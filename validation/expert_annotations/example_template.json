@@ -1,0 +1,12 @@
+[
+  {
+    "example_id": "example_001",
+    "score_source": "synthetic/C4-E4-G4",
+    "slice_time": 0.0,
+    "rater_id": "template",
+    "rating_dimension": "vertical_density",
+    "rating_value": 0.5,
+    "rating_scale": "0-1",
+    "comments": "Template record — replace with real expert annotations."
+  }
+]

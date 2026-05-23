@@ -1,0 +1,31 @@
+{
+  "benchmark_version": "1.0.0",
+  "entries": [
+    {
+      "id": "excerpt_001",
+      "title": "SDA Benchmark Excerpt 001 — C major triad",
+      "composer": "SDA Project (benchmark fixture)",
+      "source": "project_authored",
+      "license": "owned_by_project_author",
+      "encoding_author": "SDA",
+      "encoding_date": "2026-05-21",
+      "measures": "1",
+      "instrumentation": "Flute",
+      "musicxml": "corpus/excerpt_001.musicxml",
+      "expected_output": "expected_outputs/excerpt_001.json"
+    },
+    {
+      "id": "excerpt_002",
+      "title": "SDA Benchmark Excerpt 002 — mixed woodwind vertical",
+      "composer": "SDA Project (benchmark fixture)",
+      "source": "project_authored",
+      "license": "owned_by_project_author",
+      "encoding_author": "SDA",
+      "encoding_date": "2026-05-21",
+      "measures": "1",
+      "instrumentation": "Flute, Clarinet",
+      "musicxml": "corpus/excerpt_002.musicxml",
+      "expected_output": "expected_outputs/excerpt_002.json"
+    }
+  ]
+}

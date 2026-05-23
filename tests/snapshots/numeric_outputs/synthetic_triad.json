@@ -1,0 +1,65 @@
+{
+  "density": {
+    "interval": 0.2137588382139519,
+    "instrument": 18.643726397906615,
+    "weighted": 1.0390657390023068,
+    "pitch_structure": 0.24779860091865186,
+    "refined": 0.24779860091865186,
+    "total": 0.029375913167219218,
+    "sonic_mass": 31.902,
+    "absolute": 1.44045097481177,
+    "weighted_pitch": 0.10687941910697595,
+    "weighted_orchestral": 0.9321863198953307
+  },
+  "density_subindices": {
+    "event_count": {
+      "normalized": 1.0,
+      "raw": {
+        "event_count": 3.0,
+        "distinct_pitch_count": 3.0,
+        "doubling_count": 0.0,
+        "player_weighted_count": 3.0
+      }
+    },
+    "interval_compactness": {
+      "normalized": 0.2137588382139519,
+      "raw": 1.9077235705087667
+    },
+    "registral": {
+      "normalized": 0.0,
+      "raw": {
+        "pitch_span_semitones": 7.0,
+        "distinct_pitch_count": 3.0,
+        "register_entropy": 0.0,
+        "registral_dispersion": 3.5,
+        "registral_compression": 0.125
+      }
+    },
+    "orchestral_mass": {
+      "normalized": 5.648185549360077,
+      "raw": 31.902
+    },
+    "timbral_heterogeneity": {
+      "normalized": -0.0,
+      "raw": {
+        "family_diversity": 0.3333333333333333,
+        "instrument_diversity": 0.3333333333333333,
+        "blend_index": 1.0,
+        "orchestration_evenness": 1.0
+      }
+    },
+    "harmonicity_proxy": {
+      "normalized": 0.36740643219860825,
+      "raw": {
+        "harmonic_ratio": 0.36740643219860825,
+        "chroma_concentration": 0.37311140367375084
+      }
+    },
+    "temporal": {
+      "raw": {
+        "available": 0.0
+      }
+    },
+    "composite": {}
+  }
+}

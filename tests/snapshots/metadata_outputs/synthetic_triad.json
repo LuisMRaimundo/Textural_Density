@@ -1,0 +1,23 @@
+{
+  "score_only_mode": true,
+  "metric_schema_version": "4.0.0-strict-symbolic",
+  "density.interval.source_type": "score_derived",
+  "density.instrument.source_type": "external_acoustic_metadata",
+  "density.instrument.validation_status": "partially_calibrated",
+  "density.weighted.source_type": "metadata_proxy",
+  "density.instrument.assumptions": [
+    "Instrument 'flauta' uses externally sourced acoustic metadata via instrumentos/flauta.py (GPR interpolation).",
+    "Instrument density applies pre-loaded external acoustic metadata to notated pitch and dynamic markings; the pipeline does not analyse audio waveforms.",
+    "Quantity scaling model: incoherent source addition (not phase-locked N\u00b2).",
+    "Qty affects pressure-equivalent density, not pitch-structure metrics."
+  ],
+  "global_assumptions": [
+    "Dynamics (p, mf, ff, \u2026) are symbolic score markings; numeric weights are modelling assumptions.",
+    "Where instrument modules exist, density uses externally sourced sparse acoustic amplitude tables (GPR interpolation), not live audio analysis.",
+    "This analysis uses score/information input only \u2014 no audio waveforms were analysed at runtime."
+  ],
+  "orchestral_mass.assumptions": [
+    "Dynamic-to-weight mapping is symbolic dynamic weighting for score analysis.",
+    "Instrument density component uses externally sourced acoustic metadata where GPR modules exist."
+  ]
+}

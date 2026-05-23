@@ -1,0 +1,39 @@
+[
+  {
+    "corpus_id": "toy_schema_fixture",
+    "piece_id": "synthetic_triad",
+    "composer": "Synthetic",
+    "work_title": "Schema test triad (NOT REAL VALIDATION DATA)",
+    "movement_or_section": "n/a",
+    "measure": 1,
+    "beat": 1.0,
+    "slice_id": "synthetic_triad_m1_b1",
+    "score_source": "synthetic_fixture",
+    "input_file": "replication/corpus/metadata/synthetic_triad.json",
+    "rater_id": "fixture_rater",
+    "rater_expertise": "schema_test_only",
+    "rating_dimension": "overall_symbolic_vertical_density",
+    "rating_value": 3.0,
+    "rating_scale_min": 1.0,
+    "rating_scale_max": 5.0,
+    "comments": "TOY FIXTURE for schema loading tests only.",
+    "date": "2026-05-20",
+    "annotation_protocol_version": "1.0.0",
+    "fixture_label": "toy_schema_test_only"
+  },
+  {
+    "corpus_id": "toy_schema_fixture",
+    "piece_id": "synthetic_triad",
+    "slice_id": "synthetic_triad_m1_b1",
+    "score_source": "synthetic_fixture",
+    "input_file": "replication/corpus/metadata/synthetic_triad.json",
+    "rater_id": "fixture_rater",
+    "rater_expertise": "schema_test_only",
+    "rating_dimension": "event_density",
+    "rating_value": 2.5,
+    "rating_scale_min": 1.0,
+    "rating_scale_max": 5.0,
+    "annotation_protocol_version": "1.0.0",
+    "fixture_label": "toy_schema_test_only"
+  }
+]

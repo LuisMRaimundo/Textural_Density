@@ -1,0 +1,56 @@
+{
+  "metric_schema_version": "4.0.0-strict-symbolic",
+  "research_defaults": {
+    "weight_factor": 0.5,
+    "save_results": false,
+    "show_graphs": false
+  },
+  "normalization": {
+    "MAX_DENS_GLOBAL": 20.0,
+    "USE_LOG_COMPRESSION": true,
+    "COMPOSITE_HARMONIC_DAMPING": 0.15
+  },
+  "pitch": {
+    "MIDI_BASE_FREQUENCY": 440.0,
+    "MIDI_BASE_NOTE": 69,
+    "TAMANHO_OITAVA_MICROTONAL": 24,
+    "module": "config.py",
+    "role": "Symbolic pitch/MIDI mapping; not measured audio."
+  },
+  "interval_compactness": {
+    "DEFAULT_LAMBDA": 0.05,
+    "module": "config.py / densidade_intervalar.py",
+    "role": "Exponential decay over pitch distance; score-derived compactness.",
+    "configurable": true
+  },
+  "register": {
+    "DEFAULT_REGISTER_BANDS": {
+      "very_low": [0, 36],
+      "low": [36, 48],
+      "mid": [48, 72],
+      "high": [72, 84],
+      "very_high": [84, 128]
+    },
+    "module": "config.py",
+    "role": "Register band occupancy for registral metrics.",
+    "configurable": true
+  },
+  "written_dynamics": {
+    "DYNAMIC_LEVELS": [
+      "pppp", "ppp", "pp", "p", "mf", "f", "ff", "fff", "ffff"
+    ],
+    "module": "config.py / instrumentos/registry.py",
+    "role": "Symbolic dynamic weighting for score analysis; not SPL or loudness.",
+    "configurable": false
+  },
+  "composite": {
+    "DEFAULT_WEIGHT_FACTOR": 0.5,
+    "module": "config.py",
+    "role": "Linear blend of instrument vs interval density after min-max normalization."
+  },
+  "limitations": [
+    "Written dynamics are symbolic score metadata, not loudness.",
+    "Instrument profiles are symbolic metadata unless empirical_profile with source data.",
+    "Perceptual/acoustic proxy branches removed in 3.0.0–4.0.0 (strictly symbolic)."
+  ]
+}

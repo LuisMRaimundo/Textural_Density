@@ -1,0 +1,28 @@
+{
+  "density": {
+    "interval": 0.1886837391214329,
+    "instrument": 40.7369276954216,
+    "weighted": 2.1311882543317964,
+    "pitch_structure": 0.18410341010980244,
+    "refined": 0.18410341010980244,
+    "total": 0.03542805907584907,
+    "sonic_mass": 85.25724784892398,
+    "absolute": 3.4300151750558405,
+    "weighted_pitch": 0.09434186956071647,
+    "weighted_orchestral": 2.03684638477108
+  },
+  "harmonic_ratio": 0.37360213437909195,
+  "complexity": 1.9075242064152933,
+  "pitches_primary_count": 4,
+  "instrument_densities": [
+    11.721,
+    24.864123924461996,
+    12.966,
+    10.842
+  ],
+  "note_to_midi_C4": 60.0,
+  "midi_to_hz_A4": 440.0,
+  "interval_density_C4_G4": 0.49658530379140947,
+  "weighted_density_DI50_DV5": 5.0,
+  "chroma_sum": 1.0
+}

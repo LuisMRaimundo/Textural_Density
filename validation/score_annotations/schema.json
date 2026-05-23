@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Densidade Vertical score annotation",
+  "type": "object",
+  "required": [
+    "corpus_id",
+    "piece_id",
+    "slice_id",
+    "score_source",
+    "input_file",
+    "rater_id",
+    "rating_dimension",
+    "rating_value",
+    "rating_scale_min",
+    "rating_scale_max",
+    "annotation_protocol_version"
+  ],
+  "properties": {
+    "corpus_id": { "type": "string" },
+    "piece_id": { "type": "string" },
+    "composer": { "type": "string" },
+    "work_title": { "type": "string" },
+    "movement_or_section": { "type": "string" },
+    "measure": { "type": ["integer", "string"] },
+    "beat": { "type": ["number", "string"] },
+    "slice_id": { "type": "string" },
+    "score_source": { "type": "string" },
+    "input_file": { "type": "string" },
+    "rater_id": { "type": "string" },
+    "rater_expertise": { "type": "string" },
+    "rating_dimension": {
+      "type": "string",
+      "enum": [
+        "overall_symbolic_vertical_density",
+        "event_density",
+        "interval_compactness",
+        "registral_density",
+        "orchestration_mass",
+        "timbral_orchestration_complexity"
+      ]
+    },
+    "rating_value": { "type": "number" },
+    "rating_scale_min": { "type": "number" },
+    "rating_scale_max": { "type": "number" },
+    "comments": { "type": "string" },
+    "date": { "type": "string" },
+    "annotation_protocol_version": { "type": "string" },
+    "fixture_label": {
+      "type": "string",
+      "description": "If present, marks toy/schema-test rows (never real validation results)."
+    }
+  },
+  "additionalProperties": true
+}

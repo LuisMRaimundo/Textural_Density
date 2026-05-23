@@ -1,0 +1,18 @@
+{
+  "piece_id": "synthetic_triad",
+  "composer": "Synthetic",
+  "work": "C major triad fixture",
+  "year": null,
+  "instrumentation": "3× flauta (symbolic default)",
+  "excerpt_location": "synthetic slice",
+  "source": "synthetic_fixture",
+  "file_format": "json_input",
+  "known_limitations": "No orchestration diversity; schema/replication test only.",
+  "licensing_status": "synthetic — no copyright",
+  "input": {
+    "notes": ["C4", "E4", "G4"],
+    "dynamics": ["mf", "mf", "mf"],
+    "instruments": ["flauta", "flauta", "flauta"],
+    "num_instruments": [1, 1, 1]
+  }
+}

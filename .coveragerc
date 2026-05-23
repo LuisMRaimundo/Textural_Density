@@ -1,0 +1,11 @@
+# Used with pytest-cov (see pytest.ini). Threshold is set in pytest.ini (--cov-fail-under).
+[run]
+source =
+    core
+    validation
+
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:

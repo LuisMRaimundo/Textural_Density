@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Exemplo de ficheiro XML para análise de densidade (strictly symbolic).
+  Use o botão "Carregar XML" na aplicação e selecione este ficheiro.
+-->
+<densidade_analysis>
+  <settings>
+    <weight_factor>0.5</weight_factor>
+    <show_graphs>true</show_graphs>
+    <save_results>false</save_results>
+    <lambda>0.05</lambda>
+    <tuning_a4>440</tuning_a4>
+  </settings>
+  <voices>
+    <voice>
+      <note>C4</note>
+      <dynamics>mf</dynamics>
+      <instrument>Flauta</instrument>
+      <num_instruments>1</num_instruments>
+    </voice>
+    <voice>
+      <note>E4</note>
+      <dynamics>f</dynamics>
+      <instrument>Clarinete</instrument>
+      <num_instruments>1</num_instruments>
+    </voice>
+    <voice>
+      <note>G4</note>
+      <dynamics>mf</dynamics>
+      <instrument>Flauta</instrument>
+      <num_instruments>2</num_instruments>
+    </voice>
+    <voice>
+      <note>C5</note>
+      <dynamics>ff</dynamics>
+      <instrument>Flauta</instrument>
+      <num_instruments>1</num_instruments>
+    </voice>
+  </voices>
+</densidade_analysis>

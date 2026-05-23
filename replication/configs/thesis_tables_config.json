@@ -1,0 +1,12 @@
+{
+  "table_id": "thesis_symbolic_density_summary",
+  "config": "replication/configs/score_only_default.json",
+  "corpus_metadata_glob": "replication/corpus/metadata/*.json",
+  "columns": [
+    "piece_id",
+    "density.total",
+    "density.interval",
+    "density.sonic_mass",
+    "event_count"
+  ]
+}

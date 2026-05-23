@@ -1,0 +1,72 @@
+# Run tests and quality gates. Upgrade plan Phase 10.
+name: Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest tests/ -q --tb=short --no-cov -m "not slow"
+        working-directory: .
+
+      - name: Smoke check (import app)
+        if: matrix.python-version == '3.11'
+        run: python -c "from Main import DensityAnalyzerApp; import tkinter; print('OK')"
+        working-directory: .
+
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Core and validation coverage gate (80%)
+        run: >
+          pytest tests/ -q --tb=short -o addopts=
+          --cov=core --cov=validation
+          --cov-report=term-missing
+          --cov-fail-under=80
+        working-directory: .
+
+      - name: Full project coverage gate (63%)
+        run: pytest tests/ -q --tb=short
+        working-directory: .
+
+      - name: Type check core and validation
+        run: mypy core validation --ignore-missing-imports --follow-imports=skip
+        working-directory: .
+
+      - name: Slow performance tests
+        run: pytest tests/test_quality_gates.py -q --tb=short -m slow
+        working-directory: .

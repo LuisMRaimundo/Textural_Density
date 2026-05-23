@@ -1,0 +1,42 @@
+{
+  "manifest_version": "1.1.0",
+  "corpus_maturity": "synthetic_scaffold_only",
+  "warning": "No licensed representative benchmark corpus is committed. Official frozen benchmarks require representative score excerpts with clear license status (owned_by_project_author, public_domain_verified, or openly_licensed).",
+  "intake_instructions": "Place candidate score files in replication/corpus/intake/ and run replication/scripts/scan_benchmark_intake.py",
+  "entries": [
+    {
+      "benchmark_id": "synthetic_triad",
+      "file_path": "replication/corpus/metadata/synthetic_triad.json",
+      "format": "json_input",
+      "corpus_status": "synthetic_fixture",
+      "composer": "Synthetic",
+      "work_title": "C major triad fixture",
+      "excerpt_label": "synthetic slice",
+      "instrumentation": "3× flauta (symbolic default)",
+      "measure_range": "missing",
+      "source": "project_synthetic",
+      "license_status": "synthetic_no_copyright",
+      "license_note": "Project-generated fixture; no external copyright.",
+      "limitations": "Schema/replication test only; not a representative corpus.",
+      "include_in_official_benchmark": false,
+      "reason_included_or_excluded": "Synthetic fixture — scaffold credit only, not mature representative corpus."
+    },
+    {
+      "benchmark_id": "exemplo_densidade_xml",
+      "file_path": "exemplo_densidade.xml",
+      "format": "xml",
+      "corpus_status": "repository_example_unknown_license",
+      "composer": "missing",
+      "work_title": "GUI/XML loader example",
+      "excerpt_label": "4-voice example chord",
+      "instrumentation": "Flauta, Clarinete (example)",
+      "measure_range": "missing",
+      "source": "project_example",
+      "license_status": "unknown_license_excluded",
+      "license_note": "License not documented; excluded from official benchmark until clarified.",
+      "limitations": "Tutorial/example file; license not documented for benchmark promotion.",
+      "include_in_official_benchmark": false,
+      "reason_included_or_excluded": "Unknown license — listed for inventory only; not promoted to official frozen benchmark."
+    }
+  ]
+}

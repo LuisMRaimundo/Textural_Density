@@ -1,0 +1,236 @@
+{
+  "rubric_version": "2.0.0",
+  "research_line": "score_only_systematic_symbolic_analysis",
+  "title": "Densidade Vertical — Score-Only Upgrade Rubric Toward 90+",
+  "total_points": 100,
+  "principle": "Densidade Vertical is evaluated as a formal score-based symbolic descriptor. Methodological strength depends on explicit construct definitions, reproducible score-derived outputs, internal consistency, canonical test cases, corpus benchmarks, transparent assumptions, and auditable architecture.",
+  "optional_empirical_note": "External human-rating studies may be useful if the project later claims to predict expert or listener judgments. They are not required for the core score-only systematic research line.",
+  "validation_terminology": {
+    "primary": "formal score-based validation",
+    "alternate": "systematic construct verification",
+    "status_labels": [
+      "formally_defined",
+      "verified_by_tests",
+      "benchmark_replicated",
+      "corpus_replicated",
+      "externally_compared_optional",
+      "legacy_proxy",
+      "out_of_scope",
+      "not_yet_verified"
+    ],
+    "legacy_status_mapping": {
+      "verified_only": "verified_by_tests",
+      "score_validated": "externally_compared_optional",
+      "partially_score_validated": "externally_compared_optional",
+      "unvalidated": "not_yet_verified",
+      "legacy_proxy": "legacy_proxy"
+    }
+  },
+  "dimensions": [
+    {
+      "id": "score_only_scope",
+      "label": "Score-only scientific scope and construct clarity",
+      "weight": 10,
+      "subcriteria": [
+        "Symbolic notation-based identity documented",
+        "No audio waveform or measured spectral claims",
+        "No psychoacoustic or hearing-model claims on main line",
+        "Written dynamics as symbolic score metadata",
+        "Legacy/proxy branches opt-in and labelled out of scope"
+      ],
+      "scoring_guidance": {
+        "0": "Absent or contradictory scope",
+        "1-3": "Minimal scope statement",
+        "4-6": "Documented but inconsistent",
+        "7-8": "Strong consistent score-only identity",
+        "9-10": "Research-grade scope with enforced defaults and migration notes"
+      }
+    },
+    {
+      "id": "formal_construct_axioms",
+      "label": "Formal construct definition and axioms",
+      "weight": 15,
+      "subcriteria": [
+        "adding_active_score_events_increases_event_density",
+        "adding_player_count_increases_orchestration_mass_not_interval_compactness",
+        "widening_pitch_span_decreases_registral_compactness_where_applicable",
+        "tighter_pitch_spacing_increases_interval_compactness",
+        "written_dynamics_affect_orchestration_mass_not_pitch_only_constructs",
+        "legacy_proxy_branches_do_not_silently_alter_score_only_results"
+      ],
+      "scoring_guidance": {
+        "0": "Constructs undefined",
+        "1-4": "Informal descriptions only",
+        "5-9": "Partial axioms with some property tests",
+        "10-12": "Documented axioms and regression/property tests for most constructs",
+        "13-15": "Full formal definitions, axioms, and systematic construct verification"
+      }
+    },
+    {
+      "id": "construct_separation",
+      "label": "Construct separation",
+      "weight": 15,
+      "subcriteria": [
+        "event_density",
+        "interval_compactness",
+        "registral_density",
+        "orchestration_mass",
+        "timbral_orchestration_complexity",
+        "temporal_vertical_density",
+        "composite_symbolic_vertical_density"
+      ],
+      "scoring_guidance": {
+        "0": "Single opaque metric",
+        "1-4": "Names only or composite-only",
+        "5-9": "Subindices exist; incomplete construct map",
+        "10-12": "All constructs separately computed and interpretable",
+        "13-15": "Independent outputs, metadata, and validation hooks per construct"
+      }
+    },
+    {
+      "id": "benchmark_replication",
+      "label": "Benchmark corpus and replication package",
+      "weight": 15,
+      "subcriteria": [
+        "fixed_symbolic_score_inputs",
+        "frozen_json_or_csv_outputs",
+        "checksums_or_hashes",
+        "config_hashes",
+        "reproducible_scripts",
+        "table_generation_scripts"
+      ],
+      "scoring_guidance": {
+        "0": "No replication structure",
+        "1-4": "Scaffold and synthetic fixtures only",
+        "5-9": "Scripts and frozen synthetic outputs passing compare",
+        "10-12": "Representative score excerpts with frozen outputs",
+        "13-15": "Mature corpus, CI-integrated replication, reproducible research tables"
+      },
+      "constraints": [
+        "Synthetic fixtures earn scaffold credit only",
+        "Human ratings are not required for corpus credit"
+      ]
+    },
+    {
+      "id": "core_native_architecture",
+      "label": "Core-native auditable architecture",
+      "weight": 15,
+      "subcriteria": [
+        "score_input_to_vertical_slices_in_core",
+        "score_derived_subindices_in_core",
+        "composite_symbolic_density_in_core",
+        "report_without_gui_imports",
+        "documented_extraction_plan",
+        "honest_hybrid_status_when_incomplete"
+      ],
+      "scoring_guidance": {
+        "0": "GUI-era monolith only",
+        "1-4": "Hidden legacy path; no plan",
+        "5-9": "Hybrid pipeline documented; partial extraction",
+        "10-12": "Most score-only path auditable in core/",
+        "13-15": "Full core-native pipeline with compatibility adapters only"
+      }
+    },
+    {
+      "id": "orchestration_metadata_honesty",
+      "label": "Symbolic orchestration metadata honesty",
+      "weight": 10,
+      "subcriteria": [
+        "instrument_profiles_labelled_symbolic",
+        "written_dynamics_not_called_loudness",
+        "profile_status_and_uncertainty",
+        "unknown_instrument_fallback_with_warning",
+        "orchestration_mass_as_symbolic_metadata"
+      ],
+      "scoring_guidance": {
+        "0": "Acoustic realism implied",
+        "1-3": "Minimal labelling",
+        "4-6": "Mixed symbolic and acoustic language",
+        "7-8": "Consistent symbolic metadata framing",
+        "9-10": "Registry audit complete; empirical profiles only with data"
+      }
+    },
+    {
+      "id": "testing_regression",
+      "label": "Testing, regression, and quality gates",
+      "weight": 10,
+      "subcriteria": [
+        "unit_tests",
+        "regression_baseline_tests",
+        "property_or_axiom_tests",
+        "frozen_output_comparison",
+        "no_nan_or_inf_on_valid_inputs",
+        "coverage_and_ci_gates"
+      ],
+      "scoring_guidance": {
+        "0": "No automated tests",
+        "1-3": "Sparse tests",
+        "4-6": "Gaps in regression, axioms, or frozen outputs",
+        "7-8": "Strong suite including score-only and replication tests",
+        "9-10": "Comprehensive gates including construct property tests"
+      }
+    },
+    {
+      "id": "reporting_transparency",
+      "label": "Reporting and epistemic transparency",
+      "weight": 10,
+      "subcriteria": [
+        "score_only_mode",
+        "config_hash",
+        "input_hash",
+        "metric_schema_version",
+        "source_type",
+        "validation_status_label",
+        "assumptions_and_warnings",
+        "legacy_proxy_branch_state"
+      ],
+      "scoring_guidance": {
+        "0": "Opaque numeric outputs",
+        "1-3": "Partial metadata",
+        "4-6": "Incomplete report block",
+        "7-8": "Full metadata on default path",
+        "9-10": "Research-grade reporting with explain_score_slice and replication metadata"
+      }
+    }
+  ],
+  "optional_empirical_extensions": [
+    "expert_score_annotations",
+    "inter_rater_reliability",
+    "correlation_with_human_ratings",
+    "listening_tests",
+    "psychoacoustic_calibration"
+  ],
+  "interpretation_bands": [
+    {
+      "min": 0,
+      "max": 59,
+      "label": "Prototype / incomplete formalization"
+    },
+    {
+      "min": 60,
+      "max": 74,
+      "label": "Functional score-based tool with important formalization, benchmark, or architecture gaps"
+    },
+    {
+      "min": 75,
+      "max": 84,
+      "label": "Strong systematic score-analysis software with good tests and documentation; remaining gaps in corpus, architecture, or construct formalization"
+    },
+    {
+      "min": 85,
+      "max": 89,
+      "label": "Near-publication-grade score-based research infrastructure; strong formal definitions, tests, reporting, and replication scaffolding"
+    },
+    {
+      "min": 90,
+      "max": 94,
+      "label": "Publication-grade systematic score-analysis method with auditable core pipeline, stable benchmark corpus, frozen outputs, and fully documented constructs"
+    },
+    {
+      "min": 95,
+      "max": 100,
+      "label": "Reference implementation: broad symbolic corpus coverage, independent reproducibility, mature API, strong documentation, and stable long-term research workflow"
+    }
+  ],
+  "current_status_guidance": "Apply human-assigned dimension scores after inspecting the repository. Do not penalize for absence of expert ratings or listening tests on the systematic score-only line. Synthetic corpus limits benchmark_replication; hybrid pipeline limits core_native_architecture."
+}

@@ -1,0 +1,38 @@
+"""Licensed benchmark corpus regression tests."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+BENCHMARKS = ROOT / "benchmarks"
+EXPECTED = BENCHMARKS / "expected_outputs"
+
+
+@pytest.fixture(scope="module")
+def manifest_entries():
+    manifest_path = BENCHMARKS / "corpus" / "manifest.json"
+    if not manifest_path.exists():
+        pytest.skip("benchmark manifest missing")
+    with open(manifest_path, encoding="utf-8") as f:
+        return list(json.load(f).get("entries") or [])
+
+
+class TestBenchmarkCorpus:
+    def test_benchmark_numeric_matches_frozen(self, manifest_entries):
+        from benchmarks.scripts.run_benchmarks import run_entry
+
+        for entry in manifest_entries:
+            expected_path = EXPECTED / f"{entry['id']}.json"
+            if not expected_path.exists():
+                pytest.skip("Run benchmarks/scripts/freeze_outputs.py first")
+            expected = json.loads(expected_path.read_text(encoding="utf-8"))
+            current = run_entry(entry)
+            assert current["numeric"] == expected["numeric"], entry["id"]
+
+    def test_manifest_has_license(self, manifest_entries):
+        for entry in manifest_entries:
+            assert entry.get("license") == "owned_by_project_author"

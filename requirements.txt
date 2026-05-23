@@ -1,0 +1,20 @@
+# Requirements for Densidade Vertical Application
+# Python 3.9–3.11 recommended (3.8+ supported)
+
+# Core dependencies (pinned for reproducible installs)
+numpy>=1.20.0,<3.0.0
+pandas>=1.3.0,<3.0.0
+matplotlib>=3.4.0,<4.0.0
+scipy>=1.7.0,<2.0.0
+mido>=1.2.0
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+pytest-mock>=3.10.0
+
+# Optional (type checking / formatting)
+mypy>=1.0.0
+black>=23.0.0
+isort>=5.10.0
+

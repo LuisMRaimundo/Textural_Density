@@ -1,0 +1,23 @@
+{
+  "_disclaimer": "Illustrative example only; not an official project score. Human-assigned dimension scores for rubric v2.0.0 workflow demonstration. Current score reflects repository evidence, not aspiration.",
+  "rubric_version": "2.0.0",
+  "project_version": "1.1.0",
+  "date": "2026-05-20",
+  "scores": {
+    "score_only_scope": 9,
+    "formal_construct_axioms": 11,
+    "construct_separation": 10,
+    "benchmark_replication": 7,
+    "core_native_architecture": 10,
+    "orchestration_metadata_honesty": 8,
+    "testing_regression": 10,
+    "reporting_transparency": 10
+  },
+  "notes": {
+    "formal_construct_axioms": "Axioms documented; property tests in test_formal_construct_axioms.py; construct_records hooks added.",
+    "construct_separation": "Seven constructs with construct_records metadata; subindices remain separate.",
+    "benchmark_replication": "Replication scripts + intake scaffolding work; corpus still synthetic-only (scaffold credit). No official representative files.",
+    "core_native_architecture": "Core-native: calculate_metrics in core/pipeline.py; data_processor is shim; typed GUI adapter (gui/types.py).",
+    "testing_regression": "424+ tests including pipeline extraction guards, construct metadata, core extraction regression, benchmark manifest."
+  }
+}
