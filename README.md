@@ -2,10 +2,10 @@
 
 **Version:** 1.1.1  
 **Status:** Active Development  
-**License:** MIT (see [pyproject.toml](pyproject.toml))  
-**Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [API](docs/API.md) · [QA checklist](docs/qa_checklist.md)
+**License:** [MIT](LICENSE)  
+**Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [QA checklist](docs/qa_checklist.md)
 
-> **Versioning note:** The package release (`1.1.x`) is independent of internal methodology phases documented in the changelog (`3.0.0-strict-symbolic`, `4.0.0-strict-symbolic`). See [MIGRATION.md](docs/MIGRATION.md) §10.
+> **Versioning:** Package release **1.1.1** (`pyproject.toml`) is separate from methodology phases **3.0.0** / **4.0.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`). See [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -261,7 +261,7 @@ See `CONTRIBUTING.md` for guidelines.
 
 ## License
 
-MIT — see [pyproject.toml](pyproject.toml).
+MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -271,7 +271,8 @@ MIT — see [pyproject.toml](pyproject.toml).
 - MusicXML `<transpose>` support: concert pitch from chromatic + octave-change offsets
 - `InstrumentEvent.written_pitch` populated when written and sounding pitch differ
 - Benchmark excerpt_003 (Bb clarinet transpose regression)
-- CI workflow fixes; 517 tests; documentation aligned with core-native architecture
+- CI workflow fixes; 517+ tests; documentation aligned with core-native architecture
+- **LICENSE** (MIT) added; [docs/VERSIONING.md](docs/VERSIONING.md) clarifies package vs methodology versions; `core.version` single source at runtime
 
 ### Version 4.0.0-strict-symbolic (2026-05-21)
 - Hard removal of combination-tone / resultant-tone analysis

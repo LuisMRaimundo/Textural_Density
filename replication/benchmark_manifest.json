@@ -1,5 +1,6 @@
 {
-  "manifest_version": "1.1.0",
+  "manifest_version": "1.1.1",
+  "package_version": "1.1.1",
   "corpus_maturity": "synthetic_scaffold_only",
   "warning": "No licensed representative benchmark corpus is committed. Official frozen benchmarks require representative score excerpts with clear license status (owned_by_project_author, public_domain_verified, or openly_licensed).",
   "intake_instructions": "Place candidate score files in replication/corpus/intake/ and run replication/scripts/scan_benchmark_intake.py",

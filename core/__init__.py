@@ -45,8 +45,11 @@ from core.subindices import (
     build_density_subindices,
 )
 from core.temporal import group_events_into_slices
+from core.version import __version__, get_package_version
 
 __all__ = [
+    "__version__",
+    "get_package_version",
     "calculate_metrics",
     "calcular_metricas",
     "AnalysisRequest",

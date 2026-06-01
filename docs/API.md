@@ -9,13 +9,20 @@
 | [MATHEMATICAL_MANUAL.md](MATHEMATICAL_MANUAL.md) | Formulas, algorithms, tutorial, glossary |
 | [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md) | Architecture, data flow, worked examples |
 | [MIGRATION.md](MIGRATION.md) | Backward compatibility and upgrade notes |
+| [VERSIONING.md](VERSIONING.md) | Package version vs methodology phases; MIT license |
 | This file | Function-level API overview |
 
 **Recommended import path for new code:**
 
 ```python
-from core import calculate_metrics, analyze_score
+from core import calculate_metrics, analyze_score, __version__
+from core.version import get_package_version
+from core.defaults import METRIC_SCHEMA_VERSION
 ```
+
+**Package version:** `core.__version__` / `get_package_version()` — aligned with `pyproject.toml` (see [VERSIONING.md](VERSIONING.md)).
+
+---
 
 Legacy `from data_processor import calcular_metricas` remains supported and is identical to `calculate_metrics`.
 

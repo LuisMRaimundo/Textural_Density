@@ -2,7 +2,7 @@
 
 This document helps users and integrators move from pre-upgrade scripts (flat `data_processor` imports, GUI-era assumptions) to the current **Simultaneity Density Analyser** architecture (Phases 0–12).
 
-**Related docs:** [Technical Manual](TECHNICAL_MANUAL.md) · [Mathematical Manual](MATHEMATICAL_MANUAL.md) · [API](API.md)
+**Related docs:** [Technical Manual](TECHNICAL_MANUAL.md) · [Mathematical Manual](MATHEMATICAL_MANUAL.md) · [API](API.md) · [Versioning & license](VERSIONING.md)
 
 ---
 

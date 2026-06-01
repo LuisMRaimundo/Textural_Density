@@ -243,9 +243,9 @@ def calculate_metrics(
     )
 
     try:
-        from importlib.metadata import version as pkg_version
+        from core.version import get_package_version
 
-        software_version = pkg_version("densidade-vertical")
+        software_version = get_package_version()
     except Exception:
         software_version = "unknown"
 

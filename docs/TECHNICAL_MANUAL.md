@@ -649,4 +649,4 @@ mypy core validation --ignore-missing-imports --follow-imports=skip
 
 ---
 
-*Last updated: Phase 11 — architecture, epistemic outputs, temporal analysis, validation, and quality gates (Phases 2–10).*
+*Last updated: 2026-06-01 (package 1.1.1; MusicXML transpose §7.4; see VERSIONING.md).*

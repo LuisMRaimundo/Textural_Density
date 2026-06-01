@@ -574,8 +574,6 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 | Pitch conversion | `microtonal.py` |
 | Instruments | `instrumentos/*.py` |
 
-For architecture and output JSON keys, see [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md). For upgrading existing scripts, see [MIGRATION.md](MIGRATION.md). For function signatures, see [API.md](API.md).
+For architecture and output JSON keys, see [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md). For upgrading existing scripts, see [MIGRATION.md](MIGRATION.md). For package vs methodology versions, see [VERSIONING.md](VERSIONING.md). For function signatures, see [API.md](API.md).
 
----
-
-*Last updated: Phase 11 — epistemic labelling, subindices, temporal analysis, instrument registry, validation framework, and quality gates (Phases 2–10).*
+*Last updated: 2026-06-01 (package 1.1.1; MusicXML transpose §P).*
