@@ -260,7 +260,7 @@ Analytical code in `core/` and `validation/` does **not** import Tkinter at modu
 | 10 | CI quality gates, coverage, mypy on core |
 | 11 | Manuals updated (`MATHEMATICAL_MANUAL`, `TECHNICAL_MANUAL`) |
 | 12 | This migration guide |
-| 13 | MusicXML transpose → concert pitch; benchmark excerpt_003; docs/CI alignment (1.1.1) |
+| 13 | MusicXML transpose → concert pitch; benchmark excerpts `003`–`005`; docs/CI alignment (1.1.1) |
 
 ---
 

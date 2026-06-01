@@ -29,7 +29,7 @@ python replication/scripts/reproduce_tables.py
 ## Current corpus
 
 - **Replication package:** synthetic fixture only (`corpus/metadata/synthetic_triad.json`) — see policy below.
-- **Benchmark package:** three project-authored MusicXML excerpts in [`benchmarks/corpus/`](../benchmarks/corpus/) with frozen outputs in `benchmarks/expected_outputs/`.
+- **Benchmark package:** five project-authored MusicXML excerpts in [`benchmarks/corpus/`](../benchmarks/corpus/) with frozen outputs in `benchmarks/expected_outputs/`.
 
 Do not treat synthetic or project-authored fixtures as externally validated results.
 

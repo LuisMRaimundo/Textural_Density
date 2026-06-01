@@ -26,14 +26,14 @@ The research line is the **systematic score-only symbolic method**: formal const
 | Core pipeline | **`calculate_metrics` in `core/pipeline.py`**; `data_processor` is shim |
 | GUI boundary | `Main` → `AnalysisController` → `adapters/gui_adapter` → `AnalysisRequest` (tested) |
 | Qty semantics | Incoherent RSS + linear mass; row-splitting invariance; docs + QA sign-off |
-| Benchmark | Synthetic fixture + **3 project-authored excerpts** (`benchmarks/corpus/`); not yet a large licensed corpus |
-| Test suite | **517+ tests** passing; layered snapshots + benchmark frozen outputs |
-| MusicXML transpose | **Implemented** — `<transpose>` → concert pitch; `excerpt_003` regression |
+| Benchmark | Synthetic fixture + **5 project-authored excerpts** (`benchmarks/corpus/`); not yet a large licensed corpus |
+| Test suite | **521+ tests** passing; layered snapshots + benchmark frozen outputs |
+| MusicXML transpose | **Implemented** — `<transpose>` → concert pitch; `excerpt_003`–`004` regression |
 | Rubric estimate | **~89/100** (systematic line; CI badge + licensed corpus still main gaps) |
 
 ## Remaining for 92+ / reference implementation
 
-1. Larger **representative licensed** benchmark corpus (beyond synthetic + 3 project-authored excerpts)
+1. Larger **representative licensed** benchmark corpus (beyond synthetic + 5 project-authored excerpts)
 2. Official MusicXML/MIDI intake wired end-to-end in `reproduce_metrics.py`
 3. Optional: merge `densidade_intervalar` into `core/` for full monolithic core layout
 4. Optional: report integration for composite weight sensitivity section
@@ -45,7 +45,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 - ~~Qty^(3/2) removal; explicit quantity_scaling~~ ✅
 - ~~GUI adapter audit + `test_gui_architecture.py`~~ ✅
 - ~~Layered snapshot regression~~ ✅
-- ~~MusicXML `<transpose>` → concert pitch + `excerpt_003` benchmark~~ ✅
+- ~~MusicXML `<transpose>` → concert pitch + benchmark excerpts (`003`–`005`)~~ ✅
 
 ## Optional only
 

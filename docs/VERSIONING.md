@@ -37,7 +37,7 @@ See [MIGRATION.md](MIGRATION.md) for phase history.
 
 | Field | Example | Purpose |
 |-------|---------|---------|
-| `benchmark_version` | `1.1.0` in `benchmarks/corpus/manifest.json` | Benchmark corpus layout schema |
+| `benchmark_version` | `1.2.0` in `benchmarks/corpus/manifest.json` | Benchmark corpus layout schema |
 | `manifest_version` | `1.1.1` in `replication/benchmark_manifest.json` | Replication manifest schema |
 | `annotation_protocol_version` | `1.0.0` in score annotation JSON | Expert-rating file format |
 | `audit_version` | `1.0.0` in instrument metadata audit | Instrument audit export format |

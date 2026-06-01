@@ -24,7 +24,7 @@ Use alongside [`score_only_90_readiness_checklist.md`](score_only_90_readiness_c
 
 Tests: `tests/test_quantity_scaling.py`, `tests/test_gui_architecture.py`.
 
-- [ ] GitHub Actions quality job green (mypy on `core/` + `validation/` currently has known errors)
+- [x] GitHub Actions quality job green (mypy on `core/` + `validation/`; coverage gates)
 
 ## MusicXML / score intake
 
@@ -32,6 +32,8 @@ Tests: `tests/test_quantity_scaling.py`, `tests/test_gui_architecture.py`.
 - [x] `written_pitch` vs `sounding_pitch` on `InstrumentEvent` when transposition applies
 - [x] `tests/test_xml_loader.py::TestMusicXmlTranspose` passes
 - [x] `benchmarks/corpus/excerpt_003.musicxml` + frozen `expected_outputs/excerpt_003.json`
+- [x] `benchmarks/corpus/excerpt_004.musicxml` (transpose persists measure 2) + frozen output
+- [x] `benchmarks/corpus/excerpt_005.musicxml` (multi-instrument dynamics) + frozen output
 - [ ] Global onset reconstruction from MusicXML `<duration>` accumulation (not implemented)
 
 ## Frozen outputs (when formulas change)

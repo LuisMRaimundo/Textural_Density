@@ -557,7 +557,7 @@ Example: B♭ clarinet with `<chromatic>-2</chromatic>` — written C4 → sound
 - Global onset times are **not** reconstructed from cumulative `<duration>` unless explicit `<onset>` is present in custom XML.
 - Parser is hand-rolled (`xml.etree`); it does not use music21. Transposition follows MusicXML `<transpose>` elements only.
 
-Tests: `tests/test_xml_loader.py::TestMusicXmlTranspose`. Benchmark: `benchmarks/corpus/excerpt_003.musicxml`.
+Tests: `tests/test_xml_loader.py::TestMusicXmlTranspose`. Benchmarks: `benchmarks/corpus/excerpt_003.musicxml`–`excerpt_004.musicxml` (transpose); see [`benchmarks/README.md`](../benchmarks/README.md).
 
 ---
 

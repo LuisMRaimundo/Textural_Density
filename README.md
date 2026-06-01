@@ -281,7 +281,7 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 ### Version 1.1.1 (2026-06-01)
 - MusicXML `<transpose>` support: concert pitch from chromatic + octave-change offsets
 - `InstrumentEvent.written_pitch` populated when written and sounding pitch differ
-- Benchmark corpus expanded to five excerpts (transpose persistence, horn in F, dynamics)
+- Benchmark corpus expanded to five excerpts (transpose persistence, multi-instrument dynamics)
 - CI workflow fixes (headless tkinter smoke check); 521+ tests; documentation aligned with core-native architecture
 - **LICENSE** (MIT) added; [docs/VERSIONING.md](docs/VERSIONING.md) clarifies package vs methodology versions; `core.version` single source at runtime
 
