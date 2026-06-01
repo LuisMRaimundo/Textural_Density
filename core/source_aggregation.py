@@ -66,7 +66,7 @@ def aggregate_event_sources(
     Player counts sum within each group; one_player_density must be identical
     for events in the same group (same pitch/instrument/dynamic lookup).
     """
-    groups: dict[tuple[float, str, str], dict[str, object]] = {}
+    groups: dict[tuple[float, str, str], dict[str, float]] = {}
 
     for i, note in enumerate(notas):
         if not note:

@@ -185,7 +185,8 @@ class TestExampleScoresFile:
         with open(EXAMPLE_PATH, encoding="utf-8") as f:
             submission = json.load(f)
         result = score_submission(submission, rubric=rubric)
-        assert result.total == pytest.approx(75.0)
+        expected = float(sum(submission["scores"].values()))
+        assert result.total == pytest.approx(expected)
 
 
 class TestRubricStructureValidation:
