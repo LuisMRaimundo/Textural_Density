@@ -31,6 +31,10 @@ jobs:
         run: pytest tests/ -q --tb=short --no-cov -m "not slow" -o addopts=
         working-directory: .
 
+      - name: Install tkinter (Linux smoke import)
+        if: matrix.python-version == '3.11'
+        run: sudo apt-get update && sudo apt-get install -y python3-tk
+
       - name: Smoke check (import app)
         if: matrix.python-version == '3.11'
         run: python -c "import importlib; importlib.import_module('Main'); print('OK')"

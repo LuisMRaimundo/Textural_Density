@@ -23,7 +23,7 @@
 
 **Densidade Vertical** (Simultaneity Density Analyser / SDA) is a **score- and information-based** musical density analysis system. It computes vertical density metrics from **note names, dynamics, instruments, and player counts** — not from audio waveforms.
 
-The **public research API** lives in `core/` (`core/pipeline.calculate_metrics`). `data_processor.py` is a backward-compatibility shim. The GUI routes through `AnalysisController` → `adapters/gui_adapter` → `AnalysisRequest` → core pipeline (see [`docs/qa_checklist.md`](docs/qa_checklist.md)).
+The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`). **`data_processor.py` is not an analytical module** — it re-exports `core.pipeline.calculate_metrics` and legacy helpers only; all metric computation runs in `core/pipeline.py`. The GUI routes through `AnalysisController` → `adapters/gui_adapter` → `AnalysisRequest` → core pipeline (see [`docs/qa_checklist.md`](docs/qa_checklist.md)).
 
 ### Key Features
 
@@ -34,7 +34,7 @@ The **public research API** lives in `core/` (`core/pipeline.calculate_metrics`)
 - **Temporal score analysis** — `analyze_score()` for timed XML/MIDI
 - **Instrument registry** — ~28 orchestral profiles; per-event instrument resolution
 - **MusicXML concert pitch** — `<transpose>` (chromatic + octave-change) applied for transposing instruments; `written_pitch` vs `sounding_pitch` on timed events
-- **Verification scaffolding** — 517+ tests; formal score-based validation via property tests and frozen benchmarks
+- **Verification scaffolding** — 521+ tests; formal score-based validation via property tests and frozen benchmarks (five project-authored MusicXML excerpts)
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -114,33 +114,43 @@ The executable will be in `dist/densidade-vertical.exe`. For a one-folder bundle
 
 ## Architecture
 
-The research API is **core-native**: `core/pipeline.py` implements `calculate_metrics`. `data_processor.py` is a **32-line compatibility shim** (re-exports + legacy GUI helpers). Satellite modules (`densidade_intervalar.py`, `spectral_analysis.py`, `xml_loader.py`, …) remain as focused libraries called from core.
+The research API is **core-native**. **`core/pipeline.py`** is the single source of truth for vertical-slice analysis: it validates input, aggregates events by pitch, computes instrument/orchestration mass, interval compactness, registral span, spectral proxies, subindices, composite density, and attaches epistemic metadata — without importing Tkinter or GUI code.
+
+**`data_processor.py`** is a **compatibility shim only** (~32 lines). It re-exports `calculate_metrics` / `calcular_metricas` from `core.pipeline` plus legacy helpers in `data_processor_legacy.py` (file I/O, validation text, note normalisation). **Do not add new analytical logic there** — extend `core/` instead.
+
+Satellite modules (`densidade_intervalar.py`, `spectral_analysis.py`, `xml_loader.py`, …) are focused libraries called from core.
 
 ```
 Densidade vertical/
-├── core/                      # Research API: pipeline, models, temporal analysis, metadata
-│   ├── pipeline.py            # calculate_metrics (canonical implementation)
+├── core/                      # Research API (canonical)
+│   ├── pipeline.py            # calculate_metrics — orchestrates full vertical slice
+│   ├── pitch_aggregation.py   # Distinct-bin pitch structure + Qty invariants
+│   ├── orchestration.py       # One-player densities, orchestral balance inputs
 │   ├── defaults.py            # Shared research API defaults
-│   ├── metrics_metadata.py    # Epistemic labelling
+│   ├── metrics_metadata.py    # Epistemic labelling (source_type, validation_status)
 │   ├── subindices.py          # Interpretable decomposition
-│   ├── score_analysis.py      # analyze_score()
+│   ├── score_analysis.py      # analyze_score() — timed multi-slice analysis
 │   └── reporting.py           # Interpretability + sensitivity
 ├── validation/                # Verification / validation scaffolding (not GUI stats)
-├── benchmarks/                # Project-authored MusicXML excerpts + frozen outputs
+├── benchmarks/                # Five project-authored MusicXML excerpts + frozen outputs
 ├── instrumentos/              # Instrument registry + GPR/coarse modules
-├── gui/                       # GUI helpers (file I/O, analysis adapter)
+├── gui/                       # Tkinter panels + AnalysisController (no metric math)
+├── adapters/                  # gui_adapter → AnalysisRequest → core.pipeline
 ├── score_io/                  # Result export
-├── xml_loader.py              # Custom XML + MusicXML (with transpose → concert pitch)
+├── xml_loader.py              # Custom XML + MusicXML (transpose → concert pitch)
 ├── Main.py                    # Tkinter application entry
-├── data_processor.py          # Backward-compatibility shim only
+├── data_processor.py          # Shim: re-exports core.pipeline + legacy helpers only
+├── data_processor_legacy.py   # Legacy I/O and validation text (not the metric pipeline)
 ├── densidade_intervalar.py    # Interval density library
 ├── spectral_analysis.py       # Spectral metadata proxies
-└── tests/                     # 517+ tests, regression baseline, quality gates
+└── tests/                     # 521+ tests, regression baseline, quality gates
 ```
 
-**Call path (GUI):** `Main.py` → `AnalysisController` → `adapters/gui_adapter` → `core.pipeline.calculate_metrics`.
+**Call path (GUI):** `Main.py` → `AnalysisController` → `adapters/gui_adapter.build_analysis_request` → `core.pipeline.calculate_metrics`.
 
-**Call path (programmatic):** `from core import calculate_metrics` (includes `metric_metadata`).
+**Call path (programmatic):** `from core import calculate_metrics` (preferred) or `from core.pipeline import calculate_metrics`.
+
+**Call path (legacy scripts):** `from data_processor import calculate_metrics` — same function object, forwarded from core.
 
 Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pipeline_extraction.md).
 
@@ -148,10 +158,11 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 
 | Component | Role |
 |-----------|------|
-| `core.calculate_metrics` | Single vertical-slice analysis (research entry point) |
+| `core.pipeline.calculate_metrics` | **Canonical** vertical-slice analysis (research entry point) |
 | `core.analyze_score` | Multi-slice timed score analysis |
-| `gui/analysis_adapter.py` | GUI → core bridge; aligned defaults |
-| `data_processor.py` | Compatibility shim (re-exports `core.pipeline`) |
+| `adapters/gui_adapter.py` | GUI → `AnalysisRequest` → core; aligned defaults |
+| `data_processor.py` | **Compatibility only** — re-exports `core.pipeline`; no independent metric logic |
+| `data_processor_legacy.py` | Legacy save/validate/normalise helpers used by shim and GUI text |
 | `xml_loader.py` | Custom densidade XML + MusicXML loader (transpose-aware) |
 | `validation/` | Synthetic verification — **not** empirical validation |
 | `DensityAnalyzerApp` | GUI orchestrator (`Main.py`) |
@@ -270,8 +281,8 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 ### Version 1.1.1 (2026-06-01)
 - MusicXML `<transpose>` support: concert pitch from chromatic + octave-change offsets
 - `InstrumentEvent.written_pitch` populated when written and sounding pitch differ
-- Benchmark excerpt_003 (Bb clarinet transpose regression)
-- CI workflow fixes; 517+ tests; documentation aligned with core-native architecture
+- Benchmark corpus expanded to five excerpts (transpose persistence, horn in F, dynamics)
+- CI workflow fixes (headless tkinter smoke check); 521+ tests; documentation aligned with core-native architecture
 - **LICENSE** (MIT) added; [docs/VERSIONING.md](docs/VERSIONING.md) clarifies package vs methodology versions; `core.version` single source at runtime
 
 ### Version 4.0.0-strict-symbolic (2026-05-21)

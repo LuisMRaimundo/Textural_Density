@@ -1,5 +1,5 @@
 {
-  "benchmark_version": "1.1.0",
+  "benchmark_version": "1.2.0",
   "entries": [
     {
       "id": "excerpt_001",
@@ -39,6 +39,32 @@
       "instrumentation": "Flute, Clarinet in Bb (transpose -2)",
       "musicxml": "corpus/excerpt_003.musicxml",
       "expected_output": "expected_outputs/excerpt_003.json"
+    },
+    {
+      "id": "excerpt_004",
+      "title": "SDA Benchmark Excerpt 004 — Bb clarinet transpose across two measures",
+      "composer": "SDA Project (benchmark fixture)",
+      "source": "project_authored",
+      "license": "owned_by_project_author",
+      "encoding_author": "SDA",
+      "encoding_date": "2026-06-01",
+      "measures": "2",
+      "instrumentation": "Clarinet in Bb (transpose -2, state persists m2)",
+      "musicxml": "corpus/excerpt_004.musicxml",
+      "expected_output": "expected_outputs/excerpt_004.json"
+    },
+    {
+      "id": "excerpt_005",
+      "title": "SDA Benchmark Excerpt 005 — mixed ensemble with symbolic dynamics",
+      "composer": "SDA Project (benchmark fixture)",
+      "source": "project_authored",
+      "license": "owned_by_project_author",
+      "encoding_author": "SDA",
+      "encoding_date": "2026-06-01",
+      "measures": "1",
+      "instrumentation": "Flauta (p), Oboe (mf), Violino (ff)",
+      "musicxml": "corpus/excerpt_005.musicxml",
+      "expected_output": "expected_outputs/excerpt_005.json"
     }
   ]
 }

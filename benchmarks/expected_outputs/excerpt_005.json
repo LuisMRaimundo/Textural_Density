@@ -1,0 +1,335 @@
+{
+  "benchmark_id": "excerpt_005",
+  "composite_trace": {
+    "inputs": {
+      "distinct_pitch_count": 7,
+      "event_count": 7,
+      "harmonic_ratio": 0.34129795661228535,
+      "instrument_density": 30.574699677469454,
+      "interval_compactness_distinct": 0.19291068220480828,
+      "pitch_aggregation": {
+        "distinct_pitch_count": 7,
+        "distinct_pitch_ratio": 1.0,
+        "doubling_count": 0,
+        "event_count": 7,
+        "event_doubling_count": 0,
+        "interval_pairs_count_distinct": 21,
+        "pitch_aggregation_applied": true,
+        "pitch_aggregation_tolerance": 1e-06,
+        "pitch_bins": [
+          {
+            "dynamics": [
+              "p"
+            ],
+            "event_count": 1,
+            "instruments": [
+              "Flauta"
+            ],
+            "midi": 60.0,
+            "original_event_indices": [
+              0
+            ],
+            "representative_note": "C4",
+            "total_player_count": 1,
+            "total_weight": 8.046696481190175
+          },
+          {
+            "dynamics": [
+              "p"
+            ],
+            "event_count": 1,
+            "instruments": [
+              "Flauta"
+            ],
+            "midi": 64.0,
+            "original_event_indices": [
+              1
+            ],
+            "representative_note": "E4",
+            "total_player_count": 1,
+            "total_weight": 5.919248395028926
+          },
+          {
+            "dynamics": [
+              "mf"
+            ],
+            "event_count": 1,
+            "instruments": [
+              "Oboe"
+            ],
+            "midi": 67.0,
+            "original_event_indices": [
+              2
+            ],
+            "representative_note": "G4",
+            "total_player_count": 1,
+            "total_weight": 12.49815
+          },
+          {
+            "dynamics": [
+              "mf"
+            ],
+            "event_count": 1,
+            "instruments": [
+              "Oboe"
+            ],
+            "midi": 71.0,
+            "original_event_indices": [
+              3
+            ],
+            "representative_note": "B4",
+            "total_player_count": 1,
+            "total_weight": 9.16965
+          },
+          {
+            "dynamics": [
+              "ff"
+            ],
+            "event_count": 1,
+            "instruments": [
+              "Violino"
+            ],
+            "midi": 55.0,
+            "original_event_indices": [
+              4
+            ],
+            "representative_note": "G3",
+            "total_player_count": 1,
+            "total_weight": 14.08
+          },
+          {
+            "dynamics": [
+              "ff"
+            ],
+            "event_count": 1,
+            "instruments": [
+              "Violino"
+            ],
+            "midi": 59.0,
+            "original_event_indices": [
+              5
+            ],
+            "representative_note": "B3",
+            "total_player_count": 1,
+            "total_weight": 14.08
+          },
+          {
+            "dynamics": [
+              "ff"
+            ],
+            "event_count": 1,
+            "instruments": [
+              "Violino"
+            ],
+            "midi": 62.0,
+            "original_event_indices": [
+              6
+            ],
+            "representative_note": "D4",
+            "total_player_count": 1,
+            "total_weight": 14.08
+          }
+        ],
+        "pitch_differentiation_ratio": 1.0,
+        "pitch_polyphony": 7,
+        "player_count": 7,
+        "player_doubling_count": 0,
+        "qty_affects_pitch_structure": false,
+        "source_groups": [
+          {
+            "dynamic": "ff",
+            "instrument": "violino",
+            "midi": 55.0,
+            "one_player_density": 14.08,
+            "player_count": 1.0
+          },
+          {
+            "dynamic": "ff",
+            "instrument": "violino",
+            "midi": 59.0,
+            "one_player_density": 14.08,
+            "player_count": 1.0
+          },
+          {
+            "dynamic": "p",
+            "instrument": "flauta",
+            "midi": 60.0,
+            "one_player_density": 8.046696481190175,
+            "player_count": 1.0
+          },
+          {
+            "dynamic": "ff",
+            "instrument": "violino",
+            "midi": 62.0,
+            "one_player_density": 14.08,
+            "player_count": 1.0
+          },
+          {
+            "dynamic": "p",
+            "instrument": "flauta",
+            "midi": 64.0,
+            "one_player_density": 5.919248395028926,
+            "player_count": 1.0
+          },
+          {
+            "dynamic": "mf",
+            "instrument": "oboe",
+            "midi": 67.0,
+            "one_player_density": 12.49815,
+            "player_count": 1.0
+          },
+          {
+            "dynamic": "mf",
+            "instrument": "oboe",
+            "midi": 71.0,
+            "one_player_density": 9.16965,
+            "player_count": 1.0
+          }
+        ],
+        "total_player_count": 7,
+        "unison_doublings_excluded_from_interval_structure": true
+      },
+      "registral_span": 16.0,
+      "sonic_mass": 77.8737448762191
+    },
+    "overlap_warnings": [],
+    "steps": {
+      "complexity_factor": {
+        "depends_on": [
+          "symbolic_entropy",
+          "pitch_bins"
+        ],
+        "value": 2.320786918060861
+      },
+      "interval_compactness_distinct": {
+        "depends_on": [
+          "distinct_pitch_count",
+          "pitch_bins"
+        ],
+        "value": 0.19291068220480828
+      },
+      "pitch_structure_density": {
+        "depends_on": [
+          "interval_compactness_distinct",
+          "distinct_pitch_count",
+          "registral_span",
+          "symbolic_entropy",
+          "harmonicity_proxy",
+          "pitch_differentiation_ratio"
+        ],
+        "value": 0.18205049506168605
+      },
+      "sonic_mass": {
+        "depends_on": [
+          "raw_event_count",
+          "player_count",
+          "instrument_density"
+        ],
+        "value": 77.8737448762191
+      },
+      "total_density": {
+        "depends_on": [
+          "pitch_structure_density",
+          "sonic_mass"
+        ],
+        "value": 0.033554921814904964
+      },
+      "weighted_density": {
+        "depends_on": [
+          "instrument_density",
+          "interval_compactness_distinct"
+        ],
+        "value": 1.6251903249758768
+      }
+    }
+  },
+  "metadata": {
+    "density.instrument.assumptions": [
+      "Instrument 'Flauta' uses externally sourced acoustic metadata via instrumentos/flauta.py (GPR interpolation).",
+      "Instrument 'Oboe' uses externally sourced acoustic metadata via instrumentos/oboe.py (GPR interpolation).",
+      "Instrument density applies pre-loaded external acoustic metadata to notated pitch and dynamic markings; the pipeline does not analyse audio waveforms.",
+      "Quantity scaling model: incoherent source addition (not phase-locked N\u00b2).",
+      "Qty affects pressure-equivalent density, not pitch-structure metrics."
+    ],
+    "density.instrument.source_type": "external_acoustic_metadata",
+    "density.instrument.validation_status": "heuristic",
+    "density.interval.source_type": "score_derived",
+    "density.weighted.source_type": "metadata_proxy",
+    "global_assumptions": [
+      "Dynamics (p, mf, ff, \u2026) are symbolic score markings; numeric weights are modelling assumptions.",
+      "Where instrument modules exist, density uses externally sourced sparse acoustic amplitude tables (GPR interpolation), not live audio analysis.",
+      "This analysis uses score/information input only \u2014 no audio waveforms were analysed at runtime."
+    ],
+    "metric_schema_version": "4.0.0-strict-symbolic",
+    "orchestral_mass.assumptions": [
+      "Dynamic-to-weight mapping is symbolic dynamic weighting for score analysis.",
+      "Instrument density component uses externally sourced acoustic metadata where GPR modules exist."
+    ],
+    "score_only_mode": true
+  },
+  "numeric": {
+    "density": {
+      "absolute": 3.3794882748909907,
+      "instrument": 30.574699677469454,
+      "interval": 0.19291068220480828,
+      "pitch_structure": 0.18205049506168605,
+      "refined": 0.18205049506168605,
+      "sonic_mass": 77.8737448762191,
+      "total": 0.033554921814904964,
+      "weighted": 1.6251903249758768,
+      "weighted_orchestral": 1.5287349838734725,
+      "weighted_pitch": 0.09645534110240414
+    },
+    "density_subindices": {
+      "composite": {},
+      "event_count": {
+        "normalized": 1.0,
+        "raw": {
+          "distinct_pitch_count": 7.0,
+          "doubling_count": 0.0,
+          "event_count": 7.0,
+          "player_weighted_count": 7.0
+        }
+      },
+      "harmonicity_proxy": {
+        "normalized": 0.34129795661228535,
+        "raw": {
+          "chroma_concentration": 0.34129795661228535,
+          "harmonic_ratio": 0.34129795661228535
+        }
+      },
+      "interval_compactness": {
+        "normalized": 0.19291068220480828,
+        "raw": 11.743867703289965
+      },
+      "orchestral_mass": {
+        "normalized": 8.82461018267771,
+        "raw": 77.8737448762191
+      },
+      "registral": {
+        "normalized": 0.0,
+        "raw": {
+          "distinct_pitch_count": 7.0,
+          "pitch_span_semitones": 16.0,
+          "register_entropy": 0.0,
+          "registral_compression": 0.058823529411764705,
+          "registral_dispersion": 2.6666666666666665
+        }
+      },
+      "temporal": {
+        "raw": {
+          "available": 0.0
+        }
+      },
+      "timbral_heterogeneity": {
+        "normalized": -0.0,
+        "raw": {
+          "blend_index": 0.10621397983817471,
+          "family_diversity": 0.2857142857142857,
+          "instrument_diversity": 0.42857142857142855,
+          "orchestration_evenness": 1.0
+        }
+      }
+    }
+  }
+}
