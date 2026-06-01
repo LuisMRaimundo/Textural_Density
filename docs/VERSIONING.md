@@ -8,7 +8,7 @@ This document defines how **release versions**, **methodology phases**, and **sc
 
 | Label | Value | Notes |
 |-------|-------|-------|
-| **Product / documentation name** | **Textural Density** | README, manuals, rubric, reports |
+| **Product / documentation name** | **Textural Density** | README, manuals, rubric, reports; `core.version.PRODUCT_DISPLAY_NAME` |
 | **PyPI / console script** | `densidade-vertical` | Legacy package id in `pyproject.toml`; unchanged for install compatibility |
 | **GitHub repository** | `Textural_Density` | Remote URL slug |
 

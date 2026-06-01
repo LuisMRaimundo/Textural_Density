@@ -7,6 +7,9 @@ from __future__ import annotations
 # Keep in sync with [project].version in pyproject.toml
 PACKAGE_VERSION = "1.1.1"
 
+# User-facing product name (documentation, error messages). PyPI id remains densidade-vertical.
+PRODUCT_DISPLAY_NAME = "Textural Density"
+
 
 def get_package_version() -> str:
     """Return installed distribution version, or PACKAGE_VERSION when running from source."""

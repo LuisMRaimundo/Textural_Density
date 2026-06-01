@@ -1,5 +1,5 @@
 """
-Test suite for Densidade Vertical application.
+Test suite for Textural Density application.
 
 This package contains comprehensive unit tests, integration tests,
 and validation tests for the musical density analysis system.

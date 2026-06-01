@@ -2,7 +2,7 @@
 Epistemic labelling and structured metric metadata (Phase 3).
 
 Symbolic and metadata-proxy outputs are labelled with source type,
-validation status, and confidence. SDA does not implement auditory or
+validation status, and confidence. Textural Density does not implement auditory or
 psychoacoustic modelling.
 """
 

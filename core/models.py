@@ -1,5 +1,5 @@
 """
-Score-event data models for Simultaneity Density Analyser.
+Score-event data models for Textural Density.
 
 All metrics derived from these structures are score-/information-based unless
 explicitly labelled otherwise in later phases.

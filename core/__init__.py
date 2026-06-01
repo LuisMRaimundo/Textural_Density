@@ -1,5 +1,5 @@
 """
-Analytical core entry points for Simultaneity Density Analyser.
+Analytical core entry points for Textural Density.
 
 Import from this package for GUI-independent analysis. The vertical-slice
 pipeline is implemented in ``core.pipeline`` (core-native).

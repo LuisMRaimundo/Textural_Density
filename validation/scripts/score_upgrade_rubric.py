@@ -25,7 +25,7 @@ from validation.rubric_scoring import (
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Score Densidade Vertical upgrades using the score-only rubric."
+        description="Score Textural Density upgrades using the score-only rubric."
     )
     parser.add_argument(
         "scores_file",

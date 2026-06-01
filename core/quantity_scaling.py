@@ -1,7 +1,7 @@
 """
 Explicit quantity (Qty / player-count) scaling semantics.
 
-SDA treats Qty as the number of players assigned to a symbolic event.
+Textural Density treats Qty as the number of players assigned to a symbolic event.
 Mass-like quantities scale linearly; pressure-equivalent quantities use
 root-sum-square incoherent source addition. Qty does not create pitch structure.
 """

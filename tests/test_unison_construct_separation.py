@@ -1,7 +1,7 @@
 """
 Regression tests: exact unison doublings vs pitch-differentiated simultaneities.
 
-SDA separates orchestral mass from vertical pitch structure.
+Textural Density separates orchestral mass from vertical pitch structure.
 """
 
 from __future__ import annotations

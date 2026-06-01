@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Launcher for Densidade Vertical (Phase 5.1).
+Launcher for Textural Density (Phase 5.1).
 Sets working directory to the script folder and runs the Tkinter app.
 Usage: python run.py   or   python -m run (from project root)
 """

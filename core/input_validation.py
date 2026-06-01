@@ -35,53 +35,57 @@ REMOVED_ANALYTICAL_KEYS: frozenset[str] = (
 
 REMOVED_GUI_PREFERENCE_KEYS: frozenset[str] = REMOVED_ANALYTICAL_KEYS
 
+from core.version import PRODUCT_DISPLAY_NAME
+
+_PRODUCT_NAME = PRODUCT_DISPLAY_NAME
+
 _REMOVED_MESSAGES: dict[str, str] = {
     "use_stevens": (
-        "Removed option: use_stevens. SDA is now strictly symbolic and no longer "
+        f"Removed option: use_stevens. {_PRODUCT_NAME} is now strictly symbolic and no longer "
         "implements Stevens-law or power-law density compression."
     ),
     "alpha": (
-        "Removed option: alpha. SDA is now strictly symbolic and no longer "
+        f"Removed option: alpha. {_PRODUCT_NAME} is now strictly symbolic and no longer "
         "implements Stevens-law or power-law density compression."
     ),
     "beta": (
-        "Removed option: beta. SDA is now strictly symbolic and no longer "
+        f"Removed option: beta. {_PRODUCT_NAME} is now strictly symbolic and no longer "
         "implements Stevens-law or power-law density compression."
     ),
     "use_psychoacoustic": (
-        "Removed option: use_psychoacoustic. SDA is now strictly symbolic and no longer "
+        f"Removed option: use_psychoacoustic. {_PRODUCT_NAME} is now strictly symbolic and no longer "
         "implements psychoacoustic corrections (masking, roughness, loudness, Bark)."
     ),
     "use_perceptual_weighting": (
-        "Removed option: use_perceptual_weighting. SDA is now strictly symbolic and no longer "
+        f"Removed option: use_perceptual_weighting. {_PRODUCT_NAME} is now strictly symbolic and no longer "
         "implements perceptual interval weighting."
     ),
     "calculate_combination_tones": (
-        "Removed option: calculate_combination_tones. SDA is now strictly symbolic and "
+        f"Removed option: calculate_combination_tones. {_PRODUCT_NAME} is now strictly symbolic and "
         "no longer generates virtual/resultant tones."
     ),
     "combination_tones": (
-        "Removed option: combination_tones. SDA is now strictly symbolic and "
+        f"Removed option: combination_tones. {_PRODUCT_NAME} is now strictly symbolic and "
         "no longer generates virtual/resultant tones."
     ),
     "resultant_tones": (
-        "Removed option: resultant_tones. SDA is now strictly symbolic and "
+        f"Removed option: resultant_tones. {_PRODUCT_NAME} is now strictly symbolic and "
         "no longer generates virtual/resultant tones."
     ),
     "include_resultants": (
-        "Removed option: include_resultants. SDA is now strictly symbolic and "
+        f"Removed option: include_resultants. {_PRODUCT_NAME} is now strictly symbolic and "
         "no longer generates virtual/resultant tones."
     ),
     "include_combination_tones": (
-        "Removed option: include_combination_tones. SDA is now strictly symbolic and "
+        f"Removed option: include_combination_tones. {_PRODUCT_NAME} is now strictly symbolic and "
         "no longer generates virtual/resultant tones."
     ),
     "virtual_tones": (
-        "Removed option: virtual_tones. SDA is now strictly symbolic and "
+        f"Removed option: virtual_tones. {_PRODUCT_NAME} is now strictly symbolic and "
         "no longer generates virtual/resultant tones."
     ),
     "generated_tones": (
-        "Removed option: generated_tones. SDA is now strictly symbolic and "
+        f"Removed option: generated_tones. {_PRODUCT_NAME} is now strictly symbolic and "
         "no longer generates virtual/resultant tones."
     ),
 }
