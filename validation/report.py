@@ -54,7 +54,7 @@ def generate_validation_report(
     total_checks = len(verification.checks)
 
     lines = [
-        "# Validation Report — Simultaneity Density Analyser",
+        "# Validation Report — Textural Density",
         "",
         f"Generated: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}",
         "",

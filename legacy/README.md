@@ -40,6 +40,6 @@ Remaining optional visualization:
 
 
 
-SDA / Densidade Vertical is a strictly symbolic score-analysis framework. It computes analytical density indices from notated/input symbolic events and symbolic metadata only. It does not generate non-notated virtual pitches and does not implement acoustic, psychoacoustic, or perceptual modelling.
+Textural Density is a strictly symbolic score-analysis framework. It computes analytical density indices from notated/input symbolic events and symbolic metadata only. It does not generate non-notated virtual pitches and does not implement acoustic, psychoacoustic, or perceptual modelling.
 
 

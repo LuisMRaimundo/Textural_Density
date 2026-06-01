@@ -1,8 +1,8 @@
-# Mathematical Manual & Tutorial — Simultaneity Density Analyser (SDA)
+# Mathematical Manual & Tutorial — Textural Density
 
-This document is the **canonical reference** for **equations, algorithms, and models** implemented in the codebase (also known as **Densidade Vertical**), plus a **pedagogical tutorial** for reading results and tuning parameters. It complements the narrative [Technical Manual](TECHNICAL_MANUAL.md) (architecture and examples).
+This document is the **canonical reference** for **equations, algorithms, and models** implemented in **Textural Density**, plus a **pedagogical tutorial** for reading results and tuning parameters.
 
-**Epistemic premise:** SDA / Densidade Vertical is a strictly symbolic score-analysis framework. It computes analytical density indices from symbolic score data and symbolic metadata. It does **not** implement an auditory model. Unless explicitly labelled `empirical`, spectral and orchestration outputs are **metadata proxies** — not measured acoustics.
+**Epistemic premise:** Textural Density is a strictly symbolic score-analysis framework. It computes analytical density indices from symbolic score data and symbolic metadata. It does **not** implement an auditory model. Unless explicitly labelled `empirical`, spectral and orchestration outputs are **metadata proxies** — not measured acoustics.
 
 **Removed in 3.0.0-strict-symbolic:** Stevens' Law, psychoacoustic corrections (masking, roughness, loudness, Bark), and perceptual interval weighting. Sections C–E and Stevens portions of G below are retained only as migration reference; they are not active options.
 
@@ -204,7 +204,7 @@ $$
 
 **Modules:** `core/pitch_aggregation.py`, `core/pitch_structure.py`, `core/pipeline.py`.
 
-SDA separates **orchestral mass** from **vertical pitch structure**. Exact unison doublings increase event/mass descriptors but do not create additional interval structure, spectral entropy, or registral diversity.
+Textural Density separates **orchestral mass** from **vertical pitch structure**. Exact unison doublings increase event/mass descriptors but do not create additional interval structure, spectral entropy, or registral diversity.
 
 **Pitch aggregation:** events merge by exact MIDI (tolerance $10^{-6}$). Interval compactness, spectral moments, chroma, and harmonic ratio use **distinct pitch bins** with mean weight per bin (invariant under within-bin doublings).
 
@@ -506,7 +506,7 @@ flowchart TD
 - **Orchestration** (which instruments and how many),
 - **Spectral shape** (moments, entropy, harmonic ratio) from notated/input symbolic pitches.
 
-It is **not** voice-leading analysis, **not** rhythmic density, and **not** a full hearing model — it is a **consistent, tunable metric** for composition and analysis. SDA does not generate non-notated virtual pitches.
+It is **not** voice-leading analysis, **not** rhythmic density, and **not** a full hearing model — it is a **consistent, tunable metric** for composition and analysis. Textural Density does not generate non-notated virtual pitches.
 
 ### 4.2 How to read one number
 
@@ -545,7 +545,7 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 
 | Term | Meaning |
 |------|---------|
-| **SDA** | Simultaneity Density Analyser — research software name |
+| **Textural Density** | Research software for vertical symbolic density analysis |
 | **Vertical** | One time-slice of simultaneous notes (not a score) |
 | **Metadata proxy** | Symbolic estimate standing in for a perceptual quantity — not measured |
 | **verified_only** | Passes synthetic/property checks; no external validation corpus yet |

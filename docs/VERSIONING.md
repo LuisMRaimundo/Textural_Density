@@ -4,6 +4,16 @@ This document defines how **release versions**, **methodology phases**, and **sc
 
 ---
 
+## Product name vs package identifier
+
+| Label | Value | Notes |
+|-------|-------|-------|
+| **Product / documentation name** | **Textural Density** | README, manuals, rubric, reports |
+| **PyPI / console script** | `densidade-vertical` | Legacy package id in `pyproject.toml`; unchanged for install compatibility |
+| **GitHub repository** | `Textural_Density` | Remote URL slug |
+
+---
+
 ## Package release version (PyPI / GitHub releases)
 
 | Field | Location | Current |

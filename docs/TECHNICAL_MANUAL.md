@@ -1,10 +1,10 @@
-# Technical Manual: Simultaneity Density Analyser (SDA)
+# Technical Manual: Textural Density
 
-This document is a comprehensive, pedagogical technical manual for the **Simultaneity Density Analyser** (also **Densidade Vertical**). It bridges high-level design and low-level mathematical implementation.
+This document is a comprehensive, pedagogical technical manual for **Textural Density**. It bridges high-level design and low-level mathematical implementation.
 
 **Math formatting:** All formulas use **LaTeX** — inline math in `$...$`, display math on **separate lines** as `$$` … `$$` (StackEdit, Stack Exchange MathJax, KaTeX, GitHub, VS Code Markdown Math). Use `\cdot`, `\times`, or `\log_{10}(1+x)`; avoid bare Unicode operators inside expressions.
 
-**Epistemic premise (strictly symbolic):** Score/information input only — no audio waveforms, no measured spectra, no auditory perception model. SDA computes analytical density indices from notated/input symbolic events and symbolic metadata only. It does not generate non-notated virtual pitches and does not implement acoustic, psychoacoustic, or perceptual modelling. See [revised_path_to_90_score_only.md](revised_path_to_90_score_only.md).
+**Epistemic premise (strictly symbolic):** Score/information input only — no audio waveforms, no measured spectra, no auditory perception model. Textural Density computes analytical density indices from notated/input symbolic events and symbolic metadata only. It does not generate non-notated virtual pitches and does not implement acoustic, psychoacoustic, or perceptual modelling. See [revised_path_to_90_score_only.md](revised_path_to_90_score_only.md).
 
 **Removed in 3.0.0-strict-symbolic:** Stevens' Law (`use_stevens`, `alpha`, `beta`), psychoacoustic corrections (`use_psychoacoustic`), and perceptual interval weighting (`use_perceptual_weighting`).
 
@@ -16,7 +16,7 @@ This document is a comprehensive, pedagogical technical manual for the **Simulta
 
 ### 1.1 High-level purpose
 
-**Densidade Vertical** computes a set of **vertical density** metrics for a given vertical slice of music (a chord or simultaneity). The system:
+**Textural Density** computes a set of **vertical density** metrics for a given vertical slice of music (a chord or simultaneity). The system:
 
 - Takes as input: **notes** (pitches), **dynamics**, **instruments**, and **number of instruments** per note.
 - **Produces:** **interval compactness** (distinct pitch bins), **symbolic orchestration mass**, weighted / pitch-structure / composite density, symbolic spectral summaries, and texture/timbre descriptors — all from notated/input symbolic events only.
@@ -162,7 +162,7 @@ Interval compactness is **pitch-only**: no register multiplier, no perceptual we
 
 **Module:** `core/quantity_scaling.py`, `core/source_aggregation.py`, `core/orchestration.py`.
 
-SDA treats `Qty` as the number of players assigned to a symbolic event. Quantity affects player count and orchestral mass; it does **not** create additional pitch-structural events.
+Textural Density treats `Qty` as the number of players assigned to a symbolic event. Quantity affects player count and orchestral mass; it does **not** create additional pitch-structural events.
 
 **One-player density** (single dynamic lookup via instrument module):
 
@@ -565,7 +565,7 @@ Tests: `tests/test_xml_loader.py::TestMusicXmlTranspose`. Benchmarks: `benchmark
 
 ### 8.1 Verification vs validation
 
-| Term | Meaning in SDA |
+| Term | Meaning in Textural Density |
 |------|----------------|
 | **Verification** | Synthetic cases + property checks confirming implementation correctness |
 | **Validation** | Comparison against expert ratings, listening tests, or corpus benchmarks |

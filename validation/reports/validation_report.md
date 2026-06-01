@@ -1,6 +1,6 @@
-# Validation Report — Simultaneity Density Analyser
+# Validation Report — Textural Density
 
-Generated: 2026-05-21 09:01 UTC
+Generated: 2026-06-01 10:29 UTC
 
 ## Status
 

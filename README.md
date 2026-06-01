@@ -1,4 +1,4 @@
-# Densidade Vertical - Musical Density Analysis Application
+# Textural Density - Musical Density Analysis Application
 
 **Version:** 1.1.1  
 **Status:** Active Development  
@@ -11,7 +11,7 @@
 
 ## Scientific scope
 
-> **Densidade Vertical** is a strictly symbolic score-analysis framework. It computes analytical density indices from notated events at **runtime** without audio input. Interval, register, and event metrics are score-derived. **Instrument density** where GPR modules exist applies **externally sourced acoustic amplitude metadata** (sparse tables in `instrumentos/`, interpolated by GPR) to notated pitch and dynamic markings — this is not live acoustic analysis. The project does **not** generate non-notated virtual pitches and does **not** implement psychoacoustic or perceptual modelling. Written dynamics such as p, mf, and ff are **symbolic score markings**, not measured loudness or SPL.
+> **Textural Density** is a strictly symbolic score-analysis framework. It computes analytical density indices from notated events at **runtime** without audio input. Interval, register, and event metrics are score-derived. **Instrument density** where GPR modules exist applies **externally sourced acoustic amplitude metadata** (sparse tables in `instrumentos/`, interpolated by GPR) to notated pitch and dynamic markings — this is not live acoustic analysis. The project does **not** generate non-notated virtual pitches and does **not** implement psychoacoustic or perceptual modelling. Written dynamics such as p, mf, and ff are **symbolic score markings**, not measured loudness or SPL.
 
 **Removed in 3.0.0-strict-symbolic:** Stevens' Law power-law compression, psychoacoustic corrections, and perceptual interval weighting.
 
@@ -21,7 +21,7 @@
 
 ## Overview
 
-**Densidade Vertical** (Simultaneity Density Analyser / SDA) is a **score- and information-based** musical density analysis system. It computes vertical density metrics from **note names, dynamics, instruments, and player counts** — not from audio waveforms.
+**Textural Density** is a **score- and information-based** musical density analysis system. It computes vertical density metrics from **note names, dynamics, instruments, and player counts** — not from audio waveforms.
 
 The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`). **`data_processor.py` is not an analytical module** — it re-exports `core.pipeline.calculate_metrics` and legacy helpers only; all metric computation runs in `core/pipeline.py`. The GUI routes through `AnalysisController` → `adapters/gui_adapter` → `AnalysisRequest` → core pipeline (see [`docs/qa_checklist.md`](docs/qa_checklist.md)).
 
@@ -55,13 +55,13 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 
 ```bash
 # Clone or navigate to the project directory
-cd "Densidade vertical"
+cd Textural_Density
 
 # Option A: Install dependencies and run directly
 pip install -r requirements.txt
 python Main.py
 
-# Option B: Install as package (Phase 5) then run from anywhere
+# Option B: Install as package then run from anywhere (console script: densidade-vertical)
 pip install -e .
 densidade-vertical
 
@@ -121,7 +121,7 @@ The research API is **core-native**. **`core/pipeline.py`** is the single source
 Satellite modules (`densidade_intervalar.py`, `spectral_analysis.py`, `xml_loader.py`, …) are focused libraries called from core.
 
 ```
-Densidade vertical/
+Textural_Density/
 ├── core/                      # Research API (canonical)
 │   ├── pipeline.py            # calculate_metrics — orchestrates full vertical slice
 │   ├── pitch_aggregation.py   # Distinct-bin pitch structure + Qty invariants
@@ -171,7 +171,7 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 
 ## Scientific scope
 
-| Category | What SDA provides |
+| Category | What Textural Density provides |
 |----------|-------------------|
 | **Score-derived** | Pitch-class structure, event counts, registral spread from symbolic input |
 | **Metadata proxies** | Instrument GPR tables, spectral moments weighted by symbolic densities |

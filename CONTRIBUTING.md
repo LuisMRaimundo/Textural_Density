@@ -1,6 +1,6 @@
-# Contributing to Densidade Vertical (SDA)
+# Contributing to Textural Density
 
-Thank you for contributing to the **Simultaneity Density Analyser**. The research API lives in `core/`; `data_processor.py` is a compatibility shim. Read [docs/MIGRATION.md](docs/MIGRATION.md), [docs/qa_checklist.md](docs/qa_checklist.md), and [docs/legacy_pipeline_extraction.md](docs/legacy_pipeline_extraction.md) before large refactors.
+Thank you for contributing to the **Textural Density**. The research API lives in `core/`; `data_processor.py` is a compatibility shim. Read [docs/MIGRATION.md](docs/MIGRATION.md), [docs/qa_checklist.md](docs/qa_checklist.md), and [docs/legacy_pipeline_extraction.md](docs/legacy_pipeline_extraction.md) before large refactors.
 
 ---
 

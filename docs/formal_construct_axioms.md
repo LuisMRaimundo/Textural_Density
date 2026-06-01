@@ -1,6 +1,6 @@
 # Formal construct axioms — systematic score-only symbolic method
 
-Densidade Vertical defines **score-derived vertical-density constructs** with **testable axioms**. These are **formal/systematic score-based** statements — not psychoacoustic claims, not claims about listener perception, and not requirements for human-rating prediction.
+Textural Density defines **score-derived vertical-density constructs** with **testable axioms**. These are **formal/systematic score-based** statements — not psychoacoustic claims, not claims about listener perception, and not requirements for human-rating prediction.
 
 Optional human/expert studies are **outside the required systematic rubric** (see [`score_only_90_readiness_checklist.md`](score_only_90_readiness_checklist.md)).
 

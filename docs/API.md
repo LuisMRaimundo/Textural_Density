@@ -1,6 +1,6 @@
 # API Documentation
 
-**Simultaneity Density Analyser (SDA)** — also known as **Densidade Vertical**
+**Textural Density** — vertical symbolic density analysis for research and composition.
 
 ## Documentation suite
 

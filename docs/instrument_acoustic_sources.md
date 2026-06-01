@@ -43,7 +43,7 @@ dynamic coarse models **without** external acoustic amplitude tables. Status:
 
 ## Quantity (Qty) scaling
 
-SDA treats `Qty` as player count for a symbolic event. Instrument modules return **one-player** density for a (note, dynamic) pair. Slice-level metrics apply:
+Textural Density treats `Qty` as player count for a symbolic event. Instrument modules return **one-player** density for a (note, dynamic) pair. Slice-level metrics apply:
 
 - **Mass:** $\sum_j n_j \cdot d_j^{(1)}$ (linear)
 - **Pressure-equivalent density:** $\sqrt{\sum_j n_j (d_j^{(1)})^2}$ (incoherent RSS)

@@ -1,4 +1,4 @@
-# Requirements for Densidade Vertical Application
+# Requirements for Textural Density Application
 # Python 3.9–3.11 recommended (3.8+ supported)
 
 # Core dependencies (pinned for reproducible installs)

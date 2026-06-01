@@ -1,5 +1,5 @@
-# Simultaneity Density Analyser (SDA) — Densidade Vertical
-# pip install -e .  then run: densidade-vertical
+# Textural Density
+# pip install -e .  then run: densidade-vertical  (legacy PyPI/console name)
 
 [build-system]
 requires = ["setuptools>=61.0"]
@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "densidade-vertical"
 version = "1.1.1"
-description = "Simultaneity Density Analyser — vertical density metrics, temporal score analysis, and epistemic metadata for symbolic music research"
+description = "Textural Density — vertical density metrics, temporal score analysis, and epistemic metadata for symbolic music research"
 readme = "README.md"
 requires-python = ">=3.8"
 license = { file = "LICENSE" }

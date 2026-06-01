@@ -1,10 +1,10 @@
-# Densidade Vertical — Score-Only Upgrade Rubric Toward 90+
+# Textural Density — Score-Only Upgrade Rubric Toward 90+
 
-This rubric evaluates **Densidade Vertical** as a **formal score-based symbolic descriptor** — a systematic score-analysis tool. It does **not** evaluate psychoacoustic realism, audio analysis, perceptual hearing-model validity, or prediction of human ratings.
+This rubric evaluates **Textural Density** as a **formal score-based symbolic descriptor** — a systematic score-analysis tool. It does **not** evaluate psychoacoustic realism, audio analysis, perceptual hearing-model validity, or prediction of human ratings.
 
 ## Principle
 
-> Densidade Vertical is evaluated as a formal score-based symbolic descriptor. Its methodological strength depends on **explicit construct definitions**, **reproducible score-derived outputs**, **internal consistency**, **canonical test cases**, **corpus benchmarks**, **transparent assumptions**, and **auditable architecture**.
+> Textural Density is evaluated as a formal score-based symbolic descriptor. Its methodological strength depends on **explicit construct definitions**, **reproducible score-derived outputs**, **internal consistency**, **canonical test cases**, **corpus benchmarks**, **transparent assumptions**, and **auditable architecture**.
 
 > **External human-rating studies** may be useful if the project later claims to predict expert or listener judgments. **They are not required** for the core score-only systematic research line.
 

@@ -1,9 +1,9 @@
 {
   "rubric_version": "2.0.0",
   "research_line": "score_only_systematic_symbolic_analysis",
-  "title": "Densidade Vertical — Score-Only Upgrade Rubric Toward 90+",
+  "title": "Textural Density — Score-Only Upgrade Rubric Toward 90+",
   "total_points": 100,
-  "principle": "Densidade Vertical is evaluated as a formal score-based symbolic descriptor. Methodological strength depends on explicit construct definitions, reproducible score-derived outputs, internal consistency, canonical test cases, corpus benchmarks, transparent assumptions, and auditable architecture.",
+  "principle": "Textural Density is evaluated as a formal score-based symbolic descriptor. Methodological strength depends on explicit construct definitions, reproducible score-derived outputs, internal consistency, canonical test cases, corpus benchmarks, transparent assumptions, and auditable architecture.",
   "optional_empirical_note": "External human-rating studies may be useful if the project later claims to predict expert or listener judgments. They are not required for the core score-only systematic research line.",
   "validation_terminology": {
     "primary": "formal score-based validation",

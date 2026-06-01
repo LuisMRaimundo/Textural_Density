@@ -1,6 +1,6 @@
-# Migration Guide — Simultaneity Density Analyser (SDA)
+# Migration Guide — Textural Density
 
-This document helps users and integrators move from pre-upgrade scripts (flat `data_processor` imports, GUI-era assumptions) to the current **Simultaneity Density Analyser** architecture (Phases 0–12).
+This document helps users and integrators move from pre-upgrade scripts (flat `data_processor` imports, GUI-era assumptions) to the current **Textural Density** architecture (Phases 0–12).
 
 **Related docs:** [Technical Manual](TECHNICAL_MANUAL.md) · [Mathematical Manual](MATHEMATICAL_MANUAL.md) · [API](API.md) · [Versioning & license](VERSIONING.md)
 
@@ -116,7 +116,7 @@ Omitting these preserves single-slice behaviour. For full temporal analysis, pre
 
 **Before:** Optional combination-tone / resultant-tone analysis could be enabled with `calculate_combination_tones=True`. Virtual pitches were merged into spectral and density calculations.
 
-**Now:** SDA is strictly symbolic. Combination-tone analysis is **hard-removed**. Keys such as `calculate_combination_tones`, `combination_tones`, `resultant_tones`, `include_resultants`, `include_combination_tones`, `virtual_tones`, and `generated_tones` raise `InputError` if present in analytical input.
+**Now:** Textural Density is strictly symbolic. Combination-tone analysis is **hard-removed**. Keys such as `calculate_combination_tones`, `combination_tones`, `resultant_tones`, `include_resultants`, `include_combination_tones`, `virtual_tones`, and `generated_tones` raise `InputError` if present in analytical input.
 
 **Impact:** Total density, spectral moments, chroma, harmonic ratio, registral span, and related metrics are computed from **notated/input symbolic pitches only**.
 

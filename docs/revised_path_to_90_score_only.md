@@ -1,6 +1,6 @@
 # Revised path to 90/100 — systematic score-only analysis
 
-For Densidade Vertical, **90/100 does not mean psychoacoustic calibration, listening-test validation, or mandatory expert human ratings**.
+For Textural Density, **90/100 does not mean psychoacoustic calibration, listening-test validation, or mandatory expert human ratings**.
 
 The research line is the **systematic score-only symbolic method**: formal construct definitions, reproducible score-derived outputs, internal consistency, canonical test cases, benchmark replication, transparent assumptions, and auditable architecture.
 
