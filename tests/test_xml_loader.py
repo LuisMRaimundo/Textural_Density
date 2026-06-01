@@ -12,7 +12,9 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from xml_loader import note_string_to_gui_parts, parse_xml
+from microtonal import note_to_midi
+
+from xml_loader import note_string_to_gui_parts, parse_xml, parse_xml_to_events
 
 
 class TestNoteStringToGuiParts:
@@ -73,5 +75,108 @@ class TestParseXml:
             assert data["notes"] == ["C4"]
             assert data["dynamics"] == ["mf"]
             assert data["num_instruments"] == [1]
+        finally:
+            Path(path).unlink(missing_ok=True)
+
+
+class TestMusicXmlTranspose:
+    """MusicXML concert pitch from <transpose> (Bb clarinet, etc.)."""
+
+    _BB_CLARINET_XML = """<?xml version="1.0"?>
+<score-partwise version="3.1">
+  <part-list>
+    <score-part id="P1"><part-name>Flute</part-name></score-part>
+    <score-part id="P2"><part-name>Clarinet in Bb</part-name></score-part>
+  </part-list>
+  <part id="P1">
+    <measure number="1">
+      <attributes><divisions>1</divisions></attributes>
+      <note><pitch><step>C</step><octave>4</octave></pitch><duration>1</duration></note>
+    </measure>
+  </part>
+  <part id="P2">
+    <measure number="1">
+      <attributes>
+        <divisions>1</divisions>
+        <transpose><chromatic>-2</chromatic></transpose>
+      </attributes>
+      <note><pitch><step>C</step><octave>4</octave></pitch><duration>1</duration></note>
+    </measure>
+  </part>
+</score-partwise>"""
+
+    def test_parse_xml_applies_concert_pitch(self):
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
+            f.write(self._BB_CLARINET_XML)
+            path = f.name
+        try:
+            data = parse_xml(path)
+            assert len(data["notes"]) == 2
+            assert data["notes"][0] == "C4"
+            assert note_to_midi(data["notes"][1]) == pytest.approx(note_to_midi("Bb3"))
+        finally:
+            Path(path).unlink(missing_ok=True)
+
+    def test_parse_xml_to_events_sets_written_and_sounding_pitch(self):
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
+            f.write(self._BB_CLARINET_XML)
+            path = f.name
+        try:
+            events, _, warnings = parse_xml_to_events(path)
+            assert len(events) == 2
+            flute, clarinet = events
+            assert flute.sounding_pitch.note_name == "C4"
+            assert flute.written_pitch is None
+            assert clarinet.written_pitch is not None
+            assert clarinet.written_pitch.note_name == "C4"
+            assert note_to_midi(clarinet.sounding_pitch.note_name) == pytest.approx(
+                note_to_midi("Bb3")
+            )
+            assert any("transpose" in w.lower() for w in warnings)
+        finally:
+            Path(path).unlink(missing_ok=True)
+
+    def test_transpose_with_octave_change(self):
+        xml = """<?xml version="1.0"?>
+<score-partwise version="3.1">
+  <part-list><score-part id="P1"><part-name>Horn in F</part-name></score-part></part-list>
+  <part id="P1">
+    <measure number="1">
+      <attributes>
+        <transpose><chromatic>-7</chromatic></transpose>
+      </attributes>
+      <note><pitch><step>C</step><octave>4</octave></pitch><duration>1</duration></note>
+    </measure>
+  </part>
+</score-partwise>"""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
+            f.write(xml)
+            path = f.name
+        try:
+            data = parse_xml(path)
+            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("F3"))
+        finally:
+            Path(path).unlink(missing_ok=True)
+
+    def test_chromatic_plus_octave_change_formula(self):
+        """chromatic + 12 * octave-change (MusicXML convention)."""
+        xml = """<?xml version="1.0"?>
+<score-partwise version="3.1">
+  <part-list><score-part id="P1"><part-name>Test</part-name></score-part></part-list>
+  <part id="P1">
+    <measure number="1">
+      <attributes>
+        <transpose><chromatic>4</chromatic><octave-change>-1</octave-change></transpose>
+      </attributes>
+      <note><pitch><step>C</step><octave>4</octave></pitch><duration>1</duration></note>
+    </measure>
+  </part>
+</score-partwise>"""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
+            f.write(xml)
+            path = f.name
+        try:
+            data = parse_xml(path)
+            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("E3"))
         finally:
             Path(path).unlink(missing_ok=True)

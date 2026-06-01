@@ -52,6 +52,7 @@ def make_instrument_event(
     dynamic: str,
     instrument_name: str,
     player_count: int,
+    written_note: str | None = None,
     onset: float | None = None,
     offset: float | None = None,
     duration: float | None = None,
@@ -68,13 +69,19 @@ def make_instrument_event(
     else:
         inst_id = inst_name.lower()
         family = "unknown"
-    pitch = note_string_to_pitch(str(note))
+    sounding_pitch = note_string_to_pitch(str(note))
+    written_pitch = (
+        note_string_to_pitch(str(written_note))
+        if written_note is not None
+        else None
+    )
     return InstrumentEvent(
         event_id=f"evt_{idx}",
         instrument_id=inst_id,
         instrument_name=inst_name,
         family=family,
-        sounding_pitch=pitch,
+        sounding_pitch=sounding_pitch,
+        written_pitch=written_pitch,
         dynamic=str(dynamic).strip().lower(),
         player_count=player_count,
         onset=onset,

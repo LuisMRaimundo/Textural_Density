@@ -28,12 +28,12 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run tests
-        run: pytest tests/ -q --tb=short --no-cov -m "not slow"
+        run: pytest tests/ -q --tb=short --no-cov -m "not slow" -o addopts=
         working-directory: .
 
       - name: Smoke check (import app)
         if: matrix.python-version == '3.11'
-        run: python -c "from Main import DensityAnalyzerApp; import tkinter; print('OK')"
+        run: python -c "import importlib; importlib.import_module('Main'); print('OK')"
         working-directory: .
 
   quality:

@@ -7,6 +7,7 @@ Two representative MusicXML excerpts for replication. **Owned by project author*
 |----|------|-------------|
 | excerpt_001 | `corpus/excerpt_001.musicxml` | C major triad, single flute |
 | excerpt_002 | `corpus/excerpt_002.musicxml` | Four-note vertical, flute + clarinet |
+| excerpt_003 | `corpus/excerpt_003.musicxml` | Bb clarinet `<transpose>` concert-pitch regression |
 
 ```bash
 python benchmarks/scripts/run_benchmarks.py

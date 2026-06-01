@@ -7,10 +7,12 @@ O formato é compatível com a estrutura esperada por get_input_data() da GUI.
 import logging
 import re
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 from core.converters import make_instrument_event
+from microtonal import midi_to_note_name, note_to_midi
 from core.defaults import RESEARCH_ANALYSIS_DEFAULTS, apply_research_defaults
 from core.input_validation import strip_removed_gui_preference_keys
 from core.models import InstrumentEvent
@@ -142,38 +144,94 @@ def _musicxml_pitch_to_note(pitch_el, accidental_el=None):
     return f"{step}{octave}"
 
 
-def _parse_musicxml(root) -> dict:
+@dataclass
+class _ExtractedMusicXmlNote:
+    """One MusicXML note with written vs concert (sounding) pitch."""
+
+    written_note: str
+    sounding_note: str
+    dynamic: str
+    part_id: str
+    part_name: str
+    transpose_semitones: int
+
+
+def _transpose_semitones_from_attributes(attributes_el) -> int | None:
     """
-    Interpreta MusicXML (score-partwise): part-list, part/measure/note, dynamics em direction.
-    Retorna o mesmo dict que parse_xml (notes, dynamics, instruments, num_instruments, etc.).
+    Concert-pitch offset from MusicXML ``<attributes><transpose>``.
+
+    sounding_midi = written_midi + chromatic + 12 * octave_change
+    """
+    if attributes_el is None:
+        return None
+    transpose_el = attributes_el.find("transpose")
+    if transpose_el is None:
+        return None
+    chromatic = 0
+    chrom_el = transpose_el.find("chromatic")
+    if chrom_el is not None and _text(chrom_el):
+        try:
+            chromatic = int(float(_text(chrom_el)))
+        except ValueError:
+            pass
+    octave_change = 0
+    oct_el = transpose_el.find("octave-change")
+    if oct_el is not None and _text(oct_el):
+        try:
+            octave_change = int(float(_text(oct_el)))
+        except ValueError:
+            pass
+    return chromatic + 12 * octave_change
+
+
+def _apply_semitone_transpose(note_str: str, semitones: int) -> str:
+    """Map a written note string to concert/sounding pitch."""
+    if semitones == 0:
+        return note_str
+    shifted = note_to_midi(note_str) + semitones
+    _, cents = extract_cents(normalize_note_string(note_str))
+    if abs(cents) > 0 or abs(shifted - round(shifted)) > 1e-6:
+        return midi_to_note_name(shifted, include_cents=True)
+    return midi_to_note_name(shifted)
+
+
+def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
+    """
+    Parse score-partwise / score-timewise MusicXML into note records.
+
+    Applies per-part ``<transpose>`` from ``<attributes>`` to yield concert pitch.
     """
     part_list = root.find("part-list")
-    part_names = {}
+    part_names: dict[str, str] = {}
     if part_list is not None:
         for sp in part_list.findall("score-part"):
             pid = sp.get("id")
             if pid:
-                pname = _text(sp.find("part-name"), "Part")
-                part_names[pid] = pname
+                part_names[pid] = _text(sp.find("part-name"), "Part")
 
-    notes = []
-    dynamics = []
-    instruments = []
-    num_instruments = []
+    extracted: list[_ExtractedMusicXmlNote] = []
 
-    def collect_notes_from_measure(measure, part_id, part_name, current_dyn_list):
-        """Extrai notas de um measure; current_dyn_list é [current_dyn] para passar por referência."""
-        cur = current_dyn_list[0]
+    def collect_notes_from_measure(
+        measure,
+        part_id: str,
+        part_name: str,
+        part_state: dict[str, Any],
+    ) -> None:
+        cur_dyn = part_state["dynamic"]
         for el in measure:
-            if el.tag == "direction":
+            if el.tag == "attributes":
+                offset = _transpose_semitones_from_attributes(el)
+                if offset is not None:
+                    part_state["transpose"] = offset
+            elif el.tag == "direction":
                 for dtype in el.findall("direction-type"):
                     dyn_el = dtype.find("dynamics")
                     if dyn_el is not None:
                         for d in ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff"):
                             if dyn_el.find(d) is not None:
-                                cur = _MUSICXML_DYNAMICS.get(d, d)
+                                cur_dyn = _MUSICXML_DYNAMICS.get(d, d)
                                 break
-                current_dyn_list[0] = cur
+                part_state["dynamic"] = cur_dyn
             elif el.tag == "note":
                 if el.find("rest") is not None:
                     continue
@@ -181,29 +239,58 @@ def _parse_musicxml(root) -> dict:
                 if pitch is None:
                     continue
                 acc_el = el.find("accidental")
-                note_str = _musicxml_pitch_to_note(pitch, acc_el)
-                notes.append(note_str)
-                dynamics.append(cur)
-                instruments.append(part_name)
-                num_instruments.append(1)
+                written = _musicxml_pitch_to_note(pitch, acc_el)
+                transpose = int(part_state["transpose"])
+                sounding = _apply_semitone_transpose(written, transpose)
+                extracted.append(
+                    _ExtractedMusicXmlNote(
+                        written_note=written,
+                        sounding_note=sounding,
+                        dynamic=cur_dyn,
+                        part_id=part_id or "",
+                        part_name=part_name,
+                        transpose_semitones=transpose,
+                    )
+                )
 
-    # score-partwise: part -> measure -> note
     parts = root.findall("part")
     if parts:
         for part in parts:
-            part_id = part.get("id")
+            part_id = part.get("id") or ""
             part_name = part_names.get(part_id, "Flauta")
-            current_dyn_list = ["mf"]
+            part_state = {"dynamic": "mf", "transpose": 0}
             for measure in part.findall("measure"):
-                collect_notes_from_measure(measure, part_id, part_name, current_dyn_list)
+                collect_notes_from_measure(measure, part_id, part_name, part_state)
     else:
-        # score-timewise: measure -> part -> note
         for measure in root.findall("measure"):
             for part in measure.findall("part"):
-                part_id = part.get("id")
+                part_id = part.get("id") or ""
                 part_name = part_names.get(part_id, "Flauta")
-                current_dyn_list = ["mf"]
-                collect_notes_from_measure(part, part_id, part_name, current_dyn_list)
+                part_state = {"dynamic": "mf", "transpose": 0}
+                collect_notes_from_measure(part, part_id, part_name, part_state)
+
+    return extracted
+
+
+def _parse_musicxml(root) -> dict:
+    """
+    Interpreta MusicXML (score-partwise): part-list, part/measure/note, dynamics em direction.
+    Retorna o mesmo dict que parse_xml (notes, dynamics, instruments, num_instruments, etc.).
+    """
+    extracted = _extract_musicxml_notes(root)
+    if not extracted:
+        notes = []
+    else:
+        notes = [n.sounding_note for n in extracted]
+        if any(n.transpose_semitones != 0 for n in extracted):
+            logger.info(
+                "MusicXML transpose applied for concert pitch (%d note(s) with non-zero offset).",
+                sum(1 for n in extracted if n.transpose_semitones != 0),
+            )
+
+    dynamics = [n.dynamic for n in extracted] if extracted else []
+    instruments = [n.part_name for n in extracted] if extracted else []
+    num_instruments = [1] * len(extracted) if extracted else []
 
     if not notes:
         raise ValueError("MusicXML não contém notas (apenas rests ou part-list vazio).")
@@ -436,17 +523,40 @@ def parse_xml_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str,
     warnings: list[str] = []
 
     if root.tag in ("score-partwise", "score-timewise"):
-        legacy = _parse_musicxml(root)
+        extracted = _extract_musicxml_notes(root)
+        if not extracted:
+            raise ValueError("MusicXML não contém notas (apenas rests ou part-list vazio).")
         warnings.append(
             "MusicXML loaded without measure timing; treated as a single vertical slice."
         )
-        from core.converters import legacy_input_to_vertical_slice
-
-        return legacy_input_to_vertical_slice(legacy).events, {
-            k: v
-            for k, v in legacy.items()
-            if k not in ("notes", "dynamics", "instruments", "num_instruments")
-        }, warnings
+        if any(n.written_note != n.sounding_note for n in extracted):
+            warnings.append(
+                "Concert pitch derived from MusicXML <transpose> (chromatic + octave-change)."
+            )
+        events = [
+            make_instrument_event(
+                idx=idx,
+                note=n.sounding_note,
+                written_note=n.written_note if n.written_note != n.sounding_note else None,
+                dynamic=n.dynamic,
+                instrument_name=n.part_name,
+                player_count=1,
+                part_id=n.part_id or None,
+                metadata={
+                    "source": "musicxml",
+                    "transpose_semitones": n.transpose_semitones,
+                },
+            )
+            for idx, n in enumerate(extracted)
+        ]
+        options = apply_research_defaults(
+            {
+                "weight_factor": 0.5,
+                "save_results": False,
+                "show_graphs": True,
+            }
+        )
+        return events, options, warnings
 
     if root.tag != "densidade_analysis":
         candidate = root.find("densidade_analysis")

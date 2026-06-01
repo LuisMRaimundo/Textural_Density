@@ -26,6 +26,19 @@
       "instrumentation": "Flute, Clarinet",
       "musicxml": "corpus/excerpt_002.musicxml",
       "expected_output": "expected_outputs/excerpt_002.json"
+    },
+    {
+      "id": "excerpt_003",
+      "title": "SDA Benchmark Excerpt 003 — Bb clarinet transpose with flute",
+      "composer": "SDA Project (benchmark fixture)",
+      "source": "project_authored",
+      "license": "owned_by_project_author",
+      "encoding_author": "SDA",
+      "encoding_date": "2026-06-01",
+      "measures": "1",
+      "instrumentation": "Flute, Clarinet in Bb (transpose -2)",
+      "musicxml": "corpus/excerpt_003.musicxml",
+      "expected_output": "expected_outputs/excerpt_003.json"
     }
   ]
 }
