@@ -10,7 +10,9 @@ Fixed symbolic score excerpts for reproducible thesis/research tables.
 
 ## Current status
 
-Only **synthetic fixtures** are committed until licensed excerpts are available.
-Synthetic files are labelled `synthetic_fixture` in metadata.
+- **Replication package (`replication/corpus/`):** synthetic fixtures only until licensed excerpts are added to intake.
+- **Benchmark package (`benchmarks/corpus/`):** three project-authored MusicXML excerpts (including Bb clarinet transpose regression `excerpt_003`).
+
+Synthetic files are labelled `synthetic_fixture` in replication metadata. Benchmark excerpts use `owned_by_project_author` license.
 
 See [`replication/README.md`](../replication/README.md) for reproduction scripts and frozen outputs.

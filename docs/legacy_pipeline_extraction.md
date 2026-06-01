@@ -96,7 +96,7 @@ GUI validation text: `validation.gui_validation.generate_validation_text` (not a
 
 ## Coverage note
 
-Legacy modules with lower coverage (`data_processor.py`, `densidade_intervalar.py`, `xml_loader.py`) should gain tests **during** extraction, not before wholesale moves.
+Legacy modules with lower coverage (`densidade_intervalar.py`, `xml_loader.py`) should gain tests **during** extraction, not before wholesale moves. **`xml_loader.py`** now includes MusicXML transpose tests (`tests/test_xml_loader.py::TestMusicXmlTranspose`).
 
 ---
 

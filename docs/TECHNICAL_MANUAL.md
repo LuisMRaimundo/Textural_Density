@@ -26,7 +26,7 @@ The pipeline is **deterministic** given the same input and configuration; it doe
 
 ### 1.2 Design principles
 
-- **Recommended entry point:** `from core import calculate_metrics` (alias `calcular_metricas`). Implementation lives in `data_processor.py`, re-exported via `core/pipeline.py`.
+- **Recommended entry point:** `from core import calculate_metrics` (alias `calcular_metricas`). Implementation lives in **`core/pipeline.py`**. `data_processor.py` is a backward-compatibility shim.
 - **Score-level analysis:** `from core import analyze_score` for timed XML/MIDI or event lists → multiple vertical slices.
 - **Layered metrics:** Raw densities → normalised weighted density → **pitch-structure density** (distinct bins) → composite vertical density with sonic-mass boost.
 - **Epistemic transparency:** Every metric carries `metric_metadata`; interpretable decomposition in `density_subindices`.
@@ -42,7 +42,7 @@ The pipeline is **deterministic** given the same input and configuration; it doe
 ```
 core/                          # Analytical API (GUI-independent)
 ├── __init__.py                # Public exports
-├── pipeline.py                # calculate_metrics shim → data_processor
+├── pipeline.py                # calculate_metrics (canonical implementation)
 ├── models.py                  # Pitch, InstrumentEvent, VerticalSlice, MetricResult, …
 ├── converters.py              # Legacy dict ↔ VerticalSlice
 ├── orchestration.py           # Per-event instrument density
@@ -64,9 +64,10 @@ instrumentos/
 ├── coarse_default.py          # Fallback for unknown instruments
 └── *.py                       # Per-instrument GPR modules
 
-data_processor.py              # Main metric pipeline (legacy + current impl)
-densidade_intervalar.py        # Interval density
+data_processor.py              # Backward-compatibility shim (re-exports core)
+densidade_intervalar.py        # Interval density library
 spectral_analysis.py           # Spectral moments
+xml_loader.py                  # Custom XML + MusicXML loader (transpose-aware)
 score_io/, gui/                # Export and GUI layers (separate from core)
 ```
 
@@ -78,15 +79,16 @@ score_io/, gui/                # Export and GUI layers (separate from core)
 | **`core.analyze_score(source, config)`** | Timed score analysis. Accepts path, legacy dict, or `list[InstrumentEvent]`. Returns `ScoreAnalysisResult`. |
 | **`core.legacy_input_to_vertical_slice(data)`** | Converts legacy input dict to typed `VerticalSlice`. |
 | **`core.orchestration.compute_event_instrument_density`** | Per-event instrument module lookup and density. |
-| **`data_processor._validate_and_extract_input`** | Validates required keys and list lengths. |
-| **`data_processor._assemble_results`** | Builds final `resultados` dict; triggers metadata and subindex attachment. |
+| **`xml_loader.parse_xml` / `parse_xml_to_events`** | Load custom `<densidade_analysis>` or MusicXML; apply `<transpose>` for concert pitch. |
+| **`data_processor_legacy._validate_and_extract_input`** | Legacy GUI validation helpers (shim path). |
 
 ### 2.3 Core calculation modules
 
 | Module | Main functions | Purpose |
 |--------|----------------|--------|
 | **`densidade_intervalar`** | `calculate_interval_density`, `calculate_interval_density_normalized`, `calibrate_lambda` | Symbolic interval density; λ calibration. |
-| **`data_processor`** | `calculate_metrics`, `calcular_densidade_ponderada_normalizada`, `calcular_massa_sonora` | Full pipeline assembly. |
+| **`core.pipeline`** | `calculate_metrics`, `calcular_metricas` | Full vertical-slice pipeline assembly. |
+| **`data_processor`** | Re-exports `core.pipeline` symbols | Compatibility shim only. |
 | **`spectral_analysis`** | `calculate_spectral_moments`, `calculate_extended_spectral_moments`, `calculate_chroma_vector`, `calculate_harmonic_ratio` | Spectral shape metrics. |
 | **`timbre_texture_analysis`** | `calculate_texture_density`, `calculate_timbre_blend`, `calculate_orchestration_balance` | Texture and orchestration descriptors. |
 | **`core/metrics_metadata`** | `attach_metric_metadata`, `build_metric_metadata` | Epistemic fields on every metric. |
@@ -528,6 +530,34 @@ Each `VerticalSliceAnalysis` contains `metrics`, `subindices`, `composite_densit
 
 - **`event_boundary`** (default): slice at each distinct onset; active notes = those sounding at that instant (half-open `[onset, offset)`).
 - **`instantaneous`**: all events in one slice regardless of timing.
+
+### 7.4 MusicXML loading and transposition
+
+`xml_loader.py` accepts:
+
+1. **Custom `<densidade_analysis>` XML** — parallel note lists or `<voice>` elements with optional `<onset>` / `<duration>`.
+2. **Standard MusicXML** (`score-partwise` / `score-timewise`) — notes extracted per part/measure.
+
+**Concert pitch (transposing instruments):** When a part declares `<attributes><transpose>`, written pitch is converted to **sounding/concert pitch** before metrics run:
+
+$$
+m_{\mathrm{sounding}} = m_{\mathrm{written}} + \Delta_{\mathrm{chromatic}} + 12 \cdot \Delta_{\mathrm{octave\_change}}
+$$
+
+Example: B♭ clarinet with `<chromatic>-2</chromatic>` — written C4 → sounding B♭3.
+
+| Function | Returns | Notes |
+|----------|---------|-------|
+| `parse_xml(path)` | Legacy dict (`notes`, `dynamics`, …) | `notes` are **concert** pitches for MusicXML |
+| `parse_xml_to_events(path)` | `(events, options, warnings)` | Sets `written_pitch` when it differs from `sounding_pitch` |
+
+**Limitations (documented):**
+
+- Untimed MusicXML is treated as **one vertical slice** (warning emitted).
+- Global onset times are **not** reconstructed from cumulative `<duration>` unless explicit `<onset>` is present in custom XML.
+- Parser is hand-rolled (`xml.etree`); it does not use music21. Transposition follows MusicXML `<transpose>` elements only.
+
+Tests: `tests/test_xml_loader.py::TestMusicXmlTranspose`. Benchmark: `benchmarks/corpus/excerpt_003.musicxml`.
 
 ---
 

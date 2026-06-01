@@ -16,7 +16,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 | Architecture | Core-native auditable pipeline; GUI via typed adapter boundary |
 | Claims | Score/information only — no audio, spectra, or hearing models |
 
-## Current status (2026-05 — post Qty + GUI audit)
+## Current status (2026-06 — post MusicXML transpose + docs 1.1.1)
 
 | Area | Status |
 |------|--------|
@@ -26,13 +26,14 @@ The research line is the **systematic score-only symbolic method**: formal const
 | Core pipeline | **`calculate_metrics` in `core/pipeline.py`**; `data_processor` is shim |
 | GUI boundary | `Main` → `AnalysisController` → `adapters/gui_adapter` → `AnalysisRequest` (tested) |
 | Qty semantics | Incoherent RSS + linear mass; row-splitting invariance; docs + QA sign-off |
-| Benchmark | Synthetic fixture + **2 project-authored excerpts**; not yet a large licensed corpus |
-| Test suite | **513+ tests** passing; layered snapshots + benchmark frozen outputs |
-| Rubric estimate | **~90/100** (publication-grade systematic line; corpus depth still the main gap) |
+| Benchmark | Synthetic fixture + **3 project-authored excerpts** (`benchmarks/corpus/`); not yet a large licensed corpus |
+| Test suite | **517+ tests** passing; layered snapshots + benchmark frozen outputs |
+| MusicXML transpose | **Implemented** — `<transpose>` → concert pitch; `excerpt_003` regression |
+| Rubric estimate | **~89/100** (systematic line; CI badge + licensed corpus still main gaps) |
 
 ## Remaining for 92+ / reference implementation
 
-1. Larger **representative licensed** benchmark corpus (beyond synthetic + 2 excerpts)
+1. Larger **representative licensed** benchmark corpus (beyond synthetic + 3 project-authored excerpts)
 2. Official MusicXML/MIDI intake wired end-to-end in `reproduce_metrics.py`
 3. Optional: merge `densidade_intervalar` into `core/` for full monolithic core layout
 4. Optional: report integration for composite weight sensitivity section
@@ -44,6 +45,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 - ~~Qty^(3/2) removal; explicit quantity_scaling~~ ✅
 - ~~GUI adapter audit + `test_gui_architecture.py`~~ ✅
 - ~~Layered snapshot regression~~ ✅
+- ~~MusicXML `<transpose>` → concert pitch + `excerpt_003` benchmark~~ ✅
 
 ## Optional only
 

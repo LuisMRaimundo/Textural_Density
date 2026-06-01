@@ -37,7 +37,8 @@ This matches **StackEdit**, **Stack Exchange** (MathJax), **VS Code** (Markdown 
    - [M. Epistemic taxonomy and `metric_metadata`](#m-epistemic-taxonomy-and-metric_metadata)
    - [N. Density subindices (`density_subindices`)](#n-density-subindices-density_subindices)
    - [O. Temporal score analysis](#o-temporal-score-analysis)
-   - [P. Verification properties (synthetic)](#p-verification-properties-synthetic)
+   - [P. MusicXML transposition (concert pitch)](#p-musicxml-transposition-concert-pitch)
+   - [Q. Verification properties (synthetic)](#q-verification-properties-synthetic)
 3. [End-to-end pipeline (diagram)](#3-end-to-end-pipeline-diagram)
 4. [Pedagogical tutorial](#4-pedagogical-tutorial)
 5. [Glossary](#5-glossary)
@@ -391,7 +392,23 @@ When input lacks timing metadata, analysis collapses to a single slice with an e
 
 ---
 
-### P. Verification properties (synthetic)
+### P. MusicXML transposition (concert pitch)
+
+**Module:** `xml_loader.py` — `_transpose_semitones_from_attributes`, `_apply_semitone_transpose`.
+
+For transposing instruments, MusicXML stores **written** pitch in `<pitch>` and the offset in `<attributes><transpose>`:
+
+$$
+m_{\mathrm{sounding}} = m_{\mathrm{written}} + \Delta_{\mathrm{chromatic}} + 12 \cdot \Delta_{\mathrm{octave\_change}}.
+$$
+
+All pitch-structure metrics (interval compactness, registral span, pitch-structure density, symbolic spectral moments) use **sounding/concert** pitch. When written and sounding differ, `InstrumentEvent.written_pitch` retains the notated value for audit trails.
+
+**Not applied:** diatonic spelling-only transposition without chromatic offset; cue notes; transposition changes mid-score beyond per-measure `<attributes>` updates.
+
+---
+
+### Q. Verification properties (synthetic)
 
 **Module:** `validation/verification.py` — `run_verification_suite()`.
 
@@ -543,7 +560,8 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 | Topic | Primary file(s) |
 |-------|-----------------|
 | Public API | `core/__init__.py` — `calculate_metrics`, `analyze_score` |
-| Main pipeline | `data_processor.py` `calculate_metrics` (via `core/pipeline.py`) |
+| Main pipeline | `core/pipeline.py` `calculate_metrics` |
+| MusicXML intake / transpose | `xml_loader.py` |
 | Per-event instruments | `core/orchestration.py`, `instrumentos/registry.py` |
 | Epistemic metadata | `core/metrics_metadata.py` |
 | Subindices | `core/subindices.py` |

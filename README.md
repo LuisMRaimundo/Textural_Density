@@ -1,8 +1,11 @@
 # Densidade Vertical - Musical Density Analysis Application
 
-**Version:** 1.1.0  
+**Version:** 1.1.1  
 **Status:** Active Development  
+**License:** MIT (see [pyproject.toml](pyproject.toml))  
 **Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [API](docs/API.md) · [QA checklist](docs/qa_checklist.md)
+
+> **Versioning note:** The package release (`1.1.x`) is independent of internal methodology phases documented in the changelog (`3.0.0-strict-symbolic`, `4.0.0-strict-symbolic`). See [MIGRATION.md](docs/MIGRATION.md) §10.
 
 ---
 
@@ -30,7 +33,8 @@ The **public research API** lives in `core/` (`core/pipeline.calculate_metrics`)
 - **Interpretable subindices** — registral, orchestration, harmonicity proxies, etc.
 - **Temporal score analysis** — `analyze_score()` for timed XML/MIDI
 - **Instrument registry** — ~28 orchestral profiles; per-event instrument resolution
-- **Verification scaffolding** — 513+ tests; formal score-based validation via property tests and frozen benchmarks
+- **MusicXML concert pitch** — `<transpose>` (chromatic + octave-change) applied for transposing instruments; `written_pitch` vs `sounding_pitch` on timed events
+- **Verification scaffolding** — 517+ tests; formal score-based validation via property tests and frozen benchmarks
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -110,35 +114,35 @@ The executable will be in `dist/densidade-vertical.exe`. For a one-folder bundle
 
 ## Architecture
 
-The repository uses a **hybrid architecture**: the research surface is `core`-based, but the main numeric pipeline still executes inside legacy modules.
+The research API is **core-native**: `core/pipeline.py` implements `calculate_metrics`. `data_processor.py` is a **32-line compatibility shim** (re-exports + legacy GUI helpers). Satellite modules (`densidade_intervalar.py`, `spectral_analysis.py`, `xml_loader.py`, …) remain as focused libraries called from core.
 
 ```
 Densidade vertical/
-├── core/                      # Research API: metrics, temporal analysis, metadata models
-│   ├── pipeline.py            # Shim → data_processor (temporary)
+├── core/                      # Research API: pipeline, models, temporal analysis, metadata
+│   ├── pipeline.py            # calculate_metrics (canonical implementation)
 │   ├── defaults.py            # Shared research API defaults
 │   ├── metrics_metadata.py    # Epistemic labelling
 │   ├── subindices.py          # Interpretable decomposition
 │   ├── score_analysis.py      # analyze_score()
 │   └── reporting.py           # Interpretability + sensitivity
 ├── validation/                # Verification / validation scaffolding (not GUI stats)
+├── benchmarks/                # Project-authored MusicXML excerpts + frozen outputs
 ├── instrumentos/              # Instrument registry + GPR/coarse modules
 ├── gui/                       # GUI helpers (file I/O, analysis adapter)
 ├── score_io/                  # Result export
+├── xml_loader.py              # Custom XML + MusicXML (with transpose → concert pitch)
 ├── Main.py                    # Tkinter application entry
-├── gui_components.py          # GUI widgets
-├── data_processor.py          # Legacy analytical pipeline (still active)
-├── densidade_intervalar.py    # Interval density
+├── data_processor.py          # Backward-compatibility shim only
+├── densidade_intervalar.py    # Interval density library
 ├── spectral_analysis.py       # Spectral metadata proxies
-├── statistical_validation.py  # Legacy GUI stats (deprecated → use validation/)
-└── tests/                     # 320+ tests, regression baseline, quality gates
+└── tests/                     # 517+ tests, regression baseline, quality gates
 ```
 
-**Call path (GUI):** `Main.py` → `gui/analysis_adapter.calculate_from_gui` → `core.calculate_metrics` → `data_processor`.
+**Call path (GUI):** `Main.py` → `AnalysisController` → `adapters/gui_adapter` → `core.pipeline.calculate_metrics`.
 
-**Call path (programmatic):** `from core import calculate_metrics` (same pipeline; includes `metric_metadata`).
+**Call path (programmatic):** `from core import calculate_metrics` (includes `metric_metadata`).
 
-Extraction plan: [docs/legacy_pipeline_extraction.md](docs/legacy_pipeline_extraction.md).
+Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pipeline_extraction.md).
 
 ### Key Components
 
@@ -147,7 +151,8 @@ Extraction plan: [docs/legacy_pipeline_extraction.md](docs/legacy_pipeline_extra
 | `core.calculate_metrics` | Single vertical-slice analysis (research entry point) |
 | `core.analyze_score` | Multi-slice timed score analysis |
 | `gui/analysis_adapter.py` | GUI → core bridge; aligned defaults |
-| `data_processor.py` | Legacy implementation (wrapped, not removed) |
+| `data_processor.py` | Compatibility shim (re-exports `core.pipeline`) |
+| `xml_loader.py` | Custom densidade XML + MusicXML loader (transpose-aware) |
 | `validation/` | Synthetic verification — **not** empirical validation |
 | `DensityAnalyzerApp` | GUI orchestrator (`Main.py`) |
 
@@ -256,11 +261,17 @@ See `CONTRIBUTING.md` for guidelines.
 
 ## License
 
-[Specify license here]
+MIT — see [pyproject.toml](pyproject.toml).
 
 ---
 
 ## Changelog
+
+### Version 1.1.1 (2026-06-01)
+- MusicXML `<transpose>` support: concert pitch from chromatic + octave-change offsets
+- `InstrumentEvent.written_pitch` populated when written and sounding pitch differ
+- Benchmark excerpt_003 (Bb clarinet transpose regression)
+- CI workflow fixes; 517 tests; documentation aligned with core-native architecture
 
 ### Version 4.0.0-strict-symbolic (2026-05-21)
 - Hard removal of combination-tone / resultant-tone analysis
@@ -288,5 +299,5 @@ For issues and questions, please [create an issue] or [contact maintainers].
 
 ---
 
-**Last Updated:** 2026-05-21
+**Last Updated:** 2026-06-01
 

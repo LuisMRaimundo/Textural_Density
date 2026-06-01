@@ -79,6 +79,8 @@ GUI code (`Main.py`, `gui_components.py`) is **best-effort** for typing unless C
 
 12. **Qty (player count)** changes must follow [docs/qa_checklist.md](docs/qa_checklist.md) Qty semantics sign-off and update frozen outputs when formulas change.
 
+13. **MusicXML intake** changes must update [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §7.4, [docs/MIGRATION.md](docs/MIGRATION.md), and transpose tests in `tests/test_xml_loader.py`.
+
 ### Output-change checklist
 
 Any change affecting scientific output must update **at least one** of:

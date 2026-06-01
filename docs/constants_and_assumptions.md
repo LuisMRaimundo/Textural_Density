@@ -12,6 +12,8 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | `MIDI_BASE_NOTE` | 69 | `config.py` | No | MIDI number for A4 |
 | `TAMANHO_OITAVA_MICROTONAL` | 24 | `config.py` | No | Microtonal octave division for notation parser |
 | Microtonal cents | ±N cents on note string | `microtonal.py` | Via notation | Continuous pitch offset |
+| MusicXML transpose | chromatic + 12×octave-change | `xml_loader.py` | Per-part `<attributes>` | Written → concert pitch for analysis |
+| `written_pitch` vs `sounding_pitch` | Optional on `InstrumentEvent` | `core/models.py` | Set when transpose applies | Audit trail only; metrics use sounding |
 
 ---
 
@@ -41,7 +43,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | Name | Value | Module | Configurable |
 |------|-------|--------|--------------|
 | `DEFAULT_REGISTER_BANDS` | very_low … very_high MIDI ranges | `config.py` | Yes |
-| Pitch span | max−min MIDI semitones in slice | `data_processor.py` | Derived from notated pitches only |
+| Pitch span | max−min MIDI semitones in slice | `core/pitch_structure.py` | Derived from **sounding/concert** pitches |
 | Registral compression | 1/(1+span) | `core/registral_density.py` | Fixed formula |
 
 ---

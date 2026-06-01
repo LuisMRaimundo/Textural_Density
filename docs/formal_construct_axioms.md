@@ -20,8 +20,9 @@ Property tests: [`tests/test_formal_construct_axioms.py`](../tests/test_formal_c
 | ED-2 | Increasing `player_count` for an existing event must not decrease player-weighted event density. |
 | ED-3 | Equivalent pitch spellings (same sounding MIDI) must not change event count density. |
 | ED-4 | Written dynamics must not affect raw event count (unless a documented duration-weighted variant is used). |
+| ED-5 | For MusicXML with `<transpose>`, pitch-structure metrics use **concert/sounding** pitch, not written pitch alone. |
 
-**Verification:** `core/event_density.py`, `density_subindices.event_count`
+**Verification:** `core/event_density.py`, `density_subindices.event_count`, `xml_loader.py`, `tests/test_xml_loader.py`
 
 ---
 

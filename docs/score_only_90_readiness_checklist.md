@@ -20,7 +20,9 @@ Practical checklist for **systematic score-only symbolic analysis**. See [`score
 - [x] Formal verification scaffolding (regression tests, synthetic verification cases)
 - [x] Replication scaffolding (`replication/`, compare scripts, synthetic frozen output)
 - [x] Upgrade rubric and scoring helper (v2.0.0 — systematic line)
-- [x] Automated test suite passing
+- [x] MusicXML `<transpose>` → concert pitch (`xml_loader.py`, `tests/test_xml_loader.py::TestMusicXmlTranspose`)
+- [x] Benchmark excerpt_003 (Bb clarinet transpose regression + frozen output)
+- [x] Documentation aligned with core-native architecture (1.1.1)
 
 **Systematic validation status:** `verified_by_tests` for many constructs; **not** `corpus_replicated` until representative benchmark exists.
 

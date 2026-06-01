@@ -25,6 +25,7 @@ This document helps users and integrators move from pre-upgrade scripts (flat `d
 | Saved GUI/XML preferences with removed keys | **Migrated** — keys stripped with warning; not passed to pipeline |
 | Expert score validation | **New scaffolding** — `validation/score_annotations/` (status: `verified_only`) |
 | Replication package | **New** — `replication/` with synthetic fixture + frozen outputs |
+| MusicXML `<transpose>` → concert pitch | **New (1.1.1)** — `xml_loader.py`; `written_pitch` on events when applicable |
 
 **Epistemic note:** All metrics remain score/symbolic outputs. New metadata labels clarify which values are **metadata proxies**, not measured acoustics.
 
@@ -259,6 +260,22 @@ Analytical code in `core/` and `validation/` does **not** import Tkinter at modu
 | 10 | CI quality gates, coverage, mypy on core |
 | 11 | Manuals updated (`MATHEMATICAL_MANUAL`, `TECHNICAL_MANUAL`) |
 | 12 | This migration guide |
+| 13 | MusicXML transpose → concert pitch; benchmark excerpt_003; docs/CI alignment (1.1.1) |
+
+---
+
+## 12. MusicXML transposition (1.1.1)
+
+**Before:** MusicXML `<pitch>` was read as sounding pitch. Transposing parts (clarinet in B♭, horn in F, …) could produce incorrect interval/register metrics unless the file was pre-transposed.
+
+**Now:** `xml_loader` reads `<attributes><transpose>` per part and converts to concert pitch:
+
+- `parse_xml` → `notes` list uses **sounding** MIDI/note strings.
+- `parse_xml_to_events` → `InstrumentEvent.sounding_pitch` (analysis) and optional `written_pitch` (provenance).
+
+No migration required for custom `<densidade_analysis>` XML or manual GUI entry. Re-run benchmarks if you relied on untransposed MusicXML for orchestral scores.
+
+See [TECHNICAL_MANUAL.md §7.4](TECHNICAL_MANUAL.md#74-musicxml-loading-and-transposition).
 
 ---
 
@@ -271,4 +288,4 @@ Analytical code in `core/` and `validation/` does **not** import Tkinter at modu
 
 ---
 
-*Last updated: Phase 12 — backward compatibility and migration (2026-05-20).*
+*Last updated: 2026-06-01 (1.1.1 — MusicXML transpose, documentation alignment).*

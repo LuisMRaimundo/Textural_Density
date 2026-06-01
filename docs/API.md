@@ -130,7 +130,7 @@ Load timed events from XML or MIDI without running full analysis. Returns `(even
 |----------|-------------|
 | `legacy_input_to_vertical_slice(input_data)` | Legacy dict → `VerticalSlice` |
 | `vertical_slice_to_legacy_lists(slice)` | `VerticalSlice` → `(notes, dynamics, instruments, counts)` |
-| `make_instrument_event(...)` | Build one `InstrumentEvent` |
+| `make_instrument_event(..., written_note=None)` | Build one `InstrumentEvent`; optional written pitch when transposition applies |
 | `note_string_to_pitch(note)` | Note string → `Pitch` |
 | `analysis_config_from_input(input_data)` | Dict → `AnalysisConfig` |
 
@@ -179,7 +179,7 @@ Normally called internally by `calculate_metrics`; exposed for custom pipelines.
 | Class | Purpose |
 |-------|---------|
 | `Pitch` | Symbolic pitch (MIDI, note name, cents) |
-| `InstrumentEvent` | One sounding event (instrument, pitch, dynamic, timing, …) |
+| `InstrumentEvent` | One sounding event; optional `written_pitch` when MusicXML transpose applies |
 | `VerticalSlice` | Simultaneous events at one moment |
 | `AnalysisConfig` | Analysis options |
 | `MetricResult` | Scalar metric + epistemic fields |
@@ -266,22 +266,38 @@ See [instrumentos/README.md](../instrumentos/README.md).
 
 ---
 
-## `data_processor` — legacy implementation module
+## `data_processor` — backward-compatibility shim
 
-Still the implementation behind `core.calculate_metrics`. Direct use is supported.
+Re-exports `core.pipeline.calculate_metrics` and legacy GUI helpers (`save_results`, `generate_validation_text`, …). **New code should import from `core`.**
 
 | Function | Description |
 |----------|-------------|
-| `calculate_metrics` / `calcular_metricas` | Main pipeline |
-| `calcular_densidade_ponderada_normalizada(DI, DV, ...)` | Weighted density blend |
-| `calcular_massa_sonora(...)` | Sonic mass |
+| `calculate_metrics` / `calcular_metricas` | Delegates to `core.pipeline` |
+| `calcular_densidade_ponderada_normalizada(...)` | Delegates to `core.composite` |
+| `calcular_massa_sonora(...)` | Delegates to `core.orchestration_mass` |
 | `load_instrument_module(name)` | Delegates to `instrumentos.get_instrument_module` |
-| `format_output_string(resultados) -> str` | Legacy text formatting |
+| `format_output_string(resultados) -> str` | Delegates to `core.formatting` |
 | `generate_validation_text(resultados_validacao, num_historico) -> str` | GUI validation summary text |
 
 ---
 
-## `score_io`
+## `xml_loader` — score file intake
+
+```python
+from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
+```
+
+| Function | Description |
+|----------|-------------|
+| `parse_xml(filepath) -> dict` | Custom `<densidade_analysis>` or MusicXML → legacy input dict. MusicXML notes are **concert pitch** after `<transpose>`. |
+| `parse_xml_to_events(filepath) -> (events, options, warnings)` | Typed `InstrumentEvent` list; sets `written_pitch` when transposition applies. |
+| `note_string_to_gui_parts(note_str)` | GUI field helper `(base, octave, cents)` |
+
+**MusicXML transposition:** Per-part `<attributes><transpose>` with `<chromatic>` and optional `<octave-change>`. See [TECHNICAL_MANUAL.md §7.4](TECHNICAL_MANUAL.md#74-musicxml-loading-and-transposition).
+
+**Warnings:** Untimed MusicXML → single vertical slice; transpose applied → concert-pitch warning.
+
+---
 
 | Function | Module | Description |
 |----------|--------|-------------|
@@ -338,4 +354,4 @@ Calibrated λ: `config/density_params.json`.
 
 ---
 
-**Package version:** 1.1.0 · **Last updated:** 2026-05-20
+**Package version:** 1.1.1 · **Last updated:** 2026-06-01

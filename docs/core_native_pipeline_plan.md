@@ -172,6 +172,8 @@ No reintroduction via `legacy/` adapters without an explicit project decision an
 
 - `data_processor.py` slimmed to shim + legacy-only helpers
 
+- `xml_loader.py` — MusicXML `<transpose>` → concert pitch; `written_pitch` on events (1.1.1)
+
 
 
 ## Next safe extractions

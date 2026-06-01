@@ -1,6 +1,6 @@
 # Licensed benchmark corpus (project-authored excerpts)
 
-Two representative MusicXML excerpts for replication. **Owned by project author**
+Three representative MusicXML excerpts for replication. **Owned by project author**
 — safe for CI and frozen-output comparison.
 
 | ID | File | Description |
