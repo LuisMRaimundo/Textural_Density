@@ -36,6 +36,8 @@ def predict_intermediate_dynamics(
 
 Unknown dynamics are normalised to `mf` or interpolated via `predict_intermediate_dynamics`.
 
+**Pitch lookup:** `instrumentos/spectral_lookup.py` resolves missing table entries in **MIDI space** (linear interpolation/extrapolation). It does **not** collapse to the same pitch class in a distant octave (e.g. D♯6 → D♯4). Deviations beyond 1 semitone outside the table log `WARNING`; beyond 1 octave log `ERROR`.
+
 Per-event modules return **one-player** density $d^{(1)}$ for `(note, dynamic)`. Quantity scaling is applied at slice level in `core/quantity_scaling.py` and `core/source_aggregation.py`:
 
 - Pressure-equivalent instrument density: $\sqrt{\sum_j n_j (d_j^{(1)})^2}$

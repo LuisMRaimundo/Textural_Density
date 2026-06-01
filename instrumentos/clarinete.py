@@ -157,71 +157,16 @@ def nota_para_int(nota):
         return 60  # C4 como fallback
 
 def calcular_densidade(nota, dinamica):
-    """
-    Compute density from spectral data, with robust fallback for missing notes.
-    """
-    try:
-        # Extrair cents e normalizar notação
-        base_nota, cents = extract_cents(nota)
-        nota_norm = normalize_note_string(base_nota)
+    """Compute density from spectral data (MIDI-space lookup, octave-safe)."""
+    from instrumentos.spectral_lookup import lookup_spectral_density
 
-        # Verificar existência direta
-        if nota_norm in spectral_data and dinamica in spectral_data[nota_norm]:
-            return spectral_data[nota_norm][dinamica]
-
-        # Map dynamic to the three basic levels
-        dinamica_proxima = dinamica
-        if dinamica not in ['pp', 'mf', 'ff']:
-            if dinamica in ['pppp', 'ppp', 'p']:
-                dinamica_proxima = 'pp'
-            elif dinamica in ['f', 'fff', 'ffff']:
-                dinamica_proxima = 'ff'
-            else:
-                dinamica_proxima = 'mf'
-
-        if nota_norm in spectral_data and dinamica_proxima in spectral_data[nota_norm]:
-            return spectral_data[nota_norm][dinamica_proxima]
-
-        # Busca nota mais próxima por base e oitava
-        match = re.match(r'([A-Ga-g][#b]?)(\d+)', nota_norm)
-        if not match:
-            logger.warning(f"Invalid note format after normalisation: {nota_norm}, using C4 as fallback")
-            return spectral_data.get("C4", {}).get(dinamica_proxima, 5.0)
-
-        nota_base, oitava = match.groups()
-        oitava = int(oitava)
-        candidatos = []
-        for n_existente in spectral_data:
-            m = re.match(r'([A-Ga-g][#b]?)(\d+)', n_existente)
-            if m:
-                base_existente, oitava_existente = m.groups()
-                oitava_existente = int(oitava_existente)
-                if base_existente.lower() == nota_base.lower():
-                    distancia = abs(oitava - oitava_existente)
-                    candidatos.append((n_existente, distancia))
-
-        if candidatos:
-            candidatos.sort(key=lambda x: x[1])
-            nota_proxima = candidatos[0][0]
-            logger.info(f"Note {nota} not found, using {nota_proxima} as approximation")
-            if dinamica_proxima in spectral_data[nota_proxima]:
-                return spectral_data[nota_proxima][dinamica_proxima]
-            elif 'mf' in spectral_data[nota_proxima]:
-                return spectral_data[nota_proxima]['mf']
-            else:
-                return sum(spectral_data[nota_proxima].values()) / len(spectral_data[nota_proxima])
-
-        # Fallback final: C4
-        logger.warning(f"Nenhuma nota similar a {nota} encontrada, usando fallback")
-        if "C4" in spectral_data and dinamica_proxima in spectral_data["C4"]:
-            return spectral_data["C4"][dinamica_proxima]
-        else:
-            valores = [val for nota_dict in spectral_data.values() for val in nota_dict.values()]
-            return sum(valores) / len(valores) if valores else 5.0
-
-    except Exception as e:
-        logger.error(f"Error computing density for {nota}/{dinamica}: {e}")
-        return 5.0
+    return lookup_spectral_density(
+        spectral_data,
+        nota,
+        dinamica,
+        logger=logger,
+        preprocess=normalize_note_string,
+    )
 
 def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
     """
