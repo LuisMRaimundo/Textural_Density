@@ -72,5 +72,5 @@ jobs:
         working-directory: .
 
       - name: Slow performance tests
-        run: pytest tests/test_quality_gates.py -q --tb=short -m slow
+        run: pytest tests/test_quality_gates.py -q --tb=short -m slow -o addopts=
         working-directory: .
