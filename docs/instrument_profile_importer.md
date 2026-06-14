@@ -1,5 +1,7 @@
 # Instrument profile Excel importer (Phase 1a)
 
+> **Scope:** Auxiliary/offline metadata curation only. Textural Density remains a strictly symbolic score-based analyser at runtime. See [README.md](../README.md) (Scientific scope) and [instrument_acoustic_sources.md](instrument_acoustic_sources.md) (incomplete corpus status).
+
 ## Purpose
 
 The importer in `tools/import_instrument_profiles_from_excel.py` converts human-curated **Excel workbooks** into **canonical JSON profile packages** for instrument acoustic/proxy metadata used by Textural Density at score lookup time.

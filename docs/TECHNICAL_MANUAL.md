@@ -4,7 +4,11 @@ This document is a comprehensive, pedagogical technical manual for **Textural De
 
 **Math formatting:** All formulas use **LaTeX** — inline math in `$...$`, display math on **separate lines** as `$$` … `$$` (StackEdit, Stack Exchange MathJax, KaTeX, GitHub, VS Code Markdown Math). Use `\cdot`, `\times`, or `\log_{10}(1+x)`; avoid bare Unicode operators inside expressions.
 
-**Epistemic premise (strictly symbolic):** Score/information input only — no audio waveforms, no measured spectra, no auditory perception model. Textural Density computes analytical density indices from notated/input symbolic events and symbolic metadata only. It does not generate non-notated virtual pitches and does not implement acoustic, psychoacoustic, or perceptual modelling. See [revised_path_to_90_score_only.md](revised_path_to_90_score_only.md).
+**Epistemic premise (strictly symbolic):** Score/information input only — no audio waveforms, no measured spectra, no auditory perception model, no FFT/STFT signal processing, no SoundSpectrAnalyse-style live analysis, no EWSD/H/I/S constructs. Textural Density computes analytical density indices from notated/input symbolic events and symbolic metadata only. It does not generate non-notated virtual pitches (including combination or resultant tones) and does not implement acoustic, psychoacoustic, or perceptual modelling. Dynamics are symbolic score markings, not SPL. See [revised_path_to_90_score_only.md](revised_path_to_90_score_only.md).
+
+**Instrument metadata (incomplete):** The external acoustic/proxy corpus is under gradual curation. Many registry entries use coarse fallbacks; final cross-instrument calibration is not complete. Missing data are expected when provenance labels remain honest.
+
+**Auxiliary Excel importer:** `tools/import_instrument_profiles_from_excel.py` validates human-curated workbooks offline and emits JSON packages. It is not part of the analytical core; runtime does not read raw `.xlsx`. Imported acoustic rows are always in **sounding/concert pitch** (`note_sounding`, `midi_sounding`); the importer never transposes metadata rows. See [instrument_profile_importer.md](instrument_profile_importer.md).
 
 **Removed in 3.0.0-strict-symbolic:** Stevens' Law (`use_stevens`, `alpha`, `beta`), psychoacoustic corrections (`use_psychoacoustic`), and perceptual interval weighting (`use_perceptual_weighting`).
 
@@ -632,12 +636,15 @@ Phase 10 added automated quality checks (see `tests/test_quality_gates.py` and `
 
 | Gate | Threshold |
 |------|-----------|
+| Full test suite | **638 tests** passing (Python 3.10–3.11 on GitHub Actions and CircleCI) |
 | Core + validation coverage | ≥ 80% |
 | Full project coverage | ≥ 63% |
 | Mypy (core, validation) | Zero errors with `--follow-imports=skip` |
 | Finite outputs | All synthetic cases produce finite `density.*` scalars |
 | Performance | 50-note slice completes in < 5 s |
 | Import hygiene | `core/` and `validation/` modules must not import Tkinter |
+
+**Recent validation layers (high level):** interval-density formal contract tests; instrument-density registry scaffold tests; scientific/musicological output plausibility tests; Excel importer contract tests. These verify symbolic construct behaviour — not final acoustic instrument calibration.
 
 Run locally:
 
@@ -649,4 +656,4 @@ mypy core validation --ignore-missing-imports --follow-imports=skip
 
 ---
 
-*Last updated: 2026-06-01 (package 1.1.1; MusicXML transpose §7.4; see VERSIONING.md).*
+*Last updated: 2026-06-14 (package 1.1.1; instrument metadata / importer docs refresh; see VERSIONING.md).*
