@@ -10,6 +10,11 @@ Practical checklist for **systematic score-only symbolic analysis**. See [`score
 - [x] Report metadata: `score_only_mode`, config/input hashes, validation status
 - [x] Formal axioms documented (`docs/formal_construct_axioms.md`)
 - [x] Property tests for key axioms (`tests/test_formal_construct_axioms.py`)
+- [x] Interval-density contract tests (`tests/test_densidade_intervalar_contract_additional.py`)
+- [x] Instrument-density scaffold contract tests (`tests/test_instrument_density_registry_scaffold_contract_additional.py`)
+- [x] Scientific/musicological output plausibility tests (`tests/test_scientific_musicological_output_plausibility_additional.py`)
+- [x] Excel importer contract tests (`tests/test_instrument_profile_excel_importer_additional.py`)
+- [x] Full suite **638 tests**; GitHub Actions + CircleCI green
 - [x] Benchmark manifest with honest corpus gap (`replication/benchmark_manifest.json`)
 - [x] Constants/assumptions documentation + export script
 - [x] Composite weight sensitivity (diagnostic, `core/sensitivity.py`)

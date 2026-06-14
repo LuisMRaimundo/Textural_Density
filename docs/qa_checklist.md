@@ -2,6 +2,19 @@
 
 Use alongside [`score_only_90_readiness_checklist.md`](score_only_90_readiness_checklist.md).
 
+## Test suite and CI
+
+- [x] Full suite: **638 tests** passing locally
+- [x] GitHub Actions: `test` (3.10, 3.11) + `quality` green
+- [x] CircleCI: `tests-3.10`, `tests-3.11` green
+
+## Validation contract layers (symbolic)
+
+- [x] Interval-density formal contracts (`tests/test_densidade_intervalar_contract_additional.py`)
+- [x] Instrument-density registry scaffold (`tests/test_instrument_density_registry_scaffold_contract_additional.py`)
+- [x] Scientific/musicological output plausibility (`tests/test_scientific_musicological_output_plausibility_additional.py`)
+- [x] Excel importer Phase 1a (`tests/test_instrument_profile_excel_importer_additional.py`)
+
 ## GUI architecture
 
 - [x] `pytest tests/test_gui_architecture.py` passes

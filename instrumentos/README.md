@@ -1,10 +1,12 @@
 # Instrument models and registry
 
+> **Metadata status:** The instrument corpus is **incomplete**. Many names resolve to coarse fallbacks; only a few modules embed sparse GPR tables. External acoustic/proxy metadata are curated gradually via the auxiliary Excel importer — not live analysis. Current tables must not be read as final calibrated models.
+
 This package provides **instrument density** for the vertical density pipeline. Each note in a chord uses **its own** instrument module (Phase 2+), resolved via `instrumentos/registry.py` and loaded through `get_instrument_module()`.
 
 ## Acoustic-source metadata in instrument scripts
 
-Dedicated modules (`flauta.py`, `clarinete.py`, `oboe.py`) embed **sparse amplitude tables obtained from external acoustic sources** (published measurements, literature summaries). Those tables are stored in each script as `spectral_data` / `spectral_data_unicode` and interpolated by Gaussian-process regression (GPR) for intermediate dynamics.
+Dedicated modules (`flauta.py`, `clarinete.py`, `oboe.py`) embed **sparse amplitude tables** from external sources (partial digitization — **work in progress**, not final reference data). Those tables are stored in each script as `spectral_data` / `spectral_data_unicode` and interpolated by Gaussian-process regression (GPR) for intermediate dynamics.
 
 | What | Source |
 |------|--------|
