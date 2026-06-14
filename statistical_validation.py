@@ -543,7 +543,11 @@ def plot_metrics_comparison(metrics_df, title="Comparação de Métricas Musicai
         # Boxplot para múltiplas amostras
         data_to_plot = [metrics_df[col].dropna().values for col in numeric_cols[:10] if col in metrics_df.columns]  # Limitar a 10 métricas
         if data_to_plot and len(data_to_plot) > 0:
-            bp = ax.boxplot(data_to_plot, labels=numeric_cols[:len(data_to_plot)], patch_artist=True)
+            tick_labels = numeric_cols[:len(data_to_plot)]
+            try:
+                bp = ax.boxplot(data_to_plot, tick_labels=tick_labels, patch_artist=True)
+            except TypeError:
+                bp = ax.boxplot(data_to_plot, labels=tick_labels, patch_artist=True)
         
             # Colorir boxes
             for i, patch in enumerate(bp['boxes']):
