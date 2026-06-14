@@ -4,6 +4,15 @@ This document records **external acoustic metadata** embedded in `instrumentos/*
 modules. The analysis pipeline performs **score lookup** into these tables — not
 live audio analysis.
 
+## Scope and curation model
+
+- **Runtime:** score-based symbolic lookup at **sounding pitch** and written dynamic markings.
+- **Metadata source:** external/proxy tables curated gradually by the user. Values may be derived offline from SoundSpectrAnalyse outputs or other sources, but **SoundSpectrAnalyse is not imported or run** by Textural Density.
+- **Incomplete data:** missing instrument profiles or sparse tables are expected during development; coarse fallbacks are valid when labelled honestly.
+- **Labelling rule:** fallback/default/proxy values must **not** be presented as empirical measurement.
+- **Sounding pitch rule:** all acoustic/proxy table entries must be stored in **real sounding / concert pitch**. Example: B-flat clarinet written D4 → store sounding C4 (MIDI 60), not written D4 (MIDI 62). Registry `transposition` is for score parsing only.
+- **Auxiliary Excel importer:** offline validation/export via [`instrument_profile_importer.md`](instrument_profile_importer.md) — not part of the analytical core; does not change formulas; runtime should consume validated JSON artefacts, not raw `.xlsx` files.
+
 ## Flute (`flauta`)
 
 - **Module:** `instrumentos/flauta.py`

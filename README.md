@@ -3,7 +3,7 @@
 **Version:** 1.1.1  
 **Status:** Active Development  
 **License:** [MIT](LICENSE)  
-**Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [QA checklist](docs/qa_checklist.md)
+**Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [QA checklist](docs/qa_checklist.md) · [Instrument profile importer (auxiliary)](docs/instrument_profile_importer.md)
 
 > **Versioning:** Package release **1.1.1** (`pyproject.toml`) is separate from methodology phases **3.0.0** / **4.0.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`). See [docs/VERSIONING.md](docs/VERSIONING.md).
 
@@ -11,7 +11,15 @@
 
 ## Scientific scope
 
-> **Textural Density** is a strictly symbolic score-analysis framework. It computes analytical density indices from notated events at **runtime** without audio input. Interval, register, and event metrics are score-derived. **Instrument density** where GPR modules exist applies **externally sourced acoustic amplitude metadata** (sparse tables in `instrumentos/`, interpolated by GPR) to notated pitch and dynamic markings — this is not live acoustic analysis. The project does **not** generate non-notated virtual pitches and does **not** implement psychoacoustic or perceptual modelling. Written dynamics such as p, mf, and ff are **symbolic score markings**, not measured loudness or SPL.
+> **Textural Density** is a strictly symbolic score-analysis framework. It computes analytical density indices from **notated events** — note names, dynamics, instruments, player counts, vertical simultaneities, intervals, and register — at **runtime** without live audio input. Interval, register, and event metrics are score-derived. **Instrument density** where GPR modules exist applies **externally sourced acoustic amplitude metadata** (sparse tables in `instrumentos/`, interpolated by GPR) to **sounding pitch** and dynamic markings — this is proxy lookup, not live acoustic analysis.
+>
+> **Out of scope at runtime:** live audio analysis; FFT/STFT; extraction of spectral partials; EWSD; H/I/S or other SoundSpectrAnalyse metrics (SoundSpectrAnalyse code is **not** imported or executed). The project does **not** generate non-notated virtual pitches and does **not** implement psychoacoustic or perceptual modelling. Written dynamics such as p, mf, and ff are **symbolic score markings**, not measured loudness or SPL.
+>
+> **Instrument metadata:** external/proxy lookup data, curated gradually by the user. Values may be derived from SoundSpectrAnalyse outputs or other sources offline, but missing or coarse instrument data are not automatically bugs — fallbacks must stay labelled as fallback/default/proxy, never as empirical measurement.
+>
+> **Auxiliary tooling:** Excel workbooks, the Phase 1a importer (`tools/import_instrument_profiles_from_excel.py`), and related scripts are **offline metadata-curation helpers**. They are **not** part of the analytical core. The runtime consumes validated canonical artefacts (e.g. JSON profiles), not raw `.xlsx` files directly. The importer validates and audits metadata; it does **not** change density formulas.
+>
+> **Project independence:** Textural Density is an independent symbolic textural-density analyser. Any broader relation to partitional or set-theoretic approaches is conceptual/background only — not a runtime dependency on Parsemat, Partitions, Partops, or similar tools.
 
 **Removed in 3.0.0-strict-symbolic:** Stevens' Law power-law compression, psychoacoustic corrections, and perceptual interval weighting.
 
@@ -34,7 +42,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Temporal score analysis** — `analyze_score()` for timed XML/MIDI
 - **Instrument registry** — ~28 orchestral profiles; per-event instrument resolution
 - **MusicXML concert pitch** — `<transpose>` (chromatic + octave-change) applied for transposing instruments; `written_pitch` vs `sounding_pitch` on timed events
-- **Verification scaffolding** — 521+ tests; formal score-based validation via property tests and frozen benchmarks (five project-authored MusicXML excerpts)
+- **Verification scaffolding** — 570 tests (pytest); formal score-based validation via property tests and frozen benchmarks (five project-authored MusicXML excerpts)
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -136,6 +144,7 @@ Textural_Density/
 ├── instrumentos/              # Instrument registry + GPR/coarse modules
 ├── gui/                       # Tkinter panels + AnalysisController (no metric math)
 ├── adapters/                  # gui_adapter → AnalysisRequest → core.pipeline
+├── tools/                     # Auxiliary offline scripts (e.g. instrument profile importer — not runtime core)
 ├── score_io/                  # Result export
 ├── xml_loader.py              # Custom XML + MusicXML (transpose → concert pitch)
 ├── Main.py                    # Tkinter application entry
@@ -143,7 +152,7 @@ Textural_Density/
 ├── data_processor_legacy.py   # Legacy I/O and validation text (not the metric pipeline)
 ├── densidade_intervalar.py    # Interval density library
 ├── spectral_analysis.py       # Spectral metadata proxies
-└── tests/                     # 521+ tests, regression baseline, quality gates
+└── tests/                     # 570 tests, regression baseline, quality gates
 ```
 
 **Call path (GUI):** `Main.py` → `AnalysisController` → `adapters/gui_adapter.build_analysis_request` → `core.pipeline.calculate_metrics`.
@@ -178,9 +187,9 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 | **Calibrated proxies** | Interval decay λ (partially calibrated against consonance ratings) |
 | **Formal validation** | Regression/property tests, benchmark replication scaffolding (`verified_by_tests`) |
 | **Optional empirical** | Expert annotations, listening tests — only if pursuing judgment-prediction research |
-| **Not provided** | Measured audio spectra, SPL, timbre measurement, mandatory human-rating validation |
+| **Not provided** | Measured audio spectra, SPL, timbre measurement, mandatory human-rating validation, live FFT/STFT/EWSD, SoundSpectrAnalyse runtime integration |
 
-Symbolic spectral summaries use **notated/input pitches only** — not measured audio spectra or virtual/resultant tones.
+Symbolic spectral summaries use **notated/input pitches only** — not measured audio spectra, virtual/resultant tones, or combination-tone generation (removed in 4.0.0-strict-symbolic).
 
 ---
 
@@ -203,6 +212,14 @@ resultados, densidades, pitches = calculate_metrics(input_data)
 print(f"Total density: {resultados['density']['total']:.4f}")
 print(f"Input pitches only: {len(pitches)} notes")
 ```
+
+---
+
+### Current status (2026-06)
+
+- **Tests:** 570 passing (`pytest tests/`); GitHub Actions and CircleCI green on Python 3.10/3.11.
+- **Instrument metadata:** incomplete by design — profiles are added gradually; coarse fallbacks remain explicit.
+- **Auxiliary Phase 1a importer:** validates Excel curation workbooks and can emit canonical JSON/audit artefacts offline ([docs/instrument_profile_importer.md](docs/instrument_profile_importer.md)). Optional template: `instrumentos/templates/instrument_profiles_template.xlsx` (header-only; real working `.xlsx` files should normally stay outside Git).
 
 ---
 
@@ -282,7 +299,7 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 - MusicXML `<transpose>` support: concert pitch from chromatic + octave-change offsets
 - `InstrumentEvent.written_pitch` populated when written and sounding pitch differ
 - Benchmark corpus expanded to five excerpts (transpose persistence, multi-instrument dynamics)
-- CI workflow fixes (headless tkinter smoke check); 521+ tests; documentation aligned with core-native architecture
+- CI workflow fixes (headless tkinter smoke check); 570 tests; documentation aligned with core-native architecture
 - **LICENSE** (MIT) added; [docs/VERSIONING.md](docs/VERSIONING.md) clarifies package vs methodology versions; `core.version` single source at runtime
 
 ### Version 4.0.0-strict-symbolic (2026-05-21)

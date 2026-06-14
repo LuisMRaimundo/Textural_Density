@@ -27,7 +27,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 | GUI boundary | `Main` → `AnalysisController` → `adapters/gui_adapter` → `AnalysisRequest` (tested) |
 | Qty semantics | Incoherent RSS + linear mass; row-splitting invariance; docs + QA sign-off |
 | Benchmark | Synthetic fixture + **5 project-authored excerpts** (`benchmarks/corpus/`); not yet a large licensed corpus |
-| Test suite | **521+ tests** passing; layered snapshots + benchmark frozen outputs |
+| Test suite | **570 tests** passing; layered snapshots + benchmark frozen outputs |
 | MusicXML transpose | **Implemented** — `<transpose>` → concert pitch; `excerpt_003`–`004` regression |
 | Rubric estimate | **~89/100** (systematic line; CI badge + licensed corpus still main gaps) |
 

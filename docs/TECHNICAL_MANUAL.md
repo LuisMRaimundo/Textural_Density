@@ -4,7 +4,9 @@ This document is a comprehensive, pedagogical technical manual for **Textural De
 
 **Math formatting:** All formulas use **LaTeX** — inline math in `$...$`, display math on **separate lines** as `$$` … `$$` (StackEdit, Stack Exchange MathJax, KaTeX, GitHub, VS Code Markdown Math). Use `\cdot`, `\times`, or `\log_{10}(1+x)`; avoid bare Unicode operators inside expressions.
 
-**Epistemic premise (strictly symbolic):** Score/information input only — no audio waveforms, no measured spectra, no auditory perception model. Textural Density computes analytical density indices from notated/input symbolic events and symbolic metadata only. It does not generate non-notated virtual pitches and does not implement acoustic, psychoacoustic, or perceptual modelling. See [revised_path_to_90_score_only.md](revised_path_to_90_score_only.md).
+**Epistemic premise (strictly symbolic):** Score/information input only — no audio waveforms, no measured spectra, no auditory perception model, no FFT/STFT at runtime, no EWSD, no SoundSpectrAnalyse H/I/S integration. Textural Density computes analytical density indices from notated/input symbolic events and symbolic metadata only. It does not generate non-notated virtual pitches and does not implement acoustic, psychoacoustic, or perceptual modelling. See [revised_path_to_90_score_only.md](revised_path_to_90_score_only.md).
+
+**Auxiliary tooling:** Excel/importer scripts under `tools/` are offline metadata-curation helpers — not part of this analytical core. See [instrument_profile_importer.md](instrument_profile_importer.md).
 
 **Removed in 3.0.0-strict-symbolic:** Stevens' Law (`use_stevens`, `alpha`, `beta`), psychoacoustic corrections (`use_psychoacoustic`), and perceptual interval weighting (`use_perceptual_weighting`).
 
