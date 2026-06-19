@@ -1,0 +1,184 @@
+#!/usr/bin/env python3
+"""Generate violino/viola/violoncelo/contrabaixo GPR modules from AcousticTable workbooks."""
+
+from __future__ import annotations
+
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from openpyxl import load_workbook  # noqa: E402
+from microtonal import note_to_midi  # noqa: E402
+from utils.notes import normalize_note_string  # noqa: E402
+
+CONFIGS = [
+    {
+        "module": "violino",
+        "display": "Violin",
+        "workbook": Path(r"D:\CORDAS\VIOLIN_Zenodo_collections_media.xlsx"),
+        "doc_anchor": "violin-violino",
+        "technique": "arco / ordinario sustains",
+    },
+    {
+        "module": "viola",
+        "display": "Viola",
+        "workbook": Path(r"D:\CORDAS\ViOLA_Zenodo_collections_media.xlsx"),
+        "doc_anchor": "viola",
+        "technique": "arco / ordinario sustains",
+    },
+    {
+        "module": "violoncelo",
+        "display": "Cello",
+        "workbook": Path(r"D:\CORDAS\CELLO_Zenodo_collections_media.xlsx"),
+        "doc_anchor": "cello-violoncelo",
+        "technique": "arco / ordinario sustains",
+    },
+    {
+        "module": "contrabaixo",
+        "display": "Double bass",
+        "workbook": Path(r"D:\CORDAS\DOUBLEBASS_Zenodo_collections_media.xlsx"),
+        "doc_anchor": "double-bass-contrabaixo",
+        "technique": "arco / ordinario sustains",
+    },
+]
+
+GPR_BODY = '''
+def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
+    """Predict intermediate dynamics using Gaussian Process Regression."""
+    dynamic_levels = {
+        "pppp": 1, "ppp": 2, "pp": 3, "p": 4, "mf": 5,
+        "f": 6, "ff": 7, "fff": 8, "ffff": 9,
+    }
+    all_dynamics = list(dynamic_levels.keys())
+    predictions = {dynamic: [] for dynamic in all_dynamics}
+
+    existing_levels = np.array([dynamic_levels[d] for d in ["pp", "mf", "ff"]]).reshape(-1, 1)
+    all_levels = np.array([dynamic_levels[d] for d in all_dynamics]).reshape(-1, 1)
+
+    try:
+        y_train = np.array([pp_values, mf_values, ff_values]).T
+        if y_train.size == 0 or np.isnan(y_train).any():
+            logger.warning("Insufficient or invalid training data for GPR")
+            return {d: np.zeros_like(pp_values) for d in all_dynamics}
+
+        matern_kernel = C(1.0) * Matern(length_scale=1.0, nu=1.5)
+        gpr = GaussianProcessRegressor(kernel=matern_kernel, n_restarts_optimizer=10, alpha=1e-1)
+
+        for i, y in enumerate(y_train):
+            gpr.fit(existing_levels, y)
+            y_pred = gpr.predict(all_levels)
+            for j, dynamic in enumerate(all_dynamics):
+                predictions[dynamic].append(y_pred[j])
+
+        return {k: np.array(v) for k, v in predictions.items()}
+    except Exception as e:
+        logger.error(f"Error predicting intermediate dynamics: {e}")
+        return {d: np.zeros_like(pp_values) for d in all_dynamics}
+'''
+
+
+def load_spectral_data(workbook: Path) -> dict[str, dict[str, float]]:
+    wb = load_workbook(workbook, read_only=True, data_only=True)
+    ws = wb["AcousticTable"]
+    raw: dict[str, dict[str, float]] = defaultdict(dict)
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        if not row[1]:
+            continue
+        note = normalize_note_string(str(row[1]))
+        raw[note][str(row[3])] = round(float(row[4]), 6)
+    wb.close()
+    return dict(raw)
+
+
+def render_module(cfg: dict, spectral: dict[str, dict[str, float]]) -> str:
+    notes = sorted(spectral.keys(), key=lambda n: note_to_midi(n))
+    lo = int(note_to_midi(notes[0]))
+    hi = int(note_to_midi(notes[-1]))
+    table_lines = [
+        f"    '{note}': {{'pp': {spectral[note]['pp']}, 'mf': {spectral[note]['mf']}, 'ff': {spectral[note]['ff']}}},"
+        for note in notes
+    ]
+    table = "\n".join(table_lines)
+    mod = cfg["module"]
+    display = cfg["display"]
+    return f'''# instrumentos/{mod}.py
+"""
+{display} instrument density module.
+
+The ``spectral_data`` table stores sparse Combined Density Metric (CDM) values
+from **external acoustic sources** (IOWA + ORCH arco sustain collections,
+midpoint summary at pp/mf/ff). Intermediate dynamics are interpolated via GPR.
+
+Runtime analysis does not ingest audio; it maps notated pitch + dynamic to these
+pre-loaded acoustic metadata tables.
+"""
+
+from instrumentos.provenance import InstrumentSource
+
+INSTRUMENT_SOURCE = InstrumentSource(
+    source_type="external_acoustic_metadata",
+    citation=(
+        "Sparse {display.lower()} CDM table from IOWA and ORCH arco sustain collections; "
+        "midpoint summary at pp/mf/ff (Zenodo curation workbook)."
+    ),
+    source_url_or_identifier="docs/instrument_acoustic_sources.md#{cfg["doc_anchor"]}",
+    extraction_method=(
+        "Combined Density Metric midpoint of IOWA/ORCH collections; "
+        "GPR interpolation by pitch/dynamic"
+    ),
+    dynamic_levels=("pp", "mf", "ff"),
+    pitch_range=({lo}, {hi}),
+    uncertainty="medium",
+    version="2026-06-19",
+)
+
+import logging
+
+import numpy as np
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import ConstantKernel as C, Matern
+from utils.notes import normalize_note_string
+
+logger = logging.getLogger("{mod}")
+
+# CDM medians: (IOWA + ORCH) / 2 per note at pp, mf, ff ({cfg["technique"]}).
+spectral_data = {{
+{table}
+}}
+
+
+def calcular_densidade(nota, dinamica):
+    """Compute density from spectral CDM table (MIDI-space lookup, octave-safe)."""
+    from instrumentos.spectral_lookup import lookup_spectral_density
+
+    return lookup_spectral_density(
+        spectral_data,
+        nota,
+        dinamica,
+        logger=logger,
+        preprocess=normalize_note_string,
+    )
+
+{GPR_BODY.strip()}
+'''
+
+
+def main() -> int:
+    for cfg in CONFIGS:
+        spectral = load_spectral_data(cfg["workbook"])
+        out = ROOT / "instrumentos" / f"{cfg['module']}.py"
+        out.write_text(render_module(cfg, spectral), encoding="utf-8")
+        notes = sorted(spectral.keys(), key=lambda n: note_to_midi(n))
+        print(
+            f"Wrote {out.name}: {len(notes)} notes, "
+            f"MIDI {int(note_to_midi(notes[0]))}-{int(note_to_midi(notes[-1]))}"
+        )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

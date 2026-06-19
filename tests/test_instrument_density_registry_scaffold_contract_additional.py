@@ -89,7 +89,7 @@ class TestMissingInstrumentDataScaffold:
 
 class TestPartialInstrumentDataScaffold:
     def test_registered_coarse_instrument_resolves_without_acoustic_table(self):
-        mod = get_instrument_module("violin")
+        mod = get_instrument_module("trombone")
         assert getattr(mod, "IS_COARSE_DEFAULT", False) is True
         density = mod.calcular_densidade("A4", "mf")
         assert math.isfinite(density)
@@ -126,12 +126,19 @@ class TestPartialInstrumentDataScaffold:
 class TestSourceProvenanceLabelling:
     def test_coarse_only_slice_labels_metadata_proxy(self):
         vs = legacy_input_to_vertical_slice(
-            _symbolic_input(["G4", "D4"], instruments=["violin", "viola"])
+            _symbolic_input(["G4", "D4"], instruments=["trombone", "fagote"])
         )
         source_type, validation, _, warnings = _instrument_density_epistemics(vs)
         assert source_type == "metadata_proxy"
         assert validation == "heuristic"
         assert warnings
+
+    def test_string_gpr_slice_labels_external_acoustic_metadata(self):
+        vs = legacy_input_to_vertical_slice(_symbolic_input(["G4"], instruments=["violin"]))
+        source_type, validation, assumptions, _ = _instrument_density_epistemics(vs)
+        assert source_type == "external_acoustic_metadata"
+        assert validation in ("partially_calibrated", "heuristic")
+        assert any("does not analyse audio" in a.lower() for a in assumptions)
 
     def test_gpr_table_instrument_slice_labels_external_acoustic_metadata(self):
         vs = legacy_input_to_vertical_slice(_symbolic_input(["G4"], instruments=["flauta"]))

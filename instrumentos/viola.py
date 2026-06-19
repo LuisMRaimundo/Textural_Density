@@ -1,0 +1,137 @@
+# instrumentos/viola.py
+"""
+Viola instrument density module.
+
+The ``spectral_data`` table stores sparse Combined Density Metric (CDM) values
+from **external acoustic sources** (IOWA + ORCH arco sustain collections,
+midpoint summary at pp/mf/ff). Intermediate dynamics are interpolated via GPR.
+
+Runtime analysis does not ingest audio; it maps notated pitch + dynamic to these
+pre-loaded acoustic metadata tables.
+"""
+
+from instrumentos.provenance import InstrumentSource
+
+INSTRUMENT_SOURCE = InstrumentSource(
+    source_type="external_acoustic_metadata",
+    citation=(
+        "Sparse viola CDM table from IOWA and ORCH arco sustain collections; "
+        "midpoint summary at pp/mf/ff (Zenodo curation workbook)."
+    ),
+    source_url_or_identifier="docs/instrument_acoustic_sources.md#viola",
+    extraction_method=(
+        "Combined Density Metric midpoint of IOWA/ORCH collections; "
+        "GPR interpolation by pitch/dynamic"
+    ),
+    dynamic_levels=("pp", "mf", "ff"),
+    pitch_range=(36, 84),
+    uncertainty="medium",
+    version="2026-06-19",
+)
+
+import logging
+
+import numpy as np
+from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import ConstantKernel as C, Matern
+from utils.notes import normalize_note_string
+
+logger = logging.getLogger("viola")
+
+# CDM medians: (IOWA + ORCH) / 2 per note at pp, mf, ff (arco / ordinario sustains).
+spectral_data = {
+    'C2': {'pp': 53.040231, 'mf': 62.806258, 'ff': 64.678251},
+    'C#2': {'pp': 52.628812, 'mf': 55.856171, 'ff': 55.464366},
+    'D2': {'pp': 46.300964, 'mf': 48.825667, 'ff': 53.258255},
+    'D#2': {'pp': 42.732057, 'mf': 51.148026, 'ff': 51.741686},
+    'E2': {'pp': 42.562219, 'mf': 45.746578, 'ff': 45.88106},
+    'F2': {'pp': 32.676859, 'mf': 38.48503, 'ff': 38.922533},
+    'F#2': {'pp': 35.703137, 'mf': 39.983901, 'ff': 38.738388},
+    'G2': {'pp': 44.943879, 'mf': 48.450564, 'ff': 47.572886},
+    'G#2': {'pp': 27.495821, 'mf': 28.535138, 'ff': 30.730608},
+    'A2': {'pp': 25.514571, 'mf': 27.02792, 'ff': 26.606568},
+    'A#2': {'pp': 23.650212, 'mf': 25.057078, 'ff': 28.74837},
+    'B2': {'pp': 23.328144, 'mf': 26.714061, 'ff': 22.52097},
+    'C3': {'pp': 24.864557, 'mf': 28.856327, 'ff': 29.949936},
+    'C#3': {'pp': 26.122141, 'mf': 22.659352, 'ff': 24.721467},
+    'D3': {'pp': 27.954406, 'mf': 27.251578, 'ff': 29.751846},
+    'D#3': {'pp': 24.673988, 'mf': 21.862305, 'ff': 22.033111},
+    'E3': {'pp': 19.845925, 'mf': 19.799905, 'ff': 20.781418},
+    'F3': {'pp': 16.887165, 'mf': 16.820583, 'ff': 16.047916},
+    'F#3': {'pp': 17.86533, 'mf': 18.147522, 'ff': 17.258643},
+    'G3': {'pp': 21.213318, 'mf': 19.424886, 'ff': 19.636917},
+    'G#3': {'pp': 18.794672, 'mf': 17.56433, 'ff': 17.886548},
+    'A3': {'pp': 19.33069, 'mf': 20.810507, 'ff': 21.351478},
+    'A#3': {'pp': 18.703919, 'mf': 15.878015, 'ff': 16.779028},
+    'B3': {'pp': 18.686794, 'mf': 16.923815, 'ff': 15.166433},
+    'C4': {'pp': 14.204787, 'mf': 13.331529, 'ff': 13.625353},
+    'C#4': {'pp': 13.606495, 'mf': 13.241895, 'ff': 11.966232},
+    'D4': {'pp': 14.207472, 'mf': 14.497863, 'ff': 14.57471},
+    'D#4': {'pp': 12.763109, 'mf': 12.111519, 'ff': 13.45466},
+    'E4': {'pp': 10.992217, 'mf': 11.033411, 'ff': 11.443659},
+    'F4': {'pp': 10.526492, 'mf': 9.558647, 'ff': 9.624044},
+    'F#4': {'pp': 7.719122, 'mf': 7.450748, 'ff': 7.729003},
+    'G4': {'pp': 10.177074, 'mf': 10.066228, 'ff': 9.540261},
+    'G#4': {'pp': 8.986104, 'mf': 10.06828, 'ff': 9.397278},
+    'A4': {'pp': 8.259369, 'mf': 7.879721, 'ff': 8.142972},
+    'A#4': {'pp': 8.665828, 'mf': 9.237731, 'ff': 8.732884},
+    'B4': {'pp': 9.078026, 'mf': 8.56009, 'ff': 8.519324},
+    'C5': {'pp': 7.608984, 'mf': 6.873599, 'ff': 7.222314},
+    'C#5': {'pp': 7.50039, 'mf': 7.223555, 'ff': 7.223124},
+    'D5': {'pp': 7.968202, 'mf': 7.028986, 'ff': 8.356678},
+    'D#5': {'pp': 7.282524, 'mf': 6.505312, 'ff': 7.301591},
+    'E5': {'pp': 7.98995, 'mf': 7.657391, 'ff': 9.046506},
+    'F5': {'pp': 5.550638, 'mf': 5.110859, 'ff': 6.19534},
+    'F#5': {'pp': 5.92388, 'mf': 6.352379, 'ff': 6.300378},
+    'G5': {'pp': 4.528296, 'mf': 5.401213, 'ff': 5.763935},
+    'G#5': {'pp': 5.01212, 'mf': 4.929018, 'ff': 5.900219},
+    'A5': {'pp': 5.277487, 'mf': 6.045336, 'ff': 7.41803},
+    'A#5': {'pp': 4.864399, 'mf': 4.026284, 'ff': 5.082864},
+    'B5': {'pp': 3.160347, 'mf': 3.341944, 'ff': 4.401535},
+    'C6': {'pp': 3.393524, 'mf': 3.291051, 'ff': 3.062043},
+}
+
+
+def calcular_densidade(nota, dinamica):
+    """Compute density from spectral CDM table (MIDI-space lookup, octave-safe)."""
+    from instrumentos.spectral_lookup import lookup_spectral_density
+
+    return lookup_spectral_density(
+        spectral_data,
+        nota,
+        dinamica,
+        logger=logger,
+        preprocess=normalize_note_string,
+    )
+
+def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
+    """Predict intermediate dynamics using Gaussian Process Regression."""
+    dynamic_levels = {
+        "pppp": 1, "ppp": 2, "pp": 3, "p": 4, "mf": 5,
+        "f": 6, "ff": 7, "fff": 8, "ffff": 9,
+    }
+    all_dynamics = list(dynamic_levels.keys())
+    predictions = {dynamic: [] for dynamic in all_dynamics}
+
+    existing_levels = np.array([dynamic_levels[d] for d in ["pp", "mf", "ff"]]).reshape(-1, 1)
+    all_levels = np.array([dynamic_levels[d] for d in all_dynamics]).reshape(-1, 1)
+
+    try:
+        y_train = np.array([pp_values, mf_values, ff_values]).T
+        if y_train.size == 0 or np.isnan(y_train).any():
+            logger.warning("Insufficient or invalid training data for GPR")
+            return {d: np.zeros_like(pp_values) for d in all_dynamics}
+
+        matern_kernel = C(1.0) * Matern(length_scale=1.0, nu=1.5)
+        gpr = GaussianProcessRegressor(kernel=matern_kernel, n_restarts_optimizer=10, alpha=1e-1)
+
+        for i, y in enumerate(y_train):
+            gpr.fit(existing_levels, y)
+            y_pred = gpr.predict(all_levels)
+            for j, dynamic in enumerate(all_dynamics):
+                predictions[dynamic].append(y_pred[j])
+
+        return {k: np.array(v) for k, v in predictions.items()}
+    except Exception as e:
+        logger.error(f"Error predicting intermediate dynamics: {e}")
+        return {d: np.zeros_like(pp_values) for d in all_dynamics}

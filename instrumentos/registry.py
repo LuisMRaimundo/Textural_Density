@@ -226,12 +226,12 @@ REGISTRY["contrafagote"] = _profile(
     aliases=("contrabassoon",),
 )
 
-# --- Strings ---
-for _id, _name, _sound, _comfort, _aliases in (
-    ("violino", "Violin", (55, 88), (55, 76), ("violin",)),
-    ("viola", "Viola", (48, 76), (50, 69), ("viola",)),
-    ("violoncelo", "Cello", (36, 72), (40, 65), ("cello", "violoncello")),
-    ("contrabaixo", "Double bass", (28, 60), (31, 55), ("double_bass", "contrabass", "baixo")),
+# --- Strings (GPR modules: IOWA+ORCH CDM medians at pp/mf/ff) ---
+for _id, _name, _module, _sound, _comfort, _aliases in (
+    ("violino", "Violin", "violino", (55, 103), (55, 76), ("violin",)),
+    ("viola", "Viola", "viola", (36, 84), (50, 69), ("viola",)),
+    ("violoncelo", "Cello", "violoncelo", (36, 84), (40, 65), ("cello", "violoncello")),
+    ("contrabaixo", "Double bass", "contrabaixo", (28, 72), (31, 55), ("double_bass", "contrabass", "baixo")),
 ):
     REGISTRY[_id] = _profile(
         _id,
@@ -242,8 +242,18 @@ for _id, _name, _sound, _comfort, _aliases in (
         brightness="neutral",
         sustain="sustained",
         attack="soft",
+        status="literature_derived",
+        uncertainty="medium",
+        module_name=_module,
         supported=("arco", "pizzicato", "tremolo", "harmonic", "mute"),
         unsupported=("sul_ponticello", "sul_tasto"),
+        source_notes=(
+            f"Sparse GPR table in instrumentos/{_module}.py from IOWA+ORCH arco sustain "
+            "Combined Density Metric medians (pp/mf/ff); not a full measured spectrum."
+        ),
+        warnings=(
+            "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        ),
         aliases=_aliases,
     )
 

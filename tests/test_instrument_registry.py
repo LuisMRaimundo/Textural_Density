@@ -55,17 +55,18 @@ class TestInstrumentRegistry:
         assert resolve_profile("glockenspiel").instrument_id == "metalofone"
 
     def test_dedicated_modules_for_literature_profiles(self):
-        for iid in ("flauta", "clarinete", "oboe"):
+        for iid in ("flauta", "clarinete", "oboe", "violino", "viola", "violoncelo", "contrabaixo"):
             profile = REGISTRY[iid]
             assert profile.module_name is not None
             mod = get_instrument_module(iid)
             assert hasattr(mod, "calcular_densidade")
 
-    def test_coarse_default_for_violin(self):
+    def test_gpr_module_for_violin(self):
         mod = get_instrument_module("violin")
-        assert getattr(mod, "IS_COARSE_DEFAULT", False) is True
+        assert getattr(mod, "IS_COARSE_DEFAULT", False) is False
         density = mod.calcular_densidade("G4", "mf")
         assert density > 0.0
+        assert density == pytest.approx(28.582867, rel=1e-4)
 
     def test_profile_fields_present(self):
         profile = get_instrument_profile("trompete")
@@ -79,7 +80,7 @@ class TestInstrumentRegistry:
         data = {
             "notes": ["G4", "D4"],
             "dynamics": ["mf", "f"],
-            "instruments": ["violin", "viola"],
+            "instruments": ["trombone", "fagote"],
             "num_instruments": [1, 1],
         }
         resultados, densidades, _ = calculate_metrics(data)
