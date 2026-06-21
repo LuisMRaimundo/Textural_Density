@@ -65,6 +65,8 @@ validation/                    # Verification framework (Phase 8)
 
 instrumentos/
 ├── registry.py                # InstrumentProfile registry (Phase 7)
+├── pitch_interpolation.py     # Continuous-pitch metadata lookup (chromatic anchors → microtones)
+├── spectral_lookup.py         # Wrapper used by instrument modules (backward-compatible float API)
 ├── coarse_default.py          # Fallback for unknown instruments
 └── *.py                       # Per-instrument GPR modules
 
@@ -105,9 +107,11 @@ score_io/, gui/                # Export and GUI layers (separate from core)
 - Each **instrument module** under `instrumentos/` exposes:
   - `calcular_densidade(nota, dinamica)` → float
   - `predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values)` → dict of arrays
-- Modules embed **sparse acoustic amplitude tables** (`spectral_data`) obtained from **external sources** (literature / measurement summaries), interpolated by Gaussian-process regression (GPR). This is **not** runtime audio analysis.
+- Modules embed **sparse acoustic amplitude tables** (`spectral_data`) obtained from **external sources** (literature / measurement summaries). **Chromatic-only tables are sufficient** — quarter-tones, cents (`C4+50c`), and arrow notation (`C↓4`) are resolved at runtime by `instrumentos/pitch_interpolation.py` via continuous MIDI-space interpolation (local linear; PCHIP when enough in-range anchors). Manually pasted microtonal rows remain optional and take priority over interpolated estimates.
+- **Pitch lookup order:** (1) exact table key, (2) normalized MIDI-equivalent match, (3) continuous interpolation/extrapolation. Never collapses to the same pitch class in a distant octave (e.g. D♯6 ≠ D♯4). Provenance labels (`exact`, `normalized_exact`, `interpolated`, `extrapolated`, `fallback`) distinguish measured entries from modelled microtonal estimates.
+- **Dynamic interpolation** (pp/mf/ff GPR or linear via `predict_intermediate_dynamics`) is separate from pitch interpolation — each dynamic column is interpolated independently over pitch.
 - **`instrumentos/registry.py`** maps names/aliases to profiles with `profile_status` (`literature_derived`, `empirical_source`, `coarse_default`) and `uncertainty`.
-- Instruments **without** GPR tables use coarse register/dynamic models only (`coarse_default`).
+- Instruments **without** GPR tables use coarse register/dynamic models only (`coarse_default`), also via `microtonal.note_to_midi` for microtonal input.
 - **Per-event resolution:** each note uses its own instrument module via `core/orchestration.py`.
 - Unknown instruments fall back to generic coarse profile with warnings in `metric_metadata`.
 

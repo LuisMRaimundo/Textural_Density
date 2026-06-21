@@ -254,6 +254,8 @@ from validation.metrics import spearman_correlation, kendall_tau, root_mean_squa
 ```python
 from instrumentos import get_instrument_module, get_instrument_profile, resolve_profile
 from instrumentos.registry import list_instrument_ids, list_profiles
+from instrumentos.pitch_interpolation import resolve_density_from_table, PitchLookupResult
+from instrumentos.spectral_lookup import lookup_spectral_density, lookup_spectral_density_detailed
 ```
 
 | Function | Description |
@@ -263,13 +265,16 @@ from instrumentos.registry import list_instrument_ids, list_profiles
 | `resolve_profile(name) -> InstrumentProfile \| None` | Lookup by name/alias |
 | `list_instrument_ids()` | All registered instrument IDs (~28) |
 | `list_profiles()` | All `InstrumentProfile` objects |
+| `resolve_density_from_table(table, note, dynamic, ...)` | Continuous-pitch metadata lookup with provenance (`PitchLookupResult`) |
+| `lookup_spectral_density(table, note, dynamic, logger=...)` | Backward-compatible float wrapper for instrument modules |
+| `lookup_spectral_density_detailed(...)` | Same as above, returns full `PitchLookupResult` |
 
 Each instrument module must implement:
 
 - `calcular_densidade(nota: str, dinamica: str) -> float`
 - `predict_intermediate_dynamics(pitches, pp, mf, ff) -> dict`
 
-See [instrumentos/README.md](../instrumentos/README.md).
+**Metadata tables:** chromatic anchors only (`C4`, `C#4`, … × `pp`/`mf`/`ff`) are enough; microtonal values are modelled at runtime (not measured). See [instrumentos/README.md](../instrumentos/README.md).
 
 ---
 

@@ -11,7 +11,7 @@ from __future__ import annotations
 from types import SimpleNamespace
 from typing import TYPE_CHECKING
 
-from utils.notes import note_to_midi
+from microtonal import note_to_midi
 
 if TYPE_CHECKING:
     from instrumentos.registry import InstrumentProfile

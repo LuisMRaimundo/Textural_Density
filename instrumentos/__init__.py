@@ -32,6 +32,8 @@ for filename in os.listdir(_instruments_dir):
         "coarse_default.py",
         "metadata_audit.py",
         "provenance.py",
+        "spectral_lookup.py",
+        "pitch_interpolation.py",
     ):
         module_name = filename[:-3]
         try:

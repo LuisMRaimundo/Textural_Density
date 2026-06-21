@@ -38,7 +38,26 @@ def predict_intermediate_dynamics(
 
 Unknown dynamics are normalised to `mf` or interpolated via `predict_intermediate_dynamics`.
 
-**Pitch lookup:** `instrumentos/spectral_lookup.py` resolves missing table entries in **MIDI space** (linear interpolation/extrapolation). It does **not** collapse to the same pitch class in a distant octave (e.g. D♯6 → D♯4). Deviations beyond 1 semitone outside the table log `WARNING`; beyond 1 octave log `ERROR`.
+**Pitch lookup:** `instrumentos/pitch_interpolation.py` provides unified continuous-pitch resolution; `instrumentos/spectral_lookup.py` wraps it for instrument modules. **Chromatic-only tables are sufficient** — quarter-tones, cents (`C4+50c`), and arrow notation (`C↓4`, `C↑4`) are inferred at runtime by interpolating between chromatic anchors in **MIDI float space**. Manually pasted microtonal table rows remain optional and take priority over interpolated estimates when present.
+
+Lookup order:
+
+1. **Exact** — literal table key match (original / normalized / preprocessed spelling)
+2. **Normalized exact** — enharmonic / equivalent MIDI match (e.g. `C♯4` ≡ `C#4`)
+3. **Continuous interpolation** — local linear between bracketing anchors; PCHIP when ≥4 in-range anchors and `auto` mode; controlled extrapolation slightly outside range
+
+Provenance labels (`exact`, `normalized_exact`, `interpolated`, `extrapolated`, `fallback`) distinguish measured table entries from modelled microtonal estimates. Interpolated values are **not** labelled as directly measured.
+
+Range policy: never collapse to the same pitch class in a distant octave (e.g. D♯6 ≠ D♯4). Deviations >1 semitone outside the table log `WARNING`; >1 octave log `ERROR` and use fallback (default 5.0) instead of silent misleading extrapolation.
+
+Dynamic interpolation (pp/mf/ff GPR or linear) remains separate from pitch interpolation — each dynamic column is interpolated independently over pitch.
+
+```python
+from instrumentos.pitch_interpolation import resolve_density_from_table
+
+result = resolve_density_from_table(spectral_data, "C4+50c", "mf", logger=logger)
+# result.value, result.provenance, result.warnings
+```
 
 Per-event modules return **one-player** density $d^{(1)}$ for `(note, dynamic)`. Quantity scaling is applied at slice level in `core/quantity_scaling.py` and `core/source_aggregation.py`:
 
@@ -118,9 +137,9 @@ Instruments **without** a dedicated acoustic script receive a **coarse register-
 
 ### Option A — Full module with acoustic-source tables (preferred for research)
 
-1. Add `novo_instrumento.py` in this directory implementing the module contract (copy structure from `flauta.py`).
-2. Populate `spectral_data` from **documented external acoustic sources**; cite provenance in the module docstring and `registry.py` `source_notes`.
-3. Register in `registry.py`:
+1. Add `novo_instrumento.py` in this directory implementing the module contract (copy structure from `violino.py` or `flauta.py`).
+2. Populate `spectral_data` with **chromatic anchors only** (e.g. `C4`, `C#4`, … × `pp`/`mf`/`ff`) from **documented external acoustic sources**; cite provenance in the module docstring and `registry.py` `source_notes`. Microtonal rows are optional — runtime interpolation fills quarter-tones and cents.
+3. Use `lookup_spectral_density` from `instrumentos/spectral_lookup.py` inside `calcular_densidade` (see existing modules).
 
 ```python
 REGISTRY["novo_instrumento"] = _profile(
@@ -139,7 +158,7 @@ REGISTRY["novo_instrumento"] = _profile(
 
 4. Add tests under `tests/test_instrument_registry.py` or a dedicated module test.
 
-The package auto-discovers `.py` files on import (excluding `registry.py`, `coarse_default.py`, `__init__.py`).
+The package auto-discovers `.py` files on import (excluding `registry.py`, `coarse_default.py`, `pitch_interpolation.py`, `spectral_lookup.py`, `__init__.py`).
 
 ### Option B — Registry-only (coarse proxy)
 

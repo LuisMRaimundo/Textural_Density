@@ -1,6 +1,6 @@
 # Textural Density - Musical Density Analysis Application
 
-**Version:** 1.1.1  
+**Version:** 1.1.2  
 **Status:** Active Development  
 **License:** [MIT](LICENSE)  
 **Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)
@@ -35,7 +35,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Instrument registry** — orchestral profile scaffolding (~28 entries); **metadata corpus incomplete** — many instruments use coarse fallbacks; GPR tables for a few modules only
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML concert pitch** — `<transpose>` (chromatic + octave-change) applied for transposing instruments; `written_pitch` vs `sounding_pitch` on timed events
-- **Verification scaffolding** — **638 tests** (GitHub Actions + CircleCI green); formal score-based validation including interval-density contracts, instrument-density scaffold tests, scientific/musicological output plausibility tests, and Excel importer tests; frozen benchmarks (five project-authored MusicXML excerpts)
+- **Verification scaffolding** — **657 tests** (GitHub Actions + CircleCI green); formal score-based validation including interval-density contracts, instrument-density scaffold tests, pitch-interpolation tests, scientific/musicological output plausibility tests, and Excel importer tests; frozen benchmarks (five project-authored MusicXML excerpts)
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -231,7 +231,7 @@ pytest tests/test_removed_perceptual_options.py -v
 
 ### Test Coverage
 
-Current status: **638 tests passing**; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green.
+Current status: **657 tests passing**; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green.
 
 Tiered CI policy (see [CONTRIBUTING.md](CONTRIBUTING.md)):
 
@@ -288,6 +288,12 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ## Changelog
 
+### Version 1.1.2 (2026-06-21)
+- Unified continuous-pitch interpolation for instrument metadata (`instrumentos/pitch_interpolation.py`)
+- Chromatic-only acoustic tables are sufficient; quarter-tones and cents resolved at runtime in MIDI space
+- Provenance labels distinguish exact, interpolated, extrapolated, and fallback density values
+- `coarse_default` uses `microtonal.note_to_midi` for microtonal notes; 19 new tests in `tests/test_pitch_interpolation.py`
+
 ### Version 1.1.1 (2026-06-01)
 - MusicXML `<transpose>` support: concert pitch from chromatic + octave-change offsets
 - `InstrumentEvent.written_pitch` populated when written and sounding pitch differ
@@ -321,5 +327,5 @@ For issues and questions, please [create an issue] or [contact maintainers].
 
 ---
 
-**Last Updated:** 2026-06-14
+**Last Updated:** 2026-06-21
 
