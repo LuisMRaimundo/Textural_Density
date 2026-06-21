@@ -13,6 +13,10 @@ __pycache__/
 venv/
 env/
 
+# Local build / tooling cache
+*.egg-info/
+tools/workbook_cache/
+
 # IDE
 .idea/
 .vscode/

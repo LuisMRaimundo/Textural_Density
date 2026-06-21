@@ -1,9 +1,9 @@
-# instrumentos/violino.py
+# instrumentos/violin.py
 """
 Violin instrument density module.
 
 The ``spectral_data`` table stores sparse Combined Density Metric (CDM) values
-from **external acoustic sources** (IOWA + ORCH arco sustain collections,
+from **external acoustic sources** (IOWA + ORCH sustain collections,
 midpoint summary at pp/mf/ff). Intermediate dynamics are interpolated via GPR.
 
 Runtime analysis does not ingest audio; it maps notated pitch + dynamic to these
@@ -15,13 +15,11 @@ from instrumentos.provenance import InstrumentSource
 INSTRUMENT_SOURCE = InstrumentSource(
     source_type="external_acoustic_metadata",
     citation=(
-        "Sparse violin CDM table from IOWA and ORCH arco sustain collections; "
-        "midpoint summary at pp/mf/ff (Zenodo curation workbook)."
+        "Sparse violin CDM table from IOWA and ORCH sustain collections; midpoint summary at pp/mf/ff (Zenodo curation workbook)."
     ),
-    source_url_or_identifier="docs/instrument_acoustic_sources.md#violin-violino",
+    source_url_or_identifier='docs/instrument_acoustic_sources.md#violin',
     extraction_method=(
-        "Combined Density Metric midpoint of IOWA/ORCH collections; "
-        "GPR interpolation by pitch/dynamic"
+        "Combined Density Metric midpoint of IOWA/ORCH collections; GPR interpolation by pitch/dynamic"
     ),
     dynamic_levels=("pp", "mf", "ff"),
     pitch_range=(55, 103),
@@ -36,7 +34,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import ConstantKernel as C, Matern
 from utils.notes import normalize_note_string
 
-logger = logging.getLogger("violino")
+logger = logging.getLogger("violin")
 
 # CDM medians: (IOWA + ORCH) / 2 per note at pp, mf, ff (arco / ordinario sustains).
 spectral_data = {

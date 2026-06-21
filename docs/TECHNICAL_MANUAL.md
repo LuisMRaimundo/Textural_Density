@@ -345,7 +345,7 @@ Consider a single chord (vertical slice) with three notes:
 input_data = {
     "notes": ["C4", "E4", "G4"],
     "dynamics": ["mf", "f", "mf"],
-    "instruments": ["flauta", "flauta", "clarinete"],
+    "instruments": ["flute", "flute", "clarinet"],
     "num_instruments": [1, 1, 1],
     "weight_factor": 0.5,
 }
@@ -523,7 +523,7 @@ result = analyze_score({"notes": ["C4", "E4", "G4"], ...})
 
 # Explicit event list
 from core.converters import make_instrument_event
-events = [make_instrument_event(0, "C4", "mf", "flauta", 1, onset=0.0, duration=2.0), ...]
+events = [make_instrument_event(0, "C4", "mf", "flute", 1, onset=0.0, duration=2.0), ...]
 result = analyze_score(events, config={"temporal_mode": "event_boundary"})
 ```
 

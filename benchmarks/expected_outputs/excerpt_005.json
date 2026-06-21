@@ -4,8 +4,8 @@
     "inputs": {
       "distinct_pitch_count": 7,
       "event_count": 7,
-      "harmonic_ratio": 0.46530159572996765,
-      "instrument_density": 89.15359872721642,
+      "harmonic_ratio": 0.4198202987549615,
+      "instrument_density": 93.14596480936076,
       "interval_compactness_distinct": 0.19291068220480828,
       "pitch_aggregation": {
         "distinct_pitch_count": 7,
@@ -31,7 +31,7 @@
             ],
             "representative_note": "C4",
             "total_player_count": 1,
-            "total_weight": 8.046696476753247
+            "total_weight": 20.0945631779291
           },
           {
             "dynamics": [
@@ -47,7 +47,7 @@
             ],
             "representative_note": "E4",
             "total_player_count": 1,
-            "total_weight": 5.919248369602771
+            "total_weight": 14.586956743537273
           },
           {
             "dynamics": [
@@ -63,7 +63,7 @@
             ],
             "representative_note": "G4",
             "total_player_count": 1,
-            "total_weight": 12.49815
+            "total_weight": 16.51671315
           },
           {
             "dynamics": [
@@ -79,7 +79,7 @@
             ],
             "representative_note": "B4",
             "total_player_count": 1,
-            "total_weight": 9.16965
+            "total_weight": 13.360653600000001
           },
           {
             "dynamics": [
@@ -154,7 +154,7 @@
             "dynamic": "p",
             "instrument": "flauta",
             "midi": 60.0,
-            "one_player_density": 8.046696476753247,
+            "one_player_density": 20.0945631779291,
             "player_count": 1.0
           },
           {
@@ -168,21 +168,21 @@
             "dynamic": "p",
             "instrument": "flauta",
             "midi": 64.0,
-            "one_player_density": 5.919248369602771,
+            "one_player_density": 14.586956743537273,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "oboe",
             "midi": 67.0,
-            "one_player_density": 12.49815,
+            "one_player_density": 16.51671315,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "oboe",
             "midi": 71.0,
-            "one_player_density": 9.16965,
+            "one_player_density": 13.360653600000001,
             "player_count": 1.0
           }
         ],
@@ -190,7 +190,7 @@
         "unison_doublings_excluded_from_interval_structure": true
       },
       "registral_span": 16.0,
-      "sonic_mass": 178.64043184635602
+      "sonic_mass": 207.5655736714664
     },
     "overlap_warnings": [],
     "steps": {
@@ -199,7 +199,7 @@
           "symbolic_entropy",
           "pitch_bins"
         ],
-        "value": 2.1985109029263916
+        "value": 2.2665214936904166
       },
       "interval_compactness_distinct": {
         "depends_on": [
@@ -217,7 +217,7 @@
           "harmonicity_proxy",
           "pitch_differentiation_ratio"
         ],
-        "value": 0.16907783304108345
+        "value": 0.1755866195510534
       },
       "sonic_mass": {
         "depends_on": [
@@ -225,29 +225,29 @@
           "player_count",
           "instrument_density"
         ],
-        "value": 178.64043184635602
+        "value": 207.5655736714664
       },
       "total_density": {
         "depends_on": [
           "pitch_structure_density",
           "sonic_mass"
         ],
-        "value": 0.04649192713310945
+        "value": 0.0517254197680377
       },
       "weighted_density": {
         "depends_on": [
           "instrument_density",
           "interval_compactness_distinct"
         ],
-        "value": 4.554135277463225
+        "value": 4.753753581570442
       }
     }
   },
   "metadata": {
     "density.instrument.assumptions": [
-      "Instrument 'Flauta' uses externally sourced acoustic metadata via instrumentos/flauta.py (GPR interpolation).",
+      "Instrument 'Flauta' uses externally sourced acoustic metadata via instrumentos/flute.py (GPR interpolation).",
       "Instrument 'Oboe' uses externally sourced acoustic metadata via instrumentos/oboe.py (GPR interpolation).",
-      "Instrument 'Violino' uses externally sourced acoustic metadata via instrumentos/violino.py (GPR interpolation).",
+      "Instrument 'Violino' uses externally sourced acoustic metadata via instrumentos/violin.py (GPR interpolation).",
       "Instrument density applies pre-loaded external acoustic metadata to notated pitch and dynamic markings; the pipeline does not analyse audio waveforms.",
       "Quantity scaling model: incoherent source addition (not phase-locked N\u00b2).",
       "Qty affects pressure-equivalent density, not pitch-structure metrics."
@@ -270,15 +270,15 @@
   },
   "numeric": {
     "density": {
-      "absolute": 9.470058082386656,
-      "instrument": 89.15359872721642,
+      "absolute": 9.88515267642688,
+      "instrument": 93.14596480936076,
       "interval": 0.19291068220480828,
-      "pitch_structure": 0.16907783304108345,
-      "refined": 0.16907783304108345,
-      "sonic_mass": 178.64043184635602,
-      "total": 0.04649192713310945,
-      "weighted": 4.554135277463225,
-      "weighted_orchestral": 4.457679936360821,
+      "pitch_structure": 0.1755866195510534,
+      "refined": 0.1755866195510534,
+      "sonic_mass": 207.5655736714664,
+      "total": 0.0517254197680377,
+      "weighted": 4.753753581570442,
+      "weighted_orchestral": 4.657298240468038,
       "weighted_pitch": 0.09645534110240414
     },
     "density_subindices": {
@@ -293,10 +293,10 @@
         }
       },
       "harmonicity_proxy": {
-        "normalized": 0.46530159572996765,
+        "normalized": 0.4198202987549615,
         "raw": {
-          "chroma_concentration": 0.46530159572996765,
-          "harmonic_ratio": 0.46530159572996765
+          "chroma_concentration": 0.4198202987549616,
+          "harmonic_ratio": 0.4198202987549615
         }
       },
       "interval_compactness": {
@@ -304,8 +304,8 @@
         "raw": 11.743867703289965
       },
       "orchestral_mass": {
-        "normalized": 13.365643712382731,
-        "raw": 178.64043184635602
+        "normalized": 14.407136206459159,
+        "raw": 207.5655736714664
       },
       "registral": {
         "normalized": 0.0,
@@ -325,7 +325,7 @@
       "timbral_heterogeneity": {
         "normalized": -0.0,
         "raw": {
-          "blend_index": 0.0029644357638056278,
+          "blend_index": 0.004486914846176947,
           "family_diversity": 0.2857142857142857,
           "instrument_diversity": 0.42857142857142855,
           "orchestration_evenness": 1.0

@@ -80,7 +80,7 @@ from core import calculate_metrics
 input_data = {
     "notes": ["C4", "E4", "G4"],
     "dynamics": ["mf", "f", "mf"],
-    "instruments": ["flauta", "clarinete", "flauta"],
+    "instruments": ["flute", "clarinet", "flute"],
     "num_instruments": [1, 2, 1],
     "weight_factor": 0.5,
 }

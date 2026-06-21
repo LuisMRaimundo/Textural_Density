@@ -10,10 +10,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+TESTS = ROOT / "tests"
+if str(TESTS) not in sys.path:
+    sys.path.insert(0, str(TESTS))
 
 from core.defaults import apply_research_defaults
 from core.pipeline import calculate_metrics
-from tests.snapshot_utils import extract_metadata_snapshot, extract_numeric_snapshot
+from snapshot_utils import extract_metadata_snapshot, extract_numeric_snapshot
 from xml_loader import parse_xml
 
 BENCHMARKS = Path(__file__).resolve().parents[1]

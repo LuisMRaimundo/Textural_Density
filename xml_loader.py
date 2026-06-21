@@ -257,7 +257,7 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
     if parts:
         for part in parts:
             part_id = part.get("id") or ""
-            part_name = part_names.get(part_id, "Flauta")
+            part_name = part_names.get(part_id, "Flute")
             part_state = {"dynamic": "mf", "transpose": 0}
             for measure in part.findall("measure"):
                 collect_notes_from_measure(measure, part_id, part_name, part_state)
@@ -265,7 +265,7 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
         for measure in root.findall("measure"):
             for part in measure.findall("part"):
                 part_id = part.get("id") or ""
-                part_name = part_names.get(part_id, "Flauta")
+                part_name = part_names.get(part_id, "Flute")
                 part_state = {"dynamic": "mf", "transpose": 0}
                 collect_notes_from_measure(part, part_id, part_name, part_state)
 
@@ -324,7 +324,7 @@ def parse_xml(filepath: str) -> dict:
             <voice>
               <note>C4</note>
               <dynamics>mf</dynamics>
-              <instrument>Flauta</instrument>
+              <instrument>Flute</instrument>
               <num_instruments>1</num_instruments>
             </voice>
             ...
@@ -384,7 +384,7 @@ def parse_xml(filepath: str) -> dict:
 
             n = _text(note_el, "C4")
             d = _text(dyn_el, "mf")
-            i = _text(inst_el, "Flauta")
+            i = _text(inst_el, "Flute")
             num = _text(num_el, "1")
             try:
                 num = max(1, min(20, int(num)))
@@ -584,7 +584,7 @@ def parse_xml_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str,
 
             n = _text(note_el, "C4")
             d = _text(dyn_el, "mf")
-            i = _text(inst_el, "Flauta")
+            i = _text(inst_el, "Flute")
             num = _text(num_el, "1")
             try:
                 num_i = max(1, min(20, int(num)))

@@ -2,7 +2,7 @@
 """
 Orchestral instrument modules and registry.
 
-Dedicated scripts (``flauta``, ``clarinete``, ``oboe``) embed sparse amplitude
+Dedicated scripts (``flute``, ``clarinet``, ``oboe``) embed sparse amplitude
 tables from **external acoustic sources**, loaded at import time and queried
 during score analysis — the pipeline does not analyse audio waveforms.
 """

@@ -91,16 +91,33 @@ TD_SHEETS = ("WorkbookMeta", "Registry", "AcousticTable", "Provenance", "Aliases
 
 INSTRUMENT_CONFIGS: list[dict[str, Any]] = [
     {
+        "workbook": Path(r"D:\MADEIRAS\Flute_Zenodo_collections_media.xlsx"),
+        "media_sheet": "Flute_Media",
+        "instrument_id": "flute",
+        "display_name": "Flute",
+        "family": "woodwinds",
+        "subfamily": "flute",
+        "sounding": (60, 96),
+        "comfortable": (62, 88),
+        "registry_aliases": ("flute",),
+        "extra_aliases": ("flauta", "flute_traverso"),
+        "zenodo_key": "flute",
+        "zenodo_filename": "flute_sustains_median_summary_v1.xlsx",
+        "source_workbook": "Flute.xlsx",
+        "readme_title": "Flute median summary for Zenodo",
+        "citation_technique": "sustained-note",
+    },
+    {
         "workbook": Path(r"D:\CORDAS\VIOLIN_Zenodo_collections_media.xlsx"),
         "media_sheet": "Violin_Media",
-        "instrument_id": "violino",
+        "instrument_id": "violin",
         "display_name": "Violin",
         "family": "strings",
         "subfamily": "bowed_strings",
         "sounding": (55, 88),
         "comfortable": (55, 76),
         "registry_aliases": ("violin",),
-        "extra_aliases": (),
+        "extra_aliases": ("violino",),
         "zenodo_key": "violin",
         "zenodo_filename": "violin_arco_sustains_median_summary_v1.xlsx",
         "source_workbook": "VIOLIN.xlsx",
@@ -116,7 +133,7 @@ INSTRUMENT_CONFIGS: list[dict[str, Any]] = [
         "sounding": (48, 76),
         "comfortable": (50, 69),
         "registry_aliases": ("viola",),
-        "extra_aliases": (),
+        "extra_aliases": ("viola",),
         "zenodo_key": "viola",
         "zenodo_filename": "viola_arco_sustains_median_summary_v1.xlsx",
         "source_workbook": "Viola.xlsx",
@@ -125,14 +142,14 @@ INSTRUMENT_CONFIGS: list[dict[str, Any]] = [
     {
         "workbook": Path(r"D:\CORDAS\CELLO_Zenodo_collections_media.xlsx"),
         "media_sheet": "Cello_Media",
-        "instrument_id": "violoncelo",
+        "instrument_id": "cello",
         "display_name": "Cello",
         "family": "strings",
         "subfamily": "bowed_strings",
         "sounding": (36, 72),
         "comfortable": (40, 65),
         "registry_aliases": ("cello", "violoncello"),
-        "extra_aliases": (),
+        "extra_aliases": ("violoncelo", "violoncello"),
         "zenodo_key": "cello",
         "zenodo_filename": "cello_arco_sustains_median_summary_v1.xlsx",
         "source_workbook": "Cello.xlsx",
@@ -141,14 +158,14 @@ INSTRUMENT_CONFIGS: list[dict[str, Any]] = [
     {
         "workbook": Path(r"D:\CORDAS\DOUBLEBASS_Zenodo_collections_media.xlsx"),
         "media_sheet": "DBass_Media",
-        "instrument_id": "contrabaixo",
+        "instrument_id": "double_bass",
         "display_name": "Double bass",
         "family": "strings",
         "subfamily": "bowed_strings",
         "sounding": (28, 60),
         "comfortable": (31, 55),
         "registry_aliases": ("double_bass", "contrabass", "baixo"),
-        "extra_aliases": (),
+        "extra_aliases": ("contrabaixo", "contrabass", "baixo"),
         "zenodo_key": "double_bass",
         "zenodo_filename": "double_bass_arco_sustains_median_summary_v1.xlsx",
         "source_workbook": "DoubleBass.xlsx",
@@ -182,8 +199,9 @@ def _source_notes(cfg: dict[str, Any]) -> str:
 
 
 def _citation(cfg: dict[str, Any]) -> str:
+    technique = cfg.get("citation_technique", "arco sustained-note")
     return (
-        f"Median/midpoint summary of {cfg['display_name'].lower()} arco sustained-note "
+        f"Median/midpoint summary of {cfg['display_name'].lower()} {technique} "
         "Combined Density Metrics across IOWA and ORCH sound collections (pp, mf, ff)."
     )
 

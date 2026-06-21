@@ -60,6 +60,15 @@ class TestInstrumentRegistry:
             assert profile.module_name is not None
             mod = get_instrument_module(iid)
             assert hasattr(mod, "calcular_densidade")
+            assert profile.module_name in (
+                "flute",
+                "clarinet",
+                "oboe",
+                "violin",
+                "viola",
+                "cello",
+                "double_bass",
+            )
 
     def test_gpr_module_for_violin(self):
         mod = get_instrument_module("violin")

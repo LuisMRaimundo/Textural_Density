@@ -106,7 +106,7 @@ class TestPerEventInstrumentDensity:
     def test_orchestration_helper_per_event(self):
         data = {
             "notes": ["C4", "E4"],
-            "dynamics": ["mf", "f"],
+            "dynamics": ["pp", "ff"],
             "instruments": ["flauta", "clarinete"],
             "num_instruments": [1, 2],
         }

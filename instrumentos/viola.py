@@ -3,7 +3,7 @@
 Viola instrument density module.
 
 The ``spectral_data`` table stores sparse Combined Density Metric (CDM) values
-from **external acoustic sources** (IOWA + ORCH arco sustain collections,
+from **external acoustic sources** (IOWA + ORCH sustain collections,
 midpoint summary at pp/mf/ff). Intermediate dynamics are interpolated via GPR.
 
 Runtime analysis does not ingest audio; it maps notated pitch + dynamic to these

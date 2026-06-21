@@ -246,6 +246,6 @@ class TestNoInstrumentInterpolationRegression:
     def test_existing_string_instrument_microtonal_finite(self):
         from instrumentos import get_instrument_module
 
-        mod = get_instrument_module("violino")
+        mod = get_instrument_module("violin")
         assert math.isfinite(mod.calcular_densidade("G4+50c", "mf"))
         assert math.isfinite(mod.calcular_densidade("A↓4", "mf"))

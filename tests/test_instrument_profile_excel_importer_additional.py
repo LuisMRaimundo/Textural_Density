@@ -328,13 +328,13 @@ class TestDryRunAndWrite:
 
 class TestProductionSafety:
     def test_no_production_module_mutation(self, tmp_path):
-        flauta = ROOT / "instrumentos" / "flauta.py"
-        before = hashlib.sha256(flauta.read_bytes()).hexdigest()
+        flute = ROOT / "instrumentos" / "flute.py"
+        before = hashlib.sha256(flute.read_bytes()).hexdigest()
         wb_path = tmp_path / "minimal.xlsx"
         out_dir = tmp_path / "out"
         _write_workbook(wb_path, _minimal_sheets())
         run_import(wb_path, out_dir, dry_run=False)
-        after = hashlib.sha256(flauta.read_bytes()).hexdigest()
+        after = hashlib.sha256(flute.read_bytes()).hexdigest()
         assert before == after
 
     def test_importer_does_not_import_forbidden_modules(self):

@@ -199,7 +199,7 @@
   },
   "metadata": {
     "density.instrument.assumptions": [
-      "Instrument 'Clarinete' uses externally sourced acoustic metadata via instrumentos/clarinete.py (GPR interpolation).",
+      "Instrument 'Clarinete' uses externally sourced acoustic metadata via instrumentos/clarinet.py (GPR interpolation).",
       "Instrument density applies pre-loaded external acoustic metadata to notated pitch and dynamic markings; the pipeline does not analyse audio waveforms.",
       "Quantity scaling model: incoherent source addition (not phase-locked N\u00b2).",
       "Qty affects pressure-equivalent density, not pitch-structure metrics."

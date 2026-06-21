@@ -1,4 +1,4 @@
-# instrumentos/clarinete.py
+# instrumentos/clarinet.py
 """
 Clarinet instrument density module.
 
@@ -16,9 +16,9 @@ INSTRUMENT_SOURCE = InstrumentSource(
     source_type="external_acoustic_metadata",
     citation=(
         "Sparse clarinet amplitude table from external acoustic sources; "
-        "see docs/instrument_acoustic_sources.md#clarinet-clarinete"
+        "see docs/instrument_acoustic_sources.md#clarinet"
     ),
-    source_url_or_identifier="docs/instrument_acoustic_sources.md#clarinet-clarinete",
+    source_url_or_identifier="docs/instrument_acoustic_sources.md#clarinet",
     extraction_method="digitized acoustic amplitude table; GPR interpolation by pitch/dynamic",
     dynamic_levels=("pp", "mf", "ff"),
     pitch_range=(50, 88),
@@ -40,7 +40,7 @@ from utils.notes import (
     normalize_note_string,
 )
 
-logger = logging.getLogger('clarinete')
+logger = logging.getLogger('clarinet')
 
 # Spectral data per note and dynamic for clarinet.
 # Values from external acoustic sources (measurement / literature summaries).

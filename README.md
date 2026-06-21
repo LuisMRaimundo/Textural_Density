@@ -32,10 +32,10 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Epistemic metadata** — every metric labelled (`source_type`, `validation_status`, warnings)
 - **Interpretable subindices** — registral, orchestration, harmonicity proxies, etc.
 - **Temporal score analysis** — `analyze_score()` for timed XML/MIDI
-- **Instrument registry** — orchestral profile scaffolding (~28 entries); **metadata corpus incomplete** — many instruments use coarse fallbacks; GPR tables for a few modules only
+- **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; GPR CDM modules for flute and strings; sparse clarinet/oboe proxies; metadata corpus still incomplete for many names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML concert pitch** — `<transpose>` (chromatic + octave-change) applied for transposing instruments; `written_pitch` vs `sounding_pitch` on timed events
-- **Verification scaffolding** — **753 tests** (GitHub Actions + CircleCI green); strict pitch parsing, canonical core conversion path, pitch-interpolation, interval-density contracts, instrument scaffold tests, and frozen benchmarks (five project-authored MusicXML excerpts)
+- **Verification scaffolding** — **760 tests** (GitHub Actions + CircleCI green); strict pitch parsing, canonical core conversion path, pitch-interpolation, interval-density contracts, instrument scaffold tests, and frozen benchmarks (five project-authored MusicXML excerpts)
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -145,7 +145,7 @@ Textural_Density/
 ├── data_processor_legacy.py   # Legacy I/O and validation text (not the metric pipeline)
 ├── densidade_intervalar.py    # Interval density library
 ├── spectral_analysis.py       # Spectral metadata proxies
-└── tests/                     # 753 tests, regression baseline, quality gates
+└── tests/                     # 760 tests, regression baseline, quality gates
 ```
 
 **Call path (GUI):** `Main.py` → `AnalysisController` → `adapters/gui_adapter.build_analysis_request` → `core.pipeline.calculate_metrics`.
@@ -182,7 +182,9 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 | **Optional empirical** | Expert annotations, listening tests — only if pursuing judgment-prediction research |
 | **Not provided** | Measured audio spectra, SPL, timbre measurement, live waveform/FFT/STFT analysis, SoundSpectrAnalyse-style signal processing, mandatory human-rating validation, final cross-instrument acoustic calibration |
 
-**Instrument metadata status:** External acoustic/proxy tables are **incomplete** and curated gradually. Missing or coarse instrument data are **expected** at this stage — not runtime bugs when fallback labels and provenance remain honest. Do not treat current GPR modules (e.g. flauta, clarinete, oboe) as final scientific reference corpora.
+**Instrument metadata status:** External acoustic/proxy tables are **incomplete** and curated gradually. Missing or coarse instrument data are **expected** at this stage — not runtime bugs when fallback labels and provenance remain honest. Do not treat current GPR modules (e.g. flute, clarinet, oboe, violin) as final scientific reference corpora.
+
+**English module filenames:** Dedicated scripts use English names (`flute.py`, `violin.py`, …). Registry aliases accept both English (`flute`, `violin`) and legacy Portuguese (`flauta`, `violino`) strings in programmatic input.
 
 **Sounding-pitch rule:** All instrument metadata imported from Excel (or derived tables) must be in **real sounding / concert pitch**. Example: a B♭ clarinet written D4 sounds C4 — the metadata table stores **C4 / MIDI 60**, not written D4 / MIDI 62. Transposition applies during **score parsing** only; the Excel importer does **not** transpose acoustic rows.
 
@@ -202,7 +204,7 @@ from core import calculate_metrics
 input_data = {
     'notes': ['C4', 'E4', 'G4'],
     'dynamics': ['mf', 'f', 'mf'],
-    'instruments': ['flauta', 'clarinete', 'flauta'],
+    'instruments': ['flute', 'clarinet', 'flute'],
     'num_instruments': [1, 2, 1],
     'weight_factor': 0.5,
 }
@@ -231,7 +233,7 @@ pytest tests/test_removed_perceptual_options.py -v
 
 ### Test Coverage
 
-Current status: **753 tests** in suite; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green.
+Current status: **760 tests** in suite; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green.
 
 **Known local-only failure (outside strict-pitch scope):**
 

@@ -3,7 +3,7 @@
 Oboe instrument density module.
 
 Delegates to the flute module, which uses **externally sourced acoustic
-metadata** (``flauta.spectral_data``), scaled by ``OBOE_SCALE``. Oboe-specific
+metadata** (``flute.spectral_data``), scaled by ``OBOE_SCALE``. Oboe-specific
 measured tables are not yet committed; provenance is documented in
 ``instrumentos/registry.py`` (``profile_status=literature_derived``).
 """
@@ -26,7 +26,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
     version="2026-05-21",
 )
 
-from . import flauta
+from . import flute
 
 logger = logging.getLogger("oboe")
 
@@ -36,11 +36,11 @@ OBOE_SCALE = 1.05
 
 def calcular_densidade(nota: str, dinamica: str) -> float:
     """Density for oboe; delegates to flute model with scaling."""
-    d = flauta.calcular_densidade(nota, dinamica)
+    d = flute.calcular_densidade(nota, dinamica)
     return float(d) * OBOE_SCALE
 
 
 def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
     """Intermediate dynamics; delegates to flute and scales results."""
-    out = flauta.predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values)
+    out = flute.predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values)
     return {k: v * OBOE_SCALE for k, v in out.items()}

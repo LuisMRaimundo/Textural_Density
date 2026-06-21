@@ -126,10 +126,13 @@ REGISTRY["flauta"] = _profile(
     brightness="bright",
     status="literature_derived",
     uncertainty="medium",
-    module_name="flauta",
+    module_name="flute",
     supported=("legato", "staccato", "flutter_tongue"),
     unsupported=("multiphonic",),
-    source_notes="Sparse GPR table in instrumentos/flauta.py from externally sourced acoustic amplitude metadata; not a full measured spectrum.",
+    source_notes=(
+        "Sparse GPR table in instrumentos/flute.py from IOWA+ORCH sustain CDM medians "
+        "(pp/mf/ff); not a full measured spectrum."
+    ),
     warnings=(
         "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
     ),
@@ -166,14 +169,14 @@ REGISTRY["oboe"] = _profile(
 
 REGISTRY["cor_anglais"] = _profile(
     "cor_anglais",
-    "Cor anglais",
+    "English horn",
     "woodwinds",
     sounding=(52, 76),
     comfortable=(55, 72),
     brightness="dark",
     transposition=7,
     supported=("legato", "staccato"),
-    aliases=("corne_ingles", "english_horn", "cor anglais"),
+    aliases=("corne_ingles", "english_horn", "cor anglais", "cor_anglais"),
 )
 
 REGISTRY["clarinete"] = _profile(
@@ -185,9 +188,9 @@ REGISTRY["clarinete"] = _profile(
     brightness="neutral",
     status="literature_derived",
     uncertainty="medium",
-    module_name="clarinete",
+    module_name="clarinet",
     supported=("legato", "staccato", "flutter_tongue"),
-    source_notes="Sparse GPR table in instrumentos/clarinete.py from externally sourced acoustic amplitude metadata.",
+    source_notes="Sparse GPR table in instrumentos/clarinet.py from externally sourced acoustic amplitude metadata.",
     warnings=("Clarinet density uses externally sourced sparse acoustic tables; not full measured spectra.",),
     aliases=("clarinet", "clarinete"),
 )
@@ -228,10 +231,10 @@ REGISTRY["contrafagote"] = _profile(
 
 # --- Strings (GPR modules: IOWA+ORCH CDM medians at pp/mf/ff) ---
 for _id, _name, _module, _sound, _comfort, _aliases in (
-    ("violino", "Violin", "violino", (55, 103), (55, 76), ("violin",)),
+    ("violino", "Violin", "violin", (55, 103), (55, 76), ("violin",)),
     ("viola", "Viola", "viola", (48, 76), (50, 69), ("viola",)),
-    ("violoncelo", "Cello", "violoncelo", (36, 84), (40, 65), ("cello", "violoncello")),
-    ("contrabaixo", "Double bass", "contrabaixo", (28, 72), (31, 55), ("double_bass", "contrabass", "baixo")),
+    ("violoncelo", "Cello", "cello", (36, 84), (40, 65), ("cello", "violoncello")),
+    ("contrabaixo", "Double bass", "double_bass", (28, 72), (31, 55), ("double_bass", "contrabass", "baixo")),
 ):
     REGISTRY[_id] = _profile(
         _id,
@@ -392,6 +395,7 @@ def _normalize_key(name: str) -> str:
 _ALIAS_TO_ID: dict[str, str] = {}
 for profile in REGISTRY.values():
     _ALIAS_TO_ID[profile.instrument_id] = profile.instrument_id
+    _ALIAS_TO_ID[_normalize_key(profile.display_name)] = profile.instrument_id
     for alias in profile.aliases:
         key = _normalize_key(alias)
         _ALIAS_TO_ID[key] = profile.instrument_id

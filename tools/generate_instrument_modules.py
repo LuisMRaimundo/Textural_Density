@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""Generate violino/viola/violoncelo/contrabaixo GPR modules from AcousticTable workbooks.
-
-Deprecated: use ``tools/generate_instrument_modules.py`` (English module names + flute).
-"""
+"""Generate GPR instrument modules from Zenodo AcousticTable workbooks."""
 
 from __future__ import annotations
 
@@ -20,31 +17,38 @@ from utils.notes import normalize_note_string  # noqa: E402
 
 CONFIGS = [
     {
-        "module": "violino",
+        "module": "flute",
+        "display": "Flute",
+        "workbook": Path(r"D:\MADEIRAS\Flute_Zenodo_collections_media.xlsx"),
+        "registry_id": "flute",
+        "technique": "sustains (ordinario)",
+    },
+    {
+        "module": "violin",
         "display": "Violin",
         "workbook": Path(r"D:\CORDAS\VIOLIN_Zenodo_collections_media.xlsx"),
-        "doc_anchor": "violin-violino",
+        "registry_id": "violin",
         "technique": "arco / ordinario sustains",
     },
     {
         "module": "viola",
         "display": "Viola",
         "workbook": Path(r"D:\CORDAS\ViOLA_Zenodo_collections_media.xlsx"),
-        "doc_anchor": "viola",
+        "registry_id": "viola",
         "technique": "arco / ordinario sustains",
     },
     {
-        "module": "violoncelo",
+        "module": "cello",
         "display": "Cello",
         "workbook": Path(r"D:\CORDAS\CELLO_Zenodo_collections_media.xlsx"),
-        "doc_anchor": "cello-violoncelo",
+        "registry_id": "cello",
         "technique": "arco / ordinario sustains",
     },
     {
-        "module": "contrabaixo",
+        "module": "double_bass",
         "display": "Double bass",
         "workbook": Path(r"D:\CORDAS\DOUBLEBASS_Zenodo_collections_media.xlsx"),
-        "doc_anchor": "double-bass-contrabaixo",
+        "registry_id": "double_bass",
         "technique": "arco / ordinario sustains",
     },
 ]
@@ -89,20 +93,22 @@ def load_workbook_metadata(workbook: Path, instrument_id: str) -> dict[str, obje
     wb = load_workbook(workbook, read_only=True, data_only=True)
     meta: dict[str, object] = {}
     try:
-        prov = wb["Provenance"]
-        prov_header = [c for c in next(prov.iter_rows(min_row=1, max_row=1, values_only=True))]
-        for row in prov.iter_rows(min_row=2, values_only=True):
-            if row and row[0] == instrument_id:
-                meta.update(dict(zip(prov_header, row)))
-                break
-        reg = wb["Registry"]
-        reg_header = [c for c in next(reg.iter_rows(min_row=1, max_row=1, values_only=True))]
-        for row in reg.iter_rows(min_row=2, values_only=True):
-            if row and row[0] == instrument_id:
-                reg_map = dict(zip(reg_header, row))
-                meta["sounding_range_low_midi"] = int(reg_map["sounding_range_low_midi"])
-                meta["sounding_range_high_midi"] = int(reg_map["sounding_range_high_midi"])
-                break
+        if "Provenance" in wb.sheetnames:
+            prov = wb["Provenance"]
+            prov_header = [c for c in next(prov.iter_rows(min_row=1, max_row=1, values_only=True))]
+            for row in prov.iter_rows(min_row=2, values_only=True):
+                if row and row[0] == instrument_id:
+                    meta.update(dict(zip(prov_header, row)))
+                    break
+        if "Registry" in wb.sheetnames:
+            reg = wb["Registry"]
+            reg_header = [c for c in next(reg.iter_rows(min_row=1, max_row=1, values_only=True))]
+            for row in reg.iter_rows(min_row=2, values_only=True):
+                if row and row[0] == instrument_id:
+                    reg_map = dict(zip(reg_header, row))
+                    meta["sounding_range_low_midi"] = int(reg_map["sounding_range_low_midi"])
+                    meta["sounding_range_high_midi"] = int(reg_map["sounding_range_high_midi"])
+                    break
     finally:
         wb.close()
     return meta
@@ -130,13 +136,13 @@ def render_module(cfg: dict, spectral: dict[str, dict[str, float]], meta: dict[s
     citation = str(
         meta.get("citation")
         or (
-            f"Sparse {cfg['display'].lower()} CDM table from IOWA and ORCH arco sustain collections; "
+            f"Sparse {cfg['display'].lower()} CDM table from IOWA and ORCH sustain collections; "
             "midpoint summary at pp/mf/ff (Zenodo curation workbook)."
         )
     )
     source_id = str(
         meta.get("source_url_or_identifier")
-        or f"docs/instrument_acoustic_sources.md#{cfg['doc_anchor']}"
+        or f"docs/instrument_acoustic_sources.md#{cfg['module']}"
     )
     transform_notes = str(meta.get("transform_parameters") or "").strip()
     extraction = (
@@ -161,7 +167,7 @@ def render_module(cfg: dict, spectral: dict[str, dict[str, float]], meta: dict[s
 {display} instrument density module.
 
 The ``spectral_data`` table stores sparse Combined Density Metric (CDM) values
-from **external acoustic sources** (IOWA + ORCH arco sustain collections,
+from **external acoustic sources** (IOWA + ORCH sustain collections,
 midpoint summary at pp/mf/ff). Intermediate dynamics are interpolated via GPR.
 
 Runtime analysis does not ingest audio; it maps notated pitch + dynamic to these
@@ -218,8 +224,11 @@ def calcular_densidade(nota, dinamica):
 
 def main() -> int:
     for cfg in CONFIGS:
+        if not cfg["workbook"].is_file():
+            print(f"SKIP {cfg['module']}: workbook not found ({cfg['workbook']})")
+            continue
         spectral = load_spectral_data(cfg["workbook"])
-        meta = load_workbook_metadata(cfg["workbook"], cfg["module"])
+        meta = load_workbook_metadata(cfg["workbook"], cfg["registry_id"])
         out = ROOT / "instrumentos" / f"{cfg['module']}.py"
         out.write_text(render_module(cfg, spectral, meta), encoding="utf-8")
         notes = sorted(spectral.keys(), key=lambda n: note_to_midi(n))

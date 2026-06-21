@@ -48,7 +48,7 @@ def parse_midi_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str
         raise FileNotFoundError(f"Ficheiro não encontrado: {filepath}")
 
     warnings = [
-        "MIDI channel/program are not mapped to orchestral instruments; using generic 'flauta'.",
+        "MIDI channel/program are not mapped to orchestral instruments; using generic 'flute'.",
         "MIDI velocity maps to coarse dynamic labels — not measured loudness.",
         "MIDI may lack articulation, extended techniques, and reliable instrumentation.",
     ]
@@ -85,7 +85,7 @@ def parse_midi_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str
                     idx=len(events),
                     note=note_name,
                     dynamic=_velocity_to_dynamic(info["velocity"]),
-                    instrument_name="flauta",
+                    instrument_name="flute",
                     player_count=1,
                     onset=float(info["onset"]),
                     offset=float(time_sec),
@@ -106,7 +106,7 @@ def parse_midi(filepath: str) -> dict:
     """
     Parse a MIDI file and return a dict compatible with load_from_xml_data / get_input_data:
     notes, dynamics, instruments, num_instruments, weight_factor, and options.
-    Uses note_on messages; velocity maps to dynamics; instrument defaults to 'flauta'.
+    Uses note_on messages; velocity maps to dynamics; instrument defaults to 'flute'.
     """
     try:
         import mido
@@ -134,7 +134,7 @@ def parse_midi(filepath: str) -> dict:
     out = {
         "notes": notes,
         "dynamics": dynamics,
-        "instruments": ["flauta"] * n,
+        "instruments": ["flute"] * n,
         "num_instruments": [1] * n,
         **RESEARCH_ANALYSIS_DEFAULTS,
         "show_graphs": True,

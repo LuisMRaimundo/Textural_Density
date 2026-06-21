@@ -6,7 +6,7 @@
   "density.instrument.validation_status": "partially_calibrated",
   "density.weighted.source_type": "metadata_proxy",
   "density.instrument.assumptions": [
-    "Instrument 'flauta' uses externally sourced acoustic metadata via instrumentos/flauta.py (GPR interpolation).",
+    "Instrument 'flauta' uses externally sourced acoustic metadata via instrumentos/flute.py (GPR interpolation).",
     "Instrument density applies pre-loaded external acoustic metadata to notated pitch and dynamic markings; the pipeline does not analyse audio waveforms.",
     "Quantity scaling model: incoherent source addition (not phase-locked N\u00b2).",
     "Qty affects pressure-equivalent density, not pitch-structure metrics."

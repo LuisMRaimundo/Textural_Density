@@ -10,22 +10,22 @@ QUARTO_TOM_GUI = "\u2193"
 OCTAVE_LIST = [str(i) for i in range(10)]
 DYNAMIC_LEVELS = ["pppp", "ppp", "pp", "p", "mf", "f", "ff", "fff", "ffff"]
 INSTRUMENTS = [
-    "Flautim",
-    "Flauta",
+    "Piccolo",
+    "Flute",
     "Oboe",
-    "Corne_ingles",
-    "Clarinete",
-    "Clarinete baixo",
-    "Fagote",
-    "Contrafagote",
-    "Trompa",
-    "Trompete",
+    "English horn",
+    "Clarinet",
+    "Bass clarinet",
+    "Bassoon",
+    "Contrabassoon",
+    "Horn",
+    "Trumpet",
     "Trombone",
     "Tuba",
-    "Violino",
+    "Violin",
     "Viola",
-    "Violoncelo",
-    "Contrabaixo",
+    "Cello",
+    "Double bass",
 ]
 CENTS_VALUES = ["0"] + [f"+{i}" for i in range(1, 51)] + [f"-{i}" for i in range(1, 51)]
 NOTAS_BASE = [

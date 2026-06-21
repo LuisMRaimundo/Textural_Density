@@ -1,15 +1,15 @@
 {
   "density": {
     "interval": 0.2137588382139519,
-    "instrument": 18.643726397906615,
-    "weighted": 1.0390657390023068,
-    "pitch_structure": 0.24779860091865186,
-    "refined": 0.24779860091865186,
-    "total": 0.029375913167219218,
-    "sonic_mass": 31.902,
-    "absolute": 1.44045097481177,
+    "instrument": 34.500337379511365,
+    "weighted": 1.8318962880825442,
+    "pitch_structure": 0.24361125448107493,
+    "refined": 0.24361125448107493,
+    "total": 0.038555703894589954,
+    "sonic_mass": 58.09180500000001,
+    "absolute": 2.53954749432529,
     "weighted_pitch": 0.10687941910697595,
-    "weighted_orchestral": 0.9321863198953307
+    "weighted_orchestral": 1.7250168689755683
   },
   "density_subindices": {
     "event_count": {
@@ -36,8 +36,8 @@
       }
     },
     "orchestral_mass": {
-      "normalized": 5.648185549360077,
-      "raw": 31.902
+      "normalized": 7.621798016216384,
+      "raw": 58.09180500000001
     },
     "timbral_heterogeneity": {
       "normalized": -0.0,
@@ -49,10 +49,10 @@
       }
     },
     "harmonicity_proxy": {
-      "normalized": 0.36740643219860825,
+      "normalized": 0.4467886305133745,
       "raw": {
-        "harmonic_ratio": 0.36740643219860825,
-        "chroma_concentration": 0.37311140367375084
+        "harmonic_ratio": 0.4467886305133745,
+        "chroma_concentration": 0.44678863051337453
       }
     },
     "temporal": {

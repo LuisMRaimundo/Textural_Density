@@ -146,7 +146,7 @@ class InputPanel:
             dynamic_menu.grid(row=row, column=4, padx=5, pady=2)
             self.dynamic_menus.append(dynamic_menu)
 
-            instrument_var = tk.StringVar(value="Flauta")
+            instrument_var = tk.StringVar(value="Flute")
             self.instrument_vars.append(instrument_var)
             instrument_menu = ttk.Combobox(
                 self.input_frame,
@@ -199,7 +199,7 @@ class InputPanel:
         for var in self.dynamic_vars:
             var.set("mf")
         for var in self.instrument_vars:
-            var.set("Flauta")
+            var.set("Flute")
         for var in self.num_instruments_vars:
             var.set("1")
         for var in self.state_vars:
@@ -263,7 +263,7 @@ class InputPanel:
         if len(dynamics) < n:
             dynamics.extend(["mf"] * (n - len(dynamics)))
         if len(instruments) < n:
-            instruments.extend(["Flauta"] * (n - len(instruments)))
+            instruments.extend(["Flute"] * (n - len(instruments)))
         if len(num_instruments) < n:
             num_instruments.extend([1] * (n - len(num_instruments)))
         for i in range(n):

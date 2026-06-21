@@ -8,7 +8,7 @@ import math
 import pytest
 
 from instrumentos import get_instrument_module
-from instrumentos.flauta import calcular_densidade as flauta_density, spectral_data as flauta_table
+from instrumentos.flute import calcular_densidade as flauta_density, spectral_data as flauta_table
 from instrumentos.pitch_interpolation import (
     MetadataTableConflictError,
     resolve_density_from_table,
@@ -96,11 +96,11 @@ class TestExistingInstrumentBehaviour:
             assert _resolve(flauta_table, "C#+4", "mf").provenance == "exact"
 
     def test_clarinet_chromatic_lookup_finite(self):
-        mod = get_instrument_module("clarinete")
+        mod = get_instrument_module("clarinet")
         assert math.isfinite(mod.calcular_densidade("G4", "mf"))
 
     def test_string_chromatic_table_accepts_microtonal(self):
-        mod = get_instrument_module("violino")
+        mod = get_instrument_module("violin")
         assert math.isfinite(mod.calcular_densidade("G4+50c", "mf"))
         assert math.isfinite(mod.calcular_densidade("A↓4", "mf"))
 
