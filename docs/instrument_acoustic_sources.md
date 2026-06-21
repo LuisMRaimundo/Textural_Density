@@ -19,11 +19,12 @@ live audio analysis.
 ## Clarinet (`clarinet`)
 
 - **Module:** `instrumentos/clarinet.py`
-- **Table:** `spectral_data_unicode`
-- **Provenance:** External acoustic-source amplitude summaries (measurement /
-  literature digitization).
-- **Interpolation:** GPR by pitch and dynamic.
-- **Uncertainty:** medium.
+- **Table:** `spectral_data` (47 chromatic rows, D3–C7; 141 AcousticTable rows in source workbook)
+- **Provenance:** Median/midpoint summary of clarinet sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **Source workbook:** `D:\MADEIRAS\Clarinet_Zenodo_collections_media.xlsx`
+- **Interpolation:** Gaussian-process regression for intermediate dynamics
+- **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Oboe (`oboe`)
 
@@ -80,7 +81,7 @@ live audio analysis.
 Offline curation pipeline (not used at runtime):
 
 1. `tools/populate_td_importer_sheets_from_zenodo_media.py` — builds `AcousticTable`, `Registry`, and `Provenance` sheets from `*_Media` workbooks.
-2. `tools/generate_instrument_modules.py` — emits `instrumentos/flute.py`, `oboe.py`, `violin.py`, `viola.py`, `cello.py`, `double_bass.py`.
+2. `tools/generate_instrument_modules.py` — emits `instrumentos/flute.py`, `oboe.py`, `clarinet.py`, `violin.py`, `viola.py`, `cello.py`, `double_bass.py`.
 3. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
 ## Registry-only instruments

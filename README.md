@@ -32,7 +32,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Epistemic metadata** — every metric labelled (`source_type`, `validation_status`, warnings)
 - **Interpretable subindices** — registral, orchestration, harmonicity proxies, etc.
 - **Temporal score analysis** — `analyze_score()` for timed XML/MIDI
-- **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; GPR CDM modules for flute, oboe, and strings; legacy clarinet amplitude table; metadata corpus still incomplete for many names
+- **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; GPR CDM modules for flute, oboe, clarinet, and strings; metadata corpus still incomplete for many names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML concert pitch** — `<transpose>` (chromatic + octave-change) applied for transposing instruments; `written_pitch` vs `sounding_pitch` on timed events
 - **Verification scaffolding** — **760 tests** (GitHub Actions + CircleCI green); strict pitch parsing, canonical core conversion path, pitch-interpolation, interval-density contracts, instrument scaffold tests, and frozen benchmarks (five project-authored MusicXML excerpts)

@@ -195,8 +195,13 @@ REGISTRY["clarinete"] = _profile(
     uncertainty="medium",
     module_name="clarinet",
     supported=("legato", "staccato", "flutter_tongue"),
-    source_notes="Sparse GPR table in instrumentos/clarinet.py from externally sourced acoustic amplitude metadata.",
-    warnings=("Clarinet density uses externally sourced sparse acoustic tables; not full measured spectra.",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/clarinet.py from IOWA+ORCH sustain CDM medians "
+        "(pp/mf/ff); not a full measured spectrum."
+    ),
+    warnings=(
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+    ),
     aliases=("clarinet", "clarinete"),
 )
 

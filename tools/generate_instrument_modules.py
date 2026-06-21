@@ -31,6 +31,13 @@ CONFIGS = [
         "technique": "sustains (ordinario)",
     },
     {
+        "module": "clarinet",
+        "display": "Clarinet",
+        "workbook": Path(r"D:\MADEIRAS\Clarinet_Zenodo_collections_media.xlsx"),
+        "registry_id": "clarinet",
+        "technique": "sustains (ordinario)",
+    },
+    {
         "module": "violin",
         "display": "Violin",
         "workbook": Path(r"D:\CORDAS\VIOLIN_Zenodo_collections_media.xlsx"),

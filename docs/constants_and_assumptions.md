@@ -63,7 +63,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | Name | Role | Module |
 |------|------|--------|
 | `REGISTRY` profiles | Register, family, dynamic-response metadata | `instrumentos/registry.py` |
-| GPR modules (`flute`, `oboe`, `violin`, `viola`, `cello`, `double_bass`, `clarinet`, …) | Sparse note×dynamic CDM or amplitude tables (externally sourced) | `instrumentos/*.py` |
+| GPR modules (`flute`, `oboe`, `clarinet`, `violin`, `viola`, `cello`, `double_bass`, …) | Sparse note×dynamic CDM tables (externally sourced) | `instrumentos/*.py` |
 | `profile_status` | `literature_derived` / `empirical_profile` / `coarse_default` | Audit: `instrumentos/metadata_audit.py` |
 | `uncertainty` | low / medium / high | All profiles |
 | Unknown instrument | Generic fallback without external acoustic table | `profile_for_event()` |

@@ -4,8 +4,8 @@
     "inputs": {
       "distinct_pitch_count": 4,
       "event_count": 4,
-      "harmonic_ratio": 0.5023681235069444,
-      "instrument_density": 38.237479073271814,
+      "harmonic_ratio": 0.5427633793503068,
+      "instrument_density": 33.91829468305074,
       "interval_compactness_distinct": 0.1886837391214329,
       "pitch_aggregation": {
         "distinct_pitch_count": 4,
@@ -63,7 +63,7 @@
             ],
             "representative_note": "G4",
             "total_player_count": 1,
-            "total_weight": 20.043
+            "total_weight": 12.077698
           },
           {
             "dynamics": [
@@ -79,7 +79,7 @@
             ],
             "representative_note": "C5",
             "total_player_count": 1,
-            "total_weight": 10.842
+            "total_weight": 7.857858
           }
         ],
         "pitch_differentiation_ratio": 1.0,
@@ -106,14 +106,14 @@
             "dynamic": "mf",
             "instrument": "clarinet",
             "midi": 67.0,
-            "one_player_density": 20.043,
+            "one_player_density": 12.077698,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "clarinet",
             "midi": 72.0,
-            "one_player_density": 10.842,
+            "one_player_density": 7.857858,
             "player_count": 1.0
           }
         ],
@@ -121,7 +121,7 @@
         "unison_doublings_excluded_from_interval_structure": true
       },
       "registral_span": 12.0,
-      "sonic_mass": 73.24660200000001
+      "sonic_mass": 62.297158
     },
     "overlap_warnings": [],
     "steps": {
@@ -130,7 +130,7 @@
           "symbolic_entropy",
           "pitch_bins"
         ],
-        "value": 2.076173114084461
+        "value": 2.0539057631667457
       },
       "interval_compactness_distinct": {
         "depends_on": [
@@ -148,7 +148,7 @@
           "harmonicity_proxy",
           "pitch_differentiation_ratio"
         ],
-        "value": 0.18111022245927796
+        "value": 0.17799367680485753
       },
       "sonic_mass": {
         "depends_on": [
@@ -156,21 +156,21 @@
           "player_count",
           "instrument_density"
         ],
-        "value": 73.24660200000001
+        "value": 62.297158
       },
       "total_density": {
         "depends_on": [
           "pitch_structure_density",
           "sonic_mass"
         ],
-        "value": 0.03241763895758997
+        "value": 0.029482766444354623
       },
       "weighted_density": {
         "depends_on": [
           "instrument_density",
           "interval_compactness_distinct"
         ],
-        "value": 2.006215823224307
+        "value": 1.7902566037132535
       }
     }
   },
@@ -200,15 +200,15 @@
   },
   "numeric": {
     "density": {
-      "absolute": 3.2288798064223885,
-      "instrument": 38.237479073271814,
+      "absolute": 2.881306851001621,
+      "instrument": 33.91829468305074,
       "interval": 0.1886837391214329,
-      "pitch_structure": 0.18111022245927796,
-      "refined": 0.18111022245927796,
-      "sonic_mass": 73.24660200000001,
-      "total": 0.03241763895758997,
-      "weighted": 2.006215823224307,
-      "weighted_orchestral": 1.9118739536635907,
+      "pitch_structure": 0.17799367680485753,
+      "refined": 0.17799367680485753,
+      "sonic_mass": 62.297158,
+      "total": 0.029482766444354623,
+      "weighted": 1.7902566037132535,
+      "weighted_orchestral": 1.695914734152537,
       "weighted_pitch": 0.09434186956071647
     },
     "density_subindices": {
@@ -223,10 +223,10 @@
         }
       },
       "harmonicity_proxy": {
-        "normalized": 0.5023681235069444,
+        "normalized": 0.5427633793503068,
         "raw": {
-          "chroma_concentration": 0.5023681235069445,
-          "harmonic_ratio": 0.5023681235069444
+          "chroma_concentration": 0.5427633793503068,
+          "harmonic_ratio": 0.5427633793503068
         }
       },
       "interval_compactness": {
@@ -234,8 +234,8 @@
         "raw": 3.2647774062508237
       },
       "orchestral_mass": {
-        "normalized": 8.558422868729963,
-        "raw": 73.24660200000001
+        "normalized": 7.892854870070778,
+        "raw": 62.297158
       },
       "registral": {
         "normalized": 0.34939847028229715,
@@ -253,12 +253,12 @@
         }
       },
       "timbral_heterogeneity": {
-        "normalized": 0.3816269480714911,
+        "normalized": 0.3449561642695146,
         "raw": {
-          "blend_index": 0.10831860228193416,
+          "blend_index": 0.030832821138858168,
           "family_diversity": 0.25,
           "instrument_diversity": 0.5,
-          "orchestration_evenness": 0.9013196543916127
+          "orchestration_evenness": 0.9159099360519785
         }
       }
     }

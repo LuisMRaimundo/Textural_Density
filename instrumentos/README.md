@@ -14,7 +14,7 @@ This package provides **instrument density** for the vertical density pipeline. 
 
 
 
-Dedicated modules embed **sparse CDM or amplitude tables** from external sources (partial digitization — **work in progress**, not final reference data). Tables are stored as `spectral_data` (or `spectral_data_unicode` for clarinet) and interpolated by Gaussian-process regression (GPR) for intermediate dynamics.
+Dedicated modules embed **sparse CDM tables** from external sources (partial digitization — **work in progress**, not final reference data). Tables are stored as `spectral_data` and interpolated by Gaussian-process regression (GPR) for intermediate dynamics.
 
 
 
@@ -24,7 +24,7 @@ Dedicated modules embed **sparse CDM or amplitude tables** from external sources
 
 | `flute.py` | `spectral_data` | IOWA+ORCH flute sustain CDM medians (Zenodo workbook) |
 
-| `clarinet.py` | `spectral_data_unicode` | External acoustic measurements / literature |
+| `clarinet.py` | `spectral_data` | IOWA+ORCH clarinet sustain CDM medians (Zenodo workbook) |
 
 | `oboe.py` | `spectral_data` | IOWA+ORCH oboe sustain CDM medians (Zenodo workbook) |
 
@@ -184,7 +184,7 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 
 | **Flute** | `flute.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
-| **Clarinet** | `clarinet.py` | `literature_derived` | External amplitude summaries |
+| **Clarinet** | `clarinet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
 | **Oboe** | `oboe.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 

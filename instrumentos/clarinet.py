@@ -2,9 +2,9 @@
 """
 Clarinet instrument density module.
 
-The ``spectral_data_unicode`` table stores sparse amplitude values obtained from
-**external acoustic sources** (measurement summaries / literature), not invented
-at analysis time. Intermediate dynamics are interpolated via GPR.
+The ``spectral_data`` table stores sparse Combined Density Metric (CDM) values
+from **external acoustic sources** (IOWA + ORCH sustain collections,
+midpoint summary at pp/mf/ff). Intermediate dynamics are interpolated via GPR.
 
 Runtime analysis does not ingest audio; it maps notated pitch + dynamic to these
 pre-loaded acoustic metadata tables.
@@ -15,149 +15,81 @@ from instrumentos.provenance import InstrumentSource
 INSTRUMENT_SOURCE = InstrumentSource(
     source_type="external_acoustic_metadata",
     citation=(
-        "Sparse clarinet amplitude table from external acoustic sources; "
-        "see docs/instrument_acoustic_sources.md#clarinet"
+        "Median/midpoint summary of clarinet sustained-note Combined Density Metrics across IOWA and ORCH sound collections (pp, mf, ff)."
     ),
-    source_url_or_identifier="docs/instrument_acoustic_sources.md#clarinet",
-    extraction_method="digitized acoustic amplitude table; GPR interpolation by pitch/dynamic",
+    source_url_or_identifier='D:\\MADEIRAS\\Clarinet_Zenodo_collections_media.xlsx',
+    extraction_method=(
+        "Combined Density Metric midpoint of IOWA/ORCH collections (CDM midpoint pass-through; no rescaling); GPR interpolation by pitch/dynamic"
+    ),
     dynamic_levels=("pp", "mf", "ff"),
     pitch_range=(50, 88),
     uncertainty="medium",
-    version="2026-05-21",
+    version="2026-06-21",
 )
 
-import re
+import logging
+
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import ConstantKernel as C, Matern
-import logging
-from utils.notes import (
-    note_to_midi,
-    midi_to_note_name,
-    to_sharp,
-    extract_cents,
-    is_valid_note,
-    normalize_note_string,
-)
+from utils.notes import normalize_note_string
 
-logger = logging.getLogger('clarinet')
+logger = logging.getLogger("clarinet")
 
-# Spectral data per note and dynamic for clarinet.
-# Values from external acoustic sources (measurement / literature summaries).
-
-spectral_data_unicode = {
-    'D3': {'pp': 11.258, 'mf': 47.852, 'ff': 44.549},
-    'D↓3': {'pp': 10.977, 'mf': 45.983, 'ff': 44.174},
-    'D♯3': {'pp': 10.703, 'mf': 44.755, 'ff': 44.537},
-    'D♯↓3': {'pp': 10.466, 'mf': 43.205, 'ff': 44.547},
-    'E3': {'pp': 10.193, 'mf': 41.833, 'ff': 44.475},
-    'E↓3': {'pp': 9.973, 'mf': 40.519, 'ff': 44.636},
-    'F3': {'pp': 9.724, 'mf': 39.081, 'ff': 44.294},
-    'F↓3': {'pp': 9.511, 'mf': 37.93, 'ff': 44.395},
-    'F♯3': {'pp': 9.297, 'mf': 36.493, 'ff': 43.908},
-    'F♯↓3': {'pp': 9.087, 'mf': 35.447, 'ff': 43.792},
-    'G3': {'pp': 8.907, 'mf': 34.063, 'ff': 43.237},
-    'G↓3': {'pp': 8.705, 'mf': 33.074, 'ff': 42.816},
-    'G♯3': {'pp': 8.554, 'mf': 31.786, 'ff': 42.22},
-    'G♯↓3': {'pp': 8.366, 'mf': 30.816, 'ff': 41.476},
-    'A3': {'pp': 8.235, 'mf': 29.655, 'ff': 40.834},
-    'A↓3': {'pp': 8.068, 'mf': 28.678, 'ff': 39.803},
-    'A♯3': {'pp': 7.949, 'mf': 27.666, 'ff': 39.091},
-    'A♯↓3': {'pp': 7.806, 'mf': 26.661, 'ff': 37.851},
-    'B3': {'pp': 7.692, 'mf': 25.812, 'ff': 37.041},
-    'B↓3': {'pp': 7.575, 'mf': 24.768, 'ff': 35.688},
-    'C4': {'pp': 7.464, 'mf': 23.778, 'ff': 34.762},
-    'C↓4': {'pp': 7.372, 'mf': 22.999, 'ff': 33.394},
-    'C♯4': {'pp': 7.261, 'mf': 24.229, 'ff': 32.352},
-    'C♯↓4': {'pp': 7.19, 'mf': 21.354, 'ff': 31.051},
-    'D4': {'pp': 7.083, 'mf': 19.956, 'ff': 29.911},
-    'D↓4': {'pp': 7.026, 'mf': 19.832, 'ff': 28.736},
-    'D♯4': {'pp': 6.926, 'mf': 20.569, 'ff': 27.532},
-    'D♯↓4': {'pp': 6.878, 'mf': 18.43, 'ff': 26.512},
-    'E4': {'pp': 6.79, 'mf': 21.447, 'ff': 25.292},
-    'E↓4': {'pp': 6.744, 'mf': 17.147, 'ff': 24.422},
-    'F4': {'pp': 6.671, 'mf': 13.15, 'ff': 23.239},
-    'F↓4': {'pp': 6.624, 'mf': 15.977, 'ff': 22.492},
-    'F♯4': {'pp': 6.568, 'mf': 9.543, 'ff': 21.394},
-    'F♯↓4': {'pp': 6.517, 'mf': 14.916, 'ff': 20.723},
-    'G4': {'pp': 6.479, 'mf': 20.043, 'ff': 19.75},
-    'G↓4': {'pp': 6.424, 'mf': 13.959, 'ff': 19.101},
-    'G♯4': {'pp': 6.401, 'mf': 15.777, 'ff': 18.276},
-    'G♯↓4': {'pp': 6.344, 'mf': 13.1, 'ff': 17.597},
-    'A4': {'pp': 6.333, 'mf': 12.515, 'ff': 16.926},
-    'A↓4': {'pp': 6.278, 'mf': 12.332, 'ff': 16.182},
-    'A♯4': {'pp': 6.273, 'mf': 15.069, 'ff': 15.648},
-    'A♯↓4': {'pp': 6.223, 'mf': 11.648, 'ff': 14.825},
-    'B4': {'pp': 6.218, 'mf': 10.409, 'ff': 14.395},
-    'B↓4': {'pp': 6.176, 'mf': 11.04, 'ff': 13.507},
-    'C5': {'pp': 6.167, 'mf': 10.842, 'ff': 13.134},
-    'C↓5': {'pp': 6.136, 'mf': 10.501, 'ff': 12.224},
-    'C♯5': {'pp': 6.117, 'mf': 11.535, 'ff': 11.852},
-    'C♯↓5': {'pp': 6.096, 'mf': 10.022, 'ff': 10.987},
-    'D5': {'pp': 6.066, 'mf': 9.518, 'ff': 10.562},
-    'D↓5': {'pp': 6.055, 'mf': 9.595, 'ff': 9.822},
-    'D♯5': {'pp': 6.013, 'mf': 8.958, 'ff': 9.301},
-    'D♯↓5': {'pp': 6.006, 'mf': 9.212, 'ff': 8.763},
-    'E5': {'pp': 5.955, 'mf': 8.981, 'ff': 8.128},
-    'E↓5': {'pp': 5.948, 'mf': 8.865, 'ff': 7.849},
-    'F5': {'pp': 5.89, 'mf': 9.965, 'ff': 7.112},
-    'F↓5': {'pp': 5.877, 'mf': 8.544, 'ff': 7.116},
-    'F♯5': {'pp': 5.816, 'mf': 7.804, 'ff': 6.323},
-    'F♯↓5': {'pp': 5.791, 'mf': 8.242, 'ff': 6.585},
-    'G5': {'pp': 5.732, 'mf': 7.973, 'ff': 5.816},
-    'G↓5': {'pp': 5.691, 'mf': 7.952, 'ff': 6.261},
-    'G♯5': {'pp': 5.634, 'mf': 12.861, 'ff': 5.617},
-    'G♯↓5': {'pp': 5.575, 'mf': 7.665, 'ff': 6.127},
-    'A5': {'pp': 5.522, 'mf': 8.499, 'ff': 5.714},
-    'A↓5': {'pp': 5.444, 'mf': 7.374, 'ff': 6.145},
-    'A♯5': {'pp': 5.392, 'mf': 7.108, 'ff': 6.045},
-    'A♯↓5': {'pp': 5.298, 'mf': 7.074, 'ff': 6.259},
-    'B5': {'pp': 5.244, 'mf': 11.004, 'ff': 6.501},
-    'B↓5': {'pp': 5.137, 'mf': 6.757, 'ff': 6.4},
-    'C6': {'pp': 5.074, 'mf': 0.226, 'ff': 6.935},
-    'C↓6': {'pp': 4.959, 'mf': 6.419, 'ff': 6.499},
-    'C♯6': {'pp': 4.881, 'mf': 7.014, 'ff': 7.183},
-    'C♯↓6': {'pp': 4.762, 'mf': 6.054, 'ff': 6.49},
-    'D6': {'pp': 4.663, 'mf': 9.555, 'ff': 7.091},
-    'D↓6': {'pp': 4.542, 'mf': 5.659, 'ff': 6.323},
-    'D♯6': {'pp': 4.418, 'mf': 3.303, 'ff': 6.559},
-    'D♯↓6': {'pp': 4.294, 'mf': 5.229, 'ff': 5.97},
-    'E6': {'pp': 4.143, 'mf': 3.304, 'ff': 5.577},
-    'E↓6': {'pp': 4.014, 'mf': 4.763, 'ff': 5.429},
-    'F6': {'pp': 3.837, 'mf': 0.803, 'ff': 4.261},
-    'F↓6': {'pp': 3.695, 'mf': 4.257, 'ff': 4.727},
-    'F♯6': {'pp': 3.497, 'mf': 6.521, 'ff': 2.875},
-    'F♯↓6': {'pp': 3.335, 'mf': 3.711, 'ff': 3.914},
-    'G6': {'pp': 3.122, 'mf': 4.49, 'ff': 1.798},
-    'G↓6': {'pp': 2.93, 'mf': 3.124, 'ff': 3.062},
-    'G♯6': {'pp': 2.709, 'mf': 0.843, 'ff': 1.44},
-    'G♯↓6': {'pp': 2.482, 'mf': 2.496, 'ff': 2.251},
-    'A6': {'pp': 2.257, 'mf': 7.172, 'ff': 2.042},
-    'A↓6': {'pp': 1.995, 'mf': 1.829, 'ff': 1.569},
-    'A♯6': {'pp': 1.763, 'mf': 1.553, 'ff': 3.337},
-    'A♯↓6': {'pp': 1.476, 'mf': 1.123, 'ff': 1.093},
-    'B6': {'pp': 1.225, 'mf': 0.153, 'ff': 3.989},
-    'B↓6': {'pp': 0.937, 'mf': 0.381, 'ff': 0.888},
-    'C7': {'pp': 0.642, 'mf': 0.118, 'ff': 0.759},
-}
-
-# 2. Convert all keys to canonical form (ASCII, no Unicode)
+# CDM medians: (IOWA + ORCH) / 2 per note at pp, mf, ff (sustains (ordinario)).
 spectral_data = {
-    normalize_note_string(nota): valores
-    for nota, valores in spectral_data_unicode.items()
+    'D3': {'pp': 11.903889, 'mf': 36.303041, 'ff': 42.864557},
+    'D#3': {'pp': 15.312107, 'mf': 46.242576, 'ff': 47.969891},
+    'E3': {'pp': 12.955682, 'mf': 42.30675, 'ff': 42.629695},
+    'F3': {'pp': 11.828066, 'mf': 34.488982, 'ff': 44.845996},
+    'F#3': {'pp': 10.411736, 'mf': 31.127683, 'ff': 45.702062},
+    'G3': {'pp': 9.635438, 'mf': 26.358525, 'ff': 36.736956},
+    'G#3': {'pp': 7.823748, 'mf': 18.837243, 'ff': 25.315938},
+    'A3': {'pp': 8.626581, 'mf': 19.48731, 'ff': 25.191308},
+    'A#3': {'pp': 7.45531, 'mf': 20.740353, 'ff': 22.113254},
+    'B3': {'pp': 6.444599, 'mf': 18.55134, 'ff': 24.848007},
+    'C4': {'pp': 5.297686, 'mf': 17.525757, 'ff': 26.949363},
+    'C#4': {'pp': 5.360529, 'mf': 15.457444, 'ff': 21.814225},
+    'D4': {'pp': 5.424456, 'mf': 17.389167, 'ff': 22.22991},
+    'D#4': {'pp': 5.678017, 'mf': 14.628142, 'ff': 16.141993},
+    'E4': {'pp': 6.392963, 'mf': 15.119309, 'ff': 15.091111},
+    'F4': {'pp': 4.734192, 'mf': 12.982403, 'ff': 20.508392},
+    'F#4': {'pp': 7.44362, 'mf': 13.331836, 'ff': 18.910568},
+    'G4': {'pp': 6.221009, 'mf': 12.077698, 'ff': 15.583904},
+    'G#4': {'pp': 6.381125, 'mf': 11.19551, 'ff': 14.144692},
+    'A4': {'pp': 6.842638, 'mf': 9.92446, 'ff': 14.421695},
+    'A#4': {'pp': 7.535291, 'mf': 11.824642, 'ff': 15.70528},
+    'B4': {'pp': 6.861462, 'mf': 10.927506, 'ff': 14.199126},
+    'C5': {'pp': 4.336489, 'mf': 7.857858, 'ff': 9.33885},
+    'C#5': {'pp': 5.93285, 'mf': 8.563804, 'ff': 11.44536},
+    'D5': {'pp': 6.321052, 'mf': 8.585646, 'ff': 8.970291},
+    'D#5': {'pp': 5.779091, 'mf': 7.208623, 'ff': 7.769588},
+    'E5': {'pp': 3.057712, 'mf': 6.962039, 'ff': 8.417246},
+    'F5': {'pp': 4.189109, 'mf': 5.873598, 'ff': 7.224448},
+    'F#5': {'pp': 4.049515, 'mf': 6.942169, 'ff': 8.315949},
+    'G5': {'pp': 3.776513, 'mf': 6.870699, 'ff': 7.535695},
+    'G#5': {'pp': 4.143959, 'mf': 5.391318, 'ff': 6.845354},
+    'A5': {'pp': 3.878603, 'mf': 5.794484, 'ff': 7.337376},
+    'A#5': {'pp': 3.669605, 'mf': 4.990902, 'ff': 6.596684},
+    'B5': {'pp': 4.162225, 'mf': 5.625973, 'ff': 7.242145},
+    'C6': {'pp': 4.008, 'mf': 6.928537, 'ff': 7.218995},
+    'C#6': {'pp': 4.74413, 'mf': 5.692513, 'ff': 6.368469},
+    'D6': {'pp': 3.387024, 'mf': 5.866964, 'ff': 6.298073},
+    'D#6': {'pp': 3.673938, 'mf': 4.886739, 'ff': 5.716934},
+    'E6': {'pp': 3.12203, 'mf': 4.014344, 'ff': 4.819832},
+    'F6': {'pp': 2.93936, 'mf': 3.982764, 'ff': 4.408274},
+    'F#6': {'pp': 1.754258, 'mf': 3.235531, 'ff': 4.173518},
+    'G6': {'pp': 3.494253, 'mf': 2.866412, 'ff': 5.505037},
+    'G#6': {'pp': 3.12221, 'mf': 2.889422, 'ff': 4.479782},
+    'A6': {'pp': 3.323653, 'mf': 4.542583, 'ff': 4.646555},
+    'A#6': {'pp': 2.877114, 'mf': 3.903432, 'ff': 4.306829},
+    'B6': {'pp': 2.782129, 'mf': 3.790151, 'ff': 7.344033},
+    'C7': {'pp': 2.695233, 'mf': 1.972507, 'ff': 5.09456},
 }
 
-def nota_para_int(nota):
-    """Convert pitch notation to an integer (MIDI-like)."""
-    try:
-        midi = note_to_midi(normalize_note_string(nota))
-        return int(round(midi))
-    except Exception as e:
-        logger.error(f"Error converting note '{nota}' to integer: {e}")
-        return 60  # C4 como fallback
 
 def calcular_densidade(nota, dinamica):
-    """Compute density from spectral data (MIDI-space lookup, octave-safe)."""
+    """Compute density from spectral CDM table (MIDI-space lookup, octave-safe)."""
     from instrumentos.spectral_lookup import lookup_spectral_density
 
     return lookup_spectral_density(
@@ -169,10 +101,11 @@ def calcular_densidade(nota, dinamica):
     )
 
 def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
-    """
-    Prevê dinâmicas intermediárias usando Gaussian Process Regression.
-    """
-    dynamic_levels = {"pppp": 1, "ppp": 2, "pp": 3, "p": 4, "mf": 5, "f": 6, "ff": 7, "fff": 8, "ffff": 9}
+    """Predict intermediate dynamics using Gaussian Process Regression."""
+    dynamic_levels = {
+        "pppp": 1, "ppp": 2, "pp": 3, "p": 4, "mf": 5,
+        "f": 6, "ff": 7, "fff": 8, "ffff": 9,
+    }
     all_dynamics = list(dynamic_levels.keys())
     predictions = {dynamic: [] for dynamic in all_dynamics}
 
@@ -189,75 +122,12 @@ def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
         gpr = GaussianProcessRegressor(kernel=matern_kernel, n_restarts_optimizer=10, alpha=1e-1)
 
         for i, y in enumerate(y_train):
-            try:
-                gpr.fit(existing_levels, y)
-                y_pred = gpr.predict(all_levels)
-                for j, dynamic in enumerate(all_dynamics):
-                    predictions[dynamic].append(y_pred[j])
-            except Exception as e:
-                logger.error(f"GPR error for pitch {i}: {e}")
-                for j, dynamic in enumerate(all_dynamics):
-                    if dynamic == "pp":
-                        predictions[dynamic].append(y[0])
-                    elif dynamic == "mf":
-                        predictions[dynamic].append(y[1])
-                    elif dynamic == "ff":
-                        predictions[dynamic].append(y[2])
-                    elif dynamic in ["pppp", "ppp", "p"]:
-                        predictions[dynamic].append(y[0])
-                    else:
-                        predictions[dynamic].append(y[2])
+            gpr.fit(existing_levels, y)
+            y_pred = gpr.predict(all_levels)
+            for j, dynamic in enumerate(all_dynamics):
+                predictions[dynamic].append(y_pred[j])
 
         return {k: np.array(v) for k, v in predictions.items()}
     except Exception as e:
         logger.error(f"Error predicting intermediate dynamics: {e}")
         return {d: np.zeros_like(pp_values) for d in all_dynamics}
-
-def get_max_note_density(nota, num):
-    """
-    Retorna a densidade máxima da nota multiplicada pela raiz quadrada do número de instrumentos.
-    """
-    try:
-        nota_norm = normalize_note_string(nota)
-        if nota_norm in spectral_data:
-            max_value = max(spectral_data[nota_norm].values())
-            return max_value * np.sqrt(num)
-        match = re.match(r'([A-Ga-g][#b]?)(\d+)', nota_norm)
-        if match:
-            nota_base, oitava = match.groups()
-            oitava = int(oitava)
-            candidatos = []
-            for n_existente in spectral_data:
-                m = re.match(r'([A-Ga-g][#b]?)(\d+)', n_existente)
-                if m:
-                    base_existente, oitava_existente = m.groups()
-                    oitava_existente = int(oitava_existente)
-                    if base_existente.lower() == nota_base.lower():
-                        distancia = abs(oitava - oitava_existente)
-                        candidatos.append((n_existente, distancia))
-            if candidatos:
-                candidatos.sort(key=lambda x: x[1])
-                nota_proxima = candidatos[0][0]
-                max_value = max(spectral_data[nota_proxima].values())
-                return max_value * np.sqrt(num)
-        valores_maximos = [max(vals.values()) for vals in spectral_data.values()]
-        valor_medio = sum(valores_maximos) / len(valores_maximos)
-        return valor_medio * np.sqrt(num)
-    except Exception as e:
-        logger.warning(f"Error getting max density for {nota}: {e}")
-        return 50.0 * np.sqrt(num)
-
-def calculate_max_possible_density(notas, dinamicas, numeros_instrumentos):
-    """
-    Compute the maximum possible density for a set of notes.
-    """
-    total = 0.0
-    if not notas or not numeros_instrumentos:
-        return 100.0
-    n = min(len(notas), len(numeros_instrumentos))
-    for i in range(n):
-        nota = notas[i]
-        num = numeros_instrumentos[i]
-        nota_density = get_max_note_density(nota, num)
-        total += nota_density
-    return max(1.0, total)
