@@ -9,7 +9,7 @@ Five representative MusicXML excerpts for replication. **Owned by project author
 | excerpt_002 | `corpus/excerpt_002.musicxml` | Four-note vertical, flute + clarinet |
 | excerpt_003 | `corpus/excerpt_003.musicxml` | Bb clarinet `<transpose>` with flute (single measure) |
 | excerpt_004 | `corpus/excerpt_004.musicxml` | Bb clarinet transpose **persists into measure 2** |
-| excerpt_005 | `corpus/excerpt_005.musicxml` | Flauta + oboe + violino with pp/mf/ff dynamics |
+| excerpt_005 | `corpus/excerpt_005.musicxml` | Flute + oboe + violin with pp/mf/ff dynamics |
 
 ```bash
 python benchmarks/scripts/run_benchmarks.py
