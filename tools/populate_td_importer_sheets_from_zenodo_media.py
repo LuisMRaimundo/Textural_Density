@@ -108,6 +108,24 @@ INSTRUMENT_CONFIGS: list[dict[str, Any]] = [
         "citation_technique": "sustained-note",
     },
     {
+        "workbook": Path(r"D:\MADEIRAS\Oboe_Zenodo_collections_media.xlsx"),
+        "media_sheet": "Oboe_Media",
+        "instrument_id": "oboe",
+        "display_name": "Oboe",
+        "family": "woodwinds",
+        "subfamily": "double_reed",
+        "sounding": (58, 88),
+        "comfortable": (60, 81),
+        "registry_aliases": ("oboe",),
+        "extra_aliases": (),
+        "zenodo_key": "oboe",
+        "zenodo_filename": "oboe_sustains_median_summary_v1.xlsx",
+        "source_workbook": "Oboe.xlsx",
+        "readme_title": "Oboe median summary for Zenodo",
+        "citation_technique": "sustained-note",
+        "technique_label": "sustain",
+    },
+    {
         "workbook": Path(r"D:\CORDAS\VIOLIN_Zenodo_collections_media.xlsx"),
         "media_sheet": "Violin_Media",
         "instrument_id": "violin",
@@ -190,8 +208,9 @@ def _remove_sheet_if_exists(wb: Workbook, name: str) -> None:
 
 
 def _source_notes(cfg: dict[str, Any]) -> str:
+    technique = cfg.get("technique_label", "arco/sustain")
     return (
-        f"Sparse arco/sustain Combined Density Metric (CDM) table for {cfg['display_name']} "
+        f"Sparse {technique} Combined Density Metric (CDM) table for {cfg['display_name']} "
         f"at pp/mf/ff. Values are the arithmetic midpoint of IOWA and ORCH collection "
         f"summaries on sheet {cfg['media_sheet']!r} (sounding/concert pitch). "
         "External acoustic proxy metadata for Textural Density — not runtime audio analysis."

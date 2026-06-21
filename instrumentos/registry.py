@@ -162,8 +162,13 @@ REGISTRY["oboe"] = _profile(
     uncertainty="medium",
     module_name="oboe",
     supported=("legato", "staccato", "flutter_tongue"),
-    source_notes="Scaled proxy from flute module (external acoustic metadata); not oboe-specific measured spectra.",
-    warnings=("Oboe density delegates to scaled flute GPR — coarse external-acoustic proxy.",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/oboe.py from IOWA+ORCH sustain CDM medians "
+        "(pp/mf/ff); not a full measured spectrum."
+    ),
+    warnings=(
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+    ),
     aliases=("oboe",),
 )
 

@@ -24,6 +24,13 @@ CONFIGS = [
         "technique": "sustains (ordinario)",
     },
     {
+        "module": "oboe",
+        "display": "Oboe",
+        "workbook": Path(r"D:\MADEIRAS\Oboe_Zenodo_collections_media.xlsx"),
+        "registry_id": "oboe",
+        "technique": "sustains (ordinario)",
+    },
+    {
         "module": "violin",
         "display": "Violin",
         "workbook": Path(r"D:\CORDAS\VIOLIN_Zenodo_collections_media.xlsx"),
