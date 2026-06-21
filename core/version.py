@@ -5,7 +5,7 @@ Package version — single runtime fallback aligned with pyproject.toml.
 from __future__ import annotations
 
 # Keep in sync with [project].version in pyproject.toml
-PACKAGE_VERSION = "1.1.2"
+PACKAGE_VERSION = "1.1.3"
 
 # User-facing product name (documentation, error messages). PyPI id remains densidade-vertical.
 PRODUCT_DISPLAY_NAME = "Textural Density"

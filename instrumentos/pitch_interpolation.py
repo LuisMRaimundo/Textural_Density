@@ -1,9 +1,9 @@
 """
 Continuous-pitch interpolation for sparse instrument acoustic metadata tables.
 
-Chromatic-only tables (C4, C#4, D4, … × pp/mf/ff) are sufficient; quarter-tones,
-cents deviations, and equivalent spellings are resolved at runtime in MIDI float
-space via ``microtonal.note_to_midi``.
+Chromatic-only tables (C4, C#4, D4, … × pp/mf/ff) are the canonical model.
+Quarter-tones, arbitrary cent deviations, and enharmonic spellings resolve at
+runtime in MIDI float space via ``microtonal.note_to_midi_strict``.
 
 Strictly symbolic: no audio analysis or signal processing.
 """
@@ -11,10 +11,11 @@ Strictly symbolic: no audio analysis or signal processing.
 from __future__ import annotations
 
 import logging
+import math
 from dataclasses import dataclass
 from typing import Callable, Literal
 
-from microtonal import extract_cents, normalizar_simbolos_nota, note_to_midi
+from microtonal import InvalidPitchNotation, normalizar_simbolos_nota, note_to_midi_strict
 
 try:
     from scipy.interpolate import PchipInterpolator
@@ -26,6 +27,7 @@ except ImportError:  # pragma: no cover
 WARN_DEVIATION_SEMITONES = 1.0
 ERROR_DEVIATION_SEMITONES = 12.0
 MIDI_MATCH_EPS = 1e-6
+VALUE_MATCH_EPS = 1e-9
 
 InterpolationMethod = Literal["auto", "linear", "pchip"]
 LookupProvenance = Literal[
@@ -37,13 +39,17 @@ LookupProvenance = Literal[
 ]
 
 
+class MetadataTableConflictError(ValueError):
+    """Raised when duplicate MIDI coordinates disagree on dynamic metadata values."""
+
+
 @dataclass(frozen=True)
 class PitchLookupResult:
     """Result of a pitch×dynamic metadata lookup."""
 
     value: float
     provenance: LookupProvenance
-    target_midi: float
+    target_midi: float | None
     dynamic: str
     lower_anchor_midi: float | None = None
     upper_anchor_midi: float | None = None
@@ -82,57 +88,106 @@ def _dynamic_value(
     return float(sum(row.values()) / len(row))
 
 
+def _parse_table_key_midi(
+    table_key: str,
+    *,
+    preprocess: Callable[[str], str] | None,
+) -> float:
+    candidate = normalizar_simbolos_nota(table_key)
+    if preprocess is not None:
+        candidate = preprocess(candidate)
+    return float(note_to_midi_strict(candidate))
+
+
 def _note_to_target_midi(
     note: str,
     *,
     preprocess: Callable[[str], str] | None,
 ) -> tuple[float, str, str]:
-    """
-    Return (target_midi, normalized_note_without_cents, base_after_preprocess).
-
-    Cents are applied on top of ``note_to_midi`` for the base spelling.
-    """
-    nota_norm = normalizar_simbolos_nota(note)
-    base_note, cents_value = extract_cents(nota_norm)
+    """Return (target_midi, normalized_note, preprocessed_note)."""
+    note_normalized = normalizar_simbolos_nota(note)
+    candidate = note_normalized
     if preprocess is not None:
-        base_note = preprocess(base_note)
-    try:
-        target_midi = float(note_to_midi(base_note))
-        if cents_value != 0:
-            target_midi += cents_value / 100.0
-    except Exception as exc:
-        raise ValueError(f"Cannot convert note {note!r} to MIDI: {exc}") from exc
-    return target_midi, nota_norm, base_note
+        candidate = preprocess(candidate)
+    target_midi = float(note_to_midi_strict(candidate))
+    return target_midi, note_normalized, candidate
 
 
-def _table_midi_for_key(
-    table_key: str,
+def validate_metadata_table(
+    spectral_table: dict[str, dict[str, float]],
     *,
-    preprocess: Callable[[str], str] | None,
-) -> float | None:
-    try:
-        key_norm = normalizar_simbolos_nota(table_key)
-        base, cents = extract_cents(key_norm)
-        if preprocess is not None:
-            base = preprocess(base)
-        midi = float(note_to_midi(base))
-        if cents != 0:
-            midi += cents / 100.0
-        return midi
-    except Exception:
-        return None
+    preprocess: Callable[[str], str] | None = None,
+    logger: logging.Logger | None = None,
+) -> tuple[dict[str, dict[str, float]], tuple[str, ...]]:
+    """
+    Validate and normalize a metadata table.
+
+    - Unparsable keys are excluded with warnings.
+    - Harmless duplicate MIDI rows (identical dynamic values) are deduplicated
+      deterministically (lexicographically smallest key kept).
+    - Conflicting duplicate MIDI rows raise ``MetadataTableConflictError``.
+    """
+    log = logger or logging.getLogger(__name__)
+    warnings: list[str] = []
+    parsed: list[tuple[float, str, dict[str, float]]] = []
+
+    for key, row in spectral_table.items():
+        try:
+            midi = _parse_table_key_midi(key, preprocess=preprocess)
+        except InvalidPitchNotation as exc:
+            msg = f"Skipping unparsable metadata table key {key!r}: {exc}"
+            log.warning(msg)
+            warnings.append(msg)
+            continue
+        parsed.append((midi, key, dict(row)))
+
+    by_midi: dict[float, list[tuple[str, dict[str, float]]]] = {}
+    for midi, key, row in parsed:
+        by_midi.setdefault(midi, []).append((key, row))
+
+    normalized: dict[str, dict[str, float]] = {}
+    for midi, items in sorted(by_midi.items(), key=lambda item: item[0]):
+        items_sorted = sorted(items, key=lambda item: item[0])
+        ref_key, ref_row = items_sorted[0]
+        for key, row in items_sorted[1:]:
+            dynamics = set(ref_row) | set(row)
+            for dyn in dynamics:
+                if dyn not in ref_row or dyn not in row:
+                    continue
+                if abs(float(ref_row[dyn]) - float(row[dyn])) > VALUE_MATCH_EPS:
+                    raise MetadataTableConflictError(
+                        f"Conflicting metadata at MIDI {midi:.4f}: "
+                        f"{ref_key!r} ({dyn}={ref_row[dyn]}) vs "
+                        f"{key!r} ({dyn}={row[dyn]})"
+                    )
+            msg = (
+                f"Harmless duplicate MIDI {midi:.4f}: kept {ref_key!r}, "
+                f"deduplicated {[k for k, _ in items_sorted[1:]]}"
+            )
+            log.info(msg)
+            warnings.append(msg)
+        normalized[ref_key] = ref_row
+
+    return normalized, tuple(dict.fromkeys(warnings))
 
 
 def _build_sorted_entries(
     spectral_data: dict[str, dict[str, float]],
     *,
     preprocess: Callable[[str], str] | None,
+    logger: logging.Logger | None = None,
+    validate_table: bool = True,
 ) -> list[tuple[float, str]]:
-    entries: list[tuple[float, str]] = []
-    for key in spectral_data:
-        midi = _table_midi_for_key(key, preprocess=preprocess)
-        if midi is not None:
-            entries.append((midi, key))
+    if validate_table:
+        validated, _ = validate_metadata_table(
+            spectral_data, preprocess=preprocess, logger=logger
+        )
+    else:
+        validated = spectral_data
+    entries = [
+        (_parse_table_key_midi(key, preprocess=preprocess), key)
+        for key in validated
+    ]
     entries.sort(key=lambda item: item[0])
     return entries
 
@@ -162,21 +217,12 @@ def _normalized_midi_lookup(
     target_midi: float,
     dinamica: str,
     *,
-    preprocess: Callable[[str], str] | None,
-    prefer_key: str | None = None,
+    entries: list[tuple[float, str]],
 ) -> tuple[float, str] | None:
-    """Step 2 — enharmonic / equivalent-spelling match by MIDI float."""
-    matches: list[tuple[float, str]] = []
-    for key in spectral_data:
-        midi = _table_midi_for_key(key, preprocess=preprocess)
-        if midi is not None and abs(midi - target_midi) < MIDI_MATCH_EPS:
-            matches.append((midi, key))
+    """Step 2 — MIDI-equivalent match against validated table anchors."""
+    matches = [(midi, key) for midi, key in entries if abs(midi - target_midi) < MIDI_MATCH_EPS]
     if not matches:
         return None
-    if prefer_key:
-        for _, key in matches:
-            if key == prefer_key:
-                return _dynamic_value(spectral_data, key, dinamica), key
     matches.sort(key=lambda item: item[1])
     key = matches[0][1]
     return _dynamic_value(spectral_data, key, dinamica), key
@@ -234,7 +280,7 @@ def _interpolate_pchip(
     try:
         interpolator = PchipInterpolator(midis, values, extrapolate=False)
         result = float(interpolator(target_midi))
-        if not (result == result and abs(result) < 1e12):  # NaN / inf guard
+        if not math.isfinite(result) or abs(result) >= 1e12:
             return None
         return result
     except Exception:
@@ -256,6 +302,22 @@ def _range_deviation_semitones(
     return 0.0
 
 
+def _fallback_result(
+    *,
+    value: float,
+    dynamic: str,
+    target_midi: float | None,
+    warnings: list[str],
+) -> PitchLookupResult:
+    return PitchLookupResult(
+        value=float(value),
+        provenance="fallback",
+        target_midi=target_midi,
+        dynamic=dynamic,
+        warnings=tuple(dict.fromkeys(warnings)),
+    )
+
+
 def resolve_density_from_table(
     spectral_table: dict[str, dict[str, float]],
     note: str,
@@ -267,17 +329,17 @@ def resolve_density_from_table(
     fallback_value: float | None = 5.0,
     logger: logging.Logger | None = None,
     preprocess: Callable[[str], str] | None = None,
+    validate_table: bool = True,
 ) -> PitchLookupResult:
     """
     Resolve instrument density from a sparse note×dynamic metadata table.
 
-    Lookup order:
-    1. Exact table key (original / normalized / preprocessed spelling)
-    2. Normalised MIDI-equivalent match across table keys
-    3. Continuous-pitch interpolation in MIDI float space
+    Chromatic anchors define a continuous pitch-density function; microtonal
+    curated rows are optional exact overrides. Lookup order:
 
-    Pitch and dynamic resolution are independent: dynamic is resolved per row,
-    then pitch interpolation uses the selected dynamic column only.
+    1. Exact table key
+    2. Normalised MIDI-equivalent match
+    3. Continuous interpolation in MIDI float space
     """
     log = logger or logging.getLogger(__name__)
     label = provenance_label or "instrument metadata"
@@ -285,39 +347,43 @@ def resolve_density_from_table(
     warnings: list[str] = []
     dyn_resolved = _resolve_dynamic(dynamic)
 
-    if not spectral_table:
+    working_table = spectral_table
+    if validate_table and spectral_table:
+        try:
+            working_table, table_warnings = validate_metadata_table(
+                spectral_table, preprocess=preprocess, logger=log
+            )
+            warnings.extend(table_warnings)
+        except MetadataTableConflictError:
+            raise
+
+    if not working_table:
         msg = f"Empty spectral table for {label}; fallback {fallback_value}"
         log.warning(msg)
         warnings.append(msg)
-        return PitchLookupResult(
+        return _fallback_result(
             value=float(fallback_value if fallback_value is not None else 0.0),
-            provenance="fallback",
-            target_midi=60.0,
             dynamic=dyn_resolved,
-            warnings=tuple(warnings),
+            target_midi=None,
+            warnings=warnings,
         )
 
     note_normalized = normalizar_simbolos_nota(note_original)
-    base_preprocessed = note_original
-    target_midi = 60.0
     try:
-        target_midi, _, base_preprocessed = _note_to_target_midi(
-            note_original, preprocess=preprocess
-        )
-    except ValueError as exc:
+        target_midi, _, _ = _note_to_target_midi(note_original, preprocess=preprocess)
+    except InvalidPitchNotation as exc:
         msg = f"Invalid note {note_original!r} for {label}: {exc}"
         log.warning("%s — fallback", msg)
         warnings.append(msg)
-        return PitchLookupResult(
+        return _fallback_result(
             value=float(fallback_value if fallback_value is not None else 0.0),
-            provenance="fallback",
-            target_midi=60.0,
             dynamic=dyn_resolved,
-            warnings=tuple(warnings),
+            target_midi=None,
+            warnings=warnings,
         )
 
     exact = _exact_row_lookup(
-        spectral_table,
+        working_table,
         note_original=note_original,
         note_normalized=note_normalized,
         dinamica=dynamic,
@@ -331,16 +397,38 @@ def resolve_density_from_table(
             warnings=tuple(warnings),
         )
 
+    entries = (
+        [
+            (_parse_table_key_midi(key, preprocess=preprocess), key)
+            for key in working_table
+        ]
+        if validate_table
+        else _build_sorted_entries(
+            working_table,
+            preprocess=preprocess,
+            logger=log,
+            validate_table=False,
+        )
+    )
+    entries.sort(key=lambda item: item[0])
+
+    if not entries:
+        msg = f"No parseable table keys for {label}; fallback"
+        log.warning(msg)
+        warnings.append(msg)
+        return _fallback_result(
+            value=float(fallback_value if fallback_value is not None else 0.0),
+            dynamic=dyn_resolved,
+            target_midi=target_midi,
+            warnings=warnings,
+        )
+
     norm_match = _normalized_midi_lookup(
-        spectral_table,
-        target_midi,
-        dynamic,
-        preprocess=preprocess,
-        prefer_key=base_preprocessed,
+        working_table, target_midi, dynamic, entries=entries
     )
     if norm_match is not None:
         value, matched_key = norm_match
-        if matched_key != base_preprocessed and matched_key != note_original:
+        if matched_key != note_original and matched_key != note_normalized:
             msg = (
                 f"Note {note_original} (MIDI {target_midi:.4f}) matched table key "
                 f"{matched_key!r} by MIDI equivalence"
@@ -356,20 +444,7 @@ def resolve_density_from_table(
             warnings=tuple(warnings),
         )
 
-    entries = _build_sorted_entries(spectral_table, preprocess=preprocess)
-    if not entries:
-        msg = f"No parseable table keys for {label}; fallback"
-        log.warning(msg)
-        warnings.append(msg)
-        return PitchLookupResult(
-            value=float(fallback_value if fallback_value is not None else 0.0),
-            provenance="fallback",
-            target_midi=target_midi,
-            dynamic=dyn_resolved,
-            warnings=tuple(warnings),
-        )
-
-    value_at = lambda table_key: _dynamic_value(spectral_table, table_key, dynamic)
+    value_at = lambda table_key: _dynamic_value(working_table, table_key, dynamic)
     deviation = _range_deviation_semitones(target_midi, entries)
     in_range = deviation < MIDI_MATCH_EPS
 
@@ -382,26 +457,20 @@ def resolve_density_from_table(
         log.error(msg)
         warnings.append(msg)
         if fallback_value is not None:
-            return PitchLookupResult(
+            return _fallback_result(
                 value=float(fallback_value),
-                provenance="fallback",
-                target_midi=target_midi,
                 dynamic=dyn_resolved,
-                warnings=tuple(warnings),
+                target_midi=target_midi,
+                warnings=warnings,
             )
         lower, upper = _bracket_neighbors(target_midi, entries)
-        clamp_midi = entries[0][0] if target_midi < entries[0][0] else entries[-1][0]
         clamp_key = lower[1] if target_midi < entries[0][0] else upper[1]
-        return PitchLookupResult(
+        clamp_midi = entries[0][0] if target_midi < entries[0][0] else entries[-1][0]
+        return _fallback_result(
             value=float(value_at(clamp_key)),
-            provenance="fallback",
-            target_midi=target_midi,
             dynamic=dyn_resolved,
-            lower_anchor_midi=clamp_midi,
-            upper_anchor_midi=clamp_midi,
-            lower_anchor_key=clamp_key,
-            upper_anchor_key=clamp_key,
-            warnings=tuple(warnings),
+            target_midi=target_midi,
+            warnings=warnings,
         )
 
     if not allow_extrapolation and not in_range:
@@ -413,12 +482,11 @@ def resolve_density_from_table(
         warnings.append(msg)
         lower, upper = _bracket_neighbors(target_midi, entries)
         edge_key = lower[1] if target_midi < entries[0][0] else upper[1]
-        return PitchLookupResult(
+        return _fallback_result(
             value=float(value_at(edge_key)),
-            provenance="fallback",
-            target_midi=target_midi,
             dynamic=dyn_resolved,
-            warnings=tuple(warnings),
+            target_midi=target_midi,
+            warnings=warnings,
         )
 
     lower, upper = _bracket_neighbors(target_midi, entries)
@@ -461,13 +529,12 @@ def resolve_density_from_table(
                 f"({deviation:.2f} st) — controlled extrapolation"
             )
             log.info(msg)
-    elif provenance == "interpolated":
-        if lower[1] != upper[1]:
-            msg = (
-                f"Note {note_original} (MIDI {target_midi:.4f}) interpolated "
-                f"between {lower[1]!r} and {upper[1]!r} — modelled from chromatic anchors"
-            )
-            log.info(msg)
+    elif provenance == "interpolated" and lower[1] != upper[1]:
+        msg = (
+            f"Note {note_original} (MIDI {target_midi:.4f}) interpolated "
+            f"between {lower[1]!r} and {upper[1]!r} — modelled from chromatic anchors"
+        )
+        log.info(msg)
 
     if provenance in ("interpolated", "extrapolated"):
         warnings.append(
@@ -493,15 +560,17 @@ def sorted_table_entries(
     *,
     preprocess: Callable[[str], str] | None = None,
 ) -> list[tuple[float, str]]:
-    """Public alias for sorted (midi, table_key) pairs."""
+    """Public alias for sorted (midi, table_key) pairs after validation."""
     return _build_sorted_entries(spectral_data, preprocess=preprocess)
 
 
 __all__ = [
+    "MetadataTableConflictError",
     "PitchLookupResult",
     "LookupProvenance",
     "InterpolationMethod",
     "resolve_density_from_table",
+    "validate_metadata_table",
     "sorted_table_entries",
     "WARN_DEVIATION_SEMITONES",
     "ERROR_DEVIATION_SEMITONES",

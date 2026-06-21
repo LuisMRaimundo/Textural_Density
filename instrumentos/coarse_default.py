@@ -11,7 +11,7 @@ from __future__ import annotations
 from types import SimpleNamespace
 from typing import TYPE_CHECKING
 
-from microtonal import note_to_midi
+from microtonal import note_to_midi_strict
 
 if TYPE_CHECKING:
     from instrumentos.registry import InstrumentProfile
@@ -52,7 +52,7 @@ def _dynamic_weight(profile: InstrumentProfile, dynamic: str) -> float:
 
 def calcular_densidade_for_profile(profile: InstrumentProfile, nota: str, dinamica: str) -> float:
     """Coarse symbolic density for one note/dynamic pair."""
-    midi = note_to_midi(nota)
+    midi = note_to_midi_strict(nota)
     base = 8.0
     comfort = _comfort_factor(midi, profile.comfortable_range)
     brightness = _BRIGHTNESS.get(profile.generic_brightness_class, 1.0)

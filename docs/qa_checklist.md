@@ -4,7 +4,7 @@ Use alongside [`score_only_90_readiness_checklist.md`](score_only_90_readiness_c
 
 ## Test suite and CI
 
-- [x] Full suite: **638 tests** passing locally
+- [x] Full suite: **689 tests** (**687 passing**) locally
 - [x] GitHub Actions: `test` (3.10, 3.11) + `quality` green
 - [x] CircleCI: `tests-3.10`, `tests-3.11` green
 

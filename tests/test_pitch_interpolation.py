@@ -9,9 +9,13 @@ import pytest
 
 from instrumentos import get_instrument_module
 from instrumentos.flauta import calcular_densidade as flauta_density, spectral_data as flauta_table
-from instrumentos.pitch_interpolation import resolve_density_from_table
+from instrumentos.pitch_interpolation import (
+    MetadataTableConflictError,
+    resolve_density_from_table,
+    validate_metadata_table,
+)
 from instrumentos.spectral_lookup import lookup_spectral_density, lookup_spectral_density_detailed
-from microtonal import note_to_midi
+from microtonal import InvalidPitchNotation, note_to_midi_strict
 
 
 CHROMATIC_TABLE = {
@@ -19,6 +23,13 @@ CHROMATIC_TABLE = {
     "C#4": {"pp": 5.0, "mf": 20.0, "ff": 25.0},
     "D4": {"pp": 6.0, "mf": 30.0, "ff": 36.0},
     "G4": {"pp": 7.0, "mf": 9.0, "ff": 11.0},
+}
+
+EXTENDED_CHROMATIC = {
+    **CHROMATIC_TABLE,
+    "B3": {"mf": 8.0},
+    "A5": {"mf": 12.0},
+    "D3": {"mf": 14.0},
 }
 
 
@@ -107,11 +118,70 @@ class TestOctaveSafety:
         assert d6 != pytest.approx(d4)
 
     def test_high_pitch_not_collapsed_to_low_register(self):
-        target = float(note_to_midi("D#6"))
+        target = float(note_to_midi_strict("D#6"))
         logger = logging.getLogger("test.pitch_interpolation.octave")
         result = lookup_spectral_density_detailed(flauta_table, "D#6", "mf", logger=logger)
         assert result.target_midi == pytest.approx(target)
         assert result.value != pytest.approx(flauta_density("D#4", "mf"))
+
+
+class TestStrictCentsInterpolation:
+    def test_d3_plus_7c_interpolated(self):
+        result = _resolve(EXTENDED_CHROMATIC, "D3+7c", "mf", interpolation_method="linear")
+        assert result.provenance == "interpolated"
+        assert result.target_midi == pytest.approx(50.07, abs=1e-9)
+        assert math.isfinite(result.value)
+
+    def test_a5_minus_30c_interpolated(self):
+        result = _resolve(EXTENDED_CHROMATIC, "A5-30c", "mf", interpolation_method="linear")
+        assert result.provenance == "interpolated"
+        assert result.target_midi == pytest.approx(80.70, abs=1e-9)
+        assert math.isfinite(result.value)
+
+    def test_c4_plus_125c_between_c_sharp4_and_d4(self):
+        result = _resolve(CHROMATIC_TABLE, "C4+125c", "mf", interpolation_method="linear")
+        assert result.target_midi == pytest.approx(61.25, abs=1e-9)
+        assert result.lower_anchor_key == "C#4"
+        assert result.upper_anchor_key == "D4"
+        assert result.value == pytest.approx(22.5)
+
+    def test_c4_minus_30c_between_b3_and_c4(self):
+        table = {**CHROMATIC_TABLE, "B3": {"mf": 8.0}}
+        result = _resolve(table, "C4-30c", "mf", interpolation_method="linear")
+        assert result.target_midi == pytest.approx(59.70, abs=1e-9)
+        assert result.lower_anchor_key == "B3"
+        assert result.upper_anchor_key == "C4"
+        assert result.value == pytest.approx(9.4)
+
+    def test_invalid_target_note_fallback_without_c4_midi(self):
+        result = _resolve(CHROMATIC_TABLE, "foo", "mf")
+        assert result.provenance == "fallback"
+        assert result.target_midi is None
+
+
+class TestMetadataTableValidation:
+    def test_identical_duplicate_midi_deduplicated(self):
+        table = {
+            "C#4": {"mf": 20.0, "pp": 5.0},
+            "Db4": {"mf": 20.0, "pp": 5.0},
+        }
+        normalized, warnings = validate_metadata_table(table)
+        assert len(normalized) == 1
+        assert normalized["C#4"]["mf"] == pytest.approx(20.0)
+        assert any("duplicate" in w.lower() for w in warnings)
+
+    def test_conflicting_duplicate_midi_raises(self):
+        table = {
+            "C#4": {"mf": 20.0},
+            "Db4": {"mf": 25.0},
+        }
+        with pytest.raises(MetadataTableConflictError, match="Conflicting metadata"):
+            validate_metadata_table(table)
+
+    def test_resolve_raises_on_conflicting_table(self):
+        table = {"C#4": {"mf": 20.0}, "Db4": {"mf": 25.0}}
+        with pytest.raises(MetadataTableConflictError):
+            _resolve(table, "C4", "mf")
 
 
 class TestRangeHandling:

@@ -38,13 +38,17 @@ def predict_intermediate_dynamics(
 
 Unknown dynamics are normalised to `mf` or interpolated via `predict_intermediate_dynamics`.
 
-**Pitch lookup:** `instrumentos/pitch_interpolation.py` provides unified continuous-pitch resolution; `instrumentos/spectral_lookup.py` wraps it for instrument modules. **Chromatic-only tables are sufficient** — quarter-tones, cents (`C4+50c`), and arrow notation (`C↓4`, `C↑4`) are inferred at runtime by interpolating between chromatic anchors in **MIDI float space**. Manually pasted microtonal table rows remain optional and take priority over interpolated estimates when present.
+**Pitch lookup:** `instrumentos/pitch_interpolation.py` provides unified continuous-pitch resolution; `instrumentos/spectral_lookup.py` wraps it for instrument modules. **Chromatic-only tables are the canonical model** — quarter-tones, arbitrary cents (`D3+7c`, `C4+125c`), and arrow notation are inferred at runtime via `microtonal.note_to_midi_strict()` and linear/PCHIP interpolation between chromatic anchors. Manually pasted microtonal rows are optional curated exact overrides only; flute/oboe pasted tables are not architectural requirements.
+
+Strict pitch parsing (`note_to_midi_strict`, `parse_pitch_strict`) raises `InvalidPitchNotation` on malformed input and **never** falls back to C4. Legacy `note_to_midi()` remains permissive for backward compatibility; research/instrument paths use strict parsing.
 
 Lookup order:
 
-1. **Exact** — literal table key match (original / normalized / preprocessed spelling)
+1. **Exact** — literal table key match (curated microtonal override rows, if present)
 2. **Normalized exact** — enharmonic / equivalent MIDI match (e.g. `C♯4` ≡ `C#4`)
-3. **Continuous interpolation** — local linear between bracketing anchors; PCHIP when ≥4 in-range anchors and `auto` mode; controlled extrapolation slightly outside range
+3. **Continuous interpolation** — local linear between bracketing chromatic anchors; PCHIP when ≥4 in-range anchors and `auto` mode
+
+**Table validation:** duplicate MIDI coordinates with identical dynamic values are deduplicated deterministically; conflicting duplicates (e.g. `C#4` vs `Db4` with different `mf`) raise `MetadataTableConflictError`.
 
 Provenance labels (`exact`, `normalized_exact`, `interpolated`, `extrapolated`, `fallback`) distinguish measured table entries from modelled microtonal estimates. Interpolated values are **not** labelled as directly measured.
 

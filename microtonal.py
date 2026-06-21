@@ -10,9 +10,19 @@ Serve como interface comum para diferentes representações de notas microtonais
 import re
 import logging
 import math
+from dataclasses import dataclass
 from typing import Dict, Tuple, List, Optional, Union
 
 logger = logging.getLogger(__name__)
+
+
+class InvalidPitchNotation(ValueError):
+    """Raised when a pitch string is malformed or unsupported in strict mode."""
+
+
+_RE_CENTS_STRICT = re.compile(r"([+-]\d+(?:\.\d+)?)(?:c|¢)$", re.IGNORECASE)
+_RE_PITCH_QUARTER = re.compile(r"^([A-Ga-g])([#b]?)([+-])(\d+)$")
+_RE_PITCH_CHROMATIC = re.compile(r"^([A-Ga-g])([#b]?)(\d+)$")
 
 
 def normalizar_simbolos_nota(nota: str) -> str:
@@ -239,6 +249,32 @@ def is_valid_note(nota: str) -> bool:
             return True
     
     return False
+
+
+def extract_cents_float(nota: str) -> Tuple[str, float]:
+    """
+    Extract a signed decimal cents suffix from ``nota``.
+
+    Supports ``+7c``, ``-30c``, ``+125c``, ``+7.5c``, ``+7¢``, etc.
+    Returns ``(base_without_cents, cents_float)``.
+    """
+    if not isinstance(nota, str) or not nota:
+        return nota, 0.0
+
+    match = _RE_CENTS_STRICT.search(nota)
+    if match:
+        base = nota[: match.start()]
+        if not base:
+            raise InvalidPitchNotation(f"Cents suffix without pitch base: {nota!r}")
+        return base, float(match.group(1))
+
+    legacy_match = re.search(r"([+-]\d{1,2})c$", nota, re.IGNORECASE)
+    if legacy_match:
+        base = nota[: legacy_match.start()]
+        if base:
+            return base, float(int(legacy_match.group(1)))
+
+    return nota, 0.0
 
 
 def extract_cents(nota: str) -> Tuple[str, int]:
@@ -487,21 +523,130 @@ def nota_para_posicao(nota: str) -> float:
     return posicao_cents
 
 
-def note_to_midi(note: str) -> float:
+@dataclass(frozen=True)
+class ParsedPitch:
+    """Structured strict pitch parse result."""
+
+    original: str
+    letter: str
+    accidental: str
+    quarter_offset: float
+    octave: int
+    cents: float
+
+    @property
+    def midi(self) -> float:
+        return note_to_midi_strict_from_parsed(self)
+
+
+def _pitch_class_semitone(letter: str, accidental: str) -> int:
+    if accidental and len(accidental) > 1:
+        raise InvalidPitchNotation(f"Multiple accidentals not supported: {letter}{accidental}")
+    pitch_class = letter.upper() + accidental
+    if pitch_class not in ESCALA_CROMATICA:
+        raise InvalidPitchNotation(f"Unknown pitch class: {pitch_class!r}")
+    return int(ESCALA_CROMATICA[pitch_class])
+
+
+def _resolve_quarter_tone_spelling(
+    letter: str,
+    accidental: str,
+    sign: str,
+    octave: int,
+) -> tuple[str, str, float, int]:
+    """Normalize E#/B# quarter-tone spellings to canonical chromatic anchors."""
+    pitch_class = letter.upper() + accidental
+    q = 0.5 if sign == "+" else -0.5
+    if pitch_class == "E#":
+        if sign == "-":
+            return "E", "", 0.5, octave
+        return "F", "", 0.5 if sign == "+" else -0.5, octave
+    if pitch_class == "B#":
+        if sign == "-":
+            return "B", "", 0.5, octave
+        return "C", "", 0.5, octave + 1
+    return letter.upper(), accidental, q, octave
+
+
+def parse_pitch_strict(note: str) -> ParsedPitch:
+    """
+    Parse a pitch string into structured components.
+
+    Raises ``InvalidPitchNotation`` for malformed or unsupported strings.
+    Never falls back to C4.
+    """
+    if not isinstance(note, str) or not note.strip():
+        raise InvalidPitchNotation("Pitch must be a non-empty string")
+
+    original = note.strip()
+    working = original.replace("♯", "#")
+    base, cents = extract_cents_float(working)
+    base = normalizar_simbolos_nota(base)
+
+    quarter_offset = 0.0
+    letter: str | None = None
+    accidental = ""
+    octave = 0
+
+    q_match = _RE_PITCH_QUARTER.match(base)
+    if q_match:
+        letter, accidental, sign, oct_s = q_match.groups()
+        letter, accidental, quarter_offset, octave = _resolve_quarter_tone_spelling(
+            letter, accidental, sign, int(oct_s)
+        )
+    else:
+        c_match = _RE_PITCH_CHROMATIC.match(base)
+        if not c_match:
+            raise InvalidPitchNotation(f"Unsupported pitch notation: {original!r}")
+        letter, accidental, oct_s = c_match.groups()
+        if accidental and len(accidental) > 1:
+            raise InvalidPitchNotation(f"Multiple accidentals not supported: {original!r}")
+        octave = int(oct_s)
+        _pitch_class_semitone(letter, accidental)
+
+    if letter is None:
+        raise InvalidPitchNotation(f"Unsupported pitch notation: {original!r}")
+
+    return ParsedPitch(
+        original=original,
+        letter=letter,
+        accidental=accidental,
+        quarter_offset=quarter_offset,
+        octave=octave,
+        cents=float(cents),
+    )
+
+
+def note_to_midi_strict_from_parsed(parsed: ParsedPitch) -> float:
+    semitone = _pitch_class_semitone(parsed.letter, parsed.accidental)
+    midi = (parsed.octave + 1) * 12 + semitone + parsed.quarter_offset
+    if parsed.cents:
+        midi += parsed.cents / 100.0
+    return float(midi)
+
+
+def note_to_midi_strict(note: str) -> float:
+    """Convert ``note`` to continuous MIDI; raise ``InvalidPitchNotation`` on failure."""
+    return parse_pitch_strict(note).midi
+
+
+def note_to_midi(note: str, *, strict: bool = False) -> float:
     """Converte uma nota textual para o número MIDI (float)."""
+    if strict:
+        return note_to_midi_strict(note)
+
     if not isinstance(note, str) or not note:
         return 60.0
 
     # Normalizar símbolos: converter ♯ para # para processamento interno
     note = note.replace("♯", "#")
-    
-    # Extrair cents se presentes
-    base_note, cents_value = extract_cents(note)
-    base_midi = 0
-    
-    # -----------------------------------------------------------------
-    # 1) nota com cents já extraídos
-    # -----------------------------------------------------------------
+
+    # Extrair cents (decimal-capable) se presentes
+    try:
+        base_note, cents_value = extract_cents_float(note)
+    except InvalidPitchNotation:
+        base_note, cents_value = note, 0.0
+
     if cents_value != 0:
         return note_to_midi(base_note) + (cents_value / 100.0)
     

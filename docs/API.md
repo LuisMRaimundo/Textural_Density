@@ -266,8 +266,21 @@ from instrumentos.spectral_lookup import lookup_spectral_density, lookup_spectra
 | `list_instrument_ids()` | All registered instrument IDs (~28) |
 | `list_profiles()` | All `InstrumentProfile` objects |
 | `resolve_density_from_table(table, note, dynamic, ...)` | Continuous-pitch metadata lookup with provenance (`PitchLookupResult`) |
+| `validate_metadata_table(table, ...)` | Deduplicate harmless duplicate MIDI rows; raise on conflicts |
 | `lookup_spectral_density(table, note, dynamic, logger=...)` | Backward-compatible float wrapper for instrument modules |
 | `lookup_spectral_density_detailed(...)` | Same as above, returns full `PitchLookupResult` |
+
+Strict pitch parsing (research / instrument metadata paths):
+
+```python
+from microtonal import note_to_midi_strict, parse_pitch_strict, InvalidPitchNotation
+```
+
+| Function | Description |
+|----------|-------------|
+| `note_to_midi_strict(note)` | Continuous MIDI float; raises `InvalidPitchNotation` on failure |
+| `parse_pitch_strict(note)` | Structured parse (`ParsedPitch`) |
+| `note_to_midi(note, strict=True)` | Routes to strict parser when requested |
 
 Each instrument module must implement:
 

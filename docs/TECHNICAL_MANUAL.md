@@ -107,8 +107,10 @@ score_io/, gui/                # Export and GUI layers (separate from core)
 - Each **instrument module** under `instrumentos/` exposes:
   - `calcular_densidade(nota, dinamica)` → float
   - `predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values)` → dict of arrays
-- Modules embed **sparse acoustic amplitude tables** (`spectral_data`) obtained from **external sources** (literature / measurement summaries). **Chromatic-only tables are sufficient** — quarter-tones, cents (`C4+50c`), and arrow notation (`C↓4`) are resolved at runtime by `instrumentos/pitch_interpolation.py` via continuous MIDI-space interpolation (local linear; PCHIP when enough in-range anchors). Manually pasted microtonal rows remain optional and take priority over interpolated estimates.
-- **Pitch lookup order:** (1) exact table key, (2) normalized MIDI-equivalent match, (3) continuous interpolation/extrapolation. Never collapses to the same pitch class in a distant octave (e.g. D♯6 ≠ D♯4). Provenance labels (`exact`, `normalized_exact`, `interpolated`, `extrapolated`, `fallback`) distinguish measured entries from modelled microtonal estimates.
+- Modules embed **sparse acoustic amplitude tables** (`spectral_data`) obtained from **external sources** (literature / measurement summaries). **Chromatic-only tables are the canonical model** — quarter-tones and arbitrary cent deviations resolve at runtime via `microtonal.note_to_midi_strict()` and `instrumentos/pitch_interpolation.py` (local linear / PCHIP between chromatic anchors). Optional pasted microtonal rows are curated exact overrides only.
+- **Strict pitch parsing:** `note_to_midi_strict()` / `parse_pitch_strict()` raise `InvalidPitchNotation` on malformed strings (`H4`, `C##4`, `foo`) and never fall back to C4. Legacy `note_to_midi()` remains permissive; instrument metadata lookup uses strict parsing.
+- **Pitch lookup order:** (1) exact table key, (2) normalized MIDI-equivalent match, (3) continuous interpolation/extrapolation. Never collapses to the same pitch class in a distant octave (e.g. D♯6 ≠ D♯4). Cents suffixes support signed decimal values (`+7.5c`, `+125c`, `+7¢`) applied as `cents / 100.0` semitones.
+- **Metadata table validation:** harmless duplicate MIDI rows (identical pp/mf/ff) are deduplicated; conflicting duplicates raise `MetadataTableConflictError`.
 - **Dynamic interpolation** (pp/mf/ff GPR or linear via `predict_intermediate_dynamics`) is separate from pitch interpolation — each dynamic column is interpolated independently over pitch.
 - **`instrumentos/registry.py`** maps names/aliases to profiles with `profile_status` (`literature_derived`, `empirical_source`, `coarse_default`) and `uncertainty`.
 - Instruments **without** GPR tables use coarse register/dynamic models only (`coarse_default`), also via `microtonal.note_to_midi` for microtonal input.
@@ -640,7 +642,7 @@ Phase 10 added automated quality checks (see `tests/test_quality_gates.py` and `
 
 | Gate | Threshold |
 |------|-----------|
-| Full test suite | **638 tests** passing (Python 3.10–3.11 on GitHub Actions and CircleCI) |
+| Full test suite | **689 tests** in suite (**687 passing**; Python 3.10–3.11 on GitHub Actions and CircleCI) |
 | Core + validation coverage | ≥ 80% |
 | Full project coverage | ≥ 63% |
 | Mypy (core, validation) | Zero errors with `--follow-imports=skip` |
