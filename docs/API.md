@@ -68,7 +68,9 @@ Alias: `calcular_metricas`. Single vertical-slice analysis.
 
 1. **`resultados`** — results dict (see [Output structure](#output-structure))
 2. **`densidades_instr`** — per-note instrument densities (aligned with input order)
-3. **`pitches`** — MIDI pitches for input notes
+3. **`pitches`** — continuous MIDI values from each event's `sounding_pitch.midi` (strict parse; octave-boundary enharmonics preserved, e.g. `Cb4` → 59.0)
+
+Invalid note strings raise `InvalidPitchNotation` during slice construction — they never silently become C4/MIDI 60.
 
 **Example:**
 
@@ -138,7 +140,7 @@ Load timed events from XML or MIDI without running full analysis. Returns `(even
 | `legacy_input_to_vertical_slice(input_data)` | Legacy dict → `VerticalSlice` |
 | `vertical_slice_to_legacy_lists(slice)` | `VerticalSlice` → `(notes, dynamics, instruments, counts)` |
 | `make_instrument_event(..., written_note=None)` | Build one `InstrumentEvent`; optional written pitch when transposition applies |
-| `note_string_to_pitch(note)` | Note string → `Pitch` |
+| `note_string_to_pitch(note)` | Note string → `Pitch` via `parse_pitch_strict()`; MIDI computed before spelling normalization; raises `InvalidPitchNotation` on invalid input |
 | `analysis_config_from_input(input_data)` | Dict → `AnalysisConfig` |
 
 ---
@@ -290,7 +292,7 @@ strict helper delegates to it.
 | `is_valid_note(note) -> bool` | **Non-raising strict predicate.** Exactly equivalent to "`parse_pitch_strict(note)` succeeds"; `False` (never raises) for non-strings or invalid notation |
 | `extract_cents(note) -> tuple[str, float]` | **Compatibility splitter** (thin alias of `extract_cents_float`). Separates a trailing signed/decimal cents suffix — does **not** validate the pitch base (that is `parse_pitch_strict`'s job) |
 | `extract_cents_float(note) -> tuple[str, float]` | Canonical cents splitter; accepts integer and decimal cents (`+7c`, `-30c`, `+125c`, `+7.5c`, `+7¢`) |
-| `format_cents_suffix(cents) -> str` | Shared formatter: `0` → `""`, integers omit decimals (`+50c`), decimals preserved (`+7.5c`) |
+| `format_cents_suffix(cents) -> str` | Shared formatter: `0` → `""`, integers omit decimals (`+50c`), decimals preserved (`+7.5c`); never uses scientific notation; round-trips through `extract_cents_float()` |
 
 Each instrument module must implement:
 

@@ -1,11 +1,11 @@
 # Textural Density - Musical Density Analysis Application
 
-**Version:** 1.1.3  
+**Version:** 1.1.4  
 **Status:** Active Development  
 **License:** [MIT](LICENSE)  
 **Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)
 
-> **Versioning:** Package release **1.1.3** (`pyproject.toml`) is separate from methodology phases **3.0.0** / **4.0.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`). See [docs/VERSIONING.md](docs/VERSIONING.md).
+> **Versioning:** Package release **1.1.4** (`pyproject.toml`) is separate from methodology phases **3.0.0** / **4.0.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`). See [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -35,7 +35,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Instrument registry** — orchestral profile scaffolding (~28 entries); **metadata corpus incomplete** — many instruments use coarse fallbacks; GPR tables for a few modules only
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML concert pitch** — `<transpose>` (chromatic + octave-change) applied for transposing instruments; `written_pitch` vs `sounding_pitch` on timed events
-- **Verification scaffolding** — **689 tests** (687 passing; GitHub Actions + CircleCI green); strict pitch parsing, pitch-interpolation, interval-density contracts, instrument scaffold tests, and frozen benchmarks (five project-authored MusicXML excerpts)
+- **Verification scaffolding** — **753 tests** (GitHub Actions + CircleCI green); strict pitch parsing, canonical core conversion path, pitch-interpolation, interval-density contracts, instrument scaffold tests, and frozen benchmarks (five project-authored MusicXML excerpts)
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -145,7 +145,7 @@ Textural_Density/
 ├── data_processor_legacy.py   # Legacy I/O and validation text (not the metric pipeline)
 ├── densidade_intervalar.py    # Interval density library
 ├── spectral_analysis.py       # Spectral metadata proxies
-└── tests/                     # 689 tests, regression baseline, quality gates
+└── tests/                     # 753 tests, regression baseline, quality gates
 ```
 
 **Call path (GUI):** `Main.py` → `AnalysisController` → `adapters/gui_adapter.build_analysis_request` → `core.pipeline.calculate_metrics`.
@@ -231,12 +231,11 @@ pytest tests/test_removed_perceptual_options.py -v
 
 ### Test Coverage
 
-Current status: **689 tests** in suite (**687 passing**); GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green.
+Current status: **753 tests** in suite; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green.
 
-**Known unrelated failures (outside strict-pitch scope):**
+**Known local-only failure (outside strict-pitch scope):**
 
-- `tests/test_benchmark_corpus.py` — pre-existing frozen output drift (`excerpt_005`)
-- `tests/test_version_consistency.py` — installed package version mismatch when an older editable install is present (e.g. 1.1.1 vs `pyproject.toml` 1.1.3)
+- `tests/test_version_consistency.py` — fails when a stale editable install is on `PYTHONPATH` (e.g. 1.1.1 vs current `pyproject.toml`); re-run `pip install -e .` or use a clean venv. CI is unaffected.
 
 Tiered CI policy (see [CONTRIBUTING.md](CONTRIBUTING.md)):
 
@@ -292,6 +291,12 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 ---
 
 ## Changelog
+
+### Version 1.1.4 (2026-06-21)
+- Canonical core path uses strict pitch parsing: `note_string_to_pitch()` delegates to `parse_pitch_strict()` (MIDI before spelling normalization; invalid input raises `InvalidPitchNotation`)
+- `calculate_metrics()` pitch list sourced from `event.sounding_pitch.midi` (no permissive reparse)
+- `format_cents_suffix()` precision-safe formatting (no scientific notation; round-trip via `extract_cents_float()`)
+- Tests: enharmonic converter/pipeline coverage in `tests/test_core_models.py`; extended `format_cents_suffix` tests in `tests/test_microtonal_strict.py`
 
 ### Version 1.1.3 (2026-06-21)
 - Strict pitch parsing: `InvalidPitchNotation`, `ParsedPitch`, `parse_pitch_strict()`, `note_to_midi_strict()`

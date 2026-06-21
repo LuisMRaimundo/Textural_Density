@@ -255,17 +255,16 @@ def format_cents_suffix(cents: float) -> str:
     - Numerical zero → empty string (no suffix).
     - Integer-valued offsets omit the decimal point: ``+7c``, ``-30c``, ``+125c``.
     - Decimal offsets are preserved: ``+7.5c``.
+    - Never uses scientific notation (e.g. ``+1e-06c``).
     """
-    if not cents:
-        return ""
     cents_f = float(cents)
-    if cents_f.is_integer():
-        body = str(int(cents_f))
-    else:
-        body = f"{cents_f:g}"
-    if cents_f > 0 and not body.startswith("+"):
-        body = f"+{body}"
-    return f"{body}c"
+
+    if math.isclose(cents_f, 0.0, abs_tol=1e-12):
+        return ""
+
+    body = format(abs(cents_f), ".15f").rstrip("0").rstrip(".")
+    sign = "+" if cents_f > 0 else "-"
+    return f"{sign}{body}c"
 
 
 def extract_cents(nota: str) -> Tuple[str, float]:

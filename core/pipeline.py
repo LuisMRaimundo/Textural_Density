@@ -36,7 +36,6 @@ from core.pitch_structure import (
 from core.subindices import SubindexContext, attach_density_subindices
 from error_handler import handle_exceptions
 from instrumentos import get_instrument_module
-from microtonal import note_to_midi
 from spectral_analysis import (
     calculate_chroma_vector,
     calculate_extended_spectral_moments,
@@ -249,7 +248,7 @@ def calculate_metrics(
     except Exception:
         software_version = "unknown"
 
-    pitches = [note_to_midi(n) for n in notas]
+    pitches = [float(event.sounding_pitch.midi) for event in vertical_slice.events]
 
     attach_metric_metadata(
         resultados,

@@ -12,8 +12,10 @@ from core.converters import (
     vertical_slice_to_legacy_lists,
 )
 from core.orchestration import compute_instrument_densities_for_slice
-from data_processor import calculate_metrics, load_instrument_module
+from core.pipeline import calculate_metrics
+from data_processor import calculate_metrics as dp_calculate_metrics, load_instrument_module
 from error_handler import InputError
+from microtonal import InvalidPitchNotation
 
 
 class TestPitch:
@@ -28,6 +30,16 @@ class TestPitch:
         pitch = note_string_to_pitch("A4+50c")
         assert pitch.midi == pytest.approx(69.5, abs=1e-6)
         assert pitch.cents_offset == 50
+
+    def test_note_string_to_pitch_preserves_cross_octave_enharmonics(self):
+        assert note_string_to_pitch("Cb4").midi == pytest.approx(59.0)
+        assert note_string_to_pitch("B#4").midi == pytest.approx(72.0)
+        assert note_string_to_pitch("Cb4+50c").midi == pytest.approx(59.5)
+        assert note_string_to_pitch("B#4-50c").midi == pytest.approx(71.5)
+
+    def test_note_string_to_pitch_rejects_invalid_pitch(self):
+        with pytest.raises(InvalidPitchNotation):
+            note_string_to_pitch("garbage")
 
 
 class TestLegacyConverter:
@@ -102,3 +114,36 @@ class TestPerEventInstrumentDensity:
         assert len(densities) == 2
         assert densities[0] > 0
         assert densities[1] > densities[0]
+
+
+class TestPipelineStrictPitchList:
+    def test_calculate_metrics_pitch_list_uses_event_midi(self):
+        data = {
+            "notes": ["Cb4", "B#4"],
+            "dynamics": ["mf", "mf"],
+            "instruments": ["flauta", "flauta"],
+            "num_instruments": [1, 1],
+        }
+        _, _, pitches = calculate_metrics(data)
+        assert pitches[0] == pytest.approx(59.0)
+        assert pitches[1] == pytest.approx(72.0)
+
+    def test_calculate_metrics_rejects_invalid_pitch(self):
+        data = {
+            "notes": ["garbage"],
+            "dynamics": ["mf"],
+            "instruments": ["flauta"],
+            "num_instruments": [1],
+        }
+        with pytest.raises(InvalidPitchNotation):
+            calculate_metrics(data)
+
+    def test_data_processor_gateway_rejects_invalid_pitch(self):
+        data = {
+            "notes": ["garbage"],
+            "dynamics": ["mf"],
+            "instruments": ["flauta"],
+            "num_instruments": [1],
+        }
+        with pytest.raises(InvalidPitchNotation):
+            dp_calculate_metrics(data)

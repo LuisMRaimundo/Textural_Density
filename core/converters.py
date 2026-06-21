@@ -12,7 +12,7 @@ from microtonal import (
     extract_cents,
     format_cents_suffix,
     midi_to_hz,
-    note_to_midi,
+    parse_pitch_strict,
 )
 
 from core.input_validation import validate_no_removed_perceptual_options
@@ -35,13 +35,13 @@ def _infer_family(instrument_name: str) -> str:
 
 def note_string_to_pitch(note: str) -> Pitch:
     """Build a Pitch from a note string (supports cents)."""
+    parsed = parse_pitch_strict(note)
+    midi = float(parsed.midi)
     normalized = _normalize_note_string(note)
-    base, cents = extract_cents(normalized)
-    midi = note_to_midi(normalized)
     return Pitch(
         midi=midi,
         note_name=normalized,
-        cents_offset=float(cents),
+        cents_offset=float(parsed.cents),
         frequency_hz=midi_to_hz(midi),
         spelling=note,
         pitch_class=int(round(midi)) % 12,
@@ -124,8 +124,6 @@ def legacy_input_to_vertical_slice(
     if not (
         len(notas) == len(dinamicas) == len(instrumentos) == len(numeros_instr)
     ):
-        raise InputError("Input lists must have the same length.")
-
         raise InputError("Input lists must have the same length.")
     for optional_name, optional_list in (
         ("onsets", onsets),

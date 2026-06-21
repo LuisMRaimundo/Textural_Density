@@ -10,6 +10,7 @@ from microtonal import (
     InvalidPitchNotation,
     converter_para_sustenido,
     extract_cents,
+    extract_cents_float,
     format_cents_suffix,
     is_valid_note,
     note_to_midi,
@@ -148,6 +149,29 @@ class TestExtractCentsCompatibilityAlias:
 
 
 class TestFormatCentsSuffix:
+    @pytest.mark.parametrize(
+        "cents, expected",
+        [
+            (0.0, ""),
+            (50.0, "+50c"),
+            (-30.0, "-30c"),
+            (125.0, "+125c"),
+            (7.5, "+7.5c"),
+        ],
+    )
+    def test_format_cents_suffix_basic(self, cents, expected):
+        assert format_cents_suffix(cents) == expected
+
+    @pytest.mark.parametrize(
+        "cents",
+        [7.5, 7.1234567, -30.125, 0.000001, 125.0],
+    )
+    def test_format_cents_suffix_round_trips(self, cents):
+        suffix = format_cents_suffix(cents)
+        _, recovered = extract_cents_float(f"C4{suffix}")
+        assert recovered == pytest.approx(cents)
+        assert "e" not in suffix.lower()
+
     def test_zero_is_empty(self):
         assert format_cents_suffix(0) == ""
         assert format_cents_suffix(0.0) == ""
