@@ -8,6 +8,7 @@ import pytest
 
 from core.converters import (
     legacy_input_to_vertical_slice,
+    make_instrument_event,
     note_string_to_pitch,
     vertical_slice_to_legacy_lists,
 )
@@ -121,7 +122,7 @@ class TestPipelineStrictPitchList:
         data = {
             "notes": ["Cb4", "B#4"],
             "dynamics": ["mf", "mf"],
-            "instruments": ["flauta", "flauta"],
+            "instruments": ["viola", "viola"],
             "num_instruments": [1, 1],
         }
         _, _, pitches = calculate_metrics(data)
@@ -147,3 +148,54 @@ class TestPipelineStrictPitchList:
         }
         with pytest.raises(InvalidPitchNotation):
             dp_calculate_metrics(data)
+
+
+class TestInstrumentPitchRangeValidation:
+    @pytest.mark.parametrize(
+        "note, instrument",
+        [
+            ("C1", "flauta"),
+            ("C1", "flute"),
+            ("C1", "violoncelo"),
+            ("C1", "cello"),
+        ],
+    )
+    def test_out_of_range_note_raises_input_error(self, note, instrument):
+        data = {
+            "notes": [note],
+            "dynamics": ["mf"],
+            "instruments": [instrument],
+            "num_instruments": [1],
+        }
+        with pytest.raises(InputError, match="outside the sounding range"):
+            calculate_metrics(data)
+
+    def test_in_range_flute_note_accepted(self):
+        data = {
+            "notes": ["C4"],
+            "dynamics": ["mf"],
+            "instruments": ["flauta"],
+            "num_instruments": [1],
+        }
+        _, _, pitches = calculate_metrics(data)
+        assert pitches[0] == pytest.approx(60.0)
+
+    def test_in_range_cello_low_boundary_accepted(self):
+        data = {
+            "notes": ["C2"],
+            "dynamics": ["mf"],
+            "instruments": ["violoncelo"],
+            "num_instruments": [1],
+        }
+        _, _, pitches = calculate_metrics(data)
+        assert pitches[0] == pytest.approx(36.0)
+
+    def test_make_instrument_event_rejects_out_of_range(self):
+        with pytest.raises(InputError, match="outside the sounding range"):
+            make_instrument_event(
+                idx=0,
+                note="C1",
+                dynamic="mf",
+                instrument_name="flauta",
+                player_count=1,
+            )

@@ -17,6 +17,7 @@ from microtonal import (
 
 from core.input_validation import validate_no_removed_perceptual_options
 from core.models import AnalysisConfig, InstrumentEvent, Pitch, VerticalSlice
+from core.pitch_range_validation import validate_event_sounding_range
 from instrumentos.registry import resolve_profile
 
 
@@ -78,7 +79,7 @@ def make_instrument_event(
         if written_note is not None
         else None
     )
-    return InstrumentEvent(
+    event = InstrumentEvent(
         event_id=f"evt_{idx}",
         instrument_id=inst_id,
         instrument_name=inst_name,
@@ -94,6 +95,8 @@ def make_instrument_event(
         voice_id=voice_id,
         metadata=metadata or {"legacy_index": idx},
     )
+    validate_event_sounding_range(event, index=idx)
+    return event
 
 
 def legacy_input_to_vertical_slice(

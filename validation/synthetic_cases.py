@@ -47,7 +47,7 @@ class SyntheticCase:
 def all_synthetic_cases() -> list[SyntheticCase]:
     return [
         SyntheticCase("unison", "Unison doubling", base_input(["C4", "C4"])),
-        SyntheticCase("octave_doubling", "Octave doubling", base_input(["C3", "C4"])),
+        SyntheticCase("octave_doubling", "Octave doubling", base_input(["C3", "C4"], instruments=["viola", "viola"])),
         SyntheticCase(
             "chromatic_cluster",
             "Chromatic semitone cluster",
@@ -66,17 +66,20 @@ def all_synthetic_cases() -> list[SyntheticCase]:
         SyntheticCase(
             "wide_spaced",
             "Wide-spaced chord",
-            base_input(["C3", "G3", "D4", "A4", "E5"]),
+            base_input(
+                ["C3", "G3", "D4", "A4", "E5"],
+                instruments=["violoncelo"] * 5,
+            ),
         ),
         SyntheticCase(
             "dense_low_register",
             "Dense low-register cluster",
-            base_input(["C2", "C#2", "D2", "D#2", "E2"]),
+            base_input(["C2", "C#2", "D2", "D#2", "E2"], instruments=["violoncelo"] * 5),
         ),
         SyntheticCase(
             "dense_high_register",
             "Dense high-register cluster",
-            base_input(["C6", "C#6", "D6", "D#6", "E6"]),
+            base_input(["C6", "C#6", "D6", "D#6", "E6"], instruments=["flauta"] * 5),
         ),
         SyntheticCase(
             "same_pitches_different_orchestration",
@@ -91,7 +94,7 @@ def all_synthetic_cases() -> list[SyntheticCase]:
             "Same orchestration, wider registral spread",
             base_input(
                 ["C3", "E4", "G5"],
-                instruments=["flauta", "flauta", "flauta"],
+                instruments=["violoncelo"] * 3,
             ),
         ),
         SyntheticCase(
@@ -116,14 +119,14 @@ def all_synthetic_cases() -> list[SyntheticCase]:
         SyntheticCase(
             "sparse_high_texture",
             "Sparse high-register texture",
-            base_input(["C6", "E6"], dynamics=["p", "p"]),
+            base_input(["C6", "E6"], dynamics=["p", "p"], instruments=["flauta", "flauta"]),
         ),
         SyntheticCase(
             "percussion_heavy",
             "Percussion-heavy vertical (nominal pitches)",
             base_input(
-                ["C3", "G3", "D4"],
-                instruments=["timpanos", "bombo", "pratos"],
+                ["C3", "G3", "A2"],
+                instruments=["timpanos", "timpanos", "timpanos"],
                 dynamics=["ff", "ff", "ff"],
             ),
         ),

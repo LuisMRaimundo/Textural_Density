@@ -31,6 +31,19 @@ live audio analysis.
   Oboe-specific measured corpus not yet committed.
 - **Uncertainty:** medium — literature-derived scaling proxy.
 
+## Viola (`viola`)
+
+- **Module:** `instrumentos/viola.py`
+- **Table:** `spectral_data` (49 chromatic rows, C2–C6; 147 AcousticTable rows in source workbook)
+- **Provenance:** Median/midpoint summary of viola arco sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **Source workbook:** `D:\CORDAS\ViOLA_Zenodo_collections_media.xlsx`
+  (Zenodo deposit name: `viola_arco_sustains_median_summary_v1.xlsx`)
+- **Sounding range (registry):** MIDI 48–76 (C3–E5); comfortable 50–69 (D3–A4)
+- **Extraction:** CDM midpoint pass-through; no rescaling (`identity_v1`)
+- **Interpolation:** Gaussian-process regression for intermediate dynamics
+- **Uncertainty:** medium — sparse table with known QC flags on extreme-register rows
+
 ## Registry-only instruments
 
 Instruments without a dedicated module use `coarse_default.py` — register and

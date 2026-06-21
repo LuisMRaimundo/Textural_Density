@@ -229,7 +229,7 @@ REGISTRY["contrafagote"] = _profile(
 # --- Strings (GPR modules: IOWA+ORCH CDM medians at pp/mf/ff) ---
 for _id, _name, _module, _sound, _comfort, _aliases in (
     ("violino", "Violin", "violino", (55, 103), (55, 76), ("violin",)),
-    ("viola", "Viola", "viola", (36, 84), (50, 69), ("viola",)),
+    ("viola", "Viola", "viola", (48, 76), (50, 69), ("viola",)),
     ("violoncelo", "Cello", "violoncelo", (36, 84), (40, 65), ("cello", "violoncello")),
     ("contrabaixo", "Double bass", "contrabaixo", (28, 72), (31, 55), ("double_bass", "contrabass", "baixo")),
 ):

@@ -78,7 +78,9 @@ def run_verification_suite() -> VerificationResult:
 
     # --- Property checks (qualitative verification) ---
     chromatic = _calculate(base_input(["C4", "C#4", "D4", "D#4", "E4"]))["density"]["interval"]
-    wide = _calculate(base_input(["C3", "G3", "D4", "A4", "E5"]))["density"]["interval"]
+    wide = _calculate(
+        base_input(["C3", "G3", "D4", "A4", "E5"], instruments=["violoncelo"] * 5)
+    )["density"]["interval"]
     checks.append(
         CheckResult(
             "property.chromatic_gt_wide_interval",
@@ -109,7 +111,9 @@ def run_verification_suite() -> VerificationResult:
     )
 
     narrow = _calculate(base_input(["C4", "E4", "G4"]))
-    wide_span = _calculate(base_input(["C3", "E4", "G5"]))
+    wide_span = _calculate(
+        base_input(["C3", "E4", "G5"], instruments=["violoncelo"] * 3)
+    )
     pitch_n = narrow["density"]["pitch_structure"]
     pitch_w = wide_span["density"]["pitch_structure"]
     checks.append(

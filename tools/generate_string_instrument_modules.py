@@ -81,6 +81,30 @@ def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
 '''
 
 
+def load_workbook_metadata(workbook: Path, instrument_id: str) -> dict[str, object]:
+    """Read Provenance + Registry rows written by populate_td_importer_sheets_from_zenodo_media."""
+    wb = load_workbook(workbook, read_only=True, data_only=True)
+    meta: dict[str, object] = {}
+    try:
+        prov = wb["Provenance"]
+        prov_header = [c for c in next(prov.iter_rows(min_row=1, max_row=1, values_only=True))]
+        for row in prov.iter_rows(min_row=2, values_only=True):
+            if row and row[0] == instrument_id:
+                meta.update(dict(zip(prov_header, row)))
+                break
+        reg = wb["Registry"]
+        reg_header = [c for c in next(reg.iter_rows(min_row=1, max_row=1, values_only=True))]
+        for row in reg.iter_rows(min_row=2, values_only=True):
+            if row and row[0] == instrument_id:
+                reg_map = dict(zip(reg_header, row))
+                meta["sounding_range_low_midi"] = int(reg_map["sounding_range_low_midi"])
+                meta["sounding_range_high_midi"] = int(reg_map["sounding_range_high_midi"])
+                break
+    finally:
+        wb.close()
+    return meta
+
+
 def load_spectral_data(workbook: Path) -> dict[str, dict[str, float]]:
     wb = load_workbook(workbook, read_only=True, data_only=True)
     ws = wb["AcousticTable"]
@@ -94,10 +118,34 @@ def load_spectral_data(workbook: Path) -> dict[str, dict[str, float]]:
     return dict(raw)
 
 
-def render_module(cfg: dict, spectral: dict[str, dict[str, float]]) -> str:
+def render_module(cfg: dict, spectral: dict[str, dict[str, float]], meta: dict[str, object]) -> str:
     notes = sorted(spectral.keys(), key=lambda n: note_to_midi(n))
-    lo = int(note_to_midi(notes[0]))
-    hi = int(note_to_midi(notes[-1]))
+    table_lo = int(note_to_midi(notes[0]))
+    table_hi = int(note_to_midi(notes[-1]))
+    lo = int(meta.get("sounding_range_low_midi", table_lo))
+    hi = int(meta.get("sounding_range_high_midi", table_hi))
+    citation = str(
+        meta.get("citation")
+        or (
+            f"Sparse {cfg['display'].lower()} CDM table from IOWA and ORCH arco sustain collections; "
+            "midpoint summary at pp/mf/ff (Zenodo curation workbook)."
+        )
+    )
+    source_id = str(
+        meta.get("source_url_or_identifier")
+        or f"docs/instrument_acoustic_sources.md#{cfg['doc_anchor']}"
+    )
+    transform_notes = str(meta.get("transform_parameters") or "").strip()
+    extraction = (
+        "Combined Density Metric midpoint of IOWA/ORCH collections "
+        f"({transform_notes}); GPR interpolation by pitch/dynamic"
+        if transform_notes
+        else (
+            "Combined Density Metric midpoint of IOWA/ORCH collections; "
+            "GPR interpolation by pitch/dynamic"
+        )
+    )
+    version = str(meta.get("import_date") or "2026-06-19")
     table_lines = [
         f"    '{note}': {{'pp': {spectral[note]['pp']}, 'mf': {spectral[note]['mf']}, 'ff': {spectral[note]['ff']}}},"
         for note in notes
@@ -122,18 +170,16 @@ from instrumentos.provenance import InstrumentSource
 INSTRUMENT_SOURCE = InstrumentSource(
     source_type="external_acoustic_metadata",
     citation=(
-        "Sparse {display.lower()} CDM table from IOWA and ORCH arco sustain collections; "
-        "midpoint summary at pp/mf/ff (Zenodo curation workbook)."
+        "{citation}"
     ),
-    source_url_or_identifier="docs/instrument_acoustic_sources.md#{cfg["doc_anchor"]}",
+    source_url_or_identifier={source_id!r},
     extraction_method=(
-        "Combined Density Metric midpoint of IOWA/ORCH collections; "
-        "GPR interpolation by pitch/dynamic"
+        "{extraction}"
     ),
     dynamic_levels=("pp", "mf", "ff"),
     pitch_range=({lo}, {hi}),
     uncertainty="medium",
-    version="2026-06-19",
+    version="{version}",
 )
 
 import logging
@@ -170,8 +216,9 @@ def calcular_densidade(nota, dinamica):
 def main() -> int:
     for cfg in CONFIGS:
         spectral = load_spectral_data(cfg["workbook"])
+        meta = load_workbook_metadata(cfg["workbook"], cfg["module"])
         out = ROOT / "instrumentos" / f"{cfg['module']}.py"
-        out.write_text(render_module(cfg, spectral), encoding="utf-8")
+        out.write_text(render_module(cfg, spectral, meta), encoding="utf-8")
         notes = sorted(spectral.keys(), key=lambda n: note_to_midi(n))
         print(
             f"Wrote {out.name}: {len(notes)} notes, "

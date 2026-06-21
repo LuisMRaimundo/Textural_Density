@@ -105,14 +105,20 @@ class TestIntervalCompactnessIntegratedPlausibility:
 
     def test_close_position_outranks_wide_dispersed_voicing(self):
         close = _metrics(["C4", "E4", "G4", "C5"])
-        wide = _metrics(["C2", "E3", "G4", "C6"])
+        wide = _metrics(
+            ["C2", "E3", "G4", "C6"],
+            instruments=["violoncelo", "viola", "flauta", "flauta"],
+        )
         assert close["pitch_aggregation"]["distinct_pitch_count"] == wide["pitch_aggregation"]["distinct_pitch_count"]
         assert close["density"]["interval"] > wide["density"]["interval"]
         assert close["density_subindices"]["interval_compactness"]["normalized"] >= wide["density_subindices"]["interval_compactness"]["normalized"]
 
     def test_compact_chromatic_beats_wide_same_cardinality(self):
         cluster = _metrics(["C4", "C#4", "D4", "D#4"])
-        spread = _metrics(["C3", "E3", "G#3", "C4"])
+        spread = _metrics(
+            ["C3", "E3", "G#3", "C4"],
+            instruments=["viola", "viola", "viola", "flauta"],
+        )
         assert cluster["density"]["interval"] > spread["density"]["interval"]
 
     def test_dynamics_do_not_alter_integrated_interval_compactness(self):
@@ -144,7 +150,10 @@ class TestRegistralDispersionIntegratedPlausibility:
 
     def test_compact_register_higher_compression_than_wide_spread(self):
         compact = _metrics(["C4", "E4", "G4"])
-        dispersed = _metrics(["C2", "E4", "G6"])
+        dispersed = _metrics(
+            ["C2", "E4", "G6"],
+            instruments=["violoncelo", "flauta", "violino"],
+        )
         compact_reg = compact["density_subindices"]["registral"]["raw"]
         dispersed_reg = dispersed["density_subindices"]["registral"]["raw"]
         assert compact_reg["pitch_span_semitones"] < dispersed_reg["pitch_span_semitones"]
@@ -152,15 +161,19 @@ class TestRegistralDispersionIntegratedPlausibility:
 
     def test_same_pitch_class_set_register_change_only_affects_registral_block(self):
         close = _metrics(["C4", "E4", "G4"])
-        wide = _metrics(["C2", "E4", "G5"])
+        wide = _metrics(
+            ["C2", "E4", "G5"],
+            instruments=["violoncelo", "flauta", "violino"],
+        )
         assert close["pitch_aggregation"]["distinct_pitch_count"] == wide["pitch_aggregation"]["distinct_pitch_count"]
         assert close["density"]["interval"] != wide["density"]["interval"] or close["density_subindices"]["registral"]["raw"]["pitch_span_semitones"] != wide["density_subindices"]["registral"]["raw"]["pitch_span_semitones"]
 
     def test_registral_module_agrees_with_pipeline_subindex_span(self):
         notes = ["C2", "E4", "G6"]
-        result = _metrics(notes)
+        instruments = ["violoncelo", "flauta", "violino"]
+        result = _metrics(notes, instruments=instruments)
         span = result["density_subindices"]["registral"]["raw"]["pitch_span_semitones"]
-        vertical_slice = legacy_input_to_vertical_slice(_slice_input(notes))
+        vertical_slice = legacy_input_to_vertical_slice(_slice_input(notes, instruments=instruments))
         registral = compute_registral_density(vertical_slice, pitch_span_semitones=span)
         assert registral["pitch_span_semitones"] == pytest.approx(span)
         assert registral["source_type"] == "score_derived"

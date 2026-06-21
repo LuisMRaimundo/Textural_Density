@@ -15,16 +15,14 @@ from instrumentos.provenance import InstrumentSource
 INSTRUMENT_SOURCE = InstrumentSource(
     source_type="external_acoustic_metadata",
     citation=(
-        "Sparse viola CDM table from IOWA and ORCH arco sustain collections; "
-        "midpoint summary at pp/mf/ff (Zenodo curation workbook)."
+        "Median/midpoint summary of viola arco sustained-note Combined Density Metrics across IOWA and ORCH sound collections (pp, mf, ff)."
     ),
-    source_url_or_identifier="docs/instrument_acoustic_sources.md#viola",
+    source_url_or_identifier='D:\\CORDAS\\ViOLA_Zenodo_collections_media.xlsx',
     extraction_method=(
-        "Combined Density Metric midpoint of IOWA/ORCH collections; "
-        "GPR interpolation by pitch/dynamic"
+        "Combined Density Metric midpoint of IOWA/ORCH collections (CDM midpoint pass-through; no rescaling); GPR interpolation by pitch/dynamic"
     ),
     dynamic_levels=("pp", "mf", "ff"),
-    pitch_range=(36, 84),
+    pitch_range=(48, 76),
     uncertainty="medium",
     version="2026-06-19",
 )

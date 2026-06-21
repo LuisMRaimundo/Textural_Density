@@ -105,14 +105,18 @@ class TestIntervalCompactnessAxioms:
 class TestRegistralDensityAxioms:
     def test_wider_span_lower_compression(self):
         narrow = legacy_input_to_vertical_slice(_input(["C4", "E4", "G4"]))
-        wide = legacy_input_to_vertical_slice(_input(["C2", "E4", "G6"]))
+        wide = legacy_input_to_vertical_slice(
+            _input(["C2", "E4", "G6"], instruments=["violoncelo", "flauta", "violino"])
+        )
         rn = compute_registral_density(narrow, pitch_span_semitones=7.0)
         rw = compute_registral_density(wide, pitch_span_semitones=31.0)
         assert rw["registral_compression"] < rn["registral_compression"]
 
     def test_concentrated_vs_dispersed_register_differs(self):
         concentrated = legacy_input_to_vertical_slice(_input(["C4", "C4", "C4"]))
-        dispersed = legacy_input_to_vertical_slice(_input(["C3", "G4", "C6"]))
+        dispersed = legacy_input_to_vertical_slice(
+            _input(["C3", "G4", "C6"], instruments=["viola", "flauta", "flauta"])
+        )
         rc = compute_registral_density(concentrated, pitch_span_semitones=0.0)
         rd = compute_registral_density(dispersed, pitch_span_semitones=24.0)
         assert rc["register_band_occupancy"] != rd["register_band_occupancy"]

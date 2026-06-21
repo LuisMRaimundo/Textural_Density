@@ -94,7 +94,7 @@ class TestFiniteOutputs:
             assert math.isfinite(val), f"density_subindices{path} non-finite"
 
     def test_metric_metadata_scalars_finite(self):
-        data = base_input(["C3", "G3", "D4"])
+        data = base_input(["C3", "G3", "D4"], instruments=["violoncelo"] * 3)
         resultados, _, _ = calculate_metrics(data)
         for path, val in _collect_finite_scalars(resultados.get("metric_metadata", {})):
             assert math.isfinite(val), f"metric_metadata{path} non-finite"
