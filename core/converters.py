@@ -7,7 +7,13 @@ from __future__ import annotations
 from typing import Any
 
 from error_handler import InputError
-from microtonal import converter_para_sustenido, extract_cents, midi_to_hz, note_to_midi
+from microtonal import (
+    converter_para_sustenido,
+    extract_cents,
+    format_cents_suffix,
+    midi_to_hz,
+    note_to_midi,
+)
 
 from core.input_validation import validate_no_removed_perceptual_options
 from core.models import AnalysisConfig, InstrumentEvent, Pitch, VerticalSlice
@@ -17,10 +23,7 @@ from instrumentos.registry import resolve_profile
 def _normalize_note_string(note: str) -> str:
     base, cents = extract_cents(note)
     normalized_base = converter_para_sustenido(base)
-    if cents:
-        sign = "+" if cents > 0 else ""
-        return f"{normalized_base}{sign}{cents}c"
-    return normalized_base
+    return f"{normalized_base}{format_cents_suffix(cents)}"
 
 
 def _infer_family(instrument_name: str) -> str:

@@ -270,17 +270,27 @@ from instrumentos.spectral_lookup import lookup_spectral_density, lookup_spectra
 | `lookup_spectral_density(table, note, dynamic, logger=...)` | Backward-compatible float wrapper for instrument modules |
 | `lookup_spectral_density_detailed(...)` | Same as above, returns full `PitchLookupResult` |
 
-Strict pitch parsing (research / instrument metadata paths):
+### Pitch grammar (`microtonal`)
 
 ```python
-from microtonal import note_to_midi_strict, parse_pitch_strict, InvalidPitchNotation
+from microtonal import (
+    parse_pitch_strict, note_to_midi_strict, InvalidPitchNotation, ParsedPitch,
+    is_valid_note, extract_cents, extract_cents_float, format_cents_suffix,
+)
 ```
+
+`parse_pitch_strict` is the **single authoritative pitch grammar**; every other
+strict helper delegates to it.
 
 | Function | Description |
 |----------|-------------|
-| `note_to_midi_strict(note)` | Continuous MIDI float; raises `InvalidPitchNotation` on failure |
-| `parse_pitch_strict(note)` | Structured parse (`ParsedPitch`) |
-| `note_to_midi(note, strict=True)` | Routes to strict parser when requested |
+| `parse_pitch_strict(note) -> ParsedPitch` | **Authoritative grammar.** Structured parse; raises `InvalidPitchNotation` on malformed/unsupported input. Never falls back to C4. Fixes octave-boundary enharmonics (`Cb4` = B3 / 59, `B#4` = C5 / 72) including with cents/quarter-tone offsets. |
+| `note_to_midi_strict(note) -> float` | Continuous MIDI via `parse_pitch_strict`; raises `InvalidPitchNotation` on failure |
+| `note_to_midi(note, strict=True)` | Routes to the strict parser; default (permissive) path is legacy-compatible |
+| `is_valid_note(note) -> bool` | **Non-raising strict predicate.** Exactly equivalent to "`parse_pitch_strict(note)` succeeds"; `False` (never raises) for non-strings or invalid notation |
+| `extract_cents(note) -> tuple[str, float]` | **Compatibility splitter** (thin alias of `extract_cents_float`). Separates a trailing signed/decimal cents suffix — does **not** validate the pitch base (that is `parse_pitch_strict`'s job) |
+| `extract_cents_float(note) -> tuple[str, float]` | Canonical cents splitter; accepts integer and decimal cents (`+7c`, `-30c`, `+125c`, `+7.5c`, `+7¢`) |
+| `format_cents_suffix(cents) -> str` | Shared formatter: `0` → `""`, integers omit decimals (`+50c`), decimals preserved (`+7.5c`) |
 
 Each instrument module must implement:
 

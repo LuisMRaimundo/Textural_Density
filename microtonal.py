@@ -201,62 +201,39 @@ EQUIVALENCIAS_NOTAS = {
     'B-': 'A#+', 'B+': 'A#-',
 }
 
-# Padrões de expressão regular para diferentes formatos de nota (do microtonal_utils.py)
-_RE_STANDARD = re.compile(r"^([A-Ga-g][#♯b]?)(\d)$")
-_RE_QUARTER = re.compile(r"^([A-Ga-g][#♯b]?)([+-])(\d)$")
-_RE_ARROW = re.compile(fr"^([A-Ga-g][#♯b]?)([{QUARTO_TOM_ACIMA}{QUARTO_TOM_ABAIXO}])(\d)$")
-_RE_CENTS = re.compile(r"^([A-Ga-g][#♯b]?\d)([+-]\d{1,2})c$")
-
 # -----------------------------------------------------------------------------
 # Funções de manipulação microtonal
 # -----------------------------------------------------------------------------
 
 def is_valid_note(nota: str) -> bool:
     """
-    Verifica se uma string representa uma nota musical válida.
-    Aceita notação microtonal em cents, símbolos, ou combinações.
-    
-    Args:
-        nota (str): String de nota para validar
-        
-    Returns:
-        bool: True se válida, False caso contrário
+    Strict, non-raising validity predicate.
+
+    Returns ``True`` iff :func:`parse_pitch_strict` accepts ``nota``; i.e.
+    ``is_valid_note(note)`` is exactly equivalent to "``parse_pitch_strict(note)``
+    succeeds". The authoritative pitch grammar lives in ``parse_pitch_strict``.
     """
-    if not isinstance(nota, str) or not nota:
+    if not isinstance(nota, str):
         return False
-    
-    # Normalizar símbolos para processamento consistente
-    nota_normalizada = nota.replace("#", SUSTENIDO_MUSICAL)
-    
-    # Verificar usando expressões regulares compiladas (mais eficiente)
-    if (_RE_STANDARD.match(nota_normalizada) or 
-        _RE_QUARTER.match(nota_normalizada) or 
-        _RE_ARROW.match(nota_normalizada) or
-        _RE_CENTS.match(nota_normalizada)):
+    try:
+        parse_pitch_strict(nota)
         return True
-    
-    # Padrões adicionais para casos complexos
-    patterns = [
-        # Nota com seta/quarto de tom + cents
-        f'^[A-Ga-g][#♯b]?[{QUARTO_TOM_ACIMA}{QUARTO_TOM_ABAIXO}][0-9][+-][0-9]{{1,2}}c$',
-        # Nota com modificador +/- e oitava + cents
-        r'^[A-Ga-g][#♯b]?[-+][0-9][+-][0-9]{1,2}c$'
-    ]
-    
-    # Verificar padrões adicionais
-    for pattern in patterns:
-        if re.match(pattern, nota) or re.match(pattern, nota_normalizada):
-            return True
-    
-    return False
+    except InvalidPitchNotation:
+        return False
 
 
 def extract_cents_float(nota: str) -> Tuple[str, float]:
     """
-    Extract a signed decimal cents suffix from ``nota``.
+    Separate a trailing signed cents suffix from ``nota``.
 
-    Supports ``+7c``, ``-30c``, ``+125c``, ``+7.5c``, ``+7¢``, etc.
-    Returns ``(base_without_cents, cents_float)``.
+    Supports integer and decimal cents in either notation:
+    ``+7c``, ``-30c``, ``+125c``, ``+7.5c``, ``+7¢``. ``_RE_CENTS_STRICT``
+    already accepts both integer and decimal magnitudes, so no legacy
+    fallback is needed.
+
+    Returns ``(base_without_cents, cents_float)``. This only splits the
+    suffix; it does **not** validate the pitch base. Full pitch validation
+    belongs to :func:`parse_pitch_strict`.
     """
     if not isinstance(nota, str) or not nota:
         return nota, 0.0
@@ -268,68 +245,38 @@ def extract_cents_float(nota: str) -> Tuple[str, float]:
             raise InvalidPitchNotation(f"Cents suffix without pitch base: {nota!r}")
         return base, float(match.group(1))
 
-    legacy_match = re.search(r"([+-]\d{1,2})c$", nota, re.IGNORECASE)
-    if legacy_match:
-        base = nota[: legacy_match.start()]
-        if base:
-            return base, float(int(legacy_match.group(1)))
-
     return nota, 0.0
 
 
-def extract_cents(nota: str) -> Tuple[str, int]:
+def format_cents_suffix(cents: float) -> str:
     """
-    Extrai o componente cents de uma nota, se presente.
-    Suporta notas com símbolos microtonais, incluindo combinações complexas.
-    
-    Args:
-        nota (str): String de nota possivelmente com cents
-        
-    Returns:
-        Tuple[str, int]: (nota base sem cents, valor em cents)
+    Format a cents offset as a canonical note suffix.
+
+    - Numerical zero → empty string (no suffix).
+    - Integer-valued offsets omit the decimal point: ``+7c``, ``-30c``, ``+125c``.
+    - Decimal offsets are preserved: ``+7.5c``.
     """
-    if not isinstance(nota, str) or 'c' not in nota:
-        return nota, 0
-        
-    try:
-        # Usar a expressão regular compilada primeiro
-        match = _RE_CENTS.match(nota)
-        if match:
-            base_note, cents_part = match.groups()
-            cents_value = int(cents_part)
-            return base_note, cents_value
-        
-        # Normalizar símbolos para consistência
-        nota_processada = nota.replace("♯", "#")
-        
-        # Padrões para extrair cents em diferentes formatos de nota
-        patterns = [
-            # Nota simples com cents: C4+50c
-            r'^([A-Ga-g][#b]?[0-9])([+-][0-9]{1,2})c$',
-            # Nota com símbolo de quarto de tom e cents: C↓4+50c
-            f'^([A-Ga-g][#b]?[{QUARTO_TOM_ACIMA}{QUARTO_TOM_ABAIXO}][0-9])([+-][0-9]{{1,2}})c$',
-            # Nota com modificador +/- e cents: C+4-50c
-            r'^([A-Ga-g][#b]?[-+][0-9])([+-][0-9]{1,2})c$'
-        ]
-        
-        # Tentar cada padrão
-        for pattern in patterns:
-            match = re.match(pattern, nota_processada)
-            if match:
-                base_note, cents_part = match.groups()
-                cents_value = int(cents_part)
-                
-                # Restaurar símbolos Unicode se necessário
-                if "♯" in nota and "#" in base_note:
-                    base_note = base_note.replace("#", "♯")
-                
-                return base_note, cents_value
-        
-        # Se nenhum padrão corresponder
-        return nota, 0
-    except Exception as e:
-        logger.error(f"Erro ao extrair cents da nota {nota}: {e}")
-        return nota, 0
+    if not cents:
+        return ""
+    cents_f = float(cents)
+    if cents_f.is_integer():
+        body = str(int(cents_f))
+    else:
+        body = f"{cents_f:g}"
+    if cents_f > 0 and not body.startswith("+"):
+        body = f"+{body}"
+    return f"{body}c"
+
+
+def extract_cents(nota: str) -> Tuple[str, float]:
+    """
+    Compatibility splitter — thin alias for :func:`extract_cents_float`.
+
+    Separates a trailing signed cents suffix and returns
+    ``(base_without_cents, cents_float)``. It does **not** validate the
+    complete pitch; full validation belongs to :func:`parse_pitch_strict`.
+    """
+    return extract_cents_float(nota)
 
 
 def converter_para_sustenido(nota: str) -> str:
@@ -349,8 +296,8 @@ def converter_para_sustenido(nota: str) -> str:
         return nota
     
     try:
-        # Extrair cents primeiro, se presentes
-        base_note, cents = extract_cents(nota)
+        # Extrair cents primeiro, se presentes (decimal-capable canonical splitter)
+        base_note, cents = extract_cents_float(nota)
         
         # Verificar se a nota tem símbolo microtonal
         has_microtonal_symbol = QUARTO_TOM_ACIMA in base_note or QUARTO_TOM_ABAIXO in base_note
@@ -382,12 +329,8 @@ def converter_para_sustenido(nota: str) -> str:
                 
             base_convertida = f"{nota_parte}{oitava}"
         
-        # Recolocar os cents, se presentes
-        if cents != 0:
-            cents_str = f"+{cents}" if cents > 0 else f"{cents}"
-            return f"{base_convertida}{cents_str}c"
-        else:
-            return base_convertida
+        # Recolocar os cents, se presentes (preserva decimais; omite +50.0c)
+        return f"{base_convertida}{format_cents_suffix(cents)}"
             
     except Exception as e:
         logger.error(f"Erro ao converter nota: {e}")
@@ -445,8 +388,8 @@ def preprocess_nota(nota: str) -> str:
     if not nota:
         return nota
         
-    # Extrair e preservar componente de cents, se presente
-    base_note, cents = extract_cents(nota)
+    # Extrair e preservar componente de cents, se presente (decimal-capable)
+    base_note, cents = extract_cents_float(nota)
     
     # Converter símbolos Unicode para notação +/-
     # IMPORTANTE: A lógica foi invertida para corresponder à convenção visual
@@ -458,12 +401,8 @@ def preprocess_nota(nota: str) -> str:
         # Seta para baixo (↓) indica nota mais alta, portanto '+'
         processed_note = processed_note.replace(QUARTO_TOM_ABAIXO, '+')
     
-    # Recolocar cents, se presentes
-    if cents != 0:
-        cents_str = f"+{cents}" if cents > 0 else f"{cents}"
-        return f"{processed_note}{cents_str}c"
-    
-    return processed_note
+    # Recolocar cents, se presentes (preserva decimais; omite +50.0c)
+    return f"{processed_note}{format_cents_suffix(cents)}"
 
 
 def nota_para_posicao(nota: str) -> float:
@@ -484,8 +423,8 @@ def nota_para_posicao(nota: str) -> float:
     if isinstance(nota, str):
         nota = nota.replace("♯", "#")
     
-    # Extrair cents se presente
-    base_note, cents = extract_cents(nota)
+    # Extrair cents se presente (decimal-capable canonical splitter)
+    base_note, cents = extract_cents_float(nota)
     cents_fraction = cents / CENTS_POR_SEMITOM  # Converter para fração de semitom
     
     # Pré-processar para formato uniforme
@@ -539,13 +478,27 @@ class ParsedPitch:
         return note_to_midi_strict_from_parsed(self)
 
 
-def _pitch_class_semitone(letter: str, accidental: str) -> int:
+def _pitch_class_semitone(letter: str, accidental: str) -> tuple[int, int]:
+    """
+    Resolve a pitch class to ``(semitone_in_octave, octave_adjustment)``.
+
+    The octave adjustment handles cross-octave enharmonics: ``Cb`` belongs to
+    the octave below its written number (Cb4 = B3) and ``B#`` to the octave
+    above (B#4 = C5). Callers must apply ``octave_adjustment`` before computing
+    MIDI so cents and quarter-tone offsets remain correct.
+    """
     if accidental and len(accidental) > 1:
         raise InvalidPitchNotation(f"Multiple accidentals not supported: {letter}{accidental}")
     pitch_class = letter.upper() + accidental
     if pitch_class not in ESCALA_CROMATICA:
         raise InvalidPitchNotation(f"Unknown pitch class: {pitch_class!r}")
-    return int(ESCALA_CROMATICA[pitch_class])
+    semitone = int(ESCALA_CROMATICA[pitch_class])
+    octave_adjustment = 0
+    if pitch_class == "Cb":
+        octave_adjustment = -1  # Cb4 = B3
+    elif pitch_class == "B#":
+        octave_adjustment = 1  # B#4 = C5
+    return semitone, octave_adjustment
 
 
 def _resolve_quarter_tone_spelling(
@@ -602,7 +555,7 @@ def parse_pitch_strict(note: str) -> ParsedPitch:
         if accidental and len(accidental) > 1:
             raise InvalidPitchNotation(f"Multiple accidentals not supported: {original!r}")
         octave = int(oct_s)
-        _pitch_class_semitone(letter, accidental)
+        _pitch_class_semitone(letter, accidental)  # validation (raises on unknown)
 
     if letter is None:
         raise InvalidPitchNotation(f"Unsupported pitch notation: {original!r}")
@@ -618,8 +571,9 @@ def parse_pitch_strict(note: str) -> ParsedPitch:
 
 
 def note_to_midi_strict_from_parsed(parsed: ParsedPitch) -> float:
-    semitone = _pitch_class_semitone(parsed.letter, parsed.accidental)
-    midi = (parsed.octave + 1) * 12 + semitone + parsed.quarter_offset
+    semitone, octave_adjustment = _pitch_class_semitone(parsed.letter, parsed.accidental)
+    octave = parsed.octave + octave_adjustment
+    midi = (octave + 1) * 12 + semitone + parsed.quarter_offset
     if parsed.cents:
         midi += parsed.cents / 100.0
     return float(midi)
@@ -891,10 +845,14 @@ __all__ = [
     "NOTACAO_QUARTOS_TOM", "EQUIVALENCIAS_NOTAS",
     
     # Funções principais
-    "normalizar_simbolos_nota", "is_valid_note", "extract_cents", 
-    "converter_para_sustenido", "to_sharp", "converter_notacao_microtonal", 
-    "preprocess_nota", "nota_para_posicao", "note_to_midi", "midi_to_note_name", 
-    "midi_to_hz", "hz_to_midi", "frequency_to_note_name",
+    "normalizar_simbolos_nota", "is_valid_note", "extract_cents", "extract_cents_float",
+    "format_cents_suffix", "converter_para_sustenido", "to_sharp",
+    "converter_notacao_microtonal", "preprocess_nota", "nota_para_posicao",
+    "note_to_midi", "midi_to_note_name", "midi_to_hz", "hz_to_midi",
+    "frequency_to_note_name",
+
+    # Gramática estrita de altura (autoritativa)
+    "InvalidPitchNotation", "ParsedPitch", "parse_pitch_strict", "note_to_midi_strict",
     
     # Funções de debug
     "debug_note_conversion", "test_microtonal_functions"

@@ -5,7 +5,12 @@ import logging
 import numpy as np
 
 from error_handler import InputError
-from microtonal import converter_para_sustenido, extract_cents, note_to_midi
+from microtonal import (
+    converter_para_sustenido,
+    extract_cents,
+    format_cents_suffix,
+    note_to_midi,
+)
 
 logger = logging.getLogger("data_processor")
 
@@ -97,11 +102,7 @@ def _validate_and_extract_input(input_data: dict):
 
 def _normalize_notes_to_sustenido(notas: list) -> list:
     return [
-        (
-            f"{converter_para_sustenido(base)}{('+' if cents > 0 else '')}{cents}c"
-            if cents
-            else converter_para_sustenido(base)
-        )
+        f"{converter_para_sustenido(base)}{format_cents_suffix(cents)}"
         for base, cents in (extract_cents(n) for n in notas)
     ]
 
