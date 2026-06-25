@@ -8,7 +8,7 @@ SUSTENIDO_MUSICAL = "\u266f"
 QUARTO_TOM_GUI = "\u2193"
 
 OCTAVE_LIST = [str(i) for i in range(10)]
-DYNAMIC_LEVELS = ["pppp", "ppp", "pp", "p", "mf", "f", "ff", "fff", "ffff"]
+DYNAMIC_LEVELS = ["pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff"]
 INSTRUMENTS = [
     "Piccolo",
     "Flute",

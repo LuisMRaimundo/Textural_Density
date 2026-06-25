@@ -89,7 +89,7 @@ _MUSICXML_DYNAMICS = {
     "pp": "pp",
     "p": "p",
     "mf": "mf",
-    "mp": "mf",
+    "mp": "mp",
     "f": "f",
     "ff": "ff",
     "fff": "fff",

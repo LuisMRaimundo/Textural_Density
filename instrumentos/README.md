@@ -124,6 +124,8 @@ Range policy: never collapse to the same pitch class in a distant octave (e.g. D
 
 Dynamic interpolation (pp/mf/ff GPR or linear) remains separate from pitch interpolation — each dynamic column is interpolated independently over pitch.
 
+**Source vs modelled dynamics:** `INSTRUMENT_SOURCE.dynamic_levels` remains `("pp", "mf", "ff")` — the only columns in committed CDM tables. Modelled dynamics (`p`, `mp`, `f`, `pppp`, `ppp`, `fff`, `ffff`) are GPR predictions at fixed ordinal coordinates via `instrumentos/gpr_dynamic_interpolation.py` (Matérn kernel). `mp` uses coordinate **4.5** between `p` (4.0) and `mf` (5.0). These coordinates are ordinal modelling controls, not dB, SPL, or perceptual intensity; values need not be monotonic across dynamics.
+
 
 
 ```python

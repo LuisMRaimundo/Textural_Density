@@ -29,9 +29,6 @@ INSTRUMENT_SOURCE = InstrumentSource(
 
 import logging
 
-import numpy as np
-from sklearn.gaussian_process import GaussianProcessRegressor
-from sklearn.gaussian_process.kernels import ConstantKernel as C, Matern
 from utils.notes import normalize_note_string
 
 logger = logging.getLogger("oboe")
@@ -91,32 +88,6 @@ def calcular_densidade(nota, dinamica):
 
 def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
     """Predict intermediate dynamics using Gaussian Process Regression."""
-    dynamic_levels = {
-        "pppp": 1, "ppp": 2, "pp": 3, "p": 4, "mf": 5,
-        "f": 6, "ff": 7, "fff": 8, "ffff": 9,
-    }
-    all_dynamics = list(dynamic_levels.keys())
-    predictions = {dynamic: [] for dynamic in all_dynamics}
+    from instrumentos.gpr_dynamic_interpolation import predict_intermediate_dynamics_gpr
 
-    existing_levels = np.array([dynamic_levels[d] for d in ["pp", "mf", "ff"]]).reshape(-1, 1)
-    all_levels = np.array([dynamic_levels[d] for d in all_dynamics]).reshape(-1, 1)
-
-    try:
-        y_train = np.array([pp_values, mf_values, ff_values]).T
-        if y_train.size == 0 or np.isnan(y_train).any():
-            logger.warning("Insufficient or invalid training data for GPR")
-            return {d: np.zeros_like(pp_values) for d in all_dynamics}
-
-        matern_kernel = C(1.0) * Matern(length_scale=1.0, nu=1.5)
-        gpr = GaussianProcessRegressor(kernel=matern_kernel, n_restarts_optimizer=10, alpha=1e-1)
-
-        for i, y in enumerate(y_train):
-            gpr.fit(existing_levels, y)
-            y_pred = gpr.predict(all_levels)
-            for j, dynamic in enumerate(all_dynamics):
-                predictions[dynamic].append(y_pred[j])
-
-        return {k: np.array(v) for k, v in predictions.items()}
-    except Exception as e:
-        logger.error(f"Error predicting intermediate dynamics: {e}")
-        return {d: np.zeros_like(pp_values) for d in all_dynamics}
+    return predict_intermediate_dynamics_gpr(pp_values, mf_values, ff_values, logger=logger)

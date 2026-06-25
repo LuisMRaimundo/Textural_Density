@@ -1,0 +1,410 @@
+{
+  "summary": {
+    "generated_at": "2026-06-25T10:23:34.973005+00:00",
+    "scenario_count": 15,
+    "row_count": 15,
+    "mp_warnings_before": 15,
+    "mp_warnings_after": 0
+  },
+  "rows": [
+    {
+      "scenario_id": "violin_solo_low",
+      "notes": [
+        "A#3"
+      ],
+      "instruments": [
+        "violino"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "low",
+      "p_value": 30.21289317728681,
+      "old_mp_value": 32.194271,
+      "new_mp_value": 31.11824583668694,
+      "mf_value": 32.194271,
+      "f_value": 35.319733290497666,
+      "pp_value": 28.838925,
+      "ff_value": 38.719126,
+      "pipeline_mp_value": 31.118245778962997,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": -1.0760251633130622,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "violin_solo_middle",
+      "notes": [
+        "D4"
+      ],
+      "instruments": [
+        "violino"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "middle",
+      "p_value": 30.61385858498175,
+      "old_mp_value": 34.381636,
+      "new_mp_value": 32.6578957592823,
+      "mf_value": 34.381636,
+      "f_value": 36.297047263841634,
+      "pp_value": 26.133791,
+      "ff_value": 36.879891,
+      "pipeline_mp_value": 32.65789575251575,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": -1.723740240717703,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "violin_solo_high",
+      "notes": [
+        "G7"
+      ],
+      "instruments": [
+        "violino"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "high",
+      "p_value": 5.634945373534946,
+      "old_mp_value": 6.365012,
+      "new_mp_value": 6.062861021699534,
+      "mf_value": 6.365012,
+      "f_value": 5.828135842649991,
+      "pp_value": 4.46921,
+      "ff_value": 4.816325,
+      "pipeline_mp_value": 6.062861081655455,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": -0.30215097830046656,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "viola_solo_low",
+      "notes": [
+        "A#3"
+      ],
+      "instruments": [
+        "viola"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "low",
+      "p_value": 24.193357491862535,
+      "old_mp_value": 25.057078,
+      "new_mp_value": 24.61107995182729,
+      "mf_value": 25.057078,
+      "f_value": 26.81031580120012,
+      "pp_value": 23.650212,
+      "ff_value": 28.74837,
+      "pipeline_mp_value": 24.61107995230255,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": -0.4459980481727115,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "viola_solo_middle",
+      "notes": [
+        "D#6"
+      ],
+      "instruments": [
+        "viola"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "middle",
+      "p_value": 7.025067280469827,
+      "old_mp_value": 6.505312,
+      "new_mp_value": 7.025067293645085,
+      "mf_value": 6.505312,
+      "f_value": 7.025067288898233,
+      "pp_value": 7.282524,
+      "ff_value": 7.301591,
+      "pipeline_mp_value": 7.025067282983855,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": 0.5197552936450851,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "viola_solo_high",
+      "notes": [
+        "G6"
+      ],
+      "instruments": [
+        "viola"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "high",
+      "p_value": 4.974473114666692,
+      "old_mp_value": 5.401213,
+      "new_mp_value": 5.122344078884575,
+      "mf_value": 5.401213,
+      "f_value": 5.519794150585804,
+      "pp_value": 4.528296,
+      "ff_value": 5.763935,
+      "pipeline_mp_value": 5.122344079466716,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": -0.27886892111542494,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "cello_solo_low",
+      "notes": [
+        "A#2"
+      ],
+      "instruments": [
+        "violoncelo"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "low",
+      "p_value": 45.21288376187424,
+      "old_mp_value": 44.172545,
+      "new_mp_value": 44.21950161038652,
+      "mf_value": 44.172545,
+      "f_value": 47.66330544442954,
+      "pp_value": 48.225637,
+      "ff_value": 52.814275,
+      "pipeline_mp_value": 44.21950161038652,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": 0.04695661038652332,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "cello_solo_middle",
+      "notes": [
+        "D#5"
+      ],
+      "instruments": [
+        "violoncelo"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "middle",
+      "p_value": 13.103679445393595,
+      "old_mp_value": 13.102937,
+      "new_mp_value": 13.035155905430798,
+      "mf_value": 13.102937,
+      "f_value": 12.39895999265587,
+      "pp_value": 13.025811,
+      "ff_value": 11.628465,
+      "pipeline_mp_value": 13.035155908207757,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": -0.06778109456920234,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "cello_solo_high",
+      "notes": [
+        "G5"
+      ],
+      "instruments": [
+        "violoncelo"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "high",
+      "p_value": 12.685445209771016,
+      "old_mp_value": 12.544536,
+      "new_mp_value": 12.67249437195339,
+      "mf_value": 12.544536,
+      "f_value": 11.326929233223439,
+      "pp_value": 12.291407,
+      "ff_value": 9.737352,
+      "pipeline_mp_value": 12.67249437195339,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": 0.12795837195338855,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "double_bass_solo_low",
+      "notes": [
+        "A#1"
+      ],
+      "instruments": [
+        "contrabaixo"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "low",
+      "p_value": 48.66913054237869,
+      "old_mp_value": 55.597516,
+      "new_mp_value": 52.43193776090284,
+      "mf_value": 55.597516,
+      "f_value": 59.370069432931125,
+      "pp_value": 40.561869,
+      "ff_value": 60.707733,
+      "pipeline_mp_value": 52.431937836175976,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": -3.165578239097158,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "double_bass_solo_middle",
+      "notes": [
+        "D2"
+      ],
+      "instruments": [
+        "contrabaixo"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "middle",
+      "p_value": 35.120898109793956,
+      "old_mp_value": 34.144331,
+      "new_mp_value": 34.33470721552285,
+      "mf_value": 34.144331,
+      "f_value": 36.1839220489361,
+      "pp_value": 37.378471,
+      "ff_value": 39.381996,
+      "pipeline_mp_value": 34.334707206009774,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": 0.19037621552284634,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "double_bass_solo_high",
+      "notes": [
+        "G4"
+      ],
+      "instruments": [
+        "contrabaixo"
+      ],
+      "quantities": [
+        1
+      ],
+      "register": "high",
+      "p_value": 14.084144046911527,
+      "old_mp_value": 12.457552,
+      "new_mp_value": 12.68094509521754,
+      "mf_value": 12.457552,
+      "f_value": 16.62728346419027,
+      "pp_value": 17.456604,
+      "ff_value": 21.847957,
+      "pipeline_mp_value": 12.680945065412146,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": 0.22339309521754025,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "string_quartet_middle",
+      "notes": [
+        "D4",
+        "D#6",
+        "D#5",
+        "D2"
+      ],
+      "instruments": [
+        "violino",
+        "viola",
+        "violoncelo",
+        "contrabaixo"
+      ],
+      "quantities": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "register": "middle",
+      "p_value": 30.613858588935155,
+      "old_mp_value": 34.381636,
+      "new_mp_value": 32.657895761738445,
+      "mf_value": 34.381636,
+      "f_value": 36.29704734720378,
+      "pp_value": 26.133791,
+      "ff_value": 36.879891,
+      "pipeline_mp_value": 32.657895770849336,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": -1.7237402382615556,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "violin_section_qty3",
+      "notes": [
+        "G4"
+      ],
+      "instruments": [
+        "violino"
+      ],
+      "quantities": [
+        3
+      ],
+      "register": "middle",
+      "p_value": 27.486144373545702,
+      "old_mp_value": 28.582867,
+      "new_mp_value": 27.998855707705125,
+      "mf_value": 28.582867,
+      "f_value": 28.96616655510541,
+      "pp_value": 26.244,
+      "ff_value": 29.160595,
+      "pipeline_mp_value": 27.998855693320042,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": -0.5840112922948748,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    },
+    {
+      "scenario_id": "cello_low_register_mass",
+      "notes": [
+        "A#2"
+      ],
+      "instruments": [
+        "violoncelo"
+      ],
+      "quantities": [
+        4
+      ],
+      "register": "low",
+      "p_value": 45.21288385605655,
+      "old_mp_value": 44.172545,
+      "new_mp_value": 44.21950161038652,
+      "mf_value": 44.172545,
+      "f_value": 47.663305276372895,
+      "pp_value": 48.225637,
+      "ff_value": 52.814275,
+      "pipeline_mp_value": 44.21950161038652,
+      "old_warning": "Unknown dynamic 'mp' at event evt_0; mapped to 'mf' for instrument density.",
+      "new_warning": "",
+      "diff_from_mf_anchor": 0.04695661038652332,
+      "method": "GPR coordinate 4.5",
+      "provenance": "modelled_gpr"
+    }
+  ]
+}
