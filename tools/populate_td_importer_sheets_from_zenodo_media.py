@@ -28,6 +28,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from microtonal import note_to_midi  # noqa: E402
+from utils.notes import normalize_media_note_label  # noqa: E402
 
 WORKBOOK_META_COLUMNS = ("key", "value")
 REGISTRY_COLUMNS = (
@@ -265,7 +266,7 @@ def _read_media_rows(workbook_path: Path, media_sheet: str) -> list[tuple[str, d
         note = row[0]
         if note is None or str(note).strip() == "":
             continue
-        note_str = str(note).strip()
+        note_str = normalize_media_note_label(str(note).strip())
         dynamics: dict[str, float] = {}
         for dyn, col_idx, _ in MEDIA_DYNAMIC_COLUMNS:
             val = row[col_idx] if col_idx < len(row) else None

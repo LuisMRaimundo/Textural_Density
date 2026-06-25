@@ -39,7 +39,7 @@ live audio analysis.
 ## Viola (`viola`)
 
 - **Module:** `instrumentos/viola.py`
-- **Table:** `spectral_data` (49 chromatic rows, C2–C6; 147 AcousticTable rows in source workbook)
+- **Table:** `spectral_data` (49 chromatic rows, C3–C7; 147 AcousticTable rows in source workbook)
 - **Provenance:** Median/midpoint summary of viola arco sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\CORDAS\ViOLA_Zenodo_collections_media.xlsx`

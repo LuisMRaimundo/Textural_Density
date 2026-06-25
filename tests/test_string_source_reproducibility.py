@@ -11,7 +11,7 @@ import pytest
 
 from microtonal import note_to_midi_strict
 from tests.string_constants import SOURCE_DYNAMICS, STRING_INSTRUMENTS, StringInstrumentSpec
-from tools.generate_instrument_modules import CONFIGS, load_spectral_data
+from tools.generate_instrument_modules import CONFIGS, load_spectral_data, load_spectral_data_from_media
 
 VALUE_TOL = 1e-5
 RUN_ROOT = os.environ.get("TEXTURAL_DENSITY_RUN_ROOT")
@@ -58,7 +58,11 @@ class TestStringSourceReconstruction:
         if not workbook.is_file():
             pytest.skip(f"UNVERIFIED — SOURCE WORKBOOK NOT ACCESSIBLE: {workbook}")
 
-        workbook_table = load_spectral_data(workbook)
+        workbook_table = (
+            load_spectral_data_from_media(workbook, cfg["media_sheet"])
+            if cfg.get("media_sheet")
+            else load_spectral_data(workbook)
+        )
         committed = importlib.import_module(f"instrumentos.{spec.module_name}").spectral_data
         report = {
             "module": spec.module_name,
