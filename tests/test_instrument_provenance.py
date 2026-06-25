@@ -8,7 +8,15 @@ import pytest
 
 from instrumentos.provenance import InstrumentSource
 
-ACOUSTIC_MODULES = ("flute", "clarinet", "oboe")
+ACOUSTIC_MODULES = (
+    "flute",
+    "clarinet",
+    "oboe",
+    "violin",
+    "viola",
+    "cello",
+    "double_bass",
+)
 
 
 @pytest.mark.parametrize("module_name", ACOUSTIC_MODULES)
