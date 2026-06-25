@@ -580,10 +580,29 @@ Tests: `tests/test_xml_loader.py::TestMusicXmlTranspose`. Benchmarks: `benchmark
 
 | Term | Meaning in Textural Density |
 |------|----------------|
-| **Verification** | Synthetic cases + property checks confirming implementation correctness |
+| **Verification** | Synthetic cases + property checks confirming implementation correctness; source-table reconstruction; musicological contract tests |
 | **Validation** | Comparison against expert ratings, listening tests, or corpus benchmarks |
 
-Current status: **`verified_only`** — no external validation corpora loaded by default.
+Current status: **`verified_only`** — no external validation corpora loaded by default. The test suite (862 tests after PR #13/#14) provides **software and symbolic-contract verification** — not perceptual or empirical validation of CDM.
+
+### 8.1.1 String musicological battery (PR #13)
+
+97 tests (`@pytest.mark.musicological`) across violin, viola, cello, double bass:
+
+| File | Focus |
+|------|-------|
+| `tests/string_constants.py` | Documented spans, open strings, workbook paths |
+| `tests/test_string_module_contracts.py` | Module surface, table shape, exact anchors, provenance portability |
+| `tests/test_string_source_reproducibility.py` | Workbook → committed module reconstruction (local) |
+| `tests/test_string_musicological_invariants.py` | Pitch spelling, cents, GPR diagnostics, interpolation provenance |
+| `tests/test_string_score_scenarios.py` | Ensemble slices, MusicXML transposition, Qty invariants |
+| `tests/test_instrument_provenance.py` | `INSTRUMENT_SOURCE` guards |
+
+Run: `pytest -m musicological -q`
+
+### 8.1.2 Media note-label normalization (PR #14)
+
+`utils.notes.normalize_media_note_label()` strips trailing duplicate markers such as `(2)` before `normalize_note_string()`. Used when ingesting `*_Media` workbooks. Corrects viola table alignment to `VIOLA_Media` (C3–C7). This is **source-label normalization** — not acoustic or perceptual validation.
 
 ### 8.2 Running verification
 
@@ -643,26 +662,30 @@ print(format_sensitivity_report(sensitivity))
 
 Phase 10 added automated quality checks (see `tests/test_quality_gates.py` and `.github/workflows/tests.yml`):
 
-| Gate | Threshold |
-|------|-----------|
-| Full test suite | **689 tests** in suite (**687 passing**; Python 3.10–3.11 on GitHub Actions and CircleCI) |
+| Gate | Threshold / status (2026-06-25) |
+|------|--------------------------------|
+| Full test suite | **862 collected**; **861 non-slow + 1 slow** pass (Python 3.10–3.11 on GitHub Actions and CircleCI) |
+| Full-project coverage | ≥ 63% (verified **84.95%**) |
 | Core + validation coverage | ≥ 80% |
-| Full project coverage | ≥ 63% |
 | Mypy (core, validation) | Zero errors with `--follow-imports=skip` |
 | Finite outputs | All synthetic cases produce finite `density.*` scalars |
-| Performance | 50-note slice completes in < 5 s |
+| Performance | 50-note slice completes in < 5 s (`@pytest.mark.slow`) |
 | Import hygiene | `core/` and `validation/` modules must not import Tkinter |
 
-**Recent validation layers (high level):** interval-density formal contract tests; instrument-density registry scaffold tests; scientific/musicological output plausibility tests; Excel importer contract tests. These verify symbolic construct behaviour — not final acoustic instrument calibration.
+**Verification layers:** interval-density contracts; instrument registry scaffold; musicological plausibility; Excel importer contracts; **string musicological battery (PR #13)**; **media note-label normalization (PR #14)**. These verify symbolic/metadata-level behaviour — not final acoustic calibration or perceptual validation.
+
+**CI limitation:** string source-reconstruction tests require local Zenodo workbooks; skipped on runners without `D:\CORDAS\` paths.
 
 Run locally:
 
 ```bash
-pytest tests/ -q --no-cov
+pytest tests/ -q --no-cov -m "not slow" -o addopts=
+pytest -m musicological -q
 pytest tests/ -q -o addopts= --cov=core --cov=validation --cov-fail-under=80
 mypy core validation --ignore-missing-imports --follow-imports=skip
+python -c "import importlib; importlib.import_module('Main'); print('OK')"
 ```
 
 ---
 
-*Last updated: 2026-06-14 (package 1.1.1; instrument metadata / importer docs refresh; see VERSIONING.md).*
+*Last updated: 2026-06-25 (PR #13 string battery; PR #14 viola note-label normalization; see [qa_checklist.md](qa_checklist.md)).*

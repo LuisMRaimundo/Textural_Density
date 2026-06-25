@@ -35,7 +35,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; GPR CDM modules for flute, oboe, clarinet, and strings; metadata corpus still incomplete for many names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML concert pitch** — `<transpose>` (chromatic + octave-change) applied for transposing instruments; `written_pitch` vs `sounding_pitch` on timed events
-- **Verification scaffolding** — **760 tests** (GitHub Actions + CircleCI green); strict pitch parsing, canonical core conversion path, pitch-interpolation, interval-density contracts, instrument scaffold tests, and frozen benchmarks (five project-authored MusicXML excerpts)
+- **Verification scaffolding** — **862 tests** collected; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green after PR #13 and PR #14 (see [Testing](#testing))
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -145,7 +145,7 @@ Textural_Density/
 ├── data_processor_legacy.py   # Legacy I/O and validation text (not the metric pipeline)
 ├── densidade_intervalar.py    # Interval density library
 ├── spectral_analysis.py       # Spectral metadata proxies
-└── tests/                     # 760 tests, regression baseline, quality gates
+└── tests/                     # 862 tests; string musicological battery (PR #13); note-label normalization (PR #14)
 ```
 
 **Call path (GUI):** `Main.py` → `AnalysisController` → `adapters/gui_adapter.build_analysis_request` → `core.pipeline.calculate_metrics`.
@@ -221,19 +221,45 @@ print(f"Input pitches only: {len(pitches)} notes")
 ### Run Tests
 
 ```bash
-# Run all tests
-pytest tests/ -v
+# Run all tests (non-slow; skips coverage gate when addopts cleared)
+pytest tests/ -q --no-cov -m "not slow" -o addopts=
 
-# Run with coverage
+# Run with coverage (default pytest.ini gates)
 pytest tests/ --cov=. --cov-report=html
 
-# Run specific test file
-pytest tests/test_removed_perceptual_options.py -v
+# String musicological and source-audit battery (PR #13)
+pytest -m musicological -q
+
+# String modules directly
+pytest tests/test_string_module_contracts.py tests/test_string_source_reproducibility.py \
+  tests/test_string_musicological_invariants.py tests/test_string_score_scenarios.py -q
+
+# Media note-label normalization (PR #14)
+pytest tests/test_notes.py -q
 ```
 
 ### Test Coverage
 
-Current status: **760 tests** in suite; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green.
+Current verified status (after PR #14, `main` @ `607bf4a`, local Python **3.10.11**; CI also runs **3.10** and **3.11**):
+
+| Gate | Result |
+|------|--------|
+| Full suite | **862 passed** (861 non-slow + 1 slow) |
+| Full-project coverage | **84.95%** (gate ≥ 63%) |
+| `core/` + `validation/` coverage | ≥ 80% in CI quality job |
+| MyPy (`core`, `validation`) | Clean (`--follow-imports=skip`) |
+| Slow performance gate | Pass (`tests/test_quality_gates.py`, `@pytest.mark.slow`) |
+| `import Main` smoke | OK |
+| GitHub Actions | `test` 3.10/3.11 + `quality` — pass |
+| CircleCI | `tests-3.10`, `tests-3.11` — pass |
+
+**What the suite verifies:** implementation contracts, source consistency, provenance propagation, symbolic/musical invariants, and reproducibility properties under controlled test conditions. It does **not** validate perceptual adequacy of the CDM model or prove correspondence to perceived density, loudness, salience, or timbral mass.
+
+**String-family battery (PR #13):** 97 musicological tests across `tests/string_constants.py`, `tests/test_string_module_contracts.py`, `tests/test_string_source_reproducibility.py`, `tests/test_string_musicological_invariants.py`, `tests/test_string_score_scenarios.py`, and `tests/test_instrument_provenance.py` — covering violin, viola, cello, double bass, and registry aliases.
+
+**Viola correction (PR #14):** `normalize_media_note_label()` strips trailing duplicate markers such as `(2)` before canonical parsing; viola `spectral_data` aligned to authoritative `VIOLA_Media` (C3–C7, 49 rows). This is source-label normalization and table alignment — not perceptual validation.
+
+**CI limitation:** source-workbook reconstruction tests skip when `D:\CORDAS\` (or other local Zenodo workbooks) are unavailable on the runner. CI verifies committed modules and tests; independent workbook reconstruction requires local workbooks or future CI fixtures.
 
 **Known local-only failure (outside strict-pitch scope):**
 
@@ -242,7 +268,7 @@ Current status: **760 tests** in suite; GitHub Actions (`test` 3.10/3.11, `quali
 Tiered CI policy (see [CONTRIBUTING.md](CONTRIBUTING.md)):
 
 - **`core/` + `validation/`:** ≥ 80% (enforced in CI)
-- **Full repository:** ~78% while legacy modules remain; gate at 63%
+- **Full repository:** gate at 63% (current ~85%)
 - **Mypy:** clean on `core/` and `validation/` only (`--follow-imports=skip`)
 
 ---
@@ -293,6 +319,12 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 ---
 
 ## Changelog
+
+### Verification updates (2026-06-25) — PR #13, PR #14
+
+- **PR #13:** String musicological contract and source-audit battery (97 tests; `@pytest.mark.musicological`)
+- **PR #14:** Viola source-label normalization (`normalize_media_note_label` strips trailing `(2)`); viola table aligned to `VIOLA_Media` (C3–C7); portable viola provenance via `docs/instrument_acoustic_sources.md#viola`
+- Verified: 862 tests pass locally (Python 3.10.11); CI 3.10/3.11 green; full-project coverage 84.95%
 
 ### Version 1.1.4 (2026-06-21)
 - Canonical core path uses strict pitch parsing: `note_string_to_pitch()` delegates to `parse_pitch_strict()` (MIDI before spelling normalization; invalid input raises `InvalidPitchNotation`)
@@ -345,5 +377,5 @@ For issues and questions, please [create an issue] or [contact maintainers].
 
 ---
 
-**Last Updated:** 2026-06-21
+**Last Updated:** 2026-06-25
 
