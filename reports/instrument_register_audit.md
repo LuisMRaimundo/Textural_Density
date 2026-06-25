@@ -4,11 +4,11 @@
 
 ## Pitch contract
 
-- **manual_legacy_input:** notes[] are sounding/concert pitch
-- **musicxml:** written pitch transposed via <transpose> before validation
-- **density_lookup:** sounding_pitch
-- **range_validation:** sounding_pitch vs registry.sounding_range
-- **registry_transposition_field:** metadata_only_not_applied_to_manual_input
+- **manual_legacy_input:** notes[] are script pitch as written on the part
+- **musicxml:** written <pitch> used directly; <transpose> recorded but not applied
+- **density_lookup:** sounding_pitch (same as script pitch on input paths)
+- **range_validation:** script pitch vs registry.sounding_range
+- **registry_transposition_field:** metadata_only_not_applied_at_runtime
 
 ## Per-instrument summary
 

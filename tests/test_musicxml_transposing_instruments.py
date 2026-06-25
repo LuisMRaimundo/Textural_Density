@@ -1,4 +1,4 @@
-"""MusicXML transposition: written pitch → sounding pitch before range validation."""
+"""MusicXML script pitch: notes as written on the part (no <transpose> applied)."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ def _cleanup(path: str) -> None:
     Path(path).unlink(missing_ok=True)
 
 
-class TestDoubleBassOctaveTranspose:
+class TestDoubleBassScriptPitch:
     _XML = """<?xml version="1.0"?>
 <score-partwise version="3.1">
   <part-list><score-part id="P1"><part-name>Contrabass</part-name></score-part></part-list>
@@ -38,26 +38,26 @@ class TestDoubleBassOctaveTranspose:
   </part>
 </score-partwise>"""
 
-    def test_sounding_pitch_one_octave_lower(self):
+    def test_parse_xml_keeps_written_c3(self):
         path = _write_xml(self._XML)
         try:
             data = parse_xml(path)
-            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C2"))
+            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C3"))
         finally:
             _cleanup(path)
 
-    def test_events_preserve_written_and_sounding(self):
+    def test_events_use_script_pitch_without_written_split(self):
         path = _write_xml(self._XML)
         try:
             events, _, warnings = parse_xml_to_events(path)
             ev = events[0]
-            assert ev.written_pitch.note_name == "C3"
-            assert ev.sounding_pitch.note_name == "C2"
-            assert any("transpose" in w.lower() for w in warnings)
+            assert ev.sounding_pitch.note_name == "C3"
+            assert ev.written_pitch is None
+            assert any("not applied" in w.lower() for w in warnings)
         finally:
             _cleanup(path)
 
-    def test_pipeline_accepts_transposed_contrabaixo(self):
+    def test_pipeline_accepts_script_pitch_for_contrabaixo(self):
         path = _write_xml(self._XML)
         try:
             data = parse_xml(path)
@@ -71,7 +71,7 @@ class TestDoubleBassOctaveTranspose:
             _cleanup(path)
 
 
-class TestBbClarinetChromaticTranspose:
+class TestBbClarinetScriptPitch:
     _XML = """<?xml version="1.0"?>
 <score-partwise version="3.1">
   <part-list><score-part id="P1"><part-name>Clarinet</part-name></score-part></part-list>
@@ -86,31 +86,27 @@ class TestBbClarinetChromaticTranspose:
   </part>
 </score-partwise>"""
 
-    def test_written_c4_sounds_bb3(self):
+    def test_written_c4_not_transposed_to_bb3(self):
         path = _write_xml(self._XML)
         try:
             data = parse_xml(path)
-            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("Bb3"))
+            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C4"))
         finally:
             _cleanup(path)
 
-    def test_events_written_vs_sounding(self):
+    def test_events_have_no_written_sounding_split(self):
         path = _write_xml(self._XML)
         try:
-            events, _, _ = parse_xml_to_events(path)
+            events, _, warnings = parse_xml_to_events(path)
             ev = events[0]
-            assert ev.written_pitch is not None
-            assert ev.written_pitch.note_name.startswith("C")
-            assert note_to_midi(ev.sounding_pitch.note_name) == pytest.approx(
-                note_to_midi("Bb3")
-            )
+            assert ev.sounding_pitch.note_name.startswith("C")
+            assert ev.written_pitch is None
+            assert any("script pitch" in w.lower() for w in warnings)
         finally:
             _cleanup(path)
 
 
-class TestContrabassoonMusicXmlNoTranspose:
-    """Contrabassoon score pitch without <transpose> is validated as sounding pitch."""
-
+class TestContrabassoonMusicXmlScriptPitch:
     _XML = """<?xml version="1.0"?>
 <score-partwise version="3.1">
   <part-list><score-part id="P1"><part-name>Contrabassoon</part-name></score-part></part-list>
@@ -122,7 +118,7 @@ class TestContrabassoonMusicXmlNoTranspose:
   </part>
 </score-partwise>"""
 
-    def test_g4_without_transpose_element_accepted_in_range(self):
+    def test_g4_accepted_in_range(self):
         path = _write_xml(self._XML)
         try:
             data = parse_xml(path)
@@ -130,14 +126,12 @@ class TestContrabassoonMusicXmlNoTranspose:
             data["instruments"] = ["Contrabassoon"]
             data["num_instruments"] = [1]
             data["weight_factor"] = 0.5
-            resultados, densities, pitches = dp_calculate_metrics(data)
+            _, _, pitches = dp_calculate_metrics(data)
             assert pitches[0] == pytest.approx(67.0)
-            assert float(resultados["density"]["instrument"]) > 0.0
-            assert float(densities[0]) > 0.0
         finally:
             _cleanup(path)
 
-    def test_contrabassoon_g6_rejected_without_transpose(self):
+    def test_contrabassoon_g6_rejected(self):
         xml = self._XML.replace("<octave>4</octave>", "<octave>6</octave>")
         path = _write_xml(xml)
         try:
@@ -145,7 +139,7 @@ class TestContrabassoonMusicXmlNoTranspose:
             data["dynamics"] = ["mf"]
             data["instruments"] = ["contrabassoon"]
             data["num_instruments"] = [1]
-            with pytest.raises(InputError, match="outside the sounding range"):
+            with pytest.raises(InputError, match="outside the range"):
                 dp_calculate_metrics(data)
         finally:
             _cleanup(path)

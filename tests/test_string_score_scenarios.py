@@ -110,8 +110,8 @@ class TestStringVerticalSliceScenarios:
 
 
 @pytest.mark.musicological
-class TestDoubleBassWrittenVersusSoundingMusicXml:
-    """MusicXML transpose: sounding pitch used for lookup; written preserved on events."""
+class TestDoubleBassScriptPitchMusicXml:
+    """MusicXML: double-bass notes are read as written on the part (no transpose)."""
 
     _DB_XML = """<?xml version="1.0"?>
 <score-partwise version="3.1">
@@ -127,17 +127,17 @@ class TestDoubleBassWrittenVersusSoundingMusicXml:
   </part>
 </score-partwise>"""
 
-    def test_parse_xml_uses_sounding_pitch_one_octave_lower(self):
+    def test_parse_xml_keeps_written_c3(self):
         with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
             f.write(self._DB_XML)
             path = f.name
         try:
             data = parse_xml(path)
-            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C2"))
+            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C3"))
         finally:
             Path(path).unlink(missing_ok=True)
 
-    def test_events_preserve_written_and_sounding(self):
+    def test_events_use_script_pitch(self):
         with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
             f.write(self._DB_XML)
             path = f.name
@@ -145,17 +145,16 @@ class TestDoubleBassWrittenVersusSoundingMusicXml:
             events, _, warnings = parse_xml_to_events(path)
             assert len(events) == 1
             ev = events[0]
-            assert ev.written_pitch is not None
-            assert ev.written_pitch.note_name == "C3"
-            assert ev.sounding_pitch.note_name == "C2"
-            assert any("transpose" in w.lower() for w in warnings)
+            assert ev.written_pitch is None
+            assert ev.sounding_pitch.note_name == "C3"
+            assert any("script pitch" in w.lower() for w in warnings)
         finally:
             Path(path).unlink(missing_ok=True)
 
-    def test_pipeline_lookup_uses_sounding_pitch_for_contrabaixo(self):
+    def test_pipeline_lookup_uses_script_pitch_for_contrabaixo(self):
         resultados, densities, _ = dp_calculate_metrics(
             {
-                "notes": ["C2"],
+                "notes": ["C3"],
                 "dynamics": ["mf"],
                 "instruments": ["contrabaixo"],
                 "num_instruments": [1],

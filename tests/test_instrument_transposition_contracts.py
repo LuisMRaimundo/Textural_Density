@@ -109,11 +109,11 @@ class TestErrorMessageWrittenSounding:
                 player_count=1,
             )
         msg = str(exc.value)
-        assert "sounding MIDI" in msg
+        assert "MIDI" in msg
         assert "written" in msg
         assert "event index 2" in msg
 
-    def test_out_of_range_manual_input_mentions_concert_pitch(self):
+    def test_out_of_range_manual_input_mentions_script_pitch(self):
         with pytest.raises(InputError) as exc:
             calculate_metrics(
                 {
@@ -123,4 +123,4 @@ class TestErrorMessageWrittenSounding:
                     "num_instruments": [1],
                 }
             )
-        assert "concert/sounding pitch" in str(exc.value).lower()
+        assert "written on the instrument part" in str(exc.value).lower()

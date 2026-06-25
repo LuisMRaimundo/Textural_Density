@@ -83,9 +83,9 @@ def build_instrument_register_audit() -> dict[str, Any]:
                 "profile_status": profile.profile_status,
                 "table_span": table,
                 "range_discrepancy": _range_discrepancy(profile, table),
-                "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
-                "manual_input_convention": "sounding_concert_pitch",
-                "musicxml_convention": "transpose_element_to_sounding_before_validation",
+                "validation_uses": "script_pitch_midi_vs_registry_sounding_range",
+                "manual_input_convention": "script_pitch_as_written",
+                "musicxml_convention": "script_pitch_transpose_not_applied",
                 "registry_transposition_applied_at_runtime": False,
             }
         )
@@ -107,11 +107,11 @@ def build_instrument_register_audit() -> dict[str, Any]:
         "instruments": instruments,
         "alias_resolution": alias_rows,
         "pitch_contract": {
-            "manual_legacy_input": "notes[] are sounding/concert pitch",
-            "musicxml": "written pitch transposed via <transpose> before validation",
-            "density_lookup": "sounding_pitch",
-            "range_validation": "sounding_pitch vs registry.sounding_range",
-            "registry_transposition_field": "metadata_only_not_applied_to_manual_input",
+            "manual_legacy_input": "notes[] are script pitch as written on the part",
+            "musicxml": "written <pitch> used directly; <transpose> recorded but not applied",
+            "density_lookup": "sounding_pitch (same as script pitch on input paths)",
+            "range_validation": "script pitch vs registry.sounding_range",
+            "registry_transposition_field": "metadata_only_not_applied_at_runtime",
         },
     }
 

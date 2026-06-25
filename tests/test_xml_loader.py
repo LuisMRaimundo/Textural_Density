@@ -80,7 +80,7 @@ class TestParseXml:
 
 
 class TestMusicXmlTranspose:
-    """MusicXML concert pitch from <transpose> (Bb clarinet, etc.)."""
+    """MusicXML script pitch: <transpose> declared but not applied."""
 
     _BB_CLARINET_XML = """<?xml version="1.0"?>
 <score-partwise version="3.1">
@@ -105,7 +105,7 @@ class TestMusicXmlTranspose:
   </part>
 </score-partwise>"""
 
-    def test_parse_xml_applies_concert_pitch(self):
+    def test_parse_xml_uses_script_pitch(self):
         with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
             f.write(self._BB_CLARINET_XML)
             path = f.name
@@ -113,11 +113,11 @@ class TestMusicXmlTranspose:
             data = parse_xml(path)
             assert len(data["notes"]) == 2
             assert data["notes"][0] == "C4"
-            assert note_to_midi(data["notes"][1]) == pytest.approx(note_to_midi("Bb3"))
+            assert note_to_midi(data["notes"][1]) == pytest.approx(note_to_midi("C4"))
         finally:
             Path(path).unlink(missing_ok=True)
 
-    def test_parse_xml_to_events_sets_written_and_sounding_pitch(self):
+    def test_parse_xml_to_events_no_written_sounding_split(self):
         with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
             f.write(self._BB_CLARINET_XML)
             path = f.name
@@ -127,16 +127,13 @@ class TestMusicXmlTranspose:
             flute, clarinet = events
             assert flute.sounding_pitch.note_name == "C4"
             assert flute.written_pitch is None
-            assert clarinet.written_pitch is not None
-            assert clarinet.written_pitch.note_name == "C4"
-            assert note_to_midi(clarinet.sounding_pitch.note_name) == pytest.approx(
-                note_to_midi("Bb3")
-            )
-            assert any("transpose" in w.lower() for w in warnings)
+            assert clarinet.written_pitch is None
+            assert clarinet.sounding_pitch.note_name == "C4"
+            assert any("script pitch" in w.lower() for w in warnings)
         finally:
             Path(path).unlink(missing_ok=True)
 
-    def test_transpose_with_octave_change(self):
+    def test_transpose_declared_but_not_applied_for_horn(self):
         xml = """<?xml version="1.0"?>
 <score-partwise version="3.1">
   <part-list><score-part id="P1"><part-name>Horn in F</part-name></score-part></part-list>
@@ -154,12 +151,12 @@ class TestMusicXmlTranspose:
             path = f.name
         try:
             data = parse_xml(path)
-            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("F3"))
+            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C4"))
         finally:
             Path(path).unlink(missing_ok=True)
 
-    def test_chromatic_plus_octave_change_formula(self):
-        """chromatic + 12 * octave-change (MusicXML convention)."""
+    def test_chromatic_plus_octave_change_not_applied(self):
+        """Declared transpose is recorded but script pitch is kept."""
         xml = """<?xml version="1.0"?>
 <score-partwise version="3.1">
   <part-list><score-part id="P1"><part-name>Test</part-name></score-part></part-list>
@@ -177,6 +174,6 @@ class TestMusicXmlTranspose:
             path = f.name
         try:
             data = parse_xml(path)
-            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("E3"))
+            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C4"))
         finally:
             Path(path).unlink(missing_ok=True)
