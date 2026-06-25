@@ -103,8 +103,8 @@ Tests: `tests/test_quantity_scaling.py`, `tests/test_gui_architecture.py`.
 
 ## MusicXML / score intake
 
-- [x] MusicXML `<transpose>` declared but **not** applied — script pitch from `<pitch>` used for analysis
-- [x] `written_pitch` vs `sounding_pitch` on `InstrumentEvent` when transposition applies
+- [x] MusicXML `<transpose>` applied once — written `<pitch>` converted to sounding/concert pitch
+- [x] `written_pitch` vs `sounding_pitch` on `InstrumentEvent` when MusicXML transposition applies
 - [x] `tests/test_xml_loader.py::TestMusicXmlTranspose` passes
 - [x] `benchmarks/corpus/excerpt_003.musicxml` + frozen `expected_outputs/excerpt_003.json`
 - [x] `benchmarks/corpus/excerpt_004.musicxml` (transpose persists measure 2) + frozen output

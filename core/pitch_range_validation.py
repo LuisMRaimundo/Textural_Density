@@ -21,11 +21,13 @@ def _note_label(pitch) -> str:
 
 def validate_event_sounding_range(event: InstrumentEvent, *, index: int | None = None) -> None:
     """
-    Raise ``InputError`` when the event's pitch is outside the instrument range.
+    Raise ``InputError`` when the event's concert/sounding pitch is outside range.
 
-    Uses ``instrumentos.registry`` ``sounding_range`` (script/notated pitch, MIDI semitones).
-    Manual legacy input, the GUI, and MusicXML all supply the pitch as written on the
-    part; MusicXML ``<transpose>`` is not applied (see ``xml_loader``).
+    Uses ``instrumentos.registry`` ``sounding_range`` (concert-pitch MIDI semitones).
+    Manual legacy input and the GUI supply **sounding/concert** pitch directly.
+    MusicXML written ``<pitch>`` is converted via ``<transpose>`` before validation
+    (see ``xml_loader``). ``registry.transposition`` is notation metadata only and is
+    not applied to manual input.
     """
     profile = profile_for_event(event.instrument_name)
     low, high = profile.sounding_range
@@ -45,11 +47,15 @@ def validate_event_sounding_range(event: InstrumentEvent, *, index: int | None =
 
     idx_part = f" at event index {index}" if index is not None else ""
     field = "notes" if index is None else f"notes[{index}]"
+    if event.written_pitch is not None:
+        guidance = "MusicXML written pitch was transposed to sounding pitch for validation."
+    else:
+        guidance = "Enter sounding/concert pitch (manual and GUI input are not transposed)."
     raise InputError(
-        f"Note {sounding_label!r} (MIDI {midi:.2g}) is outside the range "
+        f"Note {sounding_label!r} (sounding MIDI {midi:.2g}) is outside the range "
         f"[{low:.0f}, {high:.0f}] for instrument {event.instrument_name!r} "
         f"({profile.display_name}){written_clause}{idx_part}. "
-        f"Enter the pitch as written on the instrument part.",
+        f"{guidance}",
         field=field,
     )
 

@@ -551,36 +551,36 @@ Each `VerticalSliceAnalysis` contains `metrics`, `subindices`, `composite_densit
 1. **Custom `<densidade_analysis>` XML** — parallel note lists or `<voice>` elements with optional `<onset>` / `<duration>`.
 2. **Standard MusicXML** (`score-partwise` / `score-timewise`) — notes extracted per part/measure.
 
-**Script pitch (all input paths):** Notes are analysed **as written on each instrument part** — the pitch you see on the staff is the pitch used for range validation and density lookup.
+**Sounding/concert pitch (all analytical paths):** Instrument tables, range validation, and density lookup use **concert/sounding pitch**. Manual and GUI input supply sounding pitch directly. MusicXML written ``<pitch>`` is converted via ``<transpose>`` before validation and lookup.
 
 | Input path | Pitch interpreted as | Range validation |
 |------------|----------------------|------------------|
-| Legacy dict / GUI `notes[]` | **Script pitch** as entered | `sounding_pitch.midi` vs `registry.sounding_range` |
-| MusicXML `<pitch>` | **Script pitch** on the part | Same — **`<transpose>` is not applied** |
-| `make_instrument_event(note=…)` | **Script pitch** | Same as legacy |
+| Legacy dict / GUI `notes[]` | **Sounding/concert pitch** as entered | `sounding_pitch.midi` vs `registry.sounding_range` |
+| MusicXML `<pitch>` | **Written pitch** → converted via `<transpose>` | **Sounding** MIDI vs `registry.sounding_range` |
+| `make_instrument_event(note=…)` | **Sounding/concert pitch** | Same as legacy |
 
-`instrumentos.registry.InstrumentProfile.transposition` and MusicXML `<transpose>` are **metadata only** at runtime. They document how a part relates to concert pitch in score software but are **not** applied when building events or running metrics.
+`instrumentos.registry.InstrumentProfile.transposition` is **notation/import metadata only** for manual input — it is **not** applied when building events from legacy/GUI lists. MusicXML uses the part's ``<transpose>`` element instead.
 
 **Range kinds in this repository:**
 
 | Concept | Where stored | Used for validation? |
 |---------|--------------|----------------------|
-| **Registry range** (`sounding_range`) | `registry.sounding_range` | Yes — script pitch MIDI vs this span |
+| **Registry range** (`sounding_range`) | `registry.sounding_range` | Yes — **sounding** MIDI vs this span |
 | **Comfortable range** | `registry.comfortable_range` | No (orchestration metadata) |
 | **Source-table span** | `spectral_data` keys / `INSTRUMENT_SOURCE.pitch_range` | Density lookup; should ⊆ registry range for GPR modules |
 
-**MusicXML `<transpose>` (declared, not applied):** Exporters may include `<attributes><transpose>` for concert-pitch rendering. Textural Density records the offset in event metadata but keeps the notated `<pitch>`:
+**MusicXML `<transpose>` (applied once):** Exporters include ``<attributes><transpose>`` for transposing parts. Textural Density converts written pitch to concert/sounding pitch:
 
 $$
-m_{\mathrm{analysed}} = m_{\mathrm{written}}
+m_{\mathrm{sounding}} = m_{\mathrm{written}} + \mathrm{chromatic} + 12 \times \mathrm{octave\_change}
 $$
 
-Example: B♭ clarinet part with written C4 in `<pitch>` and `<chromatic>-2</chromatic>` — analysis uses **C4**, not B♭3.
+Example: B♭ clarinet part with written C4 in `<pitch>` and `<chromatic>-2</chromatic>` — analysis uses **B♭3** (sounding), not C4.
 
 | Function | Returns | Notes |
 |----------|---------|-------|
-| `parse_xml(path)` | Legacy dict (`notes`, `dynamics`, …) | `notes` are **script** pitches for MusicXML |
-| `parse_xml_to_events(path)` | `(events, options, warnings)` | Emits a warning when `<transpose>` is present but ignored |
+| `parse_xml(path)` | Legacy dict (`notes`, `dynamics`, …) | `notes` are **sounding** pitches for MusicXML |
+| `parse_xml_to_events(path)` | `(events, options, warnings)` | Sets `written_pitch` when it differs from sounding |
 
 **Limitations (documented):**
 
@@ -588,7 +588,7 @@ Example: B♭ clarinet part with written C4 in `<pitch>` and `<chromatic>-2</chr
 - Global onset times are **not** reconstructed from cumulative `<duration>` unless explicit `<onset>` is present in custom XML.
 - Parser is hand-rolled (`xml.etree`); it does not use music21. Transposition follows MusicXML `<transpose>` elements only.
 
-Tests: `tests/test_xml_loader.py::TestMusicXmlTranspose`; register audit battery: `tests/test_instrument_register_contracts.py`, `tests/test_instrument_transposition_contracts.py`, `tests/test_instrument_alias_registers.py`, `tests/test_musicxml_transposing_instruments.py`. Generate audit artefact: `python tools/generate_instrument_register_audit.py` → `reports/instrument_register_audit.{json,md}`. Benchmarks: `benchmarks/corpus/excerpt_003.musicxml`–`excerpt_004.musicxml` (transpose); see [`benchmarks/README.md`](../benchmarks/README.md).
+Tests: `tests/test_transposing_instrument_sounding_pitch_contract.py`, `tests/test_xml_loader.py::TestMusicXmlTranspose`; register audit battery: `tests/test_instrument_register_contracts.py`, `tests/test_instrument_transposition_contracts.py`, `tests/test_instrument_alias_registers.py`, `tests/test_musicxml_transposing_instruments.py`. Generate audit artefact: `python tools/audit_transposing_instrument_pitch_contract.py` → `reports/transposing_instrument_pitch_contract_audit.{json,md}`. Benchmarks: `benchmarks/corpus/excerpt_003.musicxml`–`excerpt_004.musicxml` (transpose); see [`benchmarks/README.md`](../benchmarks/README.md).
 
 ---
 

@@ -1,0 +1,800 @@
+{
+  "instrument_count": 28,
+  "transposing_watchlist_count": 8,
+  "pitch_contract": {
+    "manual_legacy_input": "notes[] are sounding/concert pitch; registry transposition is not applied",
+    "musicxml": "written <pitch> converted via <transpose> once before validation and lookup",
+    "density_lookup": "sounding_pitch (concert pitch after MusicXML transpose when applicable)",
+    "range_validation": "sounding/concert pitch vs registry.sounding_range",
+    "registry_transposition_field": "metadata_only_not_applied_at_runtime",
+    "spectral_data_tables": "sounding/concert pitch keys only"
+  },
+  "review_required": [
+    {
+      "canonical_id": "contrabaixo",
+      "display_name": "Double bass",
+      "aliases": [
+        "Double bass",
+        "double_bass",
+        "contrabass",
+        "baixo"
+      ],
+      "family": "strings",
+      "module_name": "double_bass",
+      "table_backed": true,
+      "source_table_pitch_span": {
+        "first_note": "E1",
+        "last_note": "C5",
+        "row_count": 45,
+        "min_midi": 28,
+        "max_midi": 72,
+        "instrument_source_pitch_range": [
+          28,
+          72
+        ]
+      },
+      "registry_sounding_range_midi": [
+        28,
+        72
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "REVIEW_REQUIRED"
+    },
+    {
+      "canonical_id": "contrafagote",
+      "display_name": "Contrabassoon",
+      "aliases": [
+        "Contrabassoon",
+        "contrabassoon"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        22,
+        77
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "REVIEW_REQUIRED"
+    },
+    {
+      "canonical_id": "flautim",
+      "display_name": "Piccolo",
+      "aliases": [
+        "Piccolo",
+        "piccolo"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        74,
+        108
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "REVIEW_REQUIRED"
+    }
+  ],
+  "failures": [],
+  "instruments": [
+    {
+      "canonical_id": "bombo",
+      "display_name": "Bass drum",
+      "aliases": [
+        "Bass drum",
+        "bass_drum"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        28,
+        48
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "caixa",
+      "display_name": "Snare drum",
+      "aliases": [
+        "Snare drum",
+        "snare_drum",
+        "snare"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        60,
+        72
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "celesta",
+      "display_name": "Celesta",
+      "aliases": [
+        "Celesta",
+        "celesta"
+      ],
+      "family": "keyboard_harp",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        60,
+        96
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "clarinete",
+      "display_name": "Clarinet",
+      "aliases": [
+        "Clarinet",
+        "clarinet",
+        "clarinete"
+      ],
+      "family": "woodwinds",
+      "module_name": "clarinet",
+      "table_backed": true,
+      "source_table_pitch_span": {
+        "first_note": "D3",
+        "last_note": "C7",
+        "row_count": 47,
+        "min_midi": 50,
+        "max_midi": 96,
+        "instrument_source_pitch_range": [
+          50,
+          96
+        ]
+      },
+      "registry_sounding_range_midi": [
+        50,
+        96
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "clarinete_baixo",
+      "display_name": "Bass clarinet",
+      "aliases": [
+        "Bass clarinet",
+        "bass_clarinet",
+        "clarinete baixo",
+        "clarinete_baixo"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        34,
+        72
+      ],
+      "registry_transposition_semitones": 14,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "contrabaixo",
+      "display_name": "Double bass",
+      "aliases": [
+        "Double bass",
+        "double_bass",
+        "contrabass",
+        "baixo"
+      ],
+      "family": "strings",
+      "module_name": "double_bass",
+      "table_backed": true,
+      "source_table_pitch_span": {
+        "first_note": "E1",
+        "last_note": "C5",
+        "row_count": 45,
+        "min_midi": 28,
+        "max_midi": 72,
+        "instrument_source_pitch_range": [
+          28,
+          72
+        ]
+      },
+      "registry_sounding_range_midi": [
+        28,
+        72
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "REVIEW_REQUIRED"
+    },
+    {
+      "canonical_id": "contrafagote",
+      "display_name": "Contrabassoon",
+      "aliases": [
+        "Contrabassoon",
+        "contrabassoon"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        22,
+        77
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "REVIEW_REQUIRED"
+    },
+    {
+      "canonical_id": "cor_anglais",
+      "display_name": "English horn",
+      "aliases": [
+        "English horn",
+        "corne_ingles",
+        "english_horn",
+        "cor anglais",
+        "cor_anglais"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        52,
+        76
+      ],
+      "registry_transposition_semitones": 7,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "fagote",
+      "display_name": "Bassoon",
+      "aliases": [
+        "Bassoon",
+        "bassoon",
+        "fagot"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        34,
+        72
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "flauta",
+      "display_name": "Flute",
+      "aliases": [
+        "Flute",
+        "flute",
+        "flute_traverso"
+      ],
+      "family": "woodwinds",
+      "module_name": "flute",
+      "table_backed": true,
+      "source_table_pitch_span": {
+        "first_note": "B3",
+        "last_note": "D7",
+        "row_count": 40,
+        "min_midi": 59,
+        "max_midi": 98,
+        "instrument_source_pitch_range": [
+          59,
+          98
+        ]
+      },
+      "registry_sounding_range_midi": [
+        59,
+        98
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "flautim",
+      "display_name": "Piccolo",
+      "aliases": [
+        "Piccolo",
+        "piccolo"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        74,
+        108
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "REVIEW_REQUIRED"
+    },
+    {
+      "canonical_id": "harpa",
+      "display_name": "Harp",
+      "aliases": [
+        "Harp",
+        "harp"
+      ],
+      "family": "keyboard_harp",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        23,
+        96
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "marimba",
+      "display_name": "Marimba",
+      "aliases": [
+        "Marimba",
+        "marimba"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        45,
+        84
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "metalofone",
+      "display_name": "Glockenspiel",
+      "aliases": [
+        "Glockenspiel",
+        "glockenspiel",
+        "glock"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        72,
+        108
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "oboe",
+      "display_name": "Oboe",
+      "aliases": [
+        "Oboe",
+        "oboe"
+      ],
+      "family": "woodwinds",
+      "module_name": "oboe",
+      "table_backed": true,
+      "source_table_pitch_span": {
+        "first_note": "A#3",
+        "last_note": "A6",
+        "row_count": 36,
+        "min_midi": 58,
+        "max_midi": 93,
+        "instrument_source_pitch_range": [
+          58,
+          93
+        ]
+      },
+      "registry_sounding_range_midi": [
+        58,
+        93
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "piano",
+      "display_name": "Piano",
+      "aliases": [
+        "Piano",
+        "piano",
+        "fortepiano"
+      ],
+      "family": "keyboard_harp",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        21,
+        108
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "pratos",
+      "display_name": "Cymbals",
+      "aliases": [
+        "Cymbals",
+        "cymbals"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        60,
+        84
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "tamtam",
+      "display_name": "Tam-tam",
+      "aliases": [
+        "Tam-tam",
+        "tam_tam",
+        "tam-tam"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        24,
+        48
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "timpanos",
+      "display_name": "Timpani",
+      "aliases": [
+        "Timpani",
+        "timpani",
+        "timbales"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        36,
+        60
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "trombone",
+      "display_name": "Trombone",
+      "aliases": [
+        "Trombone",
+        "trombone"
+      ],
+      "family": "brass",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        40,
+        72
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "trombone_baixo",
+      "display_name": "Bass trombone",
+      "aliases": [
+        "Bass trombone",
+        "bass_trombone",
+        "trombone baixo"
+      ],
+      "family": "brass",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        34,
+        65
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "trompa",
+      "display_name": "Horn",
+      "aliases": [
+        "Horn",
+        "horn",
+        "french_horn",
+        "trompa"
+      ],
+      "family": "brass",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        41,
+        77
+      ],
+      "registry_transposition_semitones": 7,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "trompete",
+      "display_name": "Trumpet",
+      "aliases": [
+        "Trumpet",
+        "trumpet"
+      ],
+      "family": "brass",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        55,
+        84
+      ],
+      "registry_transposition_semitones": 2,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "tuba",
+      "display_name": "Tuba",
+      "aliases": [
+        "Tuba",
+        "tuba"
+      ],
+      "family": "brass",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        28,
+        58
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "vibrafone",
+      "display_name": "Vibraphone",
+      "aliases": [
+        "Vibraphone",
+        "vibraphone"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "source_table_pitch_span": null,
+      "registry_sounding_range_midi": [
+        53,
+        84
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "viola",
+      "display_name": "Viola",
+      "aliases": [
+        "Viola",
+        "viola"
+      ],
+      "family": "strings",
+      "module_name": "viola",
+      "table_backed": true,
+      "source_table_pitch_span": {
+        "first_note": "C3",
+        "last_note": "C7",
+        "row_count": 49,
+        "min_midi": 48,
+        "max_midi": 96,
+        "instrument_source_pitch_range": [
+          48,
+          96
+        ]
+      },
+      "registry_sounding_range_midi": [
+        48,
+        96
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "violino",
+      "display_name": "Violin",
+      "aliases": [
+        "Violin",
+        "violin"
+      ],
+      "family": "strings",
+      "module_name": "violin",
+      "table_backed": true,
+      "source_table_pitch_span": {
+        "first_note": "G3",
+        "last_note": "G7",
+        "row_count": 49,
+        "min_midi": 55,
+        "max_midi": 103,
+        "instrument_source_pitch_range": [
+          55,
+          103
+        ]
+      },
+      "registry_sounding_range_midi": [
+        55,
+        103
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    },
+    {
+      "canonical_id": "violoncelo",
+      "display_name": "Cello",
+      "aliases": [
+        "Cello",
+        "cello",
+        "violoncello"
+      ],
+      "family": "strings",
+      "module_name": "cello",
+      "table_backed": true,
+      "source_table_pitch_span": {
+        "first_note": "C2",
+        "last_note": "C6",
+        "row_count": 49,
+        "min_midi": 36,
+        "max_midi": 84,
+        "instrument_source_pitch_range": [
+          36,
+          84
+        ]
+      },
+      "registry_sounding_range_midi": [
+        36,
+        84
+      ],
+      "registry_transposition_semitones": 0,
+      "manual_input_transposed": false,
+      "musicxml_transpose_applied": true,
+      "calcular_densidade_expects_sounding_pitch": true,
+      "test_coverage": "tests/test_transposing_instrument_sounding_pitch_contract.py",
+      "status": "PASS"
+    }
+  ]
+}

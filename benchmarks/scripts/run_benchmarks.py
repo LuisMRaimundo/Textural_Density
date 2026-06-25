@@ -30,6 +30,11 @@ def _load_manifest() -> list[dict]:
 
 
 def run_entry(entry: dict) -> dict:
+    import numpy as np
+
+    # GPR optimizer restarts consume NumPy global RNG; reset per excerpt so
+    # benchmark order and prior MusicXML transpose work cannot shift later entries.
+    np.random.seed(0)
     with open(CONFIG, encoding="utf-8") as f:
         cfg = json.load(f)
     parsed = parse_xml(str(BENCHMARKS / entry["musicxml"]))

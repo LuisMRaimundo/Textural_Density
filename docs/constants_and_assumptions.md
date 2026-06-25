@@ -12,8 +12,8 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | `MIDI_BASE_NOTE` | 69 | `config.py` | No | MIDI number for A4 |
 | `TAMANHO_OITAVA_MICROTONAL` | 24 | `config.py` | No | Microtonal octave division for notation parser |
 | Microtonal cents | ±N cents on note string | `microtonal.py` | Via notation | Continuous pitch offset |
-| MusicXML transpose | declared only (not applied) | `xml_loader.py` | Per-part `<attributes>` | Script pitch from `<pitch>` used for analysis |
-| `written_pitch` vs `sounding_pitch` | Optional on `InstrumentEvent` | `core/models.py` | Set when transpose applies | Audit trail only; metrics use sounding |
+| MusicXML transpose | Applied once before validation/lookup | `xml_loader.py` | Per-part `<attributes>` | Written `<pitch>` + `<transpose>` → sounding |
+| `written_pitch` vs `sounding_pitch` | Optional on `InstrumentEvent` | `core/models.py` | Set when MusicXML transpose applies | Metrics use sounding; written retained for errors |
 
 ---
 
