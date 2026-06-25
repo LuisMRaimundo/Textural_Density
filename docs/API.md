@@ -326,13 +326,13 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 
 | Function | Description |
 |----------|-------------|
-| `parse_xml(filepath) -> dict` | Custom `<densidade_analysis>` or MusicXML → legacy input dict. MusicXML notes are **script pitch** as written on the part. |
-| `parse_xml_to_events(filepath) -> (events, options, warnings)` | Typed `InstrumentEvent` list; sets `written_pitch` when transposition applies. |
+| `parse_xml(filepath) -> dict` | Custom `<densidade_analysis>` or MusicXML → legacy input dict. MusicXML written `<pitch>` is converted to **sounding/concert pitch** via `<transpose>`. |
+| `parse_xml_to_events(filepath) -> (events, options, warnings)` | Typed `InstrumentEvent` list; sets `written_pitch` when it differs from sounding pitch. |
 | `note_string_to_gui_parts(note_str)` | GUI field helper `(base, octave, cents)` |
 
-**MusicXML transposition:** Per-part `<attributes><transpose>` may be present in exported scores; it is recorded in event metadata but **not** applied. See [TECHNICAL_MANUAL.md §7.4](TECHNICAL_MANUAL.md#74-musicxml-loading-and-transposition).
+**MusicXML transposition:** Per-part `<attributes><transpose>` converts written pitch to **sounding/concert pitch** before validation and density lookup. See [TECHNICAL_MANUAL.md §7.4](TECHNICAL_MANUAL.md#74-musicxml-loading-and-transposition).
 
-**Warnings:** Untimed MusicXML → single vertical slice; `<transpose>` present → script-pitch warning (not applied).
+**Warnings:** Untimed MusicXML → single vertical slice.
 
 ---
 

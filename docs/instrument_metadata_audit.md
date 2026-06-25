@@ -34,10 +34,11 @@ python scripts/export_instrument_metadata_audit.py
 - Review all `symbolic_default` profiles with `uncertainty=high` before claiming registry maturity.
 - Do not upgrade status to `empirical_profile` without committing supporting source notes in the repository.
 - **Double-bass span adjudication:** committed `double_bass.py` table spans E1–C5; confirm methodological status of upper-register rows (see [instrument_acoustic_sources.md](instrument_acoustic_sources.md)).
-- **Contrabassoon registry:** `sounding_range` is B♭0–F5 (MIDI 22–77). All input uses **script pitch** as written on the part.
-- **Script pitch convention:** legacy `notes[]`, GUI, and MusicXML all use the notated pitch; MusicXML `<transpose>` is not applied at runtime.
+- **Contrabassoon registry:** `sounding_range` is B♭0–F5 (MIDI 22–77). Manual/GUI input uses sounding pitch; MusicXML applies `<transpose>`.
+- **Sounding/concert pitch:** legacy `notes[]`, GUI, and manual input use sounding pitch. MusicXML written `<pitch>` is converted via `<transpose>` to sounding pitch before validation and lookup.
+- **Dynamic interpolation:** production GPR on pp/mf/ff anchors; `mp` modelled at ordinal 4.5 (not a source anchor; not mapped to `mf`). Linear/PCHIP are diagnostic references only (PR #24).
 - **Technique vs table scope:** arco sustain CDM tables must not be read as technique-specific measurements for pizzicato/tremolo/harmonics/mute without dedicated data.
-- **GPR determinism:** production modules use `create_dynamic_gpr()` with explicit `GPR_RANDOM_STATE = 0`; output is independent of global NumPy RNG state.
+- **GPR determinism:** production modules use `create_dynamic_gpr()` with explicit `GPR_RANDOM_STATE = 0`; output is independent of global NumPy RNG state and benchmark order.
 
 **Resolved (PR #14):** viola portable provenance (`docs/instrument_acoustic_sources.md#viola`); viola table aligned to `VIOLA_Media` (C3–C7) with `(2)` label normalization.
 
