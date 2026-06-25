@@ -75,7 +75,7 @@ def test_one_semitone_below_min_rejected(instrument_id):
     if lo <= 0:
         pytest.skip("MIDI floor")
     note = midi_to_note_name(float(lo - 1))
-    with pytest.raises(InputError, match="outside the sounding range"):
+    with pytest.raises(InputError, match="outside the range"):
         calculate_metrics(
             {
                 "notes": [note],
@@ -93,7 +93,7 @@ def test_one_semitone_above_max_rejected(instrument_id):
     if hi >= 127:
         pytest.skip("MIDI ceiling")
     note = midi_to_note_name(float(hi + 1))
-    with pytest.raises(InputError, match="outside the sounding range"):
+    with pytest.raises(InputError, match="outside the range"):
         calculate_metrics(
             {
                 "notes": [note],
@@ -163,7 +163,7 @@ class TestContrabassoonRegression:
         assert ev.written_pitch is None
 
     def test_contrabassoon_genuinely_high_note_rejected(self):
-        with pytest.raises(InputError, match="outside the sounding range"):
+        with pytest.raises(InputError, match="outside the range"):
             calculate_metrics(
                 {
                     "notes": ["C6"],

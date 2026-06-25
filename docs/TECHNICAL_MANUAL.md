@@ -85,7 +85,7 @@ score_io/, gui/                # Export and GUI layers (separate from core)
 | **`core.analyze_score(source, config)`** | Timed score analysis. Accepts path, legacy dict, or `list[InstrumentEvent]`. Returns `ScoreAnalysisResult`. |
 | **`core.legacy_input_to_vertical_slice(data)`** | Converts legacy input dict to typed `VerticalSlice`. |
 | **`core.orchestration.compute_event_instrument_density`** | Per-event instrument module lookup and density. |
-| **`xml_loader.parse_xml` / `parse_xml_to_events`** | Load custom `<densidade_analysis>` or MusicXML; apply `<transpose>` for concert pitch. |
+| **`xml_loader.parse_xml` / `parse_xml_to_events`** | Load custom `<densidade_analysis>` or MusicXML; notes use **script pitch** as written on each part (`<transpose>` not applied). |
 | **`data_processor_legacy._validate_and_extract_input`** | Legacy GUI validation helpers (shim path). |
 
 ### 2.3 Core calculation modules
@@ -551,37 +551,36 @@ Each `VerticalSliceAnalysis` contains `metrics`, `subindices`, `composite_densit
 1. **Custom `<densidade_analysis>` XML** — parallel note lists or `<voice>` elements with optional `<onset>` / `<duration>`.
 2. **Standard MusicXML** (`score-partwise` / `score-timewise`) — notes extracted per part/measure.
 
-**Pitch conventions (manual vs MusicXML):**
+**Script pitch (all input paths):** Notes are analysed **as written on each instrument part** — the pitch you see on the staff is the pitch used for range validation and density lookup.
 
 | Input path | Pitch interpreted as | Range validation |
 |------------|----------------------|------------------|
-| Legacy dict / GUI `notes[]` | **Sounding / concert pitch** | `sounding_pitch.midi` vs `registry.sounding_range` |
-| MusicXML `<pitch>` | **Written pitch** on the part | Converted to sounding via `<transpose>` first |
-| `make_instrument_event(note=…)` | **Sounding** unless `written_note` also set | Same as legacy |
+| Legacy dict / GUI `notes[]` | **Script pitch** as entered | `sounding_pitch.midi` vs `registry.sounding_range` |
+| MusicXML `<pitch>` | **Script pitch** on the part | Same — **`<transpose>` is not applied** |
+| `make_instrument_event(note=…)` | **Script pitch** | Same as legacy |
 
-`instrumentos.registry.InstrumentProfile.transposition` documents score transposition for **metadata and importers only** — it is **not** applied when building events from manual/GUI note strings. Octave-displaced instruments (double bass, contrabassoon, piccolo) do not auto-transpose manual input unless the score declares `<transpose>` (MusicXML) or the caller supplies both `note` and `written_note`.
+`instrumentos.registry.InstrumentProfile.transposition` and MusicXML `<transpose>` are **metadata only** at runtime. They document how a part relates to concert pitch in score software but are **not** applied when building events or running metrics.
 
 **Range kinds in this repository:**
 
 | Concept | Where stored | Used for validation? |
 |---------|--------------|----------------------|
-| **Sounding range** | `registry.sounding_range` | Yes — `core.pitch_range_validation` |
+| **Registry range** (`sounding_range`) | `registry.sounding_range` | Yes — script pitch MIDI vs this span |
 | **Comfortable range** | `registry.comfortable_range` | No (orchestration metadata) |
-| **Source-table span** | `spectral_data` keys / `INSTRUMENT_SOURCE.pitch_range` | Density lookup only; should ⊆ sounding range for GPR modules |
-| **Written range** | Not stored separately | MusicXML supplies written pitch; transpose to sounding |
+| **Source-table span** | `spectral_data` keys / `INSTRUMENT_SOURCE.pitch_range` | Density lookup; should ⊆ registry range for GPR modules |
 
-**Concert pitch (transposing instruments):** When a part declares `<attributes><transpose>`, written pitch is converted to **sounding/concert pitch** before metrics run:
+**MusicXML `<transpose>` (declared, not applied):** Exporters may include `<attributes><transpose>` for concert-pitch rendering. Textural Density records the offset in event metadata but keeps the notated `<pitch>`:
 
 $$
-m_{\mathrm{sounding}} = m_{\mathrm{written}} + \Delta_{\mathrm{chromatic}} + 12 \cdot \Delta_{\mathrm{octave\_change}}
+m_{\mathrm{analysed}} = m_{\mathrm{written}}
 $$
 
-Example: B♭ clarinet with `<chromatic>-2</chromatic>` — written C4 → sounding B♭3.
+Example: B♭ clarinet part with written C4 in `<pitch>` and `<chromatic>-2</chromatic>` — analysis uses **C4**, not B♭3.
 
 | Function | Returns | Notes |
 |----------|---------|-------|
-| `parse_xml(path)` | Legacy dict (`notes`, `dynamics`, …) | `notes` are **concert** pitches for MusicXML |
-| `parse_xml_to_events(path)` | `(events, options, warnings)` | Sets `written_pitch` when it differs from `sounding_pitch` |
+| `parse_xml(path)` | Legacy dict (`notes`, `dynamics`, …) | `notes` are **script** pitches for MusicXML |
+| `parse_xml_to_events(path)` | `(events, options, warnings)` | Emits a warning when `<transpose>` is present but ignored |
 
 **Limitations (documented):**
 

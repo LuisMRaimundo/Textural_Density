@@ -188,7 +188,7 @@ Normally called internally by `calculate_metrics`; exposed for custom pipelines.
 | Class | Purpose |
 |-------|---------|
 | `Pitch` | Symbolic pitch (MIDI, note name, cents) |
-| `InstrumentEvent` | One sounding event; optional `written_pitch` when MusicXML transpose applies |
+| `InstrumentEvent` | One score event; `sounding_pitch` holds the script/notated pitch used for analysis |
 | `VerticalSlice` | Simultaneous events at one moment |
 | `AnalysisConfig` | Analysis options |
 | `MetricResult` | Scalar metric + epistemic fields |
@@ -326,13 +326,13 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 
 | Function | Description |
 |----------|-------------|
-| `parse_xml(filepath) -> dict` | Custom `<densidade_analysis>` or MusicXML → legacy input dict. MusicXML notes are **concert pitch** after `<transpose>`. |
+| `parse_xml(filepath) -> dict` | Custom `<densidade_analysis>` or MusicXML → legacy input dict. MusicXML notes are **script pitch** as written on the part. |
 | `parse_xml_to_events(filepath) -> (events, options, warnings)` | Typed `InstrumentEvent` list; sets `written_pitch` when transposition applies. |
 | `note_string_to_gui_parts(note_str)` | GUI field helper `(base, octave, cents)` |
 
-**MusicXML transposition:** Per-part `<attributes><transpose>` with `<chromatic>` and optional `<octave-change>`. See [TECHNICAL_MANUAL.md §7.4](TECHNICAL_MANUAL.md#74-musicxml-loading-and-transposition).
+**MusicXML transposition:** Per-part `<attributes><transpose>` may be present in exported scores; it is recorded in event metadata but **not** applied. See [TECHNICAL_MANUAL.md §7.4](TECHNICAL_MANUAL.md#74-musicxml-loading-and-transposition).
 
-**Warnings:** Untimed MusicXML → single vertical slice; transpose applied → concert-pitch warning.
+**Warnings:** Untimed MusicXML → single vertical slice; `<transpose>` present → script-pitch warning (not applied).
 
 ---
 

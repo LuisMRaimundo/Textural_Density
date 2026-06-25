@@ -167,7 +167,7 @@ class TestInstrumentPitchRangeValidation:
             "instruments": [instrument],
             "num_instruments": [1],
         }
-        with pytest.raises(InputError, match="outside the sounding range"):
+        with pytest.raises(InputError, match="outside the range"):
             calculate_metrics(data)
 
     def test_in_range_flute_note_accepted(self):
@@ -217,11 +217,11 @@ class TestInstrumentPitchRangeValidation:
             "instruments": ["contrabassoon"],
             "num_instruments": [1],
         }
-        with pytest.raises(InputError, match="outside the sounding range"):
+        with pytest.raises(InputError, match="outside the range"):
             calculate_metrics(data)
 
     def test_make_instrument_event_rejects_out_of_range(self):
-        with pytest.raises(InputError, match="outside the sounding range"):
+        with pytest.raises(InputError, match="outside the range"):
             make_instrument_event(
                 idx=0,
                 note="C1",

@@ -392,19 +392,19 @@ When input lacks timing metadata, analysis collapses to a single slice with an e
 
 ---
 
-### P. MusicXML transposition (concert pitch)
+### P. MusicXML script pitch (transpose not applied)
 
-**Module:** `xml_loader.py` — `_transpose_semitones_from_attributes`, `_apply_semitone_transpose`.
+**Module:** `xml_loader.py` — `_transpose_semitones_from_attributes` (metadata only).
 
-For transposing instruments, MusicXML stores **written** pitch in `<pitch>` and the offset in `<attributes><transpose>`:
+MusicXML may declare **written** pitch in `<pitch>` and an offset in `<attributes><transpose>`. Textural Density analyses the notated pitch as shown on the part:
 
 $$
-m_{\mathrm{sounding}} = m_{\mathrm{written}} + \Delta_{\mathrm{chromatic}} + 12 \cdot \Delta_{\mathrm{octave\_change}}.
+m_{\mathrm{analysed}} = m_{\mathrm{written}}.
 $$
 
-All pitch-structure metrics (interval compactness, registral span, pitch-structure density, symbolic spectral moments) use **sounding/concert** pitch. When written and sounding differ, `InstrumentEvent.written_pitch` retains the notated value for audit trails.
+The declared transpose offset is stored in event metadata (`transpose_semitones`) but is **not** subtracted or added at runtime. All pitch-structure metrics use this script pitch.
 
-**Not applied:** diatonic spelling-only transposition without chromatic offset; cue notes; transposition changes mid-score beyond per-measure `<attributes>` updates.
+**Not applied at runtime:** chromatic/octave transpose conversion; registry `transposition` field; diatonic spelling-only transposition without chromatic offset.
 
 ---
 

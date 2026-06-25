@@ -34,7 +34,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Temporal score analysis** — `analyze_score()` for timed XML/MIDI
 - **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; GPR CDM modules for flute, oboe, clarinet, and strings; metadata corpus still incomplete for many names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
-- **MusicXML concert pitch** — `<transpose>` (chromatic + octave-change) applied for transposing instruments; `written_pitch` vs `sounding_pitch` on timed events
+- **MusicXML script pitch** — notes read as written on each part; `<transpose>` declared in the file is **not** applied at analysis time
 - **Verification scaffolding** — **862 tests** collected; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green after PR #13 and PR #14 (see [Testing](#testing))
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
@@ -139,7 +139,7 @@ Textural_Density/
 ├── gui/                       # Tkinter panels + AnalysisController (no metric math)
 ├── adapters/                  # gui_adapter → AnalysisRequest → core.pipeline
 ├── score_io/                  # Result export
-├── xml_loader.py              # Custom XML + MusicXML (transpose → concert pitch)
+├── xml_loader.py              # Custom XML + MusicXML (script pitch per part)
 ├── Main.py                    # Tkinter application entry
 ├── data_processor.py          # Shim: re-exports core.pipeline + legacy helpers only
 ├── data_processor_legacy.py   # Legacy I/O and validation text (not the metric pipeline)
@@ -165,7 +165,7 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 | `adapters/gui_adapter.py` | GUI → `AnalysisRequest` → core; aligned defaults |
 | `data_processor.py` | **Compatibility only** — re-exports `core.pipeline`; no independent metric logic |
 | `data_processor_legacy.py` | Legacy save/validate/normalise helpers used by shim and GUI text |
-| `xml_loader.py` | Custom densidade XML + MusicXML loader (transpose-aware) |
+| `xml_loader.py` | Custom densidade XML + MusicXML loader (script pitch; transpose not applied) |
 | `validation/` | Synthetic verification — **not** empirical validation |
 | `DensityAnalyzerApp` | GUI orchestrator (`Main.py`) |
 
@@ -186,7 +186,9 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 
 **English module filenames:** Dedicated scripts use English names (`flute.py`, `violin.py`, …). Registry aliases accept both English (`flute`, `violin`) and legacy Portuguese (`flauta`, `violino`) strings in programmatic input.
 
-**Sounding-pitch rule:** All instrument metadata imported from Excel (or derived tables) must be in **real sounding / concert pitch**. Example: a B♭ clarinet written D4 sounds C4 — the metadata table stores **C4 / MIDI 60**, not written D4 / MIDI 62. Transposition applies during **score parsing** only; the Excel importer does **not** transpose acoustic rows.
+**Score pitch rule:** GUI, legacy `notes[]`, and MusicXML all use the pitch **as written on each instrument part** (script pitch). MusicXML `<transpose>` is metadata only and is not applied when building events.
+
+**Acoustic-table pitch rule:** Sparse CDM metadata rows in `instrumentos/*.py` use the pitch basis documented per module (see `docs/instrument_acoustic_sources.md`). The Excel importer does not transpose imported rows.
 
 **Auxiliary Excel importer:** Human-facing curation format only. Validates workbooks and can emit canonical JSON/audit artefacts. Does not change density formulas or runtime lookup logic. Real curated `.xlsx` files should normally stay outside Git. See [`docs/instrument_profile_importer.md`](docs/instrument_profile_importer.md).
 
@@ -345,7 +347,7 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 - `coarse_default` uses `microtonal.note_to_midi` for microtonal notes; 19 new tests in `tests/test_pitch_interpolation.py`
 
 ### Version 1.1.1 (2026-06-01)
-- MusicXML `<transpose>` support: concert pitch from chromatic + octave-change offsets
+- MusicXML `<transpose>` elements are parsed for metadata but **not** applied — analysis uses script pitch from `<pitch>`
 - `InstrumentEvent.written_pitch` populated when written and sounding pitch differ
 - Benchmark corpus expanded to five excerpts (transpose persistence, multi-instrument dynamics)
 - CI workflow fixes (headless tkinter smoke check); 521+ tests; documentation aligned with core-native architecture

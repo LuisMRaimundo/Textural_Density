@@ -146,7 +146,7 @@ def _musicxml_pitch_to_note(pitch_el, accidental_el=None):
 
 @dataclass
 class _ExtractedMusicXmlNote:
-    """One MusicXML note with written vs concert (sounding) pitch."""
+    """One MusicXML note: script (written) pitch is the analytical pitch."""
 
     written_note: str
     sounding_note: str
@@ -154,6 +154,11 @@ class _ExtractedMusicXmlNote:
     part_id: str
     part_name: str
     transpose_semitones: int
+
+
+# MusicXML may declare <transpose> for concert-pitch export; this project analyses
+# the pitches as notated on each part (script pitch), so offsets are not applied.
+_APPLY_MUSICXML_TRANSPOSE = False
 
 
 def _transpose_semitones_from_attributes(attributes_el) -> int | None:
@@ -199,7 +204,9 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
     """
     Parse score-partwise / score-timewise MusicXML into note records.
 
-    Applies per-part ``<transpose>`` from ``<attributes>`` to yield concert pitch.
+    Notes are taken **as written on the part** (script pitch). Declared ``<transpose>``
+    elements are recorded in metadata but not applied unless ``_APPLY_MUSICXML_TRANSPOSE``
+    is enabled.
     """
     part_list = root.find("part-list")
     part_names: dict[str, str] = {}
@@ -241,7 +248,10 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
                 acc_el = el.find("accidental")
                 written = _musicxml_pitch_to_note(pitch, acc_el)
                 transpose = int(part_state["transpose"])
-                sounding = _apply_semitone_transpose(written, transpose)
+                if _APPLY_MUSICXML_TRANSPOSE:
+                    sounding = _apply_semitone_transpose(written, transpose)
+                else:
+                    sounding = written
                 extracted.append(
                     _ExtractedMusicXmlNote(
                         written_note=written,
@@ -283,10 +293,16 @@ def _parse_musicxml(root) -> dict:
     else:
         notes = [n.sounding_note for n in extracted]
         if any(n.transpose_semitones != 0 for n in extracted):
-            logger.info(
-                "MusicXML transpose applied for concert pitch (%d note(s) with non-zero offset).",
-                sum(1 for n in extracted if n.transpose_semitones != 0),
-            )
+            if _APPLY_MUSICXML_TRANSPOSE:
+                logger.info(
+                    "MusicXML transpose applied for concert pitch (%d note(s) with non-zero offset).",
+                    sum(1 for n in extracted if n.transpose_semitones != 0),
+                )
+            else:
+                logger.info(
+                    "MusicXML <transpose> declared on %d note(s); using script pitch (not transposed).",
+                    sum(1 for n in extracted if n.transpose_semitones != 0),
+                )
 
     dynamics = [n.dynamic for n in extracted] if extracted else []
     instruments = [n.part_name for n in extracted] if extracted else []
@@ -529,10 +545,16 @@ def parse_xml_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str,
         warnings.append(
             "MusicXML loaded without measure timing; treated as a single vertical slice."
         )
-        if any(n.written_note != n.sounding_note for n in extracted):
-            warnings.append(
-                "Concert pitch derived from MusicXML <transpose> (chromatic + octave-change)."
-            )
+        if any(n.transpose_semitones != 0 for n in extracted):
+            if _APPLY_MUSICXML_TRANSPOSE:
+                warnings.append(
+                    "Concert pitch derived from MusicXML <transpose> (chromatic + octave-change)."
+                )
+            else:
+                warnings.append(
+                    "MusicXML <transpose> declared but not applied; notes use script pitch "
+                    "as written on the part."
+                )
         events = [
             make_instrument_event(
                 idx=idx,
