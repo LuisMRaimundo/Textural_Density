@@ -62,11 +62,10 @@ CI skips reconstruction when `D:\CORDAS\` workbooks are unavailable on the runne
 
 ## Remaining scientific-review candidates
 
-1. **Double-bass table span adjudication:** committed module spans E1–C5 (45 rows). Older documentation listed E1–A3. Confirm whether rows above A3 share the same methodological status as the core arco-sustain corpus or require separate QC.
-2. **Technique metadata vs tables:** registry `supported_techniques` may include pizzicato, tremolo, harmonics, mute; CDM tables are arco sustain only.
-3. **GPR determinism:** production `GaussianProcessRegressor` instances set explicit `random_state=GPR_RANDOM_STATE` (`0`) via `create_dynamic_gpr()`; output is independent of global `np.random` state and benchmark order. Determinism is numerical repeatability only — not general perceptual or empirical validation.
-
-4. **Dynamic interpolation methodology:** production method remains GPR. `mp` is modelled through GPR (not mapped to `mf`). Linear and PCHIP are diagnostic references only (PR #24); not adopted. Document local method sensitivity (low-register strings) without overstating scenario-level impact (0 high/extreme cases in tested `density.instrument` aggregates).
+1. **Double-bass table span adjudication:** resolved — `source_table_span` E1–C5 aligns with committed module, `INSTRUMENT_SOURCE.pitch_range`, and registry; E1–A3 was obsolete documentation. Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
+2. **Technique metadata vs tables:** resolved — `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` distinguish numerical table coverage from registry organological capabilities.
+3. **Tuba range:** MIDI 28–58 is coarse-default validation placeholder — **REVIEW REQUIRED** for authoritative organological range.
+4. **GPR determinism:** production `GaussianProcessRegressor` instances set explicit `random_state=GPR_RANDOM_STATE` (`0`) via `create_dynamic_gpr()`; output is independent of global `np.random` state and benchmark order. Determinism is numerical repeatability only — not general perceptual or empirical validation.
 
 Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now portable doc anchor).
 

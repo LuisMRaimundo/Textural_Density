@@ -24,3 +24,5 @@ class InstrumentSource:
     pitch_range: tuple[int, int]
     uncertainty: UncertaintyLevel
     version: str
+    source_technique: str = "unspecified"
+    table_supported_techniques: tuple[str, ...] = ()

@@ -73,12 +73,14 @@ live audio analysis.
 ## Double bass (`double_bass`)
 
 - **Module:** `instrumentos/double_bass.py`
-- **Table:** `spectral_data` (45 chromatic rows, **E1–C5** per committed module; registry sounding MIDI 28–72)
+- **Table (source_table_span):** `spectral_data` (45 chromatic rows, **E1–C5**, MIDI 28–72), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
+- **Comfortable range:** MIDI 31–55 (G1–G3) — narrower orchestrational band, not a table limit
+- **Source technique:** `arco_sustain` (`table_supported_techniques`)
 - **Provenance:** IOWA+ORCH arco sustain CDM medians at pp/mf/ff
 - **Source workbook:** `D:\CORDAS\DOUBLEBASS_Zenodo_collections_media.xlsx`
 - **Interpolation:** GPR for intermediate dynamics
 - **Uncertainty:** medium
-- **Review note:** older documentation listed E1–A3 only. The committed table extends to C5; adjudicate whether the upper-register rows share the same methodological status as the core corpus (see [Scientific review candidates](#scientific-review-candidates-pending-adjudication)).
+- **Span status:** E1–A3 in older docs was obsolete; committed span is E1–C5 (**PASS**). Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 
 ## Generation tooling
 
@@ -114,14 +116,18 @@ Applied in `tools/populate_td_importer_sheets_from_zenodo_media.py` (`_read_medi
 
 ## Technique metadata vs source tables
 
-Registry `supported_techniques` for bowed strings may list `arco`, `pizzicato`, `tremolo`, `harmonics`, `mute`. Committed CDM tables represent **arco sustain** material at pp/mf/ff only. Do not interpret current tables as technique-specific measurements for other articulations unless separate technique tables exist.
+Registry `supported_techniques` lists organological capabilities. GPR modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the numerical table actually committed (e.g. `arco_sustain` for strings, `ordinary_sustain` for winds). Pizzicato, tremolo, harmonics, mute, flutter-tongue, etc. are **not** modelled unless separate technique-specific tables exist.
+
+Audit: `tools/audit_instrument_metadata_range_resolution.py` → `reports/instrument_metadata_range_resolution_audit.*`
 
 ## Scientific review candidates (pending adjudication)
 
 | ID | Topic | Status |
 |----|-------|--------|
-| DB-SPAN | Double-bass table spans E1–C5 in committed module; older docs listed E1–A3. Confirm methodological status of upper-register rows. | **REVIEW REQUIRED** |
-| TECHNIQUE | Registry techniques vs arco-only CDM tables (see above). | **REVIEW REQUIRED** |
+| DB-SPAN | Double-bass `source_table_span` E1–C5 aligns with committed table and registry; E1–A3 was obsolete documentation. Upper-register QC (A♯3–C5) open. | **PASS** (span); **REVIEW REQUIRED** (upper QC) |
+| TECHNIQUE | `INSTRUMENT_SOURCE.table_supported_techniques` vs registry `supported_techniques`; tables do not overclaim technique coverage. | **PASS** |
+| TUBA-RNG | Tuba sounding_range MIDI 28–58 is coarse-default validation placeholder without source table. | **REVIEW REQUIRED** |
+| TRANS-META | `registry.transposition` is metadata-only; manual input is sounding pitch; MusicXML `<transpose>` converts once. | **PASS** |
 | GPR-DET | Production GPR uses explicit `random_state=GPR_RANDOM_STATE` (`0`) via `create_dynamic_gpr()`; determinism is numerical repeatability only, not general empirical validation. | **PASS** |
 | GPR-MQ | GPR model-quality audit (`tools/audit_gpr_model_quality.py`): 315 source rows; 49 convex-hull departures (pp–mf); GPR–linear/quadratic/PCHIP diagnostic deviations. Production GPR unchanged; references not adopted. | **REVIEW REQUIRED** (local hull departures; low-register strings) |
 | GPR-CMP | Interpolation method comparison (`tools/compare_dynamic_interpolation_methods.py`): GPR vs linear vs PCHIP — 315 source rows, 320+20 scenarios, 5 benchmark excerpts. **0** high/extreme scenario-level `density.instrument` cases; production GPR unchanged; linear/PCHIP not adopted. | **PASS** (diagnostic complete; policy selection deferred) |

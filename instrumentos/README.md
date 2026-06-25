@@ -38,7 +38,11 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 
 **Media ingestion:** Zenodo `*_Media` workbook rows may use duplicate suffix labels (e.g. `F4 (2)`). Offline tooling applies `utils.notes.normalize_media_note_label()` before canonical parsing. See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md).
 
-**Technique honesty:** registry `supported_techniques` may list pizzicato, tremolo, harmonics, or mute, but committed CDM tables represent **arco sustain** anchors at pp/mf/ff unless separate technique tables exist.
+**Technique honesty:** registry `supported_techniques` lists organological capabilities. GPR modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `ordinary_sustain`). Pizzicato, tremolo, harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
+
+**Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
+
+Audit: `python tools/audit_instrument_metadata_range_resolution.py` → `reports/instrument_metadata_range_resolution_audit.*`
 
 **String verification (PR #13/#14):** musicological contract tests (`pytest -m musicological`) cover module contracts, source reconstruction (local workbooks), pitch spelling, GPR diagnostics, and score scenarios for violin, viola, cello, and double bass.
 

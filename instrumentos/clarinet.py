@@ -25,6 +25,8 @@ INSTRUMENT_SOURCE = InstrumentSource(
     pitch_range=(50, 96),
     uncertainty="medium",
     version="2026-06-21",
+    source_technique="ordinary_sustain",
+    table_supported_techniques=("ordinary_sustain",),
 )
 
 import logging

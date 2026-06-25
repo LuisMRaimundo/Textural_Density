@@ -135,6 +135,8 @@ REGISTRY["flauta"] = _profile(
     ),
     warnings=(
         "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
     ),
     aliases=("flute", "flute_traverso"),
 )
@@ -168,6 +170,8 @@ REGISTRY["oboe"] = _profile(
     ),
     warnings=(
         "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
     ),
     aliases=("oboe",),
 )
@@ -201,6 +205,8 @@ REGISTRY["clarinete"] = _profile(
     ),
     warnings=(
         "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
     ),
     aliases=("clarinet", "clarinete"),
 )
@@ -266,6 +272,8 @@ for _id, _name, _module, _sound, _comfort, _aliases in (
         ),
         warnings=(
             "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+            "Numerical CDM table covers arco_sustain only; other registry supported_techniques "
+            "are organological capabilities without technique-specific table rows.",
         ),
         aliases=_aliases,
     )
@@ -323,6 +331,13 @@ REGISTRY["tuba"] = _profile(
     sounding=(28, 58),
     comfortable=(30, 50),
     brightness="dark",
+    source_notes=(
+        "Coarse brass profile without committed acoustic CDM table. "
+        "sounding_range (MIDI 28–58) is a provisional validation placeholder — not source-table validated."
+    ),
+    warnings=(
+        "Tuba spectral density uses coarse register/dynamic proxy only; range metadata requires organological review.",
+    ),
     aliases=("tuba",),
 )
 
