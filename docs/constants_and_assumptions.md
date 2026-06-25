@@ -60,7 +60,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
 | Dynamic monotonicity | **Not assumed** | GPR + source tables | CDM may decrease across dynamics |
 
-Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict intermediate dynamics at fixed ordinal coordinates. Interpolation does not create new measured source data.
+Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict intermediate dynamics at fixed ordinal coordinates. Production estimators set `random_state=GPR_RANDOM_STATE` (currently `0`) in `gpr_dynamic_interpolation.py`; global NumPy seeding is not the production determinism mechanism. Interpolation does not create new measured source data.
 
 ---
 

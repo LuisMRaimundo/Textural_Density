@@ -64,7 +64,7 @@ CI skips reconstruction when `D:\CORDAS\` workbooks are unavailable on the runne
 
 1. **Double-bass table span adjudication:** committed module spans E1–C5 (45 rows). Older documentation listed E1–A3. Confirm whether rows above A3 share the same methodological status as the core arco-sustain corpus or require separate QC.
 2. **Technique metadata vs tables:** registry `supported_techniques` may include pizzicato, tremolo, harmonics, mute; CDM tables are arco sustain only.
-3. **GPR determinism:** production `GaussianProcessRegressor` calls do not set `random_state`; tests demonstrate reproducibility under controlled conditions only — not general perceptual or empirical validation.
+3. **GPR determinism:** production `GaussianProcessRegressor` instances set explicit `random_state=GPR_RANDOM_STATE` (`0`) via `create_dynamic_gpr()`; output is independent of global `np.random` state and benchmark order. Determinism is numerical repeatability only — not general perceptual or empirical validation.
 
 Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now portable doc anchor).
 

@@ -18,14 +18,13 @@ sys.path.insert(0, str(ROOT))
 
 from instrumentos.gpr_dynamic_interpolation import (  # noqa: E402
     GPR_DYNAMIC_COORDINATES,
+    create_dynamic_gpr,
     predict_intermediate_dynamics_gpr,
 )
 from microtonal import note_to_midi_strict  # noqa: E402
 from tests.string_constants import STRING_INSTRUMENTS  # noqa: E402
 
 REPORTS = ROOT / "reports"
-SEED = 42
-
 
 def _piecewise_linear_mp(pp: float, mf: float) -> float:
     return 0.5 * pp + 0.5 * mf
@@ -42,14 +41,10 @@ def _quadratic_mp(pp: float, mf: float, ff: float) -> float:
 
 
 def _gpr_std_at_mp(pp: float, mf: float, ff: float) -> float | None:
-    from sklearn.gaussian_process import GaussianProcessRegressor
-    from sklearn.gaussian_process.kernels import ConstantKernel as C, Matern
-
     existing = np.array([[3.0], [5.0], [7.0]], dtype=float)
     target = np.array([[4.5]], dtype=float)
     y = np.array([pp, mf, ff], dtype=float)
-    kernel = C(1.0) * Matern(length_scale=1.0, nu=1.5)
-    gpr = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=10, alpha=1e-1)
+    gpr = create_dynamic_gpr()
     gpr.fit(existing, y)
     _, std = gpr.predict(target, return_std=True)
     return float(std[0])
@@ -68,7 +63,6 @@ def collect_rows() -> list[dict[str, Any]]:
             pp = float(mod.calcular_densidade(note, "pp"))
             mf = float(mod.calcular_densidade(note, "mf"))
             ff = float(mod.calcular_densidade(note, "ff"))
-            np.random.seed(SEED)
             preds = predict_intermediate_dynamics_gpr([pp], [mf], [ff])
             gpr_p = float(preds["p"][0])
             gpr_mp = float(preds["mp"][0])

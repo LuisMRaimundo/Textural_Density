@@ -16,7 +16,9 @@ from core.models import AnalysisConfig, InstrumentEvent, Pitch, VerticalSlice
 from core.orchestration import _normalize_dynamic, compute_event_one_player_density
 from instrumentos.gpr_dynamic_interpolation import (
     GPR_DYNAMIC_COORDINATES,
+    GPR_RANDOM_STATE,
     SOURCE_ANCHOR_DYNAMICS,
+    create_dynamic_gpr,
     predict_intermediate_dynamics_gpr,
 )
 from tests.string_constants import SOURCE_DYNAMICS, STRING_INSTRUMENTS, StringInstrumentSpec
@@ -47,9 +49,6 @@ def _legacy_gpr_without_mp(
     ff_values: list[float],
 ) -> dict[str, np.ndarray]:
     """Replicate pre-mp GPR coordinate map for regression comparison."""
-    from sklearn.gaussian_process import GaussianProcessRegressor
-    from sklearn.gaussian_process.kernels import ConstantKernel as C, Matern
-
     dynamic_levels = {
         "pppp": 1.0,
         "ppp": 2.0,
@@ -70,8 +69,7 @@ def _legacy_gpr_without_mp(
         -1, 1
     )
     y_train = np.array([pp_values, mf_values, ff_values], dtype=float).T
-    matern_kernel = C(1.0) * Matern(length_scale=1.0, nu=1.5)
-    gpr = GaussianProcessRegressor(kernel=matern_kernel, n_restarts_optimizer=10, alpha=1e-1)
+    gpr = create_dynamic_gpr()
     for y in y_train:
         gpr.fit(existing_levels, y)
         y_pred = gpr.predict(all_levels)
@@ -266,13 +264,10 @@ class TestPreExistingGprStability:
     def test_pre_mp_dynamics_unchanged_under_fixed_seed(self, spec: StringInstrumentSpec):
         mod = _load_module(spec.module_name)
         for pitch in mod.spectral_data:
-            np.random.seed(42)
             pp = mod.calcular_densidade(pitch, "pp")
             mf = mod.calcular_densidade(pitch, "mf")
             ff = mod.calcular_densidade(pitch, "ff")
-            np.random.seed(42)
             current = mod.predict_intermediate_dynamics([pitch], [pp], [mf], [ff])
-            np.random.seed(42)
             legacy = _legacy_gpr_without_mp([pp], [mf], [ff])
             for dyn in PRE_MP_DYNAMICS:
                 assert float(current[dyn][0]) == pytest.approx(

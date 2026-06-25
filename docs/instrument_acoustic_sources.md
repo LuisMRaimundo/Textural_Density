@@ -122,7 +122,7 @@ Registry `supported_techniques` for bowed strings may list `arco`, `pizzicato`, 
 |----|-------|--------|
 | DB-SPAN | Double-bass table spans E1–C5 in committed module; older docs listed E1–A3. Confirm methodological status of upper-register rows. | **REVIEW REQUIRED** |
 | TECHNIQUE | Registry techniques vs arco-only CDM tables (see above). | **REVIEW REQUIRED** |
-| GPR-DET | Production GPR modules do not set `random_state`; test determinism is conditional, not general empirical validation. | **REVIEW REQUIRED** |
+| GPR-DET | Production GPR uses explicit `random_state=GPR_RANDOM_STATE` (`0`) via `create_dynamic_gpr()`; determinism is numerical repeatability only, not general empirical validation. | **PASS** |
 
 **Resolved (PR #14):** viola `INSTRUMENT_SOURCE` portable provenance (`docs/instrument_acoustic_sources.md#viola`).
 

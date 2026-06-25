@@ -8,13 +8,15 @@ extremes) are GPR predictions at fixed ordinal coordinates — not measured data
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import Any, Final
 
 import numpy as np
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import ConstantKernel as C, Matern
 
 # Ordinal modelling coordinates (not dB / SPL / perceptual intensity).
+GPR_RANDOM_STATE: Final[int] = 0
+
 GPR_DYNAMIC_COORDINATES: dict[str, float] = {
     "pppp": 1.0,
     "ppp": 2.0,
@@ -31,6 +33,17 @@ GPR_DYNAMIC_COORDINATES: dict[str, float] = {
 SOURCE_ANCHOR_DYNAMICS: tuple[str, ...] = ("pp", "mf", "ff")
 
 _LOG = logging.getLogger(__name__)
+
+
+def create_dynamic_gpr() -> GaussianProcessRegressor:
+    """Construct the production GPR estimator with fixed hyperparameters and RNG."""
+    matern_kernel = C(1.0) * Matern(length_scale=1.0, nu=1.5)
+    return GaussianProcessRegressor(
+        kernel=matern_kernel,
+        n_restarts_optimizer=10,
+        alpha=1e-1,
+        random_state=GPR_RANDOM_STATE,
+    )
 
 
 def predict_intermediate_dynamics_gpr(
@@ -63,10 +76,7 @@ def predict_intermediate_dynamics_gpr(
             log.warning("Insufficient or invalid training data for GPR")
             return {d: np.zeros_like(pp_values, dtype=float) for d in all_dynamics}
 
-        matern_kernel = C(1.0) * Matern(length_scale=1.0, nu=1.5)
-        gpr = GaussianProcessRegressor(
-            kernel=matern_kernel, n_restarts_optimizer=10, alpha=1e-1
-        )
+        gpr = create_dynamic_gpr()
 
         for y in y_train:
             gpr.fit(existing_levels, y)
