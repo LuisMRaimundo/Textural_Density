@@ -6,6 +6,7 @@ import importlib
 import inspect
 import logging
 import math
+import re
 from pathlib import Path
 
 import pytest
@@ -17,6 +18,15 @@ from microtonal import note_to_midi_strict
 from tests.string_constants import SOURCE_DYNAMICS, STRING_INSTRUMENTS, StringInstrumentSpec
 
 FLOAT_TOL = 1e-5
+_WINDOWS_ABS_PATH = re.compile(r"^[A-Za-z]:[\\/]")
+
+
+def _is_machine_local_source_path(identifier: str) -> bool:
+    if not identifier or identifier.startswith("docs/"):
+        return False
+    if _WINDOWS_ABS_PATH.match(identifier):
+        return True
+    return Path(identifier).is_absolute() and not identifier.startswith("docs/")
 
 
 def _load_module(spec: StringInstrumentSpec):
@@ -138,7 +148,7 @@ class TestStringProvenancePortability:
     def test_source_identifier_portability(self, spec: StringInstrumentSpec):
         src = _load_module(spec).INSTRUMENT_SOURCE
         identifier = src.source_url_or_identifier or ""
-        is_local_path = bool(Path(identifier).drive)
+        is_local_path = _is_machine_local_source_path(identifier)
         if spec.module_name in self.KNOWN_LOCAL_PATH_MODULES:
             assert is_local_path, "viola expected to document known local workbook path"
             return
