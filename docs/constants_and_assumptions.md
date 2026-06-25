@@ -62,7 +62,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 
 Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict intermediate dynamics at fixed ordinal coordinates. Production estimators set `random_state=GPR_RANDOM_STATE` (currently `0`) in `gpr_dynamic_interpolation.py`; global NumPy seeding is not the production determinism mechanism. Interpolation does not create new measured source data.
 
-**Model-quality diagnostics:** `tools/audit_gpr_model_quality.py` evaluates reproducible GPR behaviour (convex-hull departures, deviations from linear/quadratic/PCHIP diagnostic references). This audit does **not** change production interpolation, source tables, or density formulas. Convex-hull departures are reproducible model behaviour, not automatic failures.
+**Model-quality diagnostics:** `tools/audit_gpr_model_quality.py` evaluates reproducible GPR behaviour (convex-hull departures, deviations from linear/quadratic/PCHIP diagnostic references). **Method comparison:** `tools/compare_dynamic_interpolation_methods.py` compares production GPR with linear and PCHIP at source-row, string-scenario, and benchmark levels. Neither tool changes production interpolation, source tables, or density formulas.
 
 ---
 

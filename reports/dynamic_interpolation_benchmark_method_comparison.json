@@ -1,0 +1,154 @@
+{
+  "rows": [
+    {
+      "excerpt_id": "excerpt_001",
+      "metric": "density.instrument",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_001",
+      "metric": "density.sonic_mass",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_001",
+      "metric": "density.total",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_002",
+      "metric": "density.instrument",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_002",
+      "metric": "density.sonic_mass",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_002",
+      "metric": "density.total",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_003",
+      "metric": "density.instrument",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_003",
+      "metric": "density.sonic_mass",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_003",
+      "metric": "density.total",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_004",
+      "metric": "density.instrument",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_004",
+      "metric": "density.sonic_mass",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_004",
+      "metric": "density.total",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_005",
+      "metric": "density.instrument",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_005",
+      "metric": "density.sonic_mass",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    },
+    {
+      "excerpt_id": "excerpt_005",
+      "metric": "density.total",
+      "production_gpr": 0.0,
+      "linear_anchor": 0.0,
+      "pchip_anchor": 0.0,
+      "absolute_spread": 0.0,
+      "relative_spread": 0.0,
+      "method_sensitivity": "negligible"
+    }
+  ]
+}
