@@ -426,6 +426,8 @@ These are **implementation correctness checks**, not empirical validation:
 
 External expert/listening/corpus validation requires annotated JSON in `validation/expert_annotations/`, `validation/listening_tests/`, and `validation/corpus_examples/`. Until then, status is **`verified_only`**.
 
+**String GPR modules (2026-06):** an additional musicological contract battery (`pytest -m musicological`, PR #13) and viola media note-label normalization (PR #14) verify source-table alignment and symbolic invariants — not perceptual CDM validation. See [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md) §8 and [instrument_acoustic_sources.md](instrument_acoustic_sources.md).
+
 ---
 
 ## 3. End-to-end pipeline (diagram)

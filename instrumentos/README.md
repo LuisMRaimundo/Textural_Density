@@ -36,6 +36,12 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 
 **Important distinction:** the **analysis pipeline is score-only at runtime** (no audio input). The **instrument scripts** carry pre-loaded acoustic metadata that is looked up from notated pitch and dynamic markings.
 
+**Media ingestion:** Zenodo `*_Media` workbook rows may use duplicate suffix labels (e.g. `F4 (2)`). Offline tooling applies `utils.notes.normalize_media_note_label()` before canonical parsing. See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md).
+
+**Technique honesty:** registry `supported_techniques` may list pizzicato, tremolo, harmonics, or mute, but committed CDM tables represent **arco sustain** anchors at pp/mf/ff unless separate technique tables exist.
+
+**String verification (PR #13/#14):** musicological contract tests (`pytest -m musicological`) cover module contracts, source reconstruction (local workbooks), pitch spelling, GPR diagnostics, and score scenarios for violin, viola, cello, and double bass.
+
 
 
 **GUI vs registry IDs:** The Tkinter GUI shows **English display names** (Flute, Violin, …). Registry `instrument_id` keys remain stable internal identifiers (e.g. `flauta`, `violino`) with English aliases (`flute`, `violin`, …) and English **module filenames** (`flute.py`, `violin.py`, …).

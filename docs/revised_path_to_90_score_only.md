@@ -27,7 +27,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 | GUI boundary | `Main` → `AnalysisController` → `adapters/gui_adapter` → `AnalysisRequest` (tested) |
 | Qty semantics | Incoherent RSS + linear mass; row-splitting invariance; docs + QA sign-off |
 | Benchmark | Synthetic fixture + **5 project-authored excerpts** (`benchmarks/corpus/`); not yet a large licensed corpus |
-| Test suite | **689 tests** (**687 passing**); GitHub Actions + CircleCI green |
+| Test suite | **862 tests**; GitHub Actions + CircleCI green (Python 3.10/3.11) |
 | Validation contracts | Interval-density, instrument scaffold, scientific/musicological plausibility, Excel importer tests |
 | Instrument metadata | **Incomplete** — coarse fallbacks common; GPR modules for subset only; gradual curation via auxiliary Excel importer |
 | Excel importer | Auxiliary offline tool + empty template on main; runtime does not read `.xlsx` |

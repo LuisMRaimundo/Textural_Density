@@ -24,25 +24,40 @@ The CI workflow (`.github/workflows/tests.yml`) enforces **tiered** gates — no
 
 | Scope | Requirement |
 |-------|-------------|
-| **All tests** | Must pass on Python 3.9–3.11 (`pytest tests/ -m "not slow"`) |
+| **All tests** | Must pass on Python 3.10–3.11 (`pytest tests/ -m "not slow"`) |
 | **`core/` + `validation/` coverage** | ≥ **80%** (`pytest -o addopts= --cov=core --cov=validation --cov-fail-under=80`) |
-| **Full repository coverage** | ≥ **63%** (legacy modules still lower) |
+| **Full repository coverage** | ≥ **63%** (current verified ~85% after PR #14) |
 | **Mypy** | Zero errors on `core` and `validation` with `--follow-imports=skip` |
 | **Slow perf test** | 50-note slice < 5 s (marked `@pytest.mark.slow`) |
 
-**We do not claim** full-repository mypy cleanliness or 80%+ coverage across legacy modules until extraction completes.
+**Verified suite size (2026-06-25):** 862 tests collected; 861 non-slow + 1 slow; GitHub Actions and CircleCI green on Python 3.10 and 3.11.
+
+**We do not claim** full-repository mypy cleanliness, perceptual validation, or empirical proof that CDM values match perceived density.
 
 ### Local commands
 
 ```bash
 # Fast suite
-pytest tests/ -q --no-cov -m "not slow"
+pytest tests/ -q --no-cov -m "not slow" -o addopts=
+
+# String musicological battery
+pytest -m musicological -q
+
+# String modules directly
+pytest tests/test_string_module_contracts.py tests/test_string_source_reproducibility.py \
+  tests/test_string_musicological_invariants.py tests/test_string_score_scenarios.py -q
+
+# Note-label normalization
+pytest tests/test_notes.py -q
 
 # Core + validation coverage gate
 pytest tests/ -q -o addopts= --cov=core --cov=validation --cov-fail-under=80
 
 # Type check (core/validation only)
 mypy core validation --ignore-missing-imports --follow-imports=skip
+
+# Import smoke
+python -c "import importlib; importlib.import_module('Main'); print('OK')"
 ```
 
 GUI code (`Main.py`, `gui_components.py`) is **best-effort** for typing unless CI expands later.
@@ -81,6 +96,20 @@ GUI code (`Main.py`, `gui_components.py`) is **best-effort** for typing unless C
 
 13. **MusicXML intake** changes must update [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §7.4, [docs/MIGRATION.md](docs/MIGRATION.md), and transpose tests in `tests/test_xml_loader.py`.
 
+14. **Instrument tables** (GPR modules) require durable source provenance (`INSTRUMENT_SOURCE`, `docs/instrument_acoustic_sources.md`). Prefer repository-relative anchors (`docs/instrument_acoustic_sources.md#<module>`) over machine-local paths.
+
+15. **Media workbook labels:** duplicate suffixes such as `F4 (2)` must be normalized via `normalize_media_note_label()` before canonical pitch parsing. Do not treat interpolation outputs as source data.
+
+16. **Source reconstruction:** where Zenodo `*_Media` workbooks are available, supply tests comparing committed `spectral_data` to workbook rows (`tests/test_string_source_reproducibility.py` pattern). CI skips reconstruction when workbooks are absent.
+
+17. **Exact anchor tests:** every committed table cell should match `calcular_densidade(pitch, dynamic)` at pp/mf/ff anchors.
+
+18. **Registry aliases:** test both English and Portuguese alias resolution when applicable (`violino`/`violin`, `violoncelo`/`cello`, etc.).
+
+19. **Technique honesty:** registry `supported_techniques` may list pizzicato, tremolo, harmonics, or mute, but current CDM tables represent **arco sustain** material only unless separate technique-specific tables exist.
+
+20. **Scientific data changes** (formulas, `spectral_data`, registry ranges, provenance metadata) require human scientific review — not documentation-only PRs.
+
 ### Output-change checklist
 
 Any change affecting scientific output must update **at least one** of:
@@ -109,6 +138,10 @@ Formatting (optional locally): `black`, `isort`
 - Prefer unit tests for pure helpers; integration tests for pipelines
 - GUI: test `gui/analysis_adapter.py` and config normalizers — not full Tk rendering
 - Regression: `tests/test_regression_baseline.py` — update fixture only for intentional formula changes
+- **String GPR modules:** use `@pytest.mark.musicological` for module contracts, source reconstruction, pitch spelling, GPR diagnostics, and score scenarios (`tests/test_string_*.py`)
+- **Media labels:** test `normalize_media_note_label()` when adding workbook ingestion (`tests/test_notes.py`)
+
+Epistemic scope: tests verify software contracts and source consistency — not perceptual or psychoacoustic validation of CDM.
 
 ---
 

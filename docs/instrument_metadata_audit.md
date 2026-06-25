@@ -33,5 +33,10 @@ python scripts/export_instrument_metadata_audit.py
 
 - Review all `symbolic_default` profiles with `uncertainty=high` before claiming registry maturity.
 - Do not upgrade status to `empirical_profile` without committing supporting source notes in the repository.
+- **Double-bass span adjudication:** committed `double_bass.py` table spans E1–C5; confirm methodological status of upper-register rows (see [instrument_acoustic_sources.md](instrument_acoustic_sources.md)).
+- **Technique vs table scope:** arco sustain CDM tables must not be read as technique-specific measurements for pizzicato/tremolo/harmonics/mute without dedicated data.
+- **GPR determinism:** production modules do not fix `random_state`; test reproducibility is conditional only.
+
+**Resolved (PR #14):** viola portable provenance (`docs/instrument_acoustic_sources.md#viola`); viola table aligned to `VIOLA_Media` (C3–C7) with `(2)` label normalization.
 
 See also [`instrumentos/registry.py`](../instrumentos/registry.py) and [`docs/constants_and_assumptions.md`](constants_and_assumptions.md).
