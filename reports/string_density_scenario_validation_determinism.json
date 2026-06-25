@@ -1,0 +1,9 @@
+{
+  "deterministic_match": true,
+  "float_tolerance": 1e-05,
+  "scenario_count_1": 347,
+  "scenario_count_2": 347,
+  "mismatch_count": 0,
+  "mismatch_samples": [],
+  "note": "GPR interpolation may exhibit tiny floating-point drift between runs; tolerance applied."
+}
