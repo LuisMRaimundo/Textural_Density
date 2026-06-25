@@ -13,7 +13,7 @@ if str(ROOT) not in sys.path:
 
 from openpyxl import load_workbook  # noqa: E402
 from microtonal import note_to_midi  # noqa: E402
-from utils.notes import normalize_note_string  # noqa: E402
+from utils.notes import normalize_media_note_label, normalize_note_string  # noqa: E402
 
 CONFIGS = [
     {
@@ -48,6 +48,7 @@ CONFIGS = [
         "module": "viola",
         "display": "Viola",
         "workbook": Path(r"D:\CORDAS\ViOLA_Zenodo_collections_media.xlsx"),
+        "media_sheet": "VIOLA_Media",
         "registry_id": "viola",
         "technique": "arco / ordinario sustains",
     },
@@ -135,10 +136,19 @@ def load_spectral_data(workbook: Path) -> dict[str, dict[str, float]]:
     for row in ws.iter_rows(min_row=2, values_only=True):
         if not row[1]:
             continue
-        note = normalize_note_string(str(row[1]))
+        note = normalize_media_note_label(str(row[1]))
         raw[note][str(row[3])] = round(float(row[4]), 6)
     wb.close()
     return dict(raw)
+
+
+def load_spectral_data_from_media(workbook: Path, media_sheet: str) -> dict[str, dict[str, float]]:
+    from tools.populate_td_importer_sheets_from_zenodo_media import _read_media_rows
+
+    table: dict[str, dict[str, float]] = {}
+    for note, dynamics in _read_media_rows(workbook, media_sheet):
+        table[note] = {dyn: round(val, 6) for dyn, val in dynamics.items()}
+    return table
 
 
 def render_module(cfg: dict, spectral: dict[str, dict[str, float]], meta: dict[str, object]) -> str:

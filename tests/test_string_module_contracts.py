@@ -142,15 +142,10 @@ class TestStringTechniqueHonesty:
 
 @pytest.mark.musicological
 class TestStringProvenancePortability:
-    KNOWN_LOCAL_PATH_MODULES = frozenset({"viola"})
-
     @pytest.mark.parametrize("spec", STRING_INSTRUMENTS, ids=lambda s: s.module_name)
     def test_source_identifier_portability(self, spec: StringInstrumentSpec):
         src = _load_module(spec).INSTRUMENT_SOURCE
         identifier = src.source_url_or_identifier or ""
         is_local_path = _is_machine_local_source_path(identifier)
-        if spec.module_name in self.KNOWN_LOCAL_PATH_MODULES:
-            assert is_local_path, "viola expected to document known local workbook path"
-            return
         assert not is_local_path, f"{spec.module_name} should not use machine-local path"
         assert identifier.startswith("docs/")

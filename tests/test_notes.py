@@ -1,7 +1,7 @@
 """
 Unit tests for utils.notes (Phase 4.1).
 
-Tests pure functions: to_sharp, normalize_note_string, extract_cents, note_to_midi.
+Tests pure functions: to_sharp, normalize_note_string, normalize_media_note_label, extract_cents, note_to_midi.
 """
 
 import sys
@@ -20,6 +20,7 @@ from utils.notes import (
     midi_to_hz,
     midi_to_note_name,
     normalize_note_string,
+    normalize_media_note_label,
     note_to_midi,
     to_sharp,
 )
@@ -57,6 +58,12 @@ class TestNormalizeNoteString:
     def test_non_string_raises(self):
         with pytest.raises(ValueError, match="Nota não é uma string"):
             normalize_note_string(42)
+
+
+class TestNormalizeMediaNoteLabel:
+    def test_strips_duplicate_suffix(self):
+        assert normalize_media_note_label("F4 (2)") == "F4"
+        assert normalize_media_note_label("f4(2)") == "F4"
 
 
 class TestExtractCents:

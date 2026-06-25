@@ -15,6 +15,7 @@ Public API
 - extract_cents(note: str) -> tuple[str, int]
 - to_sharp(note: str) -> str
 - normalize_note_string(note: str) -> str
+- normalize_media_note_label(note: str) -> str
 - QUARTO_TOM_ACIMA, QUARTO_TOM_ABAIXO: microtonal Unicode symbols
 """
 
@@ -147,6 +148,15 @@ def normalize_note_string(note: str) -> str:
         note = note[0].upper() + note[1:]
 
     return note
+
+
+_MEDIA_DUPLICATE_SUFFIX = re.compile(r"\s*\(2\)\s*$", re.IGNORECASE)
+
+
+def normalize_media_note_label(note: str) -> str:
+    """Normalize a pitch label from external Media workbooks (strips duplicate markers)."""
+    text = _MEDIA_DUPLICATE_SUFFIX.sub("", str(note).strip()).strip()
+    return normalize_note_string(text)
 
 
 def _note_base_to_semitone(base: str) -> float:
