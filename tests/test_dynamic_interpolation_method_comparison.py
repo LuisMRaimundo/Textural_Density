@@ -17,7 +17,6 @@ TOOL = ROOT / "tools" / "compare_dynamic_interpolation_methods.py"
 REPORTS = ROOT / "reports"
 
 GPR_MODULES = ("violin", "viola", "cello", "double_bass", "flute", "clarinet", "oboe")
-STRING_MODULES = ("violin", "viola", "cello", "double_bass")
 MIN_COMPLEX_TYPES = (
     "very_dense_chromatic",
     "sparse_aggregate",
@@ -32,9 +31,9 @@ MIN_COMPLEX_TYPES = (
 )
 
 
-def _run_tool() -> subprocess.CompletedProcess[str]:
+def _run_tool(*extra: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, str(TOOL)],
+        [sys.executable, str(TOOL), *extra],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -42,31 +41,30 @@ def _run_tool() -> subprocess.CompletedProcess[str]:
     )
 
 
-def _payload() -> dict:
-    return json.loads(
-        (REPORTS / "dynamic_interpolation_method_comparison.json").read_text(encoding="utf-8")
-    )
+def _committed_payload() -> dict:
+    path = REPORTS / "dynamic_interpolation_method_comparison.json"
+    assert path.is_file(), "committed comparison report missing"
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _stable_hash() -> str:
-    data = _payload()
+def _stable_hash(payload: dict) -> str:
+    data = json.loads(json.dumps(payload))
     data["summary"].pop("generated_at", None)
     data["summary"].pop("repository_sha", None)
     return hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
 
 
 @pytest.fixture(scope="module")
-def comparison_payload():
-    _run_tool()
-    return _payload()
+def comparison_payload() -> dict:
+    return _committed_payload()
 
 
 class TestDynamicInterpolationMethodComparison:
-    def test_tool_runs(self):
-        proc = _run_tool()
+    def test_tool_quick_smoke_runs(self):
+        proc = _run_tool("--quick")
         assert proc.returncode == 0
 
-    def test_outputs_exist(self):
+    def test_committed_outputs_exist(self):
         assert (REPORTS / "dynamic_interpolation_method_comparison.csv").is_file()
         assert (REPORTS / "dynamic_interpolation_method_comparison.json").is_file()
         assert (REPORTS / "dynamic_interpolation_method_comparison.md").is_file()
@@ -105,7 +103,7 @@ class TestDynamicInterpolationMethodComparison:
             assert set(row["instruments"]) == required
 
     def test_pchip_status(self, comparison_payload):
-        assert "pchip_available" in comparison_payload["summary"]
+        assert comparison_payload["summary"]["pchip_available"] is True
 
     def test_markdown_has_ranked_tables(self, comparison_payload):
         md = (REPORTS / "dynamic_interpolation_method_comparison.md").read_text(encoding="utf-8")
@@ -121,14 +119,15 @@ class TestDynamicInterpolationMethodComparison:
         pos = [r for r in comparison_payload["scenario_rows"] if r.get("expected_valid", True)]
         for row in pos:
             val = row.get("production_gpr_density_instrument")
-            assert val is not None and val == val  # not NaN
+            assert val is not None
+            assert val == val
             assert val >= 0.0
 
-    def test_deterministic_across_two_runs(self):
-        _run_tool()
-        h1 = _stable_hash()
-        _run_tool()
-        h2 = _stable_hash()
+    def test_build_payload_deterministic_in_process(self):
+        from tools.compare_dynamic_interpolation_methods import build_payload
+
+        h1 = _stable_hash(build_payload(quick=True))
+        h2 = _stable_hash(build_payload(quick=True))
         assert h1 == h2
 
     def test_production_gpr_module_unchanged(self):

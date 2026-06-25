@@ -549,11 +549,14 @@ def _top(rows: list[dict[str, Any]], key: str, n: int = 20) -> list[dict[str, An
     return sorted(rows, key=lambda r: r.get(key) or -1.0, reverse=True)[:n]
 
 
-def build_payload() -> dict[str, Any]:
+def build_payload(*, quick: bool = False) -> dict[str, Any]:
     source_rows = collect_source_rows()
     positive, negative = generate_string_scenarios()
+    if quick:
+        positive = positive[:10]
+        negative = negative[:2]
     scenario_rows = evaluate_scenarios(positive + negative)
-    benchmark_rows = compare_benchmarks()
+    benchmark_rows = compare_benchmarks() if not quick else []
     high_extreme = [
         r for r in scenario_rows if r["method_sensitivity"] in ("high", "extreme") and r.get("expected_valid", True)
     ]
@@ -703,8 +706,19 @@ def write_reports(payload: dict[str, Any]) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--no-plots", action="store_true")
+    parser.add_argument(
+        "--quick",
+        action="store_true",
+        help="Smoke run with reduced scenarios (tool self-test only).",
+    )
     args = parser.parse_args()
-    payload = build_payload()
+    payload = build_payload(quick=args.quick)
+    if args.quick:
+        print(
+            f"OK quick smoke rows={payload['summary']['source_row_count']} "
+            f"scenarios={len(payload['scenario_rows'])}"
+        )
+        return 0 if payload["summary"]["classification"] != "FAIL" else 2
     write_reports(payload)
     print(f"Wrote {REPORTS / 'dynamic_interpolation_method_comparison.json'}")
     if payload["summary"]["classification"] == "FAIL":
