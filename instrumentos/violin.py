@@ -25,6 +25,8 @@ INSTRUMENT_SOURCE = InstrumentSource(
     pitch_range=(55, 103),
     uncertainty="medium",
     version="2026-06-19",
+    source_technique="arco_sustain",
+    table_supported_techniques=("arco_sustain",),
 )
 
 import logging

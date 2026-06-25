@@ -1,0 +1,1493 @@
+{
+  "range_semantics": {
+    "source_table_span": "Pitch span covered by committed spectral_data / INSTRUMENT_SOURCE.pitch_range rows (sounding/concert pitch).",
+    "sounding_range": "Registry validation span for sounding/concert-pitch manual and MusicXML-after-transpose input.",
+    "written_range": "Written notation span; only relevant on MusicXML written-pitch paths before <transpose>.",
+    "practical_range": "Ordinary orchestrational use if documented separately; not inferred from table span alone.",
+    "comfortable_range": "Conservative central register band in registry; narrower than full sounding_range when set.",
+    "extended_range": "Broader exceptional range if documented; not automatically equal to source_table_span.",
+    "source_technique": "Playing technique represented by the numerical source table (INSTRUMENT_SOURCE.source_technique).",
+    "table_supported_techniques": "Techniques with independent numerical rows in the committed table.",
+    "registry_supported_techniques": "Organological capabilities listed on InstrumentProfile.supported_techniques."
+  },
+  "instrument_count": 28,
+  "instruments": [
+    {
+      "instrument_id": "bombo",
+      "display_name": "Bass drum",
+      "aliases": [
+        "bass_drum"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        28,
+        48
+      ],
+      "registry_comfortable_range_midi": [
+        28,
+        48
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "struck",
+          "rolled"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "caixa",
+      "display_name": "Snare drum",
+      "aliases": [
+        "snare_drum",
+        "snare"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        60,
+        72
+      ],
+      "registry_comfortable_range_midi": [
+        60,
+        72
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "struck",
+          "rolled"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "celesta",
+      "display_name": "Celesta",
+      "aliases": [
+        "celesta"
+      ],
+      "family": "keyboard_harp",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        60,
+        96
+      ],
+      "registry_comfortable_range_midi": [
+        65,
+        88
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "struck"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "clarinete",
+      "display_name": "Clarinet",
+      "aliases": [
+        "clarinet",
+        "clarinete"
+      ],
+      "family": "woodwinds",
+      "module_name": "clarinet",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "D3",
+        "last_note": "C7",
+        "row_count": 47,
+        "min_midi": 50,
+        "max_midi": 96
+      },
+      "instrument_source_pitch_range": [
+        50,
+        96
+      ],
+      "registry_sounding_range_midi": [
+        50,
+        96
+      ],
+      "registry_comfortable_range_midi": [
+        55,
+        80
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pp",
+        "mf",
+        "ff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "legato",
+          "staccato",
+          "flutter_tongue"
+        ],
+        "table_supported_techniques": [
+          "ordinary_sustain"
+        ],
+        "source_technique": "ordinary_sustain",
+        "registry_not_in_table": [
+          "legato",
+          "staccato",
+          "flutter_tongue"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "clarinete_baixo",
+      "display_name": "Bass clarinet",
+      "aliases": [
+        "bass_clarinet",
+        "clarinete baixo",
+        "clarinete_baixo"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        34,
+        72
+      ],
+      "registry_comfortable_range_midi": [
+        40,
+        65
+      ],
+      "registry_transposition": 14,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "legato",
+          "staccato"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "contrabaixo",
+      "display_name": "Double bass",
+      "aliases": [
+        "double_bass",
+        "contrabass",
+        "baixo"
+      ],
+      "family": "strings",
+      "module_name": "double_bass",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "E1",
+        "last_note": "C5",
+        "row_count": 45,
+        "min_midi": 28,
+        "max_midi": 72
+      },
+      "instrument_source_pitch_range": [
+        28,
+        72
+      ],
+      "registry_sounding_range_midi": [
+        28,
+        72
+      ],
+      "registry_comfortable_range_midi": [
+        31,
+        55
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pp",
+        "mf",
+        "ff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco",
+          "pizzicato",
+          "tremolo",
+          "harmonic",
+          "mute"
+        ],
+        "table_supported_techniques": [
+          "arco_sustain"
+        ],
+        "source_technique": "arco_sustain",
+        "registry_not_in_table": [
+          "pizzicato",
+          "tremolo",
+          "harmonic",
+          "mute"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "contrafagote",
+      "display_name": "Contrabassoon",
+      "aliases": [
+        "contrabassoon"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        22,
+        77
+      ],
+      "registry_comfortable_range_midi": [
+        28,
+        65
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "cor_anglais",
+      "display_name": "English horn",
+      "aliases": [
+        "corne_ingles",
+        "english_horn",
+        "cor anglais",
+        "cor_anglais"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        52,
+        76
+      ],
+      "registry_comfortable_range_midi": [
+        55,
+        72
+      ],
+      "registry_transposition": 7,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "legato",
+          "staccato"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "fagote",
+      "display_name": "Bassoon",
+      "aliases": [
+        "bassoon",
+        "fagot"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        34,
+        72
+      ],
+      "registry_comfortable_range_midi": [
+        40,
+        65
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "legato",
+          "staccato",
+          "flutter_tongue"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "flauta",
+      "display_name": "Flute",
+      "aliases": [
+        "flute",
+        "flute_traverso"
+      ],
+      "family": "woodwinds",
+      "module_name": "flute",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "B3",
+        "last_note": "D7",
+        "row_count": 40,
+        "min_midi": 59,
+        "max_midi": 98
+      },
+      "instrument_source_pitch_range": [
+        59,
+        98
+      ],
+      "registry_sounding_range_midi": [
+        59,
+        98
+      ],
+      "registry_comfortable_range_midi": [
+        62,
+        88
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pp",
+        "mf",
+        "ff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "legato",
+          "staccato",
+          "flutter_tongue"
+        ],
+        "table_supported_techniques": [
+          "ordinary_sustain"
+        ],
+        "source_technique": "ordinary_sustain",
+        "registry_not_in_table": [
+          "legato",
+          "staccato",
+          "flutter_tongue"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "flautim",
+      "display_name": "Piccolo",
+      "aliases": [
+        "piccolo"
+      ],
+      "family": "woodwinds",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        74,
+        108
+      ],
+      "registry_comfortable_range_midi": [
+        76,
+        100
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "legato",
+          "staccato"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "harpa",
+      "display_name": "Harp",
+      "aliases": [
+        "harp"
+      ],
+      "family": "keyboard_harp",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        23,
+        96
+      ],
+      "registry_comfortable_range_midi": [
+        40,
+        88
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "plucked",
+          "glissando",
+          "harmonic"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "marimba",
+      "display_name": "Marimba",
+      "aliases": [
+        "marimba"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        45,
+        84
+      ],
+      "registry_comfortable_range_midi": [
+        45,
+        84
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "struck",
+          "rolled"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "metalofone",
+      "display_name": "Glockenspiel",
+      "aliases": [
+        "glockenspiel",
+        "glock"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        72,
+        108
+      ],
+      "registry_comfortable_range_midi": [
+        72,
+        108
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "struck",
+          "rolled"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "oboe",
+      "display_name": "Oboe",
+      "aliases": [
+        "oboe"
+      ],
+      "family": "woodwinds",
+      "module_name": "oboe",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "A#3",
+        "last_note": "A6",
+        "row_count": 36,
+        "min_midi": 58,
+        "max_midi": 93
+      },
+      "instrument_source_pitch_range": [
+        58,
+        93
+      ],
+      "registry_sounding_range_midi": [
+        58,
+        93
+      ],
+      "registry_comfortable_range_midi": [
+        60,
+        81
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pp",
+        "mf",
+        "ff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "legato",
+          "staccato",
+          "flutter_tongue"
+        ],
+        "table_supported_techniques": [
+          "ordinary_sustain"
+        ],
+        "source_technique": "ordinary_sustain",
+        "registry_not_in_table": [
+          "legato",
+          "staccato",
+          "flutter_tongue"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "piano",
+      "display_name": "Piano",
+      "aliases": [
+        "piano",
+        "fortepiano"
+      ],
+      "family": "keyboard_harp",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        21,
+        108
+      ],
+      "registry_comfortable_range_midi": [
+        36,
+        96
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "struck",
+          "pedal"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "pratos",
+      "display_name": "Cymbals",
+      "aliases": [
+        "cymbals"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        60,
+        84
+      ],
+      "registry_comfortable_range_midi": [
+        60,
+        84
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "struck",
+          "rolled"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "tamtam",
+      "display_name": "Tam-tam",
+      "aliases": [
+        "tam_tam",
+        "tam-tam"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        24,
+        48
+      ],
+      "registry_comfortable_range_midi": [
+        24,
+        48
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "struck",
+          "rolled"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "timpanos",
+      "display_name": "Timpani",
+      "aliases": [
+        "timpani",
+        "timbales"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        36,
+        60
+      ],
+      "registry_comfortable_range_midi": [
+        36,
+        60
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "struck",
+          "rolled"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "trombone",
+      "display_name": "Trombone",
+      "aliases": [
+        "trombone"
+      ],
+      "family": "brass",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        40,
+        72
+      ],
+      "registry_comfortable_range_midi": [
+        43,
+        65
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "trombone_baixo",
+      "display_name": "Bass trombone",
+      "aliases": [
+        "bass_trombone",
+        "trombone baixo"
+      ],
+      "family": "brass",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        34,
+        65
+      ],
+      "registry_comfortable_range_midi": [
+        36,
+        58
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "trompa",
+      "display_name": "Horn",
+      "aliases": [
+        "horn",
+        "french_horn",
+        "trompa"
+      ],
+      "family": "brass",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        41,
+        77
+      ],
+      "registry_comfortable_range_midi": [
+        45,
+        72
+      ],
+      "registry_transposition": 7,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "legato",
+          "staccato",
+          "stopped",
+          "mute"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "trompete",
+      "display_name": "Trumpet",
+      "aliases": [
+        "trumpet"
+      ],
+      "family": "brass",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        55,
+        84
+      ],
+      "registry_comfortable_range_midi": [
+        58,
+        80
+      ],
+      "registry_transposition": 2,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "legato",
+          "staccato",
+          "mute",
+          "flutter_tongue"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "tuba",
+      "display_name": "Tuba",
+      "aliases": [
+        "tuba"
+      ],
+      "family": "brass",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        28,
+        58
+      ],
+      "registry_comfortable_range_midi": [
+        30,
+        50
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "vibrafone",
+      "display_name": "Vibraphone",
+      "aliases": [
+        "vibraphone"
+      ],
+      "family": "percussion",
+      "module_name": null,
+      "table_backed": false,
+      "profile_status": "coarse_default",
+      "source_table_span": null,
+      "instrument_source_pitch_range": null,
+      "registry_sounding_range_midi": [
+        53,
+        84
+      ],
+      "registry_comfortable_range_midi": [
+        53,
+        84
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "no_table",
+      "range_classification": "NOT APPLICABLE",
+      "technique": {
+        "registry_supported_techniques": [
+          "struck",
+          "rolled"
+        ],
+        "table_supported_techniques": [],
+        "source_technique": null,
+        "classification": "NOT APPLICABLE"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "viola",
+      "display_name": "Viola",
+      "aliases": [
+        "viola"
+      ],
+      "family": "strings",
+      "module_name": "viola",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "C3",
+        "last_note": "C7",
+        "row_count": 49,
+        "min_midi": 48,
+        "max_midi": 96
+      },
+      "instrument_source_pitch_range": [
+        48,
+        96
+      ],
+      "registry_sounding_range_midi": [
+        48,
+        96
+      ],
+      "registry_comfortable_range_midi": [
+        50,
+        69
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pp",
+        "mf",
+        "ff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco",
+          "pizzicato",
+          "tremolo",
+          "harmonic",
+          "mute"
+        ],
+        "table_supported_techniques": [
+          "arco_sustain"
+        ],
+        "source_technique": "arco_sustain",
+        "registry_not_in_table": [
+          "pizzicato",
+          "tremolo",
+          "harmonic",
+          "mute"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "violino",
+      "display_name": "Violin",
+      "aliases": [
+        "violin"
+      ],
+      "family": "strings",
+      "module_name": "violin",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "G3",
+        "last_note": "G7",
+        "row_count": 49,
+        "min_midi": 55,
+        "max_midi": 103
+      },
+      "instrument_source_pitch_range": [
+        55,
+        103
+      ],
+      "registry_sounding_range_midi": [
+        55,
+        103
+      ],
+      "registry_comfortable_range_midi": [
+        55,
+        76
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pp",
+        "mf",
+        "ff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco",
+          "pizzicato",
+          "tremolo",
+          "harmonic",
+          "mute"
+        ],
+        "table_supported_techniques": [
+          "arco_sustain"
+        ],
+        "source_technique": "arco_sustain",
+        "registry_not_in_table": [
+          "pizzicato",
+          "tremolo",
+          "harmonic",
+          "mute"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": []
+    },
+    {
+      "instrument_id": "violoncelo",
+      "display_name": "Cello",
+      "aliases": [
+        "cello",
+        "violoncello"
+      ],
+      "family": "strings",
+      "module_name": "cello",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "C2",
+        "last_note": "C6",
+        "row_count": 49,
+        "min_midi": 36,
+        "max_midi": 84
+      },
+      "instrument_source_pitch_range": [
+        36,
+        84
+      ],
+      "registry_sounding_range_midi": [
+        36,
+        84
+      ],
+      "registry_comfortable_range_midi": [
+        40,
+        65
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pp",
+        "mf",
+        "ff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco",
+          "pizzicato",
+          "tremolo",
+          "harmonic",
+          "mute"
+        ],
+        "table_supported_techniques": [
+          "arco_sustain"
+        ],
+        "source_technique": "arco_sustain",
+        "registry_not_in_table": [
+          "pizzicato",
+          "tremolo",
+          "harmonic",
+          "mute"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": []
+    }
+  ],
+  "double_bass_resolution": {
+    "source_table_span": "E1\u2013C5 (MIDI 28\u201372)",
+    "obsolete_documentation_span": "E1\u2013A3",
+    "obsolete_status": "obsolete_documentation_only",
+    "comfortable_range_midi": "31\u201355 (G1\u2013G3) per registry",
+    "upper_register_extension": "A#3\u2013C5 rows present in committed workbook-derived table",
+    "classification": "PASS",
+    "upper_register_methodological_qc": "REVIEW REQUIRED",
+    "rationale": "Committed spectral_data, INSTRUMENT_SOURCE.pitch_range, and registry.sounding_range all agree on E1\u2013C5. E1\u2013A3 was obsolete documentation. Comfortable range remains narrower. Methodological status of upper-register rows (above A3) vs core corpus not independently adjudicated."
+  },
+  "tuba_review": {
+    "module_name": null,
+    "profile_status": "coarse_default",
+    "sounding_range_midi": "28\u201358",
+    "classification": "REVIEW REQUIRED",
+    "range_kind": "coarse_default_validation_placeholder",
+    "rationale": "No committed tuba spectral_data module. registry.sounding_range (28\u201358) is a coarse orchestration placeholder for validation only \u2014 not a source-table span."
+  },
+  "transposition_review": {
+    "contract": "registry.transposition is notation/import metadata only; manual/GUI notes[] are sounding/concert pitch; MusicXML <transpose> converts written\u2192sounding once.",
+    "octave_displaced_zero_transposition": [
+      "contrabaixo",
+      "contrafagote",
+      "flautim"
+    ],
+    "interval_transposition_metadata_only": [
+      "cor_anglais",
+      "clarinete_baixo",
+      "trompa",
+      "trompete"
+    ],
+    "classification": "PASS"
+  },
+  "pitch_contract": {
+    "manual_legacy_input": "sounding/concert pitch; registry transposition not applied",
+    "musicxml": "written <pitch> + <transpose> \u2192 sounding before validation/lookup",
+    "spectral_data_keys": "sounding/concert pitch"
+  }
+}

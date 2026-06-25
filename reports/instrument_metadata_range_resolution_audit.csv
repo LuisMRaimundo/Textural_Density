@@ -1,0 +1,29 @@
+instrument_id,display_name,module_name,table_backed,source_table_first,source_table_last,source_table_row_count,instrument_source_pitch_range,registry_sounding_min,registry_sounding_max,registry_comfortable_min,registry_comfortable_max,registry_transposition,source_technique,table_supported_techniques,registry_supported_techniques,range_classification,technique_classification
+bombo,Bass drum,,False,,,,,28,48,28,48,0,,,struck|rolled,NOT APPLICABLE,NOT APPLICABLE
+caixa,Snare drum,,False,,,,,60,72,60,72,0,,,struck|rolled,NOT APPLICABLE,NOT APPLICABLE
+celesta,Celesta,,False,,,,,60,96,65,88,0,,,struck,NOT APPLICABLE,NOT APPLICABLE
+clarinete,Clarinet,clarinet,True,D3,C7,47,"[50, 96]",50,96,55,80,0,ordinary_sustain,ordinary_sustain,legato|staccato|flutter_tongue,PASS,PASS
+clarinete_baixo,Bass clarinet,,False,,,,,34,72,40,65,14,,,legato|staccato,NOT APPLICABLE,NOT APPLICABLE
+contrabaixo,Double bass,double_bass,True,E1,C5,45,"[28, 72]",28,72,31,55,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS
+contrafagote,Contrabassoon,,False,,,,,22,77,28,65,0,,,arco,NOT APPLICABLE,NOT APPLICABLE
+cor_anglais,English horn,,False,,,,,52,76,55,72,7,,,legato|staccato,NOT APPLICABLE,NOT APPLICABLE
+fagote,Bassoon,,False,,,,,34,72,40,65,0,,,legato|staccato|flutter_tongue,NOT APPLICABLE,NOT APPLICABLE
+flauta,Flute,flute,True,B3,D7,40,"[59, 98]",59,98,62,88,0,ordinary_sustain,ordinary_sustain,legato|staccato|flutter_tongue,PASS,PASS
+flautim,Piccolo,,False,,,,,74,108,76,100,0,,,legato|staccato,NOT APPLICABLE,NOT APPLICABLE
+harpa,Harp,,False,,,,,23,96,40,88,0,,,plucked|glissando|harmonic,NOT APPLICABLE,NOT APPLICABLE
+marimba,Marimba,,False,,,,,45,84,45,84,0,,,struck|rolled,NOT APPLICABLE,NOT APPLICABLE
+metalofone,Glockenspiel,,False,,,,,72,108,72,108,0,,,struck|rolled,NOT APPLICABLE,NOT APPLICABLE
+oboe,Oboe,oboe,True,A#3,A6,36,"[58, 93]",58,93,60,81,0,ordinary_sustain,ordinary_sustain,legato|staccato|flutter_tongue,PASS,PASS
+piano,Piano,,False,,,,,21,108,36,96,0,,,struck|pedal,NOT APPLICABLE,NOT APPLICABLE
+pratos,Cymbals,,False,,,,,60,84,60,84,0,,,struck|rolled,NOT APPLICABLE,NOT APPLICABLE
+tamtam,Tam-tam,,False,,,,,24,48,24,48,0,,,struck|rolled,NOT APPLICABLE,NOT APPLICABLE
+timpanos,Timpani,,False,,,,,36,60,36,60,0,,,struck|rolled,NOT APPLICABLE,NOT APPLICABLE
+trombone,Trombone,,False,,,,,40,72,43,65,0,,,arco,NOT APPLICABLE,NOT APPLICABLE
+trombone_baixo,Bass trombone,,False,,,,,34,65,36,58,0,,,arco,NOT APPLICABLE,NOT APPLICABLE
+trompa,Horn,,False,,,,,41,77,45,72,7,,,legato|staccato|stopped|mute,NOT APPLICABLE,NOT APPLICABLE
+trompete,Trumpet,,False,,,,,55,84,58,80,2,,,legato|staccato|mute|flutter_tongue,NOT APPLICABLE,NOT APPLICABLE
+tuba,Tuba,,False,,,,,28,58,30,50,0,,,arco,NOT APPLICABLE,NOT APPLICABLE
+vibrafone,Vibraphone,,False,,,,,53,84,53,84,0,,,struck|rolled,NOT APPLICABLE,NOT APPLICABLE
+viola,Viola,viola,True,C3,C7,49,"[48, 96]",48,96,50,69,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS
+violino,Violin,violin,True,G3,G7,49,"[55, 103]",55,103,55,76,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS
+violoncelo,Cello,cello,True,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS

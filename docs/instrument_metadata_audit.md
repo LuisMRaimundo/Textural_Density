@@ -33,11 +33,10 @@ python scripts/export_instrument_metadata_audit.py
 
 - Review all `symbolic_default` profiles with `uncertainty=high` before claiming registry maturity.
 - Do not upgrade status to `empirical_profile` without committing supporting source notes in the repository.
-- **Double-bass span adjudication:** committed `double_bass.py` table spans E1–C5; confirm methodological status of upper-register rows (see [instrument_acoustic_sources.md](instrument_acoustic_sources.md)).
-- **Contrabassoon registry:** `sounding_range` is B♭0–F5 (MIDI 22–77). Manual/GUI input uses sounding pitch; MusicXML applies `<transpose>`.
+- **Double-bass span:** `source_table_span` E1–C5 (**PASS**); obsolete E1–A3 documentation; upper-register QC **REVIEW REQUIRED** (see [instrument_acoustic_sources.md](instrument_acoustic_sources.md))
+- **Tuba range:** coarse-default validation placeholder MIDI 28–58 — **REVIEW REQUIRED**
 - **Sounding/concert pitch:** legacy `notes[]`, GUI, and manual input use sounding pitch. MusicXML written `<pitch>` is converted via `<transpose>` to sounding pitch before validation and lookup.
-- **Dynamic interpolation:** production GPR on pp/mf/ff anchors; `mp` modelled at ordinal 4.5 (not a source anchor; not mapped to `mf`). Linear/PCHIP are diagnostic references only (PR #24).
-- **Technique vs table scope:** arco sustain CDM tables must not be read as technique-specific measurements for pizzicato/tremolo/harmonics/mute without dedicated data.
+- **Technique metadata:** `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` on GPR modules; registry lists broader organological capabilities without implying technique-specific numerical tables.
 - **GPR determinism:** production modules use `create_dynamic_gpr()` with explicit `GPR_RANDOM_STATE = 0`; output is independent of global NumPy RNG state and benchmark order.
 
 **Resolved (PR #14):** viola portable provenance (`docs/instrument_acoustic_sources.md#viola`); viola table aligned to `VIOLA_Media` (C3–C7) with `(2)` label normalization.

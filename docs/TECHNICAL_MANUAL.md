@@ -616,7 +616,8 @@ Each `VerticalSliceAnalysis` contains `metrics`, `subindices`, `composite_densit
 |---------|--------------|----------------------|
 | **Registry range** (`sounding_range`) | `registry.sounding_range` | Yes — **sounding** MIDI vs this span |
 | **Comfortable range** | `registry.comfortable_range` | No (orchestration metadata) |
-| **Source-table span** | `spectral_data` keys / `INSTRUMENT_SOURCE.pitch_range` | Density lookup; should ⊆ registry range for GPR modules |
+| **Source-table span** | `spectral_data` keys / `INSTRUMENT_SOURCE.pitch_range` | Density lookup; should ⊆ registry `sounding_range` for GPR modules. Not necessarily equal to practical/comfortable range. |
+| **Comfortable range** | `registry.comfortable_range` | Orchestration metadata; narrower central band when documented |
 
 **MusicXML `<transpose>` (applied once):** Exporters include ``<attributes><transpose>`` for transposing parts. Textural Density converts written pitch to concert/sounding pitch:
 
