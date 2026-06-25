@@ -39,8 +39,10 @@ def manifest_entries():
 class TestBenchmarkCorpus:
     def test_benchmark_numeric_matches_frozen(self, manifest_entries):
         from benchmarks.scripts.run_benchmarks import run_entry
+        import numpy as np
 
         for entry in manifest_entries:
+            np.random.seed(0)
             expected_path = EXPECTED / f"{entry['id']}.json"
             if not expected_path.exists():
                 pytest.skip("Run benchmarks/scripts/freeze_outputs.py first")
