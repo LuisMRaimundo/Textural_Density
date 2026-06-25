@@ -138,11 +138,14 @@ def _gpr_row_diagnostics(pp: float, mf: float, ff: float) -> dict[str, Any]:
     }
 
 
-def collect_source_rows() -> list[dict[str, Any]]:
+def collect_source_rows(*, quick: bool = False) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for module_name in GPR_MODULES:
+    modules = GPR_MODULES[:1] if quick else GPR_MODULES
+    for module_name in modules:
         mod = importlib.import_module(f"instrumentos.{module_name}")
         notes = sorted(mod.spectral_data.keys(), key=note_to_midi_strict)
+        if quick:
+            notes = [notes[0], notes[len(notes) // 2], notes[-1]]
         midis = [float(note_to_midi_strict(n)) for n in notes]
         lo, hi = min(midis), max(midis)
         for note in notes:
@@ -154,7 +157,7 @@ def collect_source_rows() -> list[dict[str, Any]]:
             lin = predict_method([pp], [mf], [ff], "linear_anchor")
             quad = predict_method([pp], [mf], [ff], "quadratic_anchor")
             pchip = predict_method([pp], [mf], [ff], "pchip_anchor")
-            diag = _gpr_row_diagnostics(pp, mf, ff)
+            diag = {} if quick else _gpr_row_diagnostics(pp, mf, ff)
             row: dict[str, Any] = {
                 "instrument": module_name,
                 "note": note,
@@ -176,7 +179,10 @@ def collect_source_rows() -> list[dict[str, Any]]:
                 "quadratic_p": float(quad["p"][0]),
                 "quadratic_mp": float(quad["mp"][0]),
                 "quadratic_f": float(quad["f"][0]),
-                **diag,
+                "kernel": diag.get("kernel"),
+                "gpr_std_p": diag.get("gpr_std_p"),
+                "gpr_std_mp": diag.get("gpr_std_mp"),
+                "gpr_std_f": diag.get("gpr_std_f"),
             }
             for dyn, gk, lk, pk, qk in (
                 ("p", "production_gpr_p", "linear_p", "pchip_p", "quadratic_p"),
@@ -550,7 +556,7 @@ def _top(rows: list[dict[str, Any]], key: str, n: int = 20) -> list[dict[str, An
 
 
 def build_payload(*, quick: bool = False) -> dict[str, Any]:
-    source_rows = collect_source_rows()
+    source_rows = collect_source_rows(quick=quick)
     positive, negative = generate_string_scenarios()
     if quick:
         positive = positive[:10]

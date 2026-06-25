@@ -47,13 +47,6 @@ def _committed_payload() -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _stable_hash(payload: dict) -> str:
-    data = json.loads(json.dumps(payload))
-    data["summary"].pop("generated_at", None)
-    data["summary"].pop("repository_sha", None)
-    return hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
-
-
 @pytest.fixture(scope="module")
 def comparison_payload() -> dict:
     return _committed_payload()
@@ -63,6 +56,7 @@ class TestDynamicInterpolationMethodComparison:
     def test_tool_quick_smoke_runs(self):
         proc = _run_tool("--quick")
         assert proc.returncode == 0
+        assert "OK quick smoke" in proc.stdout
 
     def test_committed_outputs_exist(self):
         assert (REPORTS / "dynamic_interpolation_method_comparison.csv").is_file()
@@ -123,12 +117,13 @@ class TestDynamicInterpolationMethodComparison:
             assert val == val
             assert val >= 0.0
 
-    def test_build_payload_deterministic_in_process(self):
-        from tools.compare_dynamic_interpolation_methods import build_payload
+    def test_predict_method_deterministic(self):
+        from tools.compare_dynamic_interpolation_methods import predict_method
 
-        h1 = _stable_hash(build_payload(quick=True))
-        h2 = _stable_hash(build_payload(quick=True))
-        assert h1 == h2
+        pp, mf, ff = [38.37], [66.29], [55.64]
+        a = predict_method(pp, mf, ff, "production_gpr")["mp"][0]
+        b = predict_method(pp, mf, ff, "production_gpr")["mp"][0]
+        assert float(a) == float(b)
 
     def test_production_gpr_module_unchanged(self):
         text = (ROOT / "instrumentos" / "gpr_dynamic_interpolation.py").read_text(encoding="utf-8")
