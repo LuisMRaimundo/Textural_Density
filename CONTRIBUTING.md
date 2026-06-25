@@ -68,47 +68,49 @@ GUI code (`Main.py`, `gui_components.py`) is **best-effort** for typing unless C
 
 1. **Score/information input only** — no audio waveform analysis; do not introduce acoustic-measurement claims.
 
-2. **Dynamics (`p`, `mf`, `ff`, …)** are symbolic/ordinal markings, not measured SPL.
+2. **Dynamics (`p`, `mf`, `ff`, `mp`, …)** are symbolic/ordinal markings or modelled GPR values — not measured SPL. Source-table anchors are **pp, mf, ff** only.
 
-3. **New metrics** must include in metadata:
+3. **Dynamic interpolation changes** must preserve the production GPR path unless a dedicated policy PR explicitly adopts an alternative. Diagnostic linear/PCHIP references must not be described as production methods.
+
+4. **New metrics** must include in metadata:
    - `source_type` (`score_derived`, `metadata_proxy`, `calibrated_proxy`, or `empirical`)
    - `validation_status`
    - `confidence`
    - `interpretation`, and where applicable `warnings` / `assumptions`
 
-4. **New proxy metrics** must document assumptions and warnings; do not invent detailed instrument spectra.
+5. **New proxy metrics** must document assumptions and warnings; do not invent detailed instrument spectra.
 
-5. **No metric** may use `externally_validated` unless expert/listening/corpus data exist under `validation/`.
+6. **No metric** may use `externally_validated` unless expert/listening/corpus data exist under `validation/`.
 
-6. **Distinct constructs** must remain separate (interval compactness ≠ roughness ≠ harmonicity ≠ timbral heterogeneity ≠ temporal density).
+7. **Distinct constructs** must remain separate (interval compactness ≠ roughness ≠ harmonicity ≠ timbral heterogeneity ≠ temporal density).
 
-7. **No low-confidence proxy** should silently dominate the composite score without explicit configuration.
+8. **No low-confidence proxy** should silently dominate the composite score without explicit configuration.
 
-8. **No new default** may silently change scientific output. Align with [core/defaults.py](core/defaults.py) and update tests/docs/migration notes.
+9. **No new default** may silently change scientific output. Align with [core/defaults.py](core/defaults.py) and update tests/docs/migration notes.
 
-9. **No Tkinter imports** inside `core/` or `validation/`.
+10. **No Tkinter imports** inside `core/` or `validation/`.
 
-10. **Combination-tone analysis** was removed in 4.0.0-strict-symbolic; do not reintroduce virtual/resultant tone generation.
+11. **Combination-tone analysis** was removed in 4.0.0-strict-symbolic; do not reintroduce virtual/resultant tone generation.
 
-11. **GUI analysis** must use `AnalysisController` → `adapters.gui_adapter` → `AnalysisRequest` → `core.pipeline`. Do not call `data_processor.calculate_metrics` from GUI code.
+12. **GUI analysis** must use `AnalysisController` → `adapters.gui_adapter` → `AnalysisRequest` → `core.pipeline`. Do not call `data_processor.calculate_metrics` from GUI code.
 
-12. **Qty (player count)** changes must follow [docs/qa_checklist.md](docs/qa_checklist.md) Qty semantics sign-off and update frozen outputs when formulas change.
+13. **Qty (player count)** changes must follow [docs/qa_checklist.md](docs/qa_checklist.md) Qty semantics sign-off and update frozen outputs when formulas change.
 
-13. **MusicXML intake** changes must update [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §7.4, [docs/MIGRATION.md](docs/MIGRATION.md), and transpose tests in `tests/test_xml_loader.py`.
+14. **MusicXML intake** changes must update [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §7.4, [docs/MIGRATION.md](docs/MIGRATION.md), and transpose tests in `tests/test_xml_loader.py`.
 
-14. **Instrument tables** (GPR modules) require durable source provenance (`INSTRUMENT_SOURCE`, `docs/instrument_acoustic_sources.md`). Prefer repository-relative anchors (`docs/instrument_acoustic_sources.md#<module>`) over machine-local paths.
+15. **Instrument tables** (GPR modules) require durable source provenance (`INSTRUMENT_SOURCE`, `docs/instrument_acoustic_sources.md`). Prefer repository-relative anchors (`docs/instrument_acoustic_sources.md#<module>`) over machine-local paths.
 
-15. **Media workbook labels:** duplicate suffixes such as `F4 (2)` must be normalized via `normalize_media_note_label()` before canonical pitch parsing. Do not treat interpolation outputs as source data.
+16. **Media workbook labels:** duplicate suffixes such as `F4 (2)` must be normalized via `normalize_media_note_label()` before canonical pitch parsing. Do not treat interpolation outputs as source data.
 
-16. **Source reconstruction:** where Zenodo `*_Media` workbooks are available, supply tests comparing committed `spectral_data` to workbook rows (`tests/test_string_source_reproducibility.py` pattern). CI skips reconstruction when workbooks are absent.
+17. **Source reconstruction:** where Zenodo `*_Media` workbooks are available, supply tests comparing committed `spectral_data` to workbook rows (`tests/test_string_source_reproducibility.py` pattern). CI skips reconstruction when workbooks are absent.
 
-17. **Exact anchor tests:** every committed table cell should match `calcular_densidade(pitch, dynamic)` at pp/mf/ff anchors.
+18. **Exact anchor tests:** every committed table cell should match `calcular_densidade(pitch, dynamic)` at pp/mf/ff anchors.
 
-18. **Registry aliases:** test both English and Portuguese alias resolution when applicable (`violino`/`violin`, `violoncelo`/`cello`, etc.).
+19. **Registry aliases:** test both English and Portuguese alias resolution when applicable (`violino`/`violin`, `violoncelo`/`cello`, etc.).
 
-19. **Technique honesty:** registry `supported_techniques` may list pizzicato, tremolo, harmonics, or mute, but current CDM tables represent **arco sustain** material only unless separate technique-specific tables exist.
+20. **Technique honesty:** registry `supported_techniques` may list pizzicato, tremolo, harmonics, or mute, but current CDM tables represent **arco sustain** material only unless separate technique-specific tables exist.
 
-20. **Scientific data changes** (formulas, `spectral_data`, registry ranges, provenance metadata) require human scientific review — not documentation-only PRs.
+21. **Scientific data changes** (formulas, `spectral_data`, registry ranges, provenance metadata) require human scientific review — not documentation-only PRs.
 
 ### Output-change checklist
 

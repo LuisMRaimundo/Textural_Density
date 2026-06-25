@@ -29,6 +29,7 @@ This matches **StackEdit**, **Stack Exchange** (MathJax), **VS Code** (Markdown 
    - [D. Interval density — psychoacoustic path](#d-interval-density--psychoacoustic-path)
    - [E. Psychoacoustic primitives (Bark, masking, roughness, loudness)](#e-psychoacoustic-primitives-bark-masking-roughness-loudness)
    - [F. Instrument density and sonic mass](#f-instrument-density-and-sonic-mass)
+   - [F.1 Dynamic interpolation (GPR)](#f1-dynamic-interpolation-gpr)
    - [G. Weighted density (normalisation + Stevens)](#g-weighted-density-normalisation--stevens)
    - [H. Pitch-structure density and composite vertical density](#h-pitch-structure-density-and-composite-vertical-density)
    - [I. Spectral moments, chroma, harmonic ratio](#i-spectral-moments-chroma-harmonic-ratio)
@@ -176,6 +177,36 @@ M_{\mathrm{sonic}} = \sum_j n_j \cdot d_j^{(1)}, \qquad \text{boost} = \sqrt{M_{
 $$
 
 Qty does **not** affect pitch-structure metrics (interval pairs, spectral entropy, pitch polyphony, etc.).
+
+---
+
+### F.1 Dynamic interpolation (GPR)
+
+**Module:** `instrumentos/gpr_dynamic_interpolation.py` — `create_dynamic_gpr()`, `predict_intermediate_dynamics()`.
+
+Committed CDM tables store **source-anchor dynamics** only: `pp`, `mf`, `ff`. All other allowed markings are **modelled dynamic values** obtained at analysis time:
+
+| Dynamic | Status |
+|---------|--------|
+| `pp` | source anchor |
+| `p` | modelled (GPR) |
+| `mp` | modelled (GPR at ordinal coordinate 4.5 between `p`=4.0 and `mf`=5.0) |
+| `mf` | source anchor |
+| `f` | modelled (GPR) |
+| `ff` | source anchor |
+| `pppp`, `ppp`, `fff`, `ffff` | modelled / extrapolated (GPR) |
+
+**Production method:** Gaussian-process regression with Matérn kernel fitted on $(x_{\mathrm{pp}}, d_{\mathrm{pp}})$, $(x_{\mathrm{mf}}, d_{\mathrm{mf}})$, $(x_{\mathrm{ff}}, d_{\mathrm{ff}})$ at fixed ordinal coordinates. `GPR_RANDOM_STATE = 0` makes the estimator deterministic by construction; output does not depend on global NumPy RNG state or event order. This is numerical repeatability — **not** measured acoustic data for intermediate dynamics and **not** perceptual validation.
+
+For a requested modelled dynamic $d \in \{p, mp, f, \ldots\}$ at pitch with anchors $(d_{\mathrm{pp}}, d_{\mathrm{mf}}, d_{\mathrm{ff}})$:
+
+$$
+\hat{d}_d = \mathrm{GPR}(x_d \mid \{(x_{\mathrm{pp}}, d_{\mathrm{pp}}), (x_{\mathrm{mf}}, d_{\mathrm{mf}}), (x_{\mathrm{ff}}, d_{\mathrm{ff}})\}),
+$$
+
+where $x_d$ is the ordinal coordinate for dynamic $d$. `mp` is **not** aliased to `mf` and is **not** a table column.
+
+**Diagnostic references (not production):** piecewise linear, PCHIP, and quadratic anchor interpolators appear only in audit tools (`tools/audit_gpr_model_quality.py`, `tools/compare_dynamic_interpolation_methods.py`). PR #24 compared methods on 315 source rows and 340 string scenarios; production GPR was unchanged; linear and PCHIP were not adopted. Local method sensitivity is highest in low-register strings at source-row level; scenario-level `density.instrument` showed **0** high/extreme cases in the tested aggregate battery.
 
 ---
 
@@ -392,19 +423,23 @@ When input lacks timing metadata, analysis collapses to a single slice with an e
 
 ---
 
-### P. MusicXML script pitch (transpose not applied)
+### P. MusicXML transposition (concert / sounding pitch)
 
-**Module:** `xml_loader.py` — `_transpose_semitones_from_attributes` (metadata only).
+**Module:** `xml_loader.py` — `_apply_transpose_to_written_pitch()`.
 
-MusicXML may declare **written** pitch in `<pitch>` and an offset in `<attributes><transpose>`. Textural Density analyses the notated pitch as shown on the part:
+MusicXML may declare **written** pitch in `<pitch>` and an offset in `<attributes><transpose>`. Textural Density converts written pitch to **sounding/concert pitch** before range validation and density lookup:
 
 $$
-m_{\mathrm{analysed}} = m_{\mathrm{written}}.
+m_{\mathrm{sounding}} = m_{\mathrm{written}} + \mathrm{chromatic} + 12 \times \mathrm{octave\_change}.
 $$
 
-The declared transpose offset is stored in event metadata (`transpose_semitones`) but is **not** subtracted or added at runtime. All pitch-structure metrics use this script pitch.
+Example: B♭ clarinet part with written C4 and `<chromatic>-2</chromatic>` — analysis uses **B♭3** (sounding), not C4. `InstrumentEvent` may retain `written_pitch` when it differs from `sounding_pitch`.
 
-**Not applied at runtime:** chromatic/octave transpose conversion; registry `transposition` field; diatonic spelling-only transposition without chromatic offset.
+**Manual / GUI / legacy `notes[]`:** input is already **sounding/concert pitch**; registry `transposition` is notation metadata only and is not applied to legacy lists.
+
+**Not used:** diatonic spelling-only transposition without chromatic offset; applying transpose twice.
+
+See [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md) §7.4 and `tests/test_transposing_instrument_sounding_pitch_contract.py`.
 
 ---
 
@@ -578,4 +613,4 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 
 For architecture and output JSON keys, see [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md). For upgrading existing scripts, see [MIGRATION.md](MIGRATION.md). For package vs methodology versions, see [VERSIONING.md](VERSIONING.md). For function signatures, see [API.md](API.md).
 
-*Last updated: 2026-06-01 (package 1.1.1; MusicXML transpose §P).*
+*Last updated: 2026-06-25 (dynamic interpolation §F.1; MusicXML sounding pitch §P; package 1.1.4).*

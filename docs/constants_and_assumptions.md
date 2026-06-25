@@ -60,9 +60,30 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
 | Dynamic monotonicity | **Not assumed** | GPR + source tables | CDM may decrease across dynamics |
 
-Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict intermediate dynamics at fixed ordinal coordinates. Production estimators set `random_state=GPR_RANDOM_STATE` (currently `0`) in `gpr_dynamic_interpolation.py`; global NumPy seeding is not the production determinism mechanism. Interpolation does not create new measured source data.
+Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict intermediate dynamics at fixed ordinal coordinates. Production estimators set `random_state=GPR_RANDOM_STATE` (currently `0`) in `gpr_dynamic_interpolation.py`; global NumPy seeding is not the production determinism mechanism. Interpolation does not create new measured source data. Deterministic GPR means numerical repeatability — not perceptual or empirical validation.
 
-**Model-quality diagnostics:** `tools/audit_gpr_model_quality.py` evaluates reproducible GPR behaviour (convex-hull departures, deviations from linear/quadratic/PCHIP diagnostic references). **Method comparison:** `tools/compare_dynamic_interpolation_methods.py` compares production GPR with linear and PCHIP at source-row, string-scenario, and benchmark levels. Neither tool changes production interpolation, source tables, or density formulas.
+**Source anchors vs modelled dynamics**
+
+| Dynamic | Status |
+|---------|--------|
+| `pp` | source anchor |
+| `p` | modelled (GPR) |
+| `mp` | modelled (GPR at coordinate 4.5); not a source-table anchor; not mapped to `mf` |
+| `mf` | source anchor |
+| `f` | modelled (GPR) |
+| `ff` | source anchor |
+| `pppp` / `ppp` / `fff` / `ffff` | modelled / extrapolated (GPR) |
+
+**Production vs diagnostic interpolation methods**
+
+| Method | Status | Production? |
+|--------|--------|-------------|
+| GPR (Matérn) | current deterministic production method | yes |
+| Linear anchor | diagnostic conservative reference | no |
+| PCHIP anchor | diagnostic shape-preserving reference | no |
+| Quadratic anchor | diagnostic reference (audits) | no |
+
+**Model-quality diagnostics:** `tools/audit_gpr_model_quality.py` evaluates reproducible GPR behaviour (convex-hull departures, deviations from linear/quadratic/PCHIP diagnostic references). **Method comparison:** `tools/compare_dynamic_interpolation_methods.py` compares production GPR with linear and PCHIP at source-row, string-scenario, and benchmark levels (315 rows; 320+20 scenarios; 5 excerpts). Neither tool changes production interpolation, source tables, or density formulas. PR #24 found **0** high/extreme scenario-level sensitivity in `density.instrument`; local source-row sensitivity remains highest in low-register strings. Linear and PCHIP were **not adopted**.
 
 ---
 

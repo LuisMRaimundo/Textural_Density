@@ -2,7 +2,7 @@
 
 Use alongside [`score_only_90_readiness_checklist.md`](score_only_90_readiness_checklist.md).
 
-## Test suite and CI (verified 2026-06-25, `main` @ `607bf4a`)
+## Test suite and CI (verified 2026-06-25, `main` @ `8cf1e68`)
 
 | Gate | Status |
 |------|--------|
@@ -66,6 +66,8 @@ CI skips reconstruction when `D:\CORDAS\` workbooks are unavailable on the runne
 2. **Technique metadata vs tables:** registry `supported_techniques` may include pizzicato, tremolo, harmonics, mute; CDM tables are arco sustain only.
 3. **GPR determinism:** production `GaussianProcessRegressor` instances set explicit `random_state=GPR_RANDOM_STATE` (`0`) via `create_dynamic_gpr()`; output is independent of global `np.random` state and benchmark order. Determinism is numerical repeatability only — not general perceptual or empirical validation.
 
+4. **Dynamic interpolation methodology:** production method remains GPR. `mp` is modelled through GPR (not mapped to `mf`). Linear and PCHIP are diagnostic references only (PR #24); not adopted. Document local method sensitivity (low-register strings) without overstating scenario-level impact (0 high/extreme cases in tested `density.instrument` aggregates).
+
 Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now portable doc anchor).
 
 ## Validation contract layers (symbolic)
@@ -109,6 +111,7 @@ Tests: `tests/test_quantity_scaling.py`, `tests/test_gui_architecture.py`.
 - [x] `benchmarks/corpus/excerpt_003.musicxml` + frozen `expected_outputs/excerpt_003.json`
 - [x] `benchmarks/corpus/excerpt_004.musicxml` (transpose persists measure 2) + frozen output
 - [x] `benchmarks/corpus/excerpt_005.musicxml` (multi-instrument dynamics) + frozen output
+- [x] Dynamic interpolation docs aligned: source anchors vs modelled dynamics; deterministic GPR; PR #24 comparison (diagnostic only); see `docs/TECHNICAL_MANUAL.md` §2.4.1
 - [ ] Global onset reconstruction from MusicXML `<duration>` accumulation (not implemented)
 
 ## Frozen outputs (when formulas change)
