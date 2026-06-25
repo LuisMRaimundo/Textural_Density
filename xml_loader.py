@@ -146,7 +146,7 @@ def _musicxml_pitch_to_note(pitch_el, accidental_el=None):
 
 @dataclass
 class _ExtractedMusicXmlNote:
-    """One MusicXML note: script (written) pitch is the analytical pitch."""
+    """One MusicXML note with written (staff) and concert/sounding pitch."""
 
     written_note: str
     sounding_note: str
@@ -156,9 +156,10 @@ class _ExtractedMusicXmlNote:
     transpose_semitones: int
 
 
-# MusicXML may declare <transpose> for concert-pitch export; this project analyses
-# the pitches as notated on each part (script pitch), so offsets are not applied.
-_APPLY_MUSICXML_TRANSPOSE = False
+# MusicXML <pitch> is written score pitch; <transpose> converts to concert/sounding
+# pitch before range validation and density lookup. Manual/GUI input is already
+# sounding/concert pitch and is never transposed again.
+_APPLY_MUSICXML_TRANSPOSE = True
 
 
 def _transpose_semitones_from_attributes(attributes_el) -> int | None:
@@ -204,9 +205,8 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
     """
     Parse score-partwise / score-timewise MusicXML into note records.
 
-    Notes are taken **as written on the part** (script pitch). Declared ``<transpose>``
-    elements are recorded in metadata but not applied unless ``_APPLY_MUSICXML_TRANSPOSE``
-    is enabled.
+    Written ``<pitch>`` is converted to concert/sounding pitch via ``<transpose>``
+    when ``_APPLY_MUSICXML_TRANSPOSE`` is enabled (default).
     """
     part_list = root.find("part-list")
     part_names: dict[str, str] = {}

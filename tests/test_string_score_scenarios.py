@@ -110,8 +110,8 @@ class TestStringVerticalSliceScenarios:
 
 
 @pytest.mark.musicological
-class TestDoubleBassScriptPitchMusicXml:
-    """MusicXML: double-bass notes are read as written on the part (no transpose)."""
+class TestDoubleBassSoundingPitchMusicXml:
+    """MusicXML: double-bass written pitch transposed to sounding pitch before lookup."""
 
     _DB_XML = """<?xml version="1.0"?>
 <score-partwise version="3.1">
@@ -127,17 +127,17 @@ class TestDoubleBassScriptPitchMusicXml:
   </part>
 </score-partwise>"""
 
-    def test_parse_xml_keeps_written_c3(self):
+    def test_parse_xml_converts_written_c3_to_sounding_c2(self):
         with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
             f.write(self._DB_XML)
             path = f.name
         try:
             data = parse_xml(path)
-            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C3"))
+            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C2"))
         finally:
             Path(path).unlink(missing_ok=True)
 
-    def test_events_use_script_pitch(self):
+    def test_events_use_sounding_pitch_with_written_split(self):
         with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
             f.write(self._DB_XML)
             path = f.name
@@ -145,21 +145,29 @@ class TestDoubleBassScriptPitchMusicXml:
             events, _, warnings = parse_xml_to_events(path)
             assert len(events) == 1
             ev = events[0]
-            assert ev.written_pitch is None
-            assert ev.sounding_pitch.note_name == "C3"
-            assert any("script pitch" in w.lower() for w in warnings)
+            assert ev.written_pitch is not None
+            assert ev.sounding_pitch.note_name == "C2"
+            assert any("concert pitch" in w.lower() for w in warnings)
         finally:
             Path(path).unlink(missing_ok=True)
 
-    def test_pipeline_lookup_uses_script_pitch_for_contrabaixo(self):
-        resultados, densities, _ = dp_calculate_metrics(
-            {
-                "notes": ["C3"],
-                "dynamics": ["mf"],
-                "instruments": ["contrabaixo"],
-                "num_instruments": [1],
-                "weight_factor": 0.5,
-            }
-        )
-        assert float(resultados["density"]["instrument"]) > 0.0
-        assert len(densities) == 1
+    def test_pipeline_lookup_uses_sounding_pitch_for_contrabaixo(self):
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".musicxml", delete=False) as f:
+            f.write(self._DB_XML)
+            path = f.name
+        try:
+            data = parse_xml(path)
+            resultados, densities, _ = dp_calculate_metrics(
+                {
+                    **data,
+                    "dynamics": ["mf"],
+                    "instruments": ["contrabaixo"],
+                    "num_instruments": [1],
+                    "weight_factor": 0.5,
+                }
+            )
+            assert float(resultados["density"]["instrument"]) > 0.0
+            assert len(densities) == 1
+            assert densities[0] > 0.0
+        finally:
+            Path(path).unlink(missing_ok=True)

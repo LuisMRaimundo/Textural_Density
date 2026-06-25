@@ -1,4 +1,4 @@
-"""MusicXML script pitch: notes as written on the part (no <transpose> applied)."""
+"""MusicXML concert/sounding pitch: <transpose> applied once before lookup."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ def _cleanup(path: str) -> None:
     Path(path).unlink(missing_ok=True)
 
 
-class TestDoubleBassScriptPitch:
+class TestDoubleBassSoundingPitch:
     _XML = """<?xml version="1.0"?>
 <score-partwise version="3.1">
   <part-list><score-part id="P1"><part-name>Contrabass</part-name></score-part></part-list>
@@ -38,26 +38,27 @@ class TestDoubleBassScriptPitch:
   </part>
 </score-partwise>"""
 
-    def test_parse_xml_keeps_written_c3(self):
+    def test_parse_xml_converts_written_c3_to_sounding_c2(self):
         path = _write_xml(self._XML)
         try:
             data = parse_xml(path)
-            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C3"))
+            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C2"))
         finally:
             _cleanup(path)
 
-    def test_events_use_script_pitch_without_written_split(self):
+    def test_events_split_written_and_sounding(self):
         path = _write_xml(self._XML)
         try:
             events, _, warnings = parse_xml_to_events(path)
             ev = events[0]
-            assert ev.sounding_pitch.note_name == "C3"
-            assert ev.written_pitch is None
-            assert any("not applied" in w.lower() for w in warnings)
+            assert ev.sounding_pitch.note_name == "C2"
+            assert ev.written_pitch is not None
+            assert ev.written_pitch.note_name == "C3"
+            assert any("concert pitch" in w.lower() for w in warnings)
         finally:
             _cleanup(path)
 
-    def test_pipeline_accepts_script_pitch_for_contrabaixo(self):
+    def test_pipeline_accepts_sounding_pitch_for_contrabaixo(self):
         path = _write_xml(self._XML)
         try:
             data = parse_xml(path)
@@ -71,7 +72,7 @@ class TestDoubleBassScriptPitch:
             _cleanup(path)
 
 
-class TestBbClarinetScriptPitch:
+class TestBbClarinetSoundingPitch:
     _XML = """<?xml version="1.0"?>
 <score-partwise version="3.1">
   <part-list><score-part id="P1"><part-name>Clarinet</part-name></score-part></part-list>
@@ -86,27 +87,27 @@ class TestBbClarinetScriptPitch:
   </part>
 </score-partwise>"""
 
-    def test_written_c4_not_transposed_to_bb3(self):
+    def test_written_c4_transposed_to_sounding_bb3(self):
         path = _write_xml(self._XML)
         try:
             data = parse_xml(path)
-            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("C4"))
+            assert note_to_midi(data["notes"][0]) == pytest.approx(note_to_midi("Bb3"))
         finally:
             _cleanup(path)
 
-    def test_events_have_no_written_sounding_split(self):
+    def test_events_have_written_sounding_split(self):
         path = _write_xml(self._XML)
         try:
             events, _, warnings = parse_xml_to_events(path)
             ev = events[0]
-            assert ev.sounding_pitch.note_name.startswith("C")
-            assert ev.written_pitch is None
-            assert any("script pitch" in w.lower() for w in warnings)
+            assert ev.written_pitch is not None
+            assert note_to_midi(ev.sounding_pitch.note_name) == pytest.approx(note_to_midi("Bb3"))
+            assert any("concert pitch" in w.lower() for w in warnings)
         finally:
             _cleanup(path)
 
 
-class TestContrabassoonMusicXmlScriptPitch:
+class TestContrabassoonMusicXmlSoundingPitch:
     _XML = """<?xml version="1.0"?>
 <score-partwise version="3.1">
   <part-list><score-part id="P1"><part-name>Contrabassoon</part-name></score-part></part-list>
@@ -118,7 +119,7 @@ class TestContrabassoonMusicXmlScriptPitch:
   </part>
 </score-partwise>"""
 
-    def test_g4_accepted_in_range(self):
+    def test_g4_sounding_accepted(self):
         path = _write_xml(self._XML)
         try:
             data = parse_xml(path)
@@ -131,7 +132,7 @@ class TestContrabassoonMusicXmlScriptPitch:
         finally:
             _cleanup(path)
 
-    def test_contrabassoon_g6_rejected(self):
+    def test_contrabassoon_g6_sounding_rejected(self):
         xml = self._XML.replace("<octave>4</octave>", "<octave>6</octave>")
         path = _write_xml(xml)
         try:
