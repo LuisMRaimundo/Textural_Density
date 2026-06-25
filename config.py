@@ -173,7 +173,7 @@ UI_COLORS = {
 }
 
 # Dropdown menu options
-DYNAMIC_LEVELS = ["pppp", "ppp", "pp", "p", "mf", "f", "ff", "fff", "ffff"]
+DYNAMIC_LEVELS = ["pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff"]
 INSTRUMENT_LIST = [
     "flautim",
     "flauta",

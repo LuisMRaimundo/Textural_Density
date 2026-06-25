@@ -97,7 +97,7 @@ class TestStringGprIntermediateDynamics:
         mf_in = [mf]
         ff_in = [ff]
         preds = mod.predict_intermediate_dynamics([pitch], pp_in, mf_in, ff_in)
-        expected_labels = ("pppp", "ppp", "pp", "p", "mf", "f", "ff", "fff", "ffff")
+        expected_labels = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
         assert tuple(preds.keys()) == expected_labels
         for label in expected_labels:
             arr = preds[label]

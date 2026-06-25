@@ -53,8 +53,14 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | Name | Role | Module | Limitation |
 |------|------|--------|------------|
 | `DYNAMIC_LEVELS` | Allowed symbolic markings | `config.py` | Not SPL |
-| Ordinal weights p…ffff | Symbolic orchestration mass | `instrumentos/registry.py` | Not loudness |
+| Source CDM anchors | Measured sparse table columns | `instrumentos/*.py` | **pp, mf, ff only** |
+| Modelled dynamics | GPR-interpolated values | `instrumentos/gpr_dynamic_interpolation.py` | **p, mp, f, pppp…ffff** — not measured |
+| `mp` coordinate | Ordinal GPR control between `p` (4.0) and `mf` (5.0) | `gpr_dynamic_interpolation.py` | **4.5** — not dB or perceptual intensity |
+| Ordinal weights p…ffff | Symbolic orchestration mass (coarse fallback) | `instrumentos/registry.py` | Not loudness |
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
+| Dynamic monotonicity | **Not assumed** | GPR + source tables | CDM may decrease across dynamics |
+
+Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict intermediate dynamics at fixed ordinal coordinates. Interpolation does not create new measured source data.
 
 ---
 
