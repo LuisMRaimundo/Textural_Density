@@ -47,7 +47,7 @@ live audio analysis.
   (Zenodo deposit name: `viola_arco_sustains_median_summary_v1.xlsx`)
 - **Note-label normalization:** duplicate media labels such as `F4 (2)` are stripped by
   `normalize_media_note_label()` before canonical parsing (maps to `F4` with the same CDM values).
-- **Sounding range (registry):** MIDI 48–76 (C3–E5); comfortable 50–69 (D3–A4). Table span C3–C7 covers interpolation anchors beyond comfortable sounding range.
+- **Sounding range (registry):** MIDI 48–96 (C3–C7), aligned with committed `spectral_data` table span; comfortable 50–69 (D3–A4)
 - **Extraction:** CDM midpoint pass-through; no rescaling (`identity_v1`)
 - **Interpolation:** Gaussian-process regression for intermediate dynamics
 - **Uncertainty:** medium — sparse table with known QC flags on extreme-register rows
