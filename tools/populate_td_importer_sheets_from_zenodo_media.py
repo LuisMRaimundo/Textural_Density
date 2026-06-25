@@ -167,7 +167,7 @@ INSTRUMENT_CONFIGS: list[dict[str, Any]] = [
         "display_name": "Viola",
         "family": "strings",
         "subfamily": "bowed_strings",
-        "sounding": (48, 76),
+        "sounding": (48, 96),
         "comfortable": (50, 69),
         "registry_aliases": ("viola",),
         "extra_aliases": ("viola",),
