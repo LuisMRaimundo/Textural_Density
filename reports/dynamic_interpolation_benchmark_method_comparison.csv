@@ -1,0 +1,16 @@
+excerpt_id,metric,production_gpr,linear_anchor,pchip_anchor,absolute_spread,relative_spread,method_sensitivity
+excerpt_001,density.instrument,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_001,density.sonic_mass,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_001,density.total,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_002,density.instrument,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_002,density.sonic_mass,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_002,density.total,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_003,density.instrument,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_003,density.sonic_mass,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_003,density.total,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_004,density.instrument,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_004,density.sonic_mass,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_004,density.total,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_005,density.instrument,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_005,density.sonic_mass,0.0,0.0,0.0,0.0,0.0,negligible
+excerpt_005,density.total,0.0,0.0,0.0,0.0,0.0,negligible
