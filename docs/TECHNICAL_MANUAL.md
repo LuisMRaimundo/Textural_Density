@@ -85,7 +85,7 @@ score_io/, gui/                # Export and GUI layers (separate from core)
 | **`core.analyze_score(source, config)`** | Timed score analysis. Accepts path, legacy dict, or `list[InstrumentEvent]`. Returns `ScoreAnalysisResult`. |
 | **`core.legacy_input_to_vertical_slice(data)`** | Converts legacy input dict to typed `VerticalSlice`. |
 | **`core.orchestration.compute_event_instrument_density`** | Per-event instrument module lookup and density. |
-| **`xml_loader.parse_xml` / `parse_xml_to_events`** | Load custom `<densidade_analysis>` or MusicXML; apply `<transpose>` for concert pitch. |
+| **`xml_loader.parse_xml` / `parse_xml_to_events`** | Load custom `<densidade_analysis>` or MusicXML; notes use **script pitch** as written on each part (`<transpose>` not applied). |
 | **`data_processor_legacy._validate_and_extract_input`** | Legacy GUI validation helpers (shim path). |
 
 ### 2.3 Core calculation modules

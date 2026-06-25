@@ -33,9 +33,9 @@ def test_registry_transposition_metadata(instrument_id, expected_semitones):
 
 @pytest.mark.parametrize("instrument_id", [p.instrument_id for p in TRANSPOSING_PROFILES])
 def test_manual_input_does_not_apply_registry_transposition(instrument_id):
-    """Legacy/GUI ``notes[]`` are sounding pitch; registry ``transposition`` is metadata only."""
+    """Legacy/GUI ``notes[]`` are script pitch; registry ``transposition`` is metadata only."""
     profile = REGISTRY[instrument_id]
-    # C4 at concert pitch must validate as sounding C4 (MIDI 60), not transposed.
+    # C4 on the part is validated as C4 (MIDI 60), not transposed.
     _, _, pitches = calculate_metrics(
         {
             "notes": ["C4"],
