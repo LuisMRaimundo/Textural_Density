@@ -1,0 +1,1094 @@
+{
+  "instrument_count": 28,
+  "instruments": [
+    {
+      "instrument_id": "bombo",
+      "display_name": "Bass drum",
+      "aliases": [
+        "bass_drum"
+      ],
+      "family": "percussion",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 28,
+      "registry_sounding_max_midi": 48,
+      "comfortable_min_midi": 28,
+      "comfortable_max_midi": 48,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "caixa",
+      "display_name": "Snare drum",
+      "aliases": [
+        "snare_drum",
+        "snare"
+      ],
+      "family": "percussion",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 60,
+      "registry_sounding_max_midi": 72,
+      "comfortable_min_midi": 60,
+      "comfortable_max_midi": 72,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "celesta",
+      "display_name": "Celesta",
+      "aliases": [
+        "celesta"
+      ],
+      "family": "keyboard_harp",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 60,
+      "registry_sounding_max_midi": 96,
+      "comfortable_min_midi": 65,
+      "comfortable_max_midi": 88,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "clarinete",
+      "display_name": "Clarinet",
+      "aliases": [
+        "clarinet",
+        "clarinete"
+      ],
+      "family": "woodwinds",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 50,
+      "registry_sounding_max_midi": 96,
+      "comfortable_min_midi": 55,
+      "comfortable_max_midi": 80,
+      "module_name": "clarinet",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "D3",
+        "last_note": "C7",
+        "row_count": 47,
+        "min_midi": 50,
+        "max_midi": 96,
+        "instrument_source_pitch_range": [
+          50,
+          96
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "clarinete_baixo",
+      "display_name": "Bass clarinet",
+      "aliases": [
+        "bass_clarinet",
+        "clarinete baixo",
+        "clarinete_baixo"
+      ],
+      "family": "woodwinds",
+      "transposition_semitones": 14,
+      "transposition_class": "D_interval_transposing",
+      "registry_sounding_min_midi": 34,
+      "registry_sounding_max_midi": 72,
+      "comfortable_min_midi": 40,
+      "comfortable_max_midi": 65,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "contrabaixo",
+      "display_name": "Double bass",
+      "aliases": [
+        "double_bass",
+        "contrabass",
+        "baixo"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 28,
+      "registry_sounding_max_midi": 72,
+      "comfortable_min_midi": 31,
+      "comfortable_max_midi": 55,
+      "module_name": "double_bass",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "E1",
+        "last_note": "C5",
+        "row_count": 45,
+        "min_midi": 28,
+        "max_midi": 72,
+        "instrument_source_pitch_range": [
+          28,
+          72
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "contrafagote",
+      "display_name": "Contrabassoon",
+      "aliases": [
+        "contrabassoon"
+      ],
+      "family": "woodwinds",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 22,
+      "registry_sounding_max_midi": 77,
+      "comfortable_min_midi": 28,
+      "comfortable_max_midi": 65,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "cor_anglais",
+      "display_name": "English horn",
+      "aliases": [
+        "corne_ingles",
+        "english_horn",
+        "cor anglais",
+        "cor_anglais"
+      ],
+      "family": "woodwinds",
+      "transposition_semitones": 7,
+      "transposition_class": "D_interval_transposing",
+      "registry_sounding_min_midi": 52,
+      "registry_sounding_max_midi": 76,
+      "comfortable_min_midi": 55,
+      "comfortable_max_midi": 72,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "fagote",
+      "display_name": "Bassoon",
+      "aliases": [
+        "bassoon",
+        "fagot"
+      ],
+      "family": "woodwinds",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 34,
+      "registry_sounding_max_midi": 72,
+      "comfortable_min_midi": 40,
+      "comfortable_max_midi": 65,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "flauta",
+      "display_name": "Flute",
+      "aliases": [
+        "flute",
+        "flute_traverso"
+      ],
+      "family": "woodwinds",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 59,
+      "registry_sounding_max_midi": 98,
+      "comfortable_min_midi": 62,
+      "comfortable_max_midi": 88,
+      "module_name": "flute",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "B3",
+        "last_note": "D7",
+        "row_count": 40,
+        "min_midi": 59,
+        "max_midi": 98,
+        "instrument_source_pitch_range": [
+          59,
+          98
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "flautim",
+      "display_name": "Piccolo",
+      "aliases": [
+        "piccolo"
+      ],
+      "family": "woodwinds",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 74,
+      "registry_sounding_max_midi": 108,
+      "comfortable_min_midi": 76,
+      "comfortable_max_midi": 100,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "harpa",
+      "display_name": "Harp",
+      "aliases": [
+        "harp"
+      ],
+      "family": "keyboard_harp",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 23,
+      "registry_sounding_max_midi": 96,
+      "comfortable_min_midi": 40,
+      "comfortable_max_midi": 88,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "marimba",
+      "display_name": "Marimba",
+      "aliases": [
+        "marimba"
+      ],
+      "family": "percussion",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 45,
+      "registry_sounding_max_midi": 84,
+      "comfortable_min_midi": 45,
+      "comfortable_max_midi": 84,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "metalofone",
+      "display_name": "Glockenspiel",
+      "aliases": [
+        "glockenspiel",
+        "glock"
+      ],
+      "family": "percussion",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 72,
+      "registry_sounding_max_midi": 108,
+      "comfortable_min_midi": 72,
+      "comfortable_max_midi": 108,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "oboe",
+      "display_name": "Oboe",
+      "aliases": [
+        "oboe"
+      ],
+      "family": "woodwinds",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 58,
+      "registry_sounding_max_midi": 93,
+      "comfortable_min_midi": 60,
+      "comfortable_max_midi": 81,
+      "module_name": "oboe",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "A#3",
+        "last_note": "A6",
+        "row_count": 36,
+        "min_midi": 58,
+        "max_midi": 93,
+        "instrument_source_pitch_range": [
+          58,
+          93
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "piano",
+      "display_name": "Piano",
+      "aliases": [
+        "piano",
+        "fortepiano"
+      ],
+      "family": "keyboard_harp",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 21,
+      "registry_sounding_max_midi": 108,
+      "comfortable_min_midi": 36,
+      "comfortable_max_midi": 96,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "pratos",
+      "display_name": "Cymbals",
+      "aliases": [
+        "cymbals"
+      ],
+      "family": "percussion",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 60,
+      "registry_sounding_max_midi": 84,
+      "comfortable_min_midi": 60,
+      "comfortable_max_midi": 84,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "tamtam",
+      "display_name": "Tam-tam",
+      "aliases": [
+        "tam_tam",
+        "tam-tam"
+      ],
+      "family": "percussion",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 24,
+      "registry_sounding_max_midi": 48,
+      "comfortable_min_midi": 24,
+      "comfortable_max_midi": 48,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "timpanos",
+      "display_name": "Timpani",
+      "aliases": [
+        "timpani",
+        "timbales"
+      ],
+      "family": "percussion",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 36,
+      "registry_sounding_max_midi": 60,
+      "comfortable_min_midi": 36,
+      "comfortable_max_midi": 60,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "trombone",
+      "display_name": "Trombone",
+      "aliases": [
+        "trombone"
+      ],
+      "family": "brass",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 40,
+      "registry_sounding_max_midi": 72,
+      "comfortable_min_midi": 43,
+      "comfortable_max_midi": 65,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "trombone_baixo",
+      "display_name": "Bass trombone",
+      "aliases": [
+        "bass_trombone",
+        "trombone baixo"
+      ],
+      "family": "brass",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 34,
+      "registry_sounding_max_midi": 65,
+      "comfortable_min_midi": 36,
+      "comfortable_max_midi": 58,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "trompa",
+      "display_name": "Horn",
+      "aliases": [
+        "horn",
+        "french_horn",
+        "trompa"
+      ],
+      "family": "brass",
+      "transposition_semitones": 7,
+      "transposition_class": "D_interval_transposing",
+      "registry_sounding_min_midi": 41,
+      "registry_sounding_max_midi": 77,
+      "comfortable_min_midi": 45,
+      "comfortable_max_midi": 72,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "trompete",
+      "display_name": "Trumpet",
+      "aliases": [
+        "trumpet"
+      ],
+      "family": "brass",
+      "transposition_semitones": 2,
+      "transposition_class": "D_interval_transposing",
+      "registry_sounding_min_midi": 55,
+      "registry_sounding_max_midi": 84,
+      "comfortable_min_midi": 58,
+      "comfortable_max_midi": 80,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "tuba",
+      "display_name": "Tuba",
+      "aliases": [
+        "tuba"
+      ],
+      "family": "brass",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 28,
+      "registry_sounding_max_midi": 58,
+      "comfortable_min_midi": 30,
+      "comfortable_max_midi": 50,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "vibrafone",
+      "display_name": "Vibraphone",
+      "aliases": [
+        "vibraphone"
+      ],
+      "family": "percussion",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 53,
+      "registry_sounding_max_midi": 84,
+      "comfortable_min_midi": 53,
+      "comfortable_max_midi": 84,
+      "module_name": null,
+      "profile_status": "coarse_default",
+      "table_span": null,
+      "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "viola",
+      "display_name": "Viola",
+      "aliases": [
+        "viola"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 48,
+      "registry_sounding_max_midi": 96,
+      "comfortable_min_midi": 50,
+      "comfortable_max_midi": 69,
+      "module_name": "viola",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C3",
+        "last_note": "C7",
+        "row_count": 49,
+        "min_midi": 48,
+        "max_midi": 96,
+        "instrument_source_pitch_range": [
+          48,
+          96
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violino",
+      "display_name": "Violin",
+      "aliases": [
+        "violin"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 55,
+      "registry_sounding_max_midi": 103,
+      "comfortable_min_midi": 55,
+      "comfortable_max_midi": 76,
+      "module_name": "violin",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "G3",
+        "last_note": "G7",
+        "row_count": 49,
+        "min_midi": 55,
+        "max_midi": 103,
+        "instrument_source_pitch_range": [
+          55,
+          103
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violoncelo",
+      "display_name": "Cello",
+      "aliases": [
+        "cello",
+        "violoncello"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 36,
+      "registry_sounding_max_midi": 84,
+      "comfortable_min_midi": 40,
+      "comfortable_max_midi": 65,
+      "module_name": "cello",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C2",
+        "last_note": "C6",
+        "row_count": 49,
+        "min_midi": 36,
+        "max_midi": 84,
+        "instrument_source_pitch_range": [
+          36,
+          84
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch",
+      "musicxml_convention": "transpose_element_to_sounding_before_validation",
+      "registry_transposition_applied_at_runtime": false
+    }
+  ],
+  "alias_resolution": [
+    {
+      "alias": "Flute",
+      "canonical_id": "flauta",
+      "resolved_id": "flauta"
+    },
+    {
+      "alias": "flute",
+      "canonical_id": "flauta",
+      "resolved_id": "flauta"
+    },
+    {
+      "alias": "flute_traverso",
+      "canonical_id": "flauta",
+      "resolved_id": "flauta"
+    },
+    {
+      "alias": "Piccolo",
+      "canonical_id": "flautim",
+      "resolved_id": "flautim"
+    },
+    {
+      "alias": "piccolo",
+      "canonical_id": "flautim",
+      "resolved_id": "flautim"
+    },
+    {
+      "alias": "Oboe",
+      "canonical_id": "oboe",
+      "resolved_id": "oboe"
+    },
+    {
+      "alias": "oboe",
+      "canonical_id": "oboe",
+      "resolved_id": "oboe"
+    },
+    {
+      "alias": "English horn",
+      "canonical_id": "cor_anglais",
+      "resolved_id": "cor_anglais"
+    },
+    {
+      "alias": "corne_ingles",
+      "canonical_id": "cor_anglais",
+      "resolved_id": "cor_anglais"
+    },
+    {
+      "alias": "english_horn",
+      "canonical_id": "cor_anglais",
+      "resolved_id": "cor_anglais"
+    },
+    {
+      "alias": "cor anglais",
+      "canonical_id": "cor_anglais",
+      "resolved_id": "cor_anglais"
+    },
+    {
+      "alias": "cor_anglais",
+      "canonical_id": "cor_anglais",
+      "resolved_id": "cor_anglais"
+    },
+    {
+      "alias": "Clarinet",
+      "canonical_id": "clarinete",
+      "resolved_id": "clarinete"
+    },
+    {
+      "alias": "clarinet",
+      "canonical_id": "clarinete",
+      "resolved_id": "clarinete"
+    },
+    {
+      "alias": "clarinete",
+      "canonical_id": "clarinete",
+      "resolved_id": "clarinete"
+    },
+    {
+      "alias": "Bass clarinet",
+      "canonical_id": "clarinete_baixo",
+      "resolved_id": "clarinete_baixo"
+    },
+    {
+      "alias": "bass_clarinet",
+      "canonical_id": "clarinete_baixo",
+      "resolved_id": "clarinete_baixo"
+    },
+    {
+      "alias": "clarinete baixo",
+      "canonical_id": "clarinete_baixo",
+      "resolved_id": "clarinete_baixo"
+    },
+    {
+      "alias": "clarinete_baixo",
+      "canonical_id": "clarinete_baixo",
+      "resolved_id": "clarinete_baixo"
+    },
+    {
+      "alias": "Bassoon",
+      "canonical_id": "fagote",
+      "resolved_id": "fagote"
+    },
+    {
+      "alias": "bassoon",
+      "canonical_id": "fagote",
+      "resolved_id": "fagote"
+    },
+    {
+      "alias": "fagot",
+      "canonical_id": "fagote",
+      "resolved_id": "fagote"
+    },
+    {
+      "alias": "Contrabassoon",
+      "canonical_id": "contrafagote",
+      "resolved_id": "contrafagote"
+    },
+    {
+      "alias": "contrabassoon",
+      "canonical_id": "contrafagote",
+      "resolved_id": "contrafagote"
+    },
+    {
+      "alias": "Violin",
+      "canonical_id": "violino",
+      "resolved_id": "violino"
+    },
+    {
+      "alias": "violin",
+      "canonical_id": "violino",
+      "resolved_id": "violino"
+    },
+    {
+      "alias": "Viola",
+      "canonical_id": "viola",
+      "resolved_id": "viola"
+    },
+    {
+      "alias": "viola",
+      "canonical_id": "viola",
+      "resolved_id": "viola"
+    },
+    {
+      "alias": "Cello",
+      "canonical_id": "violoncelo",
+      "resolved_id": "violoncelo"
+    },
+    {
+      "alias": "cello",
+      "canonical_id": "violoncelo",
+      "resolved_id": "violoncelo"
+    },
+    {
+      "alias": "violoncello",
+      "canonical_id": "violoncelo",
+      "resolved_id": "violoncelo"
+    },
+    {
+      "alias": "Double bass",
+      "canonical_id": "contrabaixo",
+      "resolved_id": "contrabaixo"
+    },
+    {
+      "alias": "double_bass",
+      "canonical_id": "contrabaixo",
+      "resolved_id": "contrabaixo"
+    },
+    {
+      "alias": "contrabass",
+      "canonical_id": "contrabaixo",
+      "resolved_id": "contrabaixo"
+    },
+    {
+      "alias": "baixo",
+      "canonical_id": "contrabaixo",
+      "resolved_id": "contrabaixo"
+    },
+    {
+      "alias": "Horn",
+      "canonical_id": "trompa",
+      "resolved_id": "trompa"
+    },
+    {
+      "alias": "horn",
+      "canonical_id": "trompa",
+      "resolved_id": "trompa"
+    },
+    {
+      "alias": "french_horn",
+      "canonical_id": "trompa",
+      "resolved_id": "trompa"
+    },
+    {
+      "alias": "trompa",
+      "canonical_id": "trompa",
+      "resolved_id": "trompa"
+    },
+    {
+      "alias": "Trumpet",
+      "canonical_id": "trompete",
+      "resolved_id": "trompete"
+    },
+    {
+      "alias": "trumpet",
+      "canonical_id": "trompete",
+      "resolved_id": "trompete"
+    },
+    {
+      "alias": "Trombone",
+      "canonical_id": "trombone",
+      "resolved_id": "trombone"
+    },
+    {
+      "alias": "trombone",
+      "canonical_id": "trombone",
+      "resolved_id": "trombone"
+    },
+    {
+      "alias": "Bass trombone",
+      "canonical_id": "trombone_baixo",
+      "resolved_id": "trombone_baixo"
+    },
+    {
+      "alias": "bass_trombone",
+      "canonical_id": "trombone_baixo",
+      "resolved_id": "trombone_baixo"
+    },
+    {
+      "alias": "trombone baixo",
+      "canonical_id": "trombone_baixo",
+      "resolved_id": "trombone_baixo"
+    },
+    {
+      "alias": "Tuba",
+      "canonical_id": "tuba",
+      "resolved_id": "tuba"
+    },
+    {
+      "alias": "tuba",
+      "canonical_id": "tuba",
+      "resolved_id": "tuba"
+    },
+    {
+      "alias": "Piano",
+      "canonical_id": "piano",
+      "resolved_id": "piano"
+    },
+    {
+      "alias": "piano",
+      "canonical_id": "piano",
+      "resolved_id": "piano"
+    },
+    {
+      "alias": "fortepiano",
+      "canonical_id": "piano",
+      "resolved_id": "piano"
+    },
+    {
+      "alias": "Celesta",
+      "canonical_id": "celesta",
+      "resolved_id": "celesta"
+    },
+    {
+      "alias": "celesta",
+      "canonical_id": "celesta",
+      "resolved_id": "celesta"
+    },
+    {
+      "alias": "Harp",
+      "canonical_id": "harpa",
+      "resolved_id": "harpa"
+    },
+    {
+      "alias": "harp",
+      "canonical_id": "harpa",
+      "resolved_id": "harpa"
+    },
+    {
+      "alias": "Timpani",
+      "canonical_id": "timpanos",
+      "resolved_id": "timpanos"
+    },
+    {
+      "alias": "timpani",
+      "canonical_id": "timpanos",
+      "resolved_id": "timpanos"
+    },
+    {
+      "alias": "timbales",
+      "canonical_id": "timpanos",
+      "resolved_id": "timpanos"
+    },
+    {
+      "alias": "Bass drum",
+      "canonical_id": "bombo",
+      "resolved_id": "bombo"
+    },
+    {
+      "alias": "bass_drum",
+      "canonical_id": "bombo",
+      "resolved_id": "bombo"
+    },
+    {
+      "alias": "Snare drum",
+      "canonical_id": "caixa",
+      "resolved_id": "caixa"
+    },
+    {
+      "alias": "snare_drum",
+      "canonical_id": "caixa",
+      "resolved_id": "caixa"
+    },
+    {
+      "alias": "snare",
+      "canonical_id": "caixa",
+      "resolved_id": "caixa"
+    },
+    {
+      "alias": "Cymbals",
+      "canonical_id": "pratos",
+      "resolved_id": "pratos"
+    },
+    {
+      "alias": "cymbals",
+      "canonical_id": "pratos",
+      "resolved_id": "pratos"
+    },
+    {
+      "alias": "Tam-tam",
+      "canonical_id": "tamtam",
+      "resolved_id": "tamtam"
+    },
+    {
+      "alias": "tam_tam",
+      "canonical_id": "tamtam",
+      "resolved_id": "tamtam"
+    },
+    {
+      "alias": "tam-tam",
+      "canonical_id": "tamtam",
+      "resolved_id": "tamtam"
+    },
+    {
+      "alias": "Vibraphone",
+      "canonical_id": "vibrafone",
+      "resolved_id": "vibrafone"
+    },
+    {
+      "alias": "vibraphone",
+      "canonical_id": "vibrafone",
+      "resolved_id": "vibrafone"
+    },
+    {
+      "alias": "Marimba",
+      "canonical_id": "marimba",
+      "resolved_id": "marimba"
+    },
+    {
+      "alias": "marimba",
+      "canonical_id": "marimba",
+      "resolved_id": "marimba"
+    },
+    {
+      "alias": "Glockenspiel",
+      "canonical_id": "metalofone",
+      "resolved_id": "metalofone"
+    },
+    {
+      "alias": "glockenspiel",
+      "canonical_id": "metalofone",
+      "resolved_id": "metalofone"
+    },
+    {
+      "alias": "glock",
+      "canonical_id": "metalofone",
+      "resolved_id": "metalofone"
+    }
+  ],
+  "pitch_contract": {
+    "manual_legacy_input": "notes[] are sounding/concert pitch",
+    "musicxml": "written pitch transposed via <transpose> before validation",
+    "density_lookup": "sounding_pitch",
+    "range_validation": "sounding_pitch vs registry.sounding_range",
+    "registry_transposition_field": "metadata_only_not_applied_to_manual_input"
+  }
+}

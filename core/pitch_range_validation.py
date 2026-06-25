@@ -15,8 +15,7 @@ def _midi_in_sounding_range(midi: float, low: float, high: float) -> bool:
     return (low - _RANGE_EPS) <= midi <= (high + _RANGE_EPS)
 
 
-def _note_label(event: InstrumentEvent) -> str:
-    pitch = event.sounding_pitch
+def _note_label(pitch) -> str:
     return pitch.spelling or pitch.note_name or f"MIDI {pitch.midi:.2f}"
 
 
@@ -24,7 +23,9 @@ def validate_event_sounding_range(event: InstrumentEvent, *, index: int | None =
     """
     Raise ``InputError`` when the event's sounding pitch is outside the instrument range.
 
-    Uses ``instrumentos.registry`` ``sounding_range`` (concert pitch, MIDI semitones).
+    Uses ``instrumentos.registry`` ``sounding_range`` (concert/sounding pitch, MIDI semitones).
+    Manual legacy input and the GUI supply sounding pitch directly. MusicXML applies
+    ``<transpose>`` before events are built (see ``xml_loader``).
     """
     profile = profile_for_event(event.instrument_name)
     low, high = profile.sounding_range
@@ -32,13 +33,23 @@ def validate_event_sounding_range(event: InstrumentEvent, *, index: int | None =
     if _midi_in_sounding_range(midi, low, high):
         return
 
-    note_label = _note_label(event)
+    sounding_label = _note_label(event.sounding_pitch)
+    written_clause = ""
+    if event.written_pitch is not None:
+        w_midi = float(event.written_pitch.midi)
+        if abs(w_midi - midi) > _RANGE_EPS:
+            written_label = _note_label(event.written_pitch)
+            written_clause = (
+                f"; written {written_label!r} (MIDI {w_midi:.2g})"
+            )
+
     idx_part = f" at event index {index}" if index is not None else ""
     field = "notes" if index is None else f"notes[{index}]"
     raise InputError(
-        f"Note {note_label!r} (MIDI {midi:.2g}) is outside the sounding range "
+        f"Note {sounding_label!r} (sounding MIDI {midi:.2g}) is outside the sounding range "
         f"[{low:.0f}, {high:.0f}] for instrument {event.instrument_name!r} "
-        f"({profile.display_name}){idx_part}.",
+        f"({profile.display_name}){written_clause}{idx_part}. "
+        f"Manual input must use concert/sounding pitch.",
         field=field,
     )
 

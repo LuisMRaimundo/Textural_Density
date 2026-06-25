@@ -22,7 +22,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
         "Combined Density Metric midpoint of IOWA/ORCH collections (CDM midpoint pass-through; no rescaling); GPR interpolation by pitch/dynamic"
     ),
     dynamic_levels=("pp", "mf", "ff"),
-    pitch_range=(50, 88),
+    pitch_range=(50, 96),
     uncertainty="medium",
     version="2026-06-21",
 )

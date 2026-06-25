@@ -34,7 +34,8 @@ python scripts/export_instrument_metadata_audit.py
 - Review all `symbolic_default` profiles with `uncertainty=high` before claiming registry maturity.
 - Do not upgrade status to `empirical_profile` without committing supporting source notes in the repository.
 - **Double-bass span adjudication:** committed `double_bass.py` table spans E1–C5; confirm methodological status of upper-register rows (see [instrument_acoustic_sources.md](instrument_acoustic_sources.md)).
-- **Contrabassoon registry:** `sounding_range` is B♭0–F5 (MIDI 22–77), aligned with common orchestration references; coarse profile only (no CDM table).
+- **Contrabassoon registry:** `sounding_range` is B♭0–F5 (MIDI 22–77), aligned with common orchestration references; coarse profile only (no CDM table). Manual/GUI input uses **sounding** pitch (not written); MusicXML may supply written pitch with optional `<transpose>`.
+- **Manual vs written pitch:** legacy `notes[]` and the GUI validate **concert/sounding** MIDI against `sounding_range`. Registry `transposition` is score-metadata only unless MusicXML `<transpose>` is present.
 - **Technique vs table scope:** arco sustain CDM tables must not be read as technique-specific measurements for pizzicato/tremolo/harmonics/mute without dedicated data.
 - **GPR determinism:** production modules do not fix `random_state`; test reproducibility is conditional only.
 
