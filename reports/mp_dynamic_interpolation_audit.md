@@ -1,18 +1,18 @@
 # mp dynamic interpolation audit
 
 - Rows: 192
-- GPR mp min/max: 0.000000 / 92.523786
-- GPR mp mean/median: 25.189197 / 21.962464
-- Max |GPR mp − linear|: 52.333588
-- Max |GPR mp − quadratic|: 62.929302
+- GPR mp min/max: 3.238613 / 92.523786
+- GPR mp mean/median: 25.516744 / 22.224794
+- Max |GPR mp − linear|: 9.520308
+- Max |GPR mp − quadratic|: 1.075406
 - Non-finite: 0
 - Negative: 0
-- Convex-hull departures (pp..mf): 39
+- Convex-hull departures (pp..mf): 38
 - Review required: False
 
 ## Top GPR vs linear differences
 
-- double_bass G1: GPR=0.0000, linear=52.3336, diff=52.3336
+- double_bass G1: GPR=61.8539, linear=52.3336, diff=9.5203
 - cello D2: GPR=74.3507, linear=66.2664, diff=8.0843
 - cello D3: GPR=53.4819, linear=45.6257, diff=7.8562
 - double_bass A2: GPR=54.3232, linear=46.6947, diff=7.6284
@@ -25,7 +25,7 @@
 
 ## Top |mp − mf_source|
 
-- double_bass G1: mp=0.0000, mf=66.2925, diff=66.2925
+- double_bass G1: mp=61.8539, mf=66.2925, diff=4.4386
 - cello G2: mp=29.1305, mf=33.2901, diff=4.1596
 - double_bass B2: mp=45.5486, mf=49.1248, diff=3.5762
 - double_bass F#1: mp=70.3406, mf=73.7293, diff=3.3888

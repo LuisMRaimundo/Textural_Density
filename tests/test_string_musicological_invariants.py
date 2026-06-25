@@ -109,7 +109,6 @@ class TestStringGprIntermediateDynamics:
 
     @pytest.mark.parametrize("spec", STRING_INSTRUMENTS, ids=lambda s: s.module_name)
     def test_gpr_repeated_calls_are_deterministic(self, spec: StringInstrumentSpec):
-        np.random.seed(0)
         mod = _mod(spec)
         pitch = _comfortable_table_pitch(spec)
         pp = mod.calcular_densidade(pitch, "pp")

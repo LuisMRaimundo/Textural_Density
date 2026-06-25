@@ -30,11 +30,6 @@ def _load_manifest() -> list[dict]:
 
 
 def run_entry(entry: dict) -> dict:
-    import numpy as np
-
-    # GPR optimizer restarts consume NumPy global RNG; reset per excerpt so
-    # benchmark order and prior MusicXML transpose work cannot shift later entries.
-    np.random.seed(0)
     with open(CONFIG, encoding="utf-8") as f:
         cfg = json.load(f)
     parsed = parse_xml(str(BENCHMARKS / entry["musicxml"]))
@@ -49,7 +44,25 @@ def run_entry(entry: dict) -> dict:
 
 
 def main() -> int:
-    for entry in _load_manifest():
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--order",
+        choices=("canonical", "reverse", "shuffle"),
+        default="canonical",
+        help="Excerpt evaluation order (shuffle uses deterministic seed 1).",
+    )
+    args = parser.parse_args()
+    entries = _load_manifest()
+    if args.order == "reverse":
+        entries = list(reversed(entries))
+    elif args.order == "shuffle":
+        import random
+
+        entries = list(entries)
+        random.Random(1).shuffle(entries)
+    for entry in entries:
         payload = run_entry(entry)
         print(f"OK {entry['id']} total={payload['numeric']['density']['total']:.6f}")
     return 0

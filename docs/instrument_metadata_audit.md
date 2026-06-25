@@ -37,7 +37,7 @@ python scripts/export_instrument_metadata_audit.py
 - **Contrabassoon registry:** `sounding_range` is B♭0–F5 (MIDI 22–77). All input uses **script pitch** as written on the part.
 - **Script pitch convention:** legacy `notes[]`, GUI, and MusicXML all use the notated pitch; MusicXML `<transpose>` is not applied at runtime.
 - **Technique vs table scope:** arco sustain CDM tables must not be read as technique-specific measurements for pizzicato/tremolo/harmonics/mute without dedicated data.
-- **GPR determinism:** production modules do not fix `random_state`; test reproducibility is conditional only.
+- **GPR determinism:** production modules use `create_dynamic_gpr()` with explicit `GPR_RANDOM_STATE = 0`; output is independent of global NumPy RNG state.
 
 **Resolved (PR #14):** viola portable provenance (`docs/instrument_acoustic_sources.md#viola`); viola table aligned to `VIOLA_Media` (C3–C7) with `(2)` label normalization.
 
