@@ -190,6 +190,16 @@ class TestInstrumentPitchRangeValidation:
         _, _, pitches = calculate_metrics(data)
         assert pitches[0] == pytest.approx(36.0)
 
+    def test_in_range_viola_high_table_boundary_accepted(self):
+        data = {
+            "notes": ["A5"],
+            "dynamics": ["mf"],
+            "instruments": ["viola"],
+            "num_instruments": [1],
+        }
+        _, _, pitches = calculate_metrics(data)
+        assert pitches[0] == pytest.approx(81.0)
+
     def test_make_instrument_event_rejects_out_of_range(self):
         with pytest.raises(InputError, match="outside the sounding range"):
             make_instrument_event(
