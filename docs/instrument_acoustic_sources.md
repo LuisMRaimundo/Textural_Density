@@ -61,6 +61,16 @@ live audio analysis.
 - **Interpolation:** GPR for intermediate dynamics
 - **Uncertainty:** medium
 
+## Violin sordina (`violin_sordina`)
+
+- **Module:** `instrumentos/violin_sordina.py`
+- **Table:** `spectral_data` (49 chromatic rows, G3–G7)
+- **Provenance:** IOWA+ORCH arco sordina CDM `combined_sord_collection_raw` at pp/mf/ff
+- **Source workbook:** `D:\CORDAS\VIOLIN Zenodo_Arco Sordina.xlsx` (sheets `SORDINA-pp`, `SORDINA-mf`, `SORDINA-ff`)
+- **Source technique:** `arco_sordina`
+- **Interpolation:** GPR for intermediate dynamics
+- **Uncertainty:** medium
+
 ## Cello (`cello`)
 
 - **Module:** `instrumentos/cello.py`

@@ -13,6 +13,7 @@ ACOUSTIC_MODULES = (
     "clarinet",
     "oboe",
     "violin",
+    "violin_sordina",
     "viola",
     "cello",
     "double_bass",

@@ -278,6 +278,32 @@ for _id, _name, _module, _sound, _comfort, _aliases in (
         aliases=_aliases,
     )
 
+REGISTRY["violino_sordina"] = _profile(
+    "violino_sordina",
+    "Violin sordina",
+    "strings",
+    sounding=(55, 103),
+    comfortable=(55, 76),
+    brightness="neutral",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="medium",
+    module_name="violin_sordina",
+    supported=("arco", "mute"),
+    unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/violin_sordina.py from IOWA+ORCH arco sordina "
+        "Combined Density Metric combined_sord_collection_raw (pp/mf/ff); not a full measured spectrum."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sordina only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
+    ),
+    aliases=("violin_sordina", "Violin_sordina"),
+)
+
 # --- Brass ---
 REGISTRY["trompa"] = _profile(
     "trompa",

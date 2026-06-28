@@ -26,7 +26,16 @@ RANGE_SEMANTICS: dict[str, str] = {
 }
 
 _GPR_MODULES = frozenset(
-    {"flute", "oboe", "clarinet", "violin", "viola", "cello", "double_bass"}
+    {
+        "flute",
+        "oboe",
+        "clarinet",
+        "violin",
+        "violin_sordina",
+        "viola",
+        "cello",
+        "double_bass",
+    }
 )
 
 

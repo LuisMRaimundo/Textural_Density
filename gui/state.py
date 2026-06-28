@@ -23,6 +23,7 @@ INSTRUMENTS = [
     "Trombone",
     "Tuba",
     "Violin",
+    "Violin sordina",
     "Viola",
     "Cello",
     "Double bass",
