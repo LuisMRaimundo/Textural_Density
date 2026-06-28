@@ -22,6 +22,7 @@ from core.converters import (
 from core.composite_trace import build_composite_trace
 from core.defaults import apply_research_defaults
 from core.input_validation import validate_no_removed_options
+from core.instrument_lookup_trace import build_instrument_lookup_trace
 from core.request import AnalysisRequest
 from core.metrics_metadata import MetricAssemblyContext, attach_metric_metadata
 from core.orchestration import compute_one_player_densities_for_slice, compute_slice_orchestral_metrics
@@ -137,6 +138,10 @@ def calculate_metrics(
         vertical_slice,
         load_instrument_module,
     )
+    instrument_lookup_trace = build_instrument_lookup_trace(
+        vertical_slice,
+        one_player_densities,
+    )
     densidade_instrumento_val, massa_sonora_val, aggregated_sources = (
         compute_slice_orchestral_metrics(
             notas,
@@ -214,6 +219,7 @@ def calculate_metrics(
 
     pitch_aggregation_dict = pitch_agg.to_dict()
     pitch_aggregation_dict["source_groups"] = [s.to_dict() for s in aggregated_sources]
+    pitch_aggregation_dict["instrument_lookup_trace"] = instrument_lookup_trace
     resultados = _assemble_results(
         notas,
         dinamicas,
@@ -316,7 +322,9 @@ def calculate_metrics(
         sonic_mass=float(massa_sonora_val),
         total_density=float(densidade_total_val),
         pitch_aggregation=pitch_aggregation_dict,
+        instrument_lookup_trace=instrument_lookup_trace,
     )
+    resultados["instrument_lookup_trace"] = instrument_lookup_trace
     return resultados, one_player_densities, pitches
 
 

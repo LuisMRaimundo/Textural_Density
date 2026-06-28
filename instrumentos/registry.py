@@ -301,7 +301,18 @@ REGISTRY["violino_sordina"] = _profile(
         "Numerical CDM table covers arco_sordina only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("violin_sordina", "Violin_sordina"),
+    aliases=(
+        "violin_sordina",
+        "Violin_sordina",
+        "violin con sordina",
+        "violin_con_sordina",
+        "violino sordina",
+        "violino_sordina",
+        "violino con sordina",
+        "violino_con_sordina",
+        "violin muted",
+        "muted violin",
+    ),
 )
 
 # --- Brass ---

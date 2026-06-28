@@ -40,6 +40,8 @@ def build_composite_trace(
 
     pitch_aggregation: dict[str, Any] | None = None,
 
+    instrument_lookup_trace: list[dict[str, Any]] | None = None,
+
 ) -> dict[str, Any]:
 
     trace = {
@@ -151,6 +153,8 @@ def build_composite_trace(
             "sonic_mass": float(sonic_mass),
 
             "pitch_aggregation": pitch_aggregation or {},
+
+            "instrument_lookup_trace": instrument_lookup_trace or [],
 
         },
 

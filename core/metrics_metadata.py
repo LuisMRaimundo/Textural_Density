@@ -28,6 +28,12 @@ from core.defaults import (
 from core.hash_utils import config_hash, input_hash_from_dict
 from core.models import AnalysisConfig, MetricResult, VerticalSlice
 from instrumentos.registry import resolve_profile
+from instrumentos.violin_sordina_diagnostics import (
+    AUDIT_FLAG_CRITICAL,
+    AUDIT_FLAG_HIGH,
+    input_implies_violin_sordina,
+    summarize_compare_flags,
+)
 
 
 def _instrument_density_epistemics(
@@ -190,6 +196,13 @@ def collect_slice_warnings(
             warnings.append(
                 f"Unknown instrument family for '{event.instrument_name}'."
             )
+        if input_implies_violin_sordina(event.instrument_name):
+            profile_id = profile.instrument_id if profile is not None else None
+            if profile_id != "violino_sordina":
+                warnings.append(
+                    "Input appears to request violin con sordina, but it did not "
+                    "resolve to the violin_sordina profile."
+                )
 
     if len(vertical_slice.events) < 2:
         warnings.append(
@@ -446,6 +459,18 @@ def attach_metric_metadata(
     meta = build_metric_metadata(context)
     if context.pitch_aggregation:
         meta["pitch_aggregation"] = context.pitch_aggregation
+        lookup_trace = context.pitch_aggregation.get("instrument_lookup_trace") or []
+        if lookup_trace:
+            meta["instrument_lookup_trace"] = lookup_trace
+            flagged = [
+                row
+                for row in lookup_trace
+                if row.get("audit_flag") in (AUDIT_FLAG_HIGH, AUDIT_FLAG_CRITICAL)
+            ]
+            if flagged:
+                meta["violin_sordina_arco_audit_flags"] = flagged
+        if any(row.get("module_name") == "violin_sordina" for row in lookup_trace):
+            meta["violin_sordina_arco_table_summary"] = summarize_compare_flags()
     if input_data is not None:
         meta["input_hash"] = input_hash_from_dict(input_data)
     if software_version:
