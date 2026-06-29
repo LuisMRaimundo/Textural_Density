@@ -81,8 +81,7 @@ live audio analysis.
 - **Source technique:** `arco_sul_ponticello`
 - **Interpolation:** GPR for intermediate dynamics
 - **Uncertainty:** high (pp/ff are modelled from mf-only source)
-
-## Violin art harm (`violin_art_harm`)
+- **Curation (2026-06-30):** corrected hand-curated `MF_MEASURED` mf rows (G3–G7); pp/ff anchors regenerated via violin arco ratio transfer
 
 - **Module:** `instrumentos/violin_art_harm.py`
 - **Table:** `spectral_data` (25 chromatic rows, G5–G7)

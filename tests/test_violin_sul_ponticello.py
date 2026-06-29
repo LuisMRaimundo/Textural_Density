@@ -36,8 +36,8 @@ def test_mf_measured_values_preserved_in_spectral_table():
 
 def test_mf_lookup_returns_measured_anchor():
     mod = importlib.import_module("instrumentos.violin_sul_ponticello")
-    assert mod.calcular_densidade("G4", "mf") == pytest.approx(20.557578, rel=0, abs=1e-5)
-    assert mod.calcular_densidade("A3", "mf") == pytest.approx(38.949341, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("G4", "mf") == pytest.approx(23.203351, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("A3", "mf") == pytest.approx(33.641299, rel=0, abs=1e-5)
 
 
 def test_pp_ff_extrapolated_from_violin_arco_ratios():
@@ -66,7 +66,7 @@ def test_pipeline_accepts_violin_sul_ponticello():
         num_instruments=(1,),
     )
     resultados, densities, _ = calculate_metrics(request)
-    assert densities[0] == pytest.approx(20.557578, rel=0, abs=1e-5)
+    assert densities[0] == pytest.approx(23.203351, rel=0, abs=1e-5)
     trace = resultados["instrument_lookup_trace"][0]
     assert trace["resolved_profile_id"] == "violino_sul_ponticello"
     assert trace["module_name"] == "violin_sul_ponticello"
