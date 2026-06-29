@@ -24,6 +24,8 @@ INSTRUMENTS = [
     "Tuba",
     "Violin",
     "Violin sordina",
+    "Violin sul ponticello",
+    "Violin art harm",
     "Viola",
     "Cello",
     "Double bass",

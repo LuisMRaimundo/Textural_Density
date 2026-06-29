@@ -139,6 +139,8 @@ Dynamic interpolation is a **computational modelling layer** attached to score e
 | `ff` | source anchor |
 | `pppp`, `ppp`, `fff`, `ffff` | modelled / extrapolated (GPR) |
 
+**mf-only technique modules:** For `violin_sul_ponticello` and `violin_art_harm`, only `mf` is measured source data. Committed `pp` and `ff` columns are extrapolated from mf using violin arco dynamic ratios; they behave as GPR anchors, not independent measurements. The dynamic status table above still applies once those anchors are committed.
+
 Ordinal dynamic coordinates are modelling controls — not dB, SPL, loudness, or perceptual intensity scales. Source-table monotonicity across pp/mf/ff is **not** assumed.
 
 **Production method**

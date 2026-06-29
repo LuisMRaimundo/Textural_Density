@@ -74,7 +74,7 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 | `ff` | source anchor |
 | `pppp` / `ppp` / `fff` / `ffff` | modelled / extrapolated (GPR) |
 
-**Production vs diagnostic interpolation methods**
+**mf-only technique modules:** `violin_sul_ponticello` and `violin_art_harm` measure mf only; committed pp/ff are extrapolated from violin arco ratios and serve as GPR anchors. Intermediate/extreme dynamics remain GPR-modelled in `calculate_metrics`.
 
 | Method | Status | Production? |
 |--------|--------|-------------|
@@ -92,7 +92,7 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 | Name | Role | Module |
 |------|------|--------|
 | `REGISTRY` profiles | Register, family, dynamic-response metadata | `instrumentos/registry.py` |
-| GPR modules (`flute`, `oboe`, `clarinet`, `violin`, `viola`, `cello`, `double_bass`, …) | Sparse note×dynamic CDM tables (externally sourced) | `instrumentos/*.py` |
+| GPR modules (`flute`, `oboe`, `clarinet`, `violin`, `violin_sordina`, `violin_sul_ponticello`, `violin_art_harm`, `viola`, `cello`, `double_bass`, …) | Sparse note×dynamic CDM tables (externally sourced) | `instrumentos/*.py` |
 | `profile_status` | `literature_derived` / `empirical_profile` / `coarse_default` | Audit: `instrumentos/metadata_audit.py` |
 | `uncertainty` | low / medium / high | All profiles |
 | Unknown instrument | Generic fallback without external acoustic table | `profile_for_event()` |

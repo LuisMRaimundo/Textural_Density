@@ -29,7 +29,8 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 | `oboe.py` | `spectral_data` | IOWA+ORCH oboe sustain CDM medians (Zenodo workbook) |
 
 | `violin.py`, `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` | IOWA+ORCH arco sustain CDM medians (Zenodo workbooks) |
-
+| `violin_sordina.py` | `spectral_data` | IOWA+ORCH arco sordina CDM (`combined_sord_collection_raw`, pp/mf/ff) |
+| `violin_sul_ponticello.py`, `violin_art_harm.py` | `spectral_data` | Measured **mf only**; pp/ff extrapolated via `mf_anchor_dynamic_extrapolation.py` (violin arco ratio transfer) |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
 
@@ -38,7 +39,9 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 
 **Media ingestion:** Zenodo `*_Media` workbook rows may use duplicate suffix labels (e.g. `F4 (2)`). Offline tooling applies `utils.notes.normalize_media_note_label()` before canonical parsing. See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md).
 
-**Technique honesty:** registry `supported_techniques` lists organological capabilities. GPR modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `ordinary_sustain`). Pizzicato, tremolo, harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
+**Technique honesty:** registry `supported_techniques` lists organological capabilities. GPR modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
+
+**mf-only technique modules:** `violin_sul_ponticello.py` and `violin_art_harm.py` commit measured mf rows in `MF_MEASURED`. pp and ff GPR anchors are extrapolated per note from violin arco pp/mf and ff/mf ratios (`instrumentos/mf_anchor_dynamic_extrapolation.py`). All other dynamics (`pppp` … `ffff`, including `mp`) are GPR-modelled in the production pipeline — same ordinal model as full-table modules. Direct `calcular_densidade` calls on these modules collapse non-anchor markings to the nearest table row; GUI / `calculate_metrics` uses GPR.
 
 **Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
 
@@ -203,7 +206,9 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **Oboe** | `oboe.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
 | **Violin** | `violin.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
-
+| **Violin sordina** | `violin_sordina.py` | `literature_derived` | IOWA+ORCH arco sordina CDM (pp/mf/ff) |
+| **Violin sul ponticello** | `violin_sul_ponticello.py` | `literature_derived` | mf measured; pp/ff extrapolated (high uncertainty) |
+| **Violin art harm** | `violin_art_harm.py` | `literature_derived` | mf measured G5–G7; pp/ff extrapolated (high uncertainty) |
 | **Viola** | `viola.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 
 | **Cello** | `cello.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
@@ -248,7 +253,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 | Woodwinds | `flauta`, `flautim`, `oboe`, `cor_anglais`, `clarinete`, `clarinete_baixo`, `fagote`, `contrafagote` |
 
-| Strings | `violino`, `viola`, `violoncelo`, `contrabaixo` |
+| Strings | `violino`, `violino_sordina`, `violino_sul_ponticello`, `violino_art_harm`, `viola`, `violoncelo`, `contrabaixo` |
 
 | Brass | `trompa`, `trompete`, `trombone`, `trombone_baixo`, `tuba` |
 

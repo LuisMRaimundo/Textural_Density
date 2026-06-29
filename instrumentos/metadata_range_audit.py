@@ -32,6 +32,8 @@ _GPR_MODULES = frozenset(
         "clarinet",
         "violin",
         "violin_sordina",
+        "violin_sul_ponticello",
+        "violin_art_harm",
         "viola",
         "cello",
         "double_bass",

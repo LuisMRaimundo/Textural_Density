@@ -71,6 +71,28 @@ live audio analysis.
 - **Interpolation:** GPR for intermediate dynamics
 - **Uncertainty:** medium
 
+## Violin sul ponticello (`violin_sul_ponticello`)
+
+- **Module:** `instrumentos/violin_sul_ponticello.py`
+- **Table:** `spectral_data` (49 chromatic rows, G3–G7)
+- **Measured anchor:** mf only (`MF_MEASURED` in module)
+- **Extrapolated anchors:** pp and ff derived per note via violin arco pp/mf and ff/mf ratios (`instrumentos/mf_anchor_dynamic_extrapolation.py`)
+- **GPR-modelled dynamics:** pppp, ppp, p, mp, f, fff, ffff (and other non-anchor markings) predicted by GPR on the pp/mf/ff anchor triple — same ordinal model as other GPR modules
+- **Source technique:** `arco_sul_ponticello`
+- **Interpolation:** GPR for intermediate dynamics
+- **Uncertainty:** high (pp/ff are modelled from mf-only source)
+
+## Violin art harm (`violin_art_harm`)
+
+- **Module:** `instrumentos/violin_art_harm.py`
+- **Table:** `spectral_data` (25 chromatic rows, G5–G7)
+- **Measured anchor:** mf only (`MF_MEASURED` in module)
+- **Extrapolated anchors:** pp and ff derived per note via violin arco pp/mf and ff/mf ratios (`instrumentos/mf_anchor_dynamic_extrapolation.py`)
+- **GPR-modelled dynamics:** pppp, ppp, p, mp, f, fff, ffff predicted by GPR on the pp/mf/ff anchor triple
+- **Source technique:** `arco_artificial_harmonic`
+- **Interpolation:** GPR for intermediate dynamics
+- **Uncertainty:** high (pp/ff are modelled from mf-only source; upper-register table only)
+
 ## Cello (`cello`)
 
 - **Module:** `instrumentos/cello.py`
@@ -100,6 +122,8 @@ Offline curation pipeline (not used at runtime):
 2. `tools/generate_instrument_modules.py` — emits `instrumentos/flute.py`, `oboe.py`, `clarinet.py`, `violin.py`, `viola.py`, `cello.py`, `double_bass.py`. Viola source reconstruction uses `VIOLA_Media` via `load_spectral_data_from_media`.
 3. `tools/build_viola_table_from_media.py` — helper to regenerate viola `spectral_data` from `VIOLA_Media`.
 4. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
+
+**mf-only technique tables:** `violin_sul_ponticello.py` and `violin_art_harm.py` are hand-curated (not emitted by `generate_instrument_modules.py`). Measured mf rows live in `MF_MEASURED`; pp/ff anchors are built offline via `instrumentos/mf_anchor_dynamic_extrapolation.build_spectral_data_from_mf_anchor()` using violin arco per-note dynamic ratios. Intermediate and extreme dynamics (`pppp` … `ffff`) remain GPR-modelled at runtime in `calculate_metrics`.
 
 ## Media note-label normalization (PR #14)
 

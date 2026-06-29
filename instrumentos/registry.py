@@ -315,6 +315,83 @@ REGISTRY["violino_sordina"] = _profile(
     ),
 )
 
+REGISTRY["violino_sul_ponticello"] = _profile(
+    "violino_sul_ponticello",
+    "Violin sul ponticello",
+    "strings",
+    sounding=(55, 103),
+    comfortable=(55, 76),
+    brightness="bright",
+    sustain="sustained",
+    attack="hard",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="violin_sul_ponticello",
+    supported=("arco", "sul_ponticello"),
+    unsupported=("pizzicato", "mute", "sul_tasto"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/violin_sul_ponticello.py with measured mf CDM "
+        "anchor only; pp/ff extrapolated from violin arco per-note dynamic ratios."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_ponticello only; pp/ff anchors are "
+        "extrapolated from mf using violin arco dynamic ratios.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "violin_sul_ponticello",
+        "Violin_sul_ponticello",
+        "violin sul pont",
+        "violin_sul_pont",
+        "violino sul ponticello",
+        "violino_sul_ponticello",
+        "sul ponticello violin",
+        "sul_ponticello_violin",
+    ),
+)
+
+REGISTRY["violino_art_harm"] = _profile(
+    "violino_art_harm",
+    "Violin art harm",
+    "strings",
+    sounding=(79, 103),
+    comfortable=(79, 96),
+    brightness="bright",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="violin_art_harm",
+    supported=("arco", "harmonic"),
+    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/violin_art_harm.py with measured mf CDM "
+        "anchor only (G5–G7); pp/ff extrapolated from violin arco per-note dynamic ratios."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_artificial_harmonic only; pp/ff anchors are "
+        "extrapolated from mf using violin arco dynamic ratios.",
+        "Table span is upper register only (G5–G7); notes outside this range use "
+        "controlled pitch extrapolation or fallback.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "violin_art_harm",
+        "Violin_art_harm",
+        "violin artificial harmonics",
+        "violin_artificial_harmonics",
+        "violino art harm",
+        "violino_art_harm",
+        "violino artificial harmonics",
+        "art harm violin",
+        "art_harm_violin",
+    ),
+)
+
 # --- Brass ---
 REGISTRY["trompa"] = _profile(
     "trompa",
