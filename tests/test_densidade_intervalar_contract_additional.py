@@ -168,7 +168,7 @@ class TestRemovedFeatureBoundary:
         "use_stevens",
         "use_psychoacoustic",
         "psychoacoustic_corrections",
-        "SoundSpectrAnalyse",
+        "Spectral_Analyser",
         "fft",
         "stft",
         "ewsd",

@@ -1,4 +1,4 @@
-# Textural Density
+# Textural_Density (display name: Textural Density)
 # pip install -e .  then run: densidade-vertical  (legacy PyPI/console name)
 
 [build-system]

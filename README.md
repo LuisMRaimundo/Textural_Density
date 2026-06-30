@@ -1,5 +1,6 @@
 # Textural Density - Musical Density Analysis Application
 
+**Repository:** [github.com/LuisMRaimundo/Textural_Density](https://github.com/LuisMRaimundo/Textural_Density)  
 **Version:** 1.1.4  
 **Status:** Active Development  
 **License:** [MIT](LICENSE)  
@@ -180,7 +181,7 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 | **Calibrated proxies** | Interval decay λ (partially calibrated against consonance ratings) |
 | **Formal validation** | Regression/property tests, benchmark replication scaffolding (`verified_by_tests`) |
 | **Optional empirical** | Expert annotations, listening tests — only if pursuing judgment-prediction research |
-| **Not provided** | Measured audio spectra, SPL, timbre measurement, live waveform/FFT/STFT analysis, SoundSpectrAnalyse-style signal processing, mandatory human-rating validation, final cross-instrument acoustic calibration |
+| **Not provided** | Measured audio spectra, SPL, timbre measurement, live waveform/FFT/STFT analysis, Spectral_Analyser-style signal processing, mandatory human-rating validation, final cross-instrument acoustic calibration |
 
 **Instrument metadata status:** External acoustic/proxy tables are **incomplete** and curated gradually. Missing or coarse instrument data are **expected** at this stage — not runtime bugs when fallback labels and provenance remain honest. Do not treat current GPR modules (e.g. flute, clarinet, oboe, violin, violin sordina, violin sul ponticello, violin art harm) as final scientific reference corpora.
 

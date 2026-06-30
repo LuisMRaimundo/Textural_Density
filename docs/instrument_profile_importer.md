@@ -21,7 +21,7 @@ This pipeline does **not**:
 
 - import or analyse audio;
 - run FFT/STFT or spectral analysis;
-- import SoundSpectrAnalyse or related audio stacks.
+- import Spectral_Analyser or related audio stacks.
 
 The importer itself is constrained the same way: it validates spreadsheet metadata only.
 

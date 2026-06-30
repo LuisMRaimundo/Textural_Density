@@ -9,6 +9,7 @@ PACKAGE_VERSION = "1.1.4"
 
 # User-facing product name (documentation, error messages). PyPI id remains densidade-vertical.
 PRODUCT_DISPLAY_NAME = "Textural Density"
+PRODUCT_REPO_SLUG = "Textural_Density"
 
 
 def get_package_version() -> str:

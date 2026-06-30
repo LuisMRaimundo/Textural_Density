@@ -9,8 +9,9 @@ This document defines how **release versions**, **methodology phases**, and **sc
 | Label | Value | Notes |
 |-------|-------|-------|
 | **Product / documentation name** | **Textural Density** | README, manuals, rubric, reports; `core.version.PRODUCT_DISPLAY_NAME` |
+| **Repository slug / folder** | **`Textural_Density`** | GitHub URL, clone directory, `core.version.PRODUCT_REPO_SLUG` |
 | **PyPI / console script** | `densidade-vertical` | Legacy package id in `pyproject.toml`; unchanged for install compatibility |
-| **GitHub repository** | `Textural_Density` | Remote URL slug |
+| **GitHub repository** | `Textural_Density` | `https://github.com/LuisMRaimundo/Textural_Density` |
 
 ---
 
@@ -18,7 +19,7 @@ This document defines how **release versions**, **methodology phases**, and **sc
 
 | Field | Location | Current |
 |-------|----------|---------|
-| **Canonical value** | `[project].version` in `pyproject.toml` | **1.1.1** |
+| **Canonical value** | `[project].version` in `pyproject.toml` | **1.1.4** |
 | **Runtime API** | `core.version.get_package_version()` / `core.__version__` | same |
 | **License** | `LICENSE` (MIT) + `[project].license` in `pyproject.toml` | **MIT** |
 
@@ -37,7 +38,7 @@ These describe **scientific scope**, not Python package semver:
 | `3.0.0-strict-symbolic` | Removed Stevens' Law, psychoacoustic paths, perceptual interval weighting | historical |
 | `4.0.0-strict-symbolic` | Removed combination-tone / resultant-tone analysis | `METRIC_SCHEMA_VERSION` in `core/defaults.py` |
 
-Outputs embed `metric_schema_version` (currently **`4.0.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.1`.
+Outputs embed `metric_schema_version` (currently **`4.0.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.4`.
 
 See [MIGRATION.md](MIGRATION.md) for phase history.
 
@@ -72,4 +73,4 @@ When changing methodology scope (e.g. new strict-symbolic phase):
 
 ---
 
-*Last updated: 2026-06-01 (package 1.1.1, MIT license file added).*
+*Last updated: 2026-06-29 (package 1.1.4, repo slug Textural_Density).*

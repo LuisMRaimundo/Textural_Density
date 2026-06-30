@@ -340,7 +340,7 @@ class TestProductionSafety:
     def test_importer_does_not_import_forbidden_modules(self):
         assert module_imports_are_safe()
         tree = ast.parse((ROOT / "tools" / "import_instrument_profiles_from_excel.py").read_text(encoding="utf-8"))
-        forbidden = {"proc_audio", "spectral_analysis", "SoundSpectrAnalyse", "fft", "stft"}
+        forbidden = {"proc_audio", "spectral_analysis", "Spectral_Analyser", "SoundSpectrAnalyse", "fft", "stft"}
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for alias in node.names:

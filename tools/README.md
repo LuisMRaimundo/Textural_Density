@@ -1,6 +1,6 @@
 # Auxiliary tools (offline — not analytical core)
 
-Scripts in this folder support **offline metadata curation and maintenance**. They are **not** part of the Textural Density runtime pipeline. They do **not** change density formulas, metric definitions, or runtime lookup logic. They do **not** analyse audio, run FFT/STFT, or invoke SoundSpectrAnalyse.
+Scripts in this folder support **offline metadata curation and maintenance**. They are **not** part of the Textural Density runtime pipeline. They do **not** change density formulas, metric definitions, or runtime lookup logic. They do **not** analyse audio, run FFT/STFT, or invoke Spectral_Analyser.
 
 ## Instrument profile Excel importer
 

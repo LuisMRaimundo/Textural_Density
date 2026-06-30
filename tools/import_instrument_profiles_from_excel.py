@@ -883,7 +883,7 @@ def module_imports_are_safe() -> bool:
     forbidden = (
         "proc_audio",
         "spectral_analysis",
-        "SoundSpectrAnalyse",
+        "Spectral_Analyser",
         "soundSpectrAnalyse",
         "fft",
         "stft",
