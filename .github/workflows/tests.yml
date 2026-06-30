@@ -27,6 +27,20 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Legacy branding check
+        run: |
+          legacy_hits=$(
+            grep -r --include='*.md' --include='*.py' --include='*.toml' --include='*.yml' --include='*.yaml' \
+              -E 'Simultaneity Density|Densidade Vertical|\<SDA\>' . --exclude-dir=.git 2>/dev/null \
+              | grep -v 'tools/rename_docs_branding.py' || true
+          )
+          if [ -n "$legacy_hits" ]; then
+            echo "Legacy product names found outside tools/rename_docs_branding.py:"
+            echo "$legacy_hits"
+            exit 1
+          fi
+          echo "Legacy branding check passed."
+
       - name: Run tests
         run: pytest tests/ -q --tb=short --no-cov -m "not slow" -o addopts=
         working-directory: .

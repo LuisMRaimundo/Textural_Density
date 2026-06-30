@@ -325,6 +325,12 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ## Changelog
 
+### Branding cleanups (2026-06-30)
+
+- GUI window title uses `core.version.PRODUCT_DISPLAY_NAME` (`Textural Density`)
+- Default output folder is `~/Textural_Density_Output` (was `~/Densidade_Espectral_Output`; custom `output_directory` in saved config is unchanged)
+- CI rejects legacy product names (`Simultaneity Density`, `SDA`, `Densidade Vertical`) outside `tools/rename_docs_branding.py`
+
 ### Verification updates (2026-06-25) — PR #13, PR #14
 
 - **PR #13:** String musicological contract and source-audit battery (97 tests; `@pytest.mark.musicological`)

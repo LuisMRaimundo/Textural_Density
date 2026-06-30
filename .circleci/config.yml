@@ -57,6 +57,16 @@ jobs:
             test ! -f compile_metrics.py
             test ! -f density.py
             grep -q "Textural Density" README.md
+            legacy_hits=$(
+              grep -r --include='*.md' --include='*.py' --include='*.toml' --include='*.yml' --include='*.yaml' \
+                -E 'Simultaneity Density|Densidade Vertical|\<SDA\>' . --exclude-dir=.git 2>/dev/null \
+                | grep -v 'tools/rename_docs_branding.py' || true
+            )
+            if [ -n "$legacy_hits" ]; then
+              echo "Legacy product names found outside tools/rename_docs_branding.py:"
+              echo "$legacy_hits"
+              exit 1
+            fi
             echo "Repository safety check passed."
 
       - run:

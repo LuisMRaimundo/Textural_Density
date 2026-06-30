@@ -11,6 +11,7 @@ from tkinter import messagebox
 from typing import Any, Callable, Mapping
 
 from core.request import AnalysisRequest
+from core.version import PRODUCT_DISPLAY_NAME
 from gui.analysis_adapter import build_analysis_request
 from gui.types import GuiAnalysisInput
 from gui.widgets.action_bar import ActionBar
@@ -24,7 +25,7 @@ class DensityCalculatorGUI:
 
     def __init__(self, root: tk.Misc, callbacks: Mapping[str, Callable[..., Any]]) -> None:
         self.root = root
-        self.root.title("Integrated Density Calculator")
+        self.root.title(PRODUCT_DISPLAY_NAME)
         self.callbacks = callbacks
 
         ActionBar(root, callbacks)

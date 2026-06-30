@@ -31,8 +31,10 @@ COMPOSITE_HARMONIC_DAMPING = 0.15
 # CONFIGURAÇÕES GERAIS
 # ===================================================================
 
-# Default directory for saving output files
-DEFAULT_OUTPUT_DIRECTORY = os.path.join(os.path.expanduser("~"), "Densidade_Espectral_Output")
+# Default directory for saving output files (keep in sync with core.version.PRODUCT_REPO_SLUG + "_Output")
+DEFAULT_OUTPUT_DIRECTORY = os.path.join(
+    os.path.expanduser("~"), "Textural_Density_Output"
+)
 
 # Log level and format
 LOG_LEVEL = "INFO"
