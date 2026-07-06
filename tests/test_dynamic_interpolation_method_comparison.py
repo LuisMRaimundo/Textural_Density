@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOL = ROOT / "tools" / "compare_dynamic_interpolation_methods.py"
 REPORTS = ROOT / "reports"
 
-GPR_MODULES = ("violin", "viola", "cello", "double_bass", "flute", "clarinet", "oboe")
+GPR_MODULES = ("violin", "viola", "cello", "double_bass", "flute", "clarinet", "oboe", "bassoon")
 MIN_COMPLEX_TYPES = (
     "very_dense_chromatic",
     "sparse_aggregate",

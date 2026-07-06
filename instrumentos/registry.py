@@ -227,10 +227,22 @@ REGISTRY["fagote"] = _profile(
     "fagote",
     "Bassoon",
     "woodwinds",
-    sounding=(34, 72),
+    sounding=(34, 75),
     comfortable=(40, 65),
     brightness="dark",
+    status="literature_derived",
+    uncertainty="medium",
+    module_name="bassoon",
     supported=("legato", "staccato", "flutter_tongue"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/bassoon.py from IOWA+ORCH sustain CDM medians "
+        "(pp/mf/ff); not a full measured spectrum."
+    ),
+    warnings=(
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
+    ),
     aliases=("bassoon", "fagot"),
 )
 

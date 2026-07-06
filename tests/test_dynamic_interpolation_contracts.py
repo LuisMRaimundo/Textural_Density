@@ -33,6 +33,7 @@ GPR_MODULES = (
     "flute",
     "clarinet",
     "oboe",
+    "bassoon",
 )
 MODELLED_DYNAMICS = tuple(GPR_DYNAMIC_COORDINATES.keys())
 PRE_MP_DYNAMICS = tuple(d for d in MODELLED_DYNAMICS if d != "mp")

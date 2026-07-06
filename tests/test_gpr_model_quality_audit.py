@@ -23,6 +23,7 @@ GPR_MODULES = (
     "flute",
     "clarinet",
     "oboe",
+    "bassoon",
 )
 REQUIRED_COLUMNS = {
     "instrument",

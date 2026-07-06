@@ -260,7 +260,7 @@ class TestAliasPitchContract:
 
 
 class TestTableBackedSoundingPitchKeys:
-    @pytest.mark.parametrize("module_name", ["violin", "viola", "cello", "double_bass", "flute", "clarinet", "oboe"])
+    @pytest.mark.parametrize("module_name", ["violin", "viola", "cello", "double_bass", "flute", "clarinet", "oboe", "bassoon"])
     def test_table_span_matches_instrument_source_pitch_range(self, module_name: str):
         mod = __import__(f"instrumentos.{module_name}", fromlist=["spectral_data"])
         lo, hi = mod.INSTRUMENT_SOURCE.pitch_range

@@ -1,18 +1,19 @@
 # GPR model-quality diagnostic audit
 
-- Repository SHA: `8316fb0c303e45447c0dc06035225987cc9e2a87`
+- Repository SHA: `6254bec2c9de09db9aedd980dc64627734c8e432`
 - Classification: **PASS**
-- Instruments: 7
-- Source rows: 315
-- Convex-hull departures (pp–mf): **49**
-- Convex-hull departures (pp–mf–ff): **27**
+- Instruments: 8
+- Source rows: 357
+- Convex-hull departures (pp–mf): **58**
+- Convex-hull departures (pp–mf–ff): **35**
 - PCHIP available: True
-- REVIEW REQUIRED rows: 73
+- REVIEW REQUIRED rows: 88
 
 > Diagnostic only. Production GPR unchanged. Linear/quadratic/PCHIP are comparison references.
 
 ## Per-instrument summary
 
+- **bassoon**: 42 rows, hull departures=9 (21.4%), max |GPR−linear|=3.071
 - **cello**: 49 rows, hull departures=12 (24.5%), max |GPR−linear|=2.897
 - **clarinet**: 47 rows, hull departures=2 (4.3%), max |GPR−linear|=1.410
 - **double_bass**: 45 rows, hull departures=7 (15.6%), max |GPR−linear|=3.258
@@ -47,10 +48,12 @@
 ## Top 20 |GPR−linear|
 
 - double_bass A2 (MIDI 45, middle): pp=37.954 mp=54.323 mf=55.435 |Δlin|=3.258 |Δquad|=0.694 [OK] non-monotonic source anchors
+- bassoon B1 (MIDI 35, low): pp=67.335 mp=66.719 mf=70.608 |Δlin|=3.071 |Δquad|=0.165 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
 - cello D2 (MIDI 38, low): pp=55.891 mp=74.351 mf=76.641 |Δlin|=2.897 |Δquad|=0.704 [OK] non-monotonic source anchors
 - cello G2 (MIDI 43, low): pp=27.602 mp=29.130 mf=33.290 |Δlin|=2.738 |Δquad|=0.083 [OK] within expected diagnostic envelope
 - double_bass G1 (MIDI 31, low): pp=38.375 mp=61.854 mf=66.293 |Δlin|=2.541 |Δquad|=1.075 [OK] non-monotonic source anchors
 - cello D3 (MIDI 50, low): pp=34.827 mp=53.482 mf=56.424 |Δlin|=2.457 |Δquad|=0.842 [OK] non-monotonic source anchors
+- bassoon C2 (MIDI 36, low): pp=61.505 mp=60.509 mf=63.452 |Δlin|=2.456 |Δquad|=0.172 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull
 - double_bass C#3 (MIDI 49, middle): pp=45.548 mp=37.708 mf=37.697 |Δlin|=1.952 |Δquad|=0.460 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - double_bass F#1 (MIDI 30, low): pp=52.404 mp=70.341 mf=73.729 |Δlin|=1.943 |Δquad|=0.665 [OK] non-monotonic source anchors
 - double_bass F1 (MIDI 29, low): pp=68.343 mp=66.155 mf=67.912 |Δlin|=1.864 |Δquad|=0.216 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; non-monotonic source anchors
@@ -64,8 +67,6 @@
 - clarinet E3 (MIDI 52, low): pp=12.956 mp=36.373 mf=42.307 |Δlin|=1.404 |Δquad|=1.318 [OK] within expected diagnostic envelope
 - cello F#2 (MIDI 42, low): pp=36.935 mp=37.899 mf=40.087 |Δlin|=1.400 |Δquad|=0.059 [OK] within expected diagnostic envelope
 - cello A#3 (MIDI 58, middle): pp=28.585 mp=34.347 mf=34.464 |Δlin|=1.353 |Δquad|=0.194 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
-- cello G#2 (MIDI 44, low): pp=42.424 mp=49.673 mf=50.351 |Δlin|=1.304 |Δquad|=0.243 [OK] non-monotonic source anchors
-- double_bass D#4 (MIDI 63, high): pp=23.600 mp=17.048 mf=16.538 |Δlin|=1.256 |Δquad|=0.430 [OK] non-monotonic source anchors
 
 ## Top 20 |GPR−quadratic|
 
@@ -84,17 +85,19 @@
 - flute C4 (MIDI 60, low): pp=12.595 mp=23.539 mf=25.955 |Δlin|=0.924 |Δquad|=0.553 [OK] non-monotonic source anchors
 - clarinet F#3 (MIDI 54, low): pp=10.412 mp=25.980 mf=31.128 |Δlin|=0.031 |Δquad|=0.545 [OK] within expected diagnostic envelope
 - oboe F6 (MIDI 89, high): pp=4.947 mp=4.758 mf=4.201 |Δlin|=0.371 |Δquad|=0.530 [OK] non-monotonic source anchors
+- bassoon A4 (MIDI 69, high): pp=14.832 mp=8.450 mf=7.473 |Δlin|=0.863 |Δquad|=0.506 [OK] non-monotonic source anchors
 - double_bass F#4 (MIDI 66, high): pp=22.610 mp=15.450 mf=15.154 |Δlin|=1.569 |Δquad|=0.498 [OK] non-monotonic source anchors
 - cello B2 (MIDI 47, low): pp=42.673 mp=56.132 mf=58.516 |Δlin|=1.577 |Δquad|=0.497 [OK] non-monotonic source anchors
 - viola F6 (MIDI 89, high): pp=5.551 mp=5.569 mf=5.111 |Δlin|=0.349 |Δquad|=0.492 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; non-monotonic source anchors
 - viola G#5 (MIDI 80, high): pp=8.986 mp=9.480 mf=10.068 |Δlin|=0.317 |Δquad|=0.482 [OK] non-monotonic source anchors
-- viola D#6 (MIDI 87, high): pp=7.283 mp=7.025 mf=6.505 |Δlin|=0.325 |Δquad|=0.473 [OK] non-monotonic source anchors
 
 ## Top 20 |GPR−PCHIP|
 
 - clarinet E3 (MIDI 52, low): pp=12.956 mp=36.373 mf=42.307 |Δlin|=1.404 |Δquad|=1.318 [OK] within expected diagnostic envelope
 - clarinet D#3 (MIDI 51, low): pp=15.312 mp=39.920 mf=46.243 |Δlin|=1.410 |Δquad|=1.327 [OK] within expected diagnostic envelope
+- bassoon B1 (MIDI 35, low): pp=67.335 mp=66.719 mf=70.608 |Δlin|=3.071 |Δquad|=0.165 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
 - double_bass G1 (MIDI 31, low): pp=38.375 mp=61.854 mf=66.293 |Δlin|=2.541 |Δquad|=1.075 [OK] non-monotonic source anchors
+- bassoon C2 (MIDI 36, low): pp=61.505 mp=60.509 mf=63.452 |Δlin|=2.456 |Δquad|=0.172 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull
 - cello G2 (MIDI 43, low): pp=27.602 mp=29.130 mf=33.290 |Δlin|=2.738 |Δquad|=0.083 [OK] within expected diagnostic envelope
 - double_bass F1 (MIDI 29, low): pp=68.343 mp=66.155 mf=67.912 |Δlin|=1.864 |Δquad|=0.216 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; non-monotonic source anchors
 - double_bass F#1 (MIDI 30, low): pp=52.404 mp=70.341 mf=73.729 |Δlin|=1.943 |Δquad|=0.665 [OK] non-monotonic source anchors
@@ -110,18 +113,18 @@
 - double_bass C2 (MIDI 36, low): pp=42.869 mp=38.582 mf=39.525 |Δlin|=1.779 |Δquad|=0.275 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; non-monotonic source anchors
 - clarinet E4 (MIDI 64, low): pp=6.393 mp=13.386 mf=15.119 |Δlin|=0.449 |Δquad|=0.372 [OK] non-monotonic source anchors
 - cello F#2 (MIDI 42, low): pp=36.935 mp=37.899 mf=40.087 |Δlin|=1.400 |Δquad|=0.059 [OK] within expected diagnostic envelope
-- oboe C#4 (MIDI 61, low): pp=27.957 mp=18.391 mf=16.660 |Δlin|=1.093 |Δquad|=0.636 [OK] non-monotonic source anchors
-- cello D2 (MIDI 38, low): pp=55.891 mp=74.351 mf=76.641 |Δlin|=2.897 |Δquad|=0.704 [OK] non-monotonic source anchors
 
 ## Top 20 GPR std (mp)
 
 - double_bass A2 (MIDI 45, middle): pp=37.954 mp=54.323 mf=55.435 |Δlin|=3.258 |Δquad|=0.694 [OK] non-monotonic source anchors
 - cello G2 (MIDI 43, low): pp=27.602 mp=29.130 mf=33.290 |Δlin|=2.738 |Δquad|=0.083 [OK] within expected diagnostic envelope
+- bassoon B1 (MIDI 35, low): pp=67.335 mp=66.719 mf=70.608 |Δlin|=3.071 |Δquad|=0.165 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
 - double_bass G1 (MIDI 31, low): pp=38.375 mp=61.854 mf=66.293 |Δlin|=2.541 |Δquad|=1.075 [OK] non-monotonic source anchors
 - cello D2 (MIDI 38, low): pp=55.891 mp=74.351 mf=76.641 |Δlin|=2.897 |Δquad|=0.704 [OK] non-monotonic source anchors
 - clarinet D#3 (MIDI 51, low): pp=15.312 mp=39.920 mf=46.243 |Δlin|=1.410 |Δquad|=1.327 [OK] within expected diagnostic envelope
 - clarinet E3 (MIDI 52, low): pp=12.956 mp=36.373 mf=42.307 |Δlin|=1.404 |Δquad|=1.318 [OK] within expected diagnostic envelope
 - cello D3 (MIDI 50, low): pp=34.827 mp=53.482 mf=56.424 |Δlin|=2.457 |Δquad|=0.842 [OK] non-monotonic source anchors
+- bassoon C2 (MIDI 36, low): pp=61.505 mp=60.509 mf=63.452 |Δlin|=2.456 |Δquad|=0.172 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull
 - double_bass F#4 (MIDI 66, high): pp=22.610 mp=15.450 mf=15.154 |Δlin|=1.569 |Δquad|=0.498 [OK] non-monotonic source anchors
 - double_bass C#3 (MIDI 49, middle): pp=45.548 mp=37.708 mf=37.697 |Δlin|=1.952 |Δquad|=0.460 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - double_bass C2 (MIDI 36, low): pp=42.869 mp=38.582 mf=39.525 |Δlin|=1.779 |Δquad|=0.275 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; non-monotonic source anchors
@@ -130,11 +133,9 @@
 - double_bass F1 (MIDI 29, low): pp=68.343 mp=66.155 mf=67.912 |Δlin|=1.864 |Δquad|=0.216 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; non-monotonic source anchors
 - double_bass D#4 (MIDI 63, high): pp=23.600 mp=17.048 mf=16.538 |Δlin|=1.256 |Δquad|=0.430 [OK] non-monotonic source anchors
 - clarinet D3 (MIDI 50, low): pp=11.904 mp=30.942 mf=36.303 |Δlin|=0.738 |Δquad|=0.934 [OK] within expected diagnostic envelope
+- bassoon A4 (MIDI 69, high): pp=14.832 mp=8.450 mf=7.473 |Δlin|=0.863 |Δquad|=0.506 [OK] non-monotonic source anchors
 - double_bass G#4 (MIDI 68, high): pp=16.931 mp=11.711 mf=11.427 |Δlin|=1.092 |Δquad|=0.365 [OK] non-monotonic source anchors
 - cello B2 (MIDI 47, low): pp=42.673 mp=56.132 mf=58.516 |Δlin|=1.577 |Δquad|=0.497 [OK] non-monotonic source anchors
-- double_bass E4 (MIDI 64, high): pp=23.261 mp=18.547 mf=18.548 |Δlin|=1.179 |Δquad|=0.297 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
-- double_bass G4 (MIDI 67, high): pp=17.457 mp=12.681 mf=12.458 |Δlin|=1.026 |Δquad|=0.323 [OK] non-monotonic source anchors
-- cello F#2 (MIDI 42, low): pp=36.935 mp=37.899 mf=40.087 |Δlin|=1.400 |Δquad|=0.059 [OK] within expected diagnostic envelope
 
 ## Near pp
 
@@ -149,7 +150,11 @@
 - cello D#5 (MIDI 75, high): pp=13.026 mp=13.035 mf=13.103 |Δlin|=0.048 |Δquad|=0.194 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor; non-monotonic source anchors
 - double_bass D#3 (MIDI 51, middle): pp=38.369 mp=38.485 mf=38.854 |Δlin|=0.248 |Δquad|=0.111 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor
 - flute G#6 (MIDI 92, high): pp=3.117 mp=3.106 mf=2.734 |Δlin|=0.276 |Δquad|=0.384 [REVIEW REQUIRED] mp near pp anchor; non-monotonic source anchors
+- clarinet A6 (MIDI 93, high): pp=4.916 mp=4.908 mf=4.543 |Δlin|=0.272 |Δquad|=0.377 [REVIEW REQUIRED] mp near pp anchor; non-monotonic source anchors
 - oboe E4 (MIDI 64, low): pp=16.198 mp=16.239 mf=16.184 |Δlin|=0.051 |Δquad|=0.216 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; mp near mf anchor; non-monotonic source anchors
+- bassoon B1 (MIDI 35, low): pp=67.335 mp=66.719 mf=70.608 |Δlin|=3.071 |Δquad|=0.165 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
+- bassoon C#2 (MIDI 37, low): pp=44.632 mp=44.497 mf=45.328 |Δlin|=0.657 |Δquad|=0.104 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
+- bassoon A3 (MIDI 57, middle): pp=15.105 mp=15.219 mf=15.357 |Δlin|=0.075 |Δquad|=0.145 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor
 
 ## Near mf
 
@@ -187,6 +192,7 @@
 - double_bass C#4 (MIDI 61, high): pp=27.734 mp=26.831 mf=26.875 |Δlin|=0.259 |Δquad|=0.126 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - double_bass E4 (MIDI 64, high): pp=23.261 mp=18.547 mf=18.548 |Δlin|=1.179 |Δquad|=0.297 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - flute E5 (MIDI 76, middle): pp=6.600 mp=7.250 mf=7.322 |Δlin|=0.108 |Δquad|=0.179 [REVIEW REQUIRED] mp near mf anchor
+- clarinet A#6 (MIDI 94, high): pp=3.460 mp=3.900 mf=3.903 |Δlin|=0.107 |Δquad|=0.155 [REVIEW REQUIRED] mp near mf anchor
 - oboe A#3 (MIDI 58, low): pp=20.844 mp=21.191 mf=21.132 |Δlin|=0.131 |Δquad|=0.269 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 - oboe C4 (MIDI 60, low): pp=20.340 mp=18.847 mf=18.940 |Δlin|=0.443 |Δquad|=0.131 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - oboe D4 (MIDI 62, low): pp=18.022 mp=18.597 mf=18.680 |Δlin|=0.082 |Δquad|=0.217 [REVIEW REQUIRED] mp near mf anchor
@@ -194,6 +200,11 @@
 - oboe A5 (MIDI 81, middle): pp=5.734 mp=5.359 mf=5.359 |Δlin|=0.094 |Δquad|=0.140 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - oboe A#5 (MIDI 82, high): pp=5.015 mp=5.160 mf=5.188 |Δlin|=0.016 |Δquad|=0.175 [REVIEW REQUIRED] mp near mf anchor
 - oboe F#6 (MIDI 90, high): pp=5.032 mp=5.471 mf=5.475 |Δlin|=0.107 |Δquad|=0.151 [REVIEW REQUIRED] mp near mf anchor
+- bassoon A3 (MIDI 57, middle): pp=15.105 mp=15.219 mf=15.357 |Δlin|=0.075 |Δquad|=0.145 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor
+- bassoon C#4 (MIDI 61, middle): pp=9.397 mp=9.271 mf=9.331 |Δlin|=0.077 |Δquad|=0.145 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
+- bassoon E4 (MIDI 64, high): pp=9.516 mp=9.918 mf=9.968 |Δlin|=0.064 |Δquad|=0.082 [REVIEW REQUIRED] mp near mf anchor
+- bassoon G4 (MIDI 67, high): pp=13.695 mp=13.460 mf=13.581 |Δlin|=0.149 |Δquad|=0.127 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
+- bassoon G#4 (MIDI 68, high): pp=12.216 mp=13.905 mf=14.026 |Δlin|=0.332 |Δquad|=0.112 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 
 ## Outside pp–mf
 
@@ -225,20 +236,20 @@
 - **double_bass** and **cello** show the highest departure rates in low register rows.
 
 ### 2. Register concentration
-- Highest absolute departure count in **high** register band (24 rows).
+- Highest absolute departure count in **high** register band (28 rows).
 - Low-register string rows dominate convex-hull departures.
 
 ### 3. Non-monotonic source rows
-- Non-monotonic pp/mf/ff rows: **151** of 315.
-- Convex-hull departures overlapping non-monotonic rows: **31**.
+- Non-monotonic pp/mf/ff rows: **162** of 357.
+- Convex-hull departures overlapping non-monotonic rows: **34**.
 - Departures are **associated** with non-monotonic anchors but also occur when mf lies between pp and ff.
 
 ### 4. Anchor geometry / uncertainty
 - GPR fits only three anchors; high `gpr_std_mp` correlates with steep or non-monotonic local anchor geometry.
 
 ### 5. Reference closeness
-- Mean |GPR−linear|: 0.3384; mean |GPR−quadratic|: 0.2028.
-- Mean |GPR−PCHIP|: 0.3076.
+- Mean |GPR−linear|: 0.3422; mean |GPR−quadratic|: 0.1945.
+- Mean |GPR−PCHIP|: 0.3057.
 - GPR is often closest to **quadratic** on average; case-by-case variation is large.
 
 ### 6. PCHIP conservatism
@@ -250,7 +261,7 @@
 - Extreme overshoot/undershoot is reproducible and concentrated in low strings.
 
 ### 9. Near-anchor collapse
-- near_pp: 12; near_mf: 41.
+- near_pp: 16; near_mf: 47.
 - Few cases suggest practical anchor collapse; most mp values are distinct from pp and mf.
 
 ### 10. Future campaigns

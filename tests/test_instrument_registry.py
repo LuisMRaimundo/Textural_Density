@@ -55,7 +55,7 @@ class TestInstrumentRegistry:
         assert resolve_profile("glockenspiel").instrument_id == "metalofone"
 
     def test_dedicated_modules_for_literature_profiles(self):
-        for iid in ("flauta", "clarinete", "oboe", "violino", "viola", "violoncelo", "contrabaixo"):
+        for iid in ("flauta", "clarinete", "oboe", "fagote", "violino", "viola", "violoncelo", "contrabaixo"):
             profile = REGISTRY[iid]
             assert profile.module_name is not None
             mod = get_instrument_module(iid)
@@ -64,6 +64,7 @@ class TestInstrumentRegistry:
                 "flute",
                 "clarinet",
                 "oboe",
+                "bassoon",
                 "violin",
                 "viola",
                 "cello",

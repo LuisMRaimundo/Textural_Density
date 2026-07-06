@@ -39,6 +39,7 @@ GPR_MODULES = (
     "flute",
     "clarinet",
     "oboe",
+    "bassoon",
 )
 MODELLED_DYNAMICS = tuple(GPR_DYNAMIC_COORDINATES.keys())
 FLOAT_TOL = 1e-9

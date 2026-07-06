@@ -35,7 +35,7 @@ from tests.string_constants import STRING_INSTRUMENTS  # noqa: E402
 REPORTS = ROOT / "reports"
 PLOTS = REPORTS / "dynamic_interpolation_method_comparison_plots"
 
-GPR_MODULES = ("violin", "viola", "cello", "double_bass", "flute", "clarinet", "oboe")
+GPR_MODULES = ("violin", "viola", "cello", "double_bass", "flute", "clarinet", "oboe", "bassoon")
 STRING_REGISTRY = {
     "violin": ("violino", "violin"),
     "viola": ("viola",),

@@ -10,7 +10,7 @@ import pytest
 from instrumentos.registry import REGISTRY
 from tests.string_constants import STRING_INSTRUMENTS
 
-GPR_WIND_MODULES = ("flute", "oboe", "clarinet")
+GPR_WIND_MODULES = ("flute", "oboe", "clarinet", "bassoon")
 GPR_STRING_MODULES = ("violin", "viola", "cello", "double_bass")
 
 

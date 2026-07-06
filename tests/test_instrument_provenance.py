@@ -12,6 +12,7 @@ ACOUSTIC_MODULES = (
     "flute",
     "clarinet",
     "oboe",
+    "bassoon",
     "violin",
     "violin_sordina",
     "violin_sul_ponticello",

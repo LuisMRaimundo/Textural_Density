@@ -30,6 +30,7 @@ _GPR_MODULES = frozenset(
         "flute",
         "oboe",
         "clarinet",
+        "bassoon",
         "violin",
         "violin_sordina",
         "violin_sul_ponticello",

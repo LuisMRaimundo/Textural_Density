@@ -40,6 +40,7 @@ GPR_MODULES = (
     "flute",
     "clarinet",
     "oboe",
+    "bassoon",
 )
 MODELLED_DYNAMICS = tuple(GPR_DYNAMIC_COORDINATES.keys())
 ANCHOR_X = np.array([GPR_DYNAMIC_COORDINATES[d] for d in SOURCE_ANCHOR_DYNAMICS], dtype=float)
@@ -55,6 +56,7 @@ INSTRUMENT_FAMILY = {
     "flute": "woodwinds",
     "clarinet": "woodwinds",
     "oboe": "woodwinds",
+    "bassoon": "woodwinds",
 }
 
 try:

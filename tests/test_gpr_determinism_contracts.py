@@ -34,6 +34,7 @@ GPR_MODULES = (
     "flute",
     "clarinet",
     "oboe",
+    "bassoon",
 )
 MODELLED_DYNAMICS = tuple(GPR_DYNAMIC_COORDINATES.keys())
 CAMPAIGN_DYNAMICS = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
