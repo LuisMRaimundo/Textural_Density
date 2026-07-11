@@ -18,6 +18,7 @@ from instrumentos.gpr_dynamic_interpolation import (
     GPR_DYNAMIC_COORDINATES,
     GPR_RANDOM_STATE,
     SOURCE_ANCHOR_DYNAMICS,
+    classify_dynamic_support,
     create_dynamic_gpr,
     predict_intermediate_dynamics_gpr,
 )
@@ -271,6 +272,11 @@ class TestPreExistingGprStability:
             current = mod.predict_intermediate_dynamics([pitch], [pp], [mf], [ff])
             legacy = _legacy_gpr_without_mp([pp], [mf], [ff])
             for dyn in PRE_MP_DYNAMICS:
+                # 5.1.0-strict-symbolic: out-of-support tails (below pp / above ff)
+                # now use saturating extrapolation and legitimately differ from the
+                # raw GPR trend. Interior (in-support) predictions are unchanged.
+                if classify_dynamic_support(dyn)[0] != "interior":
+                    continue
                 assert float(current[dyn][0]) == pytest.approx(
                     float(legacy[dyn][0]), rel=0, abs=FLOAT_TOL
                 )

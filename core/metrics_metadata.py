@@ -27,6 +27,7 @@ from core.defaults import (
 )
 from core.hash_utils import config_hash, input_hash_from_dict
 from core.models import AnalysisConfig, MetricResult, VerticalSlice
+from instrumentos.gpr_dynamic_interpolation import MEASURED_SUPPORT, tail_saturation_info
 from instrumentos.registry import resolve_profile
 from instrumentos.violin_sordina_diagnostics import (
     AUDIT_FLAG_CRITICAL,
@@ -175,6 +176,16 @@ def collect_slice_warnings(
                 "mapped to 'mf' for instrument density."
             )
         profile = resolve_profile(event.instrument_name)
+        if profile is not None and profile.module_name:
+            tail = tail_saturation_info(dyn)
+            if tail is not None:
+                warnings.append(
+                    f"Instrument '{event.instrument_name}' dynamic "
+                    f"'{tail['requested_level']}' at event {event.event_id} is outside "
+                    f"measured support {tuple(MEASURED_SUPPORT)}; boundary "
+                    f"'{tail['boundary_level']}', ratio {tail['ratio']}^{tail['steps']}. "
+                    "Dynamic level outside measured support; saturated extrapolation applied."
+                )
         if profile is None:
             warnings.append(
                 f"Instrument '{event.instrument_name}' has no registry profile; "

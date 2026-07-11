@@ -6,7 +6,7 @@
 **License:** [MIT](LICENSE)  
 **Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)
 
-> **Versioning:** Package release **1.1.4** (`pyproject.toml`) is separate from the methodology phase **5.0.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`; earlier phases 3.0.0 / 4.0.0). See [docs/VERSIONING.md](docs/VERSIONING.md).
+> **Versioning:** Package release **1.1.4** (`pyproject.toml`) is separate from the methodology phase **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`; earlier phases 3.0.0 / 4.0.0 / 5.0.0). See [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -19,6 +19,8 @@
 **Removed in 4.0.0-strict-symbolic:** Combination-tone / resultant-tone analysis (`calculate_combination_tones` and related keys). Analytical inputs containing those keys raise validation errors. `verified_by_tests` for many constructs; full `corpus_replicated` status requires a representative benchmark corpus. External expert ratings are **optional** empirical extensions, not required for the score-only line. See [`docs/revised_path_to_90_score_only.md`](docs/revised_path_to_90_score_only.md) and [`docs/score_only_upgrade_rubric.md`](docs/score_only_upgrade_rubric.md) (v2.0.0).
 
 **Changed in 5.0.0-strict-symbolic:** Composite vertical density is now **extensive** — pitch-structure density is built from the raw accumulating pairwise interval sum, so adding a distinct note never decreases `density.total`. The redundant registral-span damping was removed from the aggregate (registral span stays a reported subindex), and `MAX_DENS_GLOBAL` was recalibrated. Breaking numeric change; see the [Changelog](#changelog).
+
+**Changed in 5.1.0-strict-symbolic:** Instrument-density dynamic tails now **saturate** instead of continuing the GPR trend. Levels outside the measured `pp`/`mf`/`ff` support (`ppp`/`pppp` below `pp`; `fff`/`ffff` above `ff`) use bounded log-domain ratios (`DYN_TAIL_RATIO_SOFT=0.85`, `DYN_TAIL_RATIO_LOUD=1.10`), guaranteeing positive, monotone one-player density and fixing negative soft-tail weights and non-monotone loud-tail mass. Interior predictions unchanged; numeric change only for tail-dynamic cases. See the [Changelog](#changelog).
 
 ---
 
@@ -326,6 +328,26 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 ---
 
 ## Changelog
+
+### Version 5.1.0-strict-symbolic (2026-07-11)
+
+**Numeric change for tail-dynamic cases only.** Fixes exaggerated dynamic-tail extrapolation in instrument density lookup. Package release remains **1.1.4**; bumps `METRIC_SCHEMA_VERSION` to `5.1.0-strict-symbolic`.
+
+- **Root cause.** The GPR dynamic→amplitude model, fitted on the measured `pp`/`mf`/`ff` anchors, previously continued its trend **unchanged** into the unmeasured tails. This overshot **downward** at the soft end (negative one-player density, e.g. `clarinete` C4 at `pppp` ≈ −2.36, which drove `DYNGRAD.wedge` `harmonic_ratio` negative) and **bent over** at the loud end (non-monotone dip, e.g. the `flauta` C4–E4–G4 triad had sonic mass 62.32 at `ff` but 59.95 at `ffff`).
+- **Fix (saturating log-domain tails).** Out-of-support levels now saturate multiplicatively from the nearest measured boundary: soft tail `A = A_pp · DYN_TAIL_RATIO_SOFT^k`, loud tail `A = A_ff · DYN_TAIL_RATIO_LOUD^k`, with `DYN_TAIL_RATIO_SOFT = 0.85` and `DYN_TAIL_RATIO_LOUD = 1.10` in `config.py`. Positive and monotone by algebra (no clamp); `DENSITY_FLOOR` kept only as an unreachable safety assert. Measured support is exposed via `instrumentos.gpr_dynamic_interpolation.MEASURED_SUPPORT`. **Interior (in-support) predictions are unchanged** to within 1e-9.
+- **Visible metadata.** When a tail rule fires, a per-event `metric_metadata` warning records the instrument, requested level, boundary level, and ratio (never silent).
+- **New tests:** `tests/test_dynamic_tail_saturation.py` — global positivity + tail/boundary monotonicity across every module-backed instrument × three pitches × all `DYNAMIC_LEVELS`; bounded per-step ratios and soft-tail geometric shrink; anti-overshoot vs. raw GPR on the incident cases; interior golden-pin (`tests/fixtures/dynamic_tail_interior_golden.json`); regressions (`DYNGRAD.wedge` `harmonic_ratio` ∈ [0,1]; flute triad mass(`ffff`) ≥ mass(`ff`)); warning presence/absence.
+- **Regenerated golden baselines** (schema-version metadata refresh; interior numerics unchanged): `tests/snapshots/metadata_outputs/synthetic_triad.json`, `replication/outputs_frozen/json/synthetic_triad.json`, `replication/tables/thesis_symbolic_density_summary.{csv,md}`, `benchmarks/expected_outputs/excerpt_001..005.json`, plus the regenerated characterization battery under `results/characterization/` (DYN/DYNGRAD now monotone; tail warnings recorded). GPR-stability contract tests (`tests/test_dynamic_interpolation_contracts.py`, `tests/test_gpr_determinism_contracts.py`) now assert interior-only equality vs. raw GPR (tails intentionally saturate).
+- **Docs:** `docs/MATHEMATICAL_MANUAL.md` §F.1 (interior GPR vs. saturating tails; both config ratios; both motivating incidents) and §Q (dynamic-monotonicity + tail-saturation acceptance rows); `docs/VERSIONING.md` methodology table.
+
+### Documentation & probes (2026-07-11) — no schema bump
+
+Documentation-only reconciliation on `5.0.0-strict-symbolic`; **numeric outputs unchanged**, `METRIC_SCHEMA_VERSION` not bumped.
+
+- **Monotonicity semantics formalised** (`docs/MATHEMATICAL_MANUAL.md` §H): the raw interval sum `S` is a hard non-decreasing guarantee under distinct-note addition; `pitch_structure`/`composite` are **quasi-monotone** — monotone in `S` and sonic mass, modulated by the entropy factor and the bounded (≤ 15 %) harmonic damping, which are composition-dependent and may fall on fusion-increasing (e.g. octave) additions. A small `pitch_structure` decrease under octave doubling is documented as **intended** (fusion vs. crowding); the composite can decrease only when the added note carries negligible mass while sharply raising harmonic fusion.
+- **Near-unison floor documentation reconciled** (`docs/MATHEMATICAL_MANUAL.md` §B): the core distinct-bin path (`core/pitch_structure.py::calculate_interval_density_from_distinct_midis`) applies **no minimum-interval step**; sub-cent intervals are treated as real, and float-noise unisons are absorbed upstream by the exact-MIDI aggregation tolerance (`1e-6`). The legacy `0.25`-semitone floor is marked **legacy-path-only** (`densidade_intervalar.calculate_interval_density`, unreachable from `core.calculate_metrics`; used by calibration/tooling/tests).
+- **New tests:** `tests/test_near_unison_semantics.py` (sub-cent interval → no floor, exact `S`; exact unison → one bin, `S=0`, `PSD=0`; below-tolerance offset → merges to one bin).
+- **Adversarial probes added** (`benchmarks/characterization/battery_cases.py`, category `MONO`): octave-related and perfect-twelfth additions at `pppp` (minimal mass, maximal fusion shift) plus the far-bass `E1` regression; the runner reports OK/DECREASED with the `S`/harm/entropy/mass/PSD/composite deltas and never aborts.
 
 ### Version 5.0.0-strict-symbolic (2026-07-11)
 

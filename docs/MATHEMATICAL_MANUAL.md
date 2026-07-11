@@ -91,7 +91,7 @@ $$
 
 ### B. Interval density (pairwise decay)
 
-**Module:** `densidade_intervalar.py` — `modified_exponential_decay`, `calculate_interval_density`.
+**Modules:** `core/pitch_structure.py` — `calculate_interval_density_from_distinct_midis` (the **core distinct-bin path** reached from `core.calculate_metrics`); `densidade_intervalar.py` — `modified_exponential_decay`, `calculate_interval_density` (**legacy path**, see minimum-step note below).
 
 **Microtonal distance** for a pair $(i,j)$:
 
@@ -99,7 +99,9 @@ $$
 \Delta_{\mathrm{st}}(i,j) = |m_i - m_j|, \qquad \delta(i,j) = 2 \cdot \Delta_{\mathrm{st}}(i,j).
 $$
 
-(If two *different* note strings yield $\Delta_{\mathrm{st}} < 0.01$ semitones due to float noise, the code may force a minimum step of $0.25$ semitones before computing $\delta$.)
+**No minimum-interval step on the core path.** The core distinct-bin function applies **no floor**: sub-cent intervals are treated as real distances, so $\delta$ is computed directly from $\Delta_{\mathrm{st}}$ for every distinct-bin pair (e.g. $[C4, C4{+}0.5c]$ gives $\Delta_{\mathrm{st}} = 0.005$ and $\phi = e^{-\lambda \cdot 2 \cdot 0.005}$, unclamped). Genuine float-noise "unisons" cannot form a pair at all: they are absorbed **upstream** by the exact-MIDI pitch aggregation (`core/pitch_aggregation.py`, tolerance $10^{-6}$; §H), which merges pitches within tolerance into a single bin before any pairwise sum, so duplicate pitches never contribute an interval.
+
+> **Legacy-path-only minimum step (0.25 st).** The legacy `densidade_intervalar.calculate_interval_density` still contains a guard that, for two *different* note strings whose $\Delta_{\mathrm{st}} < 0.01$ semitones, forces $\Delta_{\mathrm{st}} \leftarrow \max(\Delta_{\mathrm{st}}, 0.25)$ before computing $\delta$. This floor is **not reachable from `core.calculate_metrics`** — the pipeline uses the distinct-bin path above. The legacy function is invoked only by $\lambda$-calibration internals, offline tooling (`tools/refresh_regression_fixtures.py`), `validation/verification.py`, and unit tests. The paragraph is retained (not deleted) because that function and its floor still exist and are exercised by those non-core call sites; deleting the note would leave their behaviour undocumented.
 
 **Decay (unison = strongest contribution):**
 
@@ -194,17 +196,29 @@ Committed CDM tables store **source-anchor dynamics** only: `pp`, `mf`, `ff`. Al
 | `mf` | source anchor |
 | `f` | modelled (GPR) |
 | `ff` | source anchor |
-| `pppp`, `ppp`, `fff`, `ffff` | modelled / extrapolated (GPR) |
+| `p`, `mp`, `f` | **interior** modelled (GPR **inside** measured support) |
+| `pppp`, `ppp`, `fff`, `ffff` | **tail** modelled (saturating log-domain extension **outside** measured support) |
 
-**Production method:** Gaussian-process regression with Matérn kernel fitted on $(x_{\mathrm{pp}}, d_{\mathrm{pp}})$, $(x_{\mathrm{mf}}, d_{\mathrm{mf}})$, $(x_{\mathrm{ff}}, d_{\mathrm{ff}})$ at fixed ordinal coordinates. `GPR_RANDOM_STATE = 0` makes the estimator deterministic by construction; output does not depend on global NumPy RNG state or event order. This is numerical repeatability — **not** measured acoustic data for intermediate dynamics and **not** perceptual validation.
+**Measured support.** For every GPR module the committed table is measured at `pp`, `mf`, `ff` only; this triple is the module's `measured_support` (exposed by `instrumentos.gpr_dynamic_interpolation.MEASURED_SUPPORT`). The softest measured level is `pp`, the loudest `ff`. Every other `DYNAMIC_LEVELS` entry is a model output: **interior** levels (`p`, `mp`, `f`, ordinal coordinates in $[3,7]$) are GPR interpolations; the **tails** (`ppp`, `pppp` below `pp`; `fff`, `ffff` above `ff`) are *not* measured and are *not* continued as GPR trend.
 
-For a requested modelled dynamic $d \in \{p, mp, f, \ldots\}$ at pitch with anchors $(d_{\mathrm{pp}}, d_{\mathrm{mf}}, d_{\mathrm{ff}})$:
+**Production method (interior).** Gaussian-process regression with Matérn kernel fitted on $(x_{\mathrm{pp}}, d_{\mathrm{pp}})$, $(x_{\mathrm{mf}}, d_{\mathrm{mf}})$, $(x_{\mathrm{ff}}, d_{\mathrm{ff}})$ at fixed ordinal coordinates. `GPR_RANDOM_STATE = 0` makes the estimator deterministic by construction; output does not depend on global NumPy RNG state or event order. This is numerical repeatability — **not** measured acoustic data for intermediate dynamics and **not** perceptual validation.
+
+For an interior modelled dynamic $d \in \{p, mp, f\}$ at pitch with anchors $(d_{\mathrm{pp}}, d_{\mathrm{mf}}, d_{\mathrm{ff}})$:
 
 $$
 \hat{d}_d = \mathrm{GPR}(x_d \mid \{(x_{\mathrm{pp}}, d_{\mathrm{pp}}), (x_{\mathrm{mf}}, d_{\mathrm{mf}}), (x_{\mathrm{ff}}, d_{\mathrm{ff}})\}),
 $$
 
 where $x_d$ is the ordinal coordinate for dynamic $d$. `mp` is **not** aliased to `mf` and is **not** a table column.
+
+**Saturating tail extrapolation (5.1.0-strict-symbolic).** Before this change the GPR trend was extrapolated *unchanged* into the unmeasured tails. Two failure modes resulted: (i) the soft trend overshot **downward**, producing *negative* one-player densities (e.g. `clarinete` C4 at `pppp` $\approx -2.36$, which drove `harmonic_ratio` negative in the `DYNGRAD.wedge` case); and (ii) the loud trend *bent over*, producing a **non-monotone** dip (e.g. the `flauta` C4–E4–G4 triad had sonic mass $62.32$ at `ff` but $59.95$ at `ffff`). Physically, players compress at the dynamic extremes — adjacent-marking differences shrink at `pp/ppp/pppp` and `fff/ffff` — and amplitude is monotone non-decreasing in dynamic level. This is encoded by a saturating, log-domain (multiplicative) rule anchored at the nearest measured boundary $A_b$. For a request $k$ steps below `pp` (soft tail) or $k$ steps above `ff` (loud tail):
+
+$$
+d_{\mathrm{soft}}(k) = d_{\mathrm{pp}}\, r_{\mathrm{soft}}^{\,k}, \qquad
+d_{\mathrm{loud}}(k) = d_{\mathrm{ff}}\, r_{\mathrm{loud}}^{\,k},
+$$
+
+with $r_{\mathrm{soft}} = $ `DYN_TAIL_RATIO_SOFT` $= 0.85$ ($\approx -1.4$ dB/step) and $r_{\mathrm{loud}} = $ `DYN_TAIL_RATIO_LOUD` $= 1.10$ ($\approx +0.8$ dB/step), both in `config.py`. Because $0 < r_{\mathrm{soft}} < 1 \le r_{\mathrm{loud}}$ and $d_{\mathrm{pp}}, d_{\mathrm{ff}} > 0$, the construction is **strictly positive** and **monotone** by algebra (soft tail rises toward `pp`; loud tail rises away from `ff`), with the soft-tail differences shrinking geometrically — no clamp is used. `config.DENSITY_FLOOR` is retained only as an unreachable safety assert, not as the positivity mechanism. When a tail rule fires, a per-event warning (`"…outside measured support…; saturated extrapolation applied"`) records the instrument, requested level, boundary level, and ratio — visible, never silent. Interior (in-support) predictions are **unchanged** to within $10^{-9}$. Note that a few source tables are themselves non-monotone *inside* support (e.g. `flauta` C4 has `mf` > `ff`); the spec deliberately leaves measured interior values untouched, so full `pppp → ffff` monotonicity holds except for such measured interior humps.
 
 **Diagnostic references (not production):** piecewise linear, PCHIP, and quadratic anchor interpolators appear only in audit tools (`tools/audit_gpr_model_quality.py`, `tools/compare_dynamic_interpolation_methods.py`). PR #24 compared methods on 357 source rows (8 GPR modules) and 340 string scenarios; production GPR was unchanged; linear and PCHIP were not adopted. Local method sensitivity is highest in low-register strings at source-row level; scenario-level `density.instrument` showed **0** high/extreme cases in the tested aggregate battery.
 
@@ -260,6 +274,13 @@ $$
 Optionally apply $\log_{10}(1 + x)$ if `USE_LOG_COMPRESSION`. The mass channel $\sqrt{M_{\mathrm{sonic}}}$ additionally lets a register-isolated note (e.g. a far-below bass) raise the total. Because $S$ is on a larger scale than the previous mean-per-pair term, `MAX_DENS_GLOBAL` ($D_{\max}$) was recalibrated in 5.0.0-strict-symbolic (median-matched against `benchmarks/expected_outputs`; see `config.py`).
 
 > **Removed:** mean-per-pair normalisation $D_{\mathrm{int}}^{\mathrm{norm}}$ as the aggregate's interval term (replaced by the raw sum $S$); redundant registral-span damping $1/(1+A_{\mathrm{st}}/12)$ in the composite product; earlier `D_{\mathrm{ref}} = D_{\mathrm{pond}}/A_{\mathrm{st}}` with zero-span exemption and cohesion factor $10/(1+A_{\mathrm{st}})$. The reported compactness axis $D_{\mathrm{int}}^{\mathrm{norm}}$ (`density.interval`) is unchanged and remains **intensive** (falls with spread).
+
+**Monotonicity semantics (5.0.0-strict-symbolic).** The three quantities have distinct guarantees:
+
+- **Raw interval sum $S$ — hard guarantee.** $S = \sum_{i<j} e^{-\lambda\delta_{ij}}$ is **non-decreasing** under the addition of a distinct pitch bin: a new bin only adds non-negative pairwise terms and never removes existing ones. This is an exact, composition-independent property.
+- **Pitch-structure density $D_{\mathrm{pitch}}$ and composite $D_{\mathrm{total}}$ — quasi-monotone.** Both are monotone in $S$ and (for the composite) in sonic mass $M_{\mathrm{sonic}}$, but each is *modulated* by two composition-dependent factors: the entropy factor $\bigl(1 + \ln(1+H)\bigr)$ and the bounded harmonic damping $\bigl(1 - 0.15\cdot\mathrm{harmonicRatio}\bigr)$. Both factors are recomputed over the new bin set, so either can **fall** when the added note increases pitch fusion — most notably an **octave-related** addition, which raises the harmonic ratio (more energy in octave multiples of the lowest pitch) and can also flatten/redistribute the spectral-energy entropy. Consequently $D_{\mathrm{pitch}}$ (and, in the limiting case below, $D_{\mathrm{total}}$) can show a small decrease even though $S$ rose.
+- **A small $D_{\mathrm{pitch}}$ decrease under octave doubling is intended behaviour** — it encodes the *fusion vs. crowding* trade-off: an octave-related pitch adds little textural friction (it fuses into the harmonic series) relative to a dissonant addition at the same $S$. The harmonic damping is capped at 15 %, so the effect is bounded.
+- **Composite decrease is possible only in one narrow regime:** when the added note contributes **negligible mass** (e.g. a `pppp` doubling, so $\sqrt{M_{\mathrm{sonic}}}$ barely moves) while **sharply raising harmonic fusion** (so the damping factor drops enough to overcome the rise in $S$). When the addition carries meaningful mass — including a register-isolated bass — the $\sqrt{M_{\mathrm{sonic}}}$ channel dominates and the composite rises. Adversarial probes for this regime live in `benchmarks/characterization/battery_cases.py` (category `MONO`) and report OK/DECREASED with the $S$/harm/entropy/mass/$D_{\mathrm{pitch}}$/composite deltas; they never abort the run.
 
 **Absolute density** (reference, unchanged):
 
@@ -460,7 +481,8 @@ These are **implementation correctness checks**, not empirical validation:
 | Extensive composite (5.0.0) | Adding a distinct note does not decrease composite vertical density (`density.total`) or `pitch_structure`; register-isolated bass never lowers the total (`tests/test_extensive_density_monotonic.py`) |
 | Player mass | Orchestral mass increases linearly with Qty; pressure-equivalent instrument density scales as RSS; interval/pitch-structure unchanged |
 | Qty vs pitch structure | Qty does not increase pitch polyphony, interval pairs, or spectral entropy for unison doublings |
-| Dynamic monotonicity | Sonic mass increases from `pp` to `ff` at fixed pitch (via module lookup, applied once) |
+| Dynamic monotonicity | One-player density is positive and non-decreasing across `pppp → ffff` at fixed pitch (interior GPR + saturating tails, §F.1); the only permitted decreases are measured interior humps left untouched by design |
+| Tail saturation | Out-of-support tails use bounded log-domain ratios ($r_{\mathrm{soft}}=0.85$, $r_{\mathrm{loud}}=1.10$); soft-tail differences shrink geometrically; a per-event saturation warning is attached (§F.1) |
 | Row-splitting | One row Qty=N ≡ N identical rows Qty=1 for mass and pressure-equivalent density |
 | Duplicate events | Duplicated pitch rows increase player/event counts; pitch structure uses aggregated bins |
 
@@ -618,4 +640,4 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 
 For architecture and output JSON keys, see [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md). For upgrading existing scripts, see [MIGRATION.md](MIGRATION.md). For package vs methodology versions, see [VERSIONING.md](VERSIONING.md). For function signatures, see [API.md](API.md).
 
-*Last updated: 2026-06-25 (dynamic interpolation §F.1; MusicXML sounding pitch §P; package 1.1.4).*
+*Last updated: 2026-07-11 (5.1.0-strict-symbolic: saturating dynamic-tail extrapolation §F.1; MusicXML sounding pitch §P; package 1.1.4).*

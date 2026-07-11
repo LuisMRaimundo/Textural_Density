@@ -4,10 +4,10 @@
   "synthetic_fixture": true,
   "score_only_mode": true,
   "software_version": "1.1.4",
-  "metric_schema_version": "5.0.0-strict-symbolic",
-  "config_hash": "dee1e46138467ff3d2be05839f3dc8a22366270038464543daadc4a1865867e5",
+  "metric_schema_version": "5.1.0-strict-symbolic",
+  "config_hash": "28befaebd84264a1eca83123a9c10a0bb99b899892d49cbb8c10a0eea0a3d375",
   "input_hash": "12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8",
-  "timestamp_utc": "2026-07-11T15:51:16.156732+00:00",
+  "timestamp_utc": "2026-07-11T22:49:06.484910+00:00",
   "density": {
     "interval": 0.2137588382139519,
     "instrument": 34.500337379511365,
@@ -323,9 +323,9 @@
   },
   "metric_metadata": {
     "score_only_mode": true,
-    "metric_schema_version": "5.0.0-strict-symbolic",
+    "metric_schema_version": "5.1.0-strict-symbolic",
     "validation_status": "verified_only",
-    "config_hash": "dee1e46138467ff3d2be05839f3dc8a22366270038464543daadc4a1865867e5",
+    "config_hash": "28befaebd84264a1eca83123a9c10a0bb99b899892d49cbb8c10a0eea0a3d375",
     "metrics": {
       "density.interval": {
         "name": "density.interval",

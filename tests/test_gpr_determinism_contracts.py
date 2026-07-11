@@ -20,6 +20,7 @@ from instrumentos.gpr_dynamic_interpolation import (
     GPR_DYNAMIC_COORDINATES,
     GPR_RANDOM_STATE,
     SOURCE_ANCHOR_DYNAMICS,
+    classify_dynamic_support,
     create_dynamic_gpr,
     predict_intermediate_dynamics_gpr,
 )
@@ -294,4 +295,8 @@ print(json.dumps(val))
         gpr.fit(existing, y)
         ref = gpr.predict(all_levels)
         for idx, dynamic in enumerate(MODELLED_DYNAMICS):
+            # 5.1.0-strict-symbolic: only interior (in-support) predictions match
+            # the raw GPR reference; out-of-support tails now saturate by design.
+            if classify_dynamic_support(dynamic)[0] != "interior":
+                continue
             assert float(preds[dynamic][0]) == pytest.approx(float(ref[idx]), rel=0, abs=FLOAT_TOL)

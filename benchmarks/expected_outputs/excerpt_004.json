@@ -346,7 +346,7 @@
       "Where instrument modules exist, density uses externally sourced sparse acoustic amplitude tables (GPR interpolation), not live audio analysis.",
       "This analysis uses score/information input only \u2014 no audio waveforms were analysed at runtime."
     ],
-    "metric_schema_version": "5.0.0-strict-symbolic",
+    "metric_schema_version": "5.1.0-strict-symbolic",
     "orchestral_mass.assumptions": [
       "Dynamic-to-weight mapping is symbolic dynamic weighting for score analysis.",
       "Instrument density component uses externally sourced acoustic metadata where GPR modules exist."

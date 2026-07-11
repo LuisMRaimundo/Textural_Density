@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import Any
 
-METRIC_SCHEMA_VERSION = "5.0.0-strict-symbolic"
+METRIC_SCHEMA_VERSION = "5.1.0-strict-symbolic"
 
 RESEARCH_ANALYSIS_DEFAULTS: dict[str, Any] = {
     "weight_factor": 0.5,

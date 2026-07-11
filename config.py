@@ -20,6 +20,35 @@ from typing import Any, Dict, List, Tuple
 MAX_DENS_GLOBAL = 575.0
 USE_LOG_COMPRESSION = True
 
+# -------------------------------------------------------------------
+# Dynamic-tail saturation (5.1.0-strict-symbolic)
+# -------------------------------------------------------------------
+# The instrument GPR dynamic->amplitude model is fitted on the measured source
+# anchors (pp, mf, ff). Levels outside that measured support (soft tail:
+# ppp/pppp below pp; loud tail: fff/ffff above ff) are NOT continued as raw GPR
+# trend — that overshoots downward at the soft end (producing negative pppp
+# weights, e.g. clarinet C4) and bends over at the loud end (producing a
+# non-monotone ffff mass dip, e.g. flute C4/E4/G4 triad).
+#
+# Instead, tails saturate multiplicatively in the amplitude (log) domain from
+# the nearest measured boundary value A_b:
+#     soft tail:  A = A_b * DYN_TAIL_RATIO_SOFT ** k   (k steps below pp)
+#     loud tail:  A = A_b * DYN_TAIL_RATIO_LOUD ** k   (k steps above ff)
+# Physical justification: players compress at the dynamic extremes — adjacent
+# marking differences shrink at pp/ppp/pppp and at fff/ffff — and there is no
+# acoustic measurement support in the tails. This construction is strictly
+# positive and monotone by algebra (0 < ratio_soft < 1; ratio_loud >= 1), so
+# properties 1-3 (positivity, monotonicity, tail compression) hold without any
+# clamp. Keep these in config (do not hardcode inside the interpolation path).
+DYN_TAIL_RATIO_SOFT = 0.85  # ~-1.4 dB per step below pp (almost-infimous soft steps)
+DYN_TAIL_RATIO_LOUD = 1.10  # ~+0.8 dB per step above ff (gentle loud saturation)
+
+# Safety floor for instrument density. This is an UNREACHABLE assert only: the
+# saturating-tail construction above is already strictly positive. It exists so
+# a future regression that reintroduces negative extrapolation fails loudly
+# rather than silently. It is not the positivity mechanism.
+DENSITY_FLOOR = 1e-9
+
 # Register bands for registral-density subindex (MIDI inclusive lower, exclusive upper).
 # Configurable modelling assumption — not a universal acoustic truth.
 DEFAULT_REGISTER_BANDS: dict[str, tuple[int, int]] = {

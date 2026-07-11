@@ -1,6 +1,6 @@
 {
   "score_only_mode": true,
-  "metric_schema_version": "5.0.0-strict-symbolic",
+  "metric_schema_version": "5.1.0-strict-symbolic",
   "density.interval.source_type": "score_derived",
   "density.instrument.source_type": "external_acoustic_metadata",
   "density.instrument.validation_status": "partially_calibrated",
