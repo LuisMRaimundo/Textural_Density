@@ -36,9 +36,10 @@ These describe **scientific scope**, not Python package semver:
 | Label | Meaning | Code constant |
 |-------|---------|---------------|
 | `3.0.0-strict-symbolic` | Removed Stevens' Law, psychoacoustic paths, perceptual interval weighting | historical |
-| `4.0.0-strict-symbolic` | Removed combination-tone / resultant-tone analysis | `METRIC_SCHEMA_VERSION` in `core/defaults.py` |
+| `4.0.0-strict-symbolic` | Removed combination-tone / resultant-tone analysis | historical |
+| `5.0.0-strict-symbolic` | Extensive composite vertical density: pitch-structure aggregate built from the raw accumulating pairwise interval sum (non-decreasing on distinct-note addition); redundant registral-span damping removed from the aggregate; `MAX_DENS_GLOBAL` recalibrated. Breaking numeric change. | `METRIC_SCHEMA_VERSION` in `core/defaults.py` |
 
-Outputs embed `metric_schema_version` (currently **`4.0.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.4`.
+Outputs embed `metric_schema_version` (currently **`5.0.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.4`.
 
 See [MIGRATION.md](MIGRATION.md) for phase history.
 

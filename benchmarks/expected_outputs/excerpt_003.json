@@ -6,6 +6,60 @@
       "event_count": 4,
       "harmonic_ratio": 0.13707642912201073,
       "instrument_density": 32.72359993764287,
+      "instrument_lookup_trace": [
+        {
+          "audit_flag": null,
+          "corresponding_arco_density": 25.954758,
+          "density_relation_to_arco": "",
+          "dynamic": "mf",
+          "event_id": "evt_0",
+          "instrument": "Flute",
+          "module_name": "flute",
+          "note": "C4",
+          "one_player_density": 25.954758,
+          "resolved_profile_id": "flauta",
+          "sordina_arco_ratio": 1.0
+        },
+        {
+          "audit_flag": null,
+          "corresponding_arco_density": 16.406844,
+          "density_relation_to_arco": "",
+          "dynamic": "mf",
+          "event_id": "evt_1",
+          "instrument": "Flute",
+          "module_name": "flute",
+          "note": "E4",
+          "one_player_density": 16.406844,
+          "resolved_profile_id": "flauta",
+          "sordina_arco_ratio": 1.0
+        },
+        {
+          "audit_flag": null,
+          "corresponding_arco_density": 32.194271,
+          "density_relation_to_arco": "",
+          "dynamic": "mf",
+          "event_id": "evt_2",
+          "instrument": "Clarinet in Bb",
+          "module_name": null,
+          "note": "A#3",
+          "one_player_density": 8.0,
+          "resolved_profile_id": "unknown",
+          "sordina_arco_ratio": 1.0
+        },
+        {
+          "audit_flag": null,
+          "corresponding_arco_density": 26.256405,
+          "density_relation_to_arco": "",
+          "dynamic": "mf",
+          "event_id": "evt_3",
+          "instrument": "Clarinet in Bb",
+          "module_name": null,
+          "note": "F4",
+          "one_player_density": 8.0,
+          "resolved_profile_id": "unknown",
+          "sordina_arco_ratio": 1.0
+        }
+      ],
       "interval_compactness_distinct": 0.22383396101669067,
       "pitch_aggregation": {
         "distinct_pitch_count": 4,
@@ -13,6 +67,60 @@
         "doubling_count": 0,
         "event_count": 4,
         "event_doubling_count": 0,
+        "instrument_lookup_trace": [
+          {
+            "audit_flag": null,
+            "corresponding_arco_density": 25.954758,
+            "density_relation_to_arco": "",
+            "dynamic": "mf",
+            "event_id": "evt_0",
+            "instrument": "Flute",
+            "module_name": "flute",
+            "note": "C4",
+            "one_player_density": 25.954758,
+            "resolved_profile_id": "flauta",
+            "sordina_arco_ratio": 1.0
+          },
+          {
+            "audit_flag": null,
+            "corresponding_arco_density": 16.406844,
+            "density_relation_to_arco": "",
+            "dynamic": "mf",
+            "event_id": "evt_1",
+            "instrument": "Flute",
+            "module_name": "flute",
+            "note": "E4",
+            "one_player_density": 16.406844,
+            "resolved_profile_id": "flauta",
+            "sordina_arco_ratio": 1.0
+          },
+          {
+            "audit_flag": null,
+            "corresponding_arco_density": 32.194271,
+            "density_relation_to_arco": "",
+            "dynamic": "mf",
+            "event_id": "evt_2",
+            "instrument": "Clarinet in Bb",
+            "module_name": null,
+            "note": "A#3",
+            "one_player_density": 8.0,
+            "resolved_profile_id": "unknown",
+            "sordina_arco_ratio": 1.0
+          },
+          {
+            "audit_flag": null,
+            "corresponding_arco_density": 26.256405,
+            "density_relation_to_arco": "",
+            "dynamic": "mf",
+            "event_id": "evt_3",
+            "instrument": "Clarinet in Bb",
+            "module_name": null,
+            "note": "F4",
+            "one_player_density": 8.0,
+            "resolved_profile_id": "unknown",
+            "sordina_arco_ratio": 1.0
+          }
+        ],
         "interval_pairs_count_distinct": 6,
         "pitch_aggregation_applied": true,
         "pitch_aggregation_tolerance": 1e-06,
@@ -141,14 +249,13 @@
       },
       "pitch_structure_density": {
         "depends_on": [
-          "interval_compactness_distinct",
+          "interval_sum_raw",
           "distinct_pitch_count",
-          "registral_span",
           "symbolic_entropy",
           "harmonicity_proxy",
           "pitch_differentiation_ratio"
         ],
-        "value": 0.28203692402421665
+        "value": 8.071578078039412
       },
       "sonic_mass": {
         "depends_on": [
@@ -163,7 +270,7 @@
           "pitch_structure_density",
           "sonic_mass"
         ],
-        "value": 0.04443420122963077
+        "value": 0.04424151526960101
       },
       "weighted_density": {
         "depends_on": [
@@ -190,7 +297,7 @@
       "Where instrument modules exist, density uses externally sourced sparse acoustic amplitude tables (GPR interpolation), not live audio analysis.",
       "This analysis uses score/information input only \u2014 no audio waveforms were analysed at runtime."
     ],
-    "metric_schema_version": "4.0.0-strict-symbolic",
+    "metric_schema_version": "5.0.0-strict-symbolic",
     "orchestral_mass.assumptions": [
       "Dynamic-to-weight mapping is symbolic dynamic weighting for score analysis.",
       "Instrument density component uses externally sourced acoustic metadata where GPR modules exist."
@@ -202,10 +309,10 @@
       "absolute": 2.813453550023709,
       "instrument": 32.72359993764287,
       "interval": 0.22383396101669067,
-      "pitch_structure": 0.28203692402421665,
-      "refined": 0.28203692402421665,
+      "pitch_structure": 8.071578078039412,
+      "refined": 8.071578078039412,
       "sonic_mass": 58.361602,
-      "total": 0.04443420122963077,
+      "total": 0.04424151526960101,
       "weighted": 1.7480969773904886,
       "weighted_orchestral": 1.6361799968821433,
       "weighted_pitch": 0.11191698050834534

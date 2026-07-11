@@ -239,11 +239,15 @@ Textural Density separates **orchestral mass** from **vertical pitch structure**
 
 **Pitch aggregation:** events merge by exact MIDI (tolerance $10^{-6}$). Interval compactness, spectral moments, chroma, and harmonic ratio use **distinct pitch bins** with mean weight per bin (invariant under within-bin doublings).
 
-**Pitch-structure density** ($n_{\mathrm{distinct}} \geq 2$ required):
+**Pitch-structure density** ($n_{\mathrm{distinct}} \geq 2$ required) — **extensive** (5.0.0-strict-symbolic):
 
 $$
-D_{\mathrm{pitch}} = D_{\mathrm{int}}^{\mathrm{norm}} \cdot \frac{1}{1 + A_{\mathrm{st}}/12} \cdot (1 + \ln(1 + H)) \cdot (1 - 0.15 \cdot \mathrm{harmonicRatio}).
+D_{\mathrm{pitch}} = S \cdot (1 + \ln(1 + H)) \cdot (1 - 0.15 \cdot \mathrm{harmonicRatio}),
+\qquad
+S = \sum_{i<j} e^{-\lambda \delta_{ij}}.
 $$
+
+Here $S$ is the **raw accumulating pairwise interval sum** over distinct pitch bins (the same sum whose mean-per-pair normalisation gives the reported compactness $D_{\mathrm{int}}^{\mathrm{norm}}$). Because $S$ accumulates over pairs, **adding a distinct note never decreases $D_{\mathrm{pitch}}$**. Registral span $A_{\mathrm{st}}$ is **not** applied here — the pairwise exponential decay $e^{-\lambda\delta}$ already attenuates distant pairs, so a second $1/(1+A_{\mathrm{st}}/12)$ damping would penalise ambitus twice. $A_{\mathrm{st}}$ remains a separately reported subindex (`registral`), not a factor in the aggregate.
 
 If $n_{\mathrm{distinct}} < 2$, $D_{\mathrm{pitch}} = 0$.
 
@@ -253,9 +257,9 @@ $$
 D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{pitch}} \cdot \sqrt{M_{\mathrm{sonic}}}}{D_{\max}}.
 $$
 
-Optionally apply $\log_{10}(1 + x)$ if `USE_LOG_COMPRESSION`.
+Optionally apply $\log_{10}(1 + x)$ if `USE_LOG_COMPRESSION`. The mass channel $\sqrt{M_{\mathrm{sonic}}}$ additionally lets a register-isolated note (e.g. a far-below bass) raise the total. Because $S$ is on a larger scale than the previous mean-per-pair term, `MAX_DENS_GLOBAL` ($D_{\max}$) was recalibrated in 5.0.0-strict-symbolic (median-matched against `benchmarks/expected_outputs`; see `config.py`).
 
-> **Removed:** `D_{\mathrm{ref}} = D_{\mathrm{pond}}/A_{\mathrm{st}}` with zero-span exemption; cohesion factor $10/(1+A_{\mathrm{st}})$ in the composite product.
+> **Removed:** mean-per-pair normalisation $D_{\mathrm{int}}^{\mathrm{norm}}$ as the aggregate's interval term (replaced by the raw sum $S$); redundant registral-span damping $1/(1+A_{\mathrm{st}}/12)$ in the composite product; earlier `D_{\mathrm{ref}} = D_{\mathrm{pond}}/A_{\mathrm{st}}` with zero-span exemption and cohesion factor $10/(1+A_{\mathrm{st}})$. The reported compactness axis $D_{\mathrm{int}}^{\mathrm{norm}}$ (`density.interval`) is unchanged and remains **intensive** (falls with spread).
 
 **Absolute density** (reference, unchanged):
 
@@ -452,7 +456,8 @@ These are **implementation correctness checks**, not empirical validation:
 | Property | Expected behaviour |
 |----------|-------------------|
 | Finite outputs | All `density.*` scalars finite for synthetic cases |
-| Chromatic vs wide | Interval density higher for chromatic cluster than wide-spaced chord |
+| Chromatic vs wide | Interval density (compactness, intensive) higher for chromatic cluster than wide-spaced chord |
+| Extensive composite (5.0.0) | Adding a distinct note does not decrease composite vertical density (`density.total`) or `pitch_structure`; register-isolated bass never lowers the total (`tests/test_extensive_density_monotonic.py`) |
 | Player mass | Orchestral mass increases linearly with Qty; pressure-equivalent instrument density scales as RSS; interval/pitch-structure unchanged |
 | Qty vs pitch structure | Qty does not increase pitch polyphony, interval pairs, or spectral entropy for unison doublings |
 | Dynamic monotonicity | Sonic mass increases from `pp` to `ff` at fixed pitch (via module lookup, applied once) |

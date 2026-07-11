@@ -68,11 +68,9 @@ def build_composite_trace(
 
             "depends_on": [
 
-                "interval_compactness_distinct",
+                "interval_sum_raw",
 
                 "distinct_pitch_count",
-
-                "registral_span",
 
                 "symbolic_entropy",
 

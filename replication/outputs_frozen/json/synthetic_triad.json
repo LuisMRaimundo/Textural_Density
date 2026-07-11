@@ -4,17 +4,17 @@
   "synthetic_fixture": true,
   "score_only_mode": true,
   "software_version": "1.1.4",
-  "metric_schema_version": "4.0.0-strict-symbolic",
-  "config_hash": "d457a196246ef501afffd397354cd9701c1c1cd9fb3a452f5d1a2178995b080c",
+  "metric_schema_version": "5.0.0-strict-symbolic",
+  "config_hash": "dee1e46138467ff3d2be05839f3dc8a22366270038464543daadc4a1865867e5",
   "input_hash": "12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8",
-  "timestamp_utc": "2026-06-21T23:32:44.831403+00:00",
+  "timestamp_utc": "2026-07-11T15:51:16.156732+00:00",
   "density": {
     "interval": 0.2137588382139519,
     "instrument": 34.500337379511365,
     "weighted": 1.8318962880825442,
-    "pitch_structure": 0.24361125448107493,
-    "refined": 0.24361125448107493,
-    "total": 0.038555703894589954,
+    "pitch_structure": 3.4423979010879058,
+    "refined": 3.4423979010879058,
+    "total": 0.01937804332565535,
     "sonic_mass": 58.09180500000001,
     "absolute": 2.53954749432529,
     "weighted_pitch": 0.10687941910697595,
@@ -143,19 +143,19 @@
       "assumptions": []
     },
     "composite": {
-      "value": 0.038555703894589954,
-      "pre_log": 0.09283778880659208,
+      "value": 0.01937804332565535,
+      "pre_log": 0.045630019988763905,
       "source_type": "metadata_proxy",
       "validation_status": "heuristic",
       "confidence": "medium",
       "interpretation": "Decomposable composite heuristic; components listed below.",
       "components": {
-        "pitch_structure_density": 0.24361125448107493,
+        "pitch_structure_density": 3.4423979010879058,
         "dynamic_boost": 7.621798016216384,
-        "normalization_divisor": 20.0,
+        "normalization_divisor": 575.0,
         "log_compression_applied": true
       },
-      "component_product_pre_norm": 1.8567557761318416,
+      "component_product_pre_norm": 26.237261493539243,
       "dominant_factors": [
         "dynamic_boost",
         "pitch_structure_density"
@@ -298,7 +298,7 @@
     },
     "composite_symbolic_density": {
       "construct_id": "composite_symbolic_density",
-      "value": 0.038555703894589954,
+      "value": 0.01937804332565535,
       "source_type": "metadata_proxy",
       "verification_status": "heuristic",
       "assumptions": [],
@@ -314,18 +314,18 @@
         "temporal_vertical_density": 0.15
       },
       "components": {
-        "pitch_structure_density": 0.24361125448107493,
+        "pitch_structure_density": 3.4423979010879058,
         "dynamic_boost": 7.621798016216384,
-        "normalization_divisor": 20.0,
+        "normalization_divisor": 575.0,
         "log_compression_applied": true
       }
     }
   },
   "metric_metadata": {
     "score_only_mode": true,
-    "metric_schema_version": "4.0.0-strict-symbolic",
+    "metric_schema_version": "5.0.0-strict-symbolic",
     "validation_status": "verified_only",
-    "config_hash": "d457a196246ef501afffd397354cd9701c1c1cd9fb3a452f5d1a2178995b080c",
+    "config_hash": "dee1e46138467ff3d2be05839f3dc8a22366270038464543daadc4a1865867e5",
     "metrics": {
       "density.interval": {
         "name": "density.interval",
@@ -377,7 +377,7 @@
       },
       "density.refined": {
         "name": "density.refined",
-        "value": 0.24361125448107493,
+        "value": 3.4423979010879058,
         "source_type": "score_derived",
         "validation_status": "verified_only",
         "confidence": "medium",
@@ -389,7 +389,7 @@
       },
       "density.pitch_structure": {
         "name": "density.pitch_structure",
-        "value": 0.24361125448107493,
+        "value": 3.4423979010879058,
         "source_type": "score_derived",
         "validation_status": "verified_only",
         "confidence": "medium",
@@ -400,7 +400,7 @@
       },
       "density.total": {
         "name": "density.total",
-        "value": 0.038555703894589954,
+        "value": 0.01937804332565535,
         "source_type": "metadata_proxy",
         "validation_status": "heuristic",
         "confidence": "medium",
@@ -410,12 +410,12 @@
           "Composite = pitch_structure_density \u00d7 sqrt(sonic_mass) / MAX_DENS_GLOBAL.",
           "Complexity factor (in pitch structure): 1.9341.",
           "Dynamic mass boost sqrt(sonic_mass): 7.6218.",
-          "Normalised by MAX_DENS_GLOBAL=20.0.",
-          "log10(1+x) compression applied (USE_LOG_COMPRESSION=True); pre-log value\u22480.09283778880659208."
+          "Normalised by MAX_DENS_GLOBAL=575.0.",
+          "log10(1+x) compression applied (USE_LOG_COMPRESSION=True); pre-log value\u22480.045630019988763905."
         ],
         "unit": "dimensionless",
-        "raw_value": 0.09283778880659208,
-        "normalized_value": 0.038555703894589954
+        "raw_value": 0.045630019988763905,
+        "normalized_value": 0.01937804332565535
       },
       "density.sonic_mass": {
         "name": "density.sonic_mass",
@@ -526,7 +526,7 @@
     "quantity_pressure_gain_formula": "sqrt(sum(qty_i * base_i^2))",
     "coherent_phase_locked_addition_assumed": false,
     "normalization": {
-      "MAX_DENS_GLOBAL": 20.0,
+      "MAX_DENS_GLOBAL": 575.0,
       "USE_LOG_COMPRESSION": true,
       "WEIGHTED_DI_MAX": 100.0,
       "WEIGHTED_DV_MAX": 10.0
@@ -619,8 +619,90 @@
           "one_player_density": 15.730203,
           "player_count": 1.0
         }
+      ],
+      "instrument_lookup_trace": [
+        {
+          "event_id": "evt_0",
+          "note": "C4",
+          "dynamic": "mf",
+          "instrument": "flauta",
+          "resolved_profile_id": "flauta",
+          "module_name": "flute",
+          "one_player_density": 25.954758,
+          "corresponding_arco_density": 25.954758,
+          "sordina_arco_ratio": 1.0,
+          "density_relation_to_arco": "",
+          "audit_flag": null
+        },
+        {
+          "event_id": "evt_1",
+          "note": "E4",
+          "dynamic": "mf",
+          "instrument": "flauta",
+          "resolved_profile_id": "flauta",
+          "module_name": "flute",
+          "one_player_density": 16.406844,
+          "corresponding_arco_density": 16.406844,
+          "sordina_arco_ratio": 1.0,
+          "density_relation_to_arco": "",
+          "audit_flag": null
+        },
+        {
+          "event_id": "evt_2",
+          "note": "G4",
+          "dynamic": "mf",
+          "instrument": "flauta",
+          "resolved_profile_id": "flauta",
+          "module_name": "flute",
+          "one_player_density": 15.730203,
+          "corresponding_arco_density": 15.730203,
+          "sordina_arco_ratio": 1.0,
+          "density_relation_to_arco": "",
+          "audit_flag": null
+        }
       ]
     },
+    "instrument_lookup_trace": [
+      {
+        "event_id": "evt_0",
+        "note": "C4",
+        "dynamic": "mf",
+        "instrument": "flauta",
+        "resolved_profile_id": "flauta",
+        "module_name": "flute",
+        "one_player_density": 25.954758,
+        "corresponding_arco_density": 25.954758,
+        "sordina_arco_ratio": 1.0,
+        "density_relation_to_arco": "",
+        "audit_flag": null
+      },
+      {
+        "event_id": "evt_1",
+        "note": "E4",
+        "dynamic": "mf",
+        "instrument": "flauta",
+        "resolved_profile_id": "flauta",
+        "module_name": "flute",
+        "one_player_density": 16.406844,
+        "corresponding_arco_density": 16.406844,
+        "sordina_arco_ratio": 1.0,
+        "density_relation_to_arco": "",
+        "audit_flag": null
+      },
+      {
+        "event_id": "evt_2",
+        "note": "G4",
+        "dynamic": "mf",
+        "instrument": "flauta",
+        "resolved_profile_id": "flauta",
+        "module_name": "flute",
+        "one_player_density": 15.730203,
+        "corresponding_arco_density": 15.730203,
+        "sordina_arco_ratio": 1.0,
+        "density_relation_to_arco": "",
+        "audit_flag": null
+      }
+    ],
     "input_hash": "12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8",
     "software_version": "1.1.4"
   }

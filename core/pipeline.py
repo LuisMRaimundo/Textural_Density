@@ -194,9 +194,8 @@ def calculate_metrics(
     ) or 0.0
 
     pitch_structure_density = compute_pitch_structure_density(
-        interval_compactness_norm=densidade_intervalar_val,
+        interval_sum_raw=densidade_intervalar_raw,
         aggregation=pitch_agg,
-        registral_span_semitones=amplitude_st,
         spectral_entropy=spectral_entropy,
         harmonic_ratio=float(harm_rat),
     )

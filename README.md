@@ -6,7 +6,7 @@
 **License:** [MIT](LICENSE)  
 **Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)
 
-> **Versioning:** Package release **1.1.4** (`pyproject.toml`) is separate from methodology phases **3.0.0** / **4.0.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`). See [docs/VERSIONING.md](docs/VERSIONING.md).
+> **Versioning:** Package release **1.1.4** (`pyproject.toml`) is separate from the methodology phase **5.0.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`; earlier phases 3.0.0 / 4.0.0). See [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -17,6 +17,8 @@
 **Removed in 3.0.0-strict-symbolic:** Stevens' Law power-law compression, psychoacoustic corrections, and perceptual interval weighting.
 
 **Removed in 4.0.0-strict-symbolic:** Combination-tone / resultant-tone analysis (`calculate_combination_tones` and related keys). Analytical inputs containing those keys raise validation errors. `verified_by_tests` for many constructs; full `corpus_replicated` status requires a representative benchmark corpus. External expert ratings are **optional** empirical extensions, not required for the score-only line. See [`docs/revised_path_to_90_score_only.md`](docs/revised_path_to_90_score_only.md) and [`docs/score_only_upgrade_rubric.md`](docs/score_only_upgrade_rubric.md) (v2.0.0).
+
+**Changed in 5.0.0-strict-symbolic:** Composite vertical density is now **extensive** — pitch-structure density is built from the raw accumulating pairwise interval sum, so adding a distinct note never decreases `density.total`. The redundant registral-span damping was removed from the aggregate (registral span stays a reported subindex), and `MAX_DENS_GLOBAL` was recalibrated. Breaking numeric change; see the [Changelog](#changelog).
 
 ---
 
@@ -324,6 +326,18 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 ---
 
 ## Changelog
+
+### Version 5.0.0-strict-symbolic (2026-07-11)
+
+**Breaking numeric change** — corrects non-monotonic composite vertical density. Package release remains **1.1.4** (`pyproject.toml`); this bumps the methodology `METRIC_SCHEMA_VERSION` only.
+
+- **Extensive pitch-structure density.** `core/pitch_structure.py::compute_pitch_structure_density` now builds the aggregate from the **raw accumulating pairwise interval sum** `S = Σ e^{-λδ}` instead of the mean-per-pair value. Adding a distinct note can no longer *decrease* `density.total` or `pitch_structure`. Signature changed: takes `interval_sum_raw` (was `interval_compactness_norm`); the `registral_span_semitones` parameter was removed.
+- **Redundant registral-span damping removed** from the aggregate: the `1/(1 + A_st/12)` factor is gone (the pairwise exponential decay already attenuates distant pairs). `compute_registral_span_distinct` / `compute_registral_compactness` remain as **reported subindices** (`registral`); `core/pipeline.py` still computes `amplitude_st` for `registral_span` reporting.
+- **Compactness axis unchanged.** Reported `density.interval` (`normalize_interval_density`, mean-per-pair, log-compressed) is preserved and remains **intensive** (falls with spread).
+- **`MAX_DENS_GLOBAL` recalibrated** in `config.py` from `20.0` to `575.0` (median-matched against `benchmarks/expected_outputs`) so typical `density.total` stays within the previous display range; denser sonorities legitimately rise. Kept in `config.py`, not hardcoded in the functions.
+- **New tests:** `tests/test_extensive_density_monotonic.py` (no-decrease on note addition; register-isolated bass never lowers total; compactness stays intensive; unison-doubling invariance; two-note minimum; finiteness).
+- **Regenerated golden baselines** (aggregate values legitimately changed; not weakened): `tests/fixtures/regression_baseline.json` (`pitch_structure`/`refined`/`total`), `tests/snapshots/numeric_outputs/synthetic_triad.json` (same fields), `tests/snapshots/metadata_outputs/synthetic_triad.json` (`metric_schema_version`), `benchmarks/expected_outputs/excerpt_001..005.json`, `replication/outputs_frozen/json/synthetic_triad.json`, and `replication/tables/thesis_symbolic_density_summary.{csv,md}`. Tests asserting only the intensive compactness/registral subindices were left unchanged.
+- **Docs:** `docs/MATHEMATICAL_MANUAL.md` §H (extensive formula; registral span now reporting-only) and Q (new acceptance-criteria row); `docs/VERSIONING.md` methodology table.
 
 ### Branding cleanups (2026-06-30)
 

@@ -6,6 +6,47 @@
       "event_count": 3,
       "harmonic_ratio": 0.4467886305133745,
       "instrument_density": 34.500337379511365,
+      "instrument_lookup_trace": [
+        {
+          "audit_flag": null,
+          "corresponding_arco_density": 25.954758,
+          "density_relation_to_arco": "",
+          "dynamic": "mf",
+          "event_id": "evt_0",
+          "instrument": "Flute",
+          "module_name": "flute",
+          "note": "C4",
+          "one_player_density": 25.954758,
+          "resolved_profile_id": "flauta",
+          "sordina_arco_ratio": 1.0
+        },
+        {
+          "audit_flag": null,
+          "corresponding_arco_density": 16.406844,
+          "density_relation_to_arco": "",
+          "dynamic": "mf",
+          "event_id": "evt_1",
+          "instrument": "Flute",
+          "module_name": "flute",
+          "note": "E4",
+          "one_player_density": 16.406844,
+          "resolved_profile_id": "flauta",
+          "sordina_arco_ratio": 1.0
+        },
+        {
+          "audit_flag": null,
+          "corresponding_arco_density": 15.730203,
+          "density_relation_to_arco": "",
+          "dynamic": "mf",
+          "event_id": "evt_2",
+          "instrument": "Flute",
+          "module_name": "flute",
+          "note": "G4",
+          "one_player_density": 15.730203,
+          "resolved_profile_id": "flauta",
+          "sordina_arco_ratio": 1.0
+        }
+      ],
       "interval_compactness_distinct": 0.2137588382139519,
       "pitch_aggregation": {
         "distinct_pitch_count": 3,
@@ -13,6 +54,47 @@
         "doubling_count": 0,
         "event_count": 3,
         "event_doubling_count": 0,
+        "instrument_lookup_trace": [
+          {
+            "audit_flag": null,
+            "corresponding_arco_density": 25.954758,
+            "density_relation_to_arco": "",
+            "dynamic": "mf",
+            "event_id": "evt_0",
+            "instrument": "Flute",
+            "module_name": "flute",
+            "note": "C4",
+            "one_player_density": 25.954758,
+            "resolved_profile_id": "flauta",
+            "sordina_arco_ratio": 1.0
+          },
+          {
+            "audit_flag": null,
+            "corresponding_arco_density": 16.406844,
+            "density_relation_to_arco": "",
+            "dynamic": "mf",
+            "event_id": "evt_1",
+            "instrument": "Flute",
+            "module_name": "flute",
+            "note": "E4",
+            "one_player_density": 16.406844,
+            "resolved_profile_id": "flauta",
+            "sordina_arco_ratio": 1.0
+          },
+          {
+            "audit_flag": null,
+            "corresponding_arco_density": 15.730203,
+            "density_relation_to_arco": "",
+            "dynamic": "mf",
+            "event_id": "evt_2",
+            "instrument": "Flute",
+            "module_name": "flute",
+            "note": "G4",
+            "one_player_density": 15.730203,
+            "resolved_profile_id": "flauta",
+            "sordina_arco_ratio": 1.0
+          }
+        ],
         "interval_pairs_count_distinct": 3,
         "pitch_aggregation_applied": true,
         "pitch_aggregation_tolerance": 1e-06,
@@ -118,14 +200,13 @@
       },
       "pitch_structure_density": {
         "depends_on": [
-          "interval_compactness_distinct",
+          "interval_sum_raw",
           "distinct_pitch_count",
-          "registral_span",
           "symbolic_entropy",
           "harmonicity_proxy",
           "pitch_differentiation_ratio"
         ],
-        "value": 0.24361125448107493
+        "value": 3.4423979010879058
       },
       "sonic_mass": {
         "depends_on": [
@@ -140,7 +221,7 @@
           "pitch_structure_density",
           "sonic_mass"
         ],
-        "value": 0.038555703894589954
+        "value": 0.01937804332565535
       },
       "weighted_density": {
         "depends_on": [
@@ -167,7 +248,7 @@
       "Where instrument modules exist, density uses externally sourced sparse acoustic amplitude tables (GPR interpolation), not live audio analysis.",
       "This analysis uses score/information input only \u2014 no audio waveforms were analysed at runtime."
     ],
-    "metric_schema_version": "4.0.0-strict-symbolic",
+    "metric_schema_version": "5.0.0-strict-symbolic",
     "orchestral_mass.assumptions": [
       "Dynamic-to-weight mapping is symbolic dynamic weighting for score analysis.",
       "Instrument density component uses externally sourced acoustic metadata where GPR modules exist."
@@ -179,10 +260,10 @@
       "absolute": 2.53954749432529,
       "instrument": 34.500337379511365,
       "interval": 0.2137588382139519,
-      "pitch_structure": 0.24361125448107493,
-      "refined": 0.24361125448107493,
+      "pitch_structure": 3.4423979010879058,
+      "refined": 3.4423979010879058,
       "sonic_mass": 58.09180500000001,
-      "total": 0.038555703894589954,
+      "total": 0.01937804332565535,
       "weighted": 1.8318962880825442,
       "weighted_orchestral": 1.7250168689755683,
       "weighted_pitch": 0.10687941910697595

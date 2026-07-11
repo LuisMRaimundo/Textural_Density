@@ -77,31 +77,23 @@ def compute_registral_compactness(registral_span_semitones: float) -> float:
 
 def compute_pitch_structure_density(
     *,
-    interval_compactness_norm: float,
+    interval_sum_raw: float,
     aggregation: PitchAggregationResult,
-    registral_span_semitones: float,
     spectral_entropy: float,
     harmonic_ratio: float,
 ) -> float:
-    """
-    Construct-aware pitch-structure density (distinct pitches required).
+    """Extensive pitch-structure density (distinct pitches required).
 
-    Replaces the legacy refined-density = weighted/span formula and removes the
-    redundant cohesion = 10/(1+span) multiplier from the composite path.
+    Built from the accumulating raw pairwise interval sum, so adding a distinct
+    note never decreases the value. Registral span is NOT applied here (the
+    pairwise exponential decay already attenuates distant pairs); it remains a
+    separately reported subindex.
     """
     if aggregation.distinct_pitch_count < 2:
         return 0.0
-
-    registral_compactness = compute_registral_compactness(registral_span_semitones)
     entropy_factor = 1.0 + float(np.log1p(max(0.0, spectral_entropy)))
     harmonic_adjustment = 1.0 - float(harmonic_ratio) * COMPOSITE_HARMONIC_DAMPING
-
-    return float(
-        interval_compactness_norm
-        * registral_compactness
-        * entropy_factor
-        * harmonic_adjustment
-    )
+    return float(interval_sum_raw * entropy_factor * harmonic_adjustment)
 
 
 def compute_composite_vertical_density(

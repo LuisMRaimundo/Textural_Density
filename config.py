@@ -9,8 +9,15 @@ from typing import Any, Dict, List, Tuple
 # Normalização e compressão da densidade total (Phase 3.1)
 # MAX_DENS_GLOBAL: divisor to normalise total density; calibrate with corpus.
 # USE_LOG_COMPRESSION: apply log10(1 + x) to total density to smooth extremes.
+#
+# Recalibrated in 5.0.0-strict-symbolic: compute_pitch_structure_density now
+# uses the raw accumulating pairwise interval sum (extensive) instead of the
+# mean-per-pair value, so it is on a larger scale. MAX_DENS_GLOBAL was
+# recomputed against benchmarks/expected_outputs so typical density.total stays
+# within the previous display range (median-matched ≈ 572; rounded to 575).
+# Keep this in config (do not hardcode inside the density functions).
 # -------------------------------------------------------------------
-MAX_DENS_GLOBAL = 20.0
+MAX_DENS_GLOBAL = 575.0
 USE_LOG_COMPRESSION = True
 
 # Register bands for registral-density subindex (MIDI inclusive lower, exclusive upper).
