@@ -340,6 +340,16 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 - **Regenerated golden baselines** (schema-version metadata refresh; interior numerics unchanged): `tests/snapshots/metadata_outputs/synthetic_triad.json`, `replication/outputs_frozen/json/synthetic_triad.json`, `replication/tables/thesis_symbolic_density_summary.{csv,md}`, `benchmarks/expected_outputs/excerpt_001..005.json`, plus the regenerated characterization battery under `results/characterization/` (DYN/DYNGRAD now monotone; tail warnings recorded). GPR-stability contract tests (`tests/test_dynamic_interpolation_contracts.py`, `tests/test_gpr_determinism_contracts.py`) now assert interior-only equality vs. raw GPR (tails intentionally saturate).
 - **Docs:** `docs/MATHEMATICAL_MANUAL.md` §F.1 (interior GPR vs. saturating tails; both config ratios; both motivating incidents) and §Q (dynamic-monotonicity + tail-saturation acceptance rows); `docs/VERSIONING.md` methodology table.
 
+### Register-dependence audit (2026-07-12) — no schema bump
+
+Read-only audit of instrument register dependence and per-event propagation; **no code, config, or data changes**, `METRIC_SCHEMA_VERSION` unchanged.
+
+- **Provenance** confirmed uniform (CDM spectral-density midpoints from IOWA+ORCH sustains); `violin_sul_ponticello` and `violin_art_harm` flagged as measured-mf-only with pp/ff ratio-transferred (`uncertainty="high"`).
+- **mf curves** are non-monotone for every module-backed instrument (downward trend with local reversals at register/string breaks); no instrument is cleanly monotone-decreasing.
+- **Fidelity** confirmed: density is resolved at the exact float event MIDI (quarter-tones/cents preserved), with shape-preserving PCHIP/linear interpolation only between chromatic anchors and **no cross-event banding**; at sounding-range extremes lookups are `exact` (Δ = 0 vs. raw table).
+- **REGNAT deconfounded sweep** (clarinete/fagote/violino/contrabaixo, 3-semitone cluster at bottom/centre/top-3): `S` invariant (2.6284) with strictly decreasing mass/RSS/comp — no violations.
+- **Docs:** `docs/instrument_acoustic_sources.md` "Register-dependence audit" section.
+
 ### Documentation & probes (2026-07-11) — no schema bump
 
 Documentation-only reconciliation on `5.0.0-strict-symbolic`; **numeric outputs unchanged**, `METRIC_SCHEMA_VERSION` not bumped.

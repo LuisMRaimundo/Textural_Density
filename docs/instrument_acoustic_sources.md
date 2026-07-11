@@ -189,6 +189,40 @@ Audit: `tools/audit_instrument_metadata_range_resolution.py` → `reports/instru
 
 **Resolved (PR #14):** viola `INSTRUMENT_SOURCE` portable provenance (`docs/instrument_acoustic_sources.md#viola`).
 
+## Register-dependence audit (2026-07-12, read-only)
+
+Findings of a read-only audit of register dependence and per-event propagation
+(no code, config, or data changes; `METRIC_SCHEMA_VERSION` unchanged):
+
+- **Provenance uniformity.** All module-backed tables encode the same class of
+  datum — a **Combined Density Metric (CDM)**, a spectral-density-derived measure
+  (midpoint/median of IOWA+ORCH sustain collections at pp/mf/ff). None are raw
+  amplitude/SPL pressure and none are literature-derived. Two variants are flagged
+  as partly synthetic: **`violin_sul_ponticello`** and **`violin_art_harm`** carry
+  a **measured mf anchor only**, with pp/ff transferred from violin-arco per-note
+  ratios (`uncertainty="high"`).
+- **mf curve shapes.** One-player mf density sampled every 3 semitones is
+  **non-monotone for every instrument** (downward-trending with local reversals,
+  typically at register/string breaks — e.g. violin C#4→E4, cello F#2→C3,
+  contrabass C#2→E2, bassoon C#4→G4). No instrument is cleanly monotone-decreasing;
+  do not assume monotonicity when reasoning about register.
+- **Per-event fidelity.** The pipeline resolves density at the **exact event MIDI**
+  (`microtonal.note_to_midi_strict`, float — carries quarter-tones and cents).
+  Interpolation between chromatic anchors is shape-preserving PCHIP in-range
+  (≥4 anchors) else linear; edge extrapolation is linear, with constant fallback
+  beyond 12 semitones (`pitch_interpolation.resolve_density_from_table`). There is
+  **no cross-event averaging/banding** of the one-player weight (the only mean is
+  the per-pitch-bin spectral-weight mean, which collapses exact-MIDI unisons only).
+  At every module's sounding-range extremes the endpoints coincide with table
+  anchors, so lookups return provenance `exact` with **Δ = 0** vs the raw table
+  value; smoothing affects only microtonal between-anchor targets.
+- **Deconfounded REG (REGNAT) sweep.** A fixed 3-semitone chromatic cluster at
+  bottom/centre/top-3 positions for clarinete, fagote, violino, contrabaixo yields
+  **S invariant** (= 2.6284; register-independent symbolic interval measure) and
+  **mass/RSS/comp strictly decreasing** with ascent for all four — no violations at
+  the sampled positions. (Local curve non-monotonicity above can still surface if a
+  sweep samples adjacent to a reversal.)
+
 ## Epistemic limitations
 
 - Verification tests validate implementation contracts, source consistency, provenance propagation, symbolic/musical invariants, and reproducibility under controlled conditions.
