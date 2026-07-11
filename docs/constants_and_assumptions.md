@@ -83,7 +83,7 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 | PCHIP anchor | diagnostic shape-preserving reference | no |
 | Quadratic anchor | diagnostic reference (audits) | no |
 
-**Model-quality diagnostics:** `tools/audit_gpr_model_quality.py` evaluates reproducible GPR behaviour (convex-hull departures, deviations from linear/quadratic/PCHIP diagnostic references). **Method comparison:** `tools/compare_dynamic_interpolation_methods.py` compares production GPR with linear and PCHIP at source-row, string-scenario, and benchmark levels (315 rows; 320+20 scenarios; 5 excerpts). Neither tool changes production interpolation, source tables, or density formulas. PR #24 found **0** high/extreme scenario-level sensitivity in `density.instrument`; local source-row sensitivity remains highest in low-register strings. Linear and PCHIP were **not adopted**.
+**Model-quality diagnostics:** `tools/audit_gpr_model_quality.py` evaluates reproducible GPR behaviour (convex-hull departures, deviations from linear/quadratic/PCHIP diagnostic references). **Method comparison:** `tools/compare_dynamic_interpolation_methods.py` compares production GPR with linear and PCHIP at source-row, string-scenario, and benchmark levels (357 rows; 320+20 scenarios; 5 excerpts). Neither tool changes production interpolation, source tables, or density formulas. PR #24 found **0** high/extreme scenario-level sensitivity in `density.instrument`; local source-row sensitivity remains highest in low-register strings. Linear and PCHIP were **not adopted**.
 
 ---
 
@@ -92,7 +92,7 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 | Name | Role | Module |
 |------|------|--------|
 | `REGISTRY` profiles | Register, family, dynamic-response metadata | `instrumentos/registry.py` |
-| GPR modules (`flute`, `oboe`, `clarinet`, `violin`, `violin_sordina`, `violin_sul_ponticello`, `violin_art_harm`, `viola`, `cello`, `double_bass`, …) | Sparse note×dynamic CDM tables (externally sourced) | `instrumentos/*.py` |
+| GPR modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `violin`, `violin_sordina`, `violin_sul_ponticello`, `violin_art_harm`, `viola`, `cello`, `double_bass`, …) | Sparse note×dynamic CDM tables (externally sourced) | `instrumentos/*.py` |
 | `profile_status` | `literature_derived` / `empirical_profile` / `coarse_default` | Audit: `instrumentos/metadata_audit.py` |
 | `uncertainty` | low / medium / high | All profiles |
 | Unknown instrument | Generic fallback without external acoustic table | `profile_for_event()` |

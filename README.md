@@ -35,7 +35,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Epistemic metadata** — every metric labelled (`source_type`, `validation_status`, warnings)
 - **Interpretable subindices** — registral, orchestration, harmonicity proxies, etc.
 - **Temporal score analysis** — `analyze_score()` for timed XML/MIDI
-- **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; GPR CDM modules for flute, oboe, clarinet, and strings; metadata corpus still incomplete for many names
+- **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; GPR CDM modules for flute, oboe, clarinet, bassoon, trumpet, and strings; metadata corpus still incomplete for many names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML sounding pitch** — written `<pitch>` converted to sounding/concert pitch via `<transpose>` before validation and density lookup (PR #21)
 - **Verification scaffolding** — **862 tests** collected; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green after PR #13 and PR #14 (see [Testing](#testing))
@@ -185,7 +185,7 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 | **Optional empirical** | Expert annotations, listening tests — only if pursuing judgment-prediction research |
 | **Not provided** | Measured audio spectra, SPL, timbre measurement, live waveform/FFT/STFT analysis, Spectral_Analyser-style signal processing, mandatory human-rating validation, final cross-instrument acoustic calibration |
 
-**Instrument metadata status:** External acoustic/proxy tables are **incomplete** and curated gradually. Missing or coarse instrument data are **expected** at this stage — not runtime bugs when fallback labels and provenance remain honest. Do not treat current GPR modules (e.g. flute, clarinet, oboe, violin, violin sordina, violin sul ponticello, violin art harm) as final scientific reference corpora.
+**Instrument metadata status:** External acoustic/proxy tables are **incomplete** and curated gradually. Missing or coarse instrument data are **expected** at this stage — not runtime bugs when fallback labels and provenance remain honest. Do not treat current GPR modules (e.g. flute, clarinet, oboe, bassoon, trumpet, violin, violin sordina, violin sul ponticello, violin art harm) as final scientific reference corpora.
 
 **English module filenames:** Dedicated scripts use English names (`flute.py`, `violin.py`, …). Registry aliases accept both English (`flute`, `violin`) and legacy Portuguese (`flauta`, `violino`) strings in programmatic input.
 

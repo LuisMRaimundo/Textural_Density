@@ -28,6 +28,8 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 
 | `oboe.py` | `spectral_data` | IOWA+ORCH oboe sustain CDM medians (Zenodo workbook) |
 
+| `bassoon.py` | `spectral_data` | IOWA+ORCH bassoon sustain CDM medians (Zenodo workbook) |
+
 | `trumpet.py` | `spectral_data` | IOWA+ORCH trumpet sustain CDM medians (Zenodo workbook) |
 
 | `violin.py`, `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` | IOWA+ORCH arco sustain CDM medians (Zenodo workbooks) |
@@ -206,6 +208,8 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **Clarinet** | `clarinet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
 | **Oboe** | `oboe.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
+
+| **Bassoon** | `bassoon.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
 | **Trumpet** | `trumpet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 

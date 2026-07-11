@@ -36,6 +36,28 @@ live audio analysis.
 - **Interpolation:** Gaussian-process regression for intermediate dynamics
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
+## Bassoon (`fagote` → `bassoon.py`)
+
+- **Module:** `instrumentos/bassoon.py`
+- **Table (source_table_span):** `spectral_data` (42 chromatic rows, **A#1–D#5**, MIDI 34–75), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
+- **Provenance:** Median/midpoint summary of bassoon sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **Source workbook:** `D:\MADEIRAS\Bassoon_Zenodo_collections_media.xlsx`
+- **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
+- **Interpolation:** Gaussian-process regression for intermediate dynamics
+- **Uncertainty:** medium — sparse table, not full continuous spectrum
+
+## Trumpet (`trompete` → `trumpet.py`)
+
+- **Module:** `instrumentos/trumpet.py`
+- **Table (source_table_span):** `spectral_data` (36 chromatic rows, **E3–D#6**, MIDI 52–87), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
+- **Provenance:** Median/midpoint summary of trumpet (Bb) sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **Source workbook:** `D:\METAIS\Trumpet_Zenodo_collections_media.xlsx`
+- **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
+- **Interpolation:** Gaussian-process regression for intermediate dynamics
+- **Uncertainty:** medium — sparse table, not full continuous spectrum
+
 ## Viola (`viola`)
 
 - **Module:** `instrumentos/viola.py`
@@ -118,7 +140,7 @@ live audio analysis.
 Offline curation pipeline (not used at runtime):
 
 1. `tools/populate_td_importer_sheets_from_zenodo_media.py` — builds `AcousticTable`, `Registry`, and `Provenance` sheets from `*_Media` workbooks. Applies `normalize_media_note_label()` when reading media rows (strips trailing `(2)` duplicate markers).
-2. `tools/generate_instrument_modules.py` — emits `instrumentos/flute.py`, `oboe.py`, `clarinet.py`, `violin.py`, `viola.py`, `cello.py`, `double_bass.py`. Viola source reconstruction uses `VIOLA_Media` via `load_spectral_data_from_media`.
+2. `tools/generate_instrument_modules.py` — emits `instrumentos/flute.py`, `oboe.py`, `clarinet.py`, `violin.py`, `viola.py`, `cello.py`, `double_bass.py`. Viola and double bass source reconstruction use the `VIOLA_Media` / `DBass_Media` sheets via `load_spectral_data_from_media` (their workbooks ship no `AcousticTable` sheet).
 3. `tools/build_viola_table_from_media.py` — helper to regenerate viola `spectral_data` from `VIOLA_Media`.
 4. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
@@ -162,8 +184,8 @@ Audit: `tools/audit_instrument_metadata_range_resolution.py` → `reports/instru
 | TUBA-RNG | Tuba sounding_range MIDI 28–58 is coarse-default validation placeholder without source table. | **REVIEW REQUIRED** |
 | TRANS-META | `registry.transposition` is metadata-only; manual input is sounding pitch; MusicXML `<transpose>` converts once. | **PASS** |
 | GPR-DET | Production GPR uses explicit `random_state=GPR_RANDOM_STATE` (`0`) via `create_dynamic_gpr()`; determinism is numerical repeatability only, not general empirical validation. | **PASS** |
-| GPR-MQ | GPR model-quality audit (`tools/audit_gpr_model_quality.py`): 315 source rows; 49 convex-hull departures (pp–mf); GPR–linear/quadratic/PCHIP diagnostic deviations. Production GPR unchanged; references not adopted. | **REVIEW REQUIRED** (local hull departures; low-register strings) |
-| GPR-CMP | Interpolation method comparison (`tools/compare_dynamic_interpolation_methods.py`): GPR vs linear vs PCHIP — 315 source rows, 320+20 scenarios, 5 benchmark excerpts. **0** high/extreme scenario-level `density.instrument` cases; production GPR unchanged; linear/PCHIP not adopted. | **PASS** (diagnostic complete; policy selection deferred) |
+| GPR-MQ | GPR model-quality audit (`tools/audit_gpr_model_quality.py`): 357 source rows (8 GPR modules, incl. bassoon); 58 convex-hull departures (pp–mf); GPR–linear/quadratic/PCHIP diagnostic deviations. Production GPR unchanged; references not adopted. | **REVIEW REQUIRED** (local hull departures; low-register strings) |
+| GPR-CMP | Interpolation method comparison (`tools/compare_dynamic_interpolation_methods.py`): GPR vs linear vs PCHIP — 357 source rows, 320+20 scenarios, 5 benchmark excerpts. **0** high/extreme scenario-level `density.instrument` cases; production GPR unchanged; linear/PCHIP not adopted. | **PASS** (diagnostic complete; policy selection deferred) |
 
 **Resolved (PR #14):** viola `INSTRUMENT_SOURCE` portable provenance (`docs/instrument_acoustic_sources.md#viola`).
 

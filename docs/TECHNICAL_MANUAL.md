@@ -117,7 +117,7 @@ score_io/, gui/                # Export and GUI layers (separate from core)
 - **Dynamic interpolation** — production method is **deterministic GPR** (`predict_intermediate_dynamics` → `create_dynamic_gpr()`). Piecewise linear and PCHIP appear only in diagnostic audit tools, not in production lookup. Dynamic interpolation is separate from pitch interpolation — each dynamic column is modelled independently over pitch.
 - **GPR determinism:** production dynamic interpolation uses `instrumentos/gpr_dynamic_interpolation.create_dynamic_gpr()` with explicit `GPR_RANDOM_STATE = 0`. The estimator owns deterministic optimizer restarts; production output does **not** depend on global `np.random` state or benchmark/event order. Determinism means repeatability of the numerical procedure — not acoustic, musicological, or perceptual validation. Cross-platform floating-point differences may still be compared with explicit tolerances.
 - **GPR model-quality audit:** `tools/audit_gpr_model_quality.py` compares production GPR against piecewise-linear, quadratic, and PCHIP diagnostic references. Linear/quadratic/PCHIP are **not** production methods. Convex-hull departures and large GPR–reference deviations are flagged for methodological review, not automatic correction.
-- **Interpolation method comparison:** `tools/compare_dynamic_interpolation_methods.py` evaluates analytical impact of GPR vs linear vs PCHIP at source-row, string-scenario, and benchmark levels (315 source rows; 320 positive + 20 negative string scenarios; 5 benchmark excerpts). Production GPR remains default; linear and PCHIP were **not adopted**. Comparison does not establish perceptual validity.
+- **Interpolation method comparison:** `tools/compare_dynamic_interpolation_methods.py` evaluates analytical impact of GPR vs linear vs PCHIP at source-row, string-scenario, and benchmark levels (357 source rows; 320 positive + 20 negative string scenarios; 5 benchmark excerpts). Production GPR remains default; linear and PCHIP were **not adopted**. Comparison does not establish perceptual validity.
 - **`instrumentos/registry.py`** maps names/aliases to profiles with `profile_status` (`literature_derived`, `empirical_source`, `coarse_default`) and `uncertainty`.
 - Instruments **without** GPR tables use coarse register/dynamic models only (`coarse_default`), also via `microtonal.note_to_midi_strict` for microtonal input.
 - **Per-event resolution:** each note uses its own instrument module via `core/orchestration.py`.
@@ -161,7 +161,7 @@ Ordinal dynamic coordinates are modelling controls — not dB, SPL, loudness, or
 
 PR #23 (`tools/audit_gpr_model_quality.py`) flagged **49** convex-hull departures (pp–mf band) across GPR modules. PR #24 (`tools/compare_dynamic_interpolation_methods.py`) compared production GPR with linear and PCHIP:
 
-- **315** source-table rows; **320** positive + **20** negative string scenarios; **5** benchmark excerpts (**15** metric rows).
+- **357** source-table rows; **320** positive + **20** negative string scenarios; **5** benchmark excerpts (**15** metric rows).
 - Source-row GPR differs from conservative references in some cases — highest local sensitivity in **low-register strings** (cello, double bass).
 - Scenario-level `density.instrument`: **0** high/extreme; **46** moderate; **182** low; **92** negligible.
 - Largest absolute scenario spreads: low-register mass, very sparse/dense chromatic aggregates, all-four-string scenarios — relative sensitivity remained controlled in tested aggregates.

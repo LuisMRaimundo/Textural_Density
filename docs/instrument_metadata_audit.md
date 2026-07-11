@@ -10,7 +10,7 @@ python scripts/export_instrument_metadata_audit.py
 
 ## Rules
 
-- GPR-backed modules (`flute`, `oboe`, `clarinet`, `violin`, `viola`, `cello`, `double_bass`, …) use **externally sourced acoustic metadata** (sparse CDM tables, GPR-interpolated). This is applied at score-analysis time — **not** runtime audio analysis.
+- GPR-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `violin`, `viola`, `cello`, `double_bass`, …) use **externally sourced acoustic metadata** (sparse CDM tables, GPR-interpolated). This is applied at score-analysis time — **not** runtime audio analysis.
 - Registry `coarse_default` profiles lack external acoustic tables; audit label **`symbolic_default`**.
 - `literature_derived` / `literature_informed` profiles document external provenance in `source_notes`.
 - Written dynamics use **symbolic weighting only** — not SPL or loudness.

@@ -206,7 +206,7 @@ $$
 
 where $x_d$ is the ordinal coordinate for dynamic $d$. `mp` is **not** aliased to `mf` and is **not** a table column.
 
-**Diagnostic references (not production):** piecewise linear, PCHIP, and quadratic anchor interpolators appear only in audit tools (`tools/audit_gpr_model_quality.py`, `tools/compare_dynamic_interpolation_methods.py`). PR #24 compared methods on 315 source rows and 340 string scenarios; production GPR was unchanged; linear and PCHIP were not adopted. Local method sensitivity is highest in low-register strings at source-row level; scenario-level `density.instrument` showed **0** high/extreme cases in the tested aggregate battery.
+**Diagnostic references (not production):** piecewise linear, PCHIP, and quadratic anchor interpolators appear only in audit tools (`tools/audit_gpr_model_quality.py`, `tools/compare_dynamic_interpolation_methods.py`). PR #24 compared methods on 357 source rows (8 GPR modules) and 340 string scenarios; production GPR was unchanged; linear and PCHIP were not adopted. Local method sensitivity is highest in low-register strings at source-row level; scenario-level `density.instrument` showed **0** high/extreme cases in the tested aggregate battery.
 
 ---
 
