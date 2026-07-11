@@ -421,12 +421,24 @@ REGISTRY["trompete"] = _profile(
     "trompete",
     "Trumpet",
     "brass",
-    sounding=(55, 84),
+    sounding=(52, 87),
     comfortable=(58, 80),
     brightness="bright",
     attack="hard",
     transposition=2,
+    status="literature_derived",
+    uncertainty="medium",
+    module_name="trumpet",
     supported=("legato", "staccato", "mute", "flutter_tongue"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/trumpet.py from IOWA+ORCH sustain CDM medians "
+        "(pp/mf/ff); not a full measured spectrum."
+    ),
+    warnings=(
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
+    ),
     aliases=("trumpet",),
 )
 

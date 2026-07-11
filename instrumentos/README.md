@@ -28,6 +28,8 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 
 | `oboe.py` | `spectral_data` | IOWA+ORCH oboe sustain CDM medians (Zenodo workbook) |
 
+| `trumpet.py` | `spectral_data` | IOWA+ORCH trumpet sustain CDM medians (Zenodo workbook) |
+
 | `violin.py`, `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` | IOWA+ORCH arco sustain CDM medians (Zenodo workbooks) |
 | `violin_sordina.py` | `spectral_data` | IOWA+ORCH arco sordina CDM (`combined_sord_collection_raw`, pp/mf/ff) |
 | `violin_sul_ponticello.py`, `violin_art_harm.py` | `spectral_data` | Measured **mf only**; pp/ff extrapolated via `mf_anchor_dynamic_extrapolation.py` (violin arco ratio transfer) |
@@ -204,6 +206,8 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **Clarinet** | `clarinet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
 | **Oboe** | `oboe.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
+
+| **Trumpet** | `trumpet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
 | **Violin** | `violin.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 | **Violin sordina** | `violin_sordina.py` | `literature_derived` | IOWA+ORCH arco sordina CDM (pp/mf/ff) |
