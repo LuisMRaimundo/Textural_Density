@@ -1,0 +1,335 @@
+# Textural Density — Characterization Battery (value dump)
+
+- **Tool:** `benchmarks/characterization/run_battery.py`
+- **Generated:** 2026-07-11 22:52:34 UTC
+- **METRIC_SCHEMA_VERSION:** `5.1.0-strict-symbolic`
+- **Package version (pyproject):** `1.1.4`
+- **Cases:** 123 valued / 142 total; errors: 19
+- **DYNAMIC_LEVELS:** pppp, ppp, pp, p, mp, mf, f, ff, fff, ffff
+- **Registry POOL size:** 31
+- **Resolved instrument map:**
+  - `WW_HI` -> `flauta`
+  - `WW_MID` -> `clarinete`
+  - `WW_LO` -> `fagote`
+  - `BRASS` -> `trompete`
+  - `STR_HI` -> `violino`
+  - `STR_LO` -> `double_bass`
+- **Substitutions:** none (all preferred role keys resolved)
+- **`sorted(resultados.keys())`:** ['additional_metrics', 'composite_trace', 'construct_records', 'density', 'density_subindices', 'input_data', 'instrument_lookup_trace', 'metric_metadata', 'orchestration', 'pitch_aggregation', 'quantity_scaling', 'spectral_moments', 'texture', 'timbre']
+- **`sorted(resultados['density'].keys())`:** ['absolute', 'instrument', 'interval', 'pitch_structure', 'refined', 'sonic_mass', 'total', 'weighted', 'weighted_orchestral', 'weighted_pitch']
+
+**Column legend:** `S(raw)`=raw pairwise interval sum (`metric_metadata.metrics['density.interval'].raw_value`); `int`=`density.interval` (reported compactness); `PSD`=`density.pitch_structure`; `mass`=`density.sonic_mass`; `RSS`=`density.instrument` (pressure-equiv); `comp`=`density.total`; `comp_pre`=composite pre-log (`metrics['density.total'].raw_value`); `entropy`=`spectral_moments.spectral_entropy`; `harm`=`additional_metrics.harmonic_ratio`; `span`=`composite_trace.inputs.registral_span`; `asg`=`auto` when instruments were register-auto-assigned (full pitch->instrument map in the *Per-case assignment map* appendix and the CSV `assigned` column); `warn#`=count of distinct `metric_metadata.warnings`; `nf`=non-finite flag. Full warning text per case is in the JSON and the *Per-case warnings* appendix.
+
+## MORPH
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| MORPH.single | single pitch | C4 | flauta |  | mf | 1 | 0.5 | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 25.9548 | 25.9548 | 0 | 0 | 0 | 1 | 1.29774 | 0 | 1 | F |
+| MORPH.dyad_min2 | dyad C4-C#4 (min2) | C4 C#4 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 1 | 0.904837 | 0.279858 | 1.39965 | 46.4917 | 33.0971 | 0.00714899 | 0.0165974 | 0.990182 | 0.558267 | 1.65485 | 0.139929 | 0 | F |
+| MORPH.dyad_maj2 | dyad C4-D4 (maj2) | C4 D4 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 2 | 0.818731 | 0.259768 | 1.26608 | 46.3978 | 33.0389 | 0.0064653 | 0.0149983 | 0.989797 | 0.559396 | 1.65194 | 0.129884 | 0 | F |
+| MORPH.dyad_M3 | dyad C4-E4 (M3) | C4 E4 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 4 | 0.67032 | 0.2228 | 1.01929 | 42.3616 | 30.7056 | 0.00498203 | 0.0115376 | 0.963038 | 0.612695 | 1.53528 | 0.1114 | 0 | F |
+| MORPH.dyad_tritone | dyad C4-F#4 (tritone) | C4 F#4 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 6 | 0.548812 | 0.189999 | 0.83579 | 42.6531 | 30.8623 | 0.00410332 | 0.00949303 | 0.965756 | 0.608508 | 1.54312 | 0.0949993 | 0 | F |
+| MORPH.dyad_P5 | dyad C4-G4 (P5) | C4 G4 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 7 | 0.496585 | 0.175101 | 0.752286 | 41.685 | 30.3494 | 0.0036531 | 0.00844705 | 0.956156 | 0.622641 | 1.51747 | 0.0875507 | 0 | F |
+| MORPH.dyad_8ve | dyad C4-C5 (8ve) | C4 C5 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 12 | 0.301194 | 0.114342 | 0.416418 | 36.6524 | 28.0729 | 0.00189997 | 0.00438443 | 0.871121 | 1 | 1.40365 | 0.0571711 | 0 | F |
+| MORPH.dyad_2x8ve | dyad C4-C6 (2x8ve) | C4 C6 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 24 | 0.090718 | 0.0377125 | 0.116759 | 31.5162 | 26.5439 | 0.000494797 | 0.00113996 | 0.672277 | 1 | 1.3272 | 0.0188562 | 0 | F |
+| MORPH.dyad_3x8ve | dyad C4-C7 (3x8ve) | C4 C7 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 36 | 0.0273237 | 0.0117073 | 0.0325679 | 29.1118 | 26.1461 | 0.000132701 | 0.000305602 | 0.49521 | 1 | 1.3073 | 0.00585366 | 0 | F |
+| MORPH.cluster_3 | 3-semitone chromatic cluster from C4 | C4 C#4 D4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.81756 | 66.9348 | 38.9016 | 0.0287934 | 0.0685464 | 1.57558 | 0.387762 | 1.94508 | 0.136632 | 0 | F |
+| MORPH.cluster_5 | 5-semitone chromatic cluster from C4 | C4 C#4 D4 D#4 E4 | flauta flauta flauta flauta flauta |  | mf mf mf mf mf | 1 1 1 1 1 | 0.5 | 5 | 5 | 5 | 4 | 8.2275 | 0.260727 | 17.3727 | 101.904 | 46.1202 | 0.115609 | 0.304996 | 2.30493 | 0.254699 | 2.30601 | 0.130364 | 0 | F |
+| MORPH.cluster_7 | 7-semitone chromatic cluster from C4 | C4 C#4 D4 D#4 E4 F4 F#4 | flauta flauta flauta flauta flauta flauta flauta |  | mf mf mf mf mf mf mf | 1 1 1 1 1 1 1 | 0.5 | 7 | 7 | 7 | 6 | 16.2588 | 0.249009 | 36.8426 | 136.496 | 52.2119 | 0.242687 | 0.748587 | 2.79067 | 0.190151 | 2.6106 | 0.124505 | 0 | F |
+| MORPH.cluster_12 | 12-semitone chromatic cluster from C4 | C4 C#4 D4 D#4 E4 F4 F#4 G4 G#4 A4 A#4 B4 | flauta flauta flauta flauta flauta flauta flauta flauta flauta flauta flauta flauta |  | mf mf mf mf mf mf mf mf mf mf mf mf | 1 1 1 1 1 1 1 1 1 1 1 1 | 0.5 | 12 | 12 | 12 | 11 | 44.2776 | 0.222943 | 109.353 | 209.469 | 61.6997 | 0.574318 | 2.75248 | 3.55623 | 0.123908 | 3.08499 | 0.111472 | 0 | F |
+| MORPH.triad_major | major triad on C4 | C4 E4 G4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.4424 | 58.0918 | 34.5003 | 0.019378 | 0.04563 | 1.54485 | 0.446789 | 1.72502 | 0.106879 | 0 | F |
+| MORPH.triad_minor | minor triad on C4 | C4 D#4 G4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.45662 | 60.2471 | 35.5759 | 0.019806 | 0.0466608 | 1.55253 | 0.430805 | 1.77879 | 0.106879 | 0 | F |
+| MORPH.triad_dim | dim triad on C4 | C4 D#4 F#4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 6 | 2.03045 | 0.224485 | 3.68716 | 61.2153 | 36.0144 | 0.0212601 | 0.0501712 | 1.55811 | 0.423992 | 1.80072 | 0.112243 | 0 | F |
+| MORPH.triad_aug | aug triad on C4 | C4 E4 G#4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 8 | 1.78997 | 0.203211 | 3.23863 | 59.2953 | 35.0654 | 0.018439 | 0.0433715 | 1.55096 | 0.43772 | 1.75327 | 0.101606 | 0 | F |
+| MORPH.dom7 | dominant 7th | C4 E4 G4 A#4 | flauta flauta flauta flauta |  | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 10 | 3.56523 | 0.202544 | 7.00462 | 70.4328 | 36.6412 | 0.0422746 | 0.102236 | 1.94367 | 0.368504 | 1.83206 | 0.101272 | 0 | F |
+| MORPH.maj9 | major 9th | C4 E4 G4 B4 D5 | flauta flauta flauta flauta flauta |  | mf mf mf mf mf | 1 1 1 1 1 | 0.5 | 5 | 5 | 5 | 14 | 5.25938 | 0.183537 | 10.8729 | 79.6587 | 37.8203 | 0.0677289 | 0.16877 | 2.2335 | 0.325825 | 1.89101 | 0.0917684 | 0 | F |
+| MORPH.quartal | quartal stack | C4 F4 A#4 D#5 | flauta flauta flauta flauta |  | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 15 | 2.77848 | 0.165268 | 5.36335 | 64.1099 | 34.7687 | 0.031281 | 0.0746846 | 1.87232 | 0.404848 | 1.73844 | 0.0826341 | 0 | F |
+| MORPH.wide_triad | wide-spaced triad | C4 E5 G6 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 31 | 0.470076 | 0.0632177 | 0.764977 | 38.8568 | 27.539 | 0.00358677 | 0.00829305 | 1.24466 | 0.667959 | 1.37695 | 0.0316089 | 0 | F |
+| MORPH.high_cluster | high-register cluster | C7 C#7 D7 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.87126 | 9.58037 | 5.53148 | 0.0112413 | 0.0262219 | 1.5849 | 0.329534 | 0.276574 | 0.136632 | 0 | F |
+
+## CARD
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| CARD.compact_n1 | compact growth n=1 | C4 | flauta |  | mf | 1 | 0.5 | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 25.9548 | 25.9548 | 0 | 0 | 0 | 1 | 1.29774 | 0 | 1 | F |
+| CARD.compact_n2 | compact growth n=2 | C4 C#4 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 1 | 0.904837 | 0.279858 | 1.39965 | 46.4917 | 33.0971 | 0.00714899 | 0.0165974 | 0.990182 | 0.558267 | 1.65485 | 0.139929 | 0 | F |
+| CARD.compact_n3 | compact growth n=3 | C4 C#4 D4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.81756 | 66.9348 | 38.9016 | 0.0287934 | 0.0685464 | 1.57558 | 0.387762 | 1.94508 | 0.136632 | 0 | F |
+| CARD.compact_n4 | compact growth n=4 | C4 C#4 D4 D#4 | flauta flauta flauta flauta |  | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 3 | 5.09279 | 0.26689 | 10.1822 | 85.4969 | 43.1032 | 0.0658552 | 0.163738 | 1.98836 | 0.303575 | 2.15516 | 0.133445 | 0 | F |
+| CARD.compact_n5 | compact growth n=5 | C4 C#4 D4 D#4 E4 | flauta flauta flauta flauta flauta |  | mf mf mf mf mf | 1 1 1 1 1 | 0.5 | 5 | 5 | 5 | 4 | 8.2275 | 0.260727 | 17.3727 | 101.904 | 46.1202 | 0.115609 | 0.304996 | 2.30493 | 0.254699 | 2.30601 | 0.130364 | 0 | F |
+| CARD.compact_n6 | compact growth n=6 | C4 C#4 D4 D#4 E4 F4 | flauta flauta flauta flauta flauta flauta |  | mf mf mf mf mf mf | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 5 | 11.9687 | 0.254769 | 26.3122 | 119.797 | 49.4697 | 0.176339 | 0.500857 | 2.5689 | 0.216656 | 2.47349 | 0.127385 | 0 | F |
+| CARD.compact_n7 | compact growth n=7 | C4 C#4 D4 D#4 E4 F4 F#4 | flauta flauta flauta flauta flauta flauta flauta |  | mf mf mf mf mf mf mf | 1 1 1 1 1 1 1 | 0.5 | 7 | 7 | 7 | 6 | 16.2588 | 0.249009 | 36.8426 | 136.496 | 52.2119 | 0.242687 | 0.748587 | 2.79067 | 0.190151 | 2.6106 | 0.124505 | 0 | F |
+| CARD.wide_n2 | wide growth n=2 | C4 C5 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 12 | 0.301194 | 0.114342 | 0.416418 | 36.6524 | 28.0729 | 0.00189997 | 0.00438443 | 0.871121 | 1 | 1.40365 | 0.0571711 | 0 | F |
+| CARD.wide_n3 | wide growth n=3 | C4 C5 E6 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 28 | 0.563901 | 0.0748044 | 0.893238 | 41.4077 | 28.4728 | 0.00431979 | 0.00999631 | 1.28543 | 0.88516 | 1.42364 | 0.0374022 | 0 | F |
+| CARD.farbass_0 | far-bass base (5 WW) | C4 D4 E4 F4 A#4 | flauta flauta flauta flauta flauta |  | mf mf mf mf mf | 1 1 1 1 1 | 0.5 | 5 | 5 | 5 | 10 | 6.53252 | 0.218339 | 13.6934 | 93.0393 | 42.8163 | 0.0898022 | 0.229709 | 2.27965 | 0.278966 | 2.14081 | 0.10917 | 0 | F |
+| CARD.farbass_E1 | far-bass +E1 (STR_LO) | C4 D4 E4 F4 A#4 E1 | flauta flauta flauta flauta flauta double_bass |  | mf mf mf mf mf mf | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 42 | 6.6737 | 0.159842 | 13.4868 | 161.186 | 80.4813 | 0.113204 | 0.297788 | 2.29858 | 0.524572 | 4.02407 | 0.0799209 | 0 | F |
+
+## INST
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| INST.homogeneous | 3x WW_HI triad | C4 E4 G4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.4424 | 58.0918 | 34.5003 | 0.019378 | 0.04563 | 1.54485 | 0.446789 | 1.72502 | 0.106879 | 0 | F |
+| INST.contrasting | WW_HI + STR_LO extremes | C6 C2 | flauta double_bass |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 48 | 0.00822975 | 0.00355951 | 0.0100108 | 45.0863 | 39.9143 | 5.07671e-05 | 0.000116902 | 0.538916 | 1 | 1.99571 | 0.00177975 | 0 | F |
+| INST.mixed_ww | WW hi/mid/lo | C6 C4 C2 | flauta clarinete fagote |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 48 | 0.189666 | 0.0266239 | 0.276889 | 86.5388 | 66.0621 | 0.00194114 | 0.00447964 | 1.04931 | 1 | 3.3031 | 0.013312 | 0 | F |
+| INST.timbre_iso_ww | triad as 3x WW_HI (timbre iso A) | C4 E4 G4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.4424 | 58.0918 | 34.5003 | 0.019378 | 0.04563 | 1.54485 | 0.446789 | 1.72502 | 0.106879 | 0 | F |
+| INST.timbre_iso_mixed | triad as WW_HI/STR_HI/WW_LO (timbre iso B) | C4 E4 G4 | flauta violino fagote |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.45589 | 75.5185 | 46.3989 | 0.0221106 | 0.0522298 | 1.4843 | 0.343688 | 2.31995 | 0.106879 | 0 | F |
+| INST.string_choir | string choir hi/hi/lo | C5 G4 C2 | violino violino double_bass |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 36 | 0.678904 | 0.0885972 | 1.17248 | 84.7813 | 51.5481 | 0.00807843 | 0.0187754 | 1.50352 | 0.662864 | 2.57741 | 0.0442986 | 0 | F |
+| INST.brass_triad | triad as 3x BRASS | C4 E4 G4 | trompete trompete trompete |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.49685 | 82.3333 | 47.9183 | 0.0233273 | 0.0551819 | 1.57321 | 0.384405 | 2.39592 | 0.106879 | 0 | F |
+| INST.ww_triad_ref | triad as 3x WW_HI (brass ref) | C4 E4 G4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.4424 | 58.0918 | 34.5003 | 0.019378 | 0.04563 | 1.54485 | 0.446789 | 1.72502 | 0.106879 | 0 | F |
+
+## QTY
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| QTY.q1 | triad Qty=1 each | C4 E4 G4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.4424 | 58.0918 | 34.5003 | 0.019378 | 0.04563 | 1.54485 | 0.446789 | 1.72502 | 0.106879 | 0 | F |
+| QTY.q2 | triad Qty=2 each | C4 E4 G4 | flauta flauta flauta |  | mf mf mf | 2 2 2 | 0.5 | 3 | 3 | 6 | 7 | 1.90772 | 0.213759 | 3.4424 | 116.184 | 48.7908 | 0.0271581 | 0.0645306 | 1.54485 | 0.446789 | 2.43954 | 0.106879 | 0 | F |
+| QTY.q4 | triad Qty=4 each | C4 E4 G4 | flauta flauta flauta |  | mf mf mf | 4 4 4 | 0.5 | 3 | 3 | 12 | 7 | 1.90772 | 0.213759 | 3.4424 | 232.367 | 69.0007 | 0.0379283 | 0.09126 | 1.54485 | 0.446789 | 3.45003 | 0.106879 | 0 | F |
+| QTY.q8 | triad Qty=8 each | C4 E4 G4 | flauta flauta flauta |  | mf mf mf | 8 8 8 | 0.5 | 3 | 3 | 24 | 7 | 1.90772 | 0.213759 | 3.4424 | 464.734 | 97.5817 | 0.0527175 | 0.129061 | 1.54485 | 0.446789 | 4.87908 | 0.106879 | 0 | F |
+| QTY.rowsplit_single | one event Qty=3 (unison) | C4 | flauta |  | mf | 3 | 0.5 | 1 | 1 | 3 | 0 | 0 | 0 | 0 | 77.8643 | 44.955 | 0 | 0 | 0 | 1 | 2.24775 | 0 | 1 | F |
+| QTY.rowsplit_split | three events Qty=1 (unison) | C4 C4 C4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 1 | 3 | 0 | 0 | 0 | 0 | 77.8643 | 44.955 | 0 | 0 | 0 | 1 | 2.24775 | 0 | 0 | F |
+| QTY.unison_multi_timbre | unison C4 across 3 timbres Qty1 | C4 C4 C4 | flauta clarinete violino |  | mf mf mf | 1 1 1 | 0.5 | 3 | 1 | 3 | 0 | 0 | 0 | 0 | 66.8554 | 39.0792 | 0 | 0 | 0 | 1 | 1.95396 | 0 | 0 | F |
+
+## DYN
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| DYN.uniform_pppp | triad uniform pppp | C4 E4 G4 | flauta flauta flauta |  | pppp pppp pppp | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.54102 | 28.6708 | 16.5762 | 0.0140897 | 0.0329746 | 1.58297 | 0.317404 | 0.82881 | 0.106879 | 3 | F |
+| DYN.uniform_pp | triad uniform pp | C4 E4 G4 | flauta flauta flauta |  | pp pp pp | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.54102 | 39.6827 | 22.9428 | 0.0165293 | 0.0387937 | 1.58297 | 0.317404 | 1.14714 | 0.106879 | 0 | F |
+| DYN.uniform_mp | triad uniform mp | C4 E4 G4 | flauta flauta flauta |  | mp mp mp | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.45702 | 54.4369 | 32.1158 | 0.0188498 | 0.0443589 | 1.55437 | 0.432403 | 1.60579 | 0.106879 | 0 | F |
+| DYN.uniform_mf | triad uniform mf | C4 E4 G4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.4424 | 58.0918 | 34.5003 | 0.019378 | 0.04563 | 1.54485 | 0.446789 | 1.72502 | 0.106879 | 0 | F |
+| DYN.uniform_ff | triad uniform ff | C4 E4 G4 | flauta flauta flauta |  | ff ff ff | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.5031 | 62.3243 | 36.1784 | 0.0204013 | 0.0480965 | 1.57714 | 0.378104 | 1.80892 | 0.106879 | 0 | F |
+| DYN.uniform_ffff | triad uniform ffff | C4 E4 G4 | flauta flauta flauta |  | ffff ffff ffff | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.5031 | 75.4124 | 43.7758 | 0.0223897 | 0.0529061 | 1.57714 | 0.378104 | 2.18879 | 0.106879 | 3 | F |
+| DYN.mixed | triad [pp,mf,ff] | C4 E4 G4 | flauta flauta flauta |  | pp mf ff | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.55904 | 47.2807 | 27.6031 | 0.0181013 | 0.0425606 | 1.56831 | 0.266397 | 1.38016 | 0.106879 | 0 | F |
+| DYN.contrast | triad [ffff,pppp,ffff] | C4 E4 G4 | flauta flauta flauta |  | ffff pppp ffff | 1 1 1 | 0.5 | 3 | 3 | 3 | 7 | 1.90772 | 0.213759 | 3.36481 | 59.94 | 37.2673 | 0.0192433 | 0.0453056 | 1.45791 | 0.475704 | 1.86337 | 0.106879 | 3 | F |
+
+## EDO
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| EDO.12_scale | 12-EDO scale fragment [0,1,2,3] | C4 C#4 D4 D#4 | flauta flauta flauta flauta |  | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 3 | 5.09279 | 0.26689 | 10.1822 | 85.4969 | 43.1032 | 0.0658552 | 0.163738 | 1.98836 | 0.303575 | 2.15516 | 0.133445 | 0 | F |
+| EDO.12_cluster | 12-EDO cluster [0,1,2] | C4 C#4 D4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.81756 | 66.9348 | 38.9016 | 0.0287934 | 0.0685464 | 1.57558 | 0.387762 | 1.94508 | 0.136632 | 0 | F |
+| EDO.19_scale | 19-EDO scale fragment [0,1,2,3] | C4 C#4-36.842105263158231c C#4+26.315789473684248c D4-10.526315789473983c | flauta flauta flauta flauta |  | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 1.89474 | 5.40645 | 0.278999 | 10.8383 | 89.1459 | 44.7965 | 0.071134 | 0.177969 | 1.99293 | 0.291149 | 2.23982 | 0.1395 | 0 | F |
+| EDO.19_cluster | 19-EDO cluster [0,1,2] | C4 C#4-36.842105263158231c C#4+26.315789473684248c | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 1.26316 | 2.75893 | 0.28322 | 5.06712 | 68.6867 | 39.8516 | 0.0306138 | 0.0730348 | 1.57792 | 0.377872 | 1.99258 | 0.14161 | 0 | F |
+| EDO.24_scale | 24-EDO scale fragment [0,1,2,3] | C4 C4+50c C#4 D4-50c | flauta flauta flauta flauta |  | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 1.5 | 5.52407 | 0.283455 | 11.0802 | 90.2499 | 45.3505 | 0.0730083 | 0.183064 | 1.99287 | 0.287588 | 2.26753 | 0.141727 | 0 | F |
+| EDO.24_cluster | 24-EDO cluster [0,1,2] | C4 C4+50c C#4 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 1 | 2.8073 | 0.286853 | 5.16124 | 69.7606 | 40.4581 | 0.0313966 | 0.0749706 | 1.57842 | 0.372055 | 2.0229 | 0.143426 | 0 | F |
+| EDO.31_scale | 31-EDO scale fragment [0,1,2,3] | C4 C4+38.70967741935516c C#4-22.580645161290391c C#4+16.129032258064768c | flauta flauta flauta flauta |  | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 1.16129 | 5.62745 | 0.287333 | 11.2977 | 91.8987 | 46.1586 | 0.0749464 | 0.188356 | 1.99344 | 0.282428 | 2.30793 | 0.143667 | 0 | F |
+| EDO.31_cluster | 31-EDO cluster [0,1,2] | C4 C4+38.70967741935516c C#4-22.580645161290391c | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 0.774194 | 2.84956 | 0.290002 | 5.24781 | 71.3854 | 41.35 | 0.0322604 | 0.0771108 | 1.58016 | 0.363586 | 2.0675 | 0.145001 | 0 | F |
+| EDO.53_scale | 53-EDO scale fragment [0,1,2,3] | C4 C4+22.64150943396217c C4+45.283018867924341c C#4-32.075471698113489c | flauta flauta flauta flauta |  | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 0.679245 | 5.77862 | 0.292943 | 11.1587 | 96.737 | 48.4705 | 0.075865 | 0.190872 | 1.99693 | 0.529367 | 2.42353 | 0.146472 | 0 | F |
+| EDO.53_cluster | 53-EDO cluster [0,1,2] | C4 C4+22.64150943396217c C4+45.283018867924341c | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 0.45283 | 2.91095 | 0.294536 | 5.09204 | 74.8581 | 43.2517 | 0.0320625 | 0.0766202 | 1.58388 | 0.684086 | 2.16258 | 0.147268 | 0 | F |
+| EDO.72_scale | 72-EDO scale fragment [0,1,2,3] | C4 C4+16.66666666666643c C4+33.33333333333357c C4+50c | flauta flauta flauta flauta |  | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 0.5 | 5.83608 | 0.295056 | 11.2928 | 99.3452 | 49.7159 | 0.0776412 | 0.195752 | 1.99873 | 0.51852 | 2.48579 | 0.147528 | 0 | F |
+| EDO.72_cluster | 72-EDO cluster [0,1,2] | C4 C4+16.66666666666643c C4+33.33333333333357c | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 0.333333 | 2.93416 | 0.296238 | 5.13933 | 76.0763 | 43.9343 | 0.032602 | 0.0779584 | 1.58458 | 0.677116 | 2.19672 | 0.148119 | 0 | F |
+| EDO.12_spread | 12-EDO spread reference | C4 E5 G6 | flauta flauta flauta |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 31 | 0.470076 | 0.0632177 | 0.764977 | 38.8568 | 27.539 | 0.00358677 | 0.00829305 | 1.24466 | 0.667959 | 1.37695 | 0.0316089 | 0 | F |
+| EDO.detune_0c | detune sweep C4 vs +0c | C4 C4 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 1 | 2 | 0 | 0 | 0 | 0 | 51.9095 | 36.7056 | 0 | 0 | 0 | 1 | 1.83528 | 0 | 0 | F |
+| EDO.detune_10c | detune sweep C4 vs +10c | C4 C4+10.000000000000142c | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 0.1 | 0.99005 | 0.298864 | 1.42485 | 51.7595 | 36.5996 | 0.0076743 | 0.0178278 | 0.999994 | 1 | 1.82998 | 0.149432 | 0 | F |
+| EDO.detune_25c | detune sweep C4 vs +25c | C4 C4+25c | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 0.25 | 0.97531 | 0.295635 | 1.40356 | 51.0716 | 36.118 | 0.00751064 | 0.0174443 | 0.999806 | 1 | 1.8059 | 0.147818 | 0 | F |
+| EDO.detune_50c | detune sweep C4 vs +50c | C4 C4+50c | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 0.5 | 0.951229 | 0.290308 | 1.48225 | 49.2237 | 34.8582 | 0.00778441 | 0.0180859 | 0.997851 | 0.527282 | 1.74291 | 0.145154 | 0 | F |
+| EDO.detune_100c | detune sweep C4 vs +100c | C4 C#4 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 1 | 0.904837 | 0.279858 | 1.39965 | 46.4917 | 33.0971 | 0.00714899 | 0.0165974 | 0.990182 | 0.558267 | 1.65485 | 0.139929 | 0 | F |
+| EDO.near_unison_0p5c | near-unison C4 vs +0.5c | C4 C4+0.500000000000256c | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 0.005 | 0.9995 | 0.300921 | 1.43846 | 51.9091 | 36.7053 | 0.007758 | 0.018024 | 1 | 1 | 1.83526 | 0.150461 | 0 | F |
+
+## WEIGHT
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| WEIGHT.w0.0 | weight sweep w=0.0 | C6 C4 C2 | flauta violino double_bass |  | mf mf mf | 1 1 1 | 0 | 3 | 3 | 3 | 48 | 0.189666 | 0.0266239 | 0.294163 | 68.4612 | 46.2551 | 0.00183447 | 0.00423295 | 1.2811 | 1 | 0 | 0.0266239 | 0 | F |
+| WEIGHT.w0.25 | weight sweep w=0.25 | C6 C4 C2 | flauta violino double_bass |  | mf mf mf | 1 1 1 | 0.25 | 3 | 3 | 3 | 48 | 0.189666 | 0.0266239 | 0.294163 | 68.4612 | 46.2551 | 0.00183447 | 0.00423295 | 1.2811 | 1 | 1.15638 | 0.0199679 | 0 | F |
+| WEIGHT.w0.5 | weight sweep w=0.5 | C6 C4 C2 | flauta violino double_bass |  | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 48 | 0.189666 | 0.0266239 | 0.294163 | 68.4612 | 46.2551 | 0.00183447 | 0.00423295 | 1.2811 | 1 | 2.31275 | 0.013312 | 0 | F |
+| WEIGHT.w0.75 | weight sweep w=0.75 | C6 C4 C2 | flauta violino double_bass |  | mf mf mf | 1 1 1 | 0.75 | 3 | 3 | 3 | 48 | 0.189666 | 0.0266239 | 0.294163 | 68.4612 | 46.2551 | 0.00183447 | 0.00423295 | 1.2811 | 1 | 3.46913 | 0.00665598 | 0 | F |
+| WEIGHT.w1.0 | weight sweep w=1.0 | C6 C4 C2 | flauta violino double_bass |  | mf mf mf | 1 1 1 | 1 | 3 | 3 | 3 | 48 | 0.189666 | 0.0266239 | 0.294163 | 68.4612 | 46.2551 | 0.00183447 | 0.00423295 | 1.2811 | 1 | 4.62551 | 0 | 0 | F |
+
+## EDGE
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| EDGE.two_note_min | two-note minimum | C4 C#4 | flauta flauta |  | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 1 | 0.904837 | 0.279858 | 1.39965 | 46.4917 | 33.0971 | 0.00714899 | 0.0165974 | 0.990182 | 0.558267 | 1.65485 | 0.139929 | 0 | F |
+| EDGE.single | single pitch | C4 | flauta |  | mf | 1 | 0.5 | 1 | 1 | 1 | 0 | 0 | 0 | 0 | 25.9548 | 25.9548 | 0 | 0 | 0 | 1 | 1.29774 | 0 | 1 | F |
+
+## MONO
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| MONO.octave_base | 7-note cluster (mf) — octave-probe base | C4 C#4 D4 D#4 E4 F4 F#4 | flauta flauta flauta flauta flauta flauta flauta |  | mf mf mf mf mf mf mf | 1 1 1 1 1 1 1 | 0.5 | 7 | 7 | 7 | 6 | 16.2588 | 0.249009 | 36.8426 | 136.496 | 52.2119 | 0.242687 | 0.748587 | 2.79067 | 0.190151 | 2.6106 | 0.124505 | 0 | F |
+| MONO.octave_add | cluster + octave C6 at pppp (min mass, max fusion) | C4 C#4 D4 D#4 E4 F4 F#4 C6 | flauta flauta flauta flauta flauta flauta flauta flauta |  | mf mf mf mf mf mf mf pppp | 1 1 1 1 1 1 1 1 | 0.5 | 8 | 8 | 8 | 24 | 17.1332 | 0.207338 | 39.149 | 140.512 | 52.3662 | 0.256974 | 0.807067 | 2.89814 | 0.213299 | 2.61831 | 0.103669 | 1 | F |
+| MONO.twelfth_base | 7-note cluster (mf) — twelfth-probe base | C4 C#4 D4 D#4 E4 F4 F#4 | flauta flauta flauta flauta flauta flauta flauta |  | mf mf mf mf mf mf mf | 1 1 1 1 1 1 1 | 0.5 | 7 | 7 | 7 | 6 | 16.2588 | 0.249009 | 36.8426 | 136.496 | 52.2119 | 0.242687 | 0.748587 | 2.79067 | 0.190151 | 2.6106 | 0.124505 | 0 | F |
+| MONO.twelfth_add | cluster + perfect twelfth G5 at pppp | C4 C#4 D4 D#4 E4 F4 F#4 G5 | flauta flauta flauta flauta flauta flauta flauta flauta |  | mf mf mf mf mf mf mf pppp | 1 1 1 1 1 1 1 1 | 0.5 | 8 | 8 | 8 | 19 | 17.7005 | 0.212763 | 40.6758 | 141.205 | 52.4239 | 0.264961 | 0.840609 | 2.90853 | 0.183809 | 2.6212 | 0.106381 | 1 | F |
+| MONO.farbass_base | 5 WW (mf) — far-bass regression base | C4 D4 E4 F4 A#4 | flauta flauta flauta flauta flauta |  | mf mf mf mf mf | 1 1 1 1 1 | 0.5 | 5 | 5 | 5 | 10 | 6.53252 | 0.218339 | 13.6934 | 93.0393 | 42.8163 | 0.0898022 | 0.229709 | 2.27965 | 0.278966 | 2.14081 | 0.10917 | 0 | F |
+| MONO.farbass_add | far-bass +E1 (STR_LO, mf) — mass-bearing add | C4 D4 E4 F4 A#4 E1 | flauta flauta flauta flauta flauta double_bass |  | mf mf mf mf mf mf | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 42 | 6.6737 | 0.159842 | 13.4868 | 161.186 | 80.4813 | 0.113204 | 0.297788 | 2.29858 | 0.524572 | 4.02407 | 0.0799209 | 0 | F |
+
+## REG
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| REG.cluster3_C2 | 3-note chromatic cluster shape rooted at C2 | C2 C#2 D2 | contrabaixo contrabaixo contrabaixo | auto | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.84312 | 108.999 | 63.0574 | 0.0366035 | 0.0879363 | 1.58208 | 0.362617 | 3.15287 | 0.136632 | 0 | F |
+| REG.cluster3_C3 | 3-note chromatic cluster shape rooted at C3 | C3 C#3 D3 | fagote fagote fagote | auto | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.86166 | 74.7953 | 43.1917 | 0.0306495 | 0.0731231 | 1.58468 | 0.341735 | 2.15958 | 0.136632 | 0 | F |
+| REG.cluster3_C4 | 3-note chromatic cluster shape rooted at C4 | C4 C#4 D4 | clarinete clarinete clarinete | auto | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.85495 | 50.3724 | 29.1285 | 0.0252754 | 0.0599257 | 1.58265 | 0.347924 | 1.45642 | 0.136632 | 0 | F |
+| REG.cluster3_C7 | 3-note chromatic cluster shape rooted at C7 | C7 C#7 D7 | flauta flauta flauta | auto | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.87126 | 9.58037 | 5.53148 | 0.0112413 | 0.0262219 | 1.5849 | 0.329534 | 0.276574 | 0.136632 | 0 | F |
+| REG.triad_C3 | open triad shape (root,+16,+31) rooted at C3 | C3 E4 G5 | fagote clarinete flauta | auto | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 31 | 0.470076 | 0.0632177 | 0.834999 | 52.1396 | 31.8316 | 0.00453022 | 0.0104858 | 1.50251 | 0.490226 | 1.59158 | 0.0316089 | 0 | F |
+| REG.triad_C5 | open triad shape (root,+16,+31) rooted at C5 | C5 E6 G7 | flauta flauta violino | auto | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 31 | 0.470076 | 0.0632177 | 0.834844 | 21.8179 | 13.3254 | 0.00293535 | 0.00678178 | 1.50168 | 0.490314 | 0.666268 | 0.0316089 | 0 | F |
+
+## BIMODAL
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| BIMODAL.low | low cluster stratum alone | C2 C#2 D2 | contrabaixo contrabaixo contrabaixo | auto | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.84312 | 108.999 | 63.0574 | 0.0366035 | 0.0879363 | 1.58208 | 0.362617 | 3.15287 | 0.136632 | 0 | F |
+| BIMODAL.high | high cluster stratum alone | C7 C#7 D7 | flauta flauta flauta | auto | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.87126 | 9.58037 | 5.53148 | 0.0112413 | 0.0262219 | 1.5849 | 0.329534 | 0.276574 | 0.136632 | 0 | F |
+| BIMODAL.combined | low + high strata (6 notes) | C2 C#2 D2 C7 C#7 D7 | contrabaixo contrabaixo contrabaixo flauta flauta flauta | auto | mf mf mf mf mf mf | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 62 | 5.27927 | 0.130961 | 10.4597 | 118.579 | 63.2996 | 0.0784886 | 0.198088 | 1.98728 | 0.359945 | 3.16498 | 0.0654805 | 0 | F |
+| BIMODAL.combined_bridge | low + high strata + mid bridge G4 | C2 C#2 D2 C7 C#7 D7 G4 | contrabaixo contrabaixo contrabaixo flauta flauta flauta clarinete | auto | mf mf mf mf mf mf mf | 1 1 1 1 1 1 1 | 0.5 | 7 | 7 | 7 | 62 | 5.57899 | 0.102319 | 11.5561 | 130.657 | 64.4415 | 0.089808 | 0.229725 | 2.24813 | 0.326672 | 3.22208 | 0.0511596 | 0 | F |
+
+## DENSPARSE
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| DENSPARSE.dense_soft | 7-note cluster from C5, all pppp | C5 C#5 D5 D#5 E5 F5 F#5 | flauta flauta flauta flauta flauta flauta flauta | auto | pppp pppp pppp pppp pppp pppp pppp | 1 1 1 1 1 1 1 | 0.5 | 7 | 7 | 7 | 6 | 16.2588 | 0.249009 | 37.0016 | 33.0104 | 12.5564 | 0.136633 | 0.369725 | 2.7982 | 0.16773 | 0.627822 | 0.124505 | 7 | F |
+| DENSPARSE.sparse_loud | wide trio [C2,E4,C7], all ffff | C2 E4 C7 | contrabaixo clarinete flauta | auto | ffff ffff ffff | 1 1 1 | 0.5 | 3 | 3 | 3 | 60 | 0.104051 | 0.0148076 | 0.155 | 93.7282 | 72.7991 | 0.00113192 | 0.00260974 | 1.00227 | 0.805179 | 3.63996 | 0.0074038 | 3 | F |
+| DENSPARSE.dense_loud | 7-note cluster from C5, all ffff | C5 C#5 D5 D#5 E5 F5 F#5 | flauta flauta flauta flauta flauta flauta flauta | auto | ffff ffff ffff ffff ffff ffff ffff | 1 1 1 1 1 1 1 | 0.5 | 7 | 7 | 7 | 6 | 16.2588 | 0.249009 | 36.9573 | 81.3228 | 31.1691 | 0.198551 | 0.579613 | 2.78631 | 0.166782 | 1.55846 | 0.124505 | 7 | F |
+| DENSPARSE.sparse_soft | wide trio [C2,E4,C7], all pppp | C2 E4 C7 | contrabaixo clarinete flauta | auto | pppp pppp pppp | 1 1 1 | 0.5 | 3 | 3 | 3 | 60 | 0.104051 | 0.0148076 | 0.145536 | 37.7583 | 31.3903 | 0.000674923 | 0.00155528 | 0.841814 | 0.877671 | 1.56951 | 0.0074038 | 3 | F |
+
+## DYNGRAD
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| DYNGRAD.uniform | 6-note cluster C4, uniform mf | C4 C#4 D4 D#4 E4 F4 | clarinete clarinete clarinete clarinete clarinete clarinete | auto | mf mf mf mf mf mf | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 5 | 11.9687 | 0.254769 | 26.456 | 93.1022 | 38.2045 | 0.159553 | 0.443952 | 2.57746 | 0.188242 | 1.91023 | 0.127385 | 0 | F |
+| DYNGRAD.wedge | 6-note cluster C4, wedge pppp..ffff (low->high) | C4 C#4 D4 D#4 E4 F4 | clarinete clarinete clarinete clarinete clarinete clarinete | auto | pppp pp mp f ff ffff | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 5 | 11.9687 | 0.254769 | 26.3 | 80.0503 | 36.9794 | 0.148983 | 0.409232 | 2.36446 | 0.0478147 | 1.84897 | 0.127385 | 2 | F |
+| DYNGRAD.inv_wedge | 6-note cluster C4, inverted wedge ffff..pppp | C4 C#4 D4 D#4 E4 F4 | clarinete clarinete clarinete clarinete clarinete clarinete | auto | ffff ff f mp pp pppp | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 5 | 11.9687 | 0.254769 | 24.931 | 97.8655 | 46.8042 | 0.155011 | 0.42893 | 2.29563 | 0.333199 | 2.34021 | 0.127385 | 2 | F |
+| DYNGRAD.extremes | 6-note cluster C4, extremes-only ffff/pppp | C4 C#4 D4 D#4 E4 F4 | clarinete clarinete clarinete clarinete clarinete clarinete | auto | ffff pppp pppp pppp pppp ffff | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 5 | 11.9687 | 0.254769 | 23.3753 | 73.9373 | 41.8048 | 0.130192 | 0.34956 | 1.97841 | 0.441032 | 2.09024 | 0.127385 | 6 | F |
+| DYNGRAD.bass_heavy | bass ffff + soft treble triad (C2,C5,C#5,D5) | C2 C5 C#5 D5 | contrabaixo flauta flauta flauta | auto | ffff pppp pppp pppp | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 38 | 2.70282 | 0.161509 | 3.924 | 85.6552 | 70.8441 | 0.0265984 | 0.0631594 | 0.96224 | 0.885148 | 3.5422 | 0.0807545 | 4 | F |
+
+## FUSION
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| FUSION.harmonic | partials 1-6 on C2 (harmonic series) | C2 C3 G3+1.999999999999602c C4 E4-14.000000000000057c G4+1.999999999999602c | contrabaixo fagote clarinete clarinete clarinete clarinete | auto | mf mf mf mf mf mf | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 31.02 | 5.0251 | 0.125483 | 10.2525 | 135.999 | 59.8688 | 0.0820435 | 0.207935 | 2.47219 | 0.607439 | 2.99344 | 0.0627417 | 0 | F |
+| FUSION.inharmonic | equal-cardinality inharmonic stack (6) | C2 C#3 F#3+50c B3 D#4+50c A4 | contrabaixo fagote clarinete clarinete clarinete clarinete | auto | mf mf mf mf mf mf | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 33 | 4.8068 | 0.120723 | 10.2951 | 136.199 | 60.4863 | 0.0824094 | 0.208953 | 2.453 | 0.290199 | 3.02432 | 0.0603615 | 0 | F |
+| FUSION.octave_pillar | 5-octave pillar C2..C6 | C2 C3 C4 C5 C6 | contrabaixo fagote clarinete flauta flauta | auto | mf mf mf mf mf | 1 1 1 1 1 | 0.5 | 5 | 5 | 5 | 48 | 1.53981 | 0.0621986 | 2.77115 | 98.8699 | 51.6533 | 0.0203285 | 0.0479208 | 2.05647 | 1 | 2.58266 | 0.0310993 | 0 | F |
+| FUSION.qtone_cluster | 5-note quarter-tone cluster from C4 | C4 C4+50c C#4 C#4+50c D4 | clarinete clarinete clarinete clarinete clarinete | auto | mf mf mf mf mf | 1 1 1 1 1 | 0.5 | 5 | 5 | 5 | 2 | 9.05958 | 0.280113 | 19.3015 | 83.1159 | 37.2094 | 0.115953 | 0.30603 | 2.32041 | 0.210859 | 1.86047 | 0.140057 | 0 | F |
+
+## MICROMIX
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| MICROMIX.near_unison | near-unison triple C5/+8c/-8c | C5 C5+8c C5-8c | flauta flauta flauta | auto | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 0.16 | 2.96819 | 0.298721 | 4.91896 | 32.1062 | 18.5377 | 0.0205572 | 0.048473 | 1.58487 | 1 | 0.926883 | 0.149361 | 0 | F |
+| MICROMIX.micro_frame | micro-knot in wide frame [C4,C5,+8c,-8c,C7] | C4 C5 C5+8c C5-8c C7 | clarinete flauta flauta flauta flauta | auto | mf mf mf mf mf | 1 1 1 1 1 | 0.5 | 5 | 5 | 5 | 36 | 4.17128 | 0.151409 | 7.91483 | 52.789 | 25.7053 | 0.0413968 | 0.10001 | 2.17138 | 0.794452 | 1.28527 | 0.0757045 | 0 | F |
+| MICROMIX.edo24_pedal | 24-EDO 5-cluster from C5 over C2 pedal | C2 C5 C5+50c C#5 C#5+50c D5 | contrabaixo flauta flauta flauta flauta flauta | auto | mf mf mf mf mf mf | 1 1 1 1 1 1 | 0.5 | 6 | 6 | 6 | 38 | 9.1835 | 0.207428 | 18.3036 | 87.106 | 44.9143 | 0.112971 | 0.297094 | 2.26021 | 0.576568 | 2.24571 | 0.103714 | 0 | F |
+| MICROMIX.mixed_system | JI-flavoured tetrad [C4,E4-14c,G4+2c,B4-31c] | C4 E4-14c G4+2c B4-31c | clarinete clarinete clarinete flauta | auto | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 10.69 | 3.44568 | 0.197082 | 6.88157 | 57.3128 | 28.983 | 0.0376669 | 0.0906036 | 1.98371 | 0.305791 | 1.44915 | 0.0985411 | 0 | F |
+
+## MASSASYM
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| MASSASYM.massed_bass | massed bass Qty8 (contrabaixo) + solo treble (flauta) | C2 C6 | contrabaixo flauta |  | mf mf | 8 1 | 0.5 | 2 | 2 | 9 | 48 | 0.00822975 | 0.00355951 | 0.0100108 | 321.761 | 111.932 | 0.000135608 | 0.000312297 | 0.538916 | 1 | 5.59658 | 0.00177975 | 0 | F |
+| MASSASYM.massed_treble | solo bass (contrabaixo) + massed treble Qty8 (violino) | C2 C6 | contrabaixo violino |  | mf mf | 1 8 | 0.5 | 2 | 2 | 9 | 48 | 0.00822975 | 0.00355951 | 0.0112711 | 156.994 | 57.3332 | 0.000106652 | 0.000245606 | 0.842715 | 1 | 2.86666 | 0.00177975 | 0 | F |
+| MASSASYM.balanced | balanced Qty4/4 (contrabaixo/flauta) | C2 C6 | contrabaixo flauta |  | mf mf | 4 4 | 0.5 | 2 | 2 | 8 | 48 | 0.00822975 | 0.00355951 | 0.0100108 | 180.345 | 79.8285 | 0.000101528 | 0.000233805 | 0.538916 | 1 | 3.99143 | 0.00177975 | 0 | F |
+
+## XTREME
+
+| id | desc | notes | instr | asg | dyn | qty | w | ev | dist | plr | span | S(raw) | int | PSD | mass | RSS | comp | comp_pre | entropy | harm | w_orch | w_pitch | warn# | nf |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| XTREME.very_spacious | very spacious [C2,G3,D5,A6] | C2 G3 D5 A6 | contrabaixo clarinete flauta flauta | auto | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 57 | 0.496793 | 0.0345478 | 0.896119 | 78.4096 | 48.4639 | 0.00595233 | 0.0138001 | 1.58921 | 0.504083 | 2.42319 | 0.0172739 | 0 | F |
+| XTREME.low_cluster_sub | low cluster substituted C1->E1 (MIDI 24 below contrabaixo 28): [E1,F1,F#1] | E1 F1 F#1 | contrabaixo contrabaixo contrabaixo | auto | mf mf mf | 1 1 1 | 0.5 | 3 | 3 | 3 | 2 | 2.62841 | 0.273264 | 4.87391 | 209.788 | 121.211 | 0.0502916 | 0.122772 | 1.58391 | 0.324837 | 6.06054 | 0.136632 | 0 | F |
+| XTREME.wide_n4 | wide growth n=4 [C4,C5,E6,G3] | C4 C5 E6 G3 | clarinete flauta flauta clarinete | auto | mf mf mf mf | 1 1 1 1 | 0.5 | 4 | 4 | 4 | 33 | 1.39 | 0.0904931 | 2.62254 | 59.3372 | 33.7487 | 0.0149962 | 0.0351332 | 1.77712 | 0.444216 | 1.68744 | 0.0452465 | 0 | F |
+| XTREME.farbass_E0_sub | far-bass E0->E1 (MIDI 12 below all ranges; lowest coverable E1); doubles existing E1 | C4 D4 E4 F4 A#4 E1 E1 | clarinete clarinete clarinete clarinete clarinete contrabaixo contrabaixo | auto | mf mf mf mf mf mf mf | 1 1 1 1 1 1 1 | 0.5 | 7 | 6 | 7 | 42 | 6.6737 | 0.159842 | 13.1843 | 211.135 | 102.149 | 0.124887 | 0.333173 | 2.20478 | 0.58233 | 5.10747 | 0.0799209 | 0 | F |
+| XTREME.extreme_span | extreme span: lowest coverable E1 (MIDI 28) to highest coverable G7 (MIDI 103) | E1 G7 | contrabaixo violino | auto | mf mf | 1 1 | 0.5 | 2 | 2 | 2 | 75 | 0.000553084 | 0.000240135 | 0.000644882 | 74.512 | 68.4436 | 4.20444e-06 | 9.68112e-06 | 0.421004 | 0.914577 | 3.42218 | 0.000120068 | 0 | F |
+
+## PROBES (reported only; never abort)
+
+- **[OK]** monotonic composite_total [card_compact] — CARD.compact_n1:0 -> CARD.compact_n2:0.00714899 -> CARD.compact_n3:0.0287934 -> CARD.compact_n4:0.0658552 -> CARD.compact_n5:0.115609 -> CARD.compact_n6:0.176339 -> CARD.compact_n7:0.242687
+- **[OK]** monotonic composite_total [card_wide] — CARD.wide_n2:0.00189997 -> CARD.wide_n3:0.00431979
+- **[OK]** monotonic composite_total [card_farbass] — CARD.farbass_0:0.0898022 -> CARD.farbass_E1:0.113204
+- **[OK]** QTY row-split equivalence (mass/RSS/pitch_structure) — sonic_mass: single=77.8643 split=77.8643; instrument_rss: single=44.955 split=44.955; pitch_structure_density: single=0 split=0
+- **[OK]** QTY unison pitch_structure_density == 0 — pitch_structure_density=0; sonic_mass=66.8554; instrument_rss=39.0792; players=3
+- **[OK (invariant)]** WEIGHT invariance of composite_total — w=0.0: comp=0.00183447 (w_orch=0, w_pitch=0.0266239); w=0.25: comp=0.00183447 (w_orch=1.15638, w_pitch=0.0199679); w=0.5: comp=0.00183447 (w_orch=2.31275, w_pitch=0.013312); w=0.75: comp=0.00183447 (w_orch=3.46913, w_pitch=0.00665598); w=1.0: comp=0.00183447 (w_orch=4.62551, w_pitch=0)
+- **[DIFFERS]** INST timbre-isolation: identical pitch structure, differing timbre — PSD INST.timbre_iso_ww=3.4424 vs INST.timbre_iso_mixed=3.45589; composite 0.019378 vs 0.0221106
+- **[OK]** MONO adversarial addition [octave] (composite non-decrease) — dS=+0.874439; dharm=+0.023148; dentropy=+0.10747; dmass=+4.01627; dPSD=+2.30639; dcomposite=+0.0142871 (MONO.octave_base->MONO.octave_add: S 16.2588->17.1332, comp 0.242687->0.256974)
+- **[OK]** MONO adversarial addition [twelfth] (composite non-decrease) — dS=+1.44171; dharm=-0.00634187; dentropy=+0.117858; dmass=+4.70944; dPSD=+3.83321; dcomposite=+0.0222743 (MONO.twelfth_base->MONO.twelfth_add: S 16.2588->17.7005, comp 0.242687->0.264961)
+- **[OK]** MONO adversarial addition [farbass] (composite non-decrease) — dS=+0.141178; dharm=+0.245607; dentropy=+0.0189258; dmass=+68.147; dPSD=-0.206573; dcomposite=+0.0234014 (MONO.farbass_base->MONO.farbass_add: S 6.53252->6.6737, comp 0.0898022->0.113204)
+- **[OK (S identical)]** REG-1 register-invariance of S [cluster3] — C2[contrabaixo contrabaixo contrabaixo]: S=2.62841, mass=108.999, RSS=63.0574, comp=0.0366035; C3[fagote fagote fagote]: S=2.62841, mass=74.7953, RSS=43.1917, comp=0.0306495; C4[clarinete clarinete clarinete]: S=2.62841, mass=50.3724, RSS=29.1285, comp=0.0252754; C7[flauta flauta flauta]: S=2.62841, mass=9.58037, RSS=5.53148, comp=0.0112413
+- **[OK (S identical)]** REG-1 register-invariance of S [triad] — C3[fagote clarinete flauta]: S=0.470076, mass=52.1396, RSS=31.8316, comp=0.00453022; C5[flauta flauta violino]: S=0.470076, mass=21.8179, RSS=13.3254, comp=0.00293535
+- **[FINDING]** BI-1 bimodal strata union vs parts — S: low=2.62841 + high=2.62841 = 5.25681 vs combined=5.27927 (cross-strata +0.0225); int(compactness): low=0.273264, high=0.273264, combined=0.130961 (span dilutes); composite: low=0.0366035, high=0.0112413, parts-sum=0.0478448, combined=0.0784886
+- **[OK (pitch-structure orders dense>sparse)]** DS-1 density/mass opposition (2x2) — dense_soft: S=16.2588, mass=33.0104, RSS=12.5564, PSD=37.0016, comp=0.136633; sparse_loud: S=0.104051, mass=93.7282, RSS=72.7991, PSD=0.155, comp=0.00113192; dense_loud: S=16.2588, mass=81.3228, RSS=31.1691, PSD=36.9573, comp=0.198551; sparse_soft: S=0.104051, mass=37.7583, RSS=31.3903, PSD=0.145536, comp=0.000674923
+- **[OK (S identical a-d)]** DG-1 opposed dynamics at fixed pitch structure — uniform: S=11.9687, mass=93.1022, RSS=38.2045, entropy=2.57746, harm=0.188242, PSD=26.456, comp=0.159553; wedge: S=11.9687, mass=80.0503, RSS=36.9794, entropy=2.36446, harm=0.0478147, PSD=26.3, comp=0.148983; inv_wedge: S=11.9687, mass=97.8655, RSS=46.8042, entropy=2.29563, harm=0.333199, PSD=24.931, comp=0.155011; extremes: S=11.9687, mass=73.9373, RSS=41.8048, entropy=1.97841, harm=0.441032, PSD=23.3753, comp=0.130192
+- **[OK]** FU-1 fusion vs inharmonicity (harmonic damping) — a-vs-b: harmonic(harm=0.607439, PSD=10.2525, comp=0.0820435) vs inharmonic(harm=0.290199, PSD=10.2951, comp=0.0824094) || c-vs-d: octave_pillar(harm=1, PSD=2.77115, comp=0.0203285) vs qtone(harm=0.210859, PSD=19.3015, comp=0.115953)
+- **[OK (S identical)]** MA-1 Qty asymmetry at fixed pitch structure — massed_bass: S=0.00822975, mass=321.761, RSS=111.932, comp=0.000135608; massed_treble: S=0.00822975, mass=156.994, RSS=57.3332, comp=0.000106652; balanced: S=0.00822975, mass=180.345, RSS=79.8285, comp=0.000101528
+- **[OK]** GLOBAL-1 face-validity rankings (all valued cases) — composite TOP5: MORPH.cluster_12=0.574318, MONO.twelfth_add=0.264961, MONO.octave_add=0.256974, MONO.twelfth_base=0.242687, MONO.octave_base=0.242687 || BOTTOM5: MORPH.single=0, CARD.compact_n1=0, QTY.rowsplit_single=0, QTY.rowsplit_split=0, QTY.unison_multi_timbre=0  ;;  PSD TOP5: MORPH.cluster_12=109.353, MONO.twelfth_add=40.6758, MONO.octave_add=39.149, DENSPARSE.dense_soft=37.0016, DENSPARSE.dense_loud=36.9573 || BOTTOM5: MORPH.single=0, CARD.compact_n1=0, QTY.rowsplit_single=0, QTY.rowsplit_split=0, QTY.unison_multi_timbre=0  ;;  RSS TOP5: XTREME.low_cluster_sub=121.211, MASSASYM.massed_bass=111.932, XTREME.farbass_E0_sub=102.149, QTY.q8=97.5817, MONO.farbass_add=80.4813 || BOTTOM5: MORPH.high_cluster=5.53148, REG.cluster3_C7=5.53148, BIMODAL.high=5.53148, DENSPARSE.dense_soft=12.5564, REG.triad_C5=13.3254
+
+## ERRORS (excluded from value table)
+
+- `MORPH.very_spacious` [calculate_metrics]: InputError: Note 'C2' (sounding MIDI 36) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 0. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[0]) — notes=['C2', 'G3', 'D5', 'A6']
+- `MORPH.extreme_span` [calculate_metrics]: InputError: Note 'C0' (sounding MIDI 12) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 0. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[0]) — notes=['C0', 'C8']
+- `MORPH.low_cluster` [calculate_metrics]: InputError: Note 'C1' (sounding MIDI 24) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 0. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[0]) — notes=['C1', 'C#1', 'D1']
+- `MORPH.full_range` [calculate_metrics]: InputError: Note 'C1' (sounding MIDI 24) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 0. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[0]) — notes=['C1', 'C3', 'C5', 'C7']
+- `CARD.wide_n4` [calculate_metrics]: InputError: Note 'G3' (sounding MIDI 55) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 3. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[3]) — notes=['C4', 'C5', 'E6', 'G3']
+- `CARD.wide_n5` [calculate_metrics]: InputError: Note 'G3' (sounding MIDI 55) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 3. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[3]) — notes=['C4', 'C5', 'E6', 'G3', 'B7']
+- `CARD.wide_n6` [calculate_metrics]: InputError: Note 'G3' (sounding MIDI 55) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 3. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[3]) — notes=['C4', 'C5', 'E6', 'G3', 'B7', 'D2']
+- `CARD.farbass_E0` [calculate_metrics]: InputError: Note 'E0' (sounding MIDI 16) is outside the range [28, 72] for instrument 'double_bass' (Double bass) at event index 6. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[6]) — notes=['C4', 'D4', 'E4', 'F4', 'A#4', 'E1', 'E0']
+- `INST.full_ensemble` [calculate_metrics]: InputError: Note 'C3' (sounding MIDI 48) is outside the range [52, 87] for instrument 'trompete' (Trumpet) at event index 3. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[3]) — notes=['C7', 'C5', 'C4', 'C3', 'C2', 'C1']
+- `EDO.spectral_c2` [calculate_metrics]: InputError: Note 'C2' (sounding MIDI 36) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 0. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[0]) — notes=['C2', 'C3', 'G3+1.999999999999602c', 'C4', 'E4-14.000000000000057c', 'G4+1.999999999999602c']
+- `EDGE.all_unison` [calculate_metrics]: InputError: Note 'G3' (sounding MIDI 55) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 0. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[0]) — notes=['G3', 'G3', 'G3', 'G3']
+- `EDGE.bimodal` [calculate_metrics]: InputError: Note 'C1' (sounding MIDI 24) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 0. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[0]) — notes=['C1', 'C#1', 'D1', 'C7', 'C#7', 'D7']
+- `EDGE.micro_macro` [calculate_metrics]: InputError: Note 'C0' (sounding MIDI 12) is outside the range [59, 98] for instrument 'flauta' (Flute) at event index 0. Enter sounding/concert pitch (manual and GUI input are not transposed). (field: notes[0]) — notes=['C0', 'C0+33.000000000000007c', 'C8']
+- `REG.cluster3_C1` [instrument_assignment]: CaseSetupError: no module-backed instrument covers C1 (MIDI 24) — notes=['C1', 'C#1', 'D1']
+- `REG.triad_C1` [instrument_assignment]: CaseSetupError: no module-backed instrument covers C1 (MIDI 24) — notes=['C1', 'E2', 'G3']
+- `XTREME.full_range` [instrument_assignment]: CaseSetupError: no module-backed instrument covers C1 (MIDI 24) — notes=['C1', 'C3', 'C5', 'C7']
+- `XTREME.micro_macro` [instrument_assignment]: CaseSetupError: no module-backed instrument covers C1 (MIDI 24) — notes=['C1', 'C1+33c', 'C7']
+- `XTREME.wide_n5` [instrument_assignment]: CaseSetupError: no module-backed instrument covers B7 (MIDI 107) — notes=['C4', 'C5', 'E6', 'G3', 'B7']
+- `XTREME.wide_n6` [instrument_assignment]: CaseSetupError: no module-backed instrument covers B7 (MIDI 107) — notes=['C4', 'C5', 'E6', 'G3', 'B7', 'D2']
+
+## NONDETERMINISM (curated outputs differ across two runs)
+
+- (none — all cases deterministic across two runs)
+
+## NON-FINITE (any reported scalar not finite)
+
+- (none — all reported scalars finite)
+
+## Per-case assignment map (auto-assigned cases)
+
+- `REG.cluster3_C2`: C2:contrabaixo C#2:contrabaixo D2:contrabaixo
+- `REG.cluster3_C3`: C3:fagote C#3:fagote D3:fagote
+- `REG.cluster3_C4`: C4:clarinete C#4:clarinete D4:clarinete
+- `REG.cluster3_C7`: C7:flauta C#7:flauta D7:flauta
+- `REG.triad_C3`: C3:fagote E4:clarinete G5:flauta
+- `REG.triad_C5`: C5:flauta E6:flauta G7:violino
+- `BIMODAL.low`: C2:contrabaixo C#2:contrabaixo D2:contrabaixo
+- `BIMODAL.high`: C7:flauta C#7:flauta D7:flauta
+- `BIMODAL.combined`: C2:contrabaixo C#2:contrabaixo D2:contrabaixo C7:flauta C#7:flauta D7:flauta
+- `BIMODAL.combined_bridge`: C2:contrabaixo C#2:contrabaixo D2:contrabaixo C7:flauta C#7:flauta D7:flauta G4:clarinete
+- `DENSPARSE.dense_soft`: C5:flauta C#5:flauta D5:flauta D#5:flauta E5:flauta F5:flauta F#5:flauta
+- `DENSPARSE.sparse_loud`: C2:contrabaixo E4:clarinete C7:flauta
+- `DENSPARSE.dense_loud`: C5:flauta C#5:flauta D5:flauta D#5:flauta E5:flauta F5:flauta F#5:flauta
+- `DENSPARSE.sparse_soft`: C2:contrabaixo E4:clarinete C7:flauta
+- `DYNGRAD.uniform`: C4:clarinete C#4:clarinete D4:clarinete D#4:clarinete E4:clarinete F4:clarinete
+- `DYNGRAD.wedge`: C4:clarinete C#4:clarinete D4:clarinete D#4:clarinete E4:clarinete F4:clarinete
+- `DYNGRAD.inv_wedge`: C4:clarinete C#4:clarinete D4:clarinete D#4:clarinete E4:clarinete F4:clarinete
+- `DYNGRAD.extremes`: C4:clarinete C#4:clarinete D4:clarinete D#4:clarinete E4:clarinete F4:clarinete
+- `DYNGRAD.bass_heavy`: C2:contrabaixo C5:flauta C#5:flauta D5:flauta
+- `FUSION.harmonic`: C2:contrabaixo C3:fagote G3+1.999999999999602c:clarinete C4:clarinete E4-14.000000000000057c:clarinete G4+1.999999999999602c:clarinete
+- `FUSION.inharmonic`: C2:contrabaixo C#3:fagote F#3+50c:clarinete B3:clarinete D#4+50c:clarinete A4:clarinete
+- `FUSION.octave_pillar`: C2:contrabaixo C3:fagote C4:clarinete C5:flauta C6:flauta
+- `FUSION.qtone_cluster`: C4:clarinete C4+50c:clarinete C#4:clarinete C#4+50c:clarinete D4:clarinete
+- `MICROMIX.near_unison`: C5:flauta C5+8c:flauta C5-8c:flauta
+- `MICROMIX.micro_frame`: C4:clarinete C5:flauta C5+8c:flauta C5-8c:flauta C7:flauta
+- `MICROMIX.edo24_pedal`: C2:contrabaixo C5:flauta C5+50c:flauta C#5:flauta C#5+50c:flauta D5:flauta
+- `MICROMIX.mixed_system`: C4:clarinete E4-14c:clarinete G4+2c:clarinete B4-31c:flauta
+- `XTREME.very_spacious`: C2:contrabaixo G3:clarinete D5:flauta A6:flauta
+- `XTREME.low_cluster_sub`: E1:contrabaixo F1:contrabaixo F#1:contrabaixo
+- `XTREME.wide_n4`: C4:clarinete C5:flauta E6:flauta G3:clarinete
+- `XTREME.farbass_E0_sub`: C4:clarinete D4:clarinete E4:clarinete F4:clarinete A#4:clarinete E1:contrabaixo E1:contrabaixo
+- `XTREME.extreme_span`: E1:contrabaixo G7:violino
+
+## Per-case warnings (full text)
+
+- `MORPH.single`: Fewer than two simultaneous events; interval compactness is zero or unstable.
+- `CARD.compact_n1`: Fewer than two simultaneous events; interval compactness is zero or unstable.
+- `QTY.rowsplit_single`: Fewer than two simultaneous events; interval compactness is zero or unstable.
+- `DYN.uniform_pppp`: Instrument 'flauta' dynamic 'pppp' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_1 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_2 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `DYN.uniform_ffff`: Instrument 'flauta' dynamic 'ffff' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'ffff' at event evt_1 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'ffff' at event evt_2 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `DYN.contrast`: Instrument 'flauta' dynamic 'ffff' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'ffff' at event evt_2 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_1 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `EDGE.single`: Fewer than two simultaneous events; interval compactness is zero or unstable.
+- `MONO.octave_add`: Instrument 'flauta' dynamic 'pppp' at event evt_7 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `MONO.twelfth_add`: Instrument 'flauta' dynamic 'pppp' at event evt_7 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `DENSPARSE.dense_soft`: Instrument 'flauta' dynamic 'pppp' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_1 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_2 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_3 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_4 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_5 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_6 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `DENSPARSE.sparse_loud`: Instrument 'clarinete' dynamic 'ffff' at event evt_1 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'contrabaixo' dynamic 'ffff' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'ffff' at event evt_2 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `DENSPARSE.dense_loud`: Instrument 'flauta' dynamic 'ffff' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'ffff' at event evt_1 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'ffff' at event evt_2 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'ffff' at event evt_3 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'ffff' at event evt_4 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'ffff' at event evt_5 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'ffff' at event evt_6 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `DENSPARSE.sparse_soft`: Instrument 'clarinete' dynamic 'pppp' at event evt_1 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'contrabaixo' dynamic 'pppp' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_2 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `DYNGRAD.wedge`: Instrument 'clarinete' dynamic 'ffff' at event evt_5 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'clarinete' dynamic 'pppp' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `DYNGRAD.inv_wedge`: Instrument 'clarinete' dynamic 'ffff' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'clarinete' dynamic 'pppp' at event evt_5 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `DYNGRAD.extremes`: Instrument 'clarinete' dynamic 'ffff' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'clarinete' dynamic 'ffff' at event evt_5 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'clarinete' dynamic 'pppp' at event evt_1 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'clarinete' dynamic 'pppp' at event evt_2 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'clarinete' dynamic 'pppp' at event evt_3 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'clarinete' dynamic 'pppp' at event evt_4 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied.
+- `DYNGRAD.bass_heavy`: Instrument 'contrabaixo' dynamic 'ffff' at event evt_0 is outside measured support ('pp', 'mf', 'ff'); boundary 'ff', ratio 1.1^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_1 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_2 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied. | Instrument 'flauta' dynamic 'pppp' at event evt_3 is outside measured support ('pp', 'mf', 'ff'); boundary 'pp', ratio 0.85^2. Dynamic level outside measured support; saturated extrapolation applied.
