@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from instrumentos.registry import list_profiles
+
 NUM_NOTE_ROWS = 60
 
 SUSTENIDO_MUSICAL = "\u266f"
@@ -9,27 +11,21 @@ QUARTO_TOM_GUI = "\u2193"
 
 OCTAVE_LIST = [str(i) for i in range(10)]
 DYNAMIC_LEVELS = ["pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff"]
-INSTRUMENTS = [
-    "Piccolo",
-    "Flute",
-    "Oboe",
-    "English horn",
-    "Clarinet",
-    "Bass clarinet",
-    "Bassoon",
-    "Contrabassoon",
-    "Horn",
-    "Trumpet",
-    "Trombone",
-    "Tuba",
-    "Violin",
-    "Violin sordina",
-    "Violin sul ponticello",
-    "Violin art harm",
-    "Viola",
-    "Cello",
-    "Double bass",
-]
+
+
+def _active_instrument_names() -> list[str]:
+    """GUI-selectable instruments: only those backed by a dedicated script.
+
+    An instrument is "active" when its registry profile declares a
+    ``module_name`` (a committed ``instrumentos/<module>.py`` acoustic table).
+    Coarse-default profiles (no script) are intentionally excluded so the GUI
+    only offers instruments with real acoustic metadata. Registry insertion
+    order is preserved.
+    """
+    return [p.display_name for p in list_profiles() if p.module_name]
+
+
+INSTRUMENTS = _active_instrument_names()
 CENTS_VALUES = ["0"] + [f"+{i}" for i in range(1, 51)] + [f"-{i}" for i in range(1, 51)]
 NOTAS_BASE = [
     "C",
