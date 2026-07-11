@@ -1,13 +1,13 @@
 # GPR model-quality diagnostic audit
 
-- Repository SHA: `6254bec2c9de09db9aedd980dc64627734c8e432`
+- Repository SHA: `95729e9ce8702dcfd880a1211159b4995ee97efe`
 - Classification: **PASS**
 - Instruments: 8
 - Source rows: 357
 - Convex-hull departures (pp–mf): **58**
 - Convex-hull departures (pp–mf–ff): **35**
 - PCHIP available: True
-- REVIEW REQUIRED rows: 88
+- REVIEW REQUIRED rows: 87
 
 > Diagnostic only. Production GPR unchanged. Linear/quadratic/PCHIP are comparison references.
 
@@ -188,7 +188,6 @@
 - double_bass C#3 (MIDI 49, middle): pp=45.548 mp=37.708 mf=37.697 |Δlin|=1.952 |Δquad|=0.460 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - double_bass D#3 (MIDI 51, middle): pp=38.369 mp=38.485 mf=38.854 |Δlin|=0.248 |Δquad|=0.111 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor
 - double_bass G#3 (MIDI 56, middle): pp=23.633 mp=24.141 mf=24.234 |Δlin|=0.057 |Δquad|=0.207 [REVIEW REQUIRED] mp near mf anchor
-- double_bass A#3 (MIDI 58, high): pp=26.561 mp=25.309 mf=25.061 |Δlin|=0.127 |Δquad|=0.154 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - double_bass C#4 (MIDI 61, high): pp=27.734 mp=26.831 mf=26.875 |Δlin|=0.259 |Δquad|=0.126 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - double_bass E4 (MIDI 64, high): pp=23.261 mp=18.547 mf=18.548 |Δlin|=1.179 |Δquad|=0.297 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - flute E5 (MIDI 76, middle): pp=6.600 mp=7.250 mf=7.322 |Δlin|=0.108 |Δquad|=0.179 [REVIEW REQUIRED] mp near mf anchor
@@ -240,7 +239,7 @@
 - Low-register string rows dominate convex-hull departures.
 
 ### 3. Non-monotonic source rows
-- Non-monotonic pp/mf/ff rows: **162** of 357.
+- Non-monotonic pp/mf/ff rows: **161** of 357.
 - Convex-hull departures overlapping non-monotonic rows: **34**.
 - Departures are **associated** with non-monotonic anchors but also occur when mf lies between pp and ff.
 
@@ -248,7 +247,7 @@
 - GPR fits only three anchors; high `gpr_std_mp` correlates with steep or non-monotonic local anchor geometry.
 
 ### 5. Reference closeness
-- Mean |GPR−linear|: 0.3422; mean |GPR−quadratic|: 0.1945.
+- Mean |GPR−linear|: 0.3419; mean |GPR−quadratic|: 0.1945.
 - Mean |GPR−PCHIP|: 0.3057.
 - GPR is often closest to **quadratic** on average; case-by-case variation is large.
 
@@ -261,7 +260,7 @@
 - Extreme overshoot/undershoot is reproducible and concentrated in low strings.
 
 ### 9. Near-anchor collapse
-- near_pp: 16; near_mf: 47.
+- near_pp: 16; near_mf: 46.
 - Few cases suggest practical anchor collapse; most mp values are distinct from pp and mf.
 
 ### 10. Future campaigns

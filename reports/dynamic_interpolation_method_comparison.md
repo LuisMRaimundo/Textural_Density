@@ -1,9 +1,9 @@
 # Dynamic interpolation method comparison
 
-- SHA: `913a415e54f59ab8dbb8a2afc0172da6e998947d`
+- SHA: `95729e9ce8702dcfd880a1211159b4995ee97efe`
 - Classification: **PASS**
 - Production GPR: **unchanged**
-- Source rows: 315
+- Source rows: 357
 - Positive scenarios: 320
 - Negative scenarios: 20
 - High/extreme sensitivity scenarios: 0
@@ -20,10 +20,12 @@ and can propagate into orchestral density metrics, especially for low-register s
 ## Top source-row GPR–linear (mp)
 
 - double_bass A2: GPR=54.323 linear=51.065 Δ=3.258
+- bassoon B1: GPR=66.719 linear=69.790 Δ=3.071
 - cello D2: GPR=74.351 linear=71.454 Δ=2.897
 - cello G2: GPR=29.130 linear=31.868 Δ=2.738
 - double_bass G1: GPR=61.854 linear=59.313 Δ=2.541
 - cello D3: GPR=53.482 linear=51.025 Δ=2.457
+- bassoon C2: GPR=60.509 linear=62.965 Δ=2.456
 - double_bass C#3: GPR=37.708 linear=39.660 Δ=1.952
 - double_bass F#1: GPR=70.341 linear=68.398 Δ=1.943
 - double_bass F1: GPR=66.155 linear=68.020 Δ=1.864
@@ -37,8 +39,6 @@ and can propagate into orchestral density metrics, especially for low-register s
 - clarinet E3: GPR=36.373 linear=34.969 Δ=1.404
 - cello F#2: GPR=37.899 linear=39.299 Δ=1.400
 - cello A#3: GPR=34.347 linear=32.994 Δ=1.353
-- cello G#2: GPR=49.673 linear=48.369 Δ=1.304
-- double_bass D#4: GPR=17.048 linear=18.304 Δ=1.256
 
 ## Top scenario GPR–linear (density.instrument)
 

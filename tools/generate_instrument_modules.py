@@ -63,6 +63,7 @@ CONFIGS = [
         "module": "double_bass",
         "display": "Double bass",
         "workbook": Path(r"D:\CORDAS\DOUBLEBASS_Zenodo_collections_media.xlsx"),
+        "media_sheet": "DBass_Media",
         "registry_id": "double_bass",
         "technique": "arco / ordinario sustains",
     },

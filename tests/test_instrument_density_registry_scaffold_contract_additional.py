@@ -125,8 +125,10 @@ class TestPartialInstrumentDataScaffold:
 
 class TestSourceProvenanceLabelling:
     def test_coarse_only_slice_labels_metadata_proxy(self):
+        # Both instruments must be coarse-only (no dedicated GPR module): fagote/Bassoon
+        # now ships instrumentos/bassoon.py, so use trombone + trompa (Horn) instead.
         vs = legacy_input_to_vertical_slice(
-            _symbolic_input(["G4", "D4"], instruments=["trombone", "fagote"])
+            _symbolic_input(["G4", "D4"], instruments=["trombone", "trompa"])
         )
         source_type, validation, _, warnings = _instrument_density_epistemics(vs)
         assert source_type == "metadata_proxy"

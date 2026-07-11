@@ -81,8 +81,10 @@ class TestInstrumentRegistry:
     def test_profile_fields_present(self):
         profile = get_instrument_profile("trompete")
         assert profile.family == "brass"
-        assert profile.profile_status == "coarse_default"
-        assert profile.uncertainty == "high"
+        # Trumpet now ships a dedicated GPR CDM module (instrumentos/trumpet.py).
+        assert profile.profile_status == "literature_derived"
+        assert profile.uncertainty == "medium"
+        assert profile.module_name == "trumpet"
         assert profile.sounding_range[0] < profile.sounding_range[1]
         assert profile.missing_data_warnings
 
