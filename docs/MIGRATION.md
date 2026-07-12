@@ -26,6 +26,8 @@ This document helps users and integrators move from pre-upgrade scripts (flat `d
 | Expert score validation | **New scaffolding** — `validation/score_annotations/` (status: `verified_only`) |
 | Replication package | **New** — `replication/` with synthetic fixture + frozen outputs |
 | MusicXML `<transpose>` → concert pitch | **New (1.1.1)** — `xml_loader.py`; `written_pitch` on events when applicable |
+| Extensive composite / raw sum $S$ | **Changed (5.0.0-strict-symbolic)** — pitch-structure from accumulating pairwise sum; no registral-span damping in the aggregate; `MAX_DENS_GLOBAL=575` |
+| Register-adaptive saturating dynamic tails | **Changed (5.1.0-strict-symbolic)** — out-of-support dynamics use local $s(m)$ from measured pp/mf/ff + `DYN_TAIL_SHRINK`; interior GPR unchanged |
 
 **Epistemic note:** All metrics remain score/symbolic outputs. New metadata labels clarify which values are **metadata proxies**, not measured acoustics.
 

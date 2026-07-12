@@ -75,4 +75,4 @@ When changing methodology scope (e.g. new strict-symbolic phase):
 
 ---
 
-*Last updated: 2026-06-29 (package 1.1.4, repo slug Textural_Density).*
+*Last updated: 2026-07-12 (package 1.1.4; methodology 5.1.0-strict-symbolic; repo slug Textural_Density).*

@@ -105,12 +105,14 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 
 | Name | Value | Module | Role |
 |------|-------|--------|------|
-| `MAX_DENS_GLOBAL` | 20.0 | `config.py` | Total density normalization |
+| `MAX_DENS_GLOBAL` | **575.0** | `config.py` | Total density normalization (recalibrated in 5.0.0-strict-symbolic from 20.0 for the extensive raw-sum aggregate) |
 | `USE_LOG_COMPRESSION` | True | `config.py` | log10(1+x) on total |
-| `COMPOSITE_HARMONIC_DAMPING` | 0.15 | `config.py` | Harmonic ratio adjustment |
+| `COMPOSITE_HARMONIC_DAMPING` | 0.15 | `config.py` | Harmonic ratio adjustment in $D_{\mathrm{pitch}}$ |
 | `DEFAULT_WEIGHT_FACTOR` | 0.5 | `config.py` | Instrument vs interval blend |
+| `DYN_TAIL_SHRINK` ($\gamma$) | **0.5** | `config.py` | Geometric shrink for register-adaptive saturating dynamic tails (5.1.0); whole tail ≤ one measured step |
+| `DENSITY_FLOOR` | $10^{-9}$ | `config.py` | Unreachable safety assert on saturated tail amplitudes (not a silent clamp) |
 
-Weighted density uses a linear min-max blend only (Stevens' Law removed in 3.0.0).
+Weighted density uses a linear min-max blend only (Stevens' Law removed in 3.0.0). Pitch-structure density is the **extensive** raw pairwise sum $S$ (5.0.0); registral-span damping is **not** applied in the aggregate.
 
 ---
 

@@ -370,9 +370,11 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 
 | Constant | Default | Description |
 |----------|---------|-------------|
-| `MAX_DENS_GLOBAL` | `20.0` | Total-density normalisation divisor |
+| `MAX_DENS_GLOBAL` | `575.0` | Total-density normalisation divisor (5.0.0 extensive aggregate) |
 | `USE_LOG_COMPRESSION` | `True` | Apply `log10(1+x)` to total density |
 | `COMPOSITE_HARMONIC_DAMPING` | `0.15` | Harmonic-ratio damping in composite |
+| `DYN_TAIL_SHRINK` | `0.5` | Geometric shrink γ for register-adaptive saturating dynamic tails (5.1.0) |
+| `DENSITY_FLOOR` | `1e-9` | Unreachable safety assert on saturated tail amplitudes |
 | `DEFAULT_REGISTER_BANDS` | dict | Register bands for subindices |
 | `DYNAMIC_LEVELS` | tuple | Supported dynamics |
 | `DEFAULT_LAMBDA` | `0.05` | Interval decay default |
@@ -391,4 +393,4 @@ Calibrated λ: `config/density_params.json`.
 
 ---
 
-**Package version:** 1.1.1 · **Last updated:** 2026-06-01
+**Package version:** 1.1.4 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-07-12

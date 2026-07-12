@@ -653,7 +653,7 @@ Tests: `tests/test_transposing_instrument_sounding_pitch_contract.py`, `tests/te
 | **Verification** | Synthetic cases + property checks confirming implementation correctness; source-table reconstruction; musicological contract tests |
 | **Validation** | Comparison against expert ratings, listening tests, or corpus benchmarks |
 
-Current status: **`verified_only`** — no external validation corpora loaded by default. The test suite (862 tests after PR #13/#14) provides **software and symbolic-contract verification** — not perceptual or empirical validation of CDM.
+Current status: **`verified_only`** — no external validation corpora loaded by default. The test suite (**1542 passed / 2 skipped / 18 xfailed**, 2026-07-12, methodology `5.1.0-strict-symbolic`) provides **software and symbolic-contract verification** — not auditory or empirical validation of CDM.
 
 ### 8.1.1 String musicological battery (PR #13)
 
@@ -732,19 +732,19 @@ print(format_sensitivity_report(sensitivity))
 
 Phase 10 added automated quality checks (see `tests/test_quality_gates.py` and `.github/workflows/tests.yml`):
 
-| Gate | Threshold / status (2026-06-25) |
+| Gate | Threshold / status (2026-07-12) |
 |------|--------------------------------|
-| Full test suite | **862 collected**; **861 non-slow + 1 slow** pass (Python 3.10–3.11 on GitHub Actions and CircleCI) |
-| Full-project coverage | ≥ 63% (verified **84.95%**) |
+| Full test suite | **1542 passed / 2 skipped / 18 xfailed** (methodology `5.1.0-strict-symbolic`, package `1.1.4`; Python 3.10–3.11 on GitHub Actions and CircleCI) |
+| Full-project coverage | ≥ 63% (CI quality job) |
 | Core + validation coverage | ≥ 80% |
 | Mypy (core, validation) | Zero errors with `--follow-imports=skip` |
 | Finite outputs | All synthetic cases produce finite `density.*` scalars |
 | Performance | 50-note slice completes in < 5 s (`@pytest.mark.slow`) |
 | Import hygiene | `core/` and `validation/` modules must not import Tkinter |
 
-**Verification layers:** interval-density contracts; instrument registry scaffold; musicological plausibility; Excel importer contracts; **string musicological battery (PR #13)**; **media note-label normalization (PR #14)**. These verify symbolic/metadata-level behaviour — not final acoustic calibration or perceptual validation.
+**Verification layers:** interval-density contracts; instrument registry scaffold; musicological plausibility; Excel importer contracts; **string musicological battery (PR #13)**; **media note-label normalization (PR #14)**; **adaptive dynamic tails (`tests/test_adaptive_dynamic_tails.py`)**. These verify symbolic/metadata-level behaviour — not final acoustic calibration or auditory validation.
 
-**CI limitation:** string source-reconstruction tests require local Zenodo workbooks; skipped on runners without `D:\CORDAS\` paths.
+**CI limitation:** string source-reconstruction tests require local Zenodo workbooks; skipped on runners without `D:\CORDAS\` paths (violin/viola are the two suite skips until deposited; cello/double_bass reconstruction passes when workbooks are present).
 
 Run locally:
 

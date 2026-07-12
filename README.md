@@ -1,12 +1,12 @@
 # Textural Density - Musical Density Analysis Application
 
 **Repository:** [github.com/LuisMRaimundo/Textural_Density](https://github.com/LuisMRaimundo/Textural_Density)  
-**Version:** 1.1.4  
+**Version (two axes):** package **1.1.4** (`pyproject.toml`) · methodology **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`)  
 **Status:** Active Development  
-**License:** [MIT](LICENSE)  
+**License:** [MIT](LICENSE) (`pyproject.toml` declares MIT; see [docs/VERSIONING.md](docs/VERSIONING.md))  
 **Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)
 
-> **Versioning:** Package release **1.1.4** (`pyproject.toml`) is separate from the methodology phase **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`; earlier phases 3.0.0 / 4.0.0 / 5.0.0). See [docs/VERSIONING.md](docs/VERSIONING.md).
+> **Versioning:** The header **Version** line always names both axes. Package release **1.1.4** is independent of methodology phase **5.1.0-strict-symbolic** (earlier phases 3.0.0 / 4.0.0 / 5.0.0). Do not treat package semver as a schema bump. See [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -40,7 +40,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; GPR CDM modules for flute, oboe, clarinet, bassoon, trumpet, and strings; metadata corpus still incomplete for many names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML sounding pitch** — written `<pitch>` converted to sounding/concert pitch via `<transpose>` before validation and density lookup (PR #21)
-- **Verification scaffolding** — **862 tests** collected; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green after PR #13 and PR #14 (see [Testing](#testing))
+- **Verification scaffolding** — full suite **1542 passed / 2 skipped / 18 xfailed** (2026-07-12, methodology `5.1.0-strict-symbolic`, package `1.1.4`); GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) (see [Testing](#testing))
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -150,7 +150,7 @@ Textural_Density/
 ├── data_processor_legacy.py   # Legacy I/O and validation text (not the metric pipeline)
 ├── densidade_intervalar.py    # Interval density library
 ├── spectral_analysis.py       # Spectral metadata proxies
-└── tests/                     # 862 tests; string musicological battery (PR #13); note-label normalization (PR #14)
+└── tests/                     # full suite 1542 passed / 2 skipped / 18 xfailed (2026-07-12); string musicological battery (PR #13); adaptive-tail contracts
 ```
 
 **Call path (GUI):** `Main.py` → `AnalysisController` → `adapters/gui_adapter.build_analysis_request` → `core.pipeline.calculate_metrics`.
@@ -249,12 +249,14 @@ pytest tests/test_notes.py -q
 
 ### Test Coverage
 
-Current verified status (after PR #14, `main` @ `607bf4a`, local Python **3.10.11**; CI also runs **3.10** and **3.11**):
+Current verified status (2026-07-12, methodology **`5.1.0-strict-symbolic`**, package **`1.1.4`**, local Python **3.10**; CI also runs **3.10** and **3.11**):
 
 | Gate | Result |
 |------|--------|
-| Full suite | **862 passed** (861 non-slow + 1 slow) |
-| Full-project coverage | **84.95%** (gate ≥ 63%) |
+| Full suite | **1542 passed / 2 skipped / 18 xfailed** |
+| Skipped | 2 — string source-workbook reproducibility for violin and viola when local Zenodo workbooks are absent (activate once deposited; cello and double_bass workbook reconstruction currently pass) |
+| Xfailed | 18 — measured/interior dynamic non-monotonicity on the adaptive-tail positivity grid (`tests/test_adaptive_dynamic_tails.py`; tables left untouched by design) |
+| Full-project coverage | gate ≥ 63% (CI quality job) |
 | `core/` + `validation/` coverage | ≥ 80% in CI quality job |
 | MyPy (`core`, `validation`) | Clean (`--follow-imports=skip`) |
 | Slow performance gate | Pass (`tests/test_quality_gates.py`, `@pytest.mark.slow`) |
@@ -262,7 +264,7 @@ Current verified status (after PR #14, `main` @ `607bf4a`, local Python **3.10.1
 | GitHub Actions | `test` 3.10/3.11 + `quality` — pass |
 | CircleCI | `tests-3.10`, `tests-3.11` — pass |
 
-**What the suite verifies:** implementation contracts, source consistency, provenance propagation, symbolic/musical invariants, and reproducibility properties under controlled test conditions. It does **not** validate perceptual adequacy of the CDM model or prove correspondence to perceived density, loudness, salience, or timbral mass.
+**What the suite verifies:** implementation contracts, source consistency, provenance propagation, symbolic/musical invariants, and reproducibility properties under controlled test conditions. It does **not** validate auditory adequacy of the CDM model or prove correspondence to listener judgments of textural density, symbolic-dynamic mass, salience, or timbral mass.
 
 **String-family battery (PR #13):** 97 musicological tests across `tests/string_constants.py`, `tests/test_string_module_contracts.py`, `tests/test_string_source_reproducibility.py`, `tests/test_string_musicological_invariants.py`, `tests/test_string_score_scenarios.py`, and `tests/test_instrument_provenance.py` — covering violin, viola, cello, double bass, and registry aliases.
 
@@ -329,6 +331,10 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ## Changelog
 
+### Documentation reconciliation (2026-07-12) — no schema bump
+
+Docs-only pass aligning manuals/README with live `5.1.0-strict-symbolic` / package `1.1.4` (suite **1542 / 2 / 18**). No code, config, table, test, or baseline changes.
+
 ### Version 5.1.0-strict-symbolic (2026-07-12) — register-adaptive tails
 
 **Numeric change for tail-dynamic cases only.** Fixes exaggerated dynamic-tail extrapolation in instrument density lookup. Package release remains **1.1.4**; `METRIC_SCHEMA_VERSION` is `5.1.0-strict-symbolic`.
@@ -381,7 +387,7 @@ Documentation-only reconciliation on `5.0.0-strict-symbolic`; **numeric outputs 
 
 - **PR #13:** String musicological contract and source-audit battery (97 tests; `@pytest.mark.musicological`)
 - **PR #14:** Viola source-label normalization (`normalize_media_note_label` strips trailing `(2)`); viola table aligned to `VIOLA_Media` (C3–C7); portable viola provenance via `docs/instrument_acoustic_sources.md#viola`
-- Verified: 862 tests pass locally (Python 3.10.11); CI 3.10/3.11 green; full-project coverage 84.95%
+- Verified at the time: 862 tests pass locally (Python 3.10.11); CI 3.10/3.11 green; full-project coverage 84.95% — **superseded** by the 2026-07-12 suite count in [Testing](#testing) (1542 / 2 / 18 under `5.1.0-strict-symbolic`)
 
 ### Version 1.1.4 (2026-06-21)
 - Canonical core path uses strict pitch parsing: `note_string_to_pitch()` delegates to `parse_pitch_strict()` (MIDI before spelling normalization; invalid input raises `InvalidPitchNotation`)
@@ -430,9 +436,9 @@ Documentation-only reconciliation on `5.0.0-strict-symbolic`; **numeric outputs 
 
 ## Support
 
-For issues and questions, please [create an issue] or [contact maintainers].
+For issues and questions, open a GitHub issue at [LuisMRaimundo/Textural_Density](https://github.com/LuisMRaimundo/Textural_Density/issues).
 
 ---
 
-**Last Updated:** 2026-06-25
+**Last Updated:** 2026-07-12
 

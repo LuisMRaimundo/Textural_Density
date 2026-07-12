@@ -6,6 +6,20 @@ This document records **external acoustic metadata** embedded in `instrumentos/*
 modules. The analysis pipeline performs **score lookup** into these tables — not
 live audio analysis.
 
+> **Workbook archiving.** Primary CDM workbooks for winds/brass (and the string
+> Zenodo collections cited below) live at **private local paths** (e.g.
+> `D:\MADEIRAS\…`, `D:\METAIS\…`, `D:\CORDAS\…`) and are **not** committed to this
+> repository. Intention: deposit in-repo extracts or a citable external archive so
+> reconstruction tests can run without a private machine. Until then,
+> `tests/test_string_source_reproducibility.py` **skips** when a workbook file is
+> absent; on a machine with the deposits present, **cello** and **double_bass**
+> workbook reconstruction currently **PASS**, while **violin** and **viola** are
+> the two suite skips that will activate once those workbooks are deposited for CI.
+> sklearn may emit `ConvergenceWarning` (Matérn `length_scale` at its upper bound)
+> during the fixed deterministic GPR fits — a known, **benign** property of the
+> production estimator (`GPR_RANDOM_STATE=0`); it does not indicate nondeterminism
+> or a failed fit for the committed tables.
+
 ## Flute (`flute`)
 
 - **Module:** `instrumentos/flute.py`
@@ -105,6 +119,8 @@ live audio analysis.
 - **Uncertainty:** high (pp/ff are modelled from mf-only source)
 - **Curation (2026-06-30):** corrected hand-curated `MF_MEASURED` mf rows (G3–G7); pp/ff anchors regenerated via violin arco ratio transfer
 
+## Violin art harm (`violin_art_harm`)
+
 - **Module:** `instrumentos/violin_art_harm.py`
 - **Table:** `spectral_data` (25 chromatic rows, G5–G7)
 - **Measured anchor:** mf only (`MF_MEASURED` in module)
@@ -162,12 +178,12 @@ Applied in `tools/populate_td_importer_sheets_from_zenodo_media.py` (`_read_medi
 
 | Workbook | Media sheet | Rows | Local status |
 |----------|-------------|------|--------------|
-| `VIOLIN_Zenodo_collections_media.xlsx` | `Violin_Media` | 49 | PASS — 0 value differences vs committed module |
-| `ViOLA_Zenodo_collections_media.xlsx` | `VIOLA_Media` | 49 | PASS — 0 value differences (C3–C7; `F4` from former `F4 (2)`) |
-| `CELLO_Zenodo_collections_media.xlsx` | `Cello_Media` | 49 | PASS |
-| `DOUBLEBASS_Zenodo_collections_media.xlsx` | `DBass_Media` | 45 | PASS |
+| `VIOLIN_Zenodo_collections_media.xlsx` | `Violin_Media` | 49 | **SKIPPED** in suite — workbook path not accessible on this machine (`UNVERIFIED — SOURCE WORKBOOK NOT ACCESSIBLE`); will activate once deposited |
+| `ViOLA_Zenodo_collections_media.xlsx` | `VIOLA_Media` | 49 | **SKIPPED** in suite — workbook path not accessible; will activate once deposited |
+| `CELLO_Zenodo_collections_media.xlsx` | `Cello_Media` | 49 | **PASS** — 0 value differences vs committed module |
+| `DOUBLEBASS_Zenodo_collections_media.xlsx` | `DBass_Media` | 45 | **PASS** |
 
-**CI:** `tests/test_string_source_reproducibility.py` skips when workbooks are absent on the runner. CI verifies committed modules and tests; independent reconstruction requires local workbooks or future canonical fixtures.
+**CI:** `tests/test_string_source_reproducibility.py` skips when workbooks are absent on the runner (see archiving note above). Local reconstruction status for cello and double_bass currently **PASS**; violin and viola skip in the suite until deposited. CI verifies committed modules and unit tests; independent reconstruction requires local workbooks or future canonical fixtures.
 
 ## Technique metadata vs source tables
 
@@ -226,7 +242,7 @@ Findings of a read-only audit of register dependence and per-event propagation
 ## Epistemic limitations
 
 - Verification tests validate implementation contracts, source consistency, provenance propagation, symbolic/musical invariants, and reproducibility under controlled conditions.
-- Tests do **not** validate perceptual adequacy of the CDM model or prove correspondence to perceived density, loudness, salience, or timbral mass.
+- Tests do **not** validate auditory adequacy of the CDM model or prove correspondence to listener judgments of textural density, symbolic-dynamic mass, salience, or timbral mass.
 - Acoustic metadata are externally sourced and/or interpolated — not measured by Textural Density during score analysis.
 - Note-label normalization corrects parsing and table-key alignment only.
 
