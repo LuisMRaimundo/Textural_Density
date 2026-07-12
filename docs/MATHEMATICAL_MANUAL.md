@@ -211,14 +211,23 @@ $$
 
 where $x_d$ is the ordinal coordinate for dynamic $d$. `mp` is **not** aliased to `mf` and is **not** a table column.
 
-**Saturating tail extrapolation (5.1.0-strict-symbolic).** Before this change the GPR trend was extrapolated *unchanged* into the unmeasured tails. Two failure modes resulted: (i) the soft trend overshot **downward**, producing *negative* one-player densities (e.g. `clarinete` C4 at `pppp` $\approx -2.36$, which drove `harmonic_ratio` negative in the `DYNGRAD.wedge` case); and (ii) the loud trend *bent over*, producing a **non-monotone** dip (e.g. the `flauta` C4–E4–G4 triad had sonic mass $62.32$ at `ff` but $59.95$ at `ffff`). Physically, players compress at the dynamic extremes — adjacent-marking differences shrink at `pp/ppp/pppp` and `fff/ffff` — and amplitude is monotone non-decreasing in dynamic level. This is encoded by a saturating, log-domain (multiplicative) rule anchored at the nearest measured boundary $A_b$. For a request $k$ steps below `pp` (soft tail) or $k$ steps above `ff` (loud tail):
+**Saturating register-adaptive tail extrapolation (5.1.0-strict-symbolic).** Before this change the GPR trend was extrapolated *unchanged* into the unmeasured tails. Two failure modes resulted: (i) the soft trend overshot **downward**, producing *negative* one-player densities (e.g. `clarinete` C4 at `pppp` $\approx -2.36$, which drove `harmonic_ratio` negative in the `DYNGRAD.wedge` case); and (ii) the loud trend *bent over*, producing a **non-monotone** dip (e.g. the `flauta` C4–E4–G4 triad had sonic mass $62.32$ at `ff` but $59.95$ at `ffff`). A first saturating fix used *fixed* per-step ratios; that removed the incidents but could not track register-dependent compression of the dynamic palette (e.g. `pppp≈ppp≈pp` at the top of the flute).
+
+The production rule is now **register-adaptive by construction**. At the event's sounding pitch $m$, with measured/interpolated anchors $A_{\mathrm{pp}}(m)$, $A_{\mathrm{mf}}(m)$, $A_{\mathrm{ff}}(m)$:
 
 $$
-d_{\mathrm{soft}}(k) = d_{\mathrm{pp}}\, r_{\mathrm{soft}}^{\,k}, \qquad
-d_{\mathrm{loud}}(k) = d_{\mathrm{ff}}\, r_{\mathrm{loud}}^{\,k},
+s_{\mathrm{soft}}(m)=\max\!\bigl(0,\tfrac{\ln(A_{\mathrm{mf}}/A_{\mathrm{pp}})}{N_{\mathrm{soft}}}\bigr),\qquad
+s_{\mathrm{loud}}(m)=\max\!\bigl(0,\tfrac{\ln(A_{\mathrm{ff}}/A_{\mathrm{mf}})}{N_{\mathrm{loud}}}\bigr),
 $$
 
-with $r_{\mathrm{soft}} = $ `DYN_TAIL_RATIO_SOFT` $= 0.85$ ($\approx -1.4$ dB/step) and $r_{\mathrm{loud}} = $ `DYN_TAIL_RATIO_LOUD` $= 1.10$ ($\approx +0.8$ dB/step), both in `config.py`. Because $0 < r_{\mathrm{soft}} < 1 \le r_{\mathrm{loud}}$ and $d_{\mathrm{pp}}, d_{\mathrm{ff}} > 0$, the construction is **strictly positive** and **monotone** by algebra (soft tail rises toward `pp`; loud tail rises away from `ff`), with the soft-tail differences shrinking geometrically — no clamp is used. `config.DENSITY_FLOOR` is retained only as an unreachable safety assert, not as the positivity mechanism. When a tail rule fires, a per-event warning (`"…outside measured support…; saturated extrapolation applied"`) records the instrument, requested level, boundary level, and ratio — visible, never silent. Interior (in-support) predictions are **unchanged** to within $10^{-9}$. Note that a few source tables are themselves non-monotone *inside* support (e.g. `flauta` C4 has `mf` > `ff`); the spec deliberately leaves measured interior values untouched, so full `pppp → ffff` monotonicity holds except for such measured interior humps.
+where $N_{\mathrm{soft}}=3$ (steps `pp→p→mp→mf`) and $N_{\mathrm{loud}}=2$ (`mf→f→ff`) from `DYNAMIC_LEVELS`. Inverted anchors ($A_{\mathrm{pp}}>A_{\mathrm{mf}}$ or $A_{\mathrm{ff}}<A_{\mathrm{mf}}$) clamp the corresponding step to $0$ (flat tail — zero usable differentiation) and emit a metadata warning naming instrument, pitch, and the inverted pair. For $j$ steps below `pp` or above `ff`:
+
+$$
+\ln A_{\mathrm{soft}}(j)=\ln A_{\mathrm{pp}}-s_{\mathrm{soft}}\sum_{i=1}^{j}\gamma^{i},\qquad
+\ln A_{\mathrm{loud}}(j)=\ln A_{\mathrm{ff}}+s_{\mathrm{loud}}\sum_{i=1}^{j}\gamma^{i},
+$$
+
+with geometric shrink $\gamma=$ `DYN_TAIL_SHRINK` $=0.5$ in `config.py`. The cumulative sum is bounded by $\gamma/(1-\gamma)=1$ when $\gamma=0.5$, so **the entire unmeasured tail never exceeds one measured-step's worth of change**. Because $s(m)$ is taken from the local anchors, the tail automatically compresses where measured differentiation collapses at range extremes — no instrument-independent register model is imposed. Technique modules with transferred (not measured) `pp`/`ff` anchors (`violin_sul_ponticello`, `violin_art_harm`) use the same math and additionally warn `"tail computed from transferred anchors"`. `config.DENSITY_FLOOR` remains only as an unreachable safety assert. Interior (in-support) GPR predictions are **unchanged** to within $10^{-9}$. Measured interior non-monotonicity (e.g. `flauta` C4 `mf`>`ff`) is left untouched by design.
 
 **Diagnostic references (not production):** piecewise linear, PCHIP, and quadratic anchor interpolators appear only in audit tools (`tools/audit_gpr_model_quality.py`, `tools/compare_dynamic_interpolation_methods.py`). PR #24 compared methods on 357 source rows (8 GPR modules) and 340 string scenarios; production GPR was unchanged; linear and PCHIP were not adopted. Local method sensitivity is highest in low-register strings at source-row level; scenario-level `density.instrument` showed **0** high/extreme cases in the tested aggregate battery.
 
@@ -481,8 +490,8 @@ These are **implementation correctness checks**, not empirical validation:
 | Extensive composite (5.0.0) | Adding a distinct note does not decrease composite vertical density (`density.total`) or `pitch_structure`; register-isolated bass never lowers the total (`tests/test_extensive_density_monotonic.py`) |
 | Player mass | Orchestral mass increases linearly with Qty; pressure-equivalent instrument density scales as RSS; interval/pitch-structure unchanged |
 | Qty vs pitch structure | Qty does not increase pitch polyphony, interval pairs, or spectral entropy for unison doublings |
-| Dynamic monotonicity | One-player density is positive and non-decreasing across `pppp → ffff` at fixed pitch (interior GPR + saturating tails, §F.1); the only permitted decreases are measured interior humps left untouched by design |
-| Tail saturation | Out-of-support tails use bounded log-domain ratios ($r_{\mathrm{soft}}=0.85$, $r_{\mathrm{loud}}=1.10$); soft-tail differences shrink geometrically; a per-event saturation warning is attached (§F.1) |
+| Dynamic monotonicity | One-player density is positive; soft/loud tails are monotone into measured support; full `pppp→ffff` monotone except measured/interior humps left untouched (§F.1); `tests/test_adaptive_dynamic_tails.py` |
+| Tail saturation | Register-adaptive log-domain tails with local $s(m)$ from measured pp/mf/ff and geometric shrink $\gamma=0.5$; whole tail ≤ one measured step; per-event warning records $s(m)$, $\gamma$, value (§F.1) |
 | Row-splitting | One row Qty=N ≡ N identical rows Qty=1 for mass and pressure-equivalent density |
 | Duplicate events | Duplicated pitch rows increase player/event counts; pitch structure uses aggregated bins |
 
@@ -640,4 +649,4 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 
 For architecture and output JSON keys, see [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md). For upgrading existing scripts, see [MIGRATION.md](MIGRATION.md). For package vs methodology versions, see [VERSIONING.md](VERSIONING.md). For function signatures, see [API.md](API.md).
 
-*Last updated: 2026-07-11 (5.1.0-strict-symbolic: saturating dynamic-tail extrapolation §F.1; MusicXML sounding pitch §P; package 1.1.4).*
+*Last updated: 2026-07-12 (5.1.0-strict-symbolic: register-adaptive saturating dynamic tails §F.1; MusicXML sounding pitch §P; package 1.1.4).*

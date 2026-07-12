@@ -1,6 +1,6 @@
 # Characterization battery — provenance
 
-- Generated: 2026-07-11 22:52:34 UTC
+- Generated: 2026-07-12 11:36:45 UTC
 - Tool: `benchmarks/characterization/run_battery.py`
 - METRIC_SCHEMA_VERSION: `5.1.0-strict-symbolic`
 - Package version (pyproject): `1.1.4`

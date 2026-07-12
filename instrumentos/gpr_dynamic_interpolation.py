@@ -1,13 +1,18 @@
 """
 Gaussian-process regression for modelled dynamics between pp/mf/ff anchors.
 
-Source-table anchors remain pp, mf, ff only. Intermediate dynamics (p, mp, f,
-extremes) are GPR predictions at fixed ordinal coordinates — not measured data.
+Source-table anchors remain pp, mf, ff only. Intermediate dynamics (p, mp, f)
+are GPR predictions at fixed ordinal coordinates — not measured data.
+
+Out-of-support tails (pppp/ppp below pp; fff/ffff above ff) use a
+register-adaptive saturating log-domain extension whose local step derives
+from the measured pp/mf/ff spread at the event's pitch (see config.DYN_TAIL_SHRINK).
 """
 
 from __future__ import annotations
 
 import logging
+import math
 from typing import Any, Final
 
 import numpy as np
@@ -37,6 +42,11 @@ SOURCE_ANCHOR_DYNAMICS: tuple[str, ...] = ("pp", "mf", "ff")
 # model output (interior GPR interpolation, or saturating tail extrapolation).
 MEASURED_SUPPORT: tuple[str, ...] = SOURCE_ANCHOR_DYNAMICS
 
+# Technique modules whose pp/ff columns are transferred (not independently measured).
+TRANSFERRED_ANCHOR_MODULES: frozenset[str] = frozenset(
+    {"violin_sul_ponticello", "violin_art_harm"}
+)
+
 _LOG = logging.getLogger(__name__)
 
 
@@ -59,6 +69,31 @@ def _support_bounds(
     softest = min(indices, key=indices.get)
     loudest = max(indices, key=indices.get)
     return softest, loudest, indices[softest], indices[loudest]
+
+
+def measured_interior_step_counts(
+    measured_support: tuple[str, ...] = MEASURED_SUPPORT,
+) -> tuple[int, int]:
+    """
+    Return ``(N_soft, N_loud)``: DYNAMIC_LEVELS steps from softest→mf and mf→loudest.
+
+    With default order and support ``(pp, mf, ff)`` this is ``(3, 2)``.
+    """
+    order = _dynamic_order()
+    softest, loudest, i_soft, i_loud = _support_bounds(measured_support, order)
+    if "mf" not in order:
+        raise ValueError("DYNAMIC_LEVELS must include 'mf' for adaptive tails")
+    i_mf = order.index("mf")
+    if softest != "pp" or loudest != "ff":
+        # Still define steps relative to mf when support is the standard triple.
+        pass
+    n_soft = i_mf - i_soft
+    n_loud = i_loud - i_mf
+    if n_soft <= 0 or n_loud <= 0:
+        raise ValueError(
+            f"Invalid measured-support spacing: N_soft={n_soft}, N_loud={n_loud}"
+        )
+    return n_soft, n_loud
 
 
 def classify_dynamic_support(
@@ -86,28 +121,155 @@ def classify_dynamic_support(
     return ("interior", None, 0)
 
 
+def geometric_tail_sum(gamma: float, steps: int) -> float:
+    """Σ_{i=1..j} γ^i = γ (1 − γ^j) / (1 − γ) for γ ≠ 1; else j."""
+    j = int(steps)
+    if j <= 0:
+        return 0.0
+    if abs(gamma - 1.0) < 1e-15:
+        return float(j)
+    return float(gamma * (1.0 - gamma**j) / (1.0 - gamma))
+
+
+def local_tail_steps(
+    a_pp: float,
+    a_mf: float,
+    a_ff: float,
+    *,
+    n_soft: int | None = None,
+    n_loud: int | None = None,
+) -> dict[str, Any]:
+    """
+    Compute register-adaptive per-step sizes from measured anchors at pitch m.
+
+    Returns ``s_soft``, ``s_loud``, and inversion flags. Inversions clamp the
+    corresponding step to 0 (flat unusable differentiation at that pitch).
+    """
+    if n_soft is None or n_loud is None:
+        n_soft_r, n_loud_r = measured_interior_step_counts()
+        n_soft = n_soft if n_soft is not None else n_soft_r
+        n_loud = n_loud if n_loud is not None else n_loud_r
+
+    soft_inverted = False
+    loud_inverted = False
+    s_soft = 0.0
+    s_loud = 0.0
+
+    if a_pp > 0.0 and a_mf > 0.0:
+        if a_pp > a_mf:
+            soft_inverted = True
+            s_soft = 0.0
+        else:
+            s_soft = max(0.0, math.log(a_mf / a_pp) / float(n_soft))
+    elif a_pp > 0.0 and a_mf <= 0.0:
+        soft_inverted = True
+        s_soft = 0.0
+
+    if a_mf > 0.0 and a_ff > 0.0:
+        if a_ff < a_mf:
+            loud_inverted = True
+            s_loud = 0.0
+        else:
+            s_loud = max(0.0, math.log(a_ff / a_mf) / float(n_loud))
+    elif a_mf > 0.0 and a_ff <= 0.0:
+        loud_inverted = True
+        s_loud = 0.0
+
+    return {
+        "s_soft": float(s_soft),
+        "s_loud": float(s_loud),
+        "soft_inverted": soft_inverted,
+        "loud_inverted": loud_inverted,
+        "n_soft": int(n_soft),
+        "n_loud": int(n_loud),
+    }
+
+
+def adaptive_tail_amplitude(
+    boundary: float,
+    step: float,
+    steps: int,
+    *,
+    side: str,
+    gamma: float | None = None,
+) -> float:
+    """
+    Saturating register-adaptive tail amplitude in the log domain.
+
+    soft: ln A = ln A_pp − s · Σ γ^i
+    loud: ln A = ln A_ff + s · Σ γ^i
+    """
+    from config import DYN_TAIL_SHRINK
+
+    g = DYN_TAIL_SHRINK if gamma is None else float(gamma)
+    if boundary <= 0.0:
+        return float(boundary)
+    cum = geometric_tail_sum(g, steps)
+    if side == "soft":
+        return float(boundary * math.exp(-step * cum))
+    if side == "loud":
+        return float(boundary * math.exp(+step * cum))
+    raise ValueError(f"side must be 'soft' or 'loud', got {side!r}")
+
+
 def tail_saturation_info(
-    dynamic: str, measured_support: tuple[str, ...] = MEASURED_SUPPORT
+    dynamic: str,
+    *,
+    a_pp: float | None = None,
+    a_mf: float | None = None,
+    a_ff: float | None = None,
+    measured_support: tuple[str, ...] = MEASURED_SUPPORT,
+    module_name: str | None = None,
 ) -> dict[str, Any] | None:
     """
-    Metadata for a tail rule, or ``None`` when the level is inside measured support.
+    Metadata for a tail evaluation, or ``None`` when the level is inside support.
 
-    Exposes the requested level, the boundary level used, the per-step ratio and
-    the number of steps so callers can emit a visible, never-silent warning.
+    When anchors are supplied, records local ``s(m)``, ``γ``, and the resulting
+    amplitude. Without anchors, returns classification-only fields (``s``/value
+    left ``None``) for callers that only need region/boundary/steps.
     """
+    from config import DYN_TAIL_SHRINK
+
     region, boundary, steps = classify_dynamic_support(dynamic, measured_support)
     if region == "interior":
         return None
-    from config import DYN_TAIL_RATIO_LOUD, DYN_TAIL_RATIO_SOFT
 
-    ratio = DYN_TAIL_RATIO_SOFT if region == "soft_tail" else DYN_TAIL_RATIO_LOUD
-    return {
+    info: dict[str, Any] = {
         "region": region,
         "requested_level": (dynamic or "mf").strip().lower(),
         "boundary_level": boundary,
-        "ratio": float(ratio),
         "steps": int(steps),
+        "gamma": float(DYN_TAIL_SHRINK),
+        "s": None,
+        "value": None,
+        "soft_inverted": False,
+        "loud_inverted": False,
+        "transferred_anchors": bool(
+            module_name and module_name in TRANSFERRED_ANCHOR_MODULES
+        ),
+        "description": (
+            "saturating register-adaptive tail; differentiation derived from "
+            "local measured pp/mf/ff spread"
+        ),
     }
+
+    if a_pp is None or a_mf is None or a_ff is None:
+        return info
+
+    local = local_tail_steps(float(a_pp), float(a_mf), float(a_ff))
+    info["soft_inverted"] = local["soft_inverted"]
+    info["loud_inverted"] = local["loud_inverted"]
+    if region == "soft_tail":
+        info["s"] = local["s_soft"]
+        info["value"] = adaptive_tail_amplitude(
+            float(a_pp), local["s_soft"], steps, side="soft"
+        )
+    else:
+        info["s"] = local["s_loud"]
+        info["value"] = adaptive_tail_amplitude(
+            float(a_ff), local["s_loud"], steps, side="loud"
+        )
+    return info
 
 
 def create_dynamic_gpr() -> GaussianProcessRegressor:
@@ -132,6 +294,7 @@ def predict_intermediate_dynamics_gpr(
     Predict all modelled dynamics via GPR fitted on pp/mf/ff anchor values.
 
     ``mp`` uses coordinate 4.5 between ``p`` (4.0) and ``mf`` (5.0).
+    Out-of-support tails are replaced by the register-adaptive saturating rule.
     """
     log = logger or _LOG
     dynamic_levels = GPR_DYNAMIC_COORDINATES
@@ -160,46 +323,69 @@ def predict_intermediate_dynamics_gpr(
                 predictions[dynamic].append(float(y_pred[j]))
 
         result = {k: np.array(v, dtype=float) for k, v in predictions.items()}
-        return _apply_saturating_tails(result, pp_values, ff_values)
+        return _apply_adaptive_tails(result, pp_values, mf_values, ff_values)
     except Exception as exc:
         log.error("Error predicting intermediate dynamics: %s", exc)
         return {d: np.zeros_like(pp_values, dtype=float) for d in all_dynamics}
 
 
-def _apply_saturating_tails(
+def _apply_adaptive_tails(
     predictions: dict[str, np.ndarray],
     pp_values: list[float] | np.ndarray,
+    mf_values: list[float] | np.ndarray,
     ff_values: list[float] | np.ndarray,
 ) -> dict[str, np.ndarray]:
     """
-    Replace out-of-support tail predictions with saturating log-domain extrapolation.
+    Replace out-of-support tail predictions with register-adaptive saturation.
 
-    Interior (in-support) predictions are returned unchanged. Soft-tail levels
-    saturate down from the measured pp boundary; loud-tail levels saturate up
-    from the measured ff boundary. Strictly positive and monotone by algebra.
+    Interior (in-support) predictions are returned unchanged. Soft/loud tails
+    use local measured steps ``s_soft(m)`` / ``s_loud(m)`` and geometric shrink γ.
     """
-    from config import DENSITY_FLOOR, DYN_TAIL_RATIO_LOUD, DYN_TAIL_RATIO_SOFT
+    from config import DENSITY_FLOOR, DYN_TAIL_SHRINK
 
     pp_arr = np.asarray(pp_values, dtype=float)
+    mf_arr = np.asarray(mf_values, dtype=float)
     ff_arr = np.asarray(ff_values, dtype=float)
+    n = pp_arr.shape[0]
+    n_soft, n_loud = measured_interior_step_counts()
 
     for dynamic in list(predictions.keys()):
         region, _boundary, steps = classify_dynamic_support(dynamic)
-        if region == "soft_tail":
-            boundary_arr = pp_arr
-            values = pp_arr * (DYN_TAIL_RATIO_SOFT ** steps)
-        elif region == "loud_tail":
-            boundary_arr = ff_arr
-            values = ff_arr * (DYN_TAIL_RATIO_LOUD ** steps)
-        else:
-            continue  # interior: GPR output unchanged
-        # Unreachable safety assert: whenever the measured boundary is positive
-        # the saturating construction is strictly positive. This guards against a
-        # future regression; it is NOT the positivity mechanism.
-        assert np.all(values[boundary_arr > 0] >= DENSITY_FLOOR), (
-            f"saturated tail density below floor for {dynamic!r}"
-        )
-        predictions[dynamic] = np.asarray(values, dtype=float)
+        if region == "interior":
+            continue
+
+        values = np.empty(n, dtype=float)
+        for i in range(n):
+            local = local_tail_steps(
+                float(pp_arr[i]),
+                float(mf_arr[i]),
+                float(ff_arr[i]),
+                n_soft=n_soft,
+                n_loud=n_loud,
+            )
+            if region == "soft_tail":
+                values[i] = adaptive_tail_amplitude(
+                    float(pp_arr[i]),
+                    local["s_soft"],
+                    steps,
+                    side="soft",
+                    gamma=DYN_TAIL_SHRINK,
+                )
+                boundary_ok = pp_arr[i] > 0.0
+            else:
+                values[i] = adaptive_tail_amplitude(
+                    float(ff_arr[i]),
+                    local["s_loud"],
+                    steps,
+                    side="loud",
+                    gamma=DYN_TAIL_SHRINK,
+                )
+                boundary_ok = ff_arr[i] > 0.0
+            if boundary_ok:
+                assert values[i] >= DENSITY_FLOOR, (
+                    f"saturated tail density below floor for {dynamic!r}"
+                )
+        predictions[dynamic] = values
     return predictions
 
 

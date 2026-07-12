@@ -21,7 +21,7 @@ MAX_DENS_GLOBAL = 575.0
 USE_LOG_COMPRESSION = True
 
 # -------------------------------------------------------------------
-# Dynamic-tail saturation (5.1.0-strict-symbolic)
+# Dynamic-tail saturation (5.1.0-strict-symbolic) — register-adaptive
 # -------------------------------------------------------------------
 # The instrument GPR dynamic->amplitude model is fitted on the measured source
 # anchors (pp, mf, ff). Levels outside that measured support (soft tail:
@@ -30,23 +30,27 @@ USE_LOG_COMPRESSION = True
 # weights, e.g. clarinet C4) and bends over at the loud end (producing a
 # non-monotone ffff mass dip, e.g. flute C4/E4/G4 triad).
 #
-# Instead, tails saturate multiplicatively in the amplitude (log) domain from
-# the nearest measured boundary value A_b:
-#     soft tail:  A = A_b * DYN_TAIL_RATIO_SOFT ** k   (k steps below pp)
-#     loud tail:  A = A_b * DYN_TAIL_RATIO_LOUD ** k   (k steps above ff)
-# Physical justification: players compress at the dynamic extremes — adjacent
-# marking differences shrink at pp/ppp/pppp and at fff/ffff — and there is no
-# acoustic measurement support in the tails. This construction is strictly
-# positive and monotone by algebra (0 < ratio_soft < 1; ratio_loud >= 1), so
-# properties 1-3 (positivity, monotonicity, tail compression) hold without any
-# clamp. Keep these in config (do not hardcode inside the interpolation path).
-DYN_TAIL_RATIO_SOFT = 0.85  # ~-1.4 dB per step below pp (almost-infimous soft steps)
-DYN_TAIL_RATIO_LOUD = 1.10  # ~+0.8 dB per step above ff (gentle loud saturation)
+# Tails use a saturating log-domain extension whose *local step* derives from
+# the measured pp/mf/ff spread at the event's pitch m:
+#     s_soft(m) = max(0, ln(A_mf/A_pp) / N_soft)   # N_soft = steps pp→mf (=3)
+#     s_loud(m) = max(0, ln(A_ff/A_mf) / N_loud)   # N_loud = steps mf→ff (=2)
+# For j steps outside support:
+#     soft:  ln A = ln A_pp − s_soft · Σ_{i=1..j} γ^i
+#     loud:  ln A = ln A_ff + s_loud · Σ_{i=1..j} γ^i
+# with geometric shrink γ = DYN_TAIL_SHRINK. The cumulative sum is bounded by
+# γ/(1−γ) = 1 when γ=0.5, so the entire unmeasured tail never exceeds one
+# measured-step's worth of change. Because s(m) comes from local anchors, the
+# tail automatically compresses where measured differentiation collapses
+# (e.g. top-of-flute, bottom-of-bass) — no instrument-independent register
+# model is imposed. Inverted anchors (A_pp > A_mf or A_ff < A_mf) clamp the
+# corresponding step to 0 (flat tail) and emit a metadata warning.
+DYN_TAIL_SHRINK = 0.5  # γ: each unmeasured step is half the previous; bound = s
 
 # Safety floor for instrument density. This is an UNREACHABLE assert only: the
-# saturating-tail construction above is already strictly positive. It exists so
-# a future regression that reintroduces negative extrapolation fails loudly
-# rather than silently. It is not the positivity mechanism.
+# saturating-tail construction above is already strictly positive whenever the
+# boundary anchor is positive. It exists so a future regression that
+# reintroduces negative extrapolation fails loudly rather than silently.
+# It is not the positivity mechanism.
 DENSITY_FLOOR = 1e-9
 
 # Register bands for registral-density subindex (MIDI inclusive lower, exclusive upper).
