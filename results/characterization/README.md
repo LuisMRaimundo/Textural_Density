@@ -1,10 +1,10 @@
 # Characterization battery — provenance
 
-- Generated: 2026-07-12 11:36:45 UTC
+- Generated: 2026-07-12 11:52:03 UTC
 - Tool: `benchmarks/characterization/run_battery.py`
 - METRIC_SCHEMA_VERSION: `5.1.0-strict-symbolic`
 - Package version (pyproject): `1.1.4`
-- Cases: 123 valued / 142 total; errors: 19
+- Cases: 136 valued / 155 total; errors: 19
 
 ## Resolved instrument map
 
