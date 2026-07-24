@@ -532,6 +532,96 @@ REGISTRY["violino_art_harm"] = _profile(
     ),
 )
 
+
+REGISTRY["violoncelo_sordina"] = _profile(
+    "violoncelo_sordina",
+    "Cello sordina",
+    "strings",
+    sounding=(36, 84),
+    comfortable=(40, 65),
+    brightness="neutral",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="cello_sordina",
+    supported=("arco", "mute"),
+    unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/cello_sordina.py from Strings Techniques "
+        "Extrapolation Cello_pp.xlsx / Cello_mf.xlsx / Cello_ff.xlsx "
+        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sordina only; pp/mf/ff come from "
+        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=("cello_sordina", "Cello_sordina", "cello con sordina", "cello_con_sordina", "cello sordina", "violoncelo sordina", "violoncelo_sordina", "cello muted", "muted cello"),
+)
+
+
+REGISTRY["violoncelo_sul_tasto"] = _profile(
+    "violoncelo_sul_tasto",
+    "Cello sul tasto",
+    "strings",
+    sounding=(36, 84),
+    comfortable=(40, 65),
+    brightness="dark",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="cello_sul_tasto",
+    supported=("arco", "sul_tasto"),
+    unsupported=("pizzicato", "mute", "sul_ponticello"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/cello_sul_tasto.py from Strings Techniques "
+        "Extrapolation Cello_pp.xlsx / Cello_mf.xlsx / Cello_ff.xlsx "
+        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_tasto only; pp/mf/ff come from "
+        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=("cello_sul_tasto", "Cello_sul_tasto", "cello sul tasto", "violoncelo sul tasto", "violoncelo_sul_tasto", "sul tasto cello", "sul_tasto_cello"),
+)
+
+
+REGISTRY["violoncelo_sul_ponticello"] = _profile(
+    "violoncelo_sul_ponticello",
+    "Cello sul ponticello",
+    "strings",
+    sounding=(36, 84),
+    comfortable=(40, 65),
+    brightness="bright",
+    sustain="sustained",
+    attack="hard",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="cello_sul_ponticello",
+    supported=("arco", "sul_ponticello"),
+    unsupported=("pizzicato", "mute", "sul_tasto"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/cello_sul_ponticello.py from Strings Techniques "
+        "Extrapolation Cello_pp.xlsx / Cello_mf.xlsx / Cello_ff.xlsx "
+        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from "
+        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=("cello_sul_ponticello", "Cello_sul_ponticello", "cello sul pont", "cello_sul_pont", "cello sul ponticello", "violoncelo sul ponticello", "violoncelo_sul_ponticello", "sul ponticello cello", "sul_ponticello_cello"),
+)
+
 # --- Brass ---
 REGISTRY["trompa"] = _profile(
     "trompa",

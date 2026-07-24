@@ -38,6 +38,7 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 | `violin_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_ponticello`; pp from arco ratios) |
 | `violin_art_harm.py` | `spectral_data` | Measured **mf only**; pp/ff extrapolated via `mf_anchor_dynamic_extrapolation.py` (violin arco ratio transfer) |
 | `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Viola_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
+| `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Cello_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
 
@@ -227,6 +228,9 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **Viola sul ponticello** | `viola_sul_ponticello.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
 
 | **Cello** | `cello.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
+| **Cello sordina** | `cello_sordina.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
+| **Cello sul tasto** | `cello_sul_tasto.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
+| **Cello sul ponticello** | `cello_sul_ponticello.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
 
 | **Double bass** | `double_bass.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 
@@ -258,7 +262,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 
 
-~**35 orchestral instruments / technique profiles** are registered with metadata (family, ranges, register bands, `profile_status`, `uncertainty`, aliases). Examples:
+~**38 orchestral instruments / technique profiles** are registered with metadata (family, ranges, register bands, `profile_status`, `uncertainty`, aliases). Examples:
 
 
 
@@ -268,7 +272,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 | Woodwinds | `flauta`, `flautim`, `oboe`, `cor_anglais`, `clarinete`, `clarinete_baixo`, `fagote`, `contrafagote` |
 
-| Strings | `violino`, `violino_sordina`, `violino_sul_tasto`, `violino_sul_ponticello`, `violino_art_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `violoncelo`, `contrabaixo` |
+| Strings | `violino`, `violino_sordina`, `violino_sul_tasto`, `violino_sul_ponticello`, `violino_art_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `violoncelo`, `violoncelo_sordina`, `violoncelo_sul_tasto`, `violoncelo_sul_ponticello`, `contrabaixo` |
 
 | Brass | `trompa`, `trompete`, `trombone`, `trombone_baixo`, `tuba` |
 
