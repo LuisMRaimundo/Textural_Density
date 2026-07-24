@@ -74,6 +74,48 @@ live audio analysis.
 - **Interpolation:** Gaussian-process regression for intermediate dynamics
 - **Uncertainty:** medium — sparse table with known QC flags on extreme-register rows
 
+## Viola sordina (`viola_sordina`)
+
+- **Module:** `instrumentos/viola_sordina.py`
+- **GUI display name:** `Viola sordina`
+- **Table:** `spectral_data` (49 chromatic rows, C3–C7)
+- **Provenance (2026-07-24):** assumption-based EWSD extrapolations from
+  `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (`All_Results.estimate_mean`,
+  technique `con_sordino`); **not** Zenodo-measured CDM
+- **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
+- **Source technique:** `arco_sordina`
+- **Interpolation:** GPR for intermediate dynamics
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
+
+## Viola sul tasto (`viola_sul_tasto`)
+
+- **Module:** `instrumentos/viola_sul_tasto.py`
+- **GUI display name:** `Viola sul tasto`
+- **Table:** `spectral_data` (49 chromatic rows, C3–C7)
+- **Provenance:** assumption-based EWSD extrapolations from
+  `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (technique `sul_tasto`)
+- **Workbook anchors:** pp, mf and ff
+- **Source technique:** `arco_sul_tasto`
+- **Interpolation:** GPR for intermediate dynamics
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
+
+## Viola sul ponticello (`viola_sul_ponticello`)
+
+- **Module:** `instrumentos/viola_sul_ponticello.py`
+- **GUI display name:** `Viola sul ponticello`
+- **Table:** `spectral_data` (49 chromatic rows, C3–C7)
+- **Provenance:** assumption-based EWSD extrapolations from
+  `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (technique `sul_ponticello`)
+- **Workbook anchors:** pp, mf and ff
+- **Source technique:** `arco_sul_ponticello`
+- **Interpolation:** GPR for intermediate dynamics
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
+- **Skipped:** artificial/natural harmonics remain `unavailable` in the source
+  workbooks — no `viola_art_harm` module
+
 ## Violin (`violin`)
 
 - **Module:** `instrumentos/violin.py`
@@ -87,23 +129,44 @@ live audio analysis.
 
 - **Module:** `instrumentos/violin_sordina.py`
 - **Table:** `spectral_data` (49 chromatic rows, G3–G7)
-- **Provenance:** IOWA+ORCH arco sordina CDM `combined_sord_collection_raw` at pp/mf/ff
-- **Source workbook:** `D:\CORDAS\VIOLIN Zenodo_Arco Sordina.xlsx` (sheets `SORDINA-pp`, `SORDINA-mf`, `SORDINA-ff`)
+- **Provenance (2026-07-24):** assumption-based EWSD extrapolations from
+  `Violin_mf.xlsx` / `Violin_ff.xlsx` (`All_Results.estimate_mean`, technique
+  `con_sordino`); **not** Zenodo-measured CDM
+- **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
 - **Source technique:** `arco_sordina`
 - **Interpolation:** GPR for intermediate dynamics
-- **Uncertainty:** medium
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
+
+## Violin sul tasto (`violin_sul_tasto`)
+
+- **Module:** `instrumentos/violin_sul_tasto.py`
+- **GUI display name:** `Violin sul tasto`
+- **Table:** `spectral_data` (49 chromatic rows, G3–G7)
+- **Provenance:** assumption-based EWSD extrapolations from
+  `Violin_mf.xlsx` / `Violin_ff.xlsx` (technique `sul_tasto`)
+- **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
+- **Source technique:** `arco_sul_tasto`
+- **Interpolation:** GPR for intermediate dynamics
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
 ## Violin sul ponticello (`violin_sul_ponticello`)
 
 - **Module:** `instrumentos/violin_sul_ponticello.py`
 - **Table:** `spectral_data` (49 chromatic rows, G3–G7)
-- **Measured anchor:** mf only (`MF_MEASURED` in module)
-- **Extrapolated anchors:** pp and ff derived per note via violin arco pp/mf and ff/mf ratios (`instrumentos/mf_anchor_dynamic_extrapolation.py`)
-- **GPR-modelled dynamics:** pppp, ppp, p, mp, f, fff, ffff (and other non-anchor markings) predicted by GPR on the pp/mf/ff anchor triple — same ordinal model as other GPR modules
+- **Provenance (2026-07-24):** assumption-based EWSD extrapolations from
+  `Violin_mf.xlsx` / `Violin_ff.xlsx` (technique `sul_ponticello`); replaces the
+  earlier mf-only hand-curated Zenodo-style table
+- **Workbook anchors:** mf and ff (`MF_MEASURED`, `FF_MEASURED`)
+- **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
+- **GPR-modelled dynamics:** pppp, ppp, p, mp, f, fff, ffff predicted by GPR on the pp/mf/ff triple
 - **Source technique:** `arco_sul_ponticello`
 - **Interpolation:** GPR for intermediate dynamics
-- **Uncertainty:** high (pp/ff are modelled from mf-only source)
-- **Curation (2026-06-30):** corrected hand-curated `MF_MEASURED` mf rows (G3–G7); pp/ff anchors regenerated via violin arco ratio transfer
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
+
+## Violin artificial harmonics (`violin_art_harm`)
 
 - **Module:** `instrumentos/violin_art_harm.py`
 - **Table:** `spectral_data` (25 chromatic rows, G5–G7)
@@ -141,10 +204,12 @@ Offline curation pipeline (not used at runtime):
 
 1. `tools/populate_td_importer_sheets_from_zenodo_media.py` — builds `AcousticTable`, `Registry`, and `Provenance` sheets from `*_Media` workbooks. Applies `normalize_media_note_label()` when reading media rows (strips trailing `(2)` duplicate markers).
 2. `tools/generate_instrument_modules.py` — emits `instrumentos/flute.py`, `oboe.py`, `clarinet.py`, `violin.py`, `viola.py`, `cello.py`, `double_bass.py`. Viola and double bass source reconstruction use the `VIOLA_Media` / `DBass_Media` sheets via `load_spectral_data_from_media` (their workbooks ship no `AcousticTable` sheet).
-3. `tools/build_viola_table_from_media.py` — helper to regenerate viola `spectral_data` from `VIOLA_Media`.
-4. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
+3. `tools/generate_violin_technique_modules_from_xlsx.py` — emits / replaces `violin_sordina.py`, `violin_sul_tasto.py`, `violin_sul_ponticello.py` from Desktop `Violin_mf.xlsx` / `Violin_ff.xlsx` (pp via arco ratio transfer).
+4. `tools/generate_viola_technique_modules_from_xlsx.py` — emits `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` from Desktop `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (pp/mf/ff direct from `estimate_mean`).
+5. `tools/build_viola_table_from_media.py` — helper to regenerate viola `spectral_data` from `VIOLA_Media`.
+6. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
-**mf-only technique tables:** `violin_sul_ponticello.py` and `violin_art_harm.py` are hand-curated (not emitted by `generate_instrument_modules.py`). Measured mf rows live in `MF_MEASURED`; pp/ff anchors are built offline via `instrumentos/mf_anchor_dynamic_extrapolation.build_spectral_data_from_mf_anchor()` using violin arco per-note dynamic ratios. Intermediate and extreme dynamics (`pppp` … `ffff`) remain GPR-modelled at runtime in `calculate_metrics`.
+**mf-only technique tables:** `violin_art_harm.py` remains hand-curated (mf-only Zenodo-style table; pp/ff via `mf_anchor_dynamic_extrapolation`). Violin/viola sordina, sul tasto, and sul ponticello modules are regenerated from Strings Techniques Extrapolation workbooks (assumption-based EWSD; high uncertainty). Intermediate and extreme dynamics (`pppp` … `ffff`) remain GPR-modelled at runtime in `calculate_metrics`.
 
 ## Media note-label normalization (PR #14)
 

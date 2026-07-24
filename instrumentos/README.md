@@ -33,8 +33,11 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 | `trumpet.py` | `spectral_data` | IOWA+ORCH trumpet sustain CDM medians (Zenodo workbook) |
 
 | `violin.py`, `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` | IOWA+ORCH arco sustain CDM medians (Zenodo workbooks) |
-| `violin_sordina.py` | `spectral_data` | IOWA+ORCH arco sordina CDM (`combined_sord_collection_raw`, pp/mf/ff) |
-| `violin_sul_ponticello.py`, `violin_art_harm.py` | `spectral_data` | Measured **mf only**; pp/ff extrapolated via `mf_anchor_dynamic_extrapolation.py` (violin arco ratio transfer) |
+| `violin_sordina.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`con_sordino`; pp from arco ratios) |
+| `violin_sul_tasto.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_tasto`; pp from arco ratios) |
+| `violin_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_ponticello`; pp from arco ratios) |
+| `violin_art_harm.py` | `spectral_data` | Measured **mf only**; pp/ff extrapolated via `mf_anchor_dynamic_extrapolation.py` (violin arco ratio transfer) |
+| `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Viola_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
 
@@ -43,7 +46,7 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 
 **Media ingestion:** Zenodo `*_Media` workbook rows may use duplicate suffix labels (e.g. `F4 (2)`). Offline tooling applies `utils.notes.normalize_media_note_label()` before canonical parsing. See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md).
 
-**Technique honesty:** registry `supported_techniques` lists organological capabilities. GPR modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
+**Technique honesty:** registry `supported_techniques` lists organological capabilities. GPR modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
 
 **mf-only technique modules:** `violin_sul_ponticello.py` and `violin_art_harm.py` commit measured mf rows in `MF_MEASURED`. pp and ff GPR anchors are extrapolated per note from violin arco pp/mf and ff/mf ratios (`instrumentos/mf_anchor_dynamic_extrapolation.py`). All other dynamics (`pppp` … `ffff`, including `mp`) are GPR-modelled in the production pipeline — same ordinal model as full-table modules. Direct `calcular_densidade` calls on these modules collapse non-anchor markings to the nearest table row; GUI / `calculate_metrics` uses GPR.
 
@@ -214,10 +217,14 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **Trumpet** | `trumpet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
 | **Violin** | `violin.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
-| **Violin sordina** | `violin_sordina.py` | `literature_derived` | IOWA+ORCH arco sordina CDM (pp/mf/ff) |
-| **Violin sul ponticello** | `violin_sul_ponticello.py` | `literature_derived` | mf measured; pp/ff extrapolated (high uncertainty) |
+| **Violin sordina** | `violin_sordina.py` | `literature_derived` | Extrapolation workbook mf/ff; pp from arco ratios (high uncertainty) |
+| **Violin sul tasto** | `violin_sul_tasto.py` | `literature_derived` | Extrapolation workbook mf/ff; pp from arco ratios (high uncertainty) |
+| **Violin sul ponticello** | `violin_sul_ponticello.py` | `literature_derived` | Extrapolation workbook mf/ff; pp from arco ratios (high uncertainty) |
 | **Violin art harm** | `violin_art_harm.py` | `literature_derived` | mf measured G5–G7; pp/ff extrapolated (high uncertainty) |
 | **Viola** | `viola.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
+| **Viola sordina** | `viola_sordina.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
+| **Viola sul tasto** | `viola_sul_tasto.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
+| **Viola sul ponticello** | `viola_sul_ponticello.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
 
 | **Cello** | `cello.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 
@@ -251,7 +258,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 
 
-~**28 orchestral instruments** are registered with metadata (family, ranges, register bands, `profile_status`, `uncertainty`, aliases). Examples:
+~**35 orchestral instruments / technique profiles** are registered with metadata (family, ranges, register bands, `profile_status`, `uncertainty`, aliases). Examples:
 
 
 
@@ -261,7 +268,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 | Woodwinds | `flauta`, `flautim`, `oboe`, `cor_anglais`, `clarinete`, `clarinete_baixo`, `fagote`, `contrafagote` |
 
-| Strings | `violino`, `violino_sordina`, `violino_sul_ponticello`, `violino_art_harm`, `viola`, `violoncelo`, `contrabaixo` |
+| Strings | `violino`, `violino_sordina`, `violino_sul_tasto`, `violino_sul_ponticello`, `violino_art_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `violoncelo`, `contrabaixo` |
 
 | Brass | `trompa`, `trompete`, `trombone`, `trombone_baixo`, `tuba` |
 

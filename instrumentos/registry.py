@@ -290,6 +290,96 @@ for _id, _name, _module, _sound, _comfort, _aliases in (
         aliases=_aliases,
     )
 
+
+REGISTRY["viola_sordina"] = _profile(
+    "viola_sordina",
+    "Viola sordina",
+    "strings",
+    sounding=(48, 96),
+    comfortable=(50, 69),
+    brightness="neutral",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="viola_sordina",
+    supported=("arco", "mute"),
+    unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/viola_sordina.py from Strings Techniques "
+        "Extrapolation Viola_pp.xlsx / Viola_mf.xlsx / Viola_ff.xlsx "
+        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sordina only; pp/mf/ff come from "
+        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=("viola_sordina", "Viola_sordina", "viola con sordina", "viola_con_sordina", "viola sordina", "viola muted", "muted viola"),
+)
+
+
+REGISTRY["viola_sul_tasto"] = _profile(
+    "viola_sul_tasto",
+    "Viola sul tasto",
+    "strings",
+    sounding=(48, 96),
+    comfortable=(50, 69),
+    brightness="dark",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="viola_sul_tasto",
+    supported=("arco", "sul_tasto"),
+    unsupported=("pizzicato", "mute", "sul_ponticello"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/viola_sul_tasto.py from Strings Techniques "
+        "Extrapolation Viola_pp.xlsx / Viola_mf.xlsx / Viola_ff.xlsx "
+        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_tasto only; pp/mf/ff come from "
+        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=("viola_sul_tasto", "Viola_sul_tasto", "viola sul tasto", "sul tasto viola", "sul_tasto_viola"),
+)
+
+
+REGISTRY["viola_sul_ponticello"] = _profile(
+    "viola_sul_ponticello",
+    "Viola sul ponticello",
+    "strings",
+    sounding=(48, 96),
+    comfortable=(50, 69),
+    brightness="bright",
+    sustain="sustained",
+    attack="hard",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="viola_sul_ponticello",
+    supported=("arco", "sul_ponticello"),
+    unsupported=("pizzicato", "mute", "sul_tasto"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/viola_sul_ponticello.py from Strings Techniques "
+        "Extrapolation Viola_pp.xlsx / Viola_mf.xlsx / Viola_ff.xlsx "
+        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from "
+        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=("viola_sul_ponticello", "Viola_sul_ponticello", "viola sul pont", "viola_sul_pont", "viola sul ponticello", "sul ponticello viola", "sul_ponticello_viola"),
+)
+
 REGISTRY["violino_sordina"] = _profile(
     "violino_sordina",
     "Violin sordina",
@@ -300,7 +390,7 @@ REGISTRY["violino_sordina"] = _profile(
     sustain="sustained",
     attack="soft",
     status="literature_derived",
-    uncertainty="medium",
+    uncertainty="high",
     module_name="violin_sordina",
     supported=("arco", "mute"),
     unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
@@ -347,8 +437,8 @@ REGISTRY["violino_sul_ponticello"] = _profile(
     ),
     warnings=(
         "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sul_ponticello only; pp/ff anchors are "
-        "extrapolated from mf using violin arco dynamic ratios.",
+        "Numerical CDM table covers arco_sul_ponticello only; mf/ff come from assumption-based "
+        "extrapolation workbooks; pp anchors are extrapolated from mf using violin arco ratios.",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
@@ -361,6 +451,44 @@ REGISTRY["violino_sul_ponticello"] = _profile(
         "violino_sul_ponticello",
         "sul ponticello violin",
         "sul_ponticello_violin",
+    ),
+)
+
+
+REGISTRY["violino_sul_tasto"] = _profile(
+    "violino_sul_tasto",
+    "Violin sul tasto",
+    "strings",
+    sounding=(55, 103),
+    comfortable=(55, 76),
+    brightness="dark",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="violin_sul_tasto",
+    supported=("arco", "sul_tasto"),
+    unsupported=("pizzicato", "mute", "sul_ponticello"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/violin_sul_tasto.py from Strings Techniques "
+        "Extrapolation Violin_mf.xlsx / Violin_ff.xlsx (assumption-based EWSD); "
+        "pp derived from violin arco per-note dynamic ratios."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_tasto only; mf/ff come from assumption-based "
+        "extrapolation workbooks; pp anchors are extrapolated from mf using violin arco ratios.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "violin_sul_tasto",
+        "Violin_sul_tasto",
+        "violin sul tasto",
+        "violino sul tasto",
+        "violino_sul_tasto",
+        "sul tasto violin",
+        "sul_tasto_violin",
     ),
 )
 

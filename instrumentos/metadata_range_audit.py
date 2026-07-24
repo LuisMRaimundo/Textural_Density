@@ -33,9 +33,13 @@ _GPR_MODULES = frozenset(
         "bassoon",
         "violin",
         "violin_sordina",
+        "violin_sul_tasto",
         "violin_sul_ponticello",
         "violin_art_harm",
         "viola",
+        "viola_sordina",
+        "viola_sul_tasto",
+        "viola_sul_ponticello",
         "cello",
         "double_bass",
     }

@@ -92,7 +92,7 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 | Name | Role | Module |
 |------|------|--------|
 | `REGISTRY` profiles | Register, family, dynamic-response metadata | `instrumentos/registry.py` |
-| GPR modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `violin`, `violin_sordina`, `violin_sul_ponticello`, `violin_art_harm`, `viola`, `cello`, `double_bass`, …) | Sparse note×dynamic CDM tables (externally sourced) | `instrumentos/*.py` |
+| GPR modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `violin`, `violin_sordina`, `violin_sul_tasto`, `violin_sul_ponticello`, `violin_art_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `cello`, `double_bass`, …) | Sparse note×dynamic CDM tables (externally sourced) | `instrumentos/*.py` |
 | `profile_status` | `literature_derived` / `empirical_profile` / `coarse_default` | Audit: `instrumentos/metadata_audit.py` |
 | `uncertainty` | low / medium / high | All profiles |
 | Unknown instrument | Generic fallback without external acoustic table | `profile_for_event()` |
