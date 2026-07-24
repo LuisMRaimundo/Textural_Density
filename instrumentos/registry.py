@@ -622,6 +622,96 @@ REGISTRY["violoncelo_sul_ponticello"] = _profile(
     aliases=("cello_sul_ponticello", "Cello_sul_ponticello", "cello sul pont", "cello_sul_pont", "cello sul ponticello", "violoncelo sul ponticello", "violoncelo_sul_ponticello", "sul ponticello cello", "sul_ponticello_cello"),
 )
 
+
+REGISTRY["contrabaixo_sordina"] = _profile(
+    "contrabaixo_sordina",
+    "Double bass sordina",
+    "strings",
+    sounding=(28, 72),
+    comfortable=(31, 55),
+    brightness="neutral",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="double_bass_sordina",
+    supported=("arco", "mute"),
+    unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/double_bass_sordina.py from Strings Techniques "
+        "Extrapolation Contrabass-pp.xlsx / Contrabass_mf.xlsx / Contrabass_ff.xlsx "
+        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sordina only; pp/mf/ff come from "
+        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=("double_bass_sordina", "Double_bass_sordina", "double bass sordina", "contrabass sordina", "contrabass_sordina", "contrabaixo sordina", "contrabaixo_sordina", "bass sordina", "muted double bass", "muted contrabass"),
+)
+
+
+REGISTRY["contrabaixo_sul_tasto"] = _profile(
+    "contrabaixo_sul_tasto",
+    "Double bass sul tasto",
+    "strings",
+    sounding=(28, 72),
+    comfortable=(31, 55),
+    brightness="dark",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="double_bass_sul_tasto",
+    supported=("arco", "sul_tasto"),
+    unsupported=("pizzicato", "mute", "sul_ponticello"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/double_bass_sul_tasto.py from Strings Techniques "
+        "Extrapolation Contrabass-pp.xlsx / Contrabass_mf.xlsx / Contrabass_ff.xlsx "
+        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_tasto only; pp/mf/ff come from "
+        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=("double_bass_sul_tasto", "Double_bass_sul_tasto", "double bass sul tasto", "contrabass sul tasto", "contrabass_sul_tasto", "contrabaixo sul tasto", "contrabaixo_sul_tasto", "sul tasto double bass", "sul_tasto_double_bass"),
+)
+
+
+REGISTRY["contrabaixo_sul_ponticello"] = _profile(
+    "contrabaixo_sul_ponticello",
+    "Double bass sul ponticello",
+    "strings",
+    sounding=(28, 72),
+    comfortable=(31, 55),
+    brightness="bright",
+    sustain="sustained",
+    attack="hard",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="double_bass_sul_ponticello",
+    supported=("arco", "sul_ponticello"),
+    unsupported=("pizzicato", "mute", "sul_tasto"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/double_bass_sul_ponticello.py from Strings Techniques "
+        "Extrapolation Contrabass-pp.xlsx / Contrabass_mf.xlsx / Contrabass_ff.xlsx "
+        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from "
+        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=("double_bass_sul_ponticello", "Double_bass_sul_ponticello", "double bass sul ponticello", "contrabass sul ponticello", "contrabass_sul_ponticello", "contrabaixo sul ponticello", "contrabaixo_sul_ponticello", "sul ponticello double bass", "sul_ponticello_double_bass"),
+)
+
 # --- Brass ---
 REGISTRY["trompa"] = _profile(
     "trompa",

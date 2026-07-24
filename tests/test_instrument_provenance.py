@@ -27,6 +27,9 @@ ACOUSTIC_MODULES = (
     "cello_sul_tasto",
     "cello_sul_ponticello",
     "double_bass",
+    "double_bass_sordina",
+    "double_bass_sul_tasto",
+    "double_bass_sul_ponticello",
 )
 
 
