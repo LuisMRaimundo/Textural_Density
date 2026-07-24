@@ -578,6 +578,132 @@ REGISTRY["violino_nat_harm"] = _profile(
 )
 
 
+REGISTRY["viola_art_harm"] = _profile(
+    "viola_art_harm",
+    "Viola art harm",
+    "strings",
+    sounding=(72, 108),
+    comfortable=(72, 96),
+    brightness="neutral",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="viola_art_harm",
+    supported=("arco", "harmonic"),
+    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Same-instrument viola artificial_harmonic mf table (35 unique sounding pitches) "
+        "from STE measured CSVs; multi-collection mean; no violin transfer."
+    ),
+    warnings=(
+        "Only dynamic mf is calibrated; pp/ff are not fabricated from mf.",
+        "Cross-instrument transfer from violin is disabled.",
+    ),
+    aliases=(
+        "viola_art_harm",
+        "Viola_art_harm",
+        "viola artificial harmonics",
+        "viola_artificial_harmonics",
+        "art_harm_viola",
+    ),
+)
+
+
+REGISTRY["viola_nat_harm"] = _profile(
+    "viola_nat_harm",
+    "Viola nat harm",
+    "strings",
+    sounding=(48, 96),
+    comfortable=(50, 84),
+    brightness="neutral",
+    sustain="sustained",
+    attack="soft",
+    status="coarse_default",
+    uncertainty="high",
+    module_name="viola_nat_harm",
+    supported=("arco", "harmonic"),
+    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "implemented_but_uncalibrated: STE modal register may generate pitches, "
+        "but no viola natural_harmonic EWSD measured table is available."
+    ),
+    warnings=(
+        "Acoustic density lookup returns unavailable until same-instrument calibration exists.",
+        "Do not use violin natural_harmonic coefficients for viola.",
+    ),
+    aliases=(
+        "viola_nat_harm",
+        "Viola_nat_harm",
+        "viola natural harmonics",
+        "viola_natural_harmonics",
+        "nat_harm_viola",
+    ),
+)
+
+
+REGISTRY["cello_art_harm"] = _profile(
+    "cello_art_harm",
+    "Cello art harm",
+    "strings",
+    sounding=(36, 96),
+    comfortable=(36, 84),
+    brightness="dark",
+    sustain="sustained",
+    attack="soft",
+    status="coarse_default",
+    uncertainty="high",
+    module_name="cello_art_harm",
+    supported=("arco", "harmonic"),
+    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "implemented_but_uncalibrated: no cello artificial_harmonic EWSD measured table."
+    ),
+    warnings=(
+        "Acoustic density lookup returns unavailable until same-instrument calibration exists.",
+        "Do not use violin/viola coefficients for cello.",
+    ),
+    aliases=(
+        "cello_art_harm",
+        "violoncelo_art_harm",
+        "cello artificial harmonics",
+        "cello_artificial_harmonics",
+        "art_harm_cello",
+    ),
+)
+
+
+REGISTRY["cello_nat_harm"] = _profile(
+    "cello_nat_harm",
+    "Cello nat harm",
+    "strings",
+    sounding=(36, 96),
+    comfortable=(36, 84),
+    brightness="dark",
+    sustain="sustained",
+    attack="soft",
+    status="coarse_default",
+    uncertainty="high",
+    module_name="cello_nat_harm",
+    supported=("arco", "harmonic"),
+    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "implemented_but_uncalibrated: no cello natural_harmonic EWSD measured table."
+    ),
+    warnings=(
+        "Acoustic density lookup returns unavailable until same-instrument calibration exists.",
+        "Do not use violin/viola coefficients for cello.",
+    ),
+    aliases=(
+        "cello_nat_harm",
+        "violoncelo_nat_harm",
+        "cello natural harmonics",
+        "cello_natural_harmonics",
+        "nat_harm_cello",
+    ),
+)
+
+
 REGISTRY["violoncelo_sordina"] = _profile(
     "violoncelo_sordina",
     "Cello sordina",

@@ -9,6 +9,7 @@ InstrumentSourceType = Literal[
     "external_acoustic_metadata",
     "literature_derived",
     "coarse_default",
+    "unavailable_calibration",
 ]
 
 UncertaintyLevel = Literal["low", "medium", "high"]
