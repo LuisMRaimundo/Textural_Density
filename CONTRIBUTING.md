@@ -26,13 +26,13 @@ The CI workflow (`.github/workflows/tests.yml`) enforces **tiered** gates — no
 |-------|-------------|
 | **All tests** | Must pass on Python 3.10–3.11 (`pytest tests/ -m "not slow"`) |
 | **`core/` + `validation/` coverage** | ≥ **80%** (`pytest -o addopts= --cov=core --cov=validation --cov-fail-under=80`) |
-| **Full repository coverage** | ≥ **63%** (current verified ~85% after PR #14) |
+| **Full repository coverage** | ≥ **63%** (CI quality job) |
 | **Mypy** | Zero errors on `core` and `validation` with `--follow-imports=skip` |
 | **Slow perf test** | 50-note slice < 5 s (marked `@pytest.mark.slow`) |
 
-**Verified suite size (2026-06-25):** 862 tests collected; 861 non-slow + 1 slow; GitHub Actions and CircleCI green on Python 3.10 and 3.11.
+**Verified suite size (2026-07-12):** **1542 passed / 2 skipped / 18 xfailed** under methodology `5.1.0-strict-symbolic` / package `1.1.4`; GitHub Actions and CircleCI green on Python 3.10 and 3.11.
 
-**We do not claim** full-repository mypy cleanliness, perceptual validation, or empirical proof that CDM values match perceived density.
+**We do not claim** full-repository mypy cleanliness, auditory validation, or empirical proof that CDM values match listener judgments of textural density.
 
 ### Local commands
 

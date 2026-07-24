@@ -27,7 +27,11 @@ from core.defaults import (
 )
 from core.hash_utils import config_hash, input_hash_from_dict
 from core.models import AnalysisConfig, MetricResult, VerticalSlice
-from instrumentos.gpr_dynamic_interpolation import MEASURED_SUPPORT, tail_saturation_info
+from instrumentos.gpr_dynamic_interpolation import (
+    MEASURED_SUPPORT,
+    TRANSFERRED_ANCHOR_MODULES,
+    tail_saturation_info,
+)
 from instrumentos.registry import resolve_profile
 from instrumentos.violin_sordina_diagnostics import (
     AUDIT_FLAG_CRITICAL,
@@ -177,15 +181,65 @@ def collect_slice_warnings(
             )
         profile = resolve_profile(event.instrument_name)
         if profile is not None and profile.module_name:
-            tail = tail_saturation_info(dyn)
+            pitch = (
+                event.sounding_pitch.note_name
+                if event.sounding_pitch is not None
+                else None
+            )
+            a_pp = a_mf = a_ff = None
+            if pitch:
+                try:
+                    from core.pipeline import load_instrument_module
+
+                    mod = load_instrument_module(profile.instrument_id)
+                    a_pp = float(mod.calcular_densidade(pitch, "pp"))
+                    a_mf = float(mod.calcular_densidade(pitch, "mf"))
+                    a_ff = float(mod.calcular_densidade(pitch, "ff"))
+                except Exception:
+                    a_pp = a_mf = a_ff = None
+
+            tail = tail_saturation_info(
+                dyn,
+                a_pp=a_pp,
+                a_mf=a_mf,
+                a_ff=a_ff,
+                module_name=profile.module_name,
+            )
+            if a_pp is not None and a_mf is not None and a_ff is not None and tail is not None:
+                if a_pp > a_mf and tail["region"] == "soft_tail":
+                    warnings.append(
+                        f"Instrument '{event.instrument_name}' pitch '{pitch}' has "
+                        f"inverted measured anchors pp>mf "
+                        f"(pp={a_pp:.6g}, mf={a_mf:.6g}); soft-tail step clamped to 0."
+                    )
+                if a_ff < a_mf and tail["region"] == "loud_tail":
+                    warnings.append(
+                        f"Instrument '{event.instrument_name}' pitch '{pitch}' has "
+                        f"inverted measured anchors ff<mf "
+                        f"(mf={a_mf:.6g}, ff={a_ff:.6g}); loud-tail step clamped to 0."
+                    )
             if tail is not None:
-                warnings.append(
-                    f"Instrument '{event.instrument_name}' dynamic "
-                    f"'{tail['requested_level']}' at event {event.event_id} is outside "
-                    f"measured support {tuple(MEASURED_SUPPORT)}; boundary "
-                    f"'{tail['boundary_level']}', ratio {tail['ratio']}^{tail['steps']}. "
-                    "Dynamic level outside measured support; saturated extrapolation applied."
+                s_txt = (
+                    f"{tail['s']:.6g}" if tail.get("s") is not None else "n/a"
                 )
+                val_txt = (
+                    f"{tail['value']:.6g}" if tail.get("value") is not None else "n/a"
+                )
+                msg = (
+                    f"Instrument '{event.instrument_name}' dynamic "
+                    f"'{tail['requested_level']}' at event {event.event_id}"
+                    + (f" pitch '{pitch}'" if pitch else "")
+                    + f" is outside measured support {tuple(MEASURED_SUPPORT)}; "
+                    f"boundary '{tail['boundary_level']}', "
+                    f"s(m)={s_txt}, γ={tail['gamma']}, value={val_txt}. "
+                    f"{tail['description']}."
+                )
+                if profile.module_name in TRANSFERRED_ANCHOR_MODULES:
+                    msg += (
+                        " pp/ff anchors are extrapolated from mf using violin arco "
+                        "dynamic ratios; tail computed from transferred anchors."
+                    )
+                warnings.append(msg)
         if profile is None:
             warnings.append(
                 f"Instrument '{event.instrument_name}' has no registry profile; "

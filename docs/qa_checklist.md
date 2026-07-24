@@ -2,27 +2,27 @@
 
 Use alongside [`score_only_90_readiness_checklist.md`](score_only_90_readiness_checklist.md).
 
-## Test suite and CI (verified 2026-06-25, `main` @ `8cf1e68`)
+## Test suite and CI (verified 2026-07-12, methodology `5.1.0-strict-symbolic`, package `1.1.4`)
 
 | Gate | Status |
 |------|--------|
-| Full suite | **862 passed** (861 non-slow + 1 slow) |
-| Non-slow suite | **861 passed** |
-| Full-project coverage | **84.95%** (gate ≥ 63%) |
+| Full suite | **1542 passed / 2 skipped / 18 xfailed** |
+| Skipped | 2 — violin / viola source-workbook reproducibility when Zenodo files absent |
+| Xfailed | 18 — measured/interior non-monotonicity on adaptive-tail grid |
+| Full-project coverage | gate ≥ 63% (CI quality job) |
 | `core/` + `validation/` coverage | ≥ 80% (CI quality job) |
 | MyPy (`core`, `validation`) | Clean |
 | Slow performance gate | Pass |
 | `import Main` smoke | OK |
-| `pytest --collect-only` | 862 collected |
 | GitHub Actions | `test` 3.10, 3.11 + `quality` — green |
 | CircleCI | `tests-3.10`, `tests-3.11` — green |
-| Local Python | 3.10.11 (CI also covers 3.11) |
+| Local Python | 3.10 (CI also covers 3.11) |
 
 - [x] Full suite green locally and on CI
 - [x] GitHub Actions: `test` (3.10, 3.11) + `quality` green
 - [x] CircleCI: `tests-3.10`, `tests-3.11` green
 
-**Epistemic scope:** the suite verifies implementation contracts, source consistency, provenance propagation, symbolic/musical invariants, and reproducibility — not perceptual adequacy of CDM or correspondence to perceived density/loudness.
+**Epistemic scope:** the suite verifies implementation contracts, source consistency, provenance propagation, symbolic/musical invariants, and reproducibility — not auditory adequacy of CDM or correspondence to listener judgments of textural density / symbolic-dynamic mass.
 
 ## String musicological battery (PR #13)
 

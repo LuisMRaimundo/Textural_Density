@@ -405,4 +405,60 @@ def build_cases(roles: dict[str, str]) -> list[Case]:
                       "extreme span: lowest coverable E1 (MIDI 28) to highest coverable G7 (MIDI 103)",
                       ["E1", "G7"]))
 
+    # ---------------------------------------------------------------- XDYN
+    # Extreme registers x extreme dynamics, with mid-register mid-compass
+    # references. Characterizes the corners of the register x dynamics space
+    # where the 5.1.0-strict-symbolic register-adaptive saturating tails operate
+    # (step s(m) derived from local measured pp/mf/ff anchors, shrunk by gamma).
+    # Explicit instrument assignment (no auto): each cluster sits in-range of its
+    # named module so the tail level is the only variable. All Qty1, w0.5.
+    cat = "XDYN"
+    # 1-2: flute ceiling (C7 C#7 D7 = MIDI 96-98; flauta sounding 59-98) x soft/loud.
+    cases.append(Case("XDYN.flute_top_pppp", cat, "flute top C7-D7, pppp (soft tail at ceiling)",
+                      ["C7", "C#7", "D7"], ["flauta"] * 3, dynamics=["pppp"] * 3,
+                      probe={"group": "xdyn", "case": "flute_top_pppp"}))
+    cases.append(Case("XDYN.flute_top_ffff", cat, "flute top C7-D7, ffff (loud tail at ceiling)",
+                      ["C7", "C#7", "D7"], ["flauta"] * 3, dynamics=["ffff"] * 3,
+                      probe={"group": "xdyn", "case": "flute_top_ffff"}))
+    # 3-4: double-bass floor (E1 F1 F#1 = MIDI 28-30; contrabaixo sounding 28-72) x soft/loud.
+    cases.append(Case("XDYN.bass_bottom_pppp", cat, "double-bass bottom E1-F#1, pppp (soft tail at floor)",
+                      ["E1", "F1", "F#1"], ["contrabaixo"] * 3, dynamics=["pppp"] * 3,
+                      probe={"group": "xdyn", "case": "bass_bottom_pppp"}))
+    cases.append(Case("XDYN.bass_bottom_ffff", cat, "double-bass bottom E1-F#1, ffff (loud tail at floor)",
+                      ["E1", "F1", "F#1"], ["contrabaixo"] * 3, dynamics=["ffff"] * 3,
+                      probe={"group": "xdyn", "case": "bass_bottom_ffff"}))
+    # 5-6: cross-register dynamic crossings (soft-low/loud-high vs loud-low/soft-high).
+    cases.append(Case("XDYN.cross_soft_low_loud_high", cat, "E1 contrabaixo pppp + C7 flauta ffff",
+                      ["E1", "C7"], ["contrabaixo", "flauta"], dynamics=["pppp", "ffff"],
+                      probe={"group": "xdyn", "case": "cross_soft_low_loud_high"}))
+    cases.append(Case("XDYN.cross_loud_low_soft_high", cat, "E1 contrabaixo ffff + C7 flauta pppp",
+                      ["E1", "C7"], ["contrabaixo", "flauta"], dynamics=["ffff", "pppp"],
+                      probe={"group": "xdyn", "case": "cross_loud_low_soft_high"}))
+    # 7: trumpet top (C#6 D6 D#6 = MIDI 85-87; trompete sounding 52-87) loud tail.
+    cases.append(Case("XDYN.trumpet_top_ffff", cat, "trumpet top C#6-D#6, ffff (loud tail at ceiling)",
+                      ["C#6", "D6", "D#6"], ["trompete"] * 3, dynamics=["ffff"] * 3,
+                      probe={"group": "xdyn", "case": "trumpet_top_ffff"}))
+    # 8: cello floor (C2 C#2 D2 = MIDI 36-38; violoncelo sounding 36-84) mixed both tails.
+    cases.append(Case("XDYN.cello_bottom_contrast", cat, "cello bottom C2-D2, [ffff,pppp,ffff] (both tails)",
+                      ["C2", "C#2", "D2"], ["violoncelo"] * 3, dynamics=["ffff", "pppp", "ffff"],
+                      probe={"group": "xdyn", "case": "cello_bottom_contrast"}))
+    # 9: clarinet chalumeau floor (D3 D#3 E3 = MIDI 50-52; clarinete sounding 50-96) soft tail.
+    cases.append(Case("XDYN.clarinet_bottom_pppp", cat, "clarinet chalumeau D3-E3, pppp (soft tail at floor)",
+                      ["D3", "D#3", "E3"], ["clarinete"] * 3, dynamics=["pppp"] * 3,
+                      probe={"group": "xdyn", "case": "clarinet_bottom_pppp"}))
+    # 10: transferred-anchor module at a tail level (art harm G6 A6 B6 = MIDI 91-95; range 79-103).
+    cases.append(Case("XDYN.artharm_top_pppp", cat, "violin art-harm top G6-B6, pppp (transferred-anchor tail)",
+                      ["G6", "A6", "B6"], ["violino_art_harm"] * 3, dynamics=["pppp"] * 3,
+                      probe={"group": "xdyn", "case": "artharm_top_pppp"}))
+    # 11-13: mid-register mid-compass references (same 3-semitone cluster shape).
+    cases.append(Case("XDYN.ref_flute_mid_pppp", cat, "flute mid C5-D5, pppp (mid-compass soft-tail ref)",
+                      ["C5", "C#5", "D5"], ["flauta"] * 3, dynamics=["pppp"] * 3,
+                      probe={"group": "xdyn", "case": "ref_flute_mid_pppp"}))
+    cases.append(Case("XDYN.ref_bass_mid_ffff", cat, "double-bass mid C#3-D#3, ffff (mid-compass loud-tail ref)",
+                      ["C#3", "D3", "D#3"], ["contrabaixo"] * 3, dynamics=["ffff"] * 3,
+                      probe={"group": "xdyn", "case": "ref_bass_mid_ffff"}))
+    cases.append(Case("XDYN.ref_clarinet_mid_mf", cat, "clarinet mid C5-D5, mf (interior baseline, no tail)",
+                      ["C5", "C#5", "D5"], ["clarinete"] * 3, dynamics=["mf"] * 3,
+                      probe={"group": "xdyn", "case": "ref_clarinet_mid_mf"}))
+
     return cases

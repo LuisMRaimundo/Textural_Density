@@ -1,12 +1,12 @@
 # Textural Density - Musical Density Analysis Application
 
 **Repository:** [github.com/LuisMRaimundo/Textural_Density](https://github.com/LuisMRaimundo/Textural_Density)  
-**Version:** 1.1.4  
+**Version (two axes):** package **1.1.4** (`pyproject.toml`) · methodology **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`)  
 **Status:** Active Development  
-**License:** [MIT](LICENSE)  
+**License:** [MIT](LICENSE) (`pyproject.toml` declares MIT; see [docs/VERSIONING.md](docs/VERSIONING.md))  
 **Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)
 
-> **Versioning:** Package release **1.1.4** (`pyproject.toml`) is separate from the methodology phase **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`; earlier phases 3.0.0 / 4.0.0 / 5.0.0). See [docs/VERSIONING.md](docs/VERSIONING.md).
+> **Versioning:** The header **Version** line always names both axes. Package release **1.1.4** is independent of methodology phase **5.1.0-strict-symbolic** (earlier phases 3.0.0 / 4.0.0 / 5.0.0). Do not treat package semver as a schema bump. See [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -20,7 +20,7 @@
 
 **Changed in 5.0.0-strict-symbolic:** Composite vertical density is now **extensive** — pitch-structure density is built from the raw accumulating pairwise interval sum, so adding a distinct note never decreases `density.total`. The redundant registral-span damping was removed from the aggregate (registral span stays a reported subindex), and `MAX_DENS_GLOBAL` was recalibrated. Breaking numeric change; see the [Changelog](#changelog).
 
-**Changed in 5.1.0-strict-symbolic:** Instrument-density dynamic tails now **saturate** instead of continuing the GPR trend. Levels outside the measured `pp`/`mf`/`ff` support (`ppp`/`pppp` below `pp`; `fff`/`ffff` above `ff`) use bounded log-domain ratios (`DYN_TAIL_RATIO_SOFT=0.85`, `DYN_TAIL_RATIO_LOUD=1.10`), guaranteeing positive, monotone one-player density and fixing negative soft-tail weights and non-monotone loud-tail mass. Interior predictions unchanged; numeric change only for tail-dynamic cases. See the [Changelog](#changelog).
+**Changed in 5.1.0-strict-symbolic:** Instrument-density dynamic tails now **saturate** with a **register-adaptive** log-domain rule instead of continuing the GPR trend. Local step $s(m)$ is taken from the measured pp/mf/ff spread at the event's pitch and shrunk geometrically by `DYN_TAIL_SHRINK=0.5` (whole tail ≤ one measured step). This fixes negative soft-tail weights and non-monotone loud-tail mass, and tracks dynamic-palette compression at range extremes. Interior predictions unchanged; numeric change only for tail-dynamic cases. See the [Changelog](#changelog).
 
 ---
 
@@ -40,7 +40,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; GPR CDM modules for flute, oboe, clarinet, bassoon, trumpet, and strings; metadata corpus still incomplete for many names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML sounding pitch** — written `<pitch>` converted to sounding/concert pitch via `<transpose>` before validation and density lookup (PR #21)
-- **Verification scaffolding** — **862 tests** collected; GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) green after PR #13 and PR #14 (see [Testing](#testing))
+- **Verification scaffolding** — full suite **1542 passed / 2 skipped / 18 xfailed** (2026-07-12, methodology `5.1.0-strict-symbolic`, package `1.1.4`); GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) (see [Testing](#testing))
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -150,7 +150,7 @@ Textural_Density/
 ├── data_processor_legacy.py   # Legacy I/O and validation text (not the metric pipeline)
 ├── densidade_intervalar.py    # Interval density library
 ├── spectral_analysis.py       # Spectral metadata proxies
-└── tests/                     # 862 tests; string musicological battery (PR #13); note-label normalization (PR #14)
+└── tests/                     # full suite 1542 passed / 2 skipped / 18 xfailed (2026-07-12); string musicological battery (PR #13); adaptive-tail contracts
 ```
 
 **Call path (GUI):** `Main.py` → `AnalysisController` → `adapters/gui_adapter.build_analysis_request` → `core.pipeline.calculate_metrics`.
@@ -249,12 +249,14 @@ pytest tests/test_notes.py -q
 
 ### Test Coverage
 
-Current verified status (after PR #14, `main` @ `607bf4a`, local Python **3.10.11**; CI also runs **3.10** and **3.11**):
+Current verified status (2026-07-12, methodology **`5.1.0-strict-symbolic`**, package **`1.1.4`**, local Python **3.10**; CI also runs **3.10** and **3.11**):
 
 | Gate | Result |
 |------|--------|
-| Full suite | **862 passed** (861 non-slow + 1 slow) |
-| Full-project coverage | **84.95%** (gate ≥ 63%) |
+| Full suite | **1542 passed / 2 skipped / 18 xfailed** |
+| Skipped | 2 — string source-workbook reproducibility for violin and viola when local Zenodo workbooks are absent (activate once deposited; cello and double_bass workbook reconstruction currently pass) |
+| Xfailed | 18 — measured/interior dynamic non-monotonicity on the adaptive-tail positivity grid (`tests/test_adaptive_dynamic_tails.py`; tables left untouched by design) |
+| Full-project coverage | gate ≥ 63% (CI quality job) |
 | `core/` + `validation/` coverage | ≥ 80% in CI quality job |
 | MyPy (`core`, `validation`) | Clean (`--follow-imports=skip`) |
 | Slow performance gate | Pass (`tests/test_quality_gates.py`, `@pytest.mark.slow`) |
@@ -262,7 +264,7 @@ Current verified status (after PR #14, `main` @ `607bf4a`, local Python **3.10.1
 | GitHub Actions | `test` 3.10/3.11 + `quality` — pass |
 | CircleCI | `tests-3.10`, `tests-3.11` — pass |
 
-**What the suite verifies:** implementation contracts, source consistency, provenance propagation, symbolic/musical invariants, and reproducibility properties under controlled test conditions. It does **not** validate perceptual adequacy of the CDM model or prove correspondence to perceived density, loudness, salience, or timbral mass.
+**What the suite verifies:** implementation contracts, source consistency, provenance propagation, symbolic/musical invariants, and reproducibility properties under controlled test conditions. It does **not** validate auditory adequacy of the CDM model or prove correspondence to listener judgments of textural density, symbolic-dynamic mass, salience, or timbral mass.
 
 **String-family battery (PR #13):** 97 musicological tests across `tests/string_constants.py`, `tests/test_string_module_contracts.py`, `tests/test_string_source_reproducibility.py`, `tests/test_string_musicological_invariants.py`, `tests/test_string_score_scenarios.py`, and `tests/test_instrument_provenance.py` — covering violin, viola, cello, double bass, and registry aliases.
 
@@ -329,20 +331,24 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ## Changelog
 
-### Version 5.1.0-strict-symbolic (2026-07-11)
+### Documentation reconciliation (2026-07-12) — no schema bump
 
-**Numeric change for tail-dynamic cases only.** Fixes exaggerated dynamic-tail extrapolation in instrument density lookup. Package release remains **1.1.4**; bumps `METRIC_SCHEMA_VERSION` to `5.1.0-strict-symbolic`.
+Docs-only pass aligning manuals/README with live `5.1.0-strict-symbolic` / package `1.1.4` (suite **1542 / 2 / 18**). No code, config, table, test, or baseline changes.
 
-- **Root cause.** The GPR dynamic→amplitude model, fitted on the measured `pp`/`mf`/`ff` anchors, previously continued its trend **unchanged** into the unmeasured tails. This overshot **downward** at the soft end (negative one-player density, e.g. `clarinete` C4 at `pppp` ≈ −2.36, which drove `DYNGRAD.wedge` `harmonic_ratio` negative) and **bent over** at the loud end (non-monotone dip, e.g. the `flauta` C4–E4–G4 triad had sonic mass 62.32 at `ff` but 59.95 at `ffff`).
-- **Fix (saturating log-domain tails).** Out-of-support levels now saturate multiplicatively from the nearest measured boundary: soft tail `A = A_pp · DYN_TAIL_RATIO_SOFT^k`, loud tail `A = A_ff · DYN_TAIL_RATIO_LOUD^k`, with `DYN_TAIL_RATIO_SOFT = 0.85` and `DYN_TAIL_RATIO_LOUD = 1.10` in `config.py`. Positive and monotone by algebra (no clamp); `DENSITY_FLOOR` kept only as an unreachable safety assert. Measured support is exposed via `instrumentos.gpr_dynamic_interpolation.MEASURED_SUPPORT`. **Interior (in-support) predictions are unchanged** to within 1e-9.
-- **Visible metadata.** When a tail rule fires, a per-event `metric_metadata` warning records the instrument, requested level, boundary level, and ratio (never silent).
-- **New tests:** `tests/test_dynamic_tail_saturation.py` — global positivity + tail/boundary monotonicity across every module-backed instrument × three pitches × all `DYNAMIC_LEVELS`; bounded per-step ratios and soft-tail geometric shrink; anti-overshoot vs. raw GPR on the incident cases; interior golden-pin (`tests/fixtures/dynamic_tail_interior_golden.json`); regressions (`DYNGRAD.wedge` `harmonic_ratio` ∈ [0,1]; flute triad mass(`ffff`) ≥ mass(`ff`)); warning presence/absence.
-- **Regenerated golden baselines** (schema-version metadata refresh; interior numerics unchanged): `tests/snapshots/metadata_outputs/synthetic_triad.json`, `replication/outputs_frozen/json/synthetic_triad.json`, `replication/tables/thesis_symbolic_density_summary.{csv,md}`, `benchmarks/expected_outputs/excerpt_001..005.json`, plus the regenerated characterization battery under `results/characterization/` (DYN/DYNGRAD now monotone; tail warnings recorded). GPR-stability contract tests (`tests/test_dynamic_interpolation_contracts.py`, `tests/test_gpr_determinism_contracts.py`) now assert interior-only equality vs. raw GPR (tails intentionally saturate).
-- **Docs:** `docs/MATHEMATICAL_MANUAL.md` §F.1 (interior GPR vs. saturating tails; both config ratios; both motivating incidents) and §Q (dynamic-monotonicity + tail-saturation acceptance rows); `docs/VERSIONING.md` methodology table.
+### Version 5.1.0-strict-symbolic (2026-07-12) — register-adaptive tails
+
+**Numeric change for tail-dynamic cases only.** Fixes exaggerated dynamic-tail extrapolation in instrument density lookup. Package release remains **1.1.4**; `METRIC_SCHEMA_VERSION` is `5.1.0-strict-symbolic`.
+
+- **Root cause.** The GPR dynamic→amplitude model, fitted on the measured `pp`/`mf`/`ff` anchors, previously continued its trend **unchanged** into the unmeasured tails. This overshot **downward** at the soft end (negative one-player density, e.g. `clarinete` C4 at `pppp` ≈ −2.36, which drove `DYNGRAD.wedge` `harmonic_ratio` negative) and **bent over** at the loud end (non-monotone dip, e.g. the `flauta` C4–E4–G4 triad had sonic mass 62.32 at `ff` but 59.95 at `ffff`). Fixed per-step ratios removed the incidents but could not track register-dependent compression of the dynamic palette.
+- **Fix (register-adaptive saturating tails).** Local steps $s_{\mathrm{soft}}(m)=\max(0,\ln(A_{\mathrm{mf}}/A_{\mathrm{pp}})/N_{\mathrm{soft}})$ and $s_{\mathrm{loud}}(m)=\max(0,\ln(A_{\mathrm{ff}}/A_{\mathrm{mf}})/N_{\mathrm{loud}})$ are taken from the measured anchors at the event's pitch; tails apply $\ln A = \ln A_b \mp s\cdot\sum_{i=1}^{j}\gamma^i$ with `DYN_TAIL_SHRINK` $\gamma=0.5$ (whole tail ≤ one measured step). Inverted anchors clamp the step to 0 with a metadata warning. **Interior (in-support) predictions are unchanged** to within 1e-9. `DENSITY_FLOOR` kept only as an unreachable safety assert. Fixed `DYN_TAIL_RATIO_*` constants removed.
+- **Visible metadata.** Tail warnings record requested level, boundary, $s(m)$, $\gamma$, and resulting value (`saturating register-adaptive tail…`). Transferred-anchor modules (`violin_sul_ponticello`, `violin_art_harm`) add `"tail computed from transferred anchors"`.
+- **New tests:** `tests/test_adaptive_dynamic_tails.py` — (a) positivity + monotone grid; (b) saturation bound; (c) register adaptivity (flute top / bass bottom); (d) interior golden-pin; (e) regressions + inverted-anchor fixture path; (f) determinism/finiteness.
+- **Regenerated golden baselines** (schema-version metadata refresh; interior numerics unchanged; tail-dynamic cases update): characterization battery under `results/characterization/`; GPR-stability contracts assert interior-only equality vs. raw GPR.
+- **Docs:** `docs/MATHEMATICAL_MANUAL.md` §F.1 / §Q; `docs/VERSIONING.md`.
 
 ### Register-dependence audit (2026-07-12) — no schema bump
 
-Read-only audit of instrument register dependence and per-event propagation; **no code, config, or data changes**, `METRIC_SCHEMA_VERSION` unchanged.
+Read-only audit of instrument register dependence and per-event propagation; **no code, config, or data changes** at the time of the audit, `METRIC_SCHEMA_VERSION` unchanged then (later the same day the adaptive-tail upgrade above landed under the same schema label).
 
 - **Provenance** confirmed uniform (CDM spectral-density midpoints from IOWA+ORCH sustains); `violin_sul_ponticello` and `violin_art_harm` flagged as measured-mf-only with pp/ff ratio-transferred (`uncertainty="high"`).
 - **mf curves** are non-monotone for every module-backed instrument (downward trend with local reversals at register/string breaks); no instrument is cleanly monotone-decreasing.
@@ -381,7 +387,7 @@ Documentation-only reconciliation on `5.0.0-strict-symbolic`; **numeric outputs 
 
 - **PR #13:** String musicological contract and source-audit battery (97 tests; `@pytest.mark.musicological`)
 - **PR #14:** Viola source-label normalization (`normalize_media_note_label` strips trailing `(2)`); viola table aligned to `VIOLA_Media` (C3–C7); portable viola provenance via `docs/instrument_acoustic_sources.md#viola`
-- Verified: 862 tests pass locally (Python 3.10.11); CI 3.10/3.11 green; full-project coverage 84.95%
+- Verified at the time: 862 tests pass locally (Python 3.10.11); CI 3.10/3.11 green; full-project coverage 84.95% — **superseded** by the 2026-07-12 suite count in [Testing](#testing) (1542 / 2 / 18 under `5.1.0-strict-symbolic`)
 
 ### Version 1.1.4 (2026-06-21)
 - Canonical core path uses strict pitch parsing: `note_string_to_pitch()` delegates to `parse_pitch_strict()` (MIDI before spelling normalization; invalid input raises `InvalidPitchNotation`)
@@ -430,9 +436,9 @@ Documentation-only reconciliation on `5.0.0-strict-symbolic`; **numeric outputs 
 
 ## Support
 
-For issues and questions, please [create an issue] or [contact maintainers].
+For issues and questions, open a GitHub issue at [LuisMRaimundo/Textural_Density](https://github.com/LuisMRaimundo/Textural_Density/issues).
 
 ---
 
-**Last Updated:** 2026-06-25
+**Last Updated:** 2026-07-12
 

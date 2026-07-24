@@ -14,7 +14,7 @@ Practical checklist for **systematic score-only symbolic analysis**. See [`score
 - [x] Instrument-density scaffold contract tests (`tests/test_instrument_density_registry_scaffold_contract_additional.py`)
 - [x] Scientific/musicological output plausibility tests (`tests/test_scientific_musicological_output_plausibility_additional.py`)
 - [x] Excel importer contract tests (`tests/test_instrument_profile_excel_importer_additional.py`)
-- [x] Full suite **862 tests**; GitHub Actions + CircleCI green (Python 3.10/3.11)
+- [x] Full suite **1542 passed / 2 skipped / 18 xfailed** (2026-07-12, `5.1.0-strict-symbolic`); GitHub Actions + CircleCI green (Python 3.10/3.11)
 - [x] Benchmark manifest with honest corpus gap (`replication/benchmark_manifest.json`)
 - [x] Constants/assumptions documentation + export script
 - [x] Composite weight sensitivity (diagnostic, `core/sensitivity.py`)
