@@ -36,7 +36,8 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 | `violin_sordina.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`con_sordino`; pp from arco ratios) |
 | `violin_sul_tasto.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_tasto`; pp from arco ratios) |
 | `violin_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_ponticello`; pp from arco ratios) |
-| `violin_art_harm.py` | `spectral_data` | Measured **mf only**; pp/ff extrapolated via `mf_anchor_dynamic_extrapolation.py` (violin arco ratio transfer) |
+| `violin_art_harm.py` | `spectral_data` | STE harmonic workbooks pp/mf/ff (`Violin_*_harmo.xlsx`) |
+| `violin_nat_harm.py` | `spectral_data` | STE harmonic workbooks pp/mf/ff (`Violin_*_harmo.xlsx`) |
 | `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Viola_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Cello_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Contrabass-pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
@@ -50,7 +51,7 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 
 **Technique honesty:** registry `supported_techniques` lists organological capabilities. GPR modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
 
-**mf-only technique modules:** `violin_sul_ponticello.py` and `violin_art_harm.py` commit measured mf rows in `MF_MEASURED`. pp and ff GPR anchors are extrapolated per note from violin arco pp/mf and ff/mf ratios (`instrumentos/mf_anchor_dynamic_extrapolation.py`). All other dynamics (`pppp` … `ffff`, including `mp`) are GPR-modelled in the production pipeline — same ordinal model as full-table modules. Direct `calcular_densidade` calls on these modules collapse non-anchor markings to the nearest table row; GUI / `calculate_metrics` uses GPR.
+**Transferred-anchor modules:** `violin_sul_ponticello.py` may still carry ratio-derived soft/loud anchors depending on its workbook generation path. Violin harmonic modules (`violin_art_harm.py`, `violin_nat_harm.py`) commit workbook pp/mf/ff from STE. All other dynamics (`pppp` … `ffff`, including `mp`) are GPR-modelled in the production pipeline. Direct `calcular_densidade` calls collapse non-anchor markings to the nearest table row; GUI / `calculate_metrics` uses GPR.
 
 **Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
 
@@ -222,7 +223,8 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **Violin sordina** | `violin_sordina.py` | `literature_derived` | Extrapolation workbook mf/ff; pp from arco ratios (high uncertainty) |
 | **Violin sul tasto** | `violin_sul_tasto.py` | `literature_derived` | Extrapolation workbook mf/ff; pp from arco ratios (high uncertainty) |
 | **Violin sul ponticello** | `violin_sul_ponticello.py` | `literature_derived` | Extrapolation workbook mf/ff; pp from arco ratios (high uncertainty) |
-| **Violin art harm** | `violin_art_harm.py` | `literature_derived` | mf measured G5–G7; pp/ff extrapolated (high uncertainty) |
+| **Violin art harm** | `violin_art_harm.py` | `literature_derived` | STE harmonic pp/mf/ff, G5–C8 (high uncertainty) |
+| **Violin nat harm** | `violin_nat_harm.py` | `literature_derived` | STE harmonic pp/mf/ff, G4–B7 (high uncertainty) |
 | **Viola** | `viola.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 | **Viola sordina** | `viola_sordina.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
 | **Viola sul tasto** | `viola_sul_tasto.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
@@ -275,7 +277,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 | Woodwinds | `flauta`, `flautim`, `oboe`, `cor_anglais`, `clarinete`, `clarinete_baixo`, `fagote`, `contrafagote` |
 
-| Strings | `violino`, `violino_sordina`, `violino_sul_tasto`, `violino_sul_ponticello`, `violino_art_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `violoncelo`, `violoncelo_sordina`, `violoncelo_sul_tasto`, `violoncelo_sul_ponticello`, `contrabaixo`, `contrabaixo_sordina`, `contrabaixo_sul_tasto`, `contrabaixo_sul_ponticello` |
+| Strings | `violino`, `violino_sordina`, `violino_sul_tasto`, `violino_sul_ponticello`, `violino_art_harm`, `violino_nat_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `violoncelo`, `violoncelo_sordina`, `violoncelo_sul_tasto`, `violoncelo_sul_ponticello`, `contrabaixo`, `contrabaixo_sordina`, `contrabaixo_sul_tasto`, `contrabaixo_sul_ponticello` |
 
 | Brass | `trompa`, `trompete`, `trombone`, `trombone_baixo`, `tuba` |
 

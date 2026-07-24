@@ -180,18 +180,32 @@ live audio analysis.
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
-## Violin artificial harmonics (`violin_art_harm`)
-
 ## Violin art harm (`violin_art_harm`)
 
 - **Module:** `instrumentos/violin_art_harm.py`
-- **Table:** `spectral_data` (25 chromatic rows, G5–G7)
-- **Measured anchor:** mf only (`MF_MEASURED` in module)
-- **Extrapolated anchors:** pp and ff derived per note via violin arco pp/mf and ff/mf ratios (`instrumentos/mf_anchor_dynamic_extrapolation.py`)
-- **GPR-modelled dynamics:** pppp, ppp, p, mp, f, fff, ffff predicted by GPR on the pp/mf/ff anchor triple
+- **GUI display name:** `Violin art harm`
+- **Table:** `spectral_data` (30 sounding rows, G5–C8)
+- **Provenance (2026-07-24):** Strings Techniques Extrapolation harmonic workbooks
+  `Violin_pp_hamro.xlsx` / `Violin_mf_harmo.xlsx` / `Violin_ff_harmo.xlsx`
+  (`All_Results.estimate_mean`, technique `artificial_harmonic`)
+- **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_artificial_harmonic`
 - **Interpolation:** GPR for intermediate dynamics
-- **Uncertainty:** high (pp/ff are modelled from mf-only source; upper-register table only)
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_violin_harmonic_modules_from_xlsx.py`
+
+## Violin nat harm (`violin_nat_harm`)
+
+- **Module:** `instrumentos/violin_nat_harm.py`
+- **GUI display name:** `Violin nat harm`
+- **Table:** `spectral_data` (20 sounding rows, G4–B7; duplicate string productions averaged)
+- **Provenance (2026-07-24):** same harmonic workbooks as art harm
+  (`All_Results.estimate_mean`, technique `natural_harmonic`)
+- **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
+- **Source technique:** `arco_natural_harmonic`
+- **Interpolation:** GPR for intermediate dynamics
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_violin_harmonic_modules_from_xlsx.py`
 
 ## Cello (`cello`)
 
@@ -312,7 +326,7 @@ Offline curation pipeline (not used at runtime):
 7. `tools/build_viola_table_from_media.py` — helper to regenerate viola `spectral_data` from `VIOLA_Media`.
 8. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
-**mf-only technique tables:** `violin_art_harm.py` remains hand-curated (mf-only Zenodo-style table; pp/ff via `mf_anchor_dynamic_extrapolation`). Violin/viola/cello/double-bass sordina, sul tasto, and sul ponticello modules are regenerated from Strings Techniques Extrapolation workbooks (assumption-based EWSD; high uncertainty). Intermediate and extreme dynamics (`pppp` … `ffff`) remain GPR-modelled at runtime in `calculate_metrics`.
+**Violin harmonics:** `violin_art_harm.py` and `violin_nat_harm.py` are regenerated from Strings Techniques Extrapolation harmonic workbooks (pp/mf/ff). Violin/viola/cello/double-bass sordina, sul tasto, and sul ponticello modules are regenerated from STE technique workbooks (assumption-based EWSD; high uncertainty). Intermediate and extreme dynamics (`pppp` … `ffff`) remain GPR-modelled at runtime in `calculate_metrics`.
 
 ## Media note-label normalization (PR #14)
 

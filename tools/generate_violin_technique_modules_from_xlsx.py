@@ -10,9 +10,8 @@ Numeric techniques written:
   - sul_tasto    → instrumentos/violin_sul_tasto.py        (create/replace)
   - sul_ponticello → instrumentos/violin_sul_ponticello.py (replace)
 
-Harmonics are skipped: both workbooks mark artificial/natural harmonic cells as
-unavailable (no_harmonic_acoustic_calibration_data). Existing violin_art_harm.py
-is left unchanged.
+Harmonics are handled separately by
+``tools/generate_violin_harmonic_modules_from_xlsx.py`` (Violin_*_harmo workbooks).
 
 pp anchors are derived from violin arco pp/mf ratios applied to the mf column;
 mf and ff come from the Excel estimate_mean columns.
@@ -367,8 +366,7 @@ def main() -> int:
 
     ensure_sul_tasto_registry()
     print(
-        "NOTE: artificial_harmonic / natural_harmonic skipped "
-        "(unavailable in source workbooks). violin_art_harm.py unchanged."
+        "NOTE: harmonics → tools/generate_violin_harmonic_modules_from_xlsx.py"
     )
     return 0
 

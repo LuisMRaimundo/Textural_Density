@@ -496,8 +496,8 @@ REGISTRY["violino_art_harm"] = _profile(
     "violino_art_harm",
     "Violin art harm",
     "strings",
-    sounding=(79, 103),
-    comfortable=(79, 96),
+    sounding=(79, 108),
+    comfortable=(79, 100),
     brightness="bright",
     sustain="sustained",
     attack="soft",
@@ -507,15 +507,16 @@ REGISTRY["violino_art_harm"] = _profile(
     supported=("arco", "harmonic"),
     unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
     source_notes=(
-        "Sparse GPR table in instrumentos/violin_art_harm.py with measured mf CDM "
-        "anchor only (G5–G7); pp/ff extrapolated from violin arco per-note dynamic ratios."
+        "Sparse GPR table in instrumentos/violin_art_harm.py from Strings Techniques "
+        "Extrapolation Violin_pp_hamro.xlsx / Violin_mf_harmo.xlsx / Violin_ff_harmo.xlsx "
+        "(calibrated harmonic descriptor EWSD); sounding pitches G5–C8 (30 rows)."
     ),
     warnings=(
         "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_artificial_harmonic only; pp/ff anchors are "
-        "extrapolated from mf using violin arco dynamic ratios.",
-        "Table span is upper register only (G5–G7); notes outside this range use "
-        "controlled pitch extrapolation or fallback.",
+        "Numerical CDM table covers arco_artificial_harmonic only; pp/mf/ff come from "
+        "Strings Techniques Extrapolation harmonic workbooks (calibrated / assumption-based).",
+        "Table span is harmonic sounding register (G5–C8); notes outside this range "
+        "use controlled pitch extrapolation or fallback.",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
@@ -529,6 +530,50 @@ REGISTRY["violino_art_harm"] = _profile(
         "violino artificial harmonics",
         "art harm violin",
         "art_harm_violin",
+    ),
+)
+
+
+
+
+REGISTRY["violino_nat_harm"] = _profile(
+    "violino_nat_harm",
+    "Violin nat harm",
+    "strings",
+    sounding=(67, 107),
+    comfortable=(67, 91),
+    brightness="bright",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="violin_nat_harm",
+    supported=("arco", "harmonic"),
+    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Sparse GPR table in instrumentos/violin_nat_harm.py from Strings Techniques "
+        "Extrapolation Violin_pp_hamro.xlsx / Violin_mf_harmo.xlsx / Violin_ff_harmo.xlsx "
+        "(calibrated harmonic descriptor EWSD); sounding pitches G4–B7 (20 rows)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_natural_harmonic only; pp/mf/ff come from "
+        "Strings Techniques Extrapolation harmonic workbooks (calibrated / assumption-based).",
+        "Table span is harmonic sounding register (G4–B7); notes outside this range "
+        "use controlled pitch extrapolation or fallback.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "violin_nat_harm",
+        "Violin_nat_harm",
+        "violin natural harmonics",
+        "violin_natural_harmonics",
+        "violino nat harm",
+        "violino_nat_harm",
+        "violino natural harmonics",
+        "nat harm violin",
+        "nat_harm_violin",
     ),
 )
 

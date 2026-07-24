@@ -74,7 +74,7 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 | `ff` | source anchor |
 | `pppp` / `ppp` / `fff` / `ffff` | modelled / extrapolated (GPR) |
 
-**mf-only technique modules:** `violin_sul_ponticello` and `violin_art_harm` measure mf only; committed pp/ff are extrapolated from violin arco ratios and serve as GPR anchors. Intermediate/extreme dynamics remain GPR-modelled in `calculate_metrics`.
+**Technique modules:** violin harmonics (`violin_art_harm`, `violin_nat_harm`) commit STE workbook pp/mf/ff. Remaining transferred-anchor cases (e.g. some sul ponticello generations) keep high uncertainty. Intermediate/extreme dynamics remain GPR-modelled in `calculate_metrics`.
 
 | Method | Status | Production? |
 |--------|--------|-------------|
@@ -92,7 +92,7 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 | Name | Role | Module |
 |------|------|--------|
 | `REGISTRY` profiles | Register, family, dynamic-response metadata | `instrumentos/registry.py` |
-| GPR modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `violin`, `violin_sordina`, `violin_sul_tasto`, `violin_sul_ponticello`, `violin_art_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `cello`, `cello_sordina`, `cello_sul_tasto`, `cello_sul_ponticello`, `double_bass`, `double_bass_sordina`, `double_bass_sul_tasto`, `double_bass_sul_ponticello`, …) | Sparse note×dynamic CDM tables (externally sourced) | `instrumentos/*.py` |
+| GPR modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `violin`, `violin_sordina`, `violin_sul_tasto`, `violin_sul_ponticello`, `violin_art_harm`, `violin_nat_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `cello`, `cello_sordina`, `cello_sul_tasto`, `cello_sul_ponticello`, `double_bass`, `double_bass_sordina`, `double_bass_sul_tasto`, `double_bass_sul_ponticello`, …) | Sparse note×dynamic CDM tables (externally sourced) | `instrumentos/*.py` |
 | `profile_status` | `literature_derived` / `empirical_profile` / `coarse_default` | Audit: `instrumentos/metadata_audit.py` |
 | `uncertainty` | low / medium / high | All profiles |
 | Unknown instrument | Generic fallback without external acoustic table | `profile_for_event()` |

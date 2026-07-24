@@ -43,9 +43,8 @@ SOURCE_ANCHOR_DYNAMICS: tuple[str, ...] = ("pp", "mf", "ff")
 MEASURED_SUPPORT: tuple[str, ...] = SOURCE_ANCHOR_DYNAMICS
 
 # Technique modules whose pp/ff columns are transferred (not independently measured).
-TRANSFERRED_ANCHOR_MODULES: frozenset[str] = frozenset(
-    {"violin_sul_ponticello", "violin_art_harm"}
-)
+# violin_art_harm / violin_nat_harm now commit workbook pp/mf/ff from STE harmonic exports.
+TRANSFERRED_ANCHOR_MODULES: frozenset[str] = frozenset({"violin_sul_ponticello"})
 
 _LOG = logging.getLogger(__name__)
 
