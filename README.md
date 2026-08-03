@@ -193,6 +193,8 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 
 **Score pitch rule:** GUI and legacy `notes[]` supply **sounding/concert pitch** directly. MusicXML written `<pitch>` is converted through `<transpose>` to sounding pitch before validation and density lookup. Instrument tables and range checks use sounding pitch.
 
+**Unpitched percussion:** Bass drum, Cymbals, Tam-tam, and Gong use a canonical placeholder note key (registry range midpoint) for CDM lookup only — **no acoustic / pitch-structure meaning**. The GUI hides note/octave/cents; MusicXML `<unpitched>` and MIDI channel-10 GM keys map to these modules (unmappable events are skipped with a warning). Pitch-structure exclusion is enforced once in `core/unpitched_routing.py`. See [TECHNICAL_MANUAL §7.5](docs/TECHNICAL_MANUAL.md).
+
 **Dynamic interpolation:** Production method is **deterministic GPR** on pp/mf/ff source anchors (`GPR_RANDOM_STATE = 0`). Modelled dynamics (`p`, `mp`, `f`, extremes) are not measured source data; `mp` is routed through GPR and is **not** mapped to `mf`. Linear and PCHIP were evaluated only as diagnostic conservative references (PR #24) — not adopted. See [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §2.4.1 and [docs/constants_and_assumptions.md](docs/constants_and_assumptions.md) §5.
 
 **Acoustic-table pitch rule:** Sparse CDM metadata rows in `instrumentos/*.py` use the pitch basis documented per module (see `docs/instrument_acoustic_sources.md`). The Excel importer does not transpose imported rows.

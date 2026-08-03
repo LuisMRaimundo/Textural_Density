@@ -8,6 +8,7 @@ import pytest
 from microtonal import midi_to_note_name, note_to_midi_strict
 
 from core.converters import make_instrument_event
+from core.unpitched_routing import canonical_unpitched_note
 from data_processor import calculate_metrics
 from error_handler import InputError
 from instrumentos import get_instrument_module
@@ -55,6 +56,22 @@ def test_sounding_range_finite_ordered_integers(instrument_id):
 def test_boundary_min_max_accepted(instrument_id):
     profile = REGISTRY[instrument_id]
     lo, hi = (int(profile.sounding_range[0]), int(profile.sounding_range[1]))
+    if profile.unpitched:
+        # Entry paths replace any note with the canonical placeholder (lookup only).
+        placeholder = canonical_unpitched_note(profile.display_name)
+        mid = float(note_to_midi_strict(placeholder))
+        assert lo <= mid <= hi
+        event = make_instrument_event(
+            idx=0,
+            note="C4",  # stale; must be replaced
+            dynamic="mf",
+            instrument_name=profile.display_name,
+            player_count=1,
+        )
+        assert event.unpitched is True
+        assert event.sounding_pitch.note_name == placeholder
+        assert float(event.sounding_pitch.midi) == pytest.approx(mid)
+        return
     for midi in (lo, hi):
         note = midi_to_note_name(float(midi))
         _, _, pitches = calculate_metrics(
@@ -71,6 +88,8 @@ def test_boundary_min_max_accepted(instrument_id):
 @pytest.mark.parametrize("instrument_id", ALL_IDS)
 def test_one_semitone_below_min_rejected(instrument_id):
     profile = REGISTRY[instrument_id]
+    if profile.unpitched:
+        pytest.skip("Unpitched entry path remaps all notes to the canonical placeholder")
     lo = int(profile.sounding_range[0])
     if lo <= 0:
         pytest.skip("MIDI floor")
@@ -89,6 +108,8 @@ def test_one_semitone_below_min_rejected(instrument_id):
 @pytest.mark.parametrize("instrument_id", ALL_IDS)
 def test_one_semitone_above_max_rejected(instrument_id):
     profile = REGISTRY[instrument_id]
+    if profile.unpitched:
+        pytest.skip("Unpitched entry path remaps all notes to the canonical placeholder")
     hi = int(profile.sounding_range[1])
     if hi >= 127:
         pytest.skip("MIDI ceiling")

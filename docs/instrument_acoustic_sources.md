@@ -439,6 +439,7 @@ metrics (`core/unpitched_routing.py`).
   v0.3.5 commit `4a110db…`; MC seed `20260803`. Calibration bridge reports
   **NO CALIBRATION ACHIEVED** — cross-family CDM ratios are rank-order only.
 - **Regenerate:** `python tools/generate_percussion_modules_from_nontunperc.py`
+- **Entry paths:** GUI / MusicXML `<unpitched>` / MIDI channel-10 emit `InstrumentEvent.unpitched=True` plus the canonical placeholder key (Bass drum `D2`, Cymbals `C5`, Tam-tam `C2`, Gong `C3`). See `docs/TECHNICAL_MANUAL.md` §7.5.
 
 ## Registry-only instruments
 
