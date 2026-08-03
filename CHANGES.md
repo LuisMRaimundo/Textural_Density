@@ -2,6 +2,19 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-03 — Remove runtime GPR/tail extrapolation (table-only dynamics)
+
+**Architecture change.** Instrument density no longer invents missing dynamics
+at runtime. `core.orchestration` always calls `calcular_densidade`; sparse
+tables raise `MissingCommittedDynamicError` for uncommitted markings.
+
+- Retired production path: `predict_intermediate_dynamics` + adaptive tails
+- Legacy code moved to `tools/legacy_gpr_dynamic_interpolation.py` (not imported by core)
+- **Violin arco** commits the full 10-dynamic `Results` ladder (numeric change
+  for non-anchor dynamics; pp/mf/ff anchors unchanged)
+- Regenerator: `tools/generate_violin_arco_full_dynamics_from_xlsx.py`
+- Other instruments still sparse until their full ladders are committed
+
 ## 2026-08-03 — Density stress battery (PR #37)
 
 **No computed value changed.** Adds an analysis-only public-API stress suite:

@@ -298,9 +298,9 @@ strict helper delegates to it.
 Each instrument module must implement:
 
 - `calcular_densidade(nota: str, dinamica: str) -> float`
-- `predict_intermediate_dynamics(pitches, pp, mf, ff) -> dict`
+- Committed `spectral_data` cells for all requested dynamics (no runtime GPR)
 
-**Metadata tables:** chromatic anchors only (`C4`, `C#4`, … × `pp`/`mf`/`ff`) are enough; microtonal values are modelled at runtime (not measured). See [instrumentos/README.md](../instrumentos/README.md).
+**Metadata tables:** chromatic pitch anchors (`C4`, `C#4`, …) with committed dynamic cells; microtonal pitches are modelled at runtime (not measured). Missing dynamics raise `MissingCommittedDynamicError`. See [instrumentos/README.md](../instrumentos/README.md).
 
 ---
 

@@ -111,17 +111,10 @@ def lookup_module_one_player_density(
     dynamic: str | None,
     known_dynamics: tuple[str, ...] | None = None,
 ) -> float:
-    """Mirror orchestration lookup without changing production code paths."""
+    """Mirror orchestration lookup (committed table cell only)."""
     known = known_dynamics or tuple(DYNAMIC_LEVELS) if DYNAMIC_LEVELS else ANCHOR_DYNAMICS
     dyn_norm = _normalize_dynamic(dynamic, known)
-    if dyn_norm in ANCHOR_DYNAMICS:
-        return float(module.calcular_densidade(note, dyn_norm))
-    pp = module.calcular_densidade(note, "pp")
-    mf = module.calcular_densidade(note, "mf")
-    ff = module.calcular_densidade(note, "ff")
-    return float(
-        module.predict_intermediate_dynamics([note], [pp], [mf], [ff])[dyn_norm][0]
-    )
+    return float(module.calcular_densidade(note, dyn_norm))
 
 
 def build_event_arco_reference(

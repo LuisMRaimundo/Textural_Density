@@ -96,16 +96,14 @@ def test_module_contract_mc_anchors_and_provenance(spec):
 
 
 @pytest.mark.parametrize("spec", _SPECS, ids=lambda s: s["module"])
-def test_intermediate_dynamics_monotone_and_f_between_mf_ff(spec):
+def test_no_runtime_gpr_helper(spec):
     mod = get_instrument_module(spec["display"])
-    row = mod.spectral_data[spec["note"]]
-    pred = mod.predict_intermediate_dynamics(
-        [spec["note"]], [row["pp"]], [row["mf"]], [row["ff"]]
-    )
-    vals = [float(pred[d][0]) for d in _INTERIOR]
-    for i in range(len(vals) - 1):
-        assert vals[i] < vals[i + 1], (spec["module"], _INTERIOR[i], vals)
-    assert row["mf"] < vals[_INTERIOR.index("f")] < row["ff"]
+    assert not hasattr(mod, "predict_intermediate_dynamics")
+    # Non-anchor dynamics require a committed full ladder (pending migration).
+    from instrumentos.pitch_interpolation import MissingCommittedDynamicError
+
+    with pytest.raises(MissingCommittedDynamicError):
+        mod.calcular_densidade(spec["note"], "f")
 
 
 @pytest.mark.parametrize("spec", _SPECS, ids=lambda s: s["module"])

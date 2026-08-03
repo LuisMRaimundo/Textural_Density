@@ -53,37 +53,16 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | Name | Role | Module | Limitation |
 |------|------|--------|------------|
 | `DYNAMIC_LEVELS` | Allowed symbolic markings | `config.py` | Not SPL |
-| Source CDM anchors | Measured sparse table columns | `instrumentos/*.py` | **pp, mf, ff only** |
-| Modelled dynamics | GPR-interpolated values | `instrumentos/gpr_dynamic_interpolation.py` | **p, mp, f, pppp…ffff** — not measured |
-| `mp` coordinate | Ordinal GPR control between `p` (4.0) and `mf` (5.0) | `gpr_dynamic_interpolation.py` | **4.5** — not dB or perceptual intensity |
+| Committed ladder cells | Exact `spectral_data` lookup | `instrumentos/*.py` | Must include requested dynamic |
+| Violin arco full ladder | 10 dynamics from Dynamics_predicter `Results` | `instrumentos/violin.py` | Non-anchor cells workbook-modelled, not lab-measured |
+| Sparse modules (migration) | Still pp/mf/ff only until ladders committed | other `instrumentos/*.py` | Missing cell → `MissingCommittedDynamicError` |
 | Ordinal weights p…ffff | Symbolic orchestration mass (coarse fallback) | `instrumentos/registry.py` | Not loudness |
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
-| Dynamic monotonicity | **Not assumed** | GPR + source tables | CDM may decrease across dynamics |
+| Dynamic monotonicity | **Not assumed** | source tables | CDM may decrease across dynamics |
 
-Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict intermediate dynamics at fixed ordinal coordinates. Production estimators set `random_state=GPR_RANDOM_STATE` (currently `0`) in `gpr_dynamic_interpolation.py`; global NumPy seeding is not the production determinism mechanism. Interpolation does not create new measured source data. Deterministic GPR means numerical repeatability — not perceptual or empirical validation.
+**Production rule (2026-08-03):** no runtime GPR / adaptive-tail fill-in. `calcular_densidade` reads committed cells only. Legacy code: `tools/legacy_gpr_dynamic_interpolation.py`.
 
-**Source anchors vs modelled dynamics**
-
-| Dynamic | Status |
-|---------|--------|
-| `pp` | source anchor |
-| `p` | modelled (GPR) |
-| `mp` | modelled (GPR at coordinate 4.5); not a source-table anchor; not mapped to `mf` |
-| `mf` | source anchor |
-| `f` | modelled (GPR) |
-| `ff` | source anchor |
-| `pppp` / `ppp` / `fff` / `ffff` | modelled / extrapolated (GPR) |
-
-**Technique modules:** violin harmonics (`violin_art_harm`, `violin_nat_harm`) commit STE workbook pp/mf/ff. Remaining transferred-anchor cases (e.g. some sul ponticello generations) keep high uncertainty. Intermediate/extreme dynamics remain GPR-modelled in `calculate_metrics`.
-
-| Method | Status | Production? |
-|--------|--------|-------------|
-| GPR (Matérn) | current deterministic production method | yes |
-| Linear anchor | diagnostic conservative reference | no |
-| PCHIP anchor | diagnostic shape-preserving reference | no |
-| Quadratic anchor | diagnostic reference (audits) | no |
-
-**Model-quality diagnostics:** `tools/audit_gpr_model_quality.py` evaluates reproducible GPR behaviour (convex-hull departures, deviations from linear/quadratic/PCHIP diagnostic references). **Method comparison:** `tools/compare_dynamic_interpolation_methods.py` compares production GPR with linear and PCHIP at source-row, string-scenario, and benchmark levels (357 rows; 320+20 scenarios; 5 excerpts). Neither tool changes production interpolation, source tables, or density formulas. PR #24 found **0** high/extreme scenario-level sensitivity in `density.instrument`; local source-row sensitivity remains highest in low-register strings. Linear and PCHIP were **not adopted**.
+**Technique modules:** violin harmonics (`violin_art_harm`, `violin_nat_harm`) and most technique tables still commit sparse pp/mf/ff until full ladders are supplied.
 
 ---
 
@@ -92,12 +71,12 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 | Name | Role | Module |
 |------|------|--------|
 | `REGISTRY` profiles | Register, family, dynamic-response metadata | `instrumentos/registry.py` |
-| GPR modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `violin`, `violin_sordina`, `violin_sul_tasto`, `violin_sul_ponticello`, `violin_art_harm`, `violin_nat_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `cello`, `cello_sordina`, `cello_sul_tasto`, `cello_sul_ponticello`, `double_bass`, `double_bass_sordina`, `double_bass_sul_tasto`, `double_bass_sul_ponticello`, …) | Sparse note×dynamic CDM tables (externally sourced) | `instrumentos/*.py` |
+| Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, strings, percussion, …) | Note×dynamic CDM tables (externally sourced; violin arco = full ladder) | `instrumentos/*.py` |
 | `profile_status` | `literature_derived` / `empirical_profile` / `coarse_default` | Audit: `instrumentos/metadata_audit.py` |
 | `uncertainty` | low / medium / high | All profiles |
 | Unknown instrument | Generic fallback without external acoustic table | `profile_for_event()` |
 
-**Epistemic rule:** instrument density uses **externally obtained acoustic metadata** interpolated by GPR where modules exist. The pipeline does **not** analyse audio at runtime. Written dynamics remain symbolic score markings (not SPL).
+**Epistemic rule:** instrument density uses **externally obtained acoustic metadata** looked up from committed tables where modules exist. The pipeline does **not** analyse audio at runtime and does **not** invent missing dynamics. Written dynamics remain symbolic score markings (not SPL).
 
 ---
 
