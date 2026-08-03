@@ -78,6 +78,18 @@ Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now por
 - [x] String musicological battery (PR #13)
 - [x] Media note-label normalization (`tests/test_notes.py`, PR #14)
 
+## Unpitched percussion entry paths (PR #29)
+
+- [x] GUI: note/octave/cents hidden for Bass drum / Cymbals / Tam-tam / Gong; group label `── Unpitched percussion ──`
+- [x] Adapter injects canonical placeholder (`D2` / `C5` / `C2` / `C3`) regardless of stale note state
+- [x] Cents/microtones for unpitched instruments raise `InputError`
+- [x] MusicXML `<unpitched>` maps by part name; display-step/octave never become sounding pitch
+- [x] MIDI channel 10 GM map (35/36 bass drum; 49/57 crash; 51/59 ride→Cymbals approx; 52 Chinese→Cymbals); unmapped keys skipped with warning
+- [x] Pitch-structure exclusion only in `partition_pitched_events` (no duplicate filters in GUI/loaders)
+- [x] Docs: README, `docs/TECHNICAL_MANUAL.md` §7.5, `docs/instrument_acoustic_sources.md`, `instrumentos/README.md`
+
+Run: `pytest tests/test_unpitched_entry_paths.py tests/test_unpitched_pitch_exclusion.py -q`
+
 ## GUI architecture
 
 - [x] `pytest tests/test_gui_architecture.py` passes

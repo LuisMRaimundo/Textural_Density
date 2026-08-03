@@ -644,15 +644,38 @@ Tests: `tests/test_transposing_instrument_sounding_pitch_contract.py`, `tests/te
 
 ### 7.5 Unpitched percussion entry paths
 
-Bass drum, Cymbals, Tam-tam, and Gong are **unpitched** (`InstrumentProfile.unpitched` / `InstrumentEvent.unpitched`). Their chromatic note string is a **CDM lookup placeholder only** (registry sounding-range midpoint) — it has **no acoustic meaning** and must not enter pitch-structure metrics. Core exclusion remains `core/unpitched_routing.partition_pitched_events` (single enforcement point).
+Bass drum, Cymbals, Tam-tam, and Gong are **unpitched** (`InstrumentProfile.unpitched` / `InstrumentEvent.unpitched`). Their chromatic note string is a **CDM lookup placeholder only** (registry sounding-range midpoint) — it has **no acoustic meaning** and must not enter pitch-structure metrics.
+
+**Shared event representation (all entry paths):** `unpitched=True` plus the instrument’s canonical placeholder key. GUI, MusicXML, and MIDI must converge on that shape; they must **not** re-implement pitch-structure exclusion. Exclusion stays solely in `core/unpitched_routing.partition_pitched_events`.
+
+Helpers (same module): `canonical_unpitched_note`, `normalize_unpitched_entry_note`, `reject_unpitched_microtones`, `map_gm_percussion_key`, `GM_PERCUSSION_KEY_MAP`.
 
 | Path | Behaviour |
 |------|-----------|
-| **GUI** | Note / octave / cents disabled; dropdown groups the four under `── Unpitched percussion ──`. Adapter injects the canonical placeholder regardless of stale note state. Cents/microtones raise `InputError`. |
-| **MusicXML** | `<unpitched>` maps via part name to a registered unpitched module; display-step/octave are **never** promoted to sounding pitch. Unmappable `<unpitched>` events are **skipped** with a per-event warning (part + measure). |
-| **MIDI** | Channel 10 (0-based index 9): GM keys 35/36 → Bass drum; 49/57 crash → Cymbals; 51/59 ride → Cymbals (approximation warning); 52 Chinese → Cymbals (noted). Unmapped keys are skipped with a warning — never a pitched fallback. |
+| **GUI** | Note / octave / cents disabled; dropdown groups the four under `── Unpitched percussion ──`. `adapters/gui_adapter` injects the canonical placeholder regardless of stale note state. Cents/microtones raise `InputError`. |
+| **MusicXML** | `<unpitched>` maps via part/instrument name to a registered unpitched module; `<display-step>` / `<display-octave>` are **never** promoted to sounding pitch. Unmappable `<unpitched>` events are **skipped** with a per-event warning listing **part name and measure**. |
+| **MIDI** | Channel 10 (0-based index 9) only — see GM map below. Unmapped keys are skipped with a warning — **never** a pitched fallback. |
 
-Canonical placeholders (midpoint of `sounding_range`): Bass drum `D2`, Cymbals `C5`, Tam-tam `C2`, Gong `C3`.
+#### Canonical placeholder keys
+
+| Display name | Registry ID | Placeholder | MIDI (midpoint of `sounding_range`) |
+|--------------|-------------|-------------|-------------------------------------|
+| Bass drum | `bombo` | `D2` | 38 |
+| Cymbals | `pratos` | `C5` | 72 |
+| Tam-tam | `tamtam` | `C2` | 36 |
+| Gong | `gongo` | `C3` | 48 |
+
+#### MIDI GM percussion map (channel 10)
+
+| GM key | Role | Module | Log note |
+|--------|------|--------|----------|
+| 35, 36 | Acoustic / bass drum | Bass drum | — |
+| 49, 57 | Crash cymbal 1 / 2 | Cymbals | — |
+| 51, 59 | Ride cymbal 1 / 2 | Cymbals | approximation warning |
+| 52 | Chinese cymbal | Cymbals | approximation noted |
+| other | — | **skip** | per-event warning |
+
+**Skip-with-warning policy:** unmappable unpitched MusicXML or MIDI events are omitted from the event list and logged; the loader never invents a pitched instrument or sounding pitch as a fallback.
 
 Tests: `tests/test_unpitched_entry_paths.py`, `tests/test_unpitched_pitch_exclusion.py`.
 
