@@ -275,7 +275,8 @@ Implemented in `calcular_densidade_ponderada_normalizada(DI, DV, ...)` with DI =
   D_{\mathrm{total}} = \log_{10}(1 + D_{\mathrm{total}}^{\mathrm{raw}})$$
   when `USE_LOG_COMPRESSION` is true. $\mathrm{REF}$ = `MAX_DENS_GLOBAL` (**193**).
   Zero interval/pitch contribution is just a numeric zero — **no** event-kind
-  fallback. Header: `Composite: log10(1 + D_blend·√M / REF) with w=…, REF=193`.
+  fallback. Header from `core.composite.format_composite_header_line` (same
+  constants as the computation; prints `D_blend=` and `M=`).
   See `CHANGES.md` for the 575→193 recalibration mapping.
 
 ### 3.6 Sonic mass and dynamic boost
@@ -354,8 +355,10 @@ $$C_{\mathrm{comp}} = 1 + \ln(1 + H).$$
 
 Unified composite (Task 8c) — same as §3.5; $D_{\mathrm{pitch}}$ is **not** the product term:
 
-- **Blend** (slider-controlled; equals `density.weighted`):
-  $$D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}} + (1-w)\,\widehat{D}_{\mathrm{int}}\bigr).$$
+- **Blend** (slider-controlled; equals `density.weighted`; single source in `core.composite`):
+  $$D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}} + (1-w)\,\widehat{D}_{\mathrm{int}}\bigr)
+  = w\cdot\frac{D_{\mathrm{inst}}}{10} + (1-w)\cdot D_{\mathrm{int}}$$
+  with $\mathrm{DI\_max}=100$, $\mathrm{DV\_max}=10$ (equals printed weighted orch + pitch components).
 
 - **Unnormalised total:**
   $$D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}}}{\mathrm{REF}}, \quad \mathrm{REF}=\texttt{MAX\_DENS\_GLOBAL}=193.$$
@@ -365,6 +368,23 @@ Unified composite (Task 8c) — same as §3.5; $D_{\mathrm{pitch}}$ is **not** t
   Otherwise $D_{\mathrm{total}} = D_{\mathrm{total}}^{\mathrm{raw}}$.
 
 Old→new baseline totals: [`CHANGES.md`](../CHANGES.md).
+
+### 3.12.1 Average texture density vs monotone totals
+
+`average_texture_density` is a **per-player mean** of one-player CDM (Qty-weighted). It may
+**decrease** when low-CDM instruments are added and **increase** under Qty expansion
+weighted toward high-CDM instruments. The monotone quantities under event/Qty growth are
+the **totals**: Sonic Mass, instrument RSS, and Composite (`density.total`).
+
+Worked illustrations from the Task 8c GUI acceptance chain
+(`tests/test_composite_unification_acceptance.py`):
+
+| Step | `average_texture_density` | Reading |
+|------|---------------------------|---------|
+| 5 strings ff → +bass drum | ≈40.25 → ≈37.35 | Mean falls: bass drum CDM below the string mean |
+| Unit-qty full mix → Qty 4/5/5/3/10 on strings | ≈28.39 → ≈36.25 | Mean rises: expansion weighted toward higher-CDM strings |
+
+(Session notes sometimes cite ≈39.17→36.46 and ≈27.73→33.24 for the same qualitative pair of behaviours.)
 
 ### 3.13 Absolute density (reference)
 
@@ -707,7 +727,7 @@ Pitch-structure **exclusion** of note keys remains solely in `partition_pitched_
 | Composite (unified) | Blend uses instr **yes** / interval only if pitched; mass **yes** | $\log_{10}(1+D_{\mathrm{blend}}\sqrt{M}/193)$; no event-kind branch |
 
 Display: when `unpitched_event_count > 0`, the PITCH STRUCTURE block prints  
-`N unpitched events excluded from pitch metrics by type (see ORCHESTRAL MASS / TEXTURE)`.  
+`1 unpitched event excluded…` / `N unpitched events excluded…` via `core.unpitched_labels.format_unpitched_exclusion_note`.  
 Unpitched-only spectral / advanced sections print `n/a — no pitched content`.
 
 Pipeline fields: `pitch_aggregation.pitched_event_count` / `unpitched_event_count`; `resultados["composite_meta"]` (`mode=weighted_blend_mass_log`, `normalization_ref`, `weight_factor`, `formula`) — outside the numeric `density` map.

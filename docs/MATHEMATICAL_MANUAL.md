@@ -287,6 +287,7 @@ If $n_{\mathrm{distinct}} < 2$, $D_{\mathrm{pitch}} = 0$.
 
 $$
 D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}}+(1-w)\,\widehat{D}_{\mathrm{int}}\bigr)
+= w\cdot\frac{D_{\mathrm{inst}}}{10} + (1-w)\cdot D_{\mathrm{int}}
 = \texttt{density.weighted},
 \quad
 D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}}}{\mathrm{REF}},
@@ -294,7 +295,15 @@ D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mat
 D_{\mathrm{total}} = \log_{10}(1+D_{\mathrm{total}}^{\mathrm{raw}}).
 $$
 
-$\mathrm{REF}$ = `MAX_DENS_GLOBAL` (**193**). $D_{\mathrm{pitch}}$ remains a reported axis; it is **not** the composite product. Zero interval contribution (unpitched-only) is a numeric zero — no event-kind branch. Traceability for the 575→193 recalibration: `CHANGES.md`.
+| Symbol | Default | Role |
+|--------|---------|------|
+| $\mathrm{REF}$ = `MAX_DENS_GLOBAL` | **193** | Task 8c re-freeze: chosen so frozen all-pitched baselines keep pre-unification order of magnitude (match ≈192.6→193); see `CHANGES.md` / `config.py` |
+| $w$ = `weight_factor` | **0.5** (`DEFAULT_WEIGHT_FACTOR`) | Instrument vs interval blend inside $D_{\mathrm{blend}}$ |
+| $\mathrm{DI\_max}$, $\mathrm{DV\_max}$ | 100, 10 | Min-max caps in `core.composite` |
+
+$D_{\mathrm{pitch}}$ remains a reported axis; it is **not** the composite product. Zero interval contribution (unpitched-only) is a numeric zero — no event-kind branch.
+
+**Acceptance criterion:** property tests in `tests/test_unified_composite_contract.py` (monotonicity under event/Qty addition, mixed > subsets, continuity when dropping the last pitched event) plus the GUI-chain freeze `tests/test_composite_unification_acceptance.py`. Header text is generated from the same expression as the computation (`core.composite.format_composite_header_line`).
 
 > **Removed:** mean-per-pair normalisation $D_{\mathrm{int}}^{\mathrm{norm}}$ as the aggregate's interval term (replaced by the raw sum $S$); redundant registral-span damping $1/(1+A_{\mathrm{st}}/12)$ in the composite product; earlier `D_{\mathrm{ref}} = D_{\mathrm{pond}}/A_{\mathrm{st}}` with zero-span exemption and cohesion factor $10/(1+A_{\mathrm{st}})$. The reported compactness axis $D_{\mathrm{int}}^{\mathrm{norm}}$ (`density.interval`) is unchanged and remains **intensive** (falls with spread).
 
@@ -350,7 +359,7 @@ $$
 **Texture** (`calculate_texture_density`):
 
 - `player_count` / `player_weighted_texture_mass` $= \sum n_j$ over the **full slice** (pitched + unpitched Qty)
-- `average_texture_density` = Qty-weighted mean one-player CDM over the **full slice** (includes unpitched)
+- `average_texture_density` = Qty-weighted mean one-player CDM over the **full slice** (includes unpitched). This is a **per-player mean**, not a total: it may fall when low-CDM instruments are added and rise under Qty expansion toward high-CDM instruments. Monotone under growth are the **totals** (Sonic Mass, RSS, Composite) — see Technical Manual §3.12.1.
 - `pitch_polyphony` / `texture_polyphony` $= n_{\mathrm{distinct}}$ (**pitched** bins only)
 - `texture_variability` $= \mathrm{std}(m_i)$ over pitched bins
 - `texture_contrast` $= \max m_i - \min m_i$ over pitched bins

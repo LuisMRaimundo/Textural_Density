@@ -148,9 +148,10 @@ def test_no_event_kind_fallback_mode():
 def test_header_prints_single_formula_with_w_and_ref():
     r = _result(("C4", "E4"), ("mf", "mf"), ("Violin", "Violin"))
     text = format_output_string(r)
-    assert "Composite: log10(1 + D_blend·√M / REF)" in text
+    assert "Composite: log10(1 + D_blend*sqrt(M)/REF)" in text
     assert f"REF={MAX_DENS_GLOBAL:g}" in text
     assert "w=0.5" in text
+    assert "D_blend=" in text
     assert "fallback" not in text.lower()
 
 

@@ -13,6 +13,7 @@ from typing import Any
 import numpy as np
 
 from config import MAX_DENS_GLOBAL, USE_LOG_COMPRESSION
+from core.composite import composite_formula_metadata
 from core.composite import compute_weighted_density_normalized
 from core.converters import (
     analysis_config_from_input,
@@ -287,12 +288,12 @@ def calculate_metrics(
         "normalization_ref": float(MAX_DENS_GLOBAL),
         "weight_factor": float(weight_factor),
         "use_log_compression": bool(USE_LOG_COMPRESSION),
-        "formula": (
-            "log10(1 + D_blend·√M / REF) with "
-            "D_blend = 10·(w·DI/DI_max + (1−w)·DV/DV_max)"
-            if USE_LOG_COMPRESSION
-            else "D_blend·√M / REF with D_blend = 10·(w·DI/DI_max + (1−w)·DV/DV_max)"
+        "formula": composite_formula_metadata(
+            w=float(weight_factor),
+            ref=float(MAX_DENS_GLOBAL),
+            use_log_compression=bool(USE_LOG_COMPRESSION),
         ),
+        "d_blend": float(densidade_ponderada_val),
     }
     resultados["quantity_scaling"] = quantity_scaling_metadata(
         player_count=int(full_player_count)

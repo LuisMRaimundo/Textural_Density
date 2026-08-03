@@ -105,10 +105,10 @@ def compute_composite_vertical_density(
     """
     Unified composite: blend density × mass boost / REF.
 
-    ``blend_density`` is the slider-controlled weighted density
-    ``10·(w·DI_norm+(1−w)·DV_norm)`` — the same value as ``density.weighted``.
-    Zero pitch/interval contribution is just a numeric zero; there is no
-    event-kind branch. ``max_dens_global`` is the single REF
+    ``blend_density`` is the slider-controlled weighted density from
+    ``core.composite.compute_blend_density`` — the same value as
+    ``density.weighted``. Zero pitch/interval contribution is just a numeric
+    zero; there is no event-kind branch. ``max_dens_global`` is the single REF
     (``config.MAX_DENS_GLOBAL``). Optional ``log10(1+x)`` follows.
     """
     mass_boost = float(np.sqrt(max(0.0, sonic_mass)))

@@ -11,13 +11,19 @@ from typing import Any, Dict, List, Tuple
 # Composite = log10(1 + D_blend · √M / MAX_DENS_GLOBAL) when USE_LOG_COMPRESSION,
 # where D_blend is the slider-controlled weighted density
 #   D_blend = 10 · (w · DI/DI_max + (1−w) · DV/DV_max)
-# (same object as density.weighted). D_pitch / DV = 0 is just a numeric value —
-# there is no unpitched-only fallback branch.
+# (same object as density.weighted; equivalently w·(DI/10)+(1−w)·DV with
+# DI_max=100, DV_max=10). D_pitch / DV = 0 is just a numeric value —
+# there is no unpitched-only fallback branch. Display strings are built from
+# the same constants in core.composite — do not hand-edit formula text here.
 #
-# MAX_DENS_GLOBAL (REF) was recalibrated in Task 8c from 575.0 (pitch-gated
-# product era) so typical all-pitched density.total stays in the same order of
-# magnitude as the frozen regression baseline under the new blend×mass formula
-# (matched to that baseline ≈ 192.6; rounded to 193).
+# MAX_DENS_GLOBAL (REF) = 193.0 — Task 8c re-freeze calibration:
+# chosen so the frozen all-pitched regression / snapshot baseline slices keep
+# their pre-unification order of magnitude under the new blend×mass assembly.
+# The least-squares match to that baseline was ≈ 192.6; rounded to 193.
+# Traceability (old→new totals): CHANGES.md entry
+# "2026-08-03 — Task 8c: unify composite (blend × mass)".
+# Default blend weight w = DEFAULT_WEIGHT_FACTOR (0.5) below / in
+# core.defaults.RESEARCH_ANALYSIS_DEFAULTS.
 # -------------------------------------------------------------------
 MAX_DENS_GLOBAL = 193.0
 USE_LOG_COMPRESSION = True
