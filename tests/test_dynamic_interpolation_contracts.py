@@ -86,12 +86,33 @@ class TestCommittedLadderLookup:
             assert density == pytest.approx(mod.spectral_data[pitch][dyn], abs=FLOAT_TOL)
 
     def test_sparse_module_raises_for_uncommitted_dynamic(self):
-        mod = _load_module("flute")
+        # Trumpet remains sparse until its Results ladder is committed.
+        mod = _load_module("trumpet")
         with pytest.raises(MissingCommittedDynamicError, match="full dynamic ladder"):
             mod.calcular_densidade("C4", "mp")
 
+    @pytest.mark.parametrize(
+        "module_name,pitch",
+        [
+            ("violin", "A3"),
+            ("viola", "C4"),
+            ("cello", "C3"),
+            ("double_bass", "A1"),
+            ("flute", "C5"),
+            ("clarinet", "C4"),
+            ("bassoon", "C3"),
+            ("oboe", "C5"),
+        ],
+    )
+    def test_full_ladder_modules_lookup_mp(self, module_name: str, pitch: str):
+        mod = _load_module(module_name)
+        assert mod.INSTRUMENT_SOURCE.dynamic_levels == tuple(DYNAMIC_LEVELS)
+        assert mod.calcular_densidade(pitch, "mp") == pytest.approx(
+            mod.spectral_data[pitch]["mp"], abs=FLOAT_TOL
+        )
+
     def test_modules_do_not_expose_runtime_gpr_helper(self):
-        for name in ("violin", "flute", "viola", "cello", "clarinet"):
+        for name in ("violin", "flute", "viola", "cello", "clarinet", "bassoon", "oboe"):
             mod = _load_module(name)
             assert not hasattr(mod, "predict_intermediate_dynamics")
 

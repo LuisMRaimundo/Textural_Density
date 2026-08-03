@@ -2,7 +2,7 @@
 
 
 
-> **Metadata status:** The instrument corpus is **incomplete**. Many names resolve to coarse fallbacks; table-backed modules are partial proxies. Violin arco commits a full 10-dynamic ladder; most others are still sparse pp/mf/ff until migrated. External acoustic/proxy metadata are curated gradually — not live analysis.
+> **Metadata status:** The instrument corpus is **incomplete**. Many names resolve to coarse fallbacks; table-backed modules are partial proxies. Full 10-dynamic `Results` ladders are committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, and oboe; trumpet / technique / percussion modules remain sparse until migrated. External acoustic/proxy metadata are curated gradually — not live analysis.
 
 
 
@@ -22,18 +22,9 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 |--------|-------|--------|
 
-| `flute.py` | `spectral_data` | IOWA+ORCH flute sustain CDM medians (Zenodo workbook) |
-
-| `clarinet.py` | `spectral_data` | IOWA+ORCH clarinet sustain CDM medians (Zenodo workbook) |
-
-| `oboe.py` | `spectral_data` | IOWA+ORCH oboe sustain CDM medians (Zenodo workbook) |
-
-| `bassoon.py` | `spectral_data` | IOWA+ORCH bassoon sustain CDM medians (Zenodo workbook) |
-
-| `trumpet.py` | `spectral_data` | IOWA+ORCH trumpet sustain CDM medians (Zenodo workbook) |
-
-| `violin.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladder (IOWA+ORCH anchors) |
-| `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` (pp/mf/ff; migrating) | IOWA+ORCH arco sustain CDM medians (Zenodo workbooks) |
+| `flute.py`, `clarinet.py`, `oboe.py`, `bassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
+| `trumpet.py` | `spectral_data` (sparse pp/mf/ff) | IOWA+ORCH trumpet sustain CDM medians (Zenodo workbook) |
+| `violin.py`, `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
 | `violin_sordina.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`con_sordino`; pp from arco ratios) |
 | `violin_sul_tasto.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_tasto`; pp from arco ratios) |
 | `violin_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_ponticello`; pp from arco ratios) |

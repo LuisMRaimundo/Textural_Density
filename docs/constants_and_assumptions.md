@@ -54,8 +54,8 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 |------|------|--------|------------|
 | `DYNAMIC_LEVELS` | Allowed symbolic markings | `config.py` | Not SPL |
 | Committed ladder cells | Exact `spectral_data` lookup | `instrumentos/*.py` | Must include requested dynamic |
-| Violin arco full ladder | 10 dynamics from Dynamics_predicter `Results` | `instrumentos/violin.py` | Non-anchor cells workbook-modelled, not lab-measured |
-| Sparse modules (migration) | Still pp/mf/ff only until ladders committed | other `instrumentos/*.py` | Missing cell → `MissingCommittedDynamicError` |
+| Full ordinary-sustain ladders | 10 dynamics from Dynamics_predicter `Results` | `violin`/`viola`/`cello`/`double_bass`/`flute`/`clarinet`/`bassoon`/`oboe` | Non-anchor cells workbook-modelled, not lab-measured |
+| Sparse modules (migration) | Still pp/mf/ff only until ladders committed | trumpet, techniques, percussion, … | Missing cell → `MissingCommittedDynamicError` |
 | Ordinal weights p…ffff | Symbolic orchestration mass (coarse fallback) | `instrumentos/registry.py` | Not loudness |
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
 | Dynamic monotonicity | **Not assumed** | source tables | CDM may decrease across dynamics |
@@ -71,7 +71,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | Name | Role | Module |
 |------|------|--------|
 | `REGISTRY` profiles | Register, family, dynamic-response metadata | `instrumentos/registry.py` |
-| Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, strings, percussion, …) | Note×dynamic CDM tables (externally sourced; violin arco = full ladder) | `instrumentos/*.py` |
+| Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, strings, percussion, …) | Note×dynamic CDM tables (externally sourced; ordinary-sustain winds/strings listed above = full ladder) | `instrumentos/*.py` |
 | `profile_status` | `literature_derived` / `empirical_profile` / `coarse_default` | Audit: `instrumentos/metadata_audit.py` |
 | `uncertainty` | low / medium / high | All profiles |
 | Unknown instrument | Generic fallback without external acoustic table | `profile_for_event()` |

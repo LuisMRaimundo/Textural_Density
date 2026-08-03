@@ -2,6 +2,22 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-03 — Full dynamics ladders: viola, cello, double bass, flute, clarinet, bassoon, oboe
+
+**Numeric change for non-anchor dynamics** on these modules (pp/mf/ff anchors
+unchanged). Each commits the Dynamics_predicter sheet **`Results`** ladder:
+
+- `viola.py` ← `Viola_Arco normal_iowa_orchidea_dynamics.xlsx`
+- `cello.py` ← `Cello_Arco normal_iowa_orchidea_dynamics.xlsx`
+- `double_bass.py` ← `DBass_Arco normal__iowa_orchidea_dynamics.xlsx`
+- `flute.py` ← `Flute_iowa_orchidea_dynamics.xlsx`
+- `clarinet.py` ← `Clarinet_iowa_orchidea_dynamics.xlsx`
+- `bassoon.py` ← `Basson_iowa_orchidea_dynamics.xlsx`
+- `oboe.py` ← `Oboe_iowa_orchidea_dynamics.xlsx`
+
+Regenerator: `tools/generate_full_dynamics_modules_from_xlsx.py`.
+Still sparse (error on missing cells): trumpet, technique/percussion modules, etc.
+
 ## 2026-08-03 — Remove runtime GPR/tail extrapolation (table-only dynamics)
 
 **Architecture change.** Instrument density no longer invents missing dynamics

@@ -192,8 +192,8 @@ Qty does **not** affect pitch-structure metrics (interval pairs, spectral entrop
 |------|-----------|
 | Dynamic present in row | Exact cell value |
 | Dynamic absent | MissingCommittedDynamicError |
-| Violin arco | Full 10-level ladder from Dynamics_predicter sheet Results |
-| Other table modules | Migrating from sparse pp/mf/ff |
+| Violin arco, viola, cello, double bass, flute, clarinet, bassoon, oboe | Full 10-level ladder from Dynamics_predicter sheet `Results` |
+| Other table modules (trumpet, techniques, percussion, …) | Still sparse pp/mf/ff until ladders are committed |
 
 Pitch interpolation (MIDI-space linear/PCHIP between chromatic anchors) is unchanged and independent of the dynamic column.
 
