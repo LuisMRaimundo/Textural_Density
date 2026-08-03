@@ -700,6 +700,8 @@ Pitch-structure **exclusion** of note keys remains solely in `partition_pitched_
 Display: when `unpitched_event_count > 0`, the PITCH STRUCTURE block prints  
 `N unpitched events excluded from pitch metrics by type (see ORCHESTRAL MASS / TEXTURE)`.
 
+Pipeline fields: `pitch_aggregation.pitched_event_count` / `unpitched_event_count`; `resultados["composite_meta"]` (`mode`, `normalization_ref`, `use_log_compression`) — kept outside the numeric `density` map so finite-output gates stay numeric-only.
+
 Tests: `tests/test_unpitched_entry_paths.py`, `tests/test_unpitched_pitch_exclusion.py`, `tests/test_unpitched_aggregation_contract.py`.
 
 ---

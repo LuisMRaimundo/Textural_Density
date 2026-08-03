@@ -50,6 +50,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 - ~~Layered snapshot regression~~ ✅
 - ~~MusicXML `<transpose>` → concert pitch + benchmark excerpts (`003`–`005`)~~ ✅
 - ~~Unpitched percussion entry paths (GUI / MusicXML `<unpitched>` / MIDI ch.10) + core-only pitch exclusion (PR #28–#29)~~ ✅
+- ~~Unpitched aggregation contract: counts/texture/composite + display routing (PR #31 / Task 8b)~~ ✅
 
 ## Optional only
 
