@@ -105,6 +105,17 @@ Run: `pytest tests/test_unpitched_entry_paths.py tests/test_unpitched_pitch_excl
 
 Run: `pytest tests/test_unpitched_aggregation_contract.py tests/test_unified_composite_contract.py -q`
 
+## Density stress battery (PR #37)
+
+- [x] Entry point `run_stress_battery.py` uses only public API (`AnalysisRequest` / `calculate_metrics`)
+- [x] Families A–E covered (doubling, dynamics, mix/register, extremes, Monte Carlo + determinism)
+- [x] Artifacts: `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/` (gitignored)
+- [x] Registry contract: `tests/test_stress_battery_registry.py`
+- [x] Docs: [`tests/stress/README.md`](../tests/stress/README.md), README Testing, CHANGES, TECHNICAL_MANUAL §10
+- [ ] Re-run after formula edits and attach regenerated report to the PR if behaviour shifts
+
+Run: `python run_stress_battery.py` (full battery ≈ 40–60 s locally)
+
 ## GUI architecture
 
 - [x] `pytest tests/test_gui_architecture.py` passes

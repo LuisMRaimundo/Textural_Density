@@ -53,6 +53,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 - ~~Unpitched aggregation contract: counts/texture/composite + display routing (PR #31 / Task 8b)~~ ✅
 - ~~Unified composite (blend × mass, REF=193; no unpitched-only fallback) (Task 8c)~~ ✅
 - ~~Composite header / exclusion label accuracy + acceptance freeze (PR #35; no numeric change)~~ ✅
+- ~~Density stress battery (public API; report/CSV/figures) (PR #37; no numeric change)~~ ✅
 
 ## Optional only
 
@@ -62,6 +63,7 @@ Expert annotations · IRR · human-rating correlation · listening tests · psyc
 
 ```bash
 pytest tests/ -q
+python run_stress_battery.py
 python replication/scripts/reproduce_metrics.py
 python replication/scripts/compare_to_frozen_outputs.py
 python validation/scripts/score_upgrade_rubric.py docs/examples/score_only_rubric_scores_example.json

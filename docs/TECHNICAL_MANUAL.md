@@ -834,20 +834,24 @@ Phase 10 added automated quality checks (see `tests/test_quality_gates.py` and `
 | Performance | 50-note slice completes in < 5 s (`@pytest.mark.slow`) |
 | Import hygiene | `core/` and `validation/` modules must not import Tkinter |
 
-**Verification layers:** interval-density contracts; instrument registry scaffold; musicological plausibility; Excel importer contracts; **string musicological battery (PR #13)**; **media note-label normalization (PR #14)**; **adaptive dynamic tails (`tests/test_adaptive_dynamic_tails.py`)**. These verify symbolic/metadata-level behaviour — not final acoustic calibration or auditory validation.
+**Verification layers:** interval-density contracts; instrument registry scaffold; musicological plausibility; Excel importer contracts; **string musicological battery (PR #13)**; **media note-label normalization (PR #14)**; **adaptive dynamic tails (`tests/test_adaptive_dynamic_tails.py`)**; **density stress battery (PR #37)** — controlled public-API scenarios A–E via `run_stress_battery.py` (report/CSV/figures; analysis-only, no formula change). These verify symbolic/metadata-level behaviour — not final acoustic calibration or auditory validation.
 
-**CI limitation:** string source-reconstruction tests require local Zenodo workbooks; skipped on runners without `D:\CORDAS\` paths (violin/viola are the two suite skips until deposited; cello/double_bass reconstruction passes when workbooks are present).
+**CI limitation:** string source-reconstruction tests require local Zenodo workbooks; skipped on runners without `D:\CORDAS\` paths (violin/viola are the two suite skips until deposited; cello/double_bass reconstruction passes when workbooks are present). The stress battery is **local/analysis** (not a CI gate); regenerate report after intentional metric changes.
 
 Run locally:
 
 ```bash
 pytest tests/ -q --no-cov -m "not slow" -o addopts=
 pytest -m musicological -q
+pytest tests/test_stress_battery_registry.py -q
+python run_stress_battery.py
 pytest tests/ -q -o addopts= --cov=core --cov=validation --cov-fail-under=80
 mypy core validation --ignore-missing-imports --follow-imports=skip
 python -c "import importlib; importlib.import_module('Main'); print('OK')"
 ```
 
+Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). Artifacts: `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/` (gitignored).
+
 ---
 
-*Last updated: 2026-06-25 (PR #13 string battery; PR #14 viola note-label normalization; see [qa_checklist.md](qa_checklist.md)).*
+*Last updated: 2026-08-03 (PR #37 stress battery; composite Task 8c / labels PR #35; see [qa_checklist.md](qa_checklist.md)).*

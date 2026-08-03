@@ -2,6 +2,18 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-03 — Density stress battery (PR #37)
+
+**No computed value changed.** Adds an analysis-only public-API stress suite:
+
+- Entry: `python run_stress_battery.py` (details: [`tests/stress/README.md`](tests/stress/README.md))
+- Families A–E: doubling, dynamics, mix/register, extremes, Monte Carlo + determinism
+- Artifacts (gitignored): `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/`
+- Contract tests: `tests/test_stress_battery_registry.py` (names / Qty / dyn / MIDI only)
+- First full local run (~42 s): 61/61 slices; E5 determinism PASS; 0 blockers;
+  1 documented caveat (D6: all-ffff composite &lt; all-pp on string quartet —
+  see generated report SCOPE NOTES)
+
 ## 2026-08-03 — Label / docs accuracy (composite header, plural, REF provenance)
 
 **No computed value changed in this release** (PR #35 code + this docs follow-up).

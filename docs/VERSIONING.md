@@ -44,6 +44,8 @@ These describe **scientific scope**, not Python package semver:
 
 **Label / docs accuracy (2026-08-03, PR #35, still under `5.1.0-strict-symbolic`):** Header and exclusion-note wording aligned with computation (`core.composite` / `core.unpitched_labels`); REF provenance and average-texture-density mean behaviour documented. **No numeric / schema change** — see [`CHANGES.md`](../CHANGES.md) “Label / docs accuracy”.
 
+**Density stress battery (2026-08-03, PR #37, still under `5.1.0-strict-symbolic`):** Analysis-only public-API suite (`run_stress_battery.py`, `tests/stress/`). **No numeric / schema change** — see [`CHANGES.md`](../CHANGES.md) “Density stress battery”.
+
 Outputs embed `metric_schema_version` (currently **`5.1.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.4`.
 
 See [MIGRATION.md](MIGRATION.md) for phase history.
