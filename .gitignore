@@ -4,6 +4,11 @@ htmlcov/
 .coverage
 *.cover
 
+# Stress battery generated outputs (regenerate via run_stress_battery.py)
+STRESS_TEST_REPORT.md
+stress_results.csv
+stress_figures/
+
 # Bytecode
 __pycache__/
 *.py[cod]

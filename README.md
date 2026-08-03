@@ -237,6 +237,9 @@ print(f"Input pitches only: {len(pitches)} notes")
 
 ```bash
 # Run all tests (non-slow; skips coverage gate when addopts cleared)
+# Stress battery (public API; writes STRESS_TEST_REPORT.md + CSV + figures)
+python run_stress_battery.py
+
 pytest tests/ -q --no-cov -m "not slow" -o addopts=
 
 # Run with coverage (default pytest.ini gates)
