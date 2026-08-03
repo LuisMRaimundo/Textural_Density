@@ -90,7 +90,7 @@ Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now por
 
 Run: `pytest tests/test_unpitched_entry_paths.py tests/test_unpitched_pitch_exclusion.py -q`
 
-## Unpitched aggregation contract (PR #31 / Task 8b) + unified composite (PR #33 / Task 8c)
+## Unpitched aggregation (PR #31 / Task 8b) + unified composite (PR #33 / Task 8c) + labels (PR #35)
 
 - [x] Event Count / Player Count = pitched + unpitched (mixed slice 4/4)
 - [x] Texture `player_count` / `player_weighted_texture_mass` include unpitched Qty

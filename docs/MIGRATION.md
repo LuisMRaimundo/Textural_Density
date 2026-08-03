@@ -29,7 +29,8 @@ This document helps users and integrators move from pre-upgrade scripts (flat `d
 | Extensive composite / raw sum $S$ | **Changed (5.0.0-strict-symbolic)** — pitch-structure from accumulating pairwise sum; no registral-span damping in the aggregate |
 | Register-adaptive saturating dynamic tails | **Changed (5.1.0-strict-symbolic)** — out-of-support dynamics use local $s(m)$ from measured pp/mf/ff + `DYN_TAIL_SHRINK`; interior GPR unchanged |
 | Unpitched aggregation contract | **Additive (PR #31)** — Event/Player Count + texture players/CDM include unpitched; pitch polyphony pitched-only |
-| Unified composite (blend × mass) | **Changed (Task 8c)** — `Composite = log10(1 + density.weighted·√M / REF)` with `REF=193`; removed pitch-gated product and unpitched-only fallback; baselines re-frozen (`CHANGES.md`) |
+| Unified composite (blend × mass) | **Changed (Task 8c)** — `Composite = log10(1 + density.weighted*sqrt(M)/REF)` with `REF=193`; removed pitch-gated product and unpitched-only fallback; baselines re-frozen (`CHANGES.md`) |
+| Composite header / exclusion labels | **Display-only (PR #35)** — formula string from `core.composite`; singular/plural exclusion; **no computed value changed** (`CHANGES.md`) |
 
 **Epistemic note:** All metrics remain score/symbolic outputs. New metadata labels clarify which values are **metadata proxies**, not measured acoustics.
 
