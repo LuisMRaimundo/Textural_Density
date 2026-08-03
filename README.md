@@ -268,6 +268,7 @@ python run_stress_battery.py
 ```
 
 Writes (gitignored): `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/`.
+Tracked archives: [`reports/STRESS_TEST_REPORT_v1.md`](reports/STRESS_TEST_REPORT_v1.md) (pre D6 hotfix), [`v2.md`](reports/STRESS_TEST_REPORT_v2.md) (post-hotfix).
 Details and scenario map: [`tests/stress/README.md`](tests/stress/README.md).
 Registry smoke: `pytest tests/test_stress_battery_registry.py -q`.
 

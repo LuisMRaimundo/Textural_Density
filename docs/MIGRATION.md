@@ -32,7 +32,7 @@ This document helps users and integrators move from pre-upgrade scripts (flat `d
 | Unified composite (blend × mass) | **Changed (Task 8c)** — `Composite = log10(1 + density.weighted*sqrt(M)/REF)` with `REF=193`; removed pitch-gated product and unpitched-only fallback; baselines re-frozen (`CHANGES.md`) |
 | Composite header / exclusion labels | **Display-only (PR #35)** — formula string from `core.composite`; singular/plural exclusion; **no computed value changed** (`CHANGES.md`) |
 | Density stress battery | **Additive (PR #37)** — `run_stress_battery.py` + `tests/stress/`; public API only; report/CSV/figures gitignored; **no computed value changed** (`CHANGES.md`) |
-| Committed dynamic ladders (no runtime GPR) | **Changed (2026-08-03)** — table lookup only; full 10-level `Results` ladders for violin/viola/cello/dbass/flute/clarinet/bassoon/oboe; unpitched percussion uses pitch-independent `DYNAMIC_CDM`; remaining sparse modules error on missing cells; legacy GPR → `tools/legacy_gpr_dynamic_interpolation.py` (`CHANGES.md`) |
+| Committed dynamic ladders (no runtime GPR) | **Changed (2026-08-03)** — table lookup only; pitched table-backed modules commit soft→loud monotone 10-level ladders; unpitched percussion uses pitch-independent `DYNAMIC_CDM`; missing cells error; legacy GPR → `tools/legacy_gpr_dynamic_interpolation.py` (`CHANGES.md`) |
 
 **Epistemic note:** All metrics remain score/symbolic outputs. New metadata labels clarify which values are **metadata proxies**, not measured acoustics.
 

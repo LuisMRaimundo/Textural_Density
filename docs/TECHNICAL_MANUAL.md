@@ -829,7 +829,7 @@ mypy core validation --ignore-missing-imports --follow-imports=skip
 python -c "import importlib; importlib.import_module('Main'); print('OK')"
 ```
 
-Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). Artifacts: `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/` (gitignored).
+Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). Working artifacts: `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/` (gitignored). Tracked archives: `reports/STRESS_TEST_REPORT_v1.md` (pre D6 hotfix) and `v2.md` (post-hotfix).
 
 ---
 

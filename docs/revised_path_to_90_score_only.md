@@ -29,7 +29,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 | Benchmark | Synthetic fixture + **5 project-authored excerpts** (`benchmarks/corpus/`); not yet a large licensed corpus |
 | Test suite | **1542 passed / 2 skipped / 18 xfailed** (2026-07-12; GitHub Actions + CircleCI green on Python 3.10/3.11) |
 | Validation contracts | Interval-density, instrument scaffold, scientific/musicological plausibility, Excel importer tests |
-| Instrument metadata | **Incomplete** — coarse fallbacks common; ordinary-sustain + unpitched-percussion ladders committed; trumpet + techniques still sparse |
+| Instrument metadata | **Incomplete** — coarse fallbacks common; table-backed pitched + unpitched-percussion ladders committed (soft→loud monotone); many registry names still coarse-default |
 | Excel importer | Auxiliary offline tool + empty template on main; runtime does not read `.xlsx` |
 | MusicXML transpose | **Implemented** — `<transpose>` → concert pitch; `excerpt_003`–`004` regression |
 | Rubric estimate | **~89/100** (systematic line; licensed corpus still main gap) |
@@ -57,7 +57,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 - ~~Runtime GPR removed; violin arco full dynamics ladder committed (2026-08-03)~~ ✅
 - ~~Full dynamics ladders: viola, cello, double bass, flute, clarinet, bassoon, oboe (Results)~~ ✅
 - ~~Unpitched percussion pitch-independent committed ladders (former internal_default)~~ ✅
-- [ ] Commit full dynamic ladders for remaining table-backed instruments (trumpet, techniques, …)
+- ~~Monotone pitched ladders (D6 hotfix): trumpet + techniques included~~ ✅
 
 ## Optional only
 

@@ -1,6 +1,6 @@
 # Instrument acoustic source provenance
 
-> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Most registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — full ladders committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, oboe, and unpitched percussion (trumpet / technique modules still migrating). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
+> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Most registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (incl. trumpet and string techniques) and unpitched percussion commit soft→loud monotone 10-level ladders. Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
 
 This document records **external acoustic metadata** embedded in `instrumentos/*.py`
 modules. The analysis pipeline performs **score lookup** into these tables — not
@@ -68,7 +68,8 @@ live audio analysis.
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\METAIS\Trumpet_Zenodo_collections_media.xlsx`
 - **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed
+  (anchors isotonic-clamped + offline `internal_default` rebuild; D6 hotfix).
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Viola (`viola`)
@@ -97,7 +98,7 @@ live audio analysis.
   technique `con_sordino`); **not** Zenodo-measured CDM
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_sordina`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
 
@@ -110,7 +111,7 @@ live audio analysis.
   `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (technique `sul_tasto`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_tasto`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
 
@@ -123,7 +124,7 @@ live audio analysis.
   `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (technique `sul_ponticello`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_ponticello`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
 - **Skipped:** artificial/natural harmonics remain `unavailable` in the source
@@ -154,7 +155,7 @@ live audio analysis.
   `con_sordino`); **not** Zenodo-measured CDM
 - **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
 - **Source technique:** `arco_sordina`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
@@ -167,7 +168,7 @@ live audio analysis.
   `Violin_mf.xlsx` / `Violin_ff.xlsx` (technique `sul_tasto`)
 - **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
 - **Source technique:** `arco_sul_tasto`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
@@ -182,7 +183,7 @@ live audio analysis.
 - **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
 - **Non-anchor dynamics:** require committed ladder cells (runtime GPR removed)
 - **Source technique:** `arco_sul_ponticello`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
@@ -196,7 +197,7 @@ live audio analysis.
   (`All_Results.estimate_mean`, technique `artificial_harmonic`)
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_artificial_harmonic`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_harmonic_modules_from_xlsx.py`
 
@@ -209,7 +210,7 @@ live audio analysis.
   (`All_Results.estimate_mean`, technique `natural_harmonic`)
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_natural_harmonic`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_harmonic_modules_from_xlsx.py`
 
@@ -232,7 +233,7 @@ live audio analysis.
   technique `con_sordino`); **not** Zenodo-measured CDM
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_sordina`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
 
@@ -245,7 +246,7 @@ live audio analysis.
   `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (technique `sul_tasto`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_tasto`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
 
@@ -258,7 +259,7 @@ live audio analysis.
   `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (technique `sul_ponticello`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_ponticello`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
 - **Skipped:** artificial/natural harmonics remain `unavailable` in the source
@@ -286,7 +287,7 @@ live audio analysis.
   (`All_Results.estimate_mean`, technique `con_sordino`); **not** Zenodo-measured CDM
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_sordina`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
 
@@ -299,7 +300,7 @@ live audio analysis.
   `Contrabass-pp.xlsx` / `Contrabass_mf.xlsx` / `Contrabass_ff.xlsx` (technique `sul_tasto`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_tasto`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
 
@@ -313,7 +314,7 @@ live audio analysis.
   (technique `sul_ponticello`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_ponticello`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
 - **Skipped:** artificial/natural harmonics remain `unavailable` in the source
@@ -334,7 +335,7 @@ Offline curation pipeline (not used at runtime):
 9. `tools/generate_violin_arco_full_dynamics_from_xlsx.py` — violin arco `Results` ladder regenerator.
 10. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
-**Violin harmonics:** `violin_art_harm.py` and `violin_nat_harm.py` are regenerated from Strings Techniques Extrapolation harmonic workbooks (pp/mf/ff). Violin/viola/cello/double-bass sordina, sul tasto, and sul ponticello modules are regenerated from STE technique workbooks (assumption-based EWSD; high uncertainty). Non-anchor dynamics on those sparse modules raise `MissingCommittedDynamicError` until full ladders are committed (runtime GPR removed 2026-08-03).
+**Violin harmonics / string techniques:** regenerators still emit STE workbook anchors (pp/mf/ff). After commit, `tools/enforce_pitched_monotone_dynamic_ladders.py` rebuilds full soft→loud 10-level ladders (D6 hotfix, 2026-08-03). Runtime GPR remains removed.
 
 ## Media note-label normalization (PR #14)
 

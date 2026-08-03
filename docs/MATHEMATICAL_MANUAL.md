@@ -473,8 +473,8 @@ These are **implementation correctness checks**, not empirical validation:
 | Extensive composite (5.0.0) | Adding a distinct note does not decrease composite vertical density (`density.total`) or `pitch_structure`; register-isolated bass never lowers the total (`tests/test_extensive_density_monotonic.py`) |
 | Player mass | Orchestral mass increases linearly with Qty; pressure-equivalent instrument density scales as RSS; interval/pitch-structure unchanged |
 | Qty vs pitch structure | Qty does not increase pitch polyphony, interval pairs, or spectral entropy for unison doublings |
-| Dynamic monotonicity | One-player density is positive; soft/loud tails are monotone into measured support; full `pppp→ffff` monotone except measured/interior humps left untouched (§F.1); `tests/test_adaptive_dynamic_tails.py` |
-| Tail saturation | Register-adaptive log-domain tails with local $s(m)$ from measured pp/mf/ff and geometric shrink $\gamma=0.5$; whole tail ≤ one measured step; per-event warning records $s(m)$, $\gamma$, value (§F.1) |
+| Dynamic monotonicity | One-player density is positive; committed pitched ladders are soft→loud monotone `pppp→ffff` (§F.1; D6 hotfix); `tests/test_pitched_dynamic_monotone_ladders.py` |
+| Tail saturation (historical) | Pre-2026-08-03 runtime adaptive tails retired; offline rebuild uses legacy `internal_default` path only when regenerating committed ladders (§F.1) |
 | Row-splitting | One row Qty=N ≡ N identical rows Qty=1 for mass and pressure-equivalent density |
 | Duplicate events | Duplicated pitch rows increase player/event counts; pitch structure uses aggregated bins |
 

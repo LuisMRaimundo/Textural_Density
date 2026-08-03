@@ -46,7 +46,7 @@ These describe **scientific scope**, not Python package semver:
 
 **Density stress battery (2026-08-03, PR #37, still under `5.1.0-strict-symbolic`):** Analysis-only public-API suite (`run_stress_battery.py`, `tests/stress/`). **No numeric / schema change** — see [`CHANGES.md`](../CHANGES.md) “Density stress battery”.
 
-**Committed dynamic ladders (2026-08-03, still under `5.1.0-strict-symbolic`):** Runtime GPR / adaptive-tail extrapolation removed. Full 10-dynamic ladders committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, oboe (`Results`), and unpitched percussion (pitch-independent `DYNAMIC_CDM` from former `internal_default`). Schema label unchanged — see [`CHANGES.md`](../CHANGES.md).
+**Committed dynamic ladders (2026-08-03, still under `5.1.0-strict-symbolic`):** Runtime GPR / adaptive-tail extrapolation removed. Table-backed pitched modules commit soft→loud monotone 10-dynamic ladders; unpitched percussion uses pitch-independent `DYNAMIC_CDM`. Schema label unchanged — see [`CHANGES.md`](../CHANGES.md) (incl. stress D6 hotfix).
 
 Outputs embed `metric_schema_version` (currently **`5.1.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.4`.
 
