@@ -31,6 +31,7 @@ This document helps users and integrators move from pre-upgrade scripts (flat `d
 | Unpitched aggregation contract | **Additive (PR #31)** — Event/Player Count + texture players/CDM include unpitched; pitch polyphony pitched-only |
 | Unified composite (blend × mass) | **Changed (Task 8c)** — `Composite = log10(1 + density.weighted*sqrt(M)/REF)` with `REF=193`; removed pitch-gated product and unpitched-only fallback; baselines re-frozen (`CHANGES.md`) |
 | Composite header / exclusion labels | **Display-only (PR #35)** — formula string from `core.composite`; singular/plural exclusion; **no computed value changed** (`CHANGES.md`) |
+| Density stress battery | **Additive (PR #37)** — `run_stress_battery.py` + `tests/stress/`; public API only; report/CSV/figures gitignored; **no computed value changed** (`CHANGES.md`) |
 
 **Epistemic note:** All metrics remain score/symbolic outputs. New metadata labels clarify which values are **metadata proxies**, not measured acoustics.
 

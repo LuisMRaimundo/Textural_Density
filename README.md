@@ -26,6 +26,8 @@
 
 **Labels / docs (2026-08-03, PR #35):** Numerical Results header is generated from `core.composite` (same expression as the computation) and prints `D_blend=` / `M=`; unpitched exclusion uses correct singular/plural. **No computed value changed.** Acceptance freeze: `tests/test_composite_unification_acceptance.py`.
 
+**Stress battery (2026-08-03, PR #37):** Public-API density stress suite (`python run_stress_battery.py`). **No computed value changed.** See [Testing](#testing) and [`tests/stress/README.md`](tests/stress/README.md).
+
 ---
 
 ## Overview
@@ -237,9 +239,6 @@ print(f"Input pitches only: {len(pitches)} notes")
 
 ```bash
 # Run all tests (non-slow; skips coverage gate when addopts cleared)
-# Stress battery (public API; writes STRESS_TEST_REPORT.md + CSV + figures)
-python run_stress_battery.py
-
 pytest tests/ -q --no-cov -m "not slow" -o addopts=
 
 # Run with coverage (default pytest.ini gates)
@@ -255,6 +254,20 @@ pytest tests/test_string_module_contracts.py tests/test_string_source_reproducib
 # Media note-label normalization (PR #14)
 pytest tests/test_notes.py -q
 ```
+
+### Density stress battery (PR #37)
+
+Public-API analysis suite (does **not** change production formulas). Builds controlled
+orchestras via `AnalysisRequest` / `core.calculate_metrics` only.
+
+```bash
+python run_stress_battery.py
+# Optional: python run_stress_battery.py --e1-trials 200 --seed 20260803
+```
+
+Writes (gitignored): `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/`.
+Details and scenario map: [`tests/stress/README.md`](tests/stress/README.md).
+Registry smoke: `pytest tests/test_stress_battery_registry.py -q`.
 
 ### Test Coverage
 
