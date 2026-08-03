@@ -191,7 +191,19 @@ def calculate_metrics(
     harm_rat = calculate_harmonic_ratio(bin_midis, bin_weights_spectral)
     spectral_entropy = float(comp_dict.get("spectral_entropy", 0))
 
-    texture = calculate_texture_density(bin_midis, bin_players)
+    full_event_count = len(notas)
+    full_player_count = int(sum(max(1, int(n)) for n in numeros_instr))
+    pitched_event_count = len(pitched_notas)
+    unpitched_event_count = int(full_event_count - pitched_event_count)
+
+    # Texture: polyphony/variability/contrast from pitched bins; players +
+    # average CDM from the full slice (pitched + unpitched).
+    texture = calculate_texture_density(
+        bin_midis,
+        bin_players,
+        all_player_counts=numeros_instr,
+        all_densities=one_player_densities,
+    )
     timbre = calculate_timbre_blend(instrumentos, one_player_densities)
     orch = calculate_orchestration_balance(bin_midis, bin_weights_spectral, instrumentos)
 
@@ -221,19 +233,34 @@ def calculate_metrics(
         MAX_DENS_GLOBAL,
         apply_log_compression=USE_LOG_COMPRESSION,
     )
+    # Unpitched-only slices have no pitch structure; composite equals the
+    # documented weighted-orchestral term (min-max DI against DI_max=100).
+    composite_mode = "pitch_mass_log"
+    if pitched_event_count == 0 and full_event_count > 0:
+        densidade_total_val = float(weighted_orchestral)
+        densidade_total_pre_log = float(weighted_orchestral)
+        composite_mode = "weighted_orchestral_unpitched_only"
 
     mass_boost = float(np.sqrt(max(0.0, massa_sonora_val)))
     complexity_factor = 1.0 + float(np.log1p(spectral_entropy))
 
     # Pitch-structure absolute density counts pitched events only (unpitched
     # note keys are lookup metadata and do not enlarge the pitch set).
-    total_tones_count = len(pitched_notas)
+    total_tones_count = pitched_event_count
     if pitch_agg.distinct_pitch_count < 2:
         densidade_absoluta_val = 0.0
     else:
         densidade_absoluta_val = densidade_ponderada_val * np.log1p(total_tones_count)
 
     pitch_aggregation_dict = pitch_agg.to_dict()
+    # Event/Player Count = full slice (pitched + unpitched). Pitch-structure
+    # fields (distinct bins, doublings, polyphony) remain pitched-only.
+    pitch_aggregation_dict["event_count"] = int(full_event_count)
+    pitch_aggregation_dict["player_count"] = int(full_player_count)
+    pitch_aggregation_dict["total_player_count"] = int(full_player_count)
+    pitch_aggregation_dict["pitched_event_count"] = int(pitched_event_count)
+    pitch_aggregation_dict["unpitched_event_count"] = int(unpitched_event_count)
+    pitch_aggregation_dict["pitched_player_count"] = int(pitch_agg.total_player_count)
     pitch_aggregation_dict["source_groups"] = [s.to_dict() for s in aggregated_sources]
     pitch_aggregation_dict["instrument_lookup_trace"] = instrument_lookup_trace
     resultados = _assemble_results(
@@ -259,8 +286,13 @@ def calculate_metrics(
     )
     resultados["density"]["weighted_pitch"] = float(weighted_pitch)
     resultados["density"]["weighted_orchestral"] = float(weighted_orchestral)
+    resultados["composite_meta"] = {
+        "mode": composite_mode,
+        "normalization_ref": float(MAX_DENS_GLOBAL),
+        "use_log_compression": bool(USE_LOG_COMPRESSION),
+    }
     resultados["quantity_scaling"] = quantity_scaling_metadata(
-        player_count=int(pitch_agg.total_player_count)
+        player_count=int(full_player_count)
     )
 
     try:

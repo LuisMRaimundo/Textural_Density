@@ -103,10 +103,14 @@ def compute_composite_vertical_density(
     apply_log_compression: bool = USE_LOG_COMPRESSION,
 ) -> tuple[float, float]:
     """
-    Composite vertical density = pitch_structure × mass boost.
+    Composite vertical density = pitch_structure × mass boost / MAX_DENS_GLOBAL.
 
-    Mass boost cannot alone produce high vertical pitch-structure density when
-    ``pitch_structure_density`` is zero (exact unison case).
+    ``max_dens_global`` is the fixed reference divisor (config ``MAX_DENS_GLOBAL``,
+    currently 575) — not an unintended qty/table-size factor. Optional
+    ``log10(1+x)`` compression follows. Mass boost cannot alone produce high
+    vertical pitch-structure density when ``pitch_structure_density`` is zero
+    (exact pitched unison). Unpitched-only slices bypass this helper in the
+    pipeline and use the weighted-orchestral term instead.
     """
     mass_boost = float(np.sqrt(max(0.0, sonic_mass)))
     pre_log = pitch_structure_density * mass_boost / float(max_dens_global)

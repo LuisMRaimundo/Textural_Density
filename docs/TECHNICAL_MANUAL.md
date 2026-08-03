@@ -264,13 +264,16 @@ Implemented in `calcular_densidade_ponderada_normalizada(DI, DV, ...)` with DI =
 ### 3.5 Pitch-structure and composite vertical density
 
 - **Pitch-structure density** (`density.pitch_structure`, alias `density.refined`):
-  Zero when `distinct_pitch_count < 2`. Otherwise:
-  $$D_{\mathrm{pitch}} = D_{\mathrm{int}}^{\mathrm{norm}} \cdot \frac{1}{1 + A_{\mathrm{st}}/12} \cdot (1 + \ln(1+H)) \cdot (1 - 0.15 \cdot r_{\mathrm{harm}}),$$
-  where $H$ is spectral entropy and $r_{\mathrm{harm}}$ is harmonic ratio — both computed over **distinct pitch bins** with mean weight per bin.
+  Zero when `distinct_pitch_count < 2`. Otherwise (extensive form; see `MATHEMATICAL_MANUAL` §H):
+  $$D_{\mathrm{pitch}} = S \cdot (1 + \ln(1+H)) \cdot (1 - 0.15 \cdot r_{\mathrm{harm}}),$$
+  where $S$ is the raw pairwise interval sum, $H$ is spectral entropy and $r_{\mathrm{harm}}$ is harmonic ratio — both over **distinct pitched bins**.
 
-- **Composite vertical density:**
-  $$D_{\mathrm{total}} = \log_{10}\!\left(1 + \frac{D_{\mathrm{pitch}} \cdot \sqrt{M_{\mathrm{sonic}}}}{D_{\max}}\right)$$
-  (when log compression enabled). Sonic mass $M_{\mathrm{sonic}}$ remains event-based; it cannot alone make exact unison the highest vertical-density case.
+- **Composite vertical density (pitched path):**
+  $$D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{pitch}} \cdot \sqrt{M_{\mathrm{sonic}}}}{D_{\max}}, \qquad
+  D_{\mathrm{total}} = \log_{10}(1 + D_{\mathrm{total}}^{\mathrm{raw}})$$
+  when `USE_LOG_COMPRESSION` is true. The divisor $D_{\max}$ = `MAX_DENS_GLOBAL` (**575**) is a **fixed reference range** chosen so typical display values stay in a stable band after the extensive-$S$ recalibration — **not** a division by Qty or table size. The results header prints `Composite normalized to [MAX_DENS_GLOBAL=575]`.
+
+- **Unpitched-only fallback:** when the slice has **no pitched events**, $D_{\mathrm{pitch}}=0$ by construction; composite equals the **weighted orchestral** term $10 \cdot w \cdot D_{\mathrm{inst}}/D_{\mathrm{inst,max}}$ (`DI_max=100`) so mass-only textures are strictly $> 0$. Header notes the fallback.
 
 ### 3.6 Sonic mass and dynamic boost
 
@@ -362,12 +365,12 @@ $$C_{\mathrm{comp}} = 1 + \ln(1 + H).$$
 
 ### 3.14 Texture metrics (summary)
 
-Implemented in `calculate_texture_density(pitches, instruments_counts)`.
+Implemented in `calculate_texture_density(...)`. See the **unpitched aggregation contract** table in §7.5.1 for which inputs include unpitched events.
 
-- **Average texture density:** $\sum_i n_{\mathrm{instr},i}$.
-- **Texture polyphony:** $\frac{1}{n}\sum_i n_{\mathrm{instr},i}$ (mean instruments per note).
-- **Texture variability:** standard deviation of $m_i$ (semitons).
-- **Texture contrast:** $\max_i m_i - \min_i m_i$ (semitons).
+- **Player count / player-weighted texture mass:** $\sum n_j$ over the **full slice** (pitched + unpitched Qty).
+- **Average texture density:** Qty-weighted mean of one-player CDM values over the **full slice** (includes unpitched CDM).
+- **Texture / pitch polyphony:** distinct **pitched** bins only.
+- **Texture variability / contrast:** std / range of pitched-bin MIDI only.
 
 ### 3.15 Lambda calibration
 
@@ -477,12 +480,12 @@ Calling `from core import calculate_metrics` (preferred) or `AnalysisController.
 
 | Label | Meaning |
 |-------|---------|
-| Event count | Number of notated input rows |
-| Player count | Sum of Qty |
-| Pitch polyphony | Distinct simultaneous pitch bins |
-| Player doubling count | Player count − distinct pitch count |
-| Instrument density | Pressure-equivalent RSS proxy |
-| Sonic / orchestral mass | Linear sum(qty × one-player density) |
+| Event count | Number of notated input rows (**pitched + unpitched**) |
+| Player count | Sum of Qty (**pitched + unpitched**) |
+| Pitch polyphony | Distinct simultaneous **pitched** bins |
+| Event / player doubling | Pitched-only extras beyond distinct pitched bins |
+| Instrument density | Pressure-equivalent RSS proxy (includes unpitched) |
+| Sonic / orchestral mass | Linear sum(qty × one-player density) (includes unpitched) |
 
 ### 4.4 Example numerical ranges (orientation only)
 
@@ -677,7 +680,27 @@ Helpers (same module): `canonical_unpitched_note`, `normalize_unpitched_entry_no
 
 **Skip-with-warning policy:** unmappable unpitched MusicXML or MIDI events are omitted from the event list and logged; the loader never invents a pitched instrument or sounding pitch as a fallback.
 
-Tests: `tests/test_unpitched_entry_paths.py`, `tests/test_unpitched_pitch_exclusion.py`.
+#### 7.5.1 Unpitched aggregation contract
+
+Pitch-structure **exclusion** of note keys remains solely in `partition_pitched_events`. Counts, texture, and mass use the decisions below (implement from this table — do not re-filter in the GUI).
+
+| Metric / field | Includes unpitched? | Notes |
+|----------------|---------------------|-------|
+| Event Count / Player Count | **Yes** | Full-slice rows / Qty sum (mixed test: 4/4, not 2/2) |
+| Distinct Pitch Count / Pitch Polyphony | **No** | Pitched bins only |
+| Event / Player Doubling Count | **No** | Pitched extras only |
+| Interval / pitch-structure / spectral / registral | **No** | Pitched bins only |
+| Sonic mass / instrument RSS / weighted orchestral | **Yes** | Full slice |
+| Texture `player_count`, `player_weighted_texture_mass` | **Yes** | Full-slice Qty |
+| Texture `average_texture_density` | **Yes** | Qty-weighted mean CDM (includes unpitched) |
+| Texture `texture_polyphony` / variability / contrast | **No** | Pitch concepts |
+| Composite (pitched path) | Mass **yes**, $D_{\mathrm{pitch}}$ **no** | $D_{\mathrm{pitch}}\sqrt{M}/575$ then optional $\log_{10}(1+x)$ |
+| Composite (unpitched-only) | **Yes** | Equals weighted orchestral; strictly $> 0$ |
+
+Display: when `unpitched_event_count > 0`, the PITCH STRUCTURE block prints  
+`N unpitched events excluded from pitch metrics by type (see ORCHESTRAL MASS / TEXTURE)`.
+
+Tests: `tests/test_unpitched_entry_paths.py`, `tests/test_unpitched_pitch_exclusion.py`, `tests/test_unpitched_aggregation_contract.py`.
 
 ---
 

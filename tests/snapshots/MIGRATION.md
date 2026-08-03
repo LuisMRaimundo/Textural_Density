@@ -54,3 +54,14 @@ doublings.
 - Texture: `pitch_polyphony` = distinct pitch count (not mean Qty)
 
 **Refresh:** all frozen outputs, benchmarks, regression baseline, metadata snapshots.
+
+## 2026-08-03 — Unpitched aggregation contract (Task 8b)
+
+**Contract (intentional):** Event/Player Count and texture player/CDM averages
+include unpitched events; pitch polyphony / interval / spectral remain pitched-only.
+Composite still uses `MAX_DENS_GLOBAL=575` (fixed reference, then optional
+`log10(1+x)`); unpitched-only slices fall back to the weighted orchestral term.
+
+**Numeric triad density values unchanged.** Composite mode/ref live under
+`resultados["composite_meta"]` (not inside `density`) so finite-output gates
+remain numeric-only.

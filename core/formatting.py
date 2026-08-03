@@ -9,6 +9,8 @@ from typing import Any
 
 import numpy as np
 
+from config import MAX_DENS_GLOBAL, USE_LOG_COMPRESSION
+
 logger = logging.getLogger(__name__)
 
 
@@ -27,6 +29,7 @@ def format_output_string(resultados: dict[str, Any]) -> str:
         event_doubling = int(agg.get("event_doubling_count", agg.get("doubling_count", 0)))
         player_doubling = int(agg.get("player_doubling_count", 0))
         total_players = int(agg.get("player_count", agg.get("total_player_count", event_count)))
+        unpitched_events = int(agg.get("unpitched_event_count", 0))
         has_pitch_structure = distinct_pitch >= 2
 
         pitch_structure_val = float(dens.get("pitch_structure", dens.get("refined", 0)))
@@ -35,13 +38,29 @@ def format_output_string(resultados: dict[str, Any]) -> str:
         instrument_sum = float(dens["instrument"])
         weighted_pitch = float(dens.get("weighted_pitch", 0))
         weighted_orch = float(dens.get("weighted_orchestral", dens.get("weighted", 0)))
+        composite_meta = resultados.get("composite_meta") or {}
+        composite_ref = float(composite_meta.get("normalization_ref", MAX_DENS_GLOBAL))
+        composite_mode = str(composite_meta.get("mode", "pitch_mass_log"))
 
         moments = resultados["spectral_moments"]
         spectral_entropy = max(0.0, float(moments.get("spectral_entropy", 0)))
         complexity = max(0.0, float(resultados["additional_metrics"].get("complexity", 0)))
 
+        if composite_mode == "weighted_orchestral_unpitched_only":
+            composite_norm_line = (
+                f"Composite normalized to [weighted orchestral; DI_max=100] "
+                f"(unpitched-only fallback; ref MAX_DENS_GLOBAL={composite_ref:g} unused)"
+            )
+        else:
+            log_note = "; then log10(1+x)" if USE_LOG_COMPRESSION else ""
+            composite_norm_line = (
+                f"Composite normalized to [MAX_DENS_GLOBAL={composite_ref:g}] "
+                f"(D_pitch × √M / {composite_ref:g}{log_note})"
+            )
+
         lines = [
             "==================== PITCH STRUCTURE ====================",
+            composite_norm_line,
             f"Event Count: {event_count}",
             f"Player Count: {total_players}",
             f"Distinct Pitch Count: {distinct_pitch}",
@@ -49,6 +68,11 @@ def format_output_string(resultados: dict[str, Any]) -> str:
             f"Event Doubling Count: {event_doubling}",
             f"Player Doubling Count: {player_doubling}",
         ]
+        if unpitched_events > 0:
+            lines.append(
+                f"{unpitched_events} unpitched events excluded from pitch metrics by "
+                "type (see ORCHESTRAL MASS / TEXTURE)"
+            )
         if not has_pitch_structure:
             lines.append(
                 "Note: unison / single pitch — no vertical pitch-structure diversity."
