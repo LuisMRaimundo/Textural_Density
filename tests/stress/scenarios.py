@@ -251,11 +251,11 @@ def build_scenarios() -> list[SliceSpec]:
 
     out.append(
         _s(
-            "C2_quartet_plus_tamtam_ffff",
+            "C2_quartet_plus_tamtam_ff",
             "C",
-            "Compression probe: quartet + Tam-tam ffff",
+            "Compression probe: quartet + Tam-tam ff",
             quartet_notes + (perc_notes["Tam-tam"],),
-            quartet_dyns + ("ffff",),
+            quartet_dyns + ("ff",),
             quartet_insts + ("Tam-tam",),
         )
     )
@@ -263,8 +263,8 @@ def build_scenarios() -> list[SliceSpec]:
         _s(
             "C2_quintet_fifth_string",
             "C",
-            "Compression probe: quintet (add Double bass C2) instead of percussion",
-            quartet_notes + ("C2",),
+            "Compression probe: quintet (add Double bass A1, in-range) instead of percussion",
+            quartet_notes + ("A1",),
             quartet_dyns + ("ff",),
             quartet_insts + ("Double bass",),
         )

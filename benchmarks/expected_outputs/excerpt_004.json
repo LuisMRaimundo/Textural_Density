@@ -14,11 +14,19 @@
           "dynamic": "mf",
           "event_id": "evt_0",
           "instrument": "Clarinete",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "clarinet",
           "note": "A#3",
           "one_player_density": 20.7403532,
           "resolved_profile_id": "clarinete",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            50,
+            96
+          ]
         },
         {
           "audit_flag": null,
@@ -27,11 +35,19 @@
           "dynamic": "mf",
           "event_id": "evt_1",
           "instrument": "Clarinete",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "clarinet",
           "note": "C4",
           "one_player_density": 17.5257568,
           "resolved_profile_id": "clarinete",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            50,
+            96
+          ]
         },
         {
           "audit_flag": null,
@@ -40,11 +56,19 @@
           "dynamic": "mf",
           "event_id": "evt_2",
           "instrument": "Clarinete",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "clarinet",
           "note": "D4",
           "one_player_density": 17.3891667,
           "resolved_profile_id": "clarinete",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            50,
+            96
+          ]
         },
         {
           "audit_flag": null,
@@ -53,11 +77,19 @@
           "dynamic": "mf",
           "event_id": "evt_3",
           "instrument": "Clarinete",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "clarinet",
           "note": "D#4",
           "one_player_density": 14.6281418,
           "resolved_profile_id": "clarinete",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            50,
+            96
+          ]
         },
         {
           "audit_flag": null,
@@ -66,11 +98,19 @@
           "dynamic": "mf",
           "event_id": "evt_4",
           "instrument": "Clarinete",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "clarinet",
           "note": "F4",
           "one_player_density": 12.9824027,
           "resolved_profile_id": "clarinete",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            50,
+            96
+          ]
         }
       ],
       "interval_compactness_distinct": 0.23609954188252116,
@@ -88,11 +128,19 @@
             "dynamic": "mf",
             "event_id": "evt_0",
             "instrument": "Clarinete",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "clarinet",
             "note": "A#3",
             "one_player_density": 20.7403532,
             "resolved_profile_id": "clarinete",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              50,
+              96
+            ]
           },
           {
             "audit_flag": null,
@@ -101,11 +149,19 @@
             "dynamic": "mf",
             "event_id": "evt_1",
             "instrument": "Clarinete",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "clarinet",
             "note": "C4",
             "one_player_density": 17.5257568,
             "resolved_profile_id": "clarinete",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              50,
+              96
+            ]
           },
           {
             "audit_flag": null,
@@ -114,11 +170,19 @@
             "dynamic": "mf",
             "event_id": "evt_2",
             "instrument": "Clarinete",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "clarinet",
             "note": "D4",
             "one_player_density": 17.3891667,
             "resolved_profile_id": "clarinete",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              50,
+              96
+            ]
           },
           {
             "audit_flag": null,
@@ -127,11 +191,19 @@
             "dynamic": "mf",
             "event_id": "evt_3",
             "instrument": "Clarinete",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "clarinet",
             "note": "D#4",
             "one_player_density": 14.6281418,
             "resolved_profile_id": "clarinete",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              50,
+              96
+            ]
           },
           {
             "audit_flag": null,
@@ -140,11 +212,19 @@
             "dynamic": "mf",
             "event_id": "evt_4",
             "instrument": "Clarinete",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "clarinet",
             "note": "F4",
             "one_player_density": 12.9824027,
             "resolved_profile_id": "clarinete",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              50,
+              96
+            ]
           }
         ],
         "interval_pairs_count_distinct": 10,

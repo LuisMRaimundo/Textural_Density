@@ -203,6 +203,15 @@ def collect_slice_warnings(
                     "Input appears to request violin con sordina, but it did not "
                     "resolve to the violin_sordina profile."
                 )
+        note = event.sounding_pitch.note_name or ""
+        if note and not getattr(event, "unpitched", False):
+            from instrumentos.table_coverage import pitch_outside_table_but_in_sounding_range
+
+            gap_warn = pitch_outside_table_but_in_sounding_range(
+                event.instrument_name, note
+            )
+            if gap_warn and gap_warn not in warnings:
+                warnings.append(gap_warn)
 
     if len(vertical_slice.events) < 2:
         warnings.append(

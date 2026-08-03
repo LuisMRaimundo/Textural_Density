@@ -133,7 +133,11 @@ def build_event_arco_reference(
     from instrumentos import get_instrument_module
 
     known = known_dynamics or tuple(DYNAMIC_LEVELS) if DYNAMIC_LEVELS else ANCHOR_DYNAMICS
-    selected_module = get_instrument_module(module_name or "violino")
+    # Coarse / registry-only profiles have module_name=None — never fall through to violin.
+    if not module_name:
+        return None, None, None
+
+    selected_module = get_instrument_module(module_name)
     selected_density = lookup_module_one_player_density(
         selected_module, note, dynamic, known
     )
@@ -168,6 +172,31 @@ def build_event_lookup_trace_row(
         known_dynamics=known_dynamics,
     )
 
+    from instrumentos.table_coverage import (
+        module_table_midi_span,
+        pitch_outside_table_but_in_sounding_range,
+        table_excludes_sounding_range,
+    )
+
+    unpitched = bool(getattr(event, "unpitched", False) or getattr(profile, "unpitched", False))
+    span = module_table_midi_span(module_name) if module_name else None
+    sounding = list(profile.sounding_range) if profile is not None else None
+    coverage = (
+        table_excludes_sounding_range(
+            int(sounding[0]),
+            int(sounding[1]),
+            span,
+            unpitched=unpitched,
+        )
+        if sounding is not None
+        else {}
+    )
+    gap_warn = (
+        None
+        if unpitched or not note
+        else pitch_outside_table_but_in_sounding_range(event.instrument_name, note)
+    )
+
     row: dict[str, Any] = {
         "event_id": event.event_id,
         "note": note,
@@ -179,6 +208,11 @@ def build_event_lookup_trace_row(
         "corresponding_arco_density": arco_density,
         "sordina_arco_ratio": ratio,
         "density_relation_to_arco": relation if module_name == "violin_sordina" else "",
+        "table_span_midi": list(span) if span else None,
+        "table_excludes_sounding_range": coverage.get("table_excludes_sounding_range"),
+        "table_coverage_kind": coverage.get("exclusion_kind"),
+        "labelled_table_fallback": bool(gap_warn),
+        "labelled_table_fallback_warning": gap_warn,
     }
 
     if module_name == "violin_sordina" and ratio is not None and arco_density is not None:

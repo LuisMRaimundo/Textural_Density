@@ -216,11 +216,35 @@ def build_metadata_range_resolution_audit() -> dict[str, Any]:
         }
         if table and pitch_range and (table["min_midi"], table["max_midi"]) != tuple(pitch_range):
             row["documentation_contradictions"].append("INSTRUMENT_SOURCE.pitch_range != spectral_data span")
+        from instrumentos.table_coverage import table_excludes_sounding_range
+
+        coverage = table_excludes_sounding_range(
+            int(lo),
+            int(hi),
+            (table["min_midi"], table["max_midi"]) if table else None,
+            unpitched=bool(getattr(profile, "unpitched", False)),
+        )
+        row.update(coverage)
+        if coverage["table_excludes_sounding_range"] and coverage["exclusion_kind"] == "partial_table":
+            row["range_classification"] = "REVIEW REQUIRED"
+            row["documentation_contradictions"].append(
+                "spectral_data span excludes part of registry sounding_range "
+                f"(missing_low={coverage['missing_low_semitones']}, "
+                f"missing_high={coverage['missing_high_semitones']})"
+            )
         instruments.append(row)
+
+    excluding = [
+        r
+        for r in instruments
+        if r.get("table_excludes_sounding_range") and r.get("exclusion_kind") == "partial_table"
+    ]
 
     return {
         "range_semantics": RANGE_SEMANTICS,
         "instrument_count": len(instruments),
+        "table_excludes_sounding_range_count": len(excluding),
+        "table_excludes_sounding_range_ids": [r["instrument_id"] for r in excluding],
         "instruments": instruments,
         "double_bass_resolution": _double_bass_span_classification(_table_span("double_bass")),
         "tuba_review": _tuba_classification(),

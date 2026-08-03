@@ -165,8 +165,8 @@ def write_report(
         lines.append("")
 
         # Prominent C2 paragraph
-        if fam == "C" and "C2_quartet_plus_tamtam_ffff" in idx:
-            r_tt = idx["C2_quartet_plus_tamtam_ffff"]
+        if fam == "C" and "C2_quartet_plus_tamtam_ff" in idx:
+            r_tt = idx["C2_quartet_plus_tamtam_ff"]
             r_q5 = idx.get("C2_quintet_fifth_string")
             if r_tt.ok and r_q5 and r_q5.ok:
                 t_tt = float(_get(r_tt, "density", "total"))
@@ -174,8 +174,8 @@ def write_report(
                 lines.append("### C2 — Compression probe (prominent)")
                 lines.append("")
                 lines.append(
-                    f"Quartet + Tam-tam ffff composite = **{t_tt:.6f}**; "
-                    f"quintet (fifth string instead) composite = **{t_q5:.6f}**; "
+                    f"Quartet + Tam-tam ff composite = **{t_tt:.6f}**; "
+                    f"quintet (fifth string A1 instead) composite = **{t_q5:.6f}**; "
                     f"difference (tam-tam − quintet) = **{t_tt - t_q5:.6f}**."
                 )
                 lines.append("")

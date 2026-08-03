@@ -183,6 +183,12 @@ def main(argv: list[str] | None = None) -> int:
         elapsed_s=elapsed,
     )
 
+    # Also archive a versioned copy under reports/ when writing to repo root.
+    if out_dir.resolve() == ROOT.resolve():
+        archive = ROOT / "reports" / "STRESS_TEST_REPORT_v2.md"
+        archive.write_text(report_path.read_text(encoding="utf-8"), encoding="utf-8")
+        print(f"Archived: {archive}")
+
     n_pass = sum(1 for a in asserts if a.passed)
     n_fail = sum(1 for a in asserts if not a.passed)
     n_blocker = sum(1 for a in asserts if (not a.passed and a.severity == "blocker"))

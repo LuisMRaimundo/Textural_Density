@@ -192,9 +192,8 @@ Qty does **not** affect pitch-structure metrics (interval pairs, spectral entrop
 |------|-----------|
 | Dynamic present in row | Exact cell value |
 | Dynamic absent | MissingCommittedDynamicError |
-| Violin arco, viola, cello, double bass, flute, clarinet, bassoon, oboe | Full 10-level ladder from Dynamics_predicter sheet `Results` |
+| Pitched table-backed modules (winds, brass, strings, techniques) | Soft→loud monotone 10-level ladders (anchors isotonic-clamped; former `internal_default` log-linear rebuild offline) |
 | Unpitched percussion (`bass_drum`, `cymbals`, `tamtam`, `gong`) | Pitch-independent `DYNAMIC_CDM` (former `internal_default` log-linear ladder) |
-| Other table modules (trumpet, techniques, …) | Still sparse pp/mf/ff until ladders are committed |
 
 Pitch interpolation (MIDI-space linear/PCHIP between chromatic anchors) is unchanged and independent of the dynamic column.
 

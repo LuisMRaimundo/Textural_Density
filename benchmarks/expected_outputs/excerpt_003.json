@@ -14,11 +14,19 @@
           "dynamic": "mf",
           "event_id": "evt_0",
           "instrument": "Flute",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "flute",
           "note": "C4",
           "one_player_density": 25.9547576,
           "resolved_profile_id": "flauta",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            59,
+            98
+          ]
         },
         {
           "audit_flag": null,
@@ -27,11 +35,19 @@
           "dynamic": "mf",
           "event_id": "evt_1",
           "instrument": "Flute",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "flute",
           "note": "E4",
           "one_player_density": 16.4068442,
           "resolved_profile_id": "flauta",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            59,
+            98
+          ]
         },
         {
           "audit_flag": null,
@@ -40,11 +56,16 @@
           "dynamic": "mf",
           "event_id": "evt_2",
           "instrument": "Clarinet in Bb",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": null,
           "note": "A#3",
           "one_player_density": 8.0,
           "resolved_profile_id": "unknown",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": null,
+          "table_excludes_sounding_range": null,
+          "table_span_midi": null
         },
         {
           "audit_flag": null,
@@ -53,11 +74,16 @@
           "dynamic": "mf",
           "event_id": "evt_3",
           "instrument": "Clarinet in Bb",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": null,
           "note": "F4",
           "one_player_density": 8.0,
           "resolved_profile_id": "unknown",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": null,
+          "table_excludes_sounding_range": null,
+          "table_span_midi": null
         }
       ],
       "interval_compactness_distinct": 0.22383396101669067,
@@ -75,11 +101,19 @@
             "dynamic": "mf",
             "event_id": "evt_0",
             "instrument": "Flute",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "flute",
             "note": "C4",
             "one_player_density": 25.9547576,
             "resolved_profile_id": "flauta",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              59,
+              98
+            ]
           },
           {
             "audit_flag": null,
@@ -88,11 +122,19 @@
             "dynamic": "mf",
             "event_id": "evt_1",
             "instrument": "Flute",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "flute",
             "note": "E4",
             "one_player_density": 16.4068442,
             "resolved_profile_id": "flauta",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              59,
+              98
+            ]
           },
           {
             "audit_flag": null,
@@ -101,11 +143,16 @@
             "dynamic": "mf",
             "event_id": "evt_2",
             "instrument": "Clarinet in Bb",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": null,
             "note": "A#3",
             "one_player_density": 8.0,
             "resolved_profile_id": "unknown",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": null,
+            "table_excludes_sounding_range": null,
+            "table_span_midi": null
           },
           {
             "audit_flag": null,
@@ -114,11 +161,16 @@
             "dynamic": "mf",
             "event_id": "evt_3",
             "instrument": "Clarinet in Bb",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": null,
             "note": "F4",
             "one_player_density": 8.0,
             "resolved_profile_id": "unknown",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": null,
+            "table_excludes_sounding_range": null,
+            "table_span_midi": null
           }
         ],
         "interval_pairs_count_distinct": 6,
