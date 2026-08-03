@@ -2,6 +2,25 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-03 — Stress-battery D6 hotfix (data layer)
+
+**Numeric change** on pitched table-backed modules: pp/mf/ff anchors are
+isotonic-clamped soft→loud, then full `DYNAMIC_LEVELS` rebuilt offline with the
+former unpitched `internal_default` log-linear CDM + adaptive tails
+(`tools/enforce_pitched_monotone_dynamic_ladders.py`). Fixes stress assertion
+`D6_ffff_gt_pp` (ffff composite was below pp).
+
+- Contract: `tests/test_pitched_dynamic_monotone_ladders.py`
+- Range audit: explicit `table_excludes_sounding_range` column; labelled
+  `LABELLED_TABLE_FALLBACK` warnings + lookup-trace fields when a note is inside
+  sounding range but outside the table (never silent). Violin [55,103] is
+  aligned; double bass remains E1–C5 / [28,72].
+- C2 probe: Tam-tam **ff** (not ffff); quintet adds Double bass **A1** (in-range).
+- Reports: `reports/STRESS_TEST_REPORT_v1.md` (pre-fix) + `v2` (post-fix);
+  `git_hash()` hardened (reads `git -C` / `.git` refs; no silent `unknown` when readable).
+- Lookup-trace fix: coarse profiles no longer fall through to the violin table.
+- Engine/composite untouched; A–E assertions remain green.
+
 ## 2026-08-03 — Unpitched percussion: pitch-independent committed ladders
 
 **Numeric change for non-anchor dynamics** on `bass_drum` / `cymbals` / `tamtam`

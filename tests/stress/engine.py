@@ -41,15 +41,32 @@ class SliceResult:
 
 
 def git_hash() -> str:
-    try:
-        return (
-            subprocess.check_output(
-                ["git", "rev-parse", "--short", "HEAD"],
-                cwd=ROOT,
+    """Return short HEAD hash; never silently invent values when git works."""
+    attempts = (
+        ["git", "-C", str(ROOT), "rev-parse", "--short", "HEAD"],
+        ["git", "rev-parse", "--short", "HEAD"],
+    )
+    for cmd in attempts:
+        try:
+            out = subprocess.check_output(
+                cmd,
+                cwd=str(ROOT),
                 stderr=subprocess.DEVNULL,
                 text=True,
             ).strip()
-        )
+            if out:
+                return out
+        except Exception:
+            continue
+    # Last resort: read .git/HEAD / ref files without spawning git.
+    try:
+        head = (ROOT / ".git" / "HEAD").read_text(encoding="utf-8").strip()
+        if head.startswith("ref:"):
+            ref = head.split(" ", 1)[1].strip()
+            sha = (ROOT / ".git" / ref).read_text(encoding="utf-8").strip()
+        else:
+            sha = head
+        return sha[:7] if sha else "unknown"
     except Exception:
         return "unknown"
 
@@ -407,7 +424,7 @@ def evaluate_assertions(
             )
 
     # C2 compression probe — documentary (always pass; record values)
-    _tt, _q5 = idx.get("C2_quartet_plus_tamtam_ffff"), idx.get("C2_quintet_fifth_string")
+    _tt, _q5 = idx.get("C2_quartet_plus_tamtam_ff"), idx.get("C2_quintet_fifth_string")
     if _tt and _tt.ok and _q5 and _q5.ok:
         t_tt = float(_get(_tt, "density", "total"))
         t_q5 = float(_get(_q5, "density", "total"))
@@ -415,7 +432,7 @@ def evaluate_assertions(
             "C",
             "C2_compression_probe_documented",
             True,
-            f"quartet+tam-tam_ffff={t_tt:.6g}; quintet={t_q5:.6g}; diff={t_tt - t_q5:.6g}",
+            f"quartet+tam-tam_ff={t_tt:.6g}; quintet={t_q5:.6g}; diff={t_tt - t_q5:.6g}",
             severity="caveat",
         )
 

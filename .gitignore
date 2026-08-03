@@ -5,6 +5,7 @@ htmlcov/
 *.cover
 
 # Stress battery generated outputs (regenerate via run_stress_battery.py)
+# Versioned copies under reports/STRESS_TEST_REPORT_v*.md are tracked.
 STRESS_TEST_REPORT.md
 stress_results.csv
 stress_figures/

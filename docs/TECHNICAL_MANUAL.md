@@ -132,11 +132,10 @@ extrapolation.
 | Missing cell | **Error** (`MissingCommittedDynamicError`) — no runtime fill-in |
 
 **Migration (2026-08-03):** Runtime GPR + adaptive tails removed from production.
-Full Dynamics_predicter `Results` ladders are committed for violin arco, viola,
-cello, double bass, flute, clarinet, bassoon, and oboe. Unpitched percussion
-commits pitch-independent 10-level `DYNAMIC_CDM` ladders (former
-`internal_default` log-linear values). Other modules still sparse (pp/mf/ff
-only) until their ladders are committed. Legacy implementation:
+Pitched table-backed modules commit 10-level ladders that are soft→loud
+monotone (Results / technique anchors isotonic-clamped, then rebuilt with the
+former `internal_default` log-linear + adaptive-tail rule offline). Unpitched
+percussion uses pitch-independent `DYNAMIC_CDM`. Legacy implementation:
 `tools/legacy_gpr_dynamic_interpolation.py`.
 
 **Transferred-anchor modules:** Some technique tables (historically `violin_sul_ponticello`) may commit soft/loud anchors derived by ratio transfer. Violin harmonic modules (`violin_art_harm`, `violin_nat_harm`) commit workbook `pp`/`mf`/`ff` from STE harmonic exports.
@@ -830,7 +829,7 @@ mypy core validation --ignore-missing-imports --follow-imports=skip
 python -c "import importlib; importlib.import_module('Main'); print('OK')"
 ```
 
-Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). Artifacts: `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/` (gitignored).
+Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). Working artifacts: `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/` (gitignored). Tracked archives: `reports/STRESS_TEST_REPORT_v1.md` (pre D6 hotfix) and `v2.md` (post-hotfix).
 
 ---
 

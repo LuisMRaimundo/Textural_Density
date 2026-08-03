@@ -55,14 +55,12 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | `DYNAMIC_LEVELS` | Allowed symbolic markings | `config.py` | Not SPL |
 | Committed ladder cells | Exact `spectral_data` lookup | `instrumentos/*.py` | Must include requested dynamic |
 | Full ordinary-sustain ladders | 10 dynamics from Dynamics_predicter `Results` | `violin`/`viola`/`cello`/`double_bass`/`flute`/`clarinet`/`bassoon`/`oboe` | Non-anchor cells workbook-modelled, not lab-measured |
-| Sparse modules (migration) | Still pp/mf/ff only until ladders committed | trumpet, techniques, … | Missing cell → `MissingCommittedDynamicError` |
+| Monotone pitched ladders (D6) | Soft→loud 10-level ladders for all pitched table-backed modules | trumpet, string techniques/harmonics, … | Anchors isotonic-clamped + offline `internal_default` rebuild |
 | Ordinal weights p…ffff | Symbolic orchestration mass (coarse fallback) | `instrumentos/registry.py` | Not loudness |
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
-| Dynamic monotonicity | **Not assumed** | source tables | CDM may decrease across dynamics |
+| Dynamic monotonicity (committed pitched) | Soft→loud `pppp→ffff` enforced | pitched `spectral_data` modules | See `tests/test_pitched_dynamic_monotone_ladders.py` |
 
-**Production rule (2026-08-03):** no runtime GPR / adaptive-tail fill-in. `calcular_densidade` reads committed cells only. Legacy code: `tools/legacy_gpr_dynamic_interpolation.py`.
-
-**Technique modules:** violin harmonics (`violin_art_harm`, `violin_nat_harm`) and most technique tables still commit sparse pp/mf/ff until full ladders are supplied.
+**Production rule (2026-08-03):** no runtime GPR / adaptive-tail fill-in. `calcular_densidade` reads committed cells only. Legacy code: `tools/legacy_gpr_dynamic_interpolation.py`. Missing cells still raise `MissingCommittedDynamicError` (coarse fallbacks excepted).
 
 ---
 

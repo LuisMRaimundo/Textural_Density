@@ -2,7 +2,7 @@
 
 
 
-> **Metadata status:** The instrument corpus is **incomplete**. Many names resolve to coarse fallbacks; table-backed modules are partial proxies. Full 10-dynamic ladders are committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, oboe, and unpitched percussion; trumpet / technique modules remain sparse until migrated. External acoustic/proxy metadata are curated gradually — not live analysis.
+> **Metadata status:** The instrument corpus is **incomplete**. Many names resolve to coarse fallbacks; table-backed modules are partial proxies. Full soft→loud 10-dynamic ladders are committed for ordinary-sustain winds/strings, trumpet, string technique/harmonic modules, and unpitched percussion (D6 monotone enforcement 2026-08-03). External acoustic/proxy metadata are curated gradually — not live analysis.
 
 
 
@@ -23,7 +23,7 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 |--------|-------|--------|
 
 | `flute.py`, `clarinet.py`, `oboe.py`, `bassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
-| `trumpet.py` | `spectral_data` (sparse pp/mf/ff) | IOWA+ORCH trumpet sustain CDM medians (Zenodo workbook) |
+| `trumpet.py` | `spectral_data` (10 dynamics, monotone) | IOWA+ORCH trumpet sustain CDM medians + D6 ladder rebuild |
 | `violin.py`, `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
 | `violin_sordina.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`con_sordino`; pp from arco ratios) |
 | `violin_sul_tasto.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_tasto`; pp from arco ratios) |
@@ -44,7 +44,7 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 **Technique honesty:** registry `supported_techniques` lists organological capabilities. Modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
 
-**Transferred-anchor / sparse modules:** technique modules (and trumpet) that still commit only pp/mf/ff raise `MissingCommittedDynamicError` for other markings until full ladders are supplied.
+**Technique / trumpet ladders:** STE regenerators still emit pp/mf/ff anchors; `tools/enforce_pitched_monotone_dynamic_ladders.py` then commits full soft→loud 10-level ladders (D6 hotfix).
 
 **Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
 
@@ -118,8 +118,9 @@ Range policy: never collapse to the same pitch class in a distant octave (e.g. D
 
 
 **Committed dynamic ladders:** production looks up exact `spectral_data` cells for
-the requested dynamic. Violin arco already commits all ten `DYNAMIC_LEVELS`;
-other modules are migrating from sparse pp/mf/ff tables. The retired GPR +
+the requested dynamic. Pitched table-backed modules (ordinary-sustain,
+trumpet, string techniques/harmonics) and unpitched percussion commit all ten
+`DYNAMIC_LEVELS` as soft→loud monotone ladders (D6 hotfix). The retired GPR +
 adaptive-tail implementation lives only at
 `tools/legacy_gpr_dynamic_interpolation.py` for historical audits.
 

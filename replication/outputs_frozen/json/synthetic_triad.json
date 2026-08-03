@@ -7,7 +7,7 @@
   "metric_schema_version": "5.1.0-strict-symbolic",
   "config_hash": "28befaebd84264a1eca83123a9c10a0bb99b899892d49cbb8c10a0eea0a3d375",
   "input_hash": "12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8",
-  "timestamp_utc": "2026-08-03T15:46:50.389288+00:00",
+  "timestamp_utc": "2026-08-03T16:00:22.529119+00:00",
   "density": {
     "interval": 0.2137588382139519,
     "instrument": 34.50033721929513,
@@ -635,6 +635,14 @@
           "corresponding_arco_density": 25.9547576,
           "sordina_arco_ratio": 1.0,
           "density_relation_to_arco": "",
+          "table_span_midi": [
+            59,
+            98
+          ],
+          "table_excludes_sounding_range": false,
+          "table_coverage_kind": "full_coverage",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "audit_flag": null
         },
         {
@@ -648,6 +656,14 @@
           "corresponding_arco_density": 16.4068442,
           "sordina_arco_ratio": 1.0,
           "density_relation_to_arco": "",
+          "table_span_midi": [
+            59,
+            98
+          ],
+          "table_excludes_sounding_range": false,
+          "table_coverage_kind": "full_coverage",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "audit_flag": null
         },
         {
@@ -661,6 +677,14 @@
           "corresponding_arco_density": 15.7302031,
           "sordina_arco_ratio": 1.0,
           "density_relation_to_arco": "",
+          "table_span_midi": [
+            59,
+            98
+          ],
+          "table_excludes_sounding_range": false,
+          "table_coverage_kind": "full_coverage",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "audit_flag": null
         }
       ]
@@ -677,6 +701,14 @@
         "corresponding_arco_density": 25.9547576,
         "sordina_arco_ratio": 1.0,
         "density_relation_to_arco": "",
+        "table_span_midi": [
+          59,
+          98
+        ],
+        "table_excludes_sounding_range": false,
+        "table_coverage_kind": "full_coverage",
+        "labelled_table_fallback": false,
+        "labelled_table_fallback_warning": null,
         "audit_flag": null
       },
       {
@@ -690,6 +722,14 @@
         "corresponding_arco_density": 16.4068442,
         "sordina_arco_ratio": 1.0,
         "density_relation_to_arco": "",
+        "table_span_midi": [
+          59,
+          98
+        ],
+        "table_excludes_sounding_range": false,
+        "table_coverage_kind": "full_coverage",
+        "labelled_table_fallback": false,
+        "labelled_table_fallback_warning": null,
         "audit_flag": null
       },
       {
@@ -703,6 +743,14 @@
         "corresponding_arco_density": 15.7302031,
         "sordina_arco_ratio": 1.0,
         "density_relation_to_arco": "",
+        "table_span_midi": [
+          59,
+          98
+        ],
+        "table_excludes_sounding_range": false,
+        "table_coverage_kind": "full_coverage",
+        "labelled_table_fallback": false,
+        "labelled_table_fallback_warning": null,
         "audit_flag": null
       }
     ],

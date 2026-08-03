@@ -28,7 +28,7 @@
 
 **Stress battery (2026-08-03, PR #37):** Public-API density stress suite (`python run_stress_battery.py`). **No computed value changed.** See [Testing](#testing) and [`tests/stress/README.md`](tests/stress/README.md).
 
-**Committed dynamics (2026-08-03):** Runtime GPR / adaptive-tail fill-in removed. Full 10-dynamic ladders committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, oboe, and unpitched percussion (pitch-independent); other modules raise on missing cells until migrated. See [CHANGES.md](CHANGES.md).
+**Committed dynamics (2026-08-03):** Runtime GPR / adaptive-tail fill-in removed. Table-backed pitched modules commit soft→loud monotone 10-dynamic ladders; unpitched percussion uses pitch-independent `DYNAMIC_CDM`. See [CHANGES.md](CHANGES.md).
 
 ---
 
@@ -268,6 +268,7 @@ python run_stress_battery.py
 ```
 
 Writes (gitignored): `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/`.
+Tracked archives: [`reports/STRESS_TEST_REPORT_v1.md`](reports/STRESS_TEST_REPORT_v1.md) (pre D6 hotfix), [`v2.md`](reports/STRESS_TEST_REPORT_v2.md) (post-hotfix).
 Details and scenario map: [`tests/stress/README.md`](tests/stress/README.md).
 Registry smoke: `pytest tests/test_stress_battery_registry.py -q`.
 

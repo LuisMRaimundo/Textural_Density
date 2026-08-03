@@ -43,7 +43,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS,
         "instruments": STRING_INSTS,
         "qtys": (1, 1, 1, 1, 1),
-        "expected_total": 0.12661906980085888,
+        "expected_total": 0.14539596609130592,
     },
     {
         "label": "+bass drum",
@@ -51,7 +51,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff",),
         "instruments": STRING_INSTS + ("Bass drum",),
         "qtys": (1, 1, 1, 1, 1, 1),
-        "expected_total": 0.13617563055300014,
+        "expected_total": 0.15470280022851718,
     },
     {
         "label": "+cymbals",
@@ -59,7 +59,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff", "ff"),
         "instruments": STRING_INSTS + ("Bass drum", "Cymbals"),
         "qtys": (1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.144309926233167,
+        "expected_total": 0.1626384542929687,
     },
     {
         "label": "+flute/oboe ffff",
@@ -67,7 +67,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff", "ff", "ffff", "ffff"),
         "instruments": STRING_INSTS + ("Bass drum", "Cymbals", "Flute", "Oboe"),
         "qtys": (1, 1, 1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.15174930243953405,
+        "expected_total": 0.16891192166269464,
     },
     {
         "label": "+tam-tam ffff",
@@ -76,7 +76,7 @@ SLICES: list[dict] = [
         "instruments": STRING_INSTS
         + ("Bass drum", "Cymbals", "Flute", "Oboe", "Tam-tam"),
         "qtys": (1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.1584380784116263,
+        "expected_total": 0.17546010524716044,
     },
     {
         "label": "Qty expansion 4/5/5/3/10",
@@ -85,7 +85,7 @@ SLICES: list[dict] = [
         "instruments": STRING_INSTS
         + ("Bass drum", "Cymbals", "Flute", "Oboe", "Tam-tam"),
         "qtys": (4, 5, 5, 3, 10, 1, 1, 1, 1, 1),
-        "expected_total": 0.4602863855951273,
+        "expected_total": 0.49621641017932894,
     },
 ]
 

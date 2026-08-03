@@ -65,7 +65,7 @@ CI skips reconstruction when `D:\CORDAS\` workbooks are unavailable on the runne
 1. **Double-bass table span adjudication:** resolved — `source_table_span` E1–C5 aligns with committed module, `INSTRUMENT_SOURCE.pitch_range`, and registry; E1–A3 was obsolete documentation. Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 2. **Technique metadata vs tables:** resolved — `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` distinguish numerical table coverage from registry organological capabilities.
 3. **Tuba range:** MIDI 28–58 is coarse-default validation placeholder — **REVIEW REQUIRED** for authoritative organological range.
-4. **Committed dynamics (2026-08-03):** runtime GPR removed; ordinary-sustain + unpitched-percussion ladders committed; remaining sparse modules (trumpet, techniques) must migrate before non-anchor dynamics are used.
+4. **Committed dynamics (2026-08-03):** runtime GPR removed; all table-backed pitched modules + unpitched percussion commit soft→loud monotone 10-level ladders; coarse-default registry names remain without acoustic tables.
 
 Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now portable doc anchor).
 
@@ -109,7 +109,8 @@ Run: `pytest tests/test_unpitched_aggregation_contract.py tests/test_unified_com
 
 - [x] Entry point `run_stress_battery.py` uses only public API (`AnalysisRequest` / `calculate_metrics`)
 - [x] Families A–E covered (doubling, dynamics, mix/register, extremes, Monte Carlo + determinism)
-- [x] Artifacts: `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/` (gitignored)
+- [x] Artifacts: working `STRESS_TEST_REPORT.md` / CSV / figures (gitignored); tracked `reports/STRESS_TEST_REPORT_v1.md` + `v2.md`
+- [x] D6 hotfix: monotone pitched ladders; C2 Tam-tam ff; git hash populated in report
 - [x] Registry contract: `tests/test_stress_battery_registry.py`
 - [x] Docs: [`tests/stress/README.md`](../tests/stress/README.md), README Testing, CHANGES, TECHNICAL_MANUAL §10
 - [ ] Re-run after formula edits and attach regenerated report to the PR if behaviour shifts
@@ -149,7 +150,7 @@ Tests: `tests/test_quantity_scaling.py`, `tests/test_gui_architecture.py`.
 - [x] `benchmarks/corpus/excerpt_004.musicxml` (transpose persists measure 2) + frozen output
 - [x] `benchmarks/corpus/excerpt_005.musicxml` (multi-instrument dynamics) + frozen output
 - [x] Dynamic docs aligned with committed-ladder lookup; see `docs/TECHNICAL_MANUAL.md` §2.4.1
-- [x] Ordinary-sustain + unpitched-percussion full dynamics tables + `MissingCommittedDynamicError` for sparse modules
+- [x] Table-backed pitched + unpitched-percussion full monotone dynamics tables; `MissingCommittedDynamicError` only for truly missing cells
 - [ ] Global onset reconstruction from MusicXML `<duration>` accumulation (not implemented)
 
 ## Frozen outputs (when formulas change)
