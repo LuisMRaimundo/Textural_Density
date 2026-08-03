@@ -642,6 +642,20 @@ Example: B♭ clarinet part with written C4 in `<pitch>` and `<chromatic>-2</chr
 
 Tests: `tests/test_transposing_instrument_sounding_pitch_contract.py`, `tests/test_xml_loader.py::TestMusicXmlTranspose`; register audit battery: `tests/test_instrument_register_contracts.py`, `tests/test_instrument_transposition_contracts.py`, `tests/test_instrument_alias_registers.py`, `tests/test_musicxml_transposing_instruments.py`. Generate audit artefact: `python tools/audit_transposing_instrument_pitch_contract.py` → `reports/transposing_instrument_pitch_contract_audit.{json,md}`. Benchmarks: `benchmarks/corpus/excerpt_003.musicxml`–`excerpt_004.musicxml` (transpose); see [`benchmarks/README.md`](../benchmarks/README.md).
 
+### 7.5 Unpitched percussion entry paths
+
+Bass drum, Cymbals, Tam-tam, and Gong are **unpitched** (`InstrumentProfile.unpitched` / `InstrumentEvent.unpitched`). Their chromatic note string is a **CDM lookup placeholder only** (registry sounding-range midpoint) — it has **no acoustic meaning** and must not enter pitch-structure metrics. Core exclusion remains `core/unpitched_routing.partition_pitched_events` (single enforcement point).
+
+| Path | Behaviour |
+|------|-----------|
+| **GUI** | Note / octave / cents disabled; dropdown groups the four under `── Unpitched percussion ──`. Adapter injects the canonical placeholder regardless of stale note state. Cents/microtones raise `InputError`. |
+| **MusicXML** | `<unpitched>` maps via part name to a registered unpitched module; display-step/octave are **never** promoted to sounding pitch. Unmappable `<unpitched>` events are **skipped** with a per-event warning (part + measure). |
+| **MIDI** | Channel 10 (0-based index 9): GM keys 35/36 → Bass drum; 49/57 crash → Cymbals; 51/59 ride → Cymbals (approximation warning); 52 Chinese → Cymbals (noted). Unmapped keys are skipped with a warning — never a pitched fallback. |
+
+Canonical placeholders (midpoint of `sounding_range`): Bass drum `D2`, Cymbals `C5`, Tam-tam `C2`, Gong `C3`.
+
+Tests: `tests/test_unpitched_entry_paths.py`, `tests/test_unpitched_pitch_exclusion.py`.
+
 ---
 
 ## 8. Validation and verification
