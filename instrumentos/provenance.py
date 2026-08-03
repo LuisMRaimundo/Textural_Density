@@ -8,6 +8,7 @@ from typing import Literal
 InstrumentSourceType = Literal[
     "external_acoustic_metadata",
     "literature_derived",
+    "model_derived",
     "coarse_default",
 ]
 
@@ -26,3 +27,4 @@ class InstrumentSource:
     version: str
     source_technique: str = "unspecified"
     table_supported_techniques: tuple[str, ...] = ()
+    unpitched: bool = False

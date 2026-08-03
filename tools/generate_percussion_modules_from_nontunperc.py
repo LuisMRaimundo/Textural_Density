@@ -1,24 +1,30 @@
 """
-Generate Textural_Density percussion modules from NonTunPerc Analysis exports.
+Generate Textural_Density percussion modules from NonTunPerc MC Analysis exports.
 
 Primary metrical source
 -----------------------
-``replication/percussion_nontunperc/Analysis/density_profiles.csv``
-(copied from Percussion Tool ``Analysis/``). Strike-phase
-``composite_index`` becomes the **ff** CDM proxy for each specimen.
+``replication/percussion_nontunperc/Analysis/density_profiles_mc.csv``
+p50 band weights → strike/shimmer ``composite_index`` becomes the **ff** CDM
+proxy (NonTunPerc deprecates deterministic point estimates for citation).
+
+Phase choice (perceptually dominant for sustained-texture CDM)
+-------------------------------------------------------------
+- bass_drum → strike
+- cymbals / tamtam / gong → shimmer
 
 Dynamic shape
 -------------
-pp/mf are taken from NonTunPerc ``generate_profile`` with stroke+dynamic
-excitation, then scaled so that **ff exactly equals** the Analysis strike
-composite (plates already match; bass drum is renormalised).
+pp/mf/ff from ``generate_profile(stroke=<orchestral default>, dynamic=…)``,
+scaled so ff equals the MC p50 phase composite. Orchestral defaults:
+``bass_drum_beater`` (membrane), ``yarn_mallet`` (plates / suspended).
 
-Usage (from Textural_Density project root):
+Usage:
   python tools/generate_percussion_modules_from_nontunperc.py
 """
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -26,8 +32,12 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-ANALYSIS_CSV = ROOT / "replication" / "percussion_nontunperc" / "Analysis" / "density_profiles.csv"
+ANALYSIS_DIR = ROOT / "replication" / "percussion_nontunperc" / "Analysis"
+MC_CSV = ANALYSIS_DIR / "density_profiles_mc.csv"
+MC_META = ANALYSIS_DIR / "density_profiles_mc.meta.json"
 NONTUNPERC = Path(r"C:\Users\lmr20\Desktop\Percussion Tool")
+NONTUNPERC_COMMIT = "4a110dbbaab3af831c0987e99a4b7019b008bbd6"
+NONTUNPERC_VERSION = "0.3.5"
 
 sys.path.insert(0, str(NONTUNPERC))
 sys.path.insert(0, str(ROOT))
@@ -45,37 +55,64 @@ SPECS = (
         "module": "bass_drum",
         "display": "Bass drum",
         "specimen": "bassdrum_82cm",
+        "phase": "strike",
         "stroke": "bass_drum_beater",
         "midi_lo": 28,
         "midi_hi": 48,
         "technique": "struck_membrane",
+        "phase_rationale": (
+            "Phase = strike: the transient IS the instrument's density for "
+            "membranophones; sustained-texture CDM still uses the strike "
+            "composite as the proxy."
+        ),
     },
     {
         "module": "cymbals",
         "display": "Cymbals",
         "specimen": "cymbal_46cm_medium",
-        "stroke": "unmarked",
+        "phase": "shimmer",
+        "stroke": "yarn_mallet",
         "midi_lo": 60,
         "midi_hi": 84,
         "technique": "struck_plate",
+        "phase_rationale": (
+            "Phase = shimmer: the CDM proxy feeds sustained-texture analysis; "
+            "the strike window under-represents plates and, combined with the "
+            "excitation filter, artificially collapses pp/mf."
+        ),
     },
     {
         "module": "tamtam",
         "display": "Tam-tam",
         "specimen": "tamtam_80cm_bronze",
-        "stroke": "unmarked",
+        "phase": "shimmer",
+        "stroke": "yarn_mallet",
         "midi_lo": 24,
         "midi_hi": 48,
         "technique": "struck_plate",
+        "phase_rationale": (
+            "Phase = shimmer of the tam-tam template (post-bloom sustained "
+            "regime). The CDM proxy feeds sustained-texture analysis; the "
+            "strike window under-represents plates and, combined with the "
+            "excitation filter, artificially collapses pp/mf."
+        ),
     },
     {
         "module": "gong",
         "display": "Gong",
         "specimen": "gong_50cm_bronze",
+        "phase": "shimmer",
         "stroke": "yarn_mallet",
         "midi_lo": 36,
         "midi_hi": 60,
         "technique": "struck_plate",
+        "phase_rationale": (
+            "Phase = shimmer (tam-tam-template sustained regime for plate "
+            "gongs; wind-gong subtypes share the same post-bloom emphasis). "
+            "The CDM proxy feeds sustained-texture analysis; the strike "
+            "window under-represents plates and, combined with the excitation "
+            "filter, artificially collapses pp/mf."
+        ),
     },
 )
 
@@ -91,15 +128,26 @@ def _composite_index(weights: np.ndarray, modes: np.ndarray) -> float:
     return float(np.exp(entropy) * mean_occ) ** 0.5
 
 
-def analysis_strike_index(specimen: str) -> float:
-    df = pd.read_csv(ANALYSIS_CSV)
+def mc_phase_ci(specimen: str, phase: str) -> dict[str, float]:
+    df = pd.read_csv(MC_CSV)
     g = df[df["instrument"] == specimen]
     if g.empty:
-        raise KeyError(f"{specimen} missing from {ANALYSIS_CSV}")
-    return _composite_index(
-        g["energy_w_strike"].fillna(0.0).to_numpy(),
-        g["modes_per_band"].to_numpy(),
-    )
+        raise KeyError(f"{specimen} missing from {MC_CSV}")
+    col = f"energy_w_{phase}"
+    out = {}
+    for label in ("p05", "p50", "p95"):
+        w = g[f"{col}_{label}"].fillna(0.0).to_numpy()
+        m = g[f"modes_per_band_{label}"].fillna(0.0).to_numpy()
+        out[label] = round(_composite_index(w, m), 6)
+    return out
+
+
+def _mc_seed(specimen: str) -> int:
+    meta = json.loads(MC_META.read_text(encoding="utf-8"))
+    for row in meta.get("results", []):
+        if row.get("instrument") == specimen:
+            return int(row["seed"])
+    return 20260803
 
 
 def _build_instrument(specimen: str):
@@ -118,9 +166,8 @@ def _build_instrument(specimen: str):
     return plates[specimen]
 
 
-def anchors_for(spec: dict) -> dict[str, float]:
-    """ff from Analysis CSV; pp/mf from NonTunPerc scaled to that ff."""
-    analysis_ff = analysis_strike_index(spec["specimen"])
+def anchors_for(spec: dict) -> tuple[dict[str, float], dict[str, float]]:
+    ci = mc_phase_ci(spec["specimen"], spec["phase"])
     amp = AmplitudeLayer.default(NONTUNPERC)
     instr = _build_instrument(spec["specimen"])
     model: dict[str, float] = {}
@@ -132,13 +179,14 @@ def anchors_for(spec: dict) -> dict[str, float]:
             dynamic=dyn,
             csv_path=NONTUNPERC / "data" / "source_constants.csv",
         )
-        model[dyn] = float(profile.composite_index("strike"))
-    scale = (analysis_ff / model["ff"]) if model["ff"] else 1.0
-    return {
+        model[dyn] = float(profile.composite_index(spec["phase"]))
+    scale = (ci["p50"] / model["ff"]) if model["ff"] else 1.0
+    anchors = {
         "pp": round(model["pp"] * scale, 6),
         "mf": round(model["mf"] * scale, 6),
-        "ff": round(analysis_ff, 6),
+        "ff": round(ci["p50"], 6),
     }
+    return anchors, ci
 
 
 def _spectral_block(midi_lo: int, midi_hi: int, anchors: dict[str, float]) -> str:
@@ -152,27 +200,57 @@ def _spectral_block(midi_lo: int, midi_hi: int, anchors: dict[str, float]) -> st
     return "\n".join(lines)
 
 
-def _module_source(spec: dict, anchors: dict[str, float]) -> str:
+def _module_source(
+    spec: dict,
+    anchors: dict[str, float],
+    ci: dict[str, float],
+) -> str:
     spectral = _spectral_block(spec["midi_lo"], spec["midi_hi"], anchors)
+    seed = _mc_seed(spec["specimen"])
+    mf_ff_jump = anchors["ff"] / anchors["mf"] if anchors["mf"] else float("inf")
     citation = (
-        f"NonTunPerc Analysis density_profiles.csv strike composite_index for "
-        f"{spec['specimen']} (ff CDM proxy); pp/mf from NonTunPerc excitation-"
-        f"filtered profiles scaled so ff matches the Analysis metrical export."
+        f"theoretical model output (NonTunPerc v{NONTUNPERC_VERSION}, MC median), "
+        f"anchored in Rossing 2000 / Fletcher & Rossing 1998 / Sivian et al. 1931; "
+        f"validated against Iowa EMS recordings for mallet-excited plates and mf "
+        f"tam-tams; NOT validated for striking-position-specific strokes. "
+        f"Specimen {spec['specimen']} phase={spec['phase']} MC p50 "
+        f"composite_index={ci['p50']} (p05={ci['p05']}, p95={ci['p95']}; "
+        f"seed={seed})."
+    )
+    extraction = (
+        f"density_profiles_mc.csv {spec['phase']} p50 band weights → "
+        f"composite_index (ff); generate_profile(stroke={spec['stroke']!r}, "
+        f"dynamic=pp|mf|ff) {spec['phase']} indices scaled so ff=MC p50; "
+        f"flat chromatic CDM proxy; piecewise log-linear CDM interpolation "
+        f"(internal_default; guarantees monotone pp…ff on cascade jumps). "
+        f"Cross-family ratio caveat: NonTunPerc calibration bridge reports "
+        f"NO CALIBRATION ACHIEVED; CDM comparisons between these four "
+        f"instruments and empirically derived pitched-instrument tables are "
+        f"rank-order indicative only, not ratio-valid."
     )
     return f'''# instrumentos/{spec["module"]}.py
 """
 {spec["display"]} instrument density module.
 
 The ``spectral_data`` table stores sparse Combined Density Metric (CDM)
-proxy values from **NonTunPerc Analysis** metrical exports
-(``replication/percussion_nontunperc/Analysis/density_profiles.csv``).
+proxy values from **NonTunPerc** MC Analysis exports
+(``replication/percussion_nontunperc/Analysis/density_profiles_mc.csv``).
 
-- **ff:** strike-phase ``composite_index`` from Analysis ``density_profiles.csv``
-- **pp/mf:** NonTunPerc excitation-filtered strike indices, scaled so ff
-  matches the Analysis metrical value exactly
+{spec["phase_rationale"]}
 
-Unpitched strokes use a flat chromatic table over the registry nominal MIDI
-sounding range; intermediate dynamics are interpolated via GPR.
+- **ff:** MC p50 ``composite_index`` for phase ``{spec["phase"]}``
+  (p05={ci["p05"]}, p50={ci["p50"]}, p95={ci["p95"]}; seed={seed})
+- **pp/mf:** ``generate_profile(stroke={spec["stroke"]!r}, dynamic=…)``
+  {spec["phase"]} indices, scaled so ff matches MC p50 exactly
+- **mf→ff jump:** ff/mf ≈ {mf_ff_jump:.3f} (physical cascade / ff plate bypass
+  where applicable — retained; interior dynamics use log-CDM piecewise linear
+  interpolation so ``f`` lies between mf and ff)
+- **NonTunPerc:** v{NONTUNPERC_VERSION} commit ``{NONTUNPERC_COMMIT}``
+
+Flat chromatic table: note key is notation-lookup convention only; no acoustic
+meaning (see ``INSTRUMENT_SOURCE.unpitched`` / registry ``unpitched`` flag).
+Intermediate dynamics use piecewise log-linear CDM interpolation
+(``internal_default``; Matérn GPR cannot stay monotone on large mf→ff jumps).
 
 Runtime analysis does not ingest audio; it maps notated pitch + dynamic to
 these pre-loaded acoustic metadata tables.
@@ -181,23 +259,19 @@ these pre-loaded acoustic metadata tables.
 from instrumentos.provenance import InstrumentSource
 
 INSTRUMENT_SOURCE = InstrumentSource(
-    source_type="literature_derived",
+    source_type="model_derived",
     citation=({citation!r}),
     source_url_or_identifier=(
-        "replication/percussion_nontunperc/Analysis/density_profiles.csv"
+        "replication/percussion_nontunperc/Analysis/density_profiles_mc.csv"
     ),
-    extraction_method=(
-        "Analysis density_profiles.csv strike composite_index → ff; "
-        "NonTunPerc generate_profile(stroke,dynamic) strike indices → pp/mf "
-        "with scale so ff matches Analysis; flat chromatic CDM proxy; "
-        "GPR interpolation by pitch/dynamic"
-    ),
+    extraction_method=({extraction!r}),
     dynamic_levels=("pp", "mf", "ff"),
     pitch_range=({spec["midi_lo"]}, {spec["midi_hi"]}),
     uncertainty="high",
-    version="2026-08-03",
+    version="2026-08-03+nontunperc-{NONTUNPERC_VERSION}+mc{seed}",
     source_technique="{spec["technique"]}",
     table_supported_techniques=("{spec["technique"]}",),
+    unpitched=True,
 )
 
 import logging
@@ -206,7 +280,26 @@ from utils.notes import normalize_note_string
 
 logger = logging.getLogger("{spec["module"]}")
 
-# Flat CDM proxy across nominal sounding range (unpitched; note is metadata only).
+# MC composite_index CI for the chosen phase (scale reference; seed={seed}).
+SPECTRAL_PHASE_CI = {{
+    "phase": "{spec["phase"]}",
+    "p05": {ci["p05"]},
+    "p50": {ci["p50"]},
+    "p95": {ci["p95"]},
+    "mc_seed": {seed},
+    "nontunperc_commit": "{NONTUNPERC_COMMIT}",
+    "nontunperc_version": "{NONTUNPERC_VERSION}",
+}}
+
+# Parallel CI dict (same for every note; flat unpitched table).
+spectral_data_ci = {{
+    "p05": {ci["p05"]},
+    "p50": {ci["p50"]},
+    "p95": {ci["p95"]},
+}}
+
+# Flat CDM proxy. Range is notation-lookup convention only; no acoustic meaning
+# (see unpitched flag).
 spectral_data = {{
 {spectral}
 }}
@@ -226,31 +319,32 @@ def calcular_densidade(nota, dinamica):
 
 
 def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
-    """Predict intermediate dynamics using Gaussian Process Regression."""
+    """Predict intermediate dynamics via log-CDM piecewise linear (internal_default)."""
     from instrumentos.gpr_dynamic_interpolation import predict_intermediate_dynamics_gpr
 
     return predict_intermediate_dynamics_gpr(
-        pp_values, mf_values, ff_values, logger=logger
+        pp_values,
+        mf_values,
+        ff_values,
+        logger=logger,
+        log_cdm_space=True,
     )
 '''
 
 
 def main() -> int:
-    if not ANALYSIS_CSV.is_file():
-        print(f"Missing Analysis CSV: {ANALYSIS_CSV}", file=sys.stderr)
+    if not MC_CSV.is_file():
+        print(f"Missing MC CSV: {MC_CSV}", file=sys.stderr)
         return 1
     if not NONTUNPERC.is_dir():
-        print(
-            f"Missing NonTunPerc root (needed for pp/mf shape): {NONTUNPERC}",
-            file=sys.stderr,
-        )
+        print(f"Missing NonTunPerc root: {NONTUNPERC}", file=sys.stderr)
         return 1
     out_dir = ROOT / "instrumentos"
     for spec in SPECS:
-        anchors = anchors_for(spec)
+        anchors, ci = anchors_for(spec)
         path = out_dir / f"{spec['module']}.py"
-        path.write_text(_module_source(spec, anchors), encoding="utf-8")
-        print(f"Wrote {path.name}: {anchors}")
+        path.write_text(_module_source(spec, anchors, ci), encoding="utf-8")
+        print(f"Wrote {path.name}: {anchors}  CI={ci}")
     return 0
 
 

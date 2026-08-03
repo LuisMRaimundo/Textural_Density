@@ -288,31 +288,44 @@ def predict_intermediate_dynamics_gpr(
     ff_values: list[float] | np.ndarray,
     *,
     logger: logging.Logger | None = None,
+    log_cdm_space: bool = False,
 ) -> dict[str, np.ndarray]:
     """
     Predict all modelled dynamics via GPR fitted on pp/mf/ff anchor values.
 
     ``mp`` uses coordinate 4.5 between ``p`` (4.0) and ``mf`` (5.0).
     Out-of-support tails are replaced by the register-adaptive saturating rule.
+
+    When ``log_cdm_space`` is True (``internal_default`` for unpitched modules
+    with large mf→ff cascade jumps), interior levels use piecewise log-linear
+    interpolation between pp/mf/ff anchors (guarantees monotone pp…ff when
+    anchors are monotone). Tails still use the register-adaptive rule.
     """
     log = logger or _LOG
     dynamic_levels = GPR_DYNAMIC_COORDINATES
     all_dynamics = list(dynamic_levels.keys())
-    predictions: dict[str, list[float]] = {dynamic: [] for dynamic in all_dynamics}
-
-    existing_levels = np.array(
-        [dynamic_levels[d] for d in SOURCE_ANCHOR_DYNAMICS], dtype=float
-    ).reshape(-1, 1)
-    all_levels = np.array([dynamic_levels[d] for d in all_dynamics], dtype=float).reshape(
-        -1, 1
-    )
 
     try:
         y_train = np.array([pp_values, mf_values, ff_values], dtype=float).T
         if y_train.size == 0 or np.isnan(y_train).any():
             log.warning("Insufficient or invalid training data for GPR")
             return {d: np.zeros_like(pp_values, dtype=float) for d in all_dynamics}
+        if log_cdm_space and np.any(y_train <= 0.0):
+            log.warning(
+                "log_cdm_space requires strictly positive anchors; falling back to linear CDM"
+            )
+            log_cdm_space = False
 
+        if log_cdm_space:
+            return _predict_log_linear_cdm(pp_values, mf_values, ff_values)
+
+        predictions: dict[str, list[float]] = {dynamic: [] for dynamic in all_dynamics}
+        existing_levels = np.array(
+            [dynamic_levels[d] for d in SOURCE_ANCHOR_DYNAMICS], dtype=float
+        ).reshape(-1, 1)
+        all_levels = np.array(
+            [dynamic_levels[d] for d in all_dynamics], dtype=float
+        ).reshape(-1, 1)
         gpr = create_dynamic_gpr()
 
         for y in y_train:
@@ -326,6 +339,49 @@ def predict_intermediate_dynamics_gpr(
     except Exception as exc:
         log.error("Error predicting intermediate dynamics: %s", exc)
         return {d: np.zeros_like(pp_values, dtype=float) for d in all_dynamics}
+
+
+def _log_lerp(x: float, x0: float, x1: float, y0: float, y1: float) -> float:
+    """Linear interpolation in ln(y) between two positive anchors."""
+    if x1 == x0:
+        return float(y0)
+    t = (x - x0) / (x1 - x0)
+    return float(math.exp((1.0 - t) * math.log(y0) + t * math.log(y1)))
+
+
+def _predict_log_linear_cdm(
+    pp_values: list[float] | np.ndarray,
+    mf_values: list[float] | np.ndarray,
+    ff_values: list[float] | np.ndarray,
+) -> dict[str, np.ndarray]:
+    """Piecewise log-linear CDM interpolation on ordinal dynamic coordinates."""
+    pp_arr = np.asarray(pp_values, dtype=float)
+    mf_arr = np.asarray(mf_values, dtype=float)
+    ff_arr = np.asarray(ff_values, dtype=float)
+    n = pp_arr.shape[0]
+    x_pp = GPR_DYNAMIC_COORDINATES["pp"]
+    x_mf = GPR_DYNAMIC_COORDINATES["mf"]
+    x_ff = GPR_DYNAMIC_COORDINATES["ff"]
+    predictions: dict[str, np.ndarray] = {}
+    for dynamic, x in GPR_DYNAMIC_COORDINATES.items():
+        values = np.empty(n, dtype=float)
+        for i in range(n):
+            a_pp, a_mf, a_ff = float(pp_arr[i]), float(mf_arr[i]), float(ff_arr[i])
+            if dynamic == "pp":
+                values[i] = a_pp
+            elif dynamic == "mf":
+                values[i] = a_mf
+            elif dynamic == "ff":
+                values[i] = a_ff
+            elif x_pp <= x <= x_mf:
+                values[i] = _log_lerp(x, x_pp, x_mf, a_pp, a_mf)
+            elif x_mf < x <= x_ff:
+                values[i] = _log_lerp(x, x_mf, x_ff, a_mf, a_ff)
+            else:
+                # Tail placeholders; replaced by _apply_adaptive_tails.
+                values[i] = a_pp if x < x_pp else a_ff
+        predictions[dynamic] = values
+    return _apply_adaptive_tails(predictions, pp_values, mf_values, ff_values)
 
 
 def _apply_adaptive_tails(

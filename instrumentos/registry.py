@@ -59,6 +59,7 @@ class InstrumentProfile:
     missing_data_warnings: tuple[str, ...] = field(default_factory=tuple)
     module_name: str | None = None
     aliases: tuple[str, ...] = field(default_factory=tuple)
+    unpitched: bool = False
 
 
 def _bands(low: float, mid: float, high: float) -> dict[str, tuple[float, float]]:
@@ -87,6 +88,7 @@ def _profile(
     source_notes: str = "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
     warnings: tuple[str, ...] = ("Spectral density is a coarse fallback without external acoustic metadata.",),
     aliases: tuple[str, ...] = (),
+    unpitched: bool = False,
 ) -> InstrumentProfile:
     low, high = sounding
     mid = low + (high - low) / 3
@@ -111,6 +113,7 @@ def _profile(
         missing_data_warnings=warnings,
         module_name=module_name,
         aliases=aliases,
+        unpitched=unpitched,
     )
 
 
@@ -886,16 +889,17 @@ REGISTRY["bombo"] = _profile(
     status="literature_derived",
     uncertainty="high",
     module_name="bass_drum",
+    unpitched=True,
     supported=("struck", "rolled"),
     unsupported=("damped",),
     source_notes=(
-        "Sparse GPR table in instrumentos/bass_drum.py from NonTunPerc Analysis "
+        "Sparse GPR table in instrumentos/bass_drum.py from NonTunPerc MC p50 "
         "bassdrum_82cm strike composite_index (ff) with scaled pp/mf; unpitched — "
-        "note is nominal MIDI metadata only."
+        "note is notation-lookup convention only."
     ),
     warnings=(
-        "Instrument density uses literature-derived NonTunPerc CDM proxies interpolated by GPR.",
-        "Numerical table covers struck_membrane only; unpitched strokes may lack pitch metadata.",
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_membrane only; note key excluded from pitch-structure metrics.",
     ),
     aliases=("bass_drum", "bass drum"),
 )
@@ -912,16 +916,17 @@ REGISTRY["pratos"] = _profile(
     status="literature_derived",
     uncertainty="high",
     module_name="cymbals",
+    unpitched=True,
     supported=("struck", "rolled"),
     unsupported=("damped",),
     source_notes=(
-        "Sparse GPR table in instrumentos/cymbals.py from NonTunPerc Analysis "
-        "cymbal_46cm_medium strike composite_index (ff) with scaled pp/mf; "
-        "unpitched — note is nominal MIDI metadata only."
+        "Sparse GPR table in instrumentos/cymbals.py from NonTunPerc MC p50 "
+        "cymbal_46cm_medium shimmer composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is notation-lookup convention only."
     ),
     warnings=(
-        "Instrument density uses literature-derived NonTunPerc CDM proxies interpolated by GPR.",
-        "Numerical table covers struck_plate only; unpitched strokes may lack pitch metadata.",
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
     ),
     aliases=("cymbals", "cymbal"),
 )
@@ -938,16 +943,17 @@ REGISTRY["tamtam"] = _profile(
     status="literature_derived",
     uncertainty="high",
     module_name="tamtam",
+    unpitched=True,
     supported=("struck", "rolled"),
     unsupported=("damped",),
     source_notes=(
-        "Sparse GPR table in instrumentos/tamtam.py from NonTunPerc Analysis "
-        "tamtam_80cm_bronze strike composite_index (ff) with scaled pp/mf; "
-        "unpitched — note is nominal MIDI metadata only."
+        "Sparse GPR table in instrumentos/tamtam.py from NonTunPerc MC p50 "
+        "tamtam_80cm_bronze shimmer composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is notation-lookup convention only."
     ),
     warnings=(
-        "Instrument density uses literature-derived NonTunPerc CDM proxies interpolated by GPR.",
-        "Numerical table covers struck_plate only; unpitched strokes may lack pitch metadata.",
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
     ),
     aliases=("tam_tam", "tam-tam", "tam tam"),
 )
@@ -964,16 +970,17 @@ REGISTRY["gongo"] = _profile(
     status="literature_derived",
     uncertainty="high",
     module_name="gong",
+    unpitched=True,
     supported=("struck", "rolled"),
     unsupported=("damped",),
     source_notes=(
-        "Sparse GPR table in instrumentos/gong.py from NonTunPerc Analysis "
-        "gong_50cm_bronze strike composite_index (ff) with scaled pp/mf; "
-        "unpitched — note is nominal MIDI metadata only."
+        "Sparse GPR table in instrumentos/gong.py from NonTunPerc MC p50 "
+        "gong_50cm_bronze shimmer composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is notation-lookup convention only."
     ),
     warnings=(
-        "Instrument density uses literature-derived NonTunPerc CDM proxies interpolated by GPR.",
-        "Numerical table covers struck_plate only; unpitched strokes may lack pitch metadata.",
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
     ),
     aliases=("gong",),
 )

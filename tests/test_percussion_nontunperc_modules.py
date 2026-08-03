@@ -1,4 +1,4 @@
-"""Tests for NonTunPerc Analysis-backed percussion density modules."""
+"""Tests for NonTunPerc MC-backed unpitched percussion density modules."""
 
 from __future__ import annotations
 
@@ -17,43 +17,49 @@ _SPECS = (
         "display": "Bass drum",
         "instrument_id": "bombo",
         "module": "bass_drum",
+        "phase": "strike",
         "aliases": ("Bass drum", "bass_drum", "bombo"),
         "note": "C2",
-        "pp": 2.18772,
-        "mf": 3.703499,
-        "ff": 6.576554,
+        "pp": 7.613906,
+        "mf": 12.889258,
+        "ff": 22.888331,
     },
     {
         "display": "Cymbals",
         "instrument_id": "pratos",
         "module": "cymbals",
+        "phase": "shimmer",
         "aliases": ("Cymbals", "cymbals", "pratos"),
         "note": "C5",
-        "pp": 15.777819,
-        "mf": 22.031373,
-        "ff": 32.559219,
+        "pp": 1.973133,
+        "mf": 2.665803,
+        "ff": 20.729071,
     },
     {
         "display": "Tam-tam",
         "instrument_id": "tamtam",
         "module": "tamtam",
+        "phase": "shimmer",
         "aliases": ("Tam-tam", "tam_tam", "tamtam"),
         "note": "C2",
-        "pp": 4.004706,
-        "mf": 5.525262,
-        "ff": 52.090379,
+        "pp": 3.049788,
+        "mf": 4.096546,
+        "ff": 12.324004,
     },
     {
         "display": "Gong",
         "instrument_id": "gongo",
         "module": "gong",
+        "phase": "shimmer",
         "aliases": ("Gong", "gong", "gongo"),
         "note": "C3",
-        "pp": 1.746191,
-        "mf": 2.437317,
-        "ff": 26.999281,
+        "pp": 1.537666,
+        "mf": 2.10794,
+        "ff": 17.148679,
     },
 )
+
+_INTERIOR = ("pp", "p", "mp", "mf", "f", "ff")
 
 
 @pytest.mark.parametrize("spec", _SPECS, ids=lambda s: s["module"])
@@ -63,7 +69,7 @@ def test_aliases_resolve_to_table_backed_profile(spec):
         assert profile is not None
         assert profile.instrument_id == spec["instrument_id"]
         assert profile.module_name == spec["module"]
-        assert profile.profile_status == "literature_derived"
+        assert profile.unpitched is True
 
 
 @pytest.mark.parametrize("spec", _SPECS, ids=lambda s: s["module"])
@@ -72,20 +78,34 @@ def test_appears_in_gui_instrument_list(spec):
 
 
 @pytest.mark.parametrize("spec", _SPECS, ids=lambda s: s["module"])
-def test_module_contract_and_analysis_anchors(spec):
+def test_module_contract_mc_anchors_and_provenance(spec):
     mod = importlib.import_module(f"instrumentos.{spec['module']}")
-    assert hasattr(mod, "spectral_data")
-    assert hasattr(mod, "calcular_densidade")
-    assert hasattr(mod, "predict_intermediate_dynamics")
-    assert mod.INSTRUMENT_SOURCE.dynamic_levels == ("pp", "mf", "ff")
-    assert "density_profiles.csv" in (mod.INSTRUMENT_SOURCE.source_url_or_identifier or "")
+    src = mod.INSTRUMENT_SOURCE
+    assert src.source_type == "model_derived"
+    assert src.unpitched is True
+    assert "NO CALIBRATION ACHIEVED" in src.extraction_method
+    assert "4a110db" in src.citation or "4a110db" in mod.SPECTRAL_PHASE_CI["nontunperc_commit"]
+    assert mod.SPECTRAL_PHASE_CI["phase"] == spec["phase"]
+    assert "p05" in mod.spectral_data_ci and "p95" in mod.spectral_data_ci
     row = mod.spectral_data[spec["note"]]
     assert row["pp"] == pytest.approx(spec["pp"])
     assert row["mf"] == pytest.approx(spec["mf"])
     assert row["ff"] == pytest.approx(spec["ff"])
-    resolved = get_instrument_module(spec["display"])
-    assert resolved.calcular_densidade(spec["note"], "mf") == pytest.approx(spec["mf"])
-    assert resolved.calcular_densidade(spec["note"], "ff") == pytest.approx(spec["ff"])
+    # Documented physical mf→ff cascade discontinuity retained.
+    assert row["ff"] > row["mf"]
+
+
+@pytest.mark.parametrize("spec", _SPECS, ids=lambda s: s["module"])
+def test_intermediate_dynamics_monotone_and_f_between_mf_ff(spec):
+    mod = get_instrument_module(spec["display"])
+    row = mod.spectral_data[spec["note"]]
+    pred = mod.predict_intermediate_dynamics(
+        [spec["note"]], [row["pp"]], [row["mf"]], [row["ff"]]
+    )
+    vals = [float(pred[d][0]) for d in _INTERIOR]
+    for i in range(len(vals) - 1):
+        assert vals[i] < vals[i + 1], (spec["module"], _INTERIOR[i], vals)
+    assert row["mf"] < vals[_INTERIOR.index("f")] < row["ff"]
 
 
 @pytest.mark.parametrize("spec", _SPECS, ids=lambda s: s["module"])
@@ -103,3 +123,5 @@ def test_calculate_metrics_accepts_display_name(spec):
     trace = resultados["instrument_lookup_trace"][0]
     assert trace["resolved_profile_id"] == spec["instrument_id"]
     assert trace["module_name"] == spec["module"]
+    # Solo unpitched → no pitched bins.
+    assert resultados["pitch_aggregation"]["distinct_pitch_count"] == 0
