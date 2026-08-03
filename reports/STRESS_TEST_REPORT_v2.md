@@ -1,12 +1,12 @@
 # Stress Test Report — Textural Density (v2, post D6 hotfix)
 
 Post-fix archive (monotone pitched ladders; C2 Tam-tam ff + Double bass A1).
-Companion pre-fix archive: `STRESS_TEST_REPORT_v1.md`.
+Companion pre-fix archive: \STRESS_TEST_REPORT_v1.md\.
 
 ## Header
 
 - **Tool version:** 1.1.4
-- **Git hash:** `ceb955c`
+- **Git hash:** `95aab27`
 - **weight_factor (w):** 0.5
 - **REF (`MAX_DENS_GLOBAL`):** 193
 - **Date:** 2026-08-03 16:03 UTC
@@ -14,7 +14,7 @@ Companion pre-fix archive: `STRESS_TEST_REPORT_v1.md`.
 - **E1 trials:** 200
 - **Slices run:** 61
 - **Assertions:** 119 passed / 0 failed / 119 total
-- **Wall time:** 3.8s
+- **Wall time:** 3.4s
 - **CSV:** `stress_results.csv`
 - **E5 determinism (repeat CSV hash):** PASS
 
