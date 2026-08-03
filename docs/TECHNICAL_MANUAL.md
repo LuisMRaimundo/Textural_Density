@@ -133,8 +133,10 @@ extrapolation.
 
 **Migration (2026-08-03):** Runtime GPR + adaptive tails removed from production.
 Full Dynamics_predicter `Results` ladders are committed for violin arco, viola,
-cello, double bass, flute, clarinet, bassoon, and oboe. Other modules still
-sparse (pp/mf/ff only) until their ladders are committed. Legacy implementation:
+cello, double bass, flute, clarinet, bassoon, and oboe. Unpitched percussion
+commits pitch-independent 10-level `DYNAMIC_CDM` ladders (former
+`internal_default` log-linear values). Other modules still sparse (pp/mf/ff
+only) until their ladders are committed. Legacy implementation:
 `tools/legacy_gpr_dynamic_interpolation.py`.
 
 **Transferred-anchor modules:** Some technique tables (historically `violin_sul_ponticello`) may commit soft/loud anchors derived by ratio transfer. Violin harmonic modules (`violin_art_harm`, `violin_nat_harm`) commit workbook `pp`/`mf`/`ff` from STE harmonic exports.
@@ -655,7 +657,7 @@ Tests: `tests/test_transposing_instrument_sounding_pitch_contract.py`, `tests/te
 
 ### 7.5 Unpitched percussion entry paths
 
-Bass drum, Cymbals, Tam-tam, and Gong are **unpitched** (`InstrumentProfile.unpitched` / `InstrumentEvent.unpitched`). Their chromatic note string is a **CDM lookup placeholder only** (registry sounding-range midpoint) — it has **no acoustic meaning** and must not enter pitch-structure metrics.
+Bass drum, Cymbals, Tam-tam, and Gong are **unpitched** (`InstrumentProfile.unpitched` / `InstrumentEvent.unpitched`). Density is pitch-independent (`DYNAMIC_CDM`; `nota` ignored). The chromatic note string on the event is a **placeholder only** (registry sounding-range midpoint) — it has **no acoustic meaning** and must not enter pitch-structure metrics.
 
 **Shared event representation (all entry paths):** `unpitched=True` plus the instrument’s canonical placeholder key. GUI, MusicXML, and MIDI must converge on that shape; they must **not** re-implement pitch-structure exclusion. Exclusion stays solely in `core/unpitched_routing.partition_pitched_events`.
 

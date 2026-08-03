@@ -5,12 +5,9 @@ Documents the six progressive slices used to verify blend×mass unification:
   5 strings ff → +bass drum → +cymbals → +flute/oboe ffff → +tam-tam ffff
   → Qty expansion 4/5/5/3/10 on the strings (others Qty=1).
 
-Goldens are live pipeline totals at w=0.5, REF=193. Display (4 dp) matches the
-validation-session readings for steps 2–5; step 1 displays as 0.1266 (session
-note 0.1265); final displays as 0.4595 (session note 0.4356 was a transcription
-slip — Player Count 32 / Player Doubling 22 match the session).
-
-No computed value is altered by the label/docs release that owns this file.
+Goldens are live pipeline totals at w=0.5, REF=193. Refrozen 2026-08-03 after
+committed flute/oboe `Results` ladders and unpitched-percussion `DYNAMIC_CDM`
+ladders (non-anchor dynamics). Player Count 32 / Player Doubling 22 unchanged.
 """
 
 from __future__ import annotations
@@ -70,7 +67,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff", "ff", "ffff", "ffff"),
         "instruments": STRING_INSTS + ("Bass drum", "Cymbals", "Flute", "Oboe"),
         "qtys": (1, 1, 1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.15022066453198968,
+        "expected_total": 0.15174930243953405,
     },
     {
         "label": "+tam-tam ffff",
@@ -79,7 +76,7 @@ SLICES: list[dict] = [
         "instruments": STRING_INSTS
         + ("Bass drum", "Cymbals", "Flute", "Oboe", "Tam-tam"),
         "qtys": (1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.15693343276793603,
+        "expected_total": 0.1584380784116263,
     },
     {
         "label": "Qty expansion 4/5/5/3/10",
@@ -88,7 +85,7 @@ SLICES: list[dict] = [
         "instruments": STRING_INSTS
         + ("Bass drum", "Cymbals", "Flute", "Oboe", "Tam-tam"),
         "qtys": (4, 5, 5, 3, 10, 1, 1, 1, 1, 1),
-        "expected_total": 0.4595366472931839,
+        "expected_total": 0.4602863855951273,
     },
 ]
 

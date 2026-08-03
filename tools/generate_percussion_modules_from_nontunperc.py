@@ -1,5 +1,5 @@
 """
-Generate Textural_Density percussion modules from NonTunPerc MC Analysis exports.
+Generate Textural_Density unpitched percussion modules from NonTunPerc MC exports.
 
 Primary metrical source
 -----------------------
@@ -15,8 +15,10 @@ Phase choice (perceptually dominant for sustained-texture CDM)
 Dynamic shape
 -------------
 pp/mf/ff from ``generate_profile(stroke=<orchestral default>, dynamic=…)``,
-scaled so ff equals the MC p50 phase composite. Orchestral defaults:
-``bass_drum_beater`` (membrane), ``yarn_mallet`` (plates / suspended).
+scaled so ff equals the MC p50 phase composite. Remaining DYNAMIC_LEVELS are
+**committed offline** via the former ``internal_default`` piecewise log-linear
+CDM + adaptive tails (not runtime GPR). Tables are pitch-independent
+(``DYNAMIC_CDM`` + one canonical placeholder key).
 
 Usage:
   python tools/generate_percussion_modules_from_nontunperc.py
@@ -41,8 +43,13 @@ NONTUNPERC_VERSION = "0.3.5"
 
 sys.path.insert(0, str(NONTUNPERC))
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "tools"))
 
-from microtonal import midi_to_note_name  # noqa: E402
+from core.unpitched_routing import canonical_unpitched_note  # noqa: E402
+from legacy_gpr_dynamic_interpolation import (  # noqa: E402
+    GPR_DYNAMIC_COORDINATES,
+    predict_intermediate_dynamics_gpr,
+)
 from model import (  # noqa: E402
     AmplitudeLayer,
     PlateInstrument,
@@ -189,23 +196,28 @@ def anchors_for(spec: dict) -> tuple[dict[str, float], dict[str, float]]:
     return anchors, ci
 
 
-def _spectral_block(midi_lo: int, midi_hi: int, anchors: dict[str, float]) -> str:
-    lines = []
-    for midi in range(midi_lo, midi_hi + 1):
-        note = midi_to_note_name(float(midi))
-        lines.append(
-            f"    {note!r}: {{'pp': {anchors['pp']}, 'mf': {anchors['mf']}, "
-            f"'ff': {anchors['ff']}}},"
-        )
-    return "\n".join(lines)
+def committed_ladder(anchors: dict[str, float]) -> dict[str, float]:
+    preds = predict_intermediate_dynamics_gpr(
+        [anchors["pp"]],
+        [anchors["mf"]],
+        [anchors["ff"]],
+        log_cdm_space=True,
+    )
+    return {d: round(float(preds[d][0]), 6) for d in GPR_DYNAMIC_COORDINATES}
+
+
+def _fmt_ladder(ladder: dict[str, float]) -> str:
+    parts = [f"'{d}': {ladder[d]}" for d in GPR_DYNAMIC_COORDINATES]
+    return "{" + ", ".join(parts) + "}"
 
 
 def _module_source(
     spec: dict,
     anchors: dict[str, float],
     ci: dict[str, float],
+    ladder: dict[str, float],
 ) -> str:
-    spectral = _spectral_block(spec["midi_lo"], spec["midi_hi"], anchors)
+    lookup = canonical_unpitched_note(spec["display"])
     seed = _mc_seed(spec["specimen"])
     mf_ff_jump = anchors["ff"] / anchors["mf"] if anchors["mf"] else float("inf")
     citation = (
@@ -221,19 +233,19 @@ def _module_source(
         f"density_profiles_mc.csv {spec['phase']} p50 band weights → "
         f"composite_index (ff); generate_profile(stroke={spec['stroke']!r}, "
         f"dynamic=pp|mf|ff) {spec['phase']} indices scaled so ff=MC p50; "
-        f"flat chromatic CDM proxy; piecewise log-linear CDM interpolation "
-        f"(internal_default; guarantees monotone pp…ff on cascade jumps). "
-        f"Cross-family ratio caveat: NonTunPerc calibration bridge reports "
-        f"NO CALIBRATION ACHIEVED; CDM comparisons between these four "
-        f"instruments and empirically derived pitched-instrument tables are "
+        f"pitch-independent DYNAMIC_CDM; committed 10-level ladder via offline "
+        f"piecewise log-linear CDM + adaptive tails (former internal_default; "
+        f"not runtime GPR). Cross-family ratio caveat: NonTunPerc calibration "
+        f"bridge reports NO CALIBRATION ACHIEVED; CDM comparisons between these "
+        f"four instruments and empirically derived pitched-instrument tables are "
         f"rank-order indicative only, not ratio-valid."
     )
     return f'''# instrumentos/{spec["module"]}.py
 """
 {spec["display"]} instrument density module.
 
-The ``spectral_data`` table stores sparse Combined Density Metric (CDM)
-proxy values from **NonTunPerc** MC Analysis exports
+Pitch-independent Combined Density Metric (CDM) proxy from **NonTunPerc**
+MC Analysis exports
 (``replication/percussion_nontunperc/Analysis/density_profiles_mc.csv``).
 
 {spec["phase_rationale"]}
@@ -243,17 +255,13 @@ proxy values from **NonTunPerc** MC Analysis exports
 - **pp/mf:** ``generate_profile(stroke={spec["stroke"]!r}, dynamic=…)``
   {spec["phase"]} indices, scaled so ff matches MC p50 exactly
 - **mf→ff jump:** ff/mf ≈ {mf_ff_jump:.3f} (physical cascade / ff plate bypass
-  where applicable — retained; interior dynamics use log-CDM piecewise linear
-  interpolation so ``f`` lies between mf and ff)
+  retained; interior/tail levels committed from the former offline
+  piecewise log-linear CDM + adaptive-tail ladder — no runtime fill-in)
 - **NonTunPerc:** v{NONTUNPERC_VERSION} commit ``{NONTUNPERC_COMMIT}``
 
-Flat chromatic table: note key is notation-lookup convention only; no acoustic
-meaning (see ``INSTRUMENT_SOURCE.unpitched`` / registry ``unpitched`` flag).
-Intermediate dynamics use piecewise log-linear CDM interpolation
-(``internal_default``; Matérn GPR cannot stay monotone on large mf→ff jumps).
-
-Runtime analysis does not ingest audio; it maps notated pitch + dynamic to
-these pre-loaded acoustic metadata tables.
+Unpitched: GUI/MusicXML/MIDI do not associate sounding pitch. ``nota`` is
+ignored; density is dynamics-only. ``spectral_data`` keeps a single canonical
+placeholder key (``{lookup}``) for lookup-compat only.
 """
 
 from instrumentos.provenance import InstrumentSource
@@ -265,10 +273,10 @@ INSTRUMENT_SOURCE = InstrumentSource(
         "replication/percussion_nontunperc/Analysis/density_profiles_mc.csv"
     ),
     extraction_method=({extraction!r}),
-    dynamic_levels=("pp", "mf", "ff"),
+    dynamic_levels=('pppp', 'ppp', 'pp', 'p', 'mp', 'mf', 'f', 'ff', 'fff', 'ffff'),
     pitch_range=({spec["midi_lo"]}, {spec["midi_hi"]}),
     uncertainty="high",
-    version="2026-08-03+nontunperc-{NONTUNPERC_VERSION}+mc{seed}",
+    version="2026-08-03+nontunperc-{NONTUNPERC_VERSION}+mc{seed}+committed-ladder",
     source_technique="{spec["technique"]}",
     table_supported_techniques=("{spec["technique"]}",),
     unpitched=True,
@@ -276,7 +284,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
 
 import logging
 
-from utils.notes import normalize_note_string
+from instrumentos.pitch_interpolation import MissingCommittedDynamicError
 
 logger = logging.getLogger("{spec["module"]}")
 
@@ -291,35 +299,30 @@ SPECTRAL_PHASE_CI = {{
     "nontunperc_version": "{NONTUNPERC_VERSION}",
 }}
 
-# Parallel CI dict (same for every note; flat unpitched table).
 spectral_data_ci = {{
     "p05": {ci["p05"]},
     "p50": {ci["p50"]},
     "p95": {ci["p95"]},
 }}
 
-# Flat CDM proxy. Range is notation-lookup convention only; no acoustic meaning
-# (see unpitched flag).
-spectral_data = {{
-{spectral}
-}}
+# Pitch-independent committed 10-dynamic CDM ladder (pp/mf/ff = NonTunPerc
+# anchors; other levels = former internal_default log-linear + adaptive tails).
+DYNAMIC_CDM = {_fmt_ladder(ladder)}
+
+# Single canonical placeholder for MIDI-space table shape (lookup convention only).
+LOOKUP_NOTE = {lookup!r}
+spectral_data = {{LOOKUP_NOTE: DYNAMIC_CDM}}
 
 
 def calcular_densidade(nota, dinamica):
-    """Compute density from spectral CDM table (MIDI-space lookup, octave-safe)."""
-    from instrumentos.spectral_lookup import lookup_spectral_density
-
-    return lookup_spectral_density(
-        spectral_data,
-        nota,
-        dinamica,
-        logger=logger,
-        preprocess=normalize_note_string,
-    )
-
-
-
-    )
+    """Unpitched density: dynamics only; ``nota`` is ignored."""
+    dyn = (dinamica or "mf").strip().lower()
+    if dyn not in DYNAMIC_CDM:
+        raise MissingCommittedDynamicError(
+            f"Dynamic {{dyn!r}} not committed in {spec['module']} DYNAMIC_CDM "
+            f"(have {{sorted(DYNAMIC_CDM)}})."
+        )
+    return float(DYNAMIC_CDM[dyn])
 '''
 
 
@@ -333,9 +336,13 @@ def main() -> int:
     out_dir = ROOT / "instrumentos"
     for spec in SPECS:
         anchors, ci = anchors_for(spec)
+        ladder = committed_ladder(anchors)
         path = out_dir / f"{spec['module']}.py"
-        path.write_text(_module_source(spec, anchors, ci), encoding="utf-8")
-        print(f"Wrote {path.name}: {anchors}  CI={ci}")
+        path.write_text(_module_source(spec, anchors, ci, ladder), encoding="utf-8")
+        print(
+            f"Wrote {path.name}: placeholder={canonical_unpitched_note(spec['display'])} "
+            f"anchors={anchors}"
+        )
     return 0
 
 
