@@ -2,7 +2,7 @@
 
 
 
-> **Metadata status:** The instrument corpus is **incomplete**. Many names resolve to coarse fallbacks; table-backed modules are partial proxies. Full 10-dynamic `Results` ladders are committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, and oboe; trumpet / technique / percussion modules remain sparse until migrated. External acoustic/proxy metadata are curated gradually — not live analysis.
+> **Metadata status:** The instrument corpus is **incomplete**. Many names resolve to coarse fallbacks; table-backed modules are partial proxies. Full 10-dynamic ladders are committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, oboe, and unpitched percussion; trumpet / technique modules remain sparse until migrated. External acoustic/proxy metadata are curated gradually — not live analysis.
 
 
 
@@ -33,21 +33,18 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 | `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Viola_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Cello_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Contrabass-pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
-| `bass_drum.py` | `spectral_data` | NonTunPerc MC p50 `bassdrum_82cm` **strike** (ff; scaled pp/mf; unpitched) |
-| `cymbals.py` | `spectral_data` | NonTunPerc MC p50 `cymbal_46cm_medium` **shimmer** (ff; scaled pp/mf; unpitched) |
-| `tamtam.py` | `spectral_data` | NonTunPerc MC p50 `tamtam_80cm_bronze` **shimmer** (ff; scaled pp/mf; unpitched) |
-| `gong.py` | `spectral_data` | NonTunPerc MC p50 `gong_50cm_bronze` **shimmer** (ff; scaled pp/mf; unpitched) |
+| `bass_drum.py`, `cymbals.py`, `tamtam.py`, `gong.py` | `DYNAMIC_CDM` (10 dynamics; pitch-independent) | NonTunPerc MC anchors + committed former `internal_default` ladder |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
-**Unpitched modules:** Profiles with `unpitched=True` (Bass drum, Cymbals, Tam-tam, Gong) still expose a single chromatic `spectral_data` key, but that key is a **lookup convention only** (registry range midpoint: `D2`, `C5`, `C2`, `C3`). Entry paths (GUI / MusicXML `<unpitched>` / MIDI channel 10) inject it internally; users never choose a sounding pitch. Cents/microtones are rejected. Mass/CDM and Event/Player Count contribute as usual; pitch-structure metrics and texture polyphony exclude these events in `core/unpitched_routing.partition_pitched_events` only — do not duplicate that filter in modules or loaders. Aggregation contract: [TECHNICAL_MANUAL §7.5.1](../docs/TECHNICAL_MANUAL.md). **Composite** is the same blend×mass formula as for pitched slices (`D_blend = w*(DI/10)+(1−w)*DV` at defaults, `REF=193`; header from `core.composite` — see [CHANGES.md](../CHANGES.md)).
+**Unpitched modules:** Profiles with `unpitched=True` (Bass drum, Cymbals, Tam-tam, Gong) use pitch-independent `DYNAMIC_CDM`; `calcular_densidade` ignores `nota`. A single `LOOKUP_NOTE` / `spectral_data` key remains for lookup-shape compatibility only (registry midpoint: `D2`, `C5`, `C2`, `C3`). Entry paths (GUI / MusicXML `<unpitched>` / MIDI channel 10) inject it; users never choose a sounding pitch. Cents/microtones are rejected. Mass/CDM and Event/Player Count contribute as usual; pitch-structure metrics and texture polyphony exclude these events in `core/unpitched_routing.partition_pitched_events` only. Aggregation contract: [TECHNICAL_MANUAL §7.5.1](../docs/TECHNICAL_MANUAL.md).
 
-**Important distinction:** the **analysis pipeline is score-only at runtime** (no audio input). The **instrument scripts** carry pre-loaded acoustic metadata that is looked up from notated pitch and dynamic markings.
+**Important distinction:** the **analysis pipeline is score-only at runtime** (no audio input). The **instrument scripts** carry pre-loaded acoustic metadata looked up from notation (pitch×dynamic for pitched modules; dynamics-only for unpitched).
 
 **Media ingestion:** Zenodo `*_Media` workbook rows may use duplicate suffix labels (e.g. `F4 (2)`). Offline tooling applies `utils.notes.normalize_media_note_label()` before canonical parsing. See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md).
 
 **Technique honesty:** registry `supported_techniques` lists organological capabilities. Modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
 
-**Transferred-anchor / sparse modules:** technique and wind/percussion modules that still commit only pp/mf/ff raise `MissingCommittedDynamicError` for other markings until full ladders are supplied. Violin arco is the first full-ladder module (`tools/generate_violin_arco_full_dynamics_from_xlsx.py`).
+**Transferred-anchor / sparse modules:** technique modules (and trumpet) that still commit only pp/mf/ff raise `MissingCommittedDynamicError` for other markings until full ladders are supplied.
 
 **Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
 

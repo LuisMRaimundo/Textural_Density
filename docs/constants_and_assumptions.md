@@ -55,7 +55,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | `DYNAMIC_LEVELS` | Allowed symbolic markings | `config.py` | Not SPL |
 | Committed ladder cells | Exact `spectral_data` lookup | `instrumentos/*.py` | Must include requested dynamic |
 | Full ordinary-sustain ladders | 10 dynamics from Dynamics_predicter `Results` | `violin`/`viola`/`cello`/`double_bass`/`flute`/`clarinet`/`bassoon`/`oboe` | Non-anchor cells workbook-modelled, not lab-measured |
-| Sparse modules (migration) | Still pp/mf/ff only until ladders committed | trumpet, techniques, percussion, … | Missing cell → `MissingCommittedDynamicError` |
+| Sparse modules (migration) | Still pp/mf/ff only until ladders committed | trumpet, techniques, … | Missing cell → `MissingCommittedDynamicError` |
 | Ordinal weights p…ffff | Symbolic orchestration mass (coarse fallback) | `instrumentos/registry.py` | Not loudness |
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
 | Dynamic monotonicity | **Not assumed** | source tables | CDM may decrease across dynamics |

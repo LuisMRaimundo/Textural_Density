@@ -1,6 +1,6 @@
 # Instrument acoustic source provenance
 
-> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Most registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — full `Results` ladders committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, and oboe (trumpet / techniques / percussion still migrating). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
+> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Most registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — full ladders committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, oboe, and unpitched percussion (trumpet / technique modules still migrating). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
 
 This document records **external acoustic metadata** embedded in `instrumentos/*.py`
 modules. The analysis pipeline performs **score lookup** into these tables — not
@@ -427,12 +427,12 @@ Unpitched idiophone / membranophone modules backed by Percussion Tool
 set `unpitched=True`; core excludes their note keys from pitch-structure
 metrics (`core/unpitched_routing.py`).
 
-| Module | Registry ID | Specimen | Phase | MIDI span | Technique |
-|--------|-------------|----------|-------|-----------|-----------|
-| `bass_drum.py` | `bombo` | `bassdrum_82cm` | **strike** | 28–48 | `struck_membrane` |
-| `cymbals.py` | `pratos` | `cymbal_46cm_medium` | **shimmer** | 60–84 | `struck_plate` |
-| `tamtam.py` | `tamtam` | `tamtam_80cm_bronze` | **shimmer** | 24–48 | `struck_plate` |
-| `gong.py` | `gongo` | `gong_50cm_bronze` | **shimmer** | 36–60 | `struck_plate` |
+| Module | Registry ID | Specimen | Phase | Placeholder | Technique |
+|--------|-------------|----------|-------|-------------|-----------|
+| `bass_drum.py` | `bombo` | `bassdrum_82cm` | **strike** | `D2` | `struck_membrane` |
+| `cymbals.py` | `pratos` | `cymbal_46cm_medium` | **shimmer** | `C5` | `struck_plate` |
+| `tamtam.py` | `tamtam` | `tamtam_80cm_bronze` | **shimmer** | `C2` | `struck_plate` |
+| `gong.py` | `gongo` | `gong_50cm_bronze` | **shimmer** | `C3` | `struck_plate` |
 
 - **ff anchor:** MC p50 `composite_index` for the chosen phase from
   `replication/percussion_nontunperc/Analysis/density_profiles_mc.csv`
@@ -440,9 +440,12 @@ metrics (`core/unpitched_routing.py`).
 - **pp / mf:** `generate_profile(stroke=bass_drum_beater|yarn_mallet, dynamic=…)`
   phase indices, scaled so ff matches MC p50. ff plate bypass / cascade
   discontinuity is retained (documented mf→ff jump).
-- **Dynamics model:** piecewise log-linear CDM interpolation
-  (`log_cdm_space=True`, `internal_default`) — Matérn GPR is not monotone on
-  large cascade jumps.
+- **Dynamics (2026-08-03):** full 10-level `DYNAMIC_CDM` committed offline from the
+  former `internal_default` piecewise log-linear CDM + adaptive tails
+  (`log_cdm_space=True` — not Matérn GPR). No runtime fill-in.
+- **Pitch:** not used. GUI/MusicXML/MIDI have no sounding pitch for these
+  instruments; `calcular_densidade` ignores `nota`. One canonical placeholder
+  key remains in `spectral_data` for lookup-shape compatibility only.
 - **Provenance:** `source_type=model_derived`; NonTunPerc
   v0.3.5 commit `4a110db…`; MC seed `20260803`. Calibration bridge reports
   **NO CALIBRATION ACHIEVED** — cross-family CDM ratios are rank-order only.

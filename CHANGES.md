@@ -2,6 +2,22 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-03 — Unpitched percussion: pitch-independent committed ladders
+
+**Numeric change for non-anchor dynamics** on `bass_drum` / `cymbals` / `tamtam`
+/ `gong` (pp/mf/ff anchors unchanged). Restores the former
+`internal_default` piecewise log-linear CDM + adaptive-tail values as
+**committed** `DYNAMIC_CDM` cells (no runtime GPR / log-linear fill-in).
+
+Also drops the fake chromatic `spectral_data` grid: values were identical on
+every note, and the GUI has no pitch for these instruments. Density is
+dynamics-only; one canonical placeholder key remains for lookup compat.
+
+Regenerator: `tools/generate_percussion_modules_from_nontunperc.py`.
+Acceptance / regression goldens refrozen where non-anchor dynamics appear
+(`tests/test_composite_unification_acceptance.py`,
+`tests/fixtures/regression_baseline.json`, replication snapshots).
+
 ## 2026-08-03 — Full dynamics ladders: viola, cello, double bass, flute, clarinet, bassoon, oboe
 
 **Numeric change for non-anchor dynamics** on these modules (pp/mf/ff anchors
@@ -16,7 +32,7 @@ unchanged). Each commits the Dynamics_predicter sheet **`Results`** ladder:
 - `oboe.py` ← `Oboe_iowa_orchidea_dynamics.xlsx`
 
 Regenerator: `tools/generate_full_dynamics_modules_from_xlsx.py`.
-Still sparse (error on missing cells): trumpet, technique/percussion modules, etc.
+Still sparse (error on missing cells): trumpet, technique modules, etc.
 
 ## 2026-08-03 — Remove runtime GPR/tail extrapolation (table-only dynamics)
 

@@ -2,8 +2,8 @@
 """
 Bass drum instrument density module.
 
-The ``spectral_data`` table stores sparse Combined Density Metric (CDM)
-proxy values from **NonTunPerc** MC Analysis exports
+Pitch-independent Combined Density Metric (CDM) proxy from **NonTunPerc**
+MC Analysis exports
 (``replication/percussion_nontunperc/Analysis/density_profiles_mc.csv``).
 
 Phase = strike: the transient IS the instrument's density for membranophones; sustained-texture CDM still uses the strike composite as the proxy.
@@ -13,17 +13,13 @@ Phase = strike: the transient IS the instrument's density for membranophones; su
 - **pp/mf:** ``generate_profile(stroke='bass_drum_beater', dynamic=…)``
   strike indices, scaled so ff matches MC p50 exactly
 - **mf→ff jump:** ff/mf ≈ 1.776 (physical cascade / ff plate bypass
-  where applicable — retained; interior dynamics use log-CDM piecewise linear
-  interpolation so ``f`` lies between mf and ff)
+  retained; interior/tail levels committed from the former offline
+  piecewise log-linear CDM + adaptive-tail ladder — no runtime fill-in)
 - **NonTunPerc:** v0.3.5 commit ``4a110dbbaab3af831c0987e99a4b7019b008bbd6``
 
-Flat chromatic table: note key is notation-lookup convention only; no acoustic
-meaning (see ``INSTRUMENT_SOURCE.unpitched`` / registry ``unpitched`` flag).
-Intermediate dynamics use piecewise log-linear CDM interpolation
-(``internal_default``; Matérn GPR cannot stay monotone on large mf→ff jumps).
-
-Runtime analysis does not ingest audio; it maps notated pitch + dynamic to
-these pre-loaded acoustic metadata tables.
+Unpitched: GUI/MusicXML/MIDI do not associate sounding pitch. ``nota`` is
+ignored; density is dynamics-only. ``spectral_data`` keeps a single canonical
+placeholder key (``D2``) for lookup-compat only.
 """
 
 from instrumentos.provenance import InstrumentSource
@@ -34,11 +30,11 @@ INSTRUMENT_SOURCE = InstrumentSource(
     source_url_or_identifier=(
         "replication/percussion_nontunperc/Analysis/density_profiles_mc.csv"
     ),
-    extraction_method=("density_profiles_mc.csv strike p50 band weights → composite_index (ff); generate_profile(stroke='bass_drum_beater', dynamic=pp|mf|ff) strike indices scaled so ff=MC p50; flat chromatic CDM proxy; piecewise log-linear CDM interpolation (internal_default; guarantees monotone pp…ff on cascade jumps). Cross-family ratio caveat: NonTunPerc calibration bridge reports NO CALIBRATION ACHIEVED; CDM comparisons between these four instruments and empirically derived pitched-instrument tables are rank-order indicative only, not ratio-valid."),
-    dynamic_levels=("pp", "mf", "ff"),
+    extraction_method=("density_profiles_mc.csv strike p50 band weights → composite_index (ff); generate_profile(stroke='bass_drum_beater', dynamic=pp|mf|ff) strike indices scaled so ff=MC p50; pitch-independent DYNAMIC_CDM; committed 10-level ladder via offline piecewise log-linear CDM + adaptive tails (former internal_default; not runtime GPR). Cross-family ratio caveat: NonTunPerc calibration bridge reports NO CALIBRATION ACHIEVED; CDM comparisons between these four instruments and empirically derived pitched-instrument tables are rank-order indicative only, not ratio-valid."),
+    dynamic_levels=('pppp', 'ppp', 'pp', 'p', 'mp', 'mf', 'f', 'ff', 'fff', 'ffff'),
     pitch_range=(28, 48),
     uncertainty="high",
-    version="2026-08-03+nontunperc-0.3.5+mc20260803",
+    version="2026-08-03+nontunperc-0.3.5+mc20260803+committed-ladder",
     source_technique="struck_membrane",
     table_supported_techniques=("struck_membrane",),
     unpitched=True,
@@ -46,7 +42,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
 
 import logging
 
-from utils.notes import normalize_note_string
+from instrumentos.pitch_interpolation import MissingCommittedDynamicError
 
 logger = logging.getLogger("bass_drum")
 
@@ -61,47 +57,27 @@ SPECTRAL_PHASE_CI = {
     "nontunperc_version": "0.3.5",
 }
 
-# Parallel CI dict (same for every note; flat unpitched table).
 spectral_data_ci = {
     "p05": 0.935656,
     "p50": 22.888331,
     "p95": 444.199125,
 }
 
-# Flat CDM proxy. Range is notation-lookup convention only; no acoustic meaning
-# (see unpitched flag).
-spectral_data = {
-    'E1': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'F1': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'F#1': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'G1': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'G#1': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'A1': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'A#1': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'B1': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'C2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'C#2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'D2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'D#2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'E2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'F2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'F#2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'G2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'G#2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'A2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'A#2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'B2': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-    'C3': {'pp': 7.613906, 'mf': 12.889258, 'ff': 22.888331},
-}
+# Pitch-independent committed 10-dynamic CDM ladder (pp/mf/ff = NonTunPerc
+# anchors; other levels = former internal_default log-linear + adaptive tails).
+DYNAMIC_CDM = {'pppp': 6.675018, 'ppp': 6.974356, 'pp': 7.613906, 'p': 9.906442, 'mp': 11.299854, 'mf': 12.889258, 'f': 17.17596, 'ff': 22.888331, 'fff': 26.421695, 'ffff': 28.387945}
+
+# Single canonical placeholder for MIDI-space table shape (lookup convention only).
+LOOKUP_NOTE = 'D2'
+spectral_data = {LOOKUP_NOTE: DYNAMIC_CDM}
+
 
 def calcular_densidade(nota, dinamica):
-    """Compute density from spectral CDM table (MIDI-space lookup, octave-safe)."""
-    from instrumentos.spectral_lookup import lookup_spectral_density
-
-    return lookup_spectral_density(
-        spectral_data,
-        nota,
-        dinamica,
-        logger=logger,
-        preprocess=normalize_note_string,
-    )
+    """Unpitched density: dynamics only; ``nota`` is ignored."""
+    dyn = (dinamica or "mf").strip().lower()
+    if dyn not in DYNAMIC_CDM:
+        raise MissingCommittedDynamicError(
+            f"Dynamic {dyn!r} not committed in bass_drum DYNAMIC_CDM "
+            f"(have {sorted(DYNAMIC_CDM)})."
+        )
+    return float(DYNAMIC_CDM[dyn])

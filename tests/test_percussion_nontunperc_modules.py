@@ -6,8 +6,10 @@ import importlib
 
 import pytest
 
+from config import DYNAMIC_LEVELS
 from core.pipeline import calculate_metrics
 from core.request import AnalysisRequest
+from core.unpitched_routing import canonical_unpitched_note
 from gui.state import INSTRUMENTS
 from instrumentos import get_instrument_module
 from instrumentos.registry import resolve_profile
@@ -19,10 +21,10 @@ _SPECS = (
         "module": "bass_drum",
         "phase": "strike",
         "aliases": ("Bass drum", "bass_drum", "bombo"),
-        "note": "C2",
         "pp": 7.613906,
         "mf": 12.889258,
         "ff": 22.888331,
+        "f": 17.17596,
     },
     {
         "display": "Cymbals",
@@ -30,10 +32,10 @@ _SPECS = (
         "module": "cymbals",
         "phase": "shimmer",
         "aliases": ("Cymbals", "cymbals", "pratos"),
-        "note": "C5",
         "pp": 1.973133,
         "mf": 2.665803,
         "ff": 20.729071,
+        "f": 7.433681,
     },
     {
         "display": "Tam-tam",
@@ -41,10 +43,10 @@ _SPECS = (
         "module": "tamtam",
         "phase": "shimmer",
         "aliases": ("Tam-tam", "tam_tam", "tamtam"),
-        "note": "C2",
         "pp": 3.049788,
         "mf": 4.096546,
         "ff": 12.324004,
+        "f": 7.105339,
     },
     {
         "display": "Gong",
@@ -52,14 +54,12 @@ _SPECS = (
         "module": "gong",
         "phase": "shimmer",
         "aliases": ("Gong", "gong", "gongo"),
-        "note": "C3",
         "pp": 1.537666,
         "mf": 2.10794,
         "ff": 17.148679,
+        "f": 6.012353,
     },
 )
-
-_INTERIOR = ("pp", "p", "mp", "mf", "f", "ff")
 
 
 @pytest.mark.parametrize("spec", _SPECS, ids=lambda s: s["module"])
@@ -83,34 +83,39 @@ def test_module_contract_mc_anchors_and_provenance(spec):
     src = mod.INSTRUMENT_SOURCE
     assert src.source_type == "model_derived"
     assert src.unpitched is True
+    assert src.dynamic_levels == tuple(DYNAMIC_LEVELS)
     assert "NO CALIBRATION ACHIEVED" in src.extraction_method
     assert "4a110db" in src.citation or "4a110db" in mod.SPECTRAL_PHASE_CI["nontunperc_commit"]
     assert mod.SPECTRAL_PHASE_CI["phase"] == spec["phase"]
     assert "p05" in mod.spectral_data_ci and "p95" in mod.spectral_data_ci
-    row = mod.spectral_data[spec["note"]]
-    assert row["pp"] == pytest.approx(spec["pp"])
-    assert row["mf"] == pytest.approx(spec["mf"])
-    assert row["ff"] == pytest.approx(spec["ff"])
-    # Documented physical mf→ff cascade discontinuity retained.
-    assert row["ff"] > row["mf"]
+    assert mod.LOOKUP_NOTE == canonical_unpitched_note(spec["display"])
+    assert list(mod.spectral_data) == [mod.LOOKUP_NOTE]
+    ladder = mod.DYNAMIC_CDM
+    assert ladder["pp"] == pytest.approx(spec["pp"])
+    assert ladder["mf"] == pytest.approx(spec["mf"])
+    assert ladder["ff"] == pytest.approx(spec["ff"])
+    assert ladder["ff"] > ladder["mf"] > ladder["pp"]
+    # Interior levels committed (former internal_default log-linear path).
+    assert ladder["f"] == pytest.approx(spec["f"])
+    assert ladder["pp"] < ladder["p"] < ladder["mp"] < ladder["mf"] < ladder["f"] < ladder["ff"]
 
 
 @pytest.mark.parametrize("spec", _SPECS, ids=lambda s: s["module"])
-def test_no_runtime_gpr_helper(spec):
+def test_no_runtime_gpr_helper_and_note_ignored(spec):
     mod = get_instrument_module(spec["display"])
     assert not hasattr(mod, "predict_intermediate_dynamics")
-    # Non-anchor dynamics require a committed full ladder (pending migration).
-    from instrumentos.pitch_interpolation import MissingCommittedDynamicError
-
-    with pytest.raises(MissingCommittedDynamicError):
-        mod.calcular_densidade(spec["note"], "f")
+    # Dynamics-only: arbitrary note strings yield the same committed cell.
+    assert mod.calcular_densidade("C4", "f") == pytest.approx(spec["f"])
+    assert mod.calcular_densidade("G9", "f") == pytest.approx(spec["f"])
+    assert mod.calcular_densidade(mod.LOOKUP_NOTE, "mf") == pytest.approx(spec["mf"])
 
 
 @pytest.mark.parametrize("spec", _SPECS, ids=lambda s: s["module"])
 def test_calculate_metrics_accepts_display_name(spec):
+    note = canonical_unpitched_note(spec["display"])
     resultados, densities, pitches = calculate_metrics(
         AnalysisRequest(
-            notes=(spec["note"],),
+            notes=(note,),
             dynamics=("mf",),
             instruments=(spec["display"],),
             num_instruments=(1,),
