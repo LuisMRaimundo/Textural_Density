@@ -28,6 +28,7 @@ from core.metrics_metadata import MetricAssemblyContext, attach_metric_metadata
 from core.orchestration import compute_one_player_densities_for_slice, compute_slice_orchestral_metrics
 from core.quantity_scaling import quantity_scaling_metadata
 from core.pitch_aggregation import PitchAggregationResult, aggregate_events_by_pitch
+from core.unpitched_routing import partition_pitched_events
 from core.pitch_structure import (
     compute_composite_vertical_density,
     compute_interval_compactness_distinct,
@@ -152,12 +153,26 @@ def calculate_metrics(
         )
     )
 
-    pitch_agg = aggregate_events_by_pitch(
+    (
+        pitched_notas,
+        pitched_weights,
+        pitched_players,
+        pitched_dynamics,
+        pitched_instruments,
+        unpitched_warnings,
+    ) = partition_pitched_events(
         notas,
         weights=one_player_densities,
         player_counts=numeros_instr,
         dynamics=dinamicas,
         instruments=instrumentos,
+    )
+    pitch_agg = aggregate_events_by_pitch(
+        pitched_notas,
+        weights=pitched_weights,
+        player_counts=pitched_players,
+        dynamics=pitched_dynamics,
+        instruments=pitched_instruments,
     )
 
     densidade_intervalar_raw, densidade_intervalar_val = compute_interval_compactness_distinct(
@@ -210,7 +225,9 @@ def calculate_metrics(
     mass_boost = float(np.sqrt(max(0.0, massa_sonora_val)))
     complexity_factor = 1.0 + float(np.log1p(spectral_entropy))
 
-    total_tones_count = len(notas)
+    # Pitch-structure absolute density counts pitched events only (unpitched
+    # note keys are lookup metadata and do not enlarge the pitch set).
+    total_tones_count = len(pitched_notas)
     if pitch_agg.distinct_pitch_count < 2:
         densidade_absoluta_val = 0.0
     else:
@@ -281,6 +298,7 @@ def calculate_metrics(
             complexity_factor=float(complexity_factor),
             dynamic_boost=float(mass_boost),
             pitch_aggregation=pitch_aggregation_dict,
+            extra_warnings=list(unpitched_warnings),
         ),
         input_data=input_data,
         software_version=software_version,

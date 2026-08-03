@@ -3,15 +3,24 @@
 Cymbals instrument density module.
 
 The ``spectral_data`` table stores sparse Combined Density Metric (CDM)
-proxy values from **NonTunPerc Analysis** metrical exports
-(``replication/percussion_nontunperc/Analysis/density_profiles.csv``).
+proxy values from **NonTunPerc** MC Analysis exports
+(``replication/percussion_nontunperc/Analysis/density_profiles_mc.csv``).
 
-- **ff:** strike-phase ``composite_index`` from Analysis ``density_profiles.csv``
-- **pp/mf:** NonTunPerc excitation-filtered strike indices, scaled so ff
-  matches the Analysis metrical value exactly
+Phase = shimmer: the CDM proxy feeds sustained-texture analysis; the strike window under-represents plates and, combined with the excitation filter, artificially collapses pp/mf.
 
-Unpitched strokes use a flat chromatic table over the registry nominal MIDI
-sounding range; intermediate dynamics are interpolated via GPR.
+- **ff:** MC p50 ``composite_index`` for phase ``shimmer``
+  (p05=1.856281, p50=20.729071, p95=140.685307; seed=20260803)
+- **pp/mf:** ``generate_profile(stroke='yarn_mallet', dynamic=…)``
+  shimmer indices, scaled so ff matches MC p50 exactly
+- **mf→ff jump:** ff/mf ≈ 7.776 (physical cascade / ff plate bypass
+  where applicable — retained; interior dynamics use log-CDM piecewise linear
+  interpolation so ``f`` lies between mf and ff)
+- **NonTunPerc:** v0.3.5 commit ``4a110dbbaab3af831c0987e99a4b7019b008bbd6``
+
+Flat chromatic table: note key is notation-lookup convention only; no acoustic
+meaning (see ``INSTRUMENT_SOURCE.unpitched`` / registry ``unpitched`` flag).
+Intermediate dynamics use piecewise log-linear CDM interpolation
+(``internal_default``; Matérn GPR cannot stay monotone on large mf→ff jumps).
 
 Runtime analysis does not ingest audio; it maps notated pitch + dynamic to
 these pre-loaded acoustic metadata tables.
@@ -20,23 +29,19 @@ these pre-loaded acoustic metadata tables.
 from instrumentos.provenance import InstrumentSource
 
 INSTRUMENT_SOURCE = InstrumentSource(
-    source_type="literature_derived",
-    citation=('NonTunPerc Analysis density_profiles.csv strike composite_index for cymbal_46cm_medium (ff CDM proxy); pp/mf from NonTunPerc excitation-filtered profiles scaled so ff matches the Analysis metrical export.'),
+    source_type="model_derived",
+    citation=('theoretical model output (NonTunPerc v0.3.5, MC median), anchored in Rossing 2000 / Fletcher & Rossing 1998 / Sivian et al. 1931; validated against Iowa EMS recordings for mallet-excited plates and mf tam-tams; NOT validated for striking-position-specific strokes. Specimen cymbal_46cm_medium phase=shimmer MC p50 composite_index=20.729071 (p05=1.856281, p95=140.685307; seed=20260803).'),
     source_url_or_identifier=(
-        "replication/percussion_nontunperc/Analysis/density_profiles.csv"
+        "replication/percussion_nontunperc/Analysis/density_profiles_mc.csv"
     ),
-    extraction_method=(
-        "Analysis density_profiles.csv strike composite_index → ff; "
-        "NonTunPerc generate_profile(stroke,dynamic) strike indices → pp/mf "
-        "with scale so ff matches Analysis; flat chromatic CDM proxy; "
-        "GPR interpolation by pitch/dynamic"
-    ),
+    extraction_method=("density_profiles_mc.csv shimmer p50 band weights → composite_index (ff); generate_profile(stroke='yarn_mallet', dynamic=pp|mf|ff) shimmer indices scaled so ff=MC p50; flat chromatic CDM proxy; piecewise log-linear CDM interpolation (internal_default; guarantees monotone pp…ff on cascade jumps). Cross-family ratio caveat: NonTunPerc calibration bridge reports NO CALIBRATION ACHIEVED; CDM comparisons between these four instruments and empirically derived pitched-instrument tables are rank-order indicative only, not ratio-valid."),
     dynamic_levels=("pp", "mf", "ff"),
     pitch_range=(60, 84),
     uncertainty="high",
-    version="2026-08-03",
+    version="2026-08-03+nontunperc-0.3.5+mc20260803",
     source_technique="struck_plate",
     table_supported_techniques=("struck_plate",),
+    unpitched=True,
 )
 
 import logging
@@ -45,33 +50,52 @@ from utils.notes import normalize_note_string
 
 logger = logging.getLogger("cymbals")
 
-# Flat CDM proxy across nominal sounding range (unpitched; note is metadata only).
+# MC composite_index CI for the chosen phase (scale reference; seed=20260803).
+SPECTRAL_PHASE_CI = {
+    "phase": "shimmer",
+    "p05": 1.856281,
+    "p50": 20.729071,
+    "p95": 140.685307,
+    "mc_seed": 20260803,
+    "nontunperc_commit": "4a110dbbaab3af831c0987e99a4b7019b008bbd6",
+    "nontunperc_version": "0.3.5",
+}
+
+# Parallel CI dict (same for every note; flat unpitched table).
+spectral_data_ci = {
+    "p05": 1.856281,
+    "p50": 20.729071,
+    "p95": 140.685307,
+}
+
+# Flat CDM proxy. Range is notation-lookup convention only; no acoustic meaning
+# (see unpitched flag).
 spectral_data = {
-    'C4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'C#4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'D4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'D#4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'E4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'F4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'F#4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'G4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'G#4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'A4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'A#4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'B4': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'C5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'C#5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'D5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'D#5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'E5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'F5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'F#5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'G5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'G#5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'A5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'A#5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'B5': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
-    'C6': {'pp': 15.777819, 'mf': 22.031373, 'ff': 32.559219},
+    'C4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'C#4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'D4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'D#4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'E4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'F4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'F#4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'G4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'G#4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'A4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'A#4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'B4': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'C5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'C#5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'D5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'D#5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'E5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'F5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'F#5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'G5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'G#5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'A5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'A#5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'B5': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
+    'C6': {'pp': 1.973133, 'mf': 2.665803, 'ff': 20.729071},
 }
 
 
@@ -89,9 +113,13 @@ def calcular_densidade(nota, dinamica):
 
 
 def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
-    """Predict intermediate dynamics using Gaussian Process Regression."""
+    """Predict intermediate dynamics via log-CDM piecewise linear (internal_default)."""
     from instrumentos.gpr_dynamic_interpolation import predict_intermediate_dynamics_gpr
 
     return predict_intermediate_dynamics_gpr(
-        pp_values, mf_values, ff_values, logger=logger
+        pp_values,
+        mf_values,
+        ff_values,
+        logger=logger,
+        log_cdm_space=True,
     )

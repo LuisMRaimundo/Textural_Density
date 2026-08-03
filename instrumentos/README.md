@@ -41,10 +41,10 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 | `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Viola_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Cello_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Contrabass-pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
-| `bass_drum.py` | `spectral_data` | NonTunPerc Analysis `bassdrum_82cm` strike composite (ff; scaled pp/mf) |
-| `cymbals.py` | `spectral_data` | NonTunPerc Analysis `cymbal_46cm_medium` strike composite (ff; scaled pp/mf) |
-| `tamtam.py` | `spectral_data` | NonTunPerc Analysis `tamtam_80cm_bronze` strike composite (ff; scaled pp/mf) |
-| `gong.py` | `spectral_data` | NonTunPerc Analysis `gong_50cm_bronze` strike composite (ff; scaled pp/mf) |
+| `bass_drum.py` | `spectral_data` | NonTunPerc MC p50 `bassdrum_82cm` **strike** (ff; scaled pp/mf; unpitched) |
+| `cymbals.py` | `spectral_data` | NonTunPerc MC p50 `cymbal_46cm_medium` **shimmer** (ff; scaled pp/mf; unpitched) |
+| `tamtam.py` | `spectral_data` | NonTunPerc MC p50 `tamtam_80cm_bronze` **shimmer** (ff; scaled pp/mf; unpitched) |
+| `gong.py` | `spectral_data` | NonTunPerc MC p50 `gong_50cm_bronze` **shimmer** (ff; scaled pp/mf; unpitched) |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
 

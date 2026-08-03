@@ -412,30 +412,33 @@ Findings of a read-only audit of register dependence and per-event propagation
 - Acoustic metadata are externally sourced and/or interpolated — not measured by Textural Density during score analysis.
 - Note-label normalization corrects parsing and table-key alignment only.
 
-## Percussion — NonTunPerc Analysis (`bass_drum`, `cymbals`, `tamtam`, `gong`)
+## Percussion — NonTunPerc MC Analysis (`bass_drum`, `cymbals`, `tamtam`, `gong`)
 
 Unpitched idiophone / membranophone modules backed by Percussion Tool
-(NonTunPerc) **Analysis** metrical exports.
+(NonTunPerc) **MC median** Analysis exports. Registry / `INSTRUMENT_SOURCE`
+set `unpitched=True`; core excludes their note keys from pitch-structure
+metrics (`core/unpitched_routing.py`).
 
-| Module | Registry ID | Specimen | MIDI span | Technique |
-|--------|-------------|----------|-----------|-----------|
-| `bass_drum.py` | `bombo` | `bassdrum_82cm` | 28–48 | `struck_membrane` |
-| `cymbals.py` | `pratos` | `cymbal_46cm_medium` | 60–84 | `struck_plate` |
-| `tamtam.py` | `tamtam` | `tamtam_80cm_bronze` | 24–48 | `struck_plate` |
-| `gong.py` | `gongo` | `gong_50cm_bronze` | 36–60 | `struck_plate` |
+| Module | Registry ID | Specimen | Phase | MIDI span | Technique |
+|--------|-------------|----------|-------|-----------|-----------|
+| `bass_drum.py` | `bombo` | `bassdrum_82cm` | **strike** | 28–48 | `struck_membrane` |
+| `cymbals.py` | `pratos` | `cymbal_46cm_medium` | **shimmer** | 60–84 | `struck_plate` |
+| `tamtam.py` | `tamtam` | `tamtam_80cm_bronze` | **shimmer** | 24–48 | `struck_plate` |
+| `gong.py` | `gongo` | `gong_50cm_bronze` | **shimmer** | 36–60 | `struck_plate` |
 
-- **ff anchor:** strike-phase `composite_index` from
-  `replication/percussion_nontunperc/Analysis/density_profiles.csv`
-  (copy of `Percussion Tool/Analysis/density_profiles.csv`).
-- **pp / mf:** NonTunPerc excitation-filtered strike indices, scaled so **ff
-  matches the Analysis metrical value exactly**.
-- **Table shape:** flat chromatic CDM proxy (note is nominal metadata for
-  unpitched strokes); GPR for intermediate dynamics.
-- **Uncertainty:** high — literature / model-derived proxies, not Zenodo CDM
-  sustains; calibration bridge to pitched instruments is not yet defined
-  (`Analysis/calibration_report.md`).
+- **ff anchor:** MC p50 `composite_index` for the chosen phase from
+  `replication/percussion_nontunperc/Analysis/density_profiles_mc.csv`
+  (p05/p95 retained as `SPECTRAL_PHASE_CI` / `spectral_data_ci`).
+- **pp / mf:** `generate_profile(stroke=bass_drum_beater|yarn_mallet, dynamic=…)`
+  phase indices, scaled so ff matches MC p50. ff plate bypass / cascade
+  discontinuity is retained (documented mf→ff jump).
+- **Dynamics model:** piecewise log-linear CDM interpolation
+  (`log_cdm_space=True`, `internal_default`) — Matérn GPR is not monotone on
+  large cascade jumps.
+- **Provenance:** `source_type=model_derived`; NonTunPerc
+  v0.3.5 commit `4a110db…`; MC seed `20260803`. Calibration bridge reports
+  **NO CALIBRATION ACHIEVED** — cross-family CDM ratios are rank-order only.
 - **Regenerate:** `python tools/generate_percussion_modules_from_nontunperc.py`
-  (see `replication/percussion_nontunperc/README.md`).
 
 ## Registry-only instruments
 
