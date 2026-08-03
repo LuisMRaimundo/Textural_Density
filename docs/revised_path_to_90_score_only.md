@@ -49,6 +49,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 - ~~GUI adapter audit + `test_gui_architecture.py`~~ ✅
 - ~~Layered snapshot regression~~ ✅
 - ~~MusicXML `<transpose>` → concert pitch + benchmark excerpts (`003`–`005`)~~ ✅
+- ~~Unpitched percussion entry paths (GUI / MusicXML `<unpitched>` / MIDI ch.10) + core-only pitch exclusion (PR #28–#29)~~ ✅
 
 ## Optional only
 

@@ -439,7 +439,8 @@ metrics (`core/unpitched_routing.py`).
   v0.3.5 commit `4a110db…`; MC seed `20260803`. Calibration bridge reports
   **NO CALIBRATION ACHIEVED** — cross-family CDM ratios are rank-order only.
 - **Regenerate:** `python tools/generate_percussion_modules_from_nontunperc.py`
-- **Entry paths:** GUI / MusicXML `<unpitched>` / MIDI channel-10 emit `InstrumentEvent.unpitched=True` plus the canonical placeholder key (Bass drum `D2`, Cymbals `C5`, Tam-tam `C2`, Gong `C3`). See `docs/TECHNICAL_MANUAL.md` §7.5.
+- **Placeholder keys (lookup only, no acoustic meaning):** Bass drum `D2`, Cymbals `C5`, Tam-tam `C2`, Gong `C3` (registry `sounding_range` midpoints via `canonical_unpitched_note`).
+- **Entry paths:** GUI, MusicXML `<unpitched>`, and MIDI channel-10 all emit `InstrumentEvent.unpitched=True` plus that placeholder. Display-step/octave and GM key numbers are never treated as sounding pitch. Unmappable events are skipped with a warning (part + measure for MusicXML; key for MIDI) — no pitched fallback. Pitch-structure exclusion is only in `partition_pitched_events`. Full map: `docs/TECHNICAL_MANUAL.md` §7.5.
 
 ## Registry-only instruments
 
