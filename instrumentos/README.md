@@ -41,6 +41,10 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 | `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Viola_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Cello_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Contrabass-pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
+| `bass_drum.py` | `spectral_data` | NonTunPerc Analysis `bassdrum_82cm` strike composite (ff; scaled pp/mf) |
+| `cymbals.py` | `spectral_data` | NonTunPerc Analysis `cymbal_46cm_medium` strike composite (ff; scaled pp/mf) |
+| `tamtam.py` | `spectral_data` | NonTunPerc Analysis `tamtam_80cm_bronze` strike composite (ff; scaled pp/mf) |
+| `gong.py` | `spectral_data` | NonTunPerc Analysis `gong_50cm_bronze` strike composite (ff; scaled pp/mf) |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
 
@@ -283,7 +287,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 | Keyboard / harp | `piano`, `celesta`, `harpa` |
 
-| Percussion | `timpanos`, `bombo`, `caixa`, `pratos`, `tamtam`, `vibrafone`, `marimba`, `metalofone` |
+| Percussion | `timpanos`, `bombo`, `caixa`, `pratos`, `tamtam`, `gongo`, `vibrafone`, `marimba`, `metalofone` |
 
 
 

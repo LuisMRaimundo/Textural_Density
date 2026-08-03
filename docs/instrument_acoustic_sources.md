@@ -412,6 +412,31 @@ Findings of a read-only audit of register dependence and per-event propagation
 - Acoustic metadata are externally sourced and/or interpolated — not measured by Textural Density during score analysis.
 - Note-label normalization corrects parsing and table-key alignment only.
 
+## Percussion — NonTunPerc Analysis (`bass_drum`, `cymbals`, `tamtam`, `gong`)
+
+Unpitched idiophone / membranophone modules backed by Percussion Tool
+(NonTunPerc) **Analysis** metrical exports.
+
+| Module | Registry ID | Specimen | MIDI span | Technique |
+|--------|-------------|----------|-----------|-----------|
+| `bass_drum.py` | `bombo` | `bassdrum_82cm` | 28–48 | `struck_membrane` |
+| `cymbals.py` | `pratos` | `cymbal_46cm_medium` | 60–84 | `struck_plate` |
+| `tamtam.py` | `tamtam` | `tamtam_80cm_bronze` | 24–48 | `struck_plate` |
+| `gong.py` | `gongo` | `gong_50cm_bronze` | 36–60 | `struck_plate` |
+
+- **ff anchor:** strike-phase `composite_index` from
+  `replication/percussion_nontunperc/Analysis/density_profiles.csv`
+  (copy of `Percussion Tool/Analysis/density_profiles.csv`).
+- **pp / mf:** NonTunPerc excitation-filtered strike indices, scaled so **ff
+  matches the Analysis metrical value exactly**.
+- **Table shape:** flat chromatic CDM proxy (note is nominal metadata for
+  unpitched strokes); GPR for intermediate dynamics.
+- **Uncertainty:** high — literature / model-derived proxies, not Zenodo CDM
+  sustains; calibration bridge to pitched instruments is not yet defined
+  (`Analysis/calibration_report.md`).
+- **Regenerate:** `python tools/generate_percussion_modules_from_nontunperc.py`
+  (see `replication/percussion_nontunperc/README.md`).
+
 ## Registry-only instruments
 
 Instruments without a dedicated module use `coarse_default.py` — register and
