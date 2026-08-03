@@ -352,12 +352,19 @@ $$C_{\mathrm{comp}} = 1 + \ln(1 + H).$$
 
 ### 3.12 Total density (final formula)
 
-- **Unnormalised total** (current composite):
-  $$D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{pitch}} \cdot \sqrt{M_{\mathrm{sonic}}}}{D_{\max}}.$$
+Unified composite (Task 8c) — same as §3.5; $D_{\mathrm{pitch}}$ is **not** the product term:
+
+- **Blend** (slider-controlled; equals `density.weighted`):
+  $$D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}} + (1-w)\,\widehat{D}_{\mathrm{int}}\bigr).$$
+
+- **Unnormalised total:**
+  $$D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}}}{\mathrm{REF}}, \quad \mathrm{REF}=\texttt{MAX\_DENS\_GLOBAL}=193.$$
 
 - **Optional log compression** (when `USE_LOG_COMPRESSION` is True):
   $$D_{\mathrm{total}} = \log_{10}(1 + D_{\mathrm{total}}^{\mathrm{raw}}).$$
   Otherwise $D_{\mathrm{total}} = D_{\mathrm{total}}^{\mathrm{raw}}$.
+
+Old→new baseline totals: [`CHANGES.md`](../CHANGES.md).
 
 ### 3.13 Absolute density (reference)
 

@@ -1,5 +1,7 @@
 # CHANGES — Textural Density
 
+Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
+
 ## 2026-08-03 — Task 8c: unify composite (blend × mass)
 
 **Formula change (intentional).** Composite no longer uses the pitch-gated
