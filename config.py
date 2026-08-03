@@ -6,18 +6,20 @@ import os
 from typing import Any, Dict, List, Tuple
 
 # -------------------------------------------------------------------
-# Normalização e compressão da densidade total (Phase 3.1)
-# MAX_DENS_GLOBAL: divisor to normalise total density; calibrate with corpus.
-# USE_LOG_COMPRESSION: apply log10(1 + x) to total density to smooth extremes.
-#
-# Recalibrated in 5.0.0-strict-symbolic: compute_pitch_structure_density now
-# uses the raw accumulating pairwise interval sum (extensive) instead of the
-# mean-per-pair value, so it is on a larger scale. MAX_DENS_GLOBAL was
-# recomputed against benchmarks/expected_outputs so typical density.total stays
-# within the previous display range (median-matched ≈ 572; rounded to 575).
-# Keep this in config (do not hardcode inside the density functions).
+# Composite normalisation (Task 8c — unified blend × mass path)
 # -------------------------------------------------------------------
-MAX_DENS_GLOBAL = 575.0
+# Composite = log10(1 + D_blend · √M / MAX_DENS_GLOBAL) when USE_LOG_COMPRESSION,
+# where D_blend is the slider-controlled weighted density
+#   D_blend = 10 · (w · DI/DI_max + (1−w) · DV/DV_max)
+# (same object as density.weighted). D_pitch / DV = 0 is just a numeric value —
+# there is no unpitched-only fallback branch.
+#
+# MAX_DENS_GLOBAL (REF) was recalibrated in Task 8c from 575.0 (pitch-gated
+# product era) so typical all-pitched density.total stays in the same order of
+# magnitude as the frozen regression baseline under the new blend×mass formula
+# (matched to that baseline ≈ 192.6; rounded to 193).
+# -------------------------------------------------------------------
+MAX_DENS_GLOBAL = 193.0
 USE_LOG_COMPRESSION = True
 
 # -------------------------------------------------------------------

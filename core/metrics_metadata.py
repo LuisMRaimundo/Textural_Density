@@ -386,18 +386,17 @@ def build_metric_metadata(context: MetricAssemblyContext) -> dict[str, Any]:
     )
 
     total_assumptions = [
-        "Composite (pitched path) = pitch_structure_density × sqrt(sonic_mass) / MAX_DENS_GLOBAL.",
-        f"Complexity factor (in pitch structure): {context.complexity_factor:.4f}.",
+        "Composite (all regimes) = log10(1 + D_blend × sqrt(sonic_mass) / MAX_DENS_GLOBAL) "
+        "with D_blend = density.weighted = 10·(w·DI/DI_max + (1−w)·DV/DV_max).",
+        f"Complexity factor (in pitch structure axis): {context.complexity_factor:.4f}.",
         f"Dynamic mass boost sqrt(sonic_mass): {context.dynamic_boost:.4f}.",
-        f"Normalised by fixed reference MAX_DENS_GLOBAL={MAX_DENS_GLOBAL} "
-        "(not Qty or table size).",
-        "Unpitched-only slices: composite equals the weighted orchestral term "
-        "(min-max DI / DI_max=100).",
+        f"Single REF MAX_DENS_GLOBAL={MAX_DENS_GLOBAL} (not Qty or table size; "
+        "no event-kind fallback).",
     ]
     if USE_LOG_COMPRESSION:
         total_assumptions.append(
-            f"log10(1+x) compression applied on pitched path "
-            f"(USE_LOG_COMPRESSION=True); pre-log value≈{context.total_density_pre_log}."
+            f"log10(1+x) compression applied (USE_LOG_COMPRESSION=True); "
+            f"pre-log value≈{context.total_density_pre_log}."
         )
 
     metrics["density.total"] = MetricResult(

@@ -234,6 +234,8 @@
         ],
         "pitch_differentiation_ratio": 1.0,
         "pitch_polyphony": 5,
+        "pitched_event_count": 5,
+        "pitched_player_count": 5,
         "player_count": 5,
         "player_doubling_count": 0,
         "qty_affects_pitch_structure": false,
@@ -275,7 +277,8 @@
           }
         ],
         "total_player_count": 5,
-        "unison_doublings_excluded_from_interval_structure": true
+        "unison_doublings_excluded_from_interval_structure": true,
+        "unpitched_event_count": 0
       },
       "registral_span": 7.0,
       "sonic_mass": 83.265822
@@ -319,7 +322,7 @@
           "pitch_structure_density",
           "sonic_mass"
         ],
-        "value": 0.09418645661471664
+        "value": 0.03930826248516415
       },
       "weighted_density": {
         "depends_on": [
@@ -361,7 +364,7 @@
       "pitch_structure": 15.260986269865796,
       "refined": 15.260986269865796,
       "sonic_mass": 83.265822,
-      "total": 0.09418645661471664,
+      "total": 0.03930826248516415,
       "weighted": 2.003668274223486,
       "weighted_orchestral": 1.8856185032822252,
       "weighted_pitch": 0.1180497709412606

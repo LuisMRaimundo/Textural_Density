@@ -371,8 +371,8 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 
 | Constant | Default | Description |
 |----------|---------|-------------|
-| `MAX_DENS_GLOBAL` | `575.0` | Fixed composite reference divisor (pitched path; header prints the ref) |
-| `USE_LOG_COMPRESSION` | `True` | Apply `log10(1+x)` to pitched-path total density |
+| `MAX_DENS_GLOBAL` | `193.0` | Composite REF in `log10(1 + D_blend·√M / REF)` (Task 8c) |
+| `USE_LOG_COMPRESSION` | `True` | Apply `log10(1+x)` to composite |
 | `COMPOSITE_HARMONIC_DAMPING` | `0.15` | Harmonic-ratio damping in composite |
 | `DYN_TAIL_SHRINK` | `0.5` | Geometric shrink γ for register-adaptive saturating dynamic tails (5.1.0) |
 | `DENSITY_FLOOR` | `1e-9` | Unreachable safety assert on saturated tail amplitudes |

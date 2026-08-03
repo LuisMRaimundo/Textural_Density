@@ -95,16 +95,20 @@ class TestCaseCTertianStructure:
 
 
 class TestUnisonVsDifferentiatedComparison:
-    def test_unison_not_highest_composite(self):
+    def test_unison_not_highest_pitch_structure(self):
+        """Exact unison has zero pitch-structure; differentiated chords exceed it.
+
+        Task 8c: composite includes mass for all regimes, so high-qty unison may
+        outrank a sparse differentiated chord on ``density.total`` — that is
+        expected. Vertical diversity is the pitch-structure axis.
+        """
         unison, _, _ = calculate_metrics(_slice_input(["C4", "C4", "C4", "C4"]))
         chromatic, _, _ = calculate_metrics(_slice_input(["C4", "C#4", "D4", "E4"]))
         tertian, _, _ = calculate_metrics(_slice_input(["C4", "E4", "G4", "C5"]))
 
-        u_total = unison["density"]["total"]
-        assert chromatic["density"]["total"] > u_total
-        assert tertian["density"]["total"] > u_total
-        assert chromatic["density"]["pitch_structure"] > unison["density"]["pitch_structure"]
         assert unison["density"]["pitch_structure"] == pytest.approx(0.0)
+        assert chromatic["density"]["pitch_structure"] > unison["density"]["pitch_structure"]
+        assert tertian["density"]["pitch_structure"] > unison["density"]["pitch_structure"]
 
     def test_unison_entropy_lower_than_chromatic(self):
         unison, _, _ = calculate_metrics(_slice_input(["C4", "C4", "C4", "C4"]))

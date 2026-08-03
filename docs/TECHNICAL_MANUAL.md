@@ -268,12 +268,15 @@ Implemented in `calcular_densidade_ponderada_normalizada(DI, DV, ...)` with DI =
   $$D_{\mathrm{pitch}} = S \cdot (1 + \ln(1+H)) \cdot (1 - 0.15 \cdot r_{\mathrm{harm}}),$$
   where $S$ is the raw pairwise interval sum, $H$ is spectral entropy and $r_{\mathrm{harm}}$ is harmonic ratio — both over **distinct pitched bins**.
 
-- **Composite vertical density (pitched path):**
-  $$D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{pitch}} \cdot \sqrt{M_{\mathrm{sonic}}}}{D_{\max}}, \qquad
+- **Composite vertical density (unified, all regimes — Task 8c):**
+  $$D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}} + (1-w)\,\widehat{D}_{\mathrm{int}}\bigr)
+  \quad(= \texttt{density.weighted}),$$
+  $$D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}}}{\mathrm{REF}}, \qquad
   D_{\mathrm{total}} = \log_{10}(1 + D_{\mathrm{total}}^{\mathrm{raw}})$$
-  when `USE_LOG_COMPRESSION` is true. The divisor $D_{\max}$ = `MAX_DENS_GLOBAL` (**575**) is a **fixed reference range** chosen so typical display values stay in a stable band after the extensive-$S$ recalibration — **not** a division by Qty or table size. The results header prints `Composite normalized to [MAX_DENS_GLOBAL=575]`.
-
-- **Unpitched-only fallback:** when the slice has **no pitched events**, $D_{\mathrm{pitch}}=0$ by construction; composite equals the **weighted orchestral** term $10 \cdot w \cdot D_{\mathrm{inst}}/D_{\mathrm{inst,max}}$ (`DI_max=100`) so mass-only textures are strictly $> 0$. Header notes the fallback.
+  when `USE_LOG_COMPRESSION` is true. $\mathrm{REF}$ = `MAX_DENS_GLOBAL` (**193**).
+  Zero interval/pitch contribution is just a numeric zero — **no** event-kind
+  fallback. Header: `Composite: log10(1 + D_blend·√M / REF) with w=…, REF=193`.
+  See `CHANGES.md` for the 575→193 recalibration mapping.
 
 ### 3.6 Sonic mass and dynamic boost
 
@@ -694,13 +697,13 @@ Pitch-structure **exclusion** of note keys remains solely in `partition_pitched_
 | Texture `player_count`, `player_weighted_texture_mass` | **Yes** | Full-slice Qty |
 | Texture `average_texture_density` | **Yes** | Qty-weighted mean CDM (includes unpitched) |
 | Texture `texture_polyphony` / variability / contrast | **No** | Pitch concepts |
-| Composite (pitched path) | Mass **yes**, $D_{\mathrm{pitch}}$ **no** | $D_{\mathrm{pitch}}\sqrt{M}/575$ then optional $\log_{10}(1+x)$ |
-| Composite (unpitched-only) | **Yes** | Equals weighted orchestral; strictly $> 0$ |
+| Composite (unified) | Blend uses instr **yes** / interval only if pitched; mass **yes** | $\log_{10}(1+D_{\mathrm{blend}}\sqrt{M}/193)$; no event-kind branch |
 
 Display: when `unpitched_event_count > 0`, the PITCH STRUCTURE block prints  
-`N unpitched events excluded from pitch metrics by type (see ORCHESTRAL MASS / TEXTURE)`.
+`N unpitched events excluded from pitch metrics by type (see ORCHESTRAL MASS / TEXTURE)`.  
+Unpitched-only spectral / advanced sections print `n/a — no pitched content`.
 
-Pipeline fields: `pitch_aggregation.pitched_event_count` / `unpitched_event_count`; `resultados["composite_meta"]` (`mode`, `normalization_ref`, `use_log_compression`) — kept outside the numeric `density` map so finite-output gates stay numeric-only.
+Pipeline fields: `pitch_aggregation.pitched_event_count` / `unpitched_event_count`; `resultados["composite_meta"]` (`mode=weighted_blend_mass_log`, `normalization_ref`, `weight_factor`, `formula`) — outside the numeric `density` map.
 
 Tests: `tests/test_unpitched_entry_paths.py`, `tests/test_unpitched_pitch_exclusion.py`, `tests/test_unpitched_aggregation_contract.py`.
 

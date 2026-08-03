@@ -7,14 +7,14 @@
   "metric_schema_version": "5.1.0-strict-symbolic",
   "config_hash": "28befaebd84264a1eca83123a9c10a0bb99b899892d49cbb8c10a0eea0a3d375",
   "input_hash": "12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8",
-  "timestamp_utc": "2026-07-12T11:37:09.505652+00:00",
+  "timestamp_utc": "2026-08-03T12:59:05.561177+00:00",
   "density": {
     "interval": 0.2137588382139519,
     "instrument": 34.500337379511365,
     "weighted": 1.8318962880825442,
     "pitch_structure": 3.4423979010879058,
     "refined": 3.4423979010879058,
-    "total": 0.01937804332565535,
+    "total": 0.03033402437047291,
     "sonic_mass": 58.09180500000001,
     "absolute": 2.53954749432529,
     "weighted_pitch": 0.10687941910697595,
@@ -143,8 +143,8 @@
       "assumptions": []
     },
     "composite": {
-      "value": 0.01937804332565535,
-      "pre_log": 0.045630019988763905,
+      "value": 0.03033402437047291,
+      "pre_log": 0.07234374867576007,
       "source_type": "metadata_proxy",
       "validation_status": "heuristic",
       "confidence": "medium",
@@ -152,7 +152,7 @@
       "components": {
         "pitch_structure_density": 3.4423979010879058,
         "dynamic_boost": 7.621798016216384,
-        "normalization_divisor": 575.0,
+        "normalization_divisor": 193.0,
         "log_compression_applied": true
       },
       "component_product_pre_norm": 26.237261493539243,
@@ -298,7 +298,7 @@
     },
     "composite_symbolic_density": {
       "construct_id": "composite_symbolic_density",
-      "value": 0.01937804332565535,
+      "value": 0.03033402437047291,
       "source_type": "metadata_proxy",
       "verification_status": "heuristic",
       "assumptions": [],
@@ -316,7 +316,7 @@
       "components": {
         "pitch_structure_density": 3.4423979010879058,
         "dynamic_boost": 7.621798016216384,
-        "normalization_divisor": 575.0,
+        "normalization_divisor": 193.0,
         "log_compression_applied": true
       }
     }
@@ -400,22 +400,22 @@
       },
       "density.total": {
         "name": "density.total",
-        "value": 0.01937804332565535,
+        "value": 0.03033402437047291,
         "source_type": "metadata_proxy",
         "validation_status": "heuristic",
         "confidence": "medium",
         "interpretation": "Composite heuristic score; not a validated perceptual density index.",
         "warnings": [],
         "assumptions": [
-          "Composite = pitch_structure_density \u00d7 sqrt(sonic_mass) / MAX_DENS_GLOBAL.",
-          "Complexity factor (in pitch structure): 1.9341.",
+          "Composite (all regimes) = log10(1 + D_blend \u00d7 sqrt(sonic_mass) / MAX_DENS_GLOBAL) with D_blend = density.weighted = 10\u00b7(w\u00b7DI/DI_max + (1\u2212w)\u00b7DV/DV_max).",
+          "Complexity factor (in pitch structure axis): 1.9341.",
           "Dynamic mass boost sqrt(sonic_mass): 7.6218.",
-          "Normalised by MAX_DENS_GLOBAL=575.0.",
-          "log10(1+x) compression applied (USE_LOG_COMPRESSION=True); pre-log value\u22480.045630019988763905."
+          "Single REF MAX_DENS_GLOBAL=193.0 (not Qty or table size; no event-kind fallback).",
+          "log10(1+x) compression applied (USE_LOG_COMPRESSION=True); pre-log value\u22480.07234374867576007."
         ],
         "unit": "dimensionless",
-        "raw_value": 0.045630019988763905,
-        "normalized_value": 0.01937804332565535
+        "raw_value": 0.07234374867576007,
+        "normalized_value": 0.03033402437047291
       },
       "density.sonic_mass": {
         "name": "density.sonic_mass",
@@ -526,7 +526,7 @@
     "quantity_pressure_gain_formula": "sqrt(sum(qty_i * base_i^2))",
     "coherent_phase_locked_addition_assumed": false,
     "normalization": {
-      "MAX_DENS_GLOBAL": 575.0,
+      "MAX_DENS_GLOBAL": 193.0,
       "USE_LOG_COMPRESSION": true,
       "WEIGHTED_DI_MAX": 100.0,
       "WEIGHTED_DV_MAX": 10.0
@@ -597,6 +597,9 @@
           ]
         }
       ],
+      "pitched_event_count": 3,
+      "unpitched_event_count": 0,
+      "pitched_player_count": 3,
       "source_groups": [
         {
           "midi": 60.0,

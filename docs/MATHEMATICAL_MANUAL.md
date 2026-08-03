@@ -283,13 +283,18 @@ Here $S$ is the **raw accumulating pairwise interval sum** over distinct pitch b
 
 If $n_{\mathrm{distinct}} < 2$, $D_{\mathrm{pitch}} = 0$.
 
-**Composite vertical density:**
+**Composite vertical density (Task 8c — unified):**
 
 $$
-D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{pitch}} \cdot \sqrt{M_{\mathrm{sonic}}}}{D_{\max}}.
+D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}}+(1-w)\,\widehat{D}_{\mathrm{int}}\bigr)
+= \texttt{density.weighted},
+\quad
+D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}}}{\mathrm{REF}},
+\quad
+D_{\mathrm{total}} = \log_{10}(1+D_{\mathrm{total}}^{\mathrm{raw}}).
 $$
 
-Optionally apply $\log_{10}(1 + x)$ if `USE_LOG_COMPRESSION`. The mass channel $\sqrt{M_{\mathrm{sonic}}}$ additionally lets a register-isolated note (e.g. a far-below bass) raise the total. Because $S$ is on a larger scale than the previous mean-per-pair term, `MAX_DENS_GLOBAL` ($D_{\max}$) was recalibrated in 5.0.0-strict-symbolic (median-matched against `benchmarks/expected_outputs`; see `config.py`).
+$\mathrm{REF}$ = `MAX_DENS_GLOBAL` (**193**). $D_{\mathrm{pitch}}$ remains a reported axis; it is **not** the composite product. Zero interval contribution (unpitched-only) is a numeric zero — no event-kind branch. Traceability for the 575→193 recalibration: `CHANGES.md`.
 
 > **Removed:** mean-per-pair normalisation $D_{\mathrm{int}}^{\mathrm{norm}}$ as the aggregate's interval term (replaced by the raw sum $S$); redundant registral-span damping $1/(1+A_{\mathrm{st}}/12)$ in the composite product; earlier `D_{\mathrm{ref}} = D_{\mathrm{pond}}/A_{\mathrm{st}}` with zero-span exemption and cohesion factor $10/(1+A_{\mathrm{st}})$. The reported compactness axis $D_{\mathrm{int}}^{\mathrm{norm}}$ (`density.interval`) is unchanged and remains **intensive** (falls with spread).
 
