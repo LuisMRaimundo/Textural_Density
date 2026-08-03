@@ -54,7 +54,8 @@ def test_mixed_slice_display_mentions_unpitched_exclusion():
     r = calculate_metrics(_mixed_four_events())[0]
     text = format_output_string(r)
     assert "2 unpitched events excluded from pitch metrics by type" in text
-    assert "Composite: log10(1 + D_blend·√M / REF)" in text
+    assert "Composite: log10(1 + D_blend*sqrt(M)/REF)" in text
+    assert "D_blend=" in text
     assert f"REF={MAX_DENS_GLOBAL:g}" in text
 
 

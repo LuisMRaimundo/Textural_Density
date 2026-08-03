@@ -2,6 +2,21 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-03 — Label / docs accuracy (composite header, plural, REF provenance)
+
+**No computed value changed in this release.** Totals, blends, mass, and baselines
+are bit-identical to the Task 8c unification commit; only display strings,
+singular/plural wording, documentation, and acceptance fixtures move.
+
+- Header formula text is generated from `core.composite` (same expression as
+  `compute_blend_density`); prints `D_blend=` and `M=`; blend shown as
+  `w*(DI/10) + (1-w)*DV` (defaults) so it matches the sum of printed weighted
+  components.
+- Unpitched exclusion line uses `format_unpitched_exclusion_note` (singular/plural).
+- REF=193 provenance documented in `config.py`, MATHEMATICAL_MANUAL, constants.
+- Average-texture-density mean behaviour documented (may fall/rise; totals monotone).
+- Acceptance freeze: `tests/test_composite_unification_acceptance.py`.
+
 ## 2026-08-03 — Task 8c: unify composite (blend × mass)
 
 **Formula change (intentional).** Composite no longer uses the pitch-gated
@@ -35,7 +50,7 @@ assembly and `MAX_DENS_GLOBAL` move.
 
 ### Display
 
-- Header: `Composite: log10(1 + D_blend·√M / REF) with w=…, REF=193 (…)`.
+- Header: built by `format_composite_header_line` (see label/docs accuracy entry).
 - Unpitched-only spectral / advanced blocks: `n/a — no pitched content`.
 
 ### Construct-separation note

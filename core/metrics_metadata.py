@@ -91,9 +91,8 @@ def _instrument_density_epistemics(
     return source_type, validation, assumptions, warnings
 
 
-# Normalisation constants documented in metadata (not hidden)
-WEIGHTED_DI_MAX = 100.0
-WEIGHTED_DV_MAX = 10.0
+# Normalisation constants documented in metadata (single source: core.composite)
+from core.composite import WEIGHTED_DI_MAX, WEIGHTED_DV_MAX  # noqa: E402
 
 
 @dataclass
@@ -385,13 +384,15 @@ def build_metric_metadata(context: MetricAssemblyContext) -> dict[str, Any]:
         interpretation=metrics["density.refined"].interpretation,
     )
 
+    from core.composite import blend_definition_expression, composite_outer_expression
+
     total_assumptions = [
-        "Composite (all regimes) = log10(1 + D_blend × sqrt(sonic_mass) / MAX_DENS_GLOBAL) "
-        "with D_blend = density.weighted = 10·(w·DI/DI_max + (1−w)·DV/DV_max).",
+        f"Composite (all regimes) = {composite_outer_expression(use_log_compression=USE_LOG_COMPRESSION)} "
+        f"with D_blend = density.weighted = {blend_definition_expression()}.",
         f"Complexity factor (in pitch structure axis): {context.complexity_factor:.4f}.",
         f"Dynamic mass boost sqrt(sonic_mass): {context.dynamic_boost:.4f}.",
-        f"Single REF MAX_DENS_GLOBAL={MAX_DENS_GLOBAL} (not Qty or table size; "
-        "no event-kind fallback).",
+        f"Single REF MAX_DENS_GLOBAL={MAX_DENS_GLOBAL} (Task 8c re-freeze ≈192.6→193; "
+        "not Qty or table size; no event-kind fallback).",
     ]
     if USE_LOG_COMPRESSION:
         total_assumptions.append(

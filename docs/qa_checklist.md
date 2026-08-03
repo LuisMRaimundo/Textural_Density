@@ -96,9 +96,10 @@ Run: `pytest tests/test_unpitched_entry_paths.py tests/test_unpitched_pitch_excl
 - [x] Texture `player_count` / `player_weighted_texture_mass` include unpitched Qty
 - [x] Texture `average_texture_density` = Qty-weighted mean CDM (includes unpitched)
 - [x] Texture `texture_polyphony` / variability / contrast remain pitched-only
-- [x] Unified composite: `log10(1 + D_blend·√M / REF)` with `REF=193`; no unpitched-only fallback
+- [x] Unified composite: `log10(1 + D_blend*sqrt(M)/REF)` with `REF=193`; no unpitched-only fallback
 - [x] Property tests: monotonicity, mixed > subsets, continuity (`tests/test_unified_composite_contract.py`)
-- [x] Display: exclusion line; header prints `w` + `REF`; unpitched-only spectral = `n/a — no pitched content`
+- [x] Display: singular/plural exclusion; header from `core.composite` with `D_blend=` + `M=`; unpitched-only spectral = `n/a`
+- [x] Acceptance freeze: `tests/test_composite_unification_acceptance.py`
 - [x] All-pitched baselines re-frozen; old→new totals in `CHANGES.md`
 - [x] Docs cross-links: TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1, API, constants, acoustic sources, VERSIONING
 

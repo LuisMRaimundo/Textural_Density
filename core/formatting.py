@@ -10,6 +10,8 @@ from typing import Any
 import numpy as np
 
 from config import MAX_DENS_GLOBAL, USE_LOG_COMPRESSION
+from core.composite import format_composite_header_line
+from core.unpitched_labels import format_unpitched_exclusion_note
 
 logger = logging.getLogger(__name__)
 
@@ -46,24 +48,22 @@ def format_output_string(resultados: dict[str, Any]) -> str:
                 (resultados.get("input_data") or {}).get("weight_factor", 0.5),
             )
         )
+        d_blend = float(dens.get("weighted", 0))
         pitched_events = int(agg.get("pitched_event_count", distinct_pitch))
 
         moments = resultados["spectral_moments"]
         spectral_entropy = max(0.0, float(moments.get("spectral_entropy", 0)))
         complexity = max(0.0, float(resultados["additional_metrics"].get("complexity", 0)))
 
-        if USE_LOG_COMPRESSION:
-            composite_norm_line = (
-                f"Composite: log10(1 + D_blend·√M / REF) with w={weight_w:g}, "
-                f"REF={composite_ref:g} "
-                f"(D_blend = 10·(w·DI/100 + (1−w)·DV/10))"
-            )
-        else:
-            composite_norm_line = (
-                f"Composite: D_blend·√M / REF with w={weight_w:g}, "
-                f"REF={composite_ref:g} "
-                f"(D_blend = 10·(w·DI/100 + (1−w)·DV/10))"
-            )
+        composite_norm_line = format_composite_header_line(
+            d_blend=d_blend,
+            sonic_mass=sonic_mass,
+            w=weight_w,
+            ref=composite_ref,
+            use_log_compression=bool(
+                composite_meta.get("use_log_compression", USE_LOG_COMPRESSION)
+            ),
+        )
 
         lines = [
             "==================== PITCH STRUCTURE ====================",
@@ -76,10 +76,7 @@ def format_output_string(resultados: dict[str, Any]) -> str:
             f"Player Doubling Count: {player_doubling}",
         ]
         if unpitched_events > 0:
-            lines.append(
-                f"{unpitched_events} unpitched events excluded from pitch metrics by "
-                "type (see ORCHESTRAL MASS / TEXTURE)"
-            )
+            lines.append(format_unpitched_exclusion_note(unpitched_events))
         if not has_pitch_structure:
             lines.append(
                 "Note: unison / single pitch — no vertical pitch-structure diversity."
