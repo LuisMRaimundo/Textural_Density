@@ -18,9 +18,11 @@
 
 **Removed in 4.0.0-strict-symbolic:** Combination-tone / resultant-tone analysis (`calculate_combination_tones` and related keys). Analytical inputs containing those keys raise validation errors. `verified_by_tests` for many constructs; full `corpus_replicated` status requires a representative benchmark corpus. External expert ratings are **optional** empirical extensions, not required for the score-only line. See [`docs/revised_path_to_90_score_only.md`](docs/revised_path_to_90_score_only.md) and [`docs/score_only_upgrade_rubric.md`](docs/score_only_upgrade_rubric.md) (v2.0.0).
 
-**Changed in 5.0.0-strict-symbolic:** Composite vertical density is now **extensive** — pitch-structure density is built from the raw accumulating pairwise interval sum, so adding a distinct note never decreases `density.total`. The redundant registral-span damping was removed from the aggregate (registral span stays a reported subindex), and `MAX_DENS_GLOBAL` was recalibrated. Breaking numeric change; see the [Changelog](#changelog).
+**Changed in 5.0.0-strict-symbolic:** Pitch-structure density became **extensive** (raw accumulating pairwise interval sum; registral-span damping removed from that axis). See the [Changelog](#changelog).
 
 **Changed in 5.1.0-strict-symbolic:** Instrument-density dynamic tails now **saturate** with a **register-adaptive** log-domain rule instead of continuing the GPR trend. Local step $s(m)$ is taken from the measured pp/mf/ff spread at the event's pitch and shrunk geometrically by `DYN_TAIL_SHRINK=0.5` (whole tail ≤ one measured step). This fixes negative soft-tail weights and non-monotone loud-tail mass, and tracks dynamic-palette compression at range extremes. Interior predictions unchanged; numeric change only for tail-dynamic cases. See the [Changelog](#changelog).
+
+**Changed in Task 8c (2026-08-03):** Composite vertical density is a **single blend×mass path** for all regimes — `log10(1 + density.weighted·√M / REF)` with `REF=193`. The pitch-gated product and unpitched-only fallback are removed. Baselines re-frozen; see [CHANGES.md](CHANGES.md).
 
 ---
 

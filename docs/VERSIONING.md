@@ -40,6 +40,8 @@ These describe **scientific scope**, not Python package semver:
 | `5.0.0-strict-symbolic` | Extensive composite vertical density: pitch-structure aggregate built from the raw accumulating pairwise interval sum (non-decreasing on distinct-note addition); redundant registral-span damping removed from the aggregate; `MAX_DENS_GLOBAL` recalibrated. Breaking numeric change. | historical |
 | `5.1.0-strict-symbolic` | Saturating **register-adaptive** dynamic-tail extrapolation for instrument density: out-of-support tails (below `pp` / above `ff`) use a log-domain extension whose local step $s(m)$ derives from the measured pp/mf/ff spread at the event's pitch, geometrically shrunk by `DYN_TAIL_SHRINK` ($\gamma=0.5$), so the whole tail ≤ one measured step. Replaces the earlier fixed-ratio draft. Fixes negative soft-tail weights and non-monotone loud-tail mass; tracks register compression at range extremes. Interior predictions unchanged; numeric change only for tail-dynamic cases. | `METRIC_SCHEMA_VERSION` in `core/defaults.py` |
 
+**Task 8c (2026-08-03, still under `5.1.0-strict-symbolic`):** Composite assembly changed to the unified blend×mass formula (`REF=193`); pitch-structure remains the extensive $S$ axis. Schema label unchanged — numeric/traceability details in [`CHANGES.md`](../CHANGES.md).
+
 Outputs embed `metric_schema_version` (currently **`5.1.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.4`.
 
 See [MIGRATION.md](MIGRATION.md) for phase history.

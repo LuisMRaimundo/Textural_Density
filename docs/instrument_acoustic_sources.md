@@ -441,7 +441,7 @@ metrics (`core/unpitched_routing.py`).
 - **Regenerate:** `python tools/generate_percussion_modules_from_nontunperc.py`
 - **Placeholder keys (lookup only, no acoustic meaning):** Bass drum `D2`, Cymbals `C5`, Tam-tam `C2`, Gong `C3` (registry `sounding_range` midpoints via `canonical_unpitched_note`).
 - **Entry paths:** GUI, MusicXML `<unpitched>`, and MIDI channel-10 all emit `InstrumentEvent.unpitched=True` plus that placeholder. Display-step/octave and GM key numbers are never treated as sounding pitch. Unmappable events are skipped with a warning (part + measure for MusicXML; key for MIDI) — no pitched fallback. Pitch-structure exclusion is only in `partition_pitched_events`. Full map: `docs/TECHNICAL_MANUAL.md` §7.5.
-- **Aggregation (PR #31):** Event/Player Count and texture player/CDM averages **include** these events; interval / pitch-structure / texture polyphony do **not**. Unpitched-only composite equals the weighted orchestral term. Contract table: `docs/TECHNICAL_MANUAL.md` §7.5.1.
+- **Aggregation (PR #31 / Task 8b + PR #33 / Task 8c):** Event/Player Count and texture player/CDM averages **include** these events; interval / pitch-structure / texture polyphony do **not**. Composite uses the **unified** blend×mass path for all regimes (`log10(1 + density.weighted·√M / REF)`, `REF=193`) — no unpitched-only fallback. Contract table: `docs/TECHNICAL_MANUAL.md` §7.5.1; traceability: `CHANGES.md`.
 
 ## Registry-only instruments
 

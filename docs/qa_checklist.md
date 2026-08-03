@@ -90,7 +90,7 @@ Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now por
 
 Run: `pytest tests/test_unpitched_entry_paths.py tests/test_unpitched_pitch_exclusion.py -q`
 
-## Unpitched aggregation contract (PR #31 / Task 8b) + unified composite (Task 8c)
+## Unpitched aggregation contract (PR #31 / Task 8b) + unified composite (PR #33 / Task 8c)
 
 - [x] Event Count / Player Count = pitched + unpitched (mixed slice 4/4)
 - [x] Texture `player_count` / `player_weighted_texture_mass` include unpitched Qty
@@ -98,8 +98,9 @@ Run: `pytest tests/test_unpitched_entry_paths.py tests/test_unpitched_pitch_excl
 - [x] Texture `texture_polyphony` / variability / contrast remain pitched-only
 - [x] Unified composite: `log10(1 + D_blend·√M / REF)` with `REF=193`; no unpitched-only fallback
 - [x] Property tests: monotonicity, mixed > subsets, continuity (`tests/test_unified_composite_contract.py`)
-- [x] Display: exclusion line; unpitched-only spectral = `n/a — no pitched content`
+- [x] Display: exclusion line; header prints `w` + `REF`; unpitched-only spectral = `n/a — no pitched content`
 - [x] All-pitched baselines re-frozen; old→new totals in `CHANGES.md`
+- [x] Docs cross-links: TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1, API, constants, acoustic sources, VERSIONING
 
 Run: `pytest tests/test_unpitched_aggregation_contract.py tests/test_unified_composite_contract.py -q`
 
