@@ -342,13 +342,13 @@ $$
 
 **Module:** `timbre_texture_analysis.py`.
 
-**Texture** (`calculate_texture_density`) on **distinct pitch bins**:
+**Texture** (`calculate_texture_density`):
 
-- `player_count` / `player_weighted_texture_mass` $= \sum_i n_{\mathrm{instr},i}$ (total players)
-- `pitch_polyphony` $= n_{\mathrm{distinct}}$ (distinct pitch bins — **not** mean Qty)
-- `texture_polyphony` — alias of `pitch_polyphony` (legacy key)
-- `texture_variability` $= \mathrm{std}(m_i)$
-- `texture_contrast` $= \max m_i - \min m_i$
+- `player_count` / `player_weighted_texture_mass` $= \sum n_j$ over the **full slice** (pitched + unpitched Qty)
+- `average_texture_density` = Qty-weighted mean one-player CDM over the **full slice** (includes unpitched)
+- `pitch_polyphony` / `texture_polyphony` $= n_{\mathrm{distinct}}$ (**pitched** bins only)
+- `texture_variability` $= \mathrm{std}(m_i)$ over pitched bins
+- `texture_contrast` $= \max m_i - \min m_i$ over pitched bins
 
 **Timbre blend** (`calculate_timbre_blend`):
 

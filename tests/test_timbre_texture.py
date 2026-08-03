@@ -79,6 +79,23 @@ class TestCalculateTextureDensity:
 
         assert result["average_texture_density"] == 4
 
+    def test_full_slice_players_and_cdm_average(self):
+        """Unpitched Qty/CDM enter player_count and average_texture_density."""
+        pitches = [60.0, 64.0]
+        pitched_players = [1, 1]
+        all_players = [1, 1, 1, 1]  # two unpitched
+        all_densities = [10.0, 20.0, 30.0, 40.0]
+        result = calculate_texture_density(
+            pitches,
+            pitched_players,
+            all_player_counts=all_players,
+            all_densities=all_densities,
+        )
+        assert result["player_count"] == 4
+        assert result["player_weighted_texture_mass"] == 4
+        assert result["texture_polyphony"] == 2
+        assert result["average_texture_density"] == pytest.approx(25.0)
+
 
 class TestCalculateTimbreBlend:
     """Test timbre blend calculation."""
