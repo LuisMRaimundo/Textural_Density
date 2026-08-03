@@ -873,18 +873,120 @@ REGISTRY["harpa"] = _profile(
 )
 
 # --- Percussion (pitch where applicable) ---
-_PERCUSSION = (
+# Table-backed unpitched specimens (NonTunPerc Analysis strike composite → CDM).
+REGISTRY["bombo"] = _profile(
+    "bombo",
+    "Bass drum",
+    "percussion",
+    sounding=(28, 48),
+    comfortable=(28, 48),
+    brightness="dark",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="bass_drum",
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/bass_drum.py from NonTunPerc Analysis "
+        "bassdrum_82cm strike composite_index (ff) with scaled pp/mf; unpitched — "
+        "note is nominal MIDI metadata only."
+    ),
+    warnings=(
+        "Instrument density uses literature-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_membrane only; unpitched strokes may lack pitch metadata.",
+    ),
+    aliases=("bass_drum", "bass drum"),
+)
+
+REGISTRY["pratos"] = _profile(
+    "pratos",
+    "Cymbals",
+    "percussion",
+    sounding=(60, 84),
+    comfortable=(60, 84),
+    brightness="very_bright",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="cymbals",
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/cymbals.py from NonTunPerc Analysis "
+        "cymbal_46cm_medium strike composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is nominal MIDI metadata only."
+    ),
+    warnings=(
+        "Instrument density uses literature-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; unpitched strokes may lack pitch metadata.",
+    ),
+    aliases=("cymbals", "cymbal"),
+)
+
+REGISTRY["tamtam"] = _profile(
+    "tamtam",
+    "Tam-tam",
+    "percussion",
+    sounding=(24, 48),
+    comfortable=(24, 48),
+    brightness="bright",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="tamtam",
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/tamtam.py from NonTunPerc Analysis "
+        "tamtam_80cm_bronze strike composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is nominal MIDI metadata only."
+    ),
+    warnings=(
+        "Instrument density uses literature-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; unpitched strokes may lack pitch metadata.",
+    ),
+    aliases=("tam_tam", "tam-tam", "tam tam"),
+)
+
+REGISTRY["gongo"] = _profile(
+    "gongo",
+    "Gong",
+    "percussion",
+    sounding=(36, 60),
+    comfortable=(36, 60),
+    brightness="bright",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="gong",
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/gong.py from NonTunPerc Analysis "
+        "gong_50cm_bronze strike composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is nominal MIDI metadata only."
+    ),
+    warnings=(
+        "Instrument density uses literature-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; unpitched strokes may lack pitch metadata.",
+    ),
+    aliases=("gong",),
+)
+
+_PERCUSSION_COARSE = (
     ("timpanos", "Timpani", (36, 60), ("timpani", "timbales")),
-    ("bombo", "Bass drum", (28, 48), ("bass_drum",)),
     ("caixa", "Snare drum", (60, 72), ("snare_drum", "snare")),
-    ("pratos", "Cymbals", (60, 84), ("cymbals",)),
-    ("tamtam", "Tam-tam", (24, 48), ("tam_tam", "tam-tam")),
     ("vibrafone", "Vibraphone", (53, 84), ("vibraphone",)),
     ("marimba", "Marimba", (45, 84), ("marimba",)),
     ("metalofone", "Glockenspiel", (72, 108), ("glockenspiel", "glock")),
 )
 
-for _id, _name, _sound, _aliases in _PERCUSSION:
+for _id, _name, _sound, _aliases in _PERCUSSION_COARSE:
     REGISTRY[_id] = _profile(
         _id,
         _name,
