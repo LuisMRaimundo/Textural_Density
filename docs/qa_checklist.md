@@ -65,7 +65,7 @@ CI skips reconstruction when `D:\CORDAS\` workbooks are unavailable on the runne
 1. **Double-bass table span adjudication:** resolved — `source_table_span` E1–C5 aligns with committed module, `INSTRUMENT_SOURCE.pitch_range`, and registry; E1–A3 was obsolete documentation. Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 2. **Technique metadata vs tables:** resolved — `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` distinguish numerical table coverage from registry organological capabilities.
 3. **Tuba range:** MIDI 28–58 is coarse-default validation placeholder — **REVIEW REQUIRED** for authoritative organological range.
-4. **Committed dynamics (2026-08-03):** runtime GPR removed; violin arco full ladder committed; sparse modules must migrate before non-anchor dynamics are used.
+4. **Committed dynamics (2026-08-03):** runtime GPR removed; ordinary-sustain ladders committed for violin/viola/cello/dbass/flute/clarinet/bassoon/oboe; remaining sparse modules (trumpet, techniques, percussion) must migrate before non-anchor dynamics are used.
 
 Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now portable doc anchor).
 
@@ -149,7 +149,7 @@ Tests: `tests/test_quantity_scaling.py`, `tests/test_gui_architecture.py`.
 - [x] `benchmarks/corpus/excerpt_004.musicxml` (transpose persists measure 2) + frozen output
 - [x] `benchmarks/corpus/excerpt_005.musicxml` (multi-instrument dynamics) + frozen output
 - [x] Dynamic docs aligned with committed-ladder lookup; see `docs/TECHNICAL_MANUAL.md` §2.4.1
-- [x] Violin full dynamics table + `MissingCommittedDynamicError` for sparse modules
+- [x] Ordinary-sustain full dynamics tables (violin/viola/cello/dbass/flute/clarinet/bassoon/oboe) + `MissingCommittedDynamicError` for sparse modules
 - [ ] Global onset reconstruction from MusicXML `<duration>` accumulation (not implemented)
 
 ## Frozen outputs (when formulas change)

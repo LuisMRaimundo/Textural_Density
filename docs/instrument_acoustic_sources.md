@@ -1,6 +1,6 @@
 # Instrument acoustic source provenance
 
-> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Most registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — commit full ladders (violin arco done; others migrating). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
+> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Most registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — full `Results` ladders committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, and oboe (trumpet / techniques / percussion still migrating). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
 
 This document records **external acoustic metadata** embedded in `instrumentos/*.py`
 modules. The analysis pipeline performs **score lookup** into these tables — not
@@ -25,7 +25,7 @@ live audio analysis.
 - **Provenance:** Median/midpoint summary of flute sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Flute_Zenodo_collections_media.xlsx`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error).
+- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
 - **Uncertainty:** medium — sparse table, not full continuous spectrum.
 
 ## Clarinet (`clarinet`)
@@ -35,7 +35,7 @@ live audio analysis.
 - **Provenance:** Median/midpoint summary of clarinet sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Clarinet_Zenodo_collections_media.xlsx`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Oboe (`oboe`)
@@ -45,7 +45,8 @@ live audio analysis.
 - **Provenance:** Median/midpoint summary of oboe sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Oboe_Zenodo_collections_media.xlsx`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed
+  (`Oboe_iowa_orchidea_dynamics.xlsx`).
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Bassoon (`fagote` → `bassoon.py`)
@@ -56,7 +57,7 @@ live audio analysis.
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Bassoon_Zenodo_collections_media.xlsx`
 - **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Trumpet (`trompete` → `trumpet.py`)
@@ -83,7 +84,7 @@ live audio analysis.
   `normalize_media_note_label()` before canonical parsing (maps to `F4` with the same CDM values).
 - **Sounding range (registry):** MIDI 48–96 (C3–C7), aligned with committed `spectral_data` table span; comfortable 50–69 (D3–A4)
 - **Extraction:** CDM midpoint pass-through; no rescaling (`identity_v1`)
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
 - **Uncertainty:** medium — sparse table with known QC flags on extreme-register rows
 
 ## Viola sordina (`viola_sordina`)
@@ -218,7 +219,7 @@ live audio analysis.
 - **Table:** `spectral_data` (49 chromatic rows, C2–C6)
 - **Provenance:** IOWA+ORCH arco sustain CDM medians at pp/mf/ff
 - **Source workbook:** `D:\CORDAS\CELLO_Zenodo_collections_media.xlsx`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
 - **Uncertainty:** medium
 
 ## Cello sordina (`cello_sordina`)
@@ -271,7 +272,7 @@ live audio analysis.
 - **Source technique:** `arco_sustain` (`table_supported_techniques`)
 - **Provenance:** IOWA+ORCH arco sustain CDM medians at pp/mf/ff
 - **Source workbook:** `D:\CORDAS\DOUBLEBASS_Zenodo_collections_media.xlsx`
-- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
+- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
 - **Uncertainty:** medium
 - **Span status:** E1–A3 in older docs was obsolete; committed span is E1–C5 (**PASS**). Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 
@@ -329,9 +330,11 @@ Offline curation pipeline (not used at runtime):
 5. `tools/generate_cello_technique_modules_from_xlsx.py` — emits `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` from Desktop `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (pp/mf/ff direct from `estimate_mean`).
 6. `tools/generate_double_bass_technique_modules_from_xlsx.py` — emits `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` from Desktop `Contrabass-pp.xlsx` / `Contrabass_mf.xlsx` / `Contrabass_ff.xlsx` (pp/mf/ff direct from `estimate_mean`).
 7. `tools/build_viola_table_from_media.py` — helper to regenerate viola `spectral_data` from `VIOLA_Media`.
-8. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
+8. `tools/generate_full_dynamics_modules_from_xlsx.py` — commits Dynamics_predicter sheet `Results` ladders into ordinary-sustain modules (`viola`, `cello`, `double_bass`, `flute`, `clarinet`, `bassoon`, `oboe`).
+9. `tools/generate_violin_arco_full_dynamics_from_xlsx.py` — violin arco `Results` ladder regenerator.
+10. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
-**Violin harmonics:** `violin_art_harm.py` and `violin_nat_harm.py` are regenerated from Strings Techniques Extrapolation harmonic workbooks (pp/mf/ff). Violin/viola/cello/double-bass sordina, sul tasto, and sul ponticello modules are regenerated from STE technique workbooks (assumption-based EWSD; high uncertainty). Intermediate and extreme dynamics (`pppp` … `ffff`) remain GPR-modelled at runtime in `calculate_metrics`.
+**Violin harmonics:** `violin_art_harm.py` and `violin_nat_harm.py` are regenerated from Strings Techniques Extrapolation harmonic workbooks (pp/mf/ff). Violin/viola/cello/double-bass sordina, sul tasto, and sul ponticello modules are regenerated from STE technique workbooks (assumption-based EWSD; high uncertainty). Non-anchor dynamics on those sparse modules raise `MissingCommittedDynamicError` until full ladders are committed (runtime GPR removed 2026-08-03).
 
 ## Media note-label normalization (PR #14)
 

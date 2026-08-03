@@ -28,7 +28,7 @@
 
 **Stress battery (2026-08-03, PR #37):** Public-API density stress suite (`python run_stress_battery.py`). **No computed value changed.** See [Testing](#testing) and [`tests/stress/README.md`](tests/stress/README.md).
 
-**Committed dynamics (2026-08-03):** Runtime GPR / adaptive-tail fill-in removed. Violin arco commits a full 10-dynamic ladder from Dynamics_predicter `Results`; other modules raise on missing cells until migrated. See [CHANGES.md](CHANGES.md).
+**Committed dynamics (2026-08-03):** Runtime GPR / adaptive-tail fill-in removed. Full 10-dynamic `Results` ladders committed for violin arco, viola, cello, double bass, flute, clarinet, bassoon, and oboe; other modules raise on missing cells until migrated. See [CHANGES.md](CHANGES.md).
 
 ---
 
@@ -203,7 +203,7 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 
 **Unpitched percussion:** Bass drum, Cymbals, Tam-tam, and Gong use a canonical placeholder note key (registry range midpoint: `D2` / `C5` / `C2` / `C3`) for CDM lookup only — **no acoustic / pitch-structure meaning**. Entry paths converge on `unpitched=True` + that key: the GUI hides note/octave/cents and injects the placeholder; MusicXML `<unpitched>` never promotes display-step/octave; MIDI channel-10 maps a small GM key set (35/36 bass drum; 49/57 crash; 51/59 ride and 52 Chinese → Cymbals with a logged approximation). Unmappable events are skipped with a warning — never a pitched fallback. Pitch-structure exclusion is enforced once in `core/unpitched_routing.partition_pitched_events`. Event/Player Count and texture player/CDM averages include unpitched events; texture polyphony stays pitched-only. **Composite (unified):** `log10(1 + D_blend*sqrt(M)/REF)` with `D_blend = density.weighted = w*(DI/10)+(1−w)*DV` (defaults) and `REF = 193` — one formula for pitched, unpitched, and mixed (no fallback). Header text comes from `core.composite.format_composite_header_line`. See [TECHNICAL_MANUAL §7.5](docs/TECHNICAL_MANUAL.md) and [CHANGES.md](CHANGES.md).
 
-**Dynamics:** Production looks up **committed** `spectral_data` cells only — no runtime GPR or adaptive-tail fill-in. Violin arco already has the full 10-dynamic ladder from Dynamics_predicter `Results`; other instruments are migrating. Missing cells raise `MissingCommittedDynamicError`. See [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §2.4.1.
+**Dynamics:** Production looks up **committed** `spectral_data` cells only — no runtime GPR or adaptive-tail fill-in. Violin arco, viola, cello, double bass, flute, clarinet, bassoon, and oboe have full 10-dynamic ladders from Dynamics_predicter `Results`; other instruments are migrating. Missing cells raise `MissingCommittedDynamicError`. See [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §2.4.1.
 
 **Acoustic-table pitch rule:** Sparse CDM metadata rows in `instrumentos/*.py` use the pitch basis documented per module (see `docs/instrument_acoustic_sources.md`). The Excel importer does not transpose imported rows.
 
