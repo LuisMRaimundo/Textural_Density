@@ -42,6 +42,8 @@ These describe **scientific scope**, not Python package semver:
 
 **Task 8c (2026-08-03, still under `5.1.0-strict-symbolic`):** Composite assembly changed to the unified blend×mass formula (`REF=193`); pitch-structure remains the extensive $S$ axis. Schema label unchanged — numeric/traceability details in [`CHANGES.md`](../CHANGES.md).
 
+**Label / docs accuracy (2026-08-03, PR #35, still under `5.1.0-strict-symbolic`):** Header and exclusion-note wording aligned with computation (`core.composite` / `core.unpitched_labels`); REF provenance and average-texture-density mean behaviour documented. **No numeric / schema change** — see [`CHANGES.md`](../CHANGES.md) “Label / docs accuracy”.
+
 Outputs embed `metric_schema_version` (currently **`5.1.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.4`.
 
 See [MIGRATION.md](MIGRATION.md) for phase history.

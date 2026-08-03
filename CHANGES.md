@@ -4,9 +4,10 @@ Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL
 
 ## 2026-08-03 — Label / docs accuracy (composite header, plural, REF provenance)
 
-**No computed value changed in this release.** Totals, blends, mass, and baselines
-are bit-identical to the Task 8c unification commit; only display strings,
-singular/plural wording, documentation, and acceptance fixtures move.
+**No computed value changed in this release** (PR #35 code + this docs follow-up).
+Totals, blends, mass, and baselines are bit-identical to the Task 8c unification
+commit; only display strings, singular/plural wording, documentation, and
+acceptance fixtures move.
 
 - Header formula text is generated from `core.composite` (same expression as
   `compute_blend_density`); prints `D_blend=` and `M=`; blend shown as
@@ -15,7 +16,10 @@ singular/plural wording, documentation, and acceptance fixtures move.
 - Unpitched exclusion line uses `format_unpitched_exclusion_note` (singular/plural).
 - REF=193 provenance documented in `config.py`, MATHEMATICAL_MANUAL, constants.
 - Average-texture-density mean behaviour documented (may fall/rise; totals monotone).
-- Acceptance freeze: `tests/test_composite_unification_acceptance.py`.
+- Acceptance freeze: `tests/test_composite_unification_acceptance.py`
+  (GUI chain goldens; final composite **0.4595** at `w=0.5` — see test module
+  docstring for session transcription notes).
+- Cross-links updated in README, VERSIONING, MIGRATION, acoustic sources, QA.
 
 ## 2026-08-03 — Task 8c: unify composite (blend × mass)
 
