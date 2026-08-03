@@ -1,6 +1,6 @@
 # Instrument acoustic source provenance
 
-> **Corpus status (2026-06):** The instrument metadata layer is **incomplete and under gradual curation**. Most registry entries lack dedicated acoustic tables; committed GPR modules are **partial proxies**, not final calibrated reference data. Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest. Do not treat flute / clarinet / oboe tables as complete scientific corpora.
+> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Most registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — commit full ladders (violin arco done; others migrating). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
 
 This document records **external acoustic metadata** embedded in `instrumentos/*.py`
 modules. The analysis pipeline performs **score lookup** into these tables — not
@@ -15,10 +15,8 @@ live audio analysis.
 > absent; on a machine with the deposits present, **cello** and **double_bass**
 > workbook reconstruction currently **PASS**, while **violin** and **viola** are
 > the two suite skips that will activate once those workbooks are deposited for CI.
-> sklearn may emit `ConvergenceWarning` (Matérn `length_scale` at its upper bound)
-> during the fixed deterministic GPR fits — a known, **benign** property of the
-> production estimator (`GPR_RANDOM_STATE=0`); it does not indicate nondeterminism
-> or a failed fit for the committed tables.
+> Runtime dynamics lookup is table-only (2026-08-03). Historical GPR audits remain
+> under `tools/legacy_gpr_dynamic_interpolation.py` / `reports/`.
 
 ## Flute (`flute`)
 
@@ -27,7 +25,7 @@ live audio analysis.
 - **Provenance:** Median/midpoint summary of flute sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Flute_Zenodo_collections_media.xlsx`
-- **Interpolation:** Gaussian-process regression for intermediate dynamics.
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error).
 - **Uncertainty:** medium — sparse table, not full continuous spectrum.
 
 ## Clarinet (`clarinet`)
@@ -37,7 +35,7 @@ live audio analysis.
 - **Provenance:** Median/midpoint summary of clarinet sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Clarinet_Zenodo_collections_media.xlsx`
-- **Interpolation:** Gaussian-process regression for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Oboe (`oboe`)
@@ -47,7 +45,7 @@ live audio analysis.
 - **Provenance:** Median/midpoint summary of oboe sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Oboe_Zenodo_collections_media.xlsx`
-- **Interpolation:** Gaussian-process regression for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Bassoon (`fagote` → `bassoon.py`)
@@ -58,7 +56,7 @@ live audio analysis.
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Bassoon_Zenodo_collections_media.xlsx`
 - **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
-- **Interpolation:** Gaussian-process regression for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Trumpet (`trompete` → `trumpet.py`)
@@ -69,7 +67,7 @@ live audio analysis.
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\METAIS\Trumpet_Zenodo_collections_media.xlsx`
 - **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
-- **Interpolation:** Gaussian-process regression for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Viola (`viola`)
@@ -85,7 +83,7 @@ live audio analysis.
   `normalize_media_note_label()` before canonical parsing (maps to `F4` with the same CDM values).
 - **Sounding range (registry):** MIDI 48–96 (C3–C7), aligned with committed `spectral_data` table span; comfortable 50–69 (D3–A4)
 - **Extraction:** CDM midpoint pass-through; no rescaling (`identity_v1`)
-- **Interpolation:** Gaussian-process regression for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** medium — sparse table with known QC flags on extreme-register rows
 
 ## Viola sordina (`viola_sordina`)
@@ -98,7 +96,7 @@ live audio analysis.
   technique `con_sordino`); **not** Zenodo-measured CDM
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_sordina`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
 
@@ -111,7 +109,7 @@ live audio analysis.
   `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (technique `sul_tasto`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_tasto`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
 
@@ -124,7 +122,7 @@ live audio analysis.
   `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (technique `sul_ponticello`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_ponticello`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
 - **Skipped:** artificial/natural harmonics remain `unavailable` in the source
@@ -133,11 +131,18 @@ live audio analysis.
 ## Violin (`violin`)
 
 - **Module:** `instrumentos/violin.py`
-- **Table:** `spectral_data` (49 chromatic rows, G3–G7)
-- **Provenance:** IOWA+ORCH arco sustain CDM medians at pp/mf/ff
-- **Source workbook:** `D:\CORDAS\VIOLIN_Zenodo_collections_media.xlsx`
-- **Interpolation:** GPR for intermediate dynamics
-- **Uncertainty:** medium
+- **Table:** `spectral_data` (49 chromatic rows, G3–G7 × **all 10** dynamics)
+- **Provenance (2026-08-03):** IOWA+ORCH measured anchors at pp/mf/ff, with the
+  full dynamic ladder committed from Dynamics_predicter sheet **`Results`**
+  (data-faithful imputation). Runtime analysis looks up committed cells — it does
+  **not** re-run GPR / adaptive-tail extrapolation for violin arco.
+- **Source workbook (committed ladder):** Desktop
+  `Violino - extrapol/Dynamics_predicter/outputs/iowa_orchidea_dynamics.xlsx`
+  (`Results`). Anchor corpus also documented at
+  `D:\CORDAS\VIOLIN_Zenodo_collections_media.xlsx`.
+- **Regeneration:** `tools/generate_violin_arco_full_dynamics_from_xlsx.py`
+  (`--sheet Results`; switch later if needed).
+- **Uncertainty:** medium — non-anchor cells remain workbook-modelled, not lab measurements
 
 ## Violin sordina (`violin_sordina`)
 
@@ -148,7 +153,7 @@ live audio analysis.
   `con_sordino`); **not** Zenodo-measured CDM
 - **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
 - **Source technique:** `arco_sordina`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
@@ -161,7 +166,7 @@ live audio analysis.
   `Violin_mf.xlsx` / `Violin_ff.xlsx` (technique `sul_tasto`)
 - **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
 - **Source technique:** `arco_sul_tasto`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
@@ -174,9 +179,9 @@ live audio analysis.
   earlier mf-only hand-curated Zenodo-style table
 - **Workbook anchors:** mf and ff (`MF_MEASURED`, `FF_MEASURED`)
 - **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
-- **GPR-modelled dynamics:** pppp, ppp, p, mp, f, fff, ffff predicted by GPR on the pp/mf/ff triple
+- **Non-anchor dynamics:** require committed ladder cells (runtime GPR removed)
 - **Source technique:** `arco_sul_ponticello`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
@@ -190,7 +195,7 @@ live audio analysis.
   (`All_Results.estimate_mean`, technique `artificial_harmonic`)
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_artificial_harmonic`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_harmonic_modules_from_xlsx.py`
 
@@ -203,7 +208,7 @@ live audio analysis.
   (`All_Results.estimate_mean`, technique `natural_harmonic`)
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_natural_harmonic`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_harmonic_modules_from_xlsx.py`
 
@@ -213,7 +218,7 @@ live audio analysis.
 - **Table:** `spectral_data` (49 chromatic rows, C2–C6)
 - **Provenance:** IOWA+ORCH arco sustain CDM medians at pp/mf/ff
 - **Source workbook:** `D:\CORDAS\CELLO_Zenodo_collections_media.xlsx`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** medium
 
 ## Cello sordina (`cello_sordina`)
@@ -226,7 +231,7 @@ live audio analysis.
   technique `con_sordino`); **not** Zenodo-measured CDM
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_sordina`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
 
@@ -239,7 +244,7 @@ live audio analysis.
   `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (technique `sul_tasto`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_tasto`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
 
@@ -252,7 +257,7 @@ live audio analysis.
   `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (technique `sul_ponticello`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_ponticello`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
 - **Skipped:** artificial/natural harmonics remain `unavailable` in the source
@@ -266,7 +271,7 @@ live audio analysis.
 - **Source technique:** `arco_sustain` (`table_supported_techniques`)
 - **Provenance:** IOWA+ORCH arco sustain CDM medians at pp/mf/ff
 - **Source workbook:** `D:\CORDAS\DOUBLEBASS_Zenodo_collections_media.xlsx`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** medium
 - **Span status:** E1–A3 in older docs was obsolete; committed span is E1–C5 (**PASS**). Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 
@@ -280,7 +285,7 @@ live audio analysis.
   (`All_Results.estimate_mean`, technique `con_sordino`); **not** Zenodo-measured CDM
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_sordina`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
 
@@ -293,7 +298,7 @@ live audio analysis.
   `Contrabass-pp.xlsx` / `Contrabass_mf.xlsx` / `Contrabass_ff.xlsx` (technique `sul_tasto`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_tasto`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
 
@@ -307,7 +312,7 @@ live audio analysis.
   (technique `sul_ponticello`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_ponticello`
-- **Interpolation:** GPR for intermediate dynamics
+- **Dynamics:** sparse pp/mf/ff until a full ladder is committed (missing cells error)
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
 - **Skipped:** artificial/natural harmonics remain `unavailable` in the source
@@ -353,7 +358,7 @@ Applied in `tools/populate_td_importer_sheets_from_zenodo_media.py` (`_read_medi
 
 ## Technique metadata vs source tables
 
-Registry `supported_techniques` lists organological capabilities. GPR modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the numerical table actually committed (e.g. `arco_sustain` for strings, `ordinary_sustain` for winds). Pizzicato, tremolo, harmonics, mute, flutter-tongue, etc. are **not** modelled unless separate technique-specific tables exist.
+Registry `supported_techniques` lists organological capabilities. Table-backed modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the numerical table actually committed (e.g. `arco_sustain` for strings, `ordinary_sustain` for winds). Pizzicato, tremolo, harmonics, mute, flutter-tongue, etc. are **not** modelled unless separate technique-specific tables exist.
 
 Audit: `tools/audit_instrument_metadata_range_resolution.py` → `reports/instrument_metadata_range_resolution_audit.*`
 
@@ -365,7 +370,7 @@ Audit: `tools/audit_instrument_metadata_range_resolution.py` → `reports/instru
 | TECHNIQUE | `INSTRUMENT_SOURCE.table_supported_techniques` vs registry `supported_techniques`; tables do not overclaim technique coverage. | **PASS** |
 | TUBA-RNG | Tuba sounding_range MIDI 28–58 is coarse-default validation placeholder without source table. | **REVIEW REQUIRED** |
 | TRANS-META | `registry.transposition` is metadata-only; manual input is sounding pitch; MusicXML `<transpose>` converts once. | **PASS** |
-| GPR-DET | Production GPR uses explicit `random_state=GPR_RANDOM_STATE` (`0`) via `create_dynamic_gpr()`; determinism is numerical repeatability only, not general empirical validation. | **PASS** |
+| LEGACY-GPR | Runtime GPR retired 2026-08-03; historical code at `tools/legacy_gpr_dynamic_interpolation.py`. | **N/A (retired)** |
 | GPR-MQ | GPR model-quality audit (`tools/audit_gpr_model_quality.py`): 357 source rows (8 GPR modules, incl. bassoon); 58 convex-hull departures (pp–mf); GPR–linear/quadratic/PCHIP diagnostic deviations. Production GPR unchanged; references not adopted. | **REVIEW REQUIRED** (local hull departures; low-register strings) |
 | GPR-CMP | Interpolation method comparison (`tools/compare_dynamic_interpolation_methods.py`): GPR vs linear vs PCHIP — 357 source rows, 320+20 scenarios, 5 benchmark excerpts. **0** high/extreme scenario-level `density.instrument` cases; production GPR unchanged; linear/PCHIP not adopted. | **PASS** (diagnostic complete; policy selection deferred) |
 

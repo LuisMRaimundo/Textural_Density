@@ -6,9 +6,9 @@ Use alongside [`score_only_90_readiness_checklist.md`](score_only_90_readiness_c
 
 | Gate | Status |
 |------|--------|
-| Full suite | **1542 passed / 2 skipped / 18 xfailed** |
+| Full suite | Re-verify after dynamics migration (adaptive-tail xfails retired) |
 | Skipped | 2 — violin / viola source-workbook reproducibility when Zenodo files absent |
-| Xfailed | 18 — measured/interior non-monotonicity on adaptive-tail grid |
+| Xfailed | Adaptive-tail positivity grid removed with runtime GPR (2026-08-03) |
 | Full-project coverage | gate ≥ 63% (CI quality job) |
 | `core/` + `validation/` coverage | ≥ 80% (CI quality job) |
 | MyPy (`core`, `validation`) | Clean |
@@ -35,7 +35,7 @@ Use alongside [`score_only_90_readiness_checklist.md`](score_only_90_readiness_c
 - `tests/test_string_score_scenarios.py`
 - `tests/test_instrument_provenance.py`
 
-Coverage includes: module/table contracts; exact anchor lookup; source workbook reconstruction (local); pitch spelling; Unicode accidentals; enharmonic normalization; cents/microtonal handling; interpolation provenance; GPR diagnostics; organological fixtures; ensemble/MusicXML scenarios; double-bass sounding-pitch via MusicXML transposition; quantity row-splitting; unison/octave/cluster/register/dynamics/event-order invariants.
+Coverage includes: module/table contracts; exact anchor lookup; source workbook reconstruction (local); pitch spelling; Unicode accidentals; enharmonic normalization; cents/microtonal handling; interpolation provenance; committed-dynamics contracts; organological fixtures; ensemble/MusicXML scenarios; double-bass sounding-pitch via MusicXML transposition; quantity row-splitting; unison/octave/cluster/register/dynamics/event-order invariants.
 
 Run: `pytest -m musicological -q`
 
@@ -65,7 +65,7 @@ CI skips reconstruction when `D:\CORDAS\` workbooks are unavailable on the runne
 1. **Double-bass table span adjudication:** resolved — `source_table_span` E1–C5 aligns with committed module, `INSTRUMENT_SOURCE.pitch_range`, and registry; E1–A3 was obsolete documentation. Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 2. **Technique metadata vs tables:** resolved — `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` distinguish numerical table coverage from registry organological capabilities.
 3. **Tuba range:** MIDI 28–58 is coarse-default validation placeholder — **REVIEW REQUIRED** for authoritative organological range.
-4. **GPR determinism:** production `GaussianProcessRegressor` instances set explicit `random_state=GPR_RANDOM_STATE` (`0`) via `create_dynamic_gpr()`; output is independent of global `np.random` state and benchmark order. Determinism is numerical repeatability only — not general perceptual or empirical validation.
+4. **Committed dynamics (2026-08-03):** runtime GPR removed; violin arco full ladder committed; sparse modules must migrate before non-anchor dynamics are used.
 
 Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now portable doc anchor).
 
@@ -148,7 +148,8 @@ Tests: `tests/test_quantity_scaling.py`, `tests/test_gui_architecture.py`.
 - [x] `benchmarks/corpus/excerpt_003.musicxml` + frozen `expected_outputs/excerpt_003.json`
 - [x] `benchmarks/corpus/excerpt_004.musicxml` (transpose persists measure 2) + frozen output
 - [x] `benchmarks/corpus/excerpt_005.musicxml` (multi-instrument dynamics) + frozen output
-- [x] Dynamic interpolation docs aligned: source anchors vs modelled dynamics; deterministic GPR; PR #24 comparison (diagnostic only); see `docs/TECHNICAL_MANUAL.md` §2.4.1
+- [x] Dynamic docs aligned with committed-ladder lookup; see `docs/TECHNICAL_MANUAL.md` §2.4.1
+- [x] Violin full dynamics table + `MissingCommittedDynamicError` for sparse modules
 - [ ] Global onset reconstruction from MusicXML `<duration>` accumulation (not implemented)
 
 ## Frozen outputs (when formulas change)

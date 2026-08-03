@@ -12,7 +12,7 @@
 
 ## Scientific scope
 
-> **Textural Density** is a strictly symbolic score-analysis framework. It computes analytical density indices from **notated events** at runtime — vertical simultaneities, intervals, register, dynamics, instruments, Qty/player counts, and other score-derived density metrics — **without audio input**. Interval, register, and event metrics are score-derived. **Instrument density** where GPR modules exist applies **externally sourced acoustic amplitude metadata** (sparse tables in `instrumentos/`, interpolated by GPR) to notated pitch and dynamic markings — this is not live acoustic analysis. The project does **not** analyse live audio, process waveforms, run FFT/STFT, extract spectral partials, compute EWSD, use H/I/S constructs, or generate resultant tones, combination tones, or other non-notated virtual pitches. It does **not** implement psychoacoustic or perceptual modelling. Written dynamics such as p, mf, and ff are **symbolic score markings**, not measured loudness or SPL.
+> **Textural Density** is a strictly symbolic score-analysis framework. It computes analytical density indices from **notated events** at runtime — vertical simultaneities, intervals, register, dynamics, instruments, Qty/player counts, and other score-derived density metrics — **without audio input**. Interval, register, and event metrics are score-derived. **Instrument density** applies **externally sourced acoustic amplitude metadata** (committed `spectral_data` ladders in `instrumentos/`) to notated pitch and dynamic markings — this is not live acoustic analysis and does not invent missing dynamics at runtime. The project does **not** analyse live audio, process waveforms, run FFT/STFT, extract spectral partials, compute EWSD, use H/I/S constructs, or generate resultant tones, combination tones, or other non-notated virtual pitches. It does **not** implement psychoacoustic or perceptual modelling. Written dynamics such as p, mf, and ff are **symbolic score markings**, not measured loudness or SPL.
 
 **Removed in 3.0.0-strict-symbolic:** Stevens' Law power-law compression, psychoacoustic corrections, and perceptual interval weighting.
 
@@ -27,6 +27,8 @@
 **Labels / docs (2026-08-03, PR #35):** Numerical Results header is generated from `core.composite` (same expression as the computation) and prints `D_blend=` / `M=`; unpitched exclusion uses correct singular/plural. **No computed value changed.** Acceptance freeze: `tests/test_composite_unification_acceptance.py`.
 
 **Stress battery (2026-08-03, PR #37):** Public-API density stress suite (`python run_stress_battery.py`). **No computed value changed.** See [Testing](#testing) and [`tests/stress/README.md`](tests/stress/README.md).
+
+**Committed dynamics (2026-08-03):** Runtime GPR / adaptive-tail fill-in removed. Violin arco commits a full 10-dynamic ladder from Dynamics_predicter `Results`; other modules raise on missing cells until migrated. See [CHANGES.md](CHANGES.md).
 
 ---
 
@@ -43,7 +45,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Epistemic metadata** — every metric labelled (`source_type`, `validation_status`, warnings)
 - **Interpretable subindices** — registral, orchestration, harmonicity proxies, etc.
 - **Temporal score analysis** — `analyze_score()` for timed XML/MIDI
-- **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; GPR CDM modules for flute, oboe, clarinet, bassoon, trumpet, and strings; metadata corpus still incomplete for many names
+- **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; table-backed CDM modules for flute, oboe, clarinet, bassoon, trumpet, strings, and selected percussion; metadata corpus still incomplete for many names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML sounding pitch** — written `<pitch>` converted to sounding/concert pitch via `<transpose>` before validation and density lookup (PR #21)
 - **Verification scaffolding** — full suite **1542 passed / 2 skipped / 18 xfailed** (2026-07-12, methodology `5.1.0-strict-symbolic`, package `1.1.4`); GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) (see [Testing](#testing))
@@ -156,7 +158,7 @@ Textural_Density/
 ├── data_processor_legacy.py   # Legacy I/O and validation text (not the metric pipeline)
 ├── densidade_intervalar.py    # Interval density library
 ├── spectral_analysis.py       # Spectral metadata proxies
-└── tests/                     # full suite 1542 passed / 2 skipped / 18 xfailed (2026-07-12); string musicological battery (PR #13); adaptive-tail contracts
+└── tests/                     # string musicological battery (PR #13); committed-dynamics contracts; stress battery (PR #37)
 ```
 
 **Call path (GUI):** `Main.py` → `AnalysisController` → `adapters/gui_adapter.build_analysis_request` → `core.pipeline.calculate_metrics`.
@@ -201,7 +203,7 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 
 **Unpitched percussion:** Bass drum, Cymbals, Tam-tam, and Gong use a canonical placeholder note key (registry range midpoint: `D2` / `C5` / `C2` / `C3`) for CDM lookup only — **no acoustic / pitch-structure meaning**. Entry paths converge on `unpitched=True` + that key: the GUI hides note/octave/cents and injects the placeholder; MusicXML `<unpitched>` never promotes display-step/octave; MIDI channel-10 maps a small GM key set (35/36 bass drum; 49/57 crash; 51/59 ride and 52 Chinese → Cymbals with a logged approximation). Unmappable events are skipped with a warning — never a pitched fallback. Pitch-structure exclusion is enforced once in `core/unpitched_routing.partition_pitched_events`. Event/Player Count and texture player/CDM averages include unpitched events; texture polyphony stays pitched-only. **Composite (unified):** `log10(1 + D_blend*sqrt(M)/REF)` with `D_blend = density.weighted = w*(DI/10)+(1−w)*DV` (defaults) and `REF = 193` — one formula for pitched, unpitched, and mixed (no fallback). Header text comes from `core.composite.format_composite_header_line`. See [TECHNICAL_MANUAL §7.5](docs/TECHNICAL_MANUAL.md) and [CHANGES.md](CHANGES.md).
 
-**Dynamic interpolation:** Production method is **deterministic GPR** on pp/mf/ff source anchors (`GPR_RANDOM_STATE = 0`). Modelled dynamics (`p`, `mp`, `f`, extremes) are not measured source data; `mp` is routed through GPR and is **not** mapped to `mf`. Linear and PCHIP were evaluated only as diagnostic conservative references (PR #24) — not adopted. See [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §2.4.1 and [docs/constants_and_assumptions.md](docs/constants_and_assumptions.md) §5.
+**Dynamics:** Production looks up **committed** `spectral_data` cells only — no runtime GPR or adaptive-tail fill-in. Violin arco already has the full 10-dynamic ladder from Dynamics_predicter `Results`; other instruments are migrating. Missing cells raise `MissingCommittedDynamicError`. See [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §2.4.1.
 
 **Acoustic-table pitch rule:** Sparse CDM metadata rows in `instrumentos/*.py` use the pitch basis documented per module (see `docs/instrument_acoustic_sources.md`). The Excel importer does not transpose imported rows.
 

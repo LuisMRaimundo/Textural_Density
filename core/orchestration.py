@@ -1,9 +1,9 @@
 """
 Per-event orchestration density from instrument modules.
 
-Instrument modules interpolate **externally sourced acoustic amplitude tables**
-(sparse note×dynamic GPR profiles). The analysis pipeline does not ingest audio;
-it applies pre-loaded acoustic metadata to notated pitch and dynamic markings.
+Instrument modules apply **externally sourced acoustic amplitude tables**
+(committed note × dynamic ladders). The analysis pipeline does not ingest audio
+and does not extrapolate missing dynamics at runtime.
 
 Quantity scaling (player count) is applied at the source-aggregation layer via
 ``core.quantity_scaling`` and ``core.source_aggregation`` — not inside per-event
@@ -30,14 +30,6 @@ logger = logging.getLogger("core.orchestration")
 class InstrumentModule(Protocol):
     def calcular_densidade(self, note: str, dynamic: str) -> float: ...
 
-    def predict_intermediate_dynamics(
-        self,
-        notes: list[str],
-        pp: list[float],
-        mf: list[float],
-        ff: list[float],
-    ) -> dict[str, list[float]]: ...
-
 
 def _normalize_dynamic(dynamic: str | None, known_dynamics: tuple[str, ...]) -> str:
     dyn = (dynamic or "mf").strip().lower()
@@ -52,8 +44,9 @@ def compute_event_one_player_density(
     """
     Single-player instrument density for one notated event.
 
-    Includes exactly one dynamic treatment via the instrument module lookup.
-    Does **not** scale by player count (Qty).
+    Looks up the committed spectral_data cell for the normalised dynamic.
+    Does **not** scale by player count (Qty). Missing dynamics are not
+    extrapolated — modules must commit the full ladder.
     """
     known = known_dynamics or tuple(DYNAMIC_LEVELS) if DYNAMIC_LEVELS else ("pp", "mf", "ff")
     module = load_instrument_module(event.instrument_id)
@@ -62,17 +55,7 @@ def compute_event_one_player_density(
         raise ValueError(f"Event {event.event_id} has no note_name on sounding_pitch")
 
     dyn_norm = _normalize_dynamic(event.dynamic, known)
-    if dyn_norm in ("pp", "mf", "ff"):
-        density = module.calcular_densidade(note, dyn_norm)
-    else:
-        pp = module.calcular_densidade(note, "pp")
-        mf = module.calcular_densidade(note, "mf")
-        ff = module.calcular_densidade(note, "ff")
-        density = module.predict_intermediate_dynamics([note], [pp], [mf], [ff])[
-            dyn_norm
-        ][0]
-
-    return float(density)
+    return float(module.calcular_densidade(note, dyn_norm))
 
 
 def compute_event_instrument_density(

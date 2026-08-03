@@ -140,7 +140,6 @@ spectral_data = {
     'B7': {'pp': 2.950661, 'mf': 2.950661, 'ff': 2.950661},
 }
 
-
 def calcular_densidade(nota, dinamica):
     """Compute density from spectral CDM table (MIDI-space lookup, octave-safe)."""
     from instrumentos.spectral_lookup import lookup_spectral_density
@@ -152,10 +151,3 @@ def calcular_densidade(nota, dinamica):
         logger=logger,
         preprocess=normalize_note_string,
     )
-
-
-def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
-    """Predict intermediate dynamics using Gaussian Process Regression."""
-    from instrumentos.gpr_dynamic_interpolation import predict_intermediate_dynamics_gpr
-
-    return predict_intermediate_dynamics_gpr(pp_values, mf_values, ff_values, logger=logger)

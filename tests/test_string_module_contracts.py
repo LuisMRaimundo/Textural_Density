@@ -41,16 +41,21 @@ class TestStringModuleImportContract:
         assert hasattr(mod, "spectral_data") and mod.spectral_data
         assert hasattr(mod, "INSTRUMENT_SOURCE")
         assert callable(mod.calcular_densidade)
-        assert callable(mod.predict_intermediate_dynamics)
+        assert not hasattr(mod, "predict_intermediate_dynamics")
         assert getattr(mod, "IS_COARSE_DEFAULT", False) is False
 
     @pytest.mark.parametrize("spec", STRING_INSTRUMENTS, ids=lambda s: s.module_name)
     def test_instrument_source_metadata(self, spec: StringInstrumentSpec):
+        from config import DYNAMIC_LEVELS
+
         src: InstrumentSource = _load_module(spec).INSTRUMENT_SOURCE
         assert src.source_type == "external_acoustic_metadata"
         assert src.citation
         assert src.extraction_method
-        assert src.dynamic_levels == SOURCE_DYNAMICS
+        if spec.module_name == "violin":
+            assert src.dynamic_levels == tuple(DYNAMIC_LEVELS)
+        else:
+            assert src.dynamic_levels == SOURCE_DYNAMICS
         assert src.uncertainty in {"low", "medium", "high"}
         assert src.version
         assert src.pitch_range[0] < src.pitch_range[1]

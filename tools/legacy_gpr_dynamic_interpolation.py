@@ -1,12 +1,12 @@
 """
-Gaussian-process regression for modelled dynamics between pp/mf/ff anchors.
+LEGACY — not used by the production pipeline (2026-08-03).
 
-Source-table anchors remain pp, mf, ff only. Intermediate dynamics (p, mp, f)
-are GPR predictions at fixed ordinal coordinates — not measured data.
+Formerly: Gaussian-process regression for modelled dynamics between pp/mf/ff
+anchors, plus register-adaptive saturating tails. Instrument density now looks
+up committed full dynamic ladders in ``spectral_data`` only.
 
-Out-of-support tails (pppp/ppp below pp; fff/ffff above ff) use a
-register-adaptive saturating log-domain extension whose local step derives
-from the measured pp/mf/ff spread at the event's pitch (see config.DYN_TAIL_SHRINK).
+Kept under ``tools/`` for historical audits / method comparisons. Do not import
+from ``core/`` or ``instrumentos/`` production modules.
 """
 
 from __future__ import annotations

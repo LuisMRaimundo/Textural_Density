@@ -46,6 +46,8 @@ These describe **scientific scope**, not Python package semver:
 
 **Density stress battery (2026-08-03, PR #37, still under `5.1.0-strict-symbolic`):** Analysis-only public-API suite (`run_stress_battery.py`, `tests/stress/`). **No numeric / schema change** — see [`CHANGES.md`](../CHANGES.md) “Density stress battery”.
 
+**Committed dynamic ladders (2026-08-03, still under `5.1.0-strict-symbolic`):** Runtime GPR / adaptive-tail extrapolation removed. Violin arco commits a full 10-dynamic ladder (numeric change for non-anchor dynamics). Schema label unchanged — see [`CHANGES.md`](../CHANGES.md) “Remove runtime GPR/tail extrapolation”.
+
 Outputs embed `metric_schema_version` (currently **`5.1.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.4`.
 
 See [MIGRATION.md](MIGRATION.md) for phase history.
