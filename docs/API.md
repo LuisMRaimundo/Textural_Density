@@ -204,14 +204,15 @@ Normally called internally by `calculate_metrics`; exposed for custom pipelines.
 Legacy scalars (unchanged):
 
 ```python
-resultados["density"]           # interval, instrument, weighted, refined, total, sonic_mass, absolute
+resultados["density"]           # interval, instrument, weighted, refined, total, sonic_mass, absolute (numeric only)
+resultados["composite_meta"]      # mode, normalization_ref (MAX_DENS_GLOBAL), use_log_compression
 resultados["spectral_moments"]
 resultados["additional_metrics"]  # complexity, harmonic_ratio, chroma_vector
-resultados["texture"]
+resultados["texture"]             # players/CDM avg include unpitched; polyphony pitched-only
 resultados["timbre"]
 resultados["orchestration"]
 resultados["input_data"]
-resultados["pitch_aggregation"]   # event/player counts, pitch_polyphony, pitch bins
+resultados["pitch_aggregation"]   # event/player = full slice; pitched_event_count / unpitched_event_count; pitch_polyphony pitched-only
 resultados["quantity_scaling"]    # incoherent source-addition model metadata
 ```
 
@@ -370,8 +371,8 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 
 | Constant | Default | Description |
 |----------|---------|-------------|
-| `MAX_DENS_GLOBAL` | `575.0` | Total-density normalisation divisor (5.0.0 extensive aggregate) |
-| `USE_LOG_COMPRESSION` | `True` | Apply `log10(1+x)` to total density |
+| `MAX_DENS_GLOBAL` | `575.0` | Fixed composite reference divisor (pitched path; header prints the ref) |
+| `USE_LOG_COMPRESSION` | `True` | Apply `log10(1+x)` to pitched-path total density |
 | `COMPOSITE_HARMONIC_DAMPING` | `0.15` | Harmonic-ratio damping in composite |
 | `DYN_TAIL_SHRINK` | `0.5` | Geometric shrink γ for register-adaptive saturating dynamic tails (5.1.0) |
 | `DENSITY_FLOOR` | `1e-9` | Unreachable safety assert on saturated tail amplitudes |
@@ -393,4 +394,6 @@ Calibrated λ: `config/density_params.json`.
 
 ---
 
-**Package version:** 1.1.4 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-07-12
+**Package version:** 1.1.4 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-08-03
+
+Unpitched aggregation contract: [TECHNICAL_MANUAL §7.5.1](TECHNICAL_MANUAL.md).

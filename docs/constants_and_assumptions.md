@@ -105,10 +105,12 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 
 | Name | Value | Module | Role |
 |------|-------|--------|------|
-| `MAX_DENS_GLOBAL` | **575.0** | `config.py` | Total density normalization (recalibrated in 5.0.0-strict-symbolic from 20.0 for the extensive raw-sum aggregate) |
-| `USE_LOG_COMPRESSION` | True | `config.py` | log10(1+x) on total |
+| `MAX_DENS_GLOBAL` | **575.0** | `config.py` | Fixed composite reference divisor (pitched path: $D_{\mathrm{pitch}}\sqrt{M}/D_{\max}$). Recalibrated in 5.0.0-strict-symbolic from 20.0 for the extensive raw-sum aggregate — **not** Qty or table size. Results header: `Composite normalized to [MAX_DENS_GLOBAL=575]`. |
+| `USE_LOG_COMPRESSION` | True | `config.py` | log10(1+x) on pitched-path total |
 | `COMPOSITE_HARMONIC_DAMPING` | 0.15 | `config.py` | Harmonic ratio adjustment in $D_{\mathrm{pitch}}$ |
 | `DEFAULT_WEIGHT_FACTOR` | 0.5 | `config.py` | Instrument vs interval blend |
+
+**Unpitched-only composite (PR #31):** when a slice has no pitched events, `density.total` equals the **weighted orchestral** term ($10 \cdot w \cdot D_{\mathrm{inst}}/\mathrm{DI\_max}$, `DI_max=100`) so mass-only textures are strictly $> 0$. Mode recorded in `resultados["composite_meta"]` (not inside the numeric `density` map).
 | `DYN_TAIL_SHRINK` ($\gamma$) | **0.5** | `config.py` | Geometric shrink for register-adaptive saturating dynamic tails (5.1.0); whole tail ≤ one measured step |
 | `DENSITY_FLOOR` | $10^{-9}$ | `config.py` | Unreachable safety assert on saturated tail amplitudes (not a silent clamp) |
 
