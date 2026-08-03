@@ -90,19 +90,18 @@ Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now por
 
 Run: `pytest tests/test_unpitched_entry_paths.py tests/test_unpitched_pitch_exclusion.py -q`
 
-## Unpitched aggregation contract (PR #31 / Task 8b)
+## Unpitched aggregation contract (PR #31 / Task 8b) + unified composite (Task 8c)
 
 - [x] Event Count / Player Count = pitched + unpitched (mixed slice 4/4)
 - [x] Texture `player_count` / `player_weighted_texture_mass` include unpitched Qty
 - [x] Texture `average_texture_density` = Qty-weighted mean CDM (includes unpitched)
 - [x] Texture `texture_polyphony` / variability / contrast remain pitched-only
-- [x] Composite pitched path: fixed `MAX_DENS_GLOBAL=575` + optional `log10(1+x)`; header prints `Composite normalized to [MAX_DENS_GLOBAL=575]`
-- [x] Unpitched-only (tam-tam fff + bass drum fff): Composite = weighted orchestral, strictly > 0
-- [x] Display: `N unpitched events excluded from pitch metrics by type (see ORCHESTRAL MASS / TEXTURE)`
-- [x] Pitched-only regression baseline density bit-identical
-- [x] Docs: TECHNICAL_MANUAL §7.5.1 table, README, MATHEMATICAL_MANUAL §J
+- [x] Unified composite: `log10(1 + D_blend·√M / REF)` with `REF=193`; no unpitched-only fallback
+- [x] Property tests: monotonicity, mixed > subsets, continuity (`tests/test_unified_composite_contract.py`)
+- [x] Display: exclusion line; unpitched-only spectral = `n/a — no pitched content`
+- [x] All-pitched baselines re-frozen; old→new totals in `CHANGES.md`
 
-Run: `pytest tests/test_unpitched_aggregation_contract.py -q`
+Run: `pytest tests/test_unpitched_aggregation_contract.py tests/test_unified_composite_contract.py -q`
 
 ## GUI architecture
 

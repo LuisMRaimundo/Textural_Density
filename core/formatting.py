@@ -40,22 +40,29 @@ def format_output_string(resultados: dict[str, Any]) -> str:
         weighted_orch = float(dens.get("weighted_orchestral", dens.get("weighted", 0)))
         composite_meta = resultados.get("composite_meta") or {}
         composite_ref = float(composite_meta.get("normalization_ref", MAX_DENS_GLOBAL))
-        composite_mode = str(composite_meta.get("mode", "pitch_mass_log"))
+        weight_w = float(
+            composite_meta.get(
+                "weight_factor",
+                (resultados.get("input_data") or {}).get("weight_factor", 0.5),
+            )
+        )
+        pitched_events = int(agg.get("pitched_event_count", distinct_pitch))
 
         moments = resultados["spectral_moments"]
         spectral_entropy = max(0.0, float(moments.get("spectral_entropy", 0)))
         complexity = max(0.0, float(resultados["additional_metrics"].get("complexity", 0)))
 
-        if composite_mode == "weighted_orchestral_unpitched_only":
+        if USE_LOG_COMPRESSION:
             composite_norm_line = (
-                f"Composite normalized to [weighted orchestral; DI_max=100] "
-                f"(unpitched-only fallback; ref MAX_DENS_GLOBAL={composite_ref:g} unused)"
+                f"Composite: log10(1 + D_blend·√M / REF) with w={weight_w:g}, "
+                f"REF={composite_ref:g} "
+                f"(D_blend = 10·(w·DI/100 + (1−w)·DV/10))"
             )
         else:
-            log_note = "; then log10(1+x)" if USE_LOG_COMPRESSION else ""
             composite_norm_line = (
-                f"Composite normalized to [MAX_DENS_GLOBAL={composite_ref:g}] "
-                f"(D_pitch × √M / {composite_ref:g}{log_note})"
+                f"Composite: D_blend·√M / REF with w={weight_w:g}, "
+                f"REF={composite_ref:g} "
+                f"(D_blend = 10·(w·DI/100 + (1−w)·DV/10))"
             )
 
         lines = [
@@ -89,18 +96,35 @@ def format_output_string(resultados: dict[str, Any]) -> str:
                 f"Weighted Orchestral Component: {_fmt(weighted_orch)}",
                 f"Weighted Pitch Component: {_fmt(weighted_pitch)}",
                 "",
-                "================ SPECTRAL (distinct pitch bins) ===============",
-                f"Centroid: {moments['centroid']['frequency']:.2f} Hz, Note: {moments['centroid']['note']}",
-                f"Spread: ±{moments['spread']['deviation']:.2f} Hz",
-                f"Entropy: {_fmt(spectral_entropy)}",
-                "",
-                "=============== ADVANCED METRICS ===============",
-                f"Spectral Complexity: {_fmt(complexity)}",
-                f"Harmonic Ratio: {resultados['additional_metrics'].get('harmonic_ratio', 0):.4f}",
-                "",
-                "================== TEXTURE ======================",
             ]
         )
+        if pitched_events == 0:
+            lines.extend(
+                [
+                    "================ SPECTRAL (distinct pitch bins) ===============",
+                    "n/a — no pitched content",
+                    "",
+                    "=============== ADVANCED METRICS ===============",
+                    "n/a — no pitched content",
+                    "",
+                    "================== TEXTURE ======================",
+                ]
+            )
+        else:
+            lines.extend(
+                [
+                    "================ SPECTRAL (distinct pitch bins) ===============",
+                    f"Centroid: {moments['centroid']['frequency']:.2f} Hz, Note: {moments['centroid']['note']}",
+                    f"Spread: ±{moments['spread']['deviation']:.2f} Hz",
+                    f"Entropy: {_fmt(spectral_entropy)}",
+                    "",
+                    "=============== ADVANCED METRICS ===============",
+                    f"Spectral Complexity: {_fmt(complexity)}",
+                    f"Harmonic Ratio: {resultados['additional_metrics'].get('harmonic_ratio', 0):.4f}",
+                    "",
+                    "================== TEXTURE ======================",
+                ]
+            )
 
         output_string = "\n".join(lines) + "\n"
         for k, v in resultados["texture"].items():

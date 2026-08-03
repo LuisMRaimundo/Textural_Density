@@ -227,19 +227,15 @@ def calculate_metrics(
         harmonic_ratio=float(harm_rat),
     )
 
+    # Unified composite for all regimes: slider blend × √M / REF (no
+    # event-kind fallback). Pitch_structure remains a reported axis only.
     densidade_total_val, densidade_total_pre_log = compute_composite_vertical_density(
-        pitch_structure_density,
+        densidade_ponderada_val,
         massa_sonora_val,
         MAX_DENS_GLOBAL,
         apply_log_compression=USE_LOG_COMPRESSION,
     )
-    # Unpitched-only slices have no pitch structure; composite equals the
-    # documented weighted-orchestral term (min-max DI against DI_max=100).
-    composite_mode = "pitch_mass_log"
-    if pitched_event_count == 0 and full_event_count > 0:
-        densidade_total_val = float(weighted_orchestral)
-        densidade_total_pre_log = float(weighted_orchestral)
-        composite_mode = "weighted_orchestral_unpitched_only"
+    composite_mode = "weighted_blend_mass_log"
 
     mass_boost = float(np.sqrt(max(0.0, massa_sonora_val)))
     complexity_factor = 1.0 + float(np.log1p(spectral_entropy))
@@ -289,7 +285,14 @@ def calculate_metrics(
     resultados["composite_meta"] = {
         "mode": composite_mode,
         "normalization_ref": float(MAX_DENS_GLOBAL),
+        "weight_factor": float(weight_factor),
         "use_log_compression": bool(USE_LOG_COMPRESSION),
+        "formula": (
+            "log10(1 + D_blend·√M / REF) with "
+            "D_blend = 10·(w·DI/DI_max + (1−w)·DV/DV_max)"
+            if USE_LOG_COMPRESSION
+            else "D_blend·√M / REF with D_blend = 10·(w·DI/DI_max + (1−w)·DV/DV_max)"
+        ),
     }
     resultados["quantity_scaling"] = quantity_scaling_metadata(
         player_count=int(full_player_count)

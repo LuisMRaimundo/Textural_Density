@@ -1,4 +1,4 @@
-"""Task 8b: unpitched aggregation contract (counts, texture, composite)."""
+"""Task 8b/8c: unpitched aggregation contract (counts, texture, unified composite)."""
 
 from __future__ import annotations
 
@@ -42,10 +42,8 @@ def test_mixed_slice_texture_contract():
     tex = r["texture"]
     assert tex["player_count"] == pytest.approx(4.0)
     assert tex["player_weighted_texture_mass"] == pytest.approx(4.0)
-    # Polyphony is pitched-only (two violin pitches).
     assert tex["texture_polyphony"] == pytest.approx(2.0)
     assert tex["pitch_polyphony"] == pytest.approx(2.0)
-    # Average CDM must reflect unpitched densities (not equal to player count).
     assert tex["average_texture_density"] > 0.0
     assert tex["average_texture_density"] != pytest.approx(4.0)
     expected_avg = float(r["density"]["sonic_mass"]) / 4.0
@@ -56,11 +54,11 @@ def test_mixed_slice_display_mentions_unpitched_exclusion():
     r = calculate_metrics(_mixed_four_events())[0]
     text = format_output_string(r)
     assert "2 unpitched events excluded from pitch metrics by type" in text
-    assert "Composite normalized to [MAX_DENS_GLOBAL=" in text
-    assert f"{MAX_DENS_GLOBAL:g}" in text
+    assert "Composite: log10(1 + D_blend·√M / REF)" in text
+    assert f"REF={MAX_DENS_GLOBAL:g}" in text
 
 
-def test_unpitched_only_composite_equals_weighted_orchestral():
+def test_unpitched_only_composite_on_unified_path():
     r = calculate_metrics(
         AnalysisRequest(
             notes=("C2", "D2"),
@@ -70,18 +68,16 @@ def test_unpitched_only_composite_equals_weighted_orchestral():
         )
     )[0]
     assert r["density"]["pitch_structure"] == pytest.approx(0.0)
-    wo = float(r["density"]["weighted_orchestral"])
-    assert wo > 0.0
-    assert r["density"]["total"] == pytest.approx(wo)
     assert r["density"]["total"] > 0.0
-    assert r["composite_meta"]["mode"] == "weighted_orchestral_unpitched_only"
+    assert r["composite_meta"]["mode"] == "weighted_blend_mass_log"
     text = format_output_string(r)
-    assert "weighted orchestral" in text.lower()
+    assert "fallback" not in text.lower()
     assert "2 unpitched events excluded from pitch metrics by type" in text
+    assert "n/a — no pitched content" in text
 
 
-def test_image1_pitched_only_density_bit_identical():
-    """Pitched-only regression baseline slice remains bit-identical on density."""
+def test_image1_pitched_only_density_matches_frozen_baseline():
+    """Pitched-only regression baseline (re-frozen under unified composite)."""
     baseline = json.loads(BASELINE_PATH.read_text(encoding="utf-8"))
     input_data = {
         "notes": ["C4", "E4", "G4", "C5"],
@@ -102,4 +98,4 @@ def test_image1_pitched_only_density_bit_identical():
     assert r["pitch_aggregation"]["unpitched_event_count"] == 0
     text = format_output_string(r)
     assert "unpitched events excluded" not in text
-    assert "Composite normalized to [MAX_DENS_GLOBAL=575]" in text
+    assert f"REF={MAX_DENS_GLOBAL:g}" in text

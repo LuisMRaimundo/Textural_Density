@@ -59,9 +59,10 @@ doublings.
 
 **Contract (intentional):** Event/Player Count and texture player/CDM averages
 include unpitched events; pitch polyphony / interval / spectral remain pitched-only.
-Composite still uses `MAX_DENS_GLOBAL=575` (fixed reference, then optional
-`log10(1+x)`); unpitched-only slices fall back to the weighted orchestral term.
 
-**Numeric triad density values unchanged.** Composite mode/ref live under
-`resultados["composite_meta"]` (not inside `density`) so finite-output gates
-remain numeric-only.
+## 2026-08-03 — Unified composite (Task 8c)
+
+**Formula change:** `Composite = log10(1 + density.weighted·√M / REF)` with
+`REF=193`; removed pitch-gated product and unpitched-only fallback.
+Re-froze `numeric_outputs/synthetic_triad.json` and related baselines — see
+root `CHANGES.md` for old→new `density.total` mapping.
