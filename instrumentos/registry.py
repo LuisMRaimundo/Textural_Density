@@ -122,7 +122,7 @@ REGISTRY: dict[str, InstrumentProfile] = {}
 # --- Woodwinds ---
 REGISTRY["flauta"] = _profile(
     "flauta",
-    "Flute",
+    "Fl",
     "woodwinds",
     sounding=(59, 98),
     comfortable=(62, 88),
@@ -141,7 +141,7 @@ REGISTRY["flauta"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("flute", "flute_traverso"),
+    aliases=("flute", "flute_traverso", "fl."),
 )
 
 REGISTRY["flautim"] = _profile(
@@ -158,7 +158,7 @@ REGISTRY["flautim"] = _profile(
 
 REGISTRY["oboe"] = _profile(
     "oboe",
-    "Oboe",
+    "Ob",
     "woodwinds",
     sounding=(58, 93),
     comfortable=(60, 81),
@@ -176,7 +176,7 @@ REGISTRY["oboe"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("oboe",),
+    aliases=("oboe", "ob."),
 )
 
 REGISTRY["cor_anglais"] = _profile(
@@ -193,7 +193,7 @@ REGISTRY["cor_anglais"] = _profile(
 
 REGISTRY["clarinete"] = _profile(
     "clarinete",
-    "Clarinet",
+    "Cl",
     "woodwinds",
     sounding=(50, 96),
     comfortable=(55, 80),
@@ -211,7 +211,7 @@ REGISTRY["clarinete"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("clarinet", "clarinete"),
+    aliases=("clarinet", "clarinete", "cl."),
 )
 
 REGISTRY["clarinete_baixo"] = _profile(
@@ -228,7 +228,7 @@ REGISTRY["clarinete_baixo"] = _profile(
 
 REGISTRY["fagote"] = _profile(
     "fagote",
-    "Bassoon",
+    "Bsn",
     "woodwinds",
     sounding=(34, 75),
     comfortable=(40, 65),
@@ -246,7 +246,7 @@ REGISTRY["fagote"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("bassoon", "fagot"),
+    aliases=("bassoon", "fagot", "bsn.", "fg", "fg."),
 )
 
 REGISTRY["contrafagote"] = _profile(
@@ -262,10 +262,10 @@ REGISTRY["contrafagote"] = _profile(
 
 # --- Strings (GPR modules: IOWA+ORCH CDM medians at pp/mf/ff) ---
 for _id, _name, _module, _sound, _comfort, _aliases in (
-    ("violino", "Violin", "violin", (55, 103), (55, 76), ("violin",)),
-    ("viola", "Viola", "viola", (48, 96), (50, 69), ("viola",)),
-    ("violoncelo", "Cello", "cello", (36, 84), (40, 65), ("cello", "violoncello")),
-    ("contrabaixo", "Double bass", "double_bass", (28, 72), (31, 55), ("double_bass", "contrabass", "baixo")),
+    ("violino", "Vl", "violin", (55, 103), (55, 76), ("violin", "vl.", "vln", "vln.")),
+    ("viola", "Vla", "viola", (48, 96), (50, 69), ("viola", "vla.")),
+    ("violoncelo", "Vc", "cello", (36, 84), (40, 65), ("cello", "violoncello", "vc.", "vcl")),
+    ("contrabaixo", "Db", "double_bass", (28, 72), (31, 55), ("double_bass", "double bass", "contrabass", "baixo", "db.", "cb", "cb.")),
 ):
     REGISTRY[_id] = _profile(
         _id,
@@ -763,19 +763,31 @@ REGISTRY["contrabaixo_sul_ponticello"] = _profile(
 # --- Brass ---
 REGISTRY["trompa"] = _profile(
     "trompa",
-    "Horn",
+    "Hn",
     "brass",
     sounding=(41, 77),
     comfortable=(45, 72),
     brightness="neutral",
     transposition=7,
+    status="literature_derived",
+    uncertainty="medium",
+    module_name="horn",
     supported=("legato", "staccato", "stopped", "mute"),
-    aliases=("horn", "french_horn", "trompa"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/horn.py from IOWA+ORCH "
+        "sustain medians (pp/mf/ff anchors; Dynamics_predicter Results sheet)."
+    ),
+    warnings=(
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
+    ),
+    aliases=("horn", "french_horn", "trompa", "hn."),
 )
 
 REGISTRY["trompete"] = _profile(
     "trompete",
-    "Trumpet",
+    "Tpt",
     "brass",
     sounding=(52, 87),
     comfortable=(58, 80),
@@ -795,7 +807,7 @@ REGISTRY["trompete"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("trumpet",),
+    aliases=("trumpet", "tpt."),
 )
 
 REGISTRY["trombone"] = _profile(

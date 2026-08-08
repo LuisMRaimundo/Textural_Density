@@ -125,10 +125,10 @@ class TestPartialInstrumentDataScaffold:
 
 class TestSourceProvenanceLabelling:
     def test_coarse_only_slice_labels_metadata_proxy(self):
-        # Both instruments must be coarse-only (no dedicated GPR module): fagote/Bassoon
-        # now ships instrumentos/bassoon.py, so use trombone + trompa (Horn) instead.
+        # Both instruments must be coarse-only (no dedicated acoustic module):
+        # trompa/Horn now ships instrumentos/horn.py, so use trombone + tuba instead.
         vs = legacy_input_to_vertical_slice(
-            _symbolic_input(["G4", "D4"], instruments=["trombone", "trompa"])
+            _symbolic_input(["E3", "C3"], instruments=["trombone", "tuba"])
         )
         source_type, validation, _, warnings = _instrument_density_epistemics(vs)
         assert source_type == "metadata_proxy"
@@ -263,11 +263,14 @@ class TestMalformedTableHandling:
         value = lookup_spectral_density(table, "E4", "mf", logger=logger)
         assert math.isfinite(value)
 
-    def test_missing_dynamic_row_falls_back_to_mf_or_mean(self):
+    def test_missing_dynamic_row_raises_missing_committed_dynamic(self):
+        """Runtime dynamic fill-in was removed: incomplete pitched ladders must fail loudly."""
+        from instrumentos.pitch_interpolation import MissingCommittedDynamicError
+
         logger = logging.getLogger("test.scaffold.missing_dyn")
         table = {"C4": {"mf": 6.5}}
-        value = lookup_spectral_density(table, "C4", "ppp", logger=logger)
-        assert value == pytest.approx(6.5)
+        with pytest.raises(MissingCommittedDynamicError):
+            lookup_spectral_density(table, "C4", "ppp", logger=logger)
 
     def test_single_entry_table_returns_finite_value(self):
         logger = logging.getLogger("test.scaffold.single_entry")

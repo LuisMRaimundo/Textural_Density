@@ -48,7 +48,12 @@ FLOAT_TOL = 1e-9
 def _git_sha() -> str:
     import subprocess
 
-    return subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], text=True, stderr=subprocess.DEVNULL
+        ).strip()
+    except (subprocess.CalledProcessError, OSError):
+        return "unknown (not a git checkout)"
 
 
 def _inventory() -> list[dict[str, Any]]:

@@ -126,7 +126,8 @@ class TestDynamicInterpolationMethodComparison:
         assert float(a) == float(b)
 
     def test_production_gpr_module_unchanged(self):
-        text = (ROOT / "instrumentos" / "gpr_dynamic_interpolation.py").read_text(encoding="utf-8")
+        # Runtime GPR was retired: the interpolation model lives on as an offline tool.
+        text = (ROOT / "tools" / "legacy_gpr_dynamic_interpolation.py").read_text(encoding="utf-8")
         assert "GPR_RANDOM_STATE" in text
         assert "create_dynamic_gpr" in text
 

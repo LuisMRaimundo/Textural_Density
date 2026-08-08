@@ -51,7 +51,7 @@
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 32.1942715,
+          "corresponding_arco_density": null,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_2",
@@ -62,14 +62,14 @@
           "note": "A#3",
           "one_player_density": 8.0,
           "resolved_profile_id": "unknown",
-          "sordina_arco_ratio": 1.0,
+          "sordina_arco_ratio": null,
           "table_coverage_kind": null,
           "table_excludes_sounding_range": null,
           "table_span_midi": null
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 26.2564053,
+          "corresponding_arco_density": null,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_3",
@@ -80,7 +80,7 @@
           "note": "F4",
           "one_player_density": 8.0,
           "resolved_profile_id": "unknown",
-          "sordina_arco_ratio": 1.0,
+          "sordina_arco_ratio": null,
           "table_coverage_kind": null,
           "table_excludes_sounding_range": null,
           "table_span_midi": null
@@ -138,7 +138,7 @@
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 32.1942715,
+            "corresponding_arco_density": null,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_2",
@@ -149,14 +149,14 @@
             "note": "A#3",
             "one_player_density": 8.0,
             "resolved_profile_id": "unknown",
-            "sordina_arco_ratio": 1.0,
+            "sordina_arco_ratio": null,
             "table_coverage_kind": null,
             "table_excludes_sounding_range": null,
             "table_span_midi": null
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 26.2564053,
+            "corresponding_arco_density": null,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_3",
@@ -167,7 +167,7 @@
             "note": "F4",
             "one_player_density": 8.0,
             "resolved_profile_id": "unknown",
-            "sordina_arco_ratio": 1.0,
+            "sordina_arco_ratio": null,
             "table_coverage_kind": null,
             "table_excludes_sounding_range": null,
             "table_span_midi": null

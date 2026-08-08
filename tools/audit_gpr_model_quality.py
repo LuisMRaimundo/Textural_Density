@@ -69,7 +69,12 @@ except ImportError:  # pragma: no cover
 
 
 def _git_sha() -> str:
-    return subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], text=True, stderr=subprocess.DEVNULL
+        ).strip()
+    except (subprocess.CalledProcessError, OSError):
+        return "unknown (not a git checkout)"
 
 
 def _quadratic_lagrange(pp: float, mf: float, ff: float, x: float) -> float:

@@ -152,7 +152,7 @@ class InputPanel:
             dynamic_menu.grid(row=row, column=4, padx=5, pady=2)
             self.dynamic_menus.append(dynamic_menu)
 
-            instrument_var = tk.StringVar(value="Flute")
+            instrument_var = tk.StringVar(value="Fl")
             self.instrument_vars.append(instrument_var)
             instrument_menu = ttk.Combobox(
                 self.input_frame,
@@ -207,7 +207,7 @@ class InputPanel:
         selected = self.instrument_vars[index].get()
         if selected == UNPITCHED_INSTRUMENT_GROUP_LABEL:
             # Group header is not a real instrument — revert to Flute.
-            self.instrument_vars[index].set("Flute")
+            self.instrument_vars[index].set("Fl")
         if self.state_vars[index].get() == 1:
             self._apply_unpitched_row_ui(index)
 
@@ -238,7 +238,7 @@ class InputPanel:
         for var in self.dynamic_vars:
             var.set("mf")
         for var in self.instrument_vars:
-            var.set("Flute")
+            var.set("Fl")
         for var in self.num_instruments_vars:
             var.set("1")
         for var in self.state_vars:
@@ -254,7 +254,7 @@ class InputPanel:
         for i in active_indices:
             inst = self.instrument_vars[i].get()
             if inst == UNPITCHED_INSTRUMENT_GROUP_LABEL:
-                inst = "Flute"
+                inst = "Fl"
             instruments.append(inst)
             if instrument_is_unpitched(inst):
                 # User never chooses the lookup key — inject canonical placeholder.
@@ -310,7 +310,7 @@ class InputPanel:
         if len(dynamics) < n:
             dynamics.extend(["mf"] * (n - len(dynamics)))
         if len(instruments) < n:
-            instruments.extend(["Flute"] * (n - len(instruments)))
+            instruments.extend(["Fl"] * (n - len(instruments)))
         if len(num_instruments) < n:
             num_instruments.extend([1] * (n - len(num_instruments)))
         for i in range(n):

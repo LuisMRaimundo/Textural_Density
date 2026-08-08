@@ -65,5 +65,13 @@ def test_flute_registry_technique_warning():
 
 @pytest.mark.parametrize("module_name", GPR_STRING_MODULES + GPR_WIND_MODULES)
 def test_dynamic_anchors_unchanged_pp_mf_ff(module_name: str):
+    """Full 10-level ladders are committed; measured pp/mf/ff anchors present per pitch."""
     mod = importlib.import_module(f"instrumentos.{module_name}")
-    assert mod.INSTRUMENT_SOURCE.dynamic_levels == ("pp", "mf", "ff")
+    assert mod.INSTRUMENT_SOURCE.dynamic_levels == (
+        "pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff",
+    )
+    for note, row in mod.spectral_data.items():
+        for anchor in ("pp", "mf", "ff"):
+            assert anchor in row and float(row[anchor]) > 0.0, (
+                f"{module_name} {note}: missing measured anchor {anchor}"
+            )
