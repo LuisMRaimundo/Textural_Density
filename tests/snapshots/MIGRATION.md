@@ -54,3 +54,21 @@ doublings.
 - Texture: `pitch_polyphony` = distinct pitch count (not mean Qty)
 
 **Refresh:** all frozen outputs, benchmarks, regression baseline, metadata snapshots.
+
+## 2026-08-03 — Unpitched aggregation contract (Task 8b)
+
+**Contract (intentional):** Event/Player Count and texture player/CDM averages
+include unpitched events; pitch polyphony / interval / spectral remain pitched-only.
+
+## 2026-08-03 — Unified composite (Task 8c)
+
+**Formula change:** `Composite = log10(1 + density.weighted*sqrt(M)/REF)` with
+`REF=193`; removed pitch-gated product and unpitched-only fallback.
+Re-froze `numeric_outputs/synthetic_triad.json` and related baselines — see
+root `CHANGES.md` for old→new `density.total` mapping.
+
+## 2026-08-03 — Label / docs accuracy (PR #35)
+
+**Display-only:** header and exclusion strings; no snapshot numeric refresh
+required. Acceptance freeze lives in
+`tests/test_composite_unification_acceptance.py`.

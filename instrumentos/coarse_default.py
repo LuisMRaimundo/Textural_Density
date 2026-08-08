@@ -64,56 +64,14 @@ def calcular_densidade_for_profile(profile: InstrumentProfile, nota: str, dinami
     return float(base * comfort * brightness * attack * sustain * dynamic)
 
 
-def predict_intermediate_dynamics_for_profile(
-    profile: InstrumentProfile,
-    pitches,
-    pp_values,
-    mf_values,
-    ff_values,
-):
-    """Linear interpolation between pp/mf/ff coarse anchors (existing API)."""
-    import numpy as np
-
-    dyn_map = {
-        "pppp": 0.0,
-        "ppp": 0.125,
-        "pp": 0.25,
-        "p": 0.375,
-        "mp": 0.5,
-        "mf": 0.625,
-        "f": 0.75,
-        "ff": 0.875,
-        "fff": 0.9375,
-        "ffff": 1.0,
-    }
-    result = {}
-    for dyn, t in dyn_map.items():
-        if t <= 0.25:
-            values = pp_values
-        elif t <= 0.75:
-            alpha = (t - 0.25) / 0.5
-            values = [pp * (1 - alpha) + mf * alpha for pp, mf in zip(pp_values, mf_values)]
-        else:
-            alpha = (t - 0.75) / 0.25
-            values = [mf * (1 - alpha) + ff * alpha for mf, ff in zip(mf_values, ff_values)]
-        result[dyn] = np.array(values, dtype=float)
-    return result
-
-
 def build_coarse_module(profile: InstrumentProfile) -> SimpleNamespace:
     """Return a module-like namespace bound to ``profile``."""
 
     def calcular_densidade(nota, dinamica):
         return calcular_densidade_for_profile(profile, nota, dinamica)
 
-    def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
-        return predict_intermediate_dynamics_for_profile(
-            profile, pitches, pp_values, mf_values, ff_values
-        )
-
     return SimpleNamespace(
         calcular_densidade=calcular_densidade,
-        predict_intermediate_dynamics=predict_intermediate_dynamics,
         PROFILE=profile,
         IS_COARSE_DEFAULT=True,
     )

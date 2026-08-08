@@ -4,99 +4,155 @@
     "inputs": {
       "distinct_pitch_count": 7,
       "event_count": 7,
-      "harmonic_ratio": 0.41848057974429265,
-      "instrument_density": 93.37926788246219,
+      "harmonic_ratio": 0.4156505180589505,
+      "instrument_density": 94.7795128654548,
       "instrument_lookup_trace": [
         {
           "audit_flag": null,
-          "corresponding_arco_density": 20.094563204783675,
+          "corresponding_arco_density": 18.0807084,
           "density_relation_to_arco": "",
           "dynamic": "p",
           "event_id": "evt_0",
           "instrument": "Flauta",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "flute",
           "note": "C4",
-          "one_player_density": 20.094563204783675,
+          "one_player_density": 18.0807084,
           "resolved_profile_id": "flauta",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            59,
+            98
+          ]
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 14.586956696138017,
+          "corresponding_arco_density": 14.5396344,
           "density_relation_to_arco": "",
           "dynamic": "p",
           "event_id": "evt_1",
           "instrument": "Flauta",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "flute",
           "note": "E4",
-          "one_player_density": 14.586956696138017,
+          "one_player_density": 14.5396344,
           "resolved_profile_id": "flauta",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            59,
+            98
+          ]
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 16.863416,
+          "corresponding_arco_density": 17.4298527,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_2",
           "instrument": "Oboe",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "oboe",
           "note": "G4",
-          "one_player_density": 16.863416,
+          "one_player_density": 17.4298527,
           "resolved_profile_id": "oboe",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            58,
+            93
+          ]
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 14.506929,
+          "corresponding_arco_density": 14.5069295,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_3",
           "instrument": "Oboe",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "oboe",
           "note": "B4",
-          "one_player_density": 14.506929,
+          "one_player_density": 14.5069295,
           "resolved_profile_id": "oboe",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            58,
+            93
+          ]
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 70.623528,
+          "corresponding_arco_density": 70.6235283,
           "density_relation_to_arco": "",
           "dynamic": "ff",
           "event_id": "evt_4",
           "instrument": "Violino",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "violin",
           "note": "G3",
-          "one_player_density": 70.623528,
+          "one_player_density": 70.6235283,
           "resolved_profile_id": "violino",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            55,
+            103
+          ]
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 35.503268,
+          "corresponding_arco_density": 39.7842075,
           "density_relation_to_arco": "",
           "dynamic": "ff",
           "event_id": "evt_5",
           "instrument": "Violino",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "violin",
           "note": "B3",
-          "one_player_density": 35.503268,
+          "one_player_density": 39.7842075,
           "resolved_profile_id": "violino",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            55,
+            103
+          ]
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 36.879891,
+          "corresponding_arco_density": 36.8798914,
           "density_relation_to_arco": "",
           "dynamic": "ff",
           "event_id": "evt_6",
           "instrument": "Violino",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "violin",
           "note": "D4",
-          "one_player_density": 36.879891,
+          "one_player_density": 36.8798914,
           "resolved_profile_id": "violino",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            55,
+            103
+          ]
         }
       ],
       "interval_compactness_distinct": 0.19291068220480828,
@@ -109,94 +165,150 @@
         "instrument_lookup_trace": [
           {
             "audit_flag": null,
-            "corresponding_arco_density": 20.094563204783675,
+            "corresponding_arco_density": 18.0807084,
             "density_relation_to_arco": "",
             "dynamic": "p",
             "event_id": "evt_0",
             "instrument": "Flauta",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "flute",
             "note": "C4",
-            "one_player_density": 20.094563204783675,
+            "one_player_density": 18.0807084,
             "resolved_profile_id": "flauta",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              59,
+              98
+            ]
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 14.586956696138017,
+            "corresponding_arco_density": 14.5396344,
             "density_relation_to_arco": "",
             "dynamic": "p",
             "event_id": "evt_1",
             "instrument": "Flauta",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "flute",
             "note": "E4",
-            "one_player_density": 14.586956696138017,
+            "one_player_density": 14.5396344,
             "resolved_profile_id": "flauta",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              59,
+              98
+            ]
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 16.863416,
+            "corresponding_arco_density": 17.4298527,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_2",
             "instrument": "Oboe",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "oboe",
             "note": "G4",
-            "one_player_density": 16.863416,
+            "one_player_density": 17.4298527,
             "resolved_profile_id": "oboe",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              58,
+              93
+            ]
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 14.506929,
+            "corresponding_arco_density": 14.5069295,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_3",
             "instrument": "Oboe",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "oboe",
             "note": "B4",
-            "one_player_density": 14.506929,
+            "one_player_density": 14.5069295,
             "resolved_profile_id": "oboe",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              58,
+              93
+            ]
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 70.623528,
+            "corresponding_arco_density": 70.6235283,
             "density_relation_to_arco": "",
             "dynamic": "ff",
             "event_id": "evt_4",
             "instrument": "Violino",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "violin",
             "note": "G3",
-            "one_player_density": 70.623528,
+            "one_player_density": 70.6235283,
             "resolved_profile_id": "violino",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              55,
+              103
+            ]
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 35.503268,
+            "corresponding_arco_density": 39.7842075,
             "density_relation_to_arco": "",
             "dynamic": "ff",
             "event_id": "evt_5",
             "instrument": "Violino",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "violin",
             "note": "B3",
-            "one_player_density": 35.503268,
+            "one_player_density": 39.7842075,
             "resolved_profile_id": "violino",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              55,
+              103
+            ]
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 36.879891,
+            "corresponding_arco_density": 36.8798914,
             "density_relation_to_arco": "",
             "dynamic": "ff",
             "event_id": "evt_6",
             "instrument": "Violino",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "violin",
             "note": "D4",
-            "one_player_density": 36.879891,
+            "one_player_density": 36.8798914,
             "resolved_profile_id": "violino",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              55,
+              103
+            ]
           }
         ],
         "interval_pairs_count_distinct": 21,
@@ -217,7 +329,7 @@
             ],
             "representative_note": "C4",
             "total_player_count": 1,
-            "total_weight": 20.094563204783675
+            "total_weight": 18.0807084
           },
           {
             "dynamics": [
@@ -233,7 +345,7 @@
             ],
             "representative_note": "E4",
             "total_player_count": 1,
-            "total_weight": 14.586956696138017
+            "total_weight": 14.5396344
           },
           {
             "dynamics": [
@@ -249,7 +361,7 @@
             ],
             "representative_note": "G4",
             "total_player_count": 1,
-            "total_weight": 16.863416
+            "total_weight": 17.4298527
           },
           {
             "dynamics": [
@@ -265,7 +377,7 @@
             ],
             "representative_note": "B4",
             "total_player_count": 1,
-            "total_weight": 14.506929
+            "total_weight": 14.5069295
           },
           {
             "dynamics": [
@@ -281,7 +393,7 @@
             ],
             "representative_note": "G3",
             "total_player_count": 1,
-            "total_weight": 70.623528
+            "total_weight": 70.6235283
           },
           {
             "dynamics": [
@@ -297,7 +409,7 @@
             ],
             "representative_note": "B3",
             "total_player_count": 1,
-            "total_weight": 35.503268
+            "total_weight": 39.7842075
           },
           {
             "dynamics": [
@@ -313,11 +425,13 @@
             ],
             "representative_note": "D4",
             "total_player_count": 1,
-            "total_weight": 36.879891
+            "total_weight": 36.8798914
           }
         ],
         "pitch_differentiation_ratio": 1.0,
         "pitch_polyphony": 7,
+        "pitched_event_count": 7,
+        "pitched_player_count": 7,
         "player_count": 7,
         "player_doubling_count": 0,
         "qty_affects_pitch_structure": false,
@@ -326,57 +440,58 @@
             "dynamic": "ff",
             "instrument": "violino",
             "midi": 55.0,
-            "one_player_density": 70.623528,
+            "one_player_density": 70.6235283,
             "player_count": 1.0
           },
           {
             "dynamic": "ff",
             "instrument": "violino",
             "midi": 59.0,
-            "one_player_density": 35.503268,
+            "one_player_density": 39.7842075,
             "player_count": 1.0
           },
           {
             "dynamic": "p",
             "instrument": "flauta",
             "midi": 60.0,
-            "one_player_density": 20.094563204783675,
+            "one_player_density": 18.0807084,
             "player_count": 1.0
           },
           {
             "dynamic": "ff",
             "instrument": "violino",
             "midi": 62.0,
-            "one_player_density": 36.879891,
+            "one_player_density": 36.8798914,
             "player_count": 1.0
           },
           {
             "dynamic": "p",
             "instrument": "flauta",
             "midi": 64.0,
-            "one_player_density": 14.586956696138017,
+            "one_player_density": 14.5396344,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "oboe",
             "midi": 67.0,
-            "one_player_density": 16.863416,
+            "one_player_density": 17.4298527,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "oboe",
             "midi": 71.0,
-            "one_player_density": 14.506929,
+            "one_player_density": 14.5069295,
             "player_count": 1.0
           }
         ],
         "total_player_count": 7,
-        "unison_doublings_excluded_from_interval_structure": true
+        "unison_doublings_excluded_from_interval_structure": true,
+        "unpitched_event_count": 0
       },
       "registral_span": 16.0,
-      "sonic_mass": 209.05855190092166
+      "sonic_mass": 211.84475220000002
     },
     "overlap_warnings": [],
     "steps": {
@@ -385,7 +500,7 @@
           "symbolic_entropy",
           "pitch_bins"
         ],
-        "value": 2.2691212043147866
+        "value": 2.266994016434117
       },
       "interval_compactness_distinct": {
         "depends_on": [
@@ -402,7 +517,7 @@
           "harmonicity_proxy",
           "pitch_differentiation_ratio"
         ],
-        "value": 24.975492380679217
+        "value": 24.963380930832614
       },
       "sonic_mass": {
         "depends_on": [
@@ -410,30 +525,30 @@
           "player_count",
           "instrument_density"
         ],
-        "value": 209.05855190092166
+        "value": 211.84475220000002
       },
       "total_density": {
         "depends_on": [
           "pitch_structure_density",
           "sonic_mass"
         ],
-        "value": 0.21166232372340457
+        "value": 0.13502408987958267
       },
       "weighted_density": {
         "depends_on": [
           "instrument_density",
           "interval_compactness_distinct"
         ],
-        "value": 4.765418735225514
+        "value": 4.835430984375145
       }
     }
   },
   "metadata": {
     "density.instrument.assumptions": [
-      "Instrument 'Flauta' uses externally sourced acoustic metadata via instrumentos/flute.py (GPR interpolation).",
-      "Instrument 'Oboe' uses externally sourced acoustic metadata via instrumentos/oboe.py (GPR interpolation).",
-      "Instrument 'Violino' uses externally sourced acoustic metadata via instrumentos/violin.py (GPR interpolation).",
-      "Instrument density applies pre-loaded external acoustic metadata to notated pitch and dynamic markings; the pipeline does not analyse audio waveforms.",
+      "Instrument 'Flauta' uses externally sourced acoustic metadata via instrumentos/flute.py (committed dynamic ladder).",
+      "Instrument 'Oboe' uses externally sourced acoustic metadata via instrumentos/oboe.py (committed dynamic ladder).",
+      "Instrument 'Violino' uses externally sourced acoustic metadata via instrumentos/violin.py (committed dynamic ladder).",
+      "Instrument density applies pre-loaded external acoustic metadata to notated pitch and dynamic markings; the pipeline does not analyse audio waveforms and does not extrapolate missing dynamics at runtime.",
       "Quantity scaling model: incoherent source addition (not phase-locked N\u00b2).",
       "Qty affects pressure-equivalent density, not pitch-structure metrics."
     ],
@@ -455,15 +570,15 @@
   },
   "numeric": {
     "density": {
-      "absolute": 9.909409681527315,
-      "instrument": 93.37926788246219,
+      "absolute": 10.054996060835496,
+      "instrument": 94.7795128654548,
       "interval": 0.19291068220480828,
-      "pitch_structure": 24.975492380679217,
-      "refined": 24.975492380679217,
-      "sonic_mass": 209.05855190092166,
-      "total": 0.21166232372340457,
-      "weighted": 4.765418735225514,
-      "weighted_orchestral": 4.66896339412311,
+      "pitch_structure": 24.963380930832614,
+      "refined": 24.963380930832614,
+      "sonic_mass": 211.84475220000002,
+      "total": 0.13502408987958267,
+      "weighted": 4.835430984375145,
+      "weighted_orchestral": 4.73897564327274,
       "weighted_pitch": 0.09645534110240414
     },
     "density_subindices": {
@@ -478,10 +593,10 @@
         }
       },
       "harmonicity_proxy": {
-        "normalized": 0.41848057974429265,
+        "normalized": 0.4156505180589505,
         "raw": {
-          "chroma_concentration": 0.4184805797442926,
-          "harmonic_ratio": 0.41848057974429265
+          "chroma_concentration": 0.41565051805895054,
+          "harmonic_ratio": 0.4156505180589505
         }
       },
       "interval_compactness": {
@@ -489,8 +604,8 @@
         "raw": 11.743867703289965
       },
       "orchestral_mass": {
-        "normalized": 14.458857212827079,
-        "raw": 209.05855190092166
+        "normalized": 14.554887570847121,
+        "raw": 211.84475220000002
       },
       "registral": {
         "normalized": 0.0,
@@ -510,7 +625,7 @@
       "timbral_heterogeneity": {
         "normalized": -0.0,
         "raw": {
-          "blend_index": 0.004604769244555659,
+          "blend_index": 0.004125697231500635,
           "family_diversity": 0.2857142857142857,
           "instrument_diversity": 0.42857142857142855,
           "orchestration_evenness": 1.0

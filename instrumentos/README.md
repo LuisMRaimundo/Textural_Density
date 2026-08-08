@@ -2,7 +2,7 @@
 
 
 
-> **Metadata status:** The instrument corpus is **incomplete**. Many names resolve to coarse fallbacks; only a few modules embed sparse GPR tables. External acoustic/proxy metadata are curated gradually via the auxiliary Excel importer — not live analysis. Current tables must not be read as final calibrated models.
+> **Metadata status:** The instrument corpus is **incomplete**. Many names resolve to coarse fallbacks; table-backed modules are partial proxies. Full soft→loud 10-dynamic ladders are committed for ordinary-sustain winds/strings, trumpet, string technique/harmonic modules, and unpitched percussion (D6 monotone enforcement 2026-08-03). External acoustic/proxy metadata are curated gradually — not live analysis.
 
 
 
@@ -14,7 +14,7 @@ This package provides **instrument density** for the vertical density pipeline. 
 
 
 
-Dedicated modules embed **sparse CDM tables** from external sources (partial digitization — **work in progress**, not final reference data). Tables are stored as `spectral_data` and interpolated by Gaussian-process regression (GPR) for intermediate dynamics.
+Dedicated modules embed CDM tables from external sources (partial digitization — **work in progress**, not final reference data). Tables are stored as `spectral_data` and looked up by pitch × dynamic. Missing dynamics are **not** filled at runtime.
 
 
 
@@ -22,17 +22,9 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 
 |--------|-------|--------|
 
-| `flute.py` | `spectral_data` | IOWA+ORCH flute sustain CDM medians (Zenodo workbook) |
-
-| `clarinet.py` | `spectral_data` | IOWA+ORCH clarinet sustain CDM medians (Zenodo workbook) |
-
-| `oboe.py` | `spectral_data` | IOWA+ORCH oboe sustain CDM medians (Zenodo workbook) |
-
-| `bassoon.py` | `spectral_data` | IOWA+ORCH bassoon sustain CDM medians (Zenodo workbook) |
-
-| `trumpet.py` | `spectral_data` | IOWA+ORCH trumpet sustain CDM medians (Zenodo workbook) |
-
-| `violin.py`, `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` | IOWA+ORCH arco sustain CDM medians (Zenodo workbooks) |
+| `flute.py`, `clarinet.py`, `oboe.py`, `bassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
+| `trumpet.py` | `spectral_data` (10 dynamics, monotone) | IOWA+ORCH trumpet sustain CDM medians + D6 ladder rebuild |
+| `violin.py`, `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
 | `violin_sordina.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`con_sordino`; pp from arco ratios) |
 | `violin_sul_tasto.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_tasto`; pp from arco ratios) |
 | `violin_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_ponticello`; pp from arco ratios) |
@@ -41,23 +33,24 @@ Dedicated modules embed **sparse CDM tables** from external sources (partial dig
 | `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Viola_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Cello_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
 | `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Contrabass-pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
+| `bass_drum.py`, `cymbals.py`, `tamtam.py`, `gong.py` | `DYNAMIC_CDM` (10 dynamics; pitch-independent) | NonTunPerc MC anchors + committed former `internal_default` ladder |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
+**Unpitched modules:** Profiles with `unpitched=True` (Bass drum, Cymbals, Tam-tam, Gong) use pitch-independent `DYNAMIC_CDM`; `calcular_densidade` ignores `nota`. A single `LOOKUP_NOTE` / `spectral_data` key remains for lookup-shape compatibility only (registry midpoint: `D2`, `C5`, `C2`, `C3`). Entry paths (GUI / MusicXML `<unpitched>` / MIDI channel 10) inject it; users never choose a sounding pitch. Cents/microtones are rejected. Mass/CDM and Event/Player Count contribute as usual; pitch-structure metrics and texture polyphony exclude these events in `core/unpitched_routing.partition_pitched_events` only. Aggregation contract: [TECHNICAL_MANUAL §7.5.1](../docs/TECHNICAL_MANUAL.md).
 
-
-**Important distinction:** the **analysis pipeline is score-only at runtime** (no audio input). The **instrument scripts** carry pre-loaded acoustic metadata that is looked up from notated pitch and dynamic markings.
+**Important distinction:** the **analysis pipeline is score-only at runtime** (no audio input). The **instrument scripts** carry pre-loaded acoustic metadata looked up from notation (pitch×dynamic for pitched modules; dynamics-only for unpitched).
 
 **Media ingestion:** Zenodo `*_Media` workbook rows may use duplicate suffix labels (e.g. `F4 (2)`). Offline tooling applies `utils.notes.normalize_media_note_label()` before canonical parsing. See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md).
 
-**Technique honesty:** registry `supported_techniques` lists organological capabilities. GPR modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
+**Technique honesty:** registry `supported_techniques` lists organological capabilities. Modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
 
-**Transferred-anchor modules:** `violin_sul_ponticello.py` may still carry ratio-derived soft/loud anchors depending on its workbook generation path. Violin harmonic modules (`violin_art_harm.py`, `violin_nat_harm.py`) commit workbook pp/mf/ff from STE. All other dynamics (`pppp` … `ffff`, including `mp`) are GPR-modelled in the production pipeline. Direct `calcular_densidade` calls collapse non-anchor markings to the nearest table row; GUI / `calculate_metrics` uses GPR.
+**Technique / trumpet ladders:** STE regenerators still emit pp/mf/ff anchors; `tools/enforce_pitched_monotone_dynamic_ladders.py` then commits full soft→loud 10-level ladders (D6 hotfix).
 
 **Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
 
 Audit: `python tools/audit_instrument_metadata_range_resolution.py` → `reports/instrument_metadata_range_resolution_audit.*`
 
-**String verification (PR #13/#14):** musicological contract tests (`pytest -m musicological`) cover module contracts, source reconstruction (local workbooks), pitch spelling, GPR diagnostics, and score scenarios for violin, viola, cello, and double bass.
+**String verification (PR #13/#14):** musicological contract tests (`pytest -m musicological`) cover module contracts, source reconstruction (local workbooks), pitch spelling, committed-dynamics contracts, and score scenarios for violin, viola, cello, and double bass.
 
 
 
@@ -81,29 +74,14 @@ Every loadable instrument module must expose:
 
 def calcular_densidade(nota: str, dinamica: str) -> float:
 
-    """Density for one note at one dynamic marking."""
-
-
-
-def predict_intermediate_dynamics(
-
-    pitches: list,
-
-    pp_values: list,
-
-    mf_values: list,
-
-    ff_values: list,
-
-) -> dict[str, list[float]]:
-
-    """Interpolate pp/mf/ff for dynamics not in the table."""
+    """Density for one note at one dynamic marking (committed table cell)."""
 
 ```
 
 
 
-Unknown dynamics are normalised to `mf` or interpolated via `predict_intermediate_dynamics`.
+Unknown score dynamics are normalised to `mf`. Missing cells in `spectral_data`
+raise `MissingCommittedDynamicError` — there is no runtime GPR/tail fill-in.
 
 
 
@@ -139,11 +117,12 @@ Range policy: never collapse to the same pitch class in a distant octave (e.g. D
 
 
 
-Dynamic interpolation — **production GPR only** (`create_dynamic_gpr()`, `GPR_RANDOM_STATE = 0`) — remains separate from pitch interpolation; each dynamic column is modelled independently over pitch. Piecewise linear and PCHIP appear only in diagnostic audit tools, not in `calcular_densidade` lookup.
-
-**Source vs modelled dynamics:** `INSTRUMENT_SOURCE.dynamic_levels` remains `("pp", "mf", "ff")` — the only columns in committed CDM tables. Modelled dynamics (`p`, `mp`, `f`, `pppp`, `ppp`, `fff`, `ffff`) are GPR predictions at fixed ordinal coordinates via `instrumentos/gpr_dynamic_interpolation.py` (Matérn kernel). `mp` uses coordinate **4.5** between `p` (4.0) and `mf` (5.0) and is **not** mapped to `mf`. These coordinates are ordinal modelling controls, not dB, SPL, or perceptual intensity; values need not be monotonic across dynamics.
-
-**Determinism and diagnostics:** GPR is deterministic by construction (PR #22). Model-quality and method-comparison audits (`tools/audit_gpr_model_quality.py`, `tools/compare_dynamic_interpolation_methods.py`) document local method sensitivity — especially low-register strings — without changing production interpolation. Linear and PCHIP were diagnostic references only (PR #24); not adopted.
+**Committed dynamic ladders:** production looks up exact `spectral_data` cells for
+the requested dynamic. Pitched table-backed modules (ordinary-sustain,
+trumpet, string techniques/harmonics) and unpitched percussion commit all ten
+`DYNAMIC_LEVELS` as soft→loud monotone ladders (D6 hotfix). The retired GPR +
+adaptive-tail implementation lives only at
+`tools/legacy_gpr_dynamic_interpolation.py` for historical audits.
 
 
 
@@ -283,7 +262,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 | Keyboard / harp | `piano`, `celesta`, `harpa` |
 
-| Percussion | `timpanos`, `bombo`, `caixa`, `pratos`, `tamtam`, `vibrafone`, `marimba`, `metalofone` |
+| Percussion | `timpanos`, `bombo`, `caixa`, `pratos`, `tamtam`, `gongo`, `vibrafone`, `marimba`, `metalofone` |
 
 
 

@@ -6,8 +6,6 @@ import importlib
 import logging
 import math
 import statistics
-from unittest import mock
-
 import numpy as np
 import pytest
 from instrumentos import get_instrument_profile
@@ -85,74 +83,39 @@ class TestStringPitchSpellingAndMicrotonal:
 
 
 @pytest.mark.musicological
-class TestStringGprIntermediateDynamics:
+class TestStringCommittedDynamics:
     @pytest.mark.parametrize("spec", STRING_INSTRUMENTS, ids=lambda s: s.module_name)
-    def test_predict_intermediate_dynamics_contract(self, spec: StringInstrumentSpec):
+    def test_no_runtime_gpr_helper(self, spec: StringInstrumentSpec):
+        assert not hasattr(_mod(spec), "predict_intermediate_dynamics")
+
+    @pytest.mark.parametrize("spec", STRING_INSTRUMENTS, ids=lambda s: s.module_name)
+    def test_anchor_lookups_are_finite(self, spec: StringInstrumentSpec):
         mod = _mod(spec)
         pitch = _comfortable_table_pitch(spec)
-        pp = mod.calcular_densidade(pitch, "pp")
-        mf = mod.calcular_densidade(pitch, "mf")
-        ff = mod.calcular_densidade(pitch, "ff")
-        pp_in = [pp]
-        mf_in = [mf]
-        ff_in = [ff]
-        preds = mod.predict_intermediate_dynamics([pitch], pp_in, mf_in, ff_in)
-        expected_labels = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
-        assert tuple(preds.keys()) == expected_labels
-        for label in expected_labels:
-            arr = preds[label]
-            assert len(arr) == 1
-            assert math.isfinite(float(arr[0]))
-        assert pp_in == [pp]
-        assert mf_in == [mf]
-        assert ff_in == [ff]
+        for dyn in ("pp", "mf", "ff"):
+            val = mod.calcular_densidade(pitch, dyn)
+            assert math.isfinite(val)
+            assert val > 0.0
 
-    @pytest.mark.parametrize("spec", STRING_INSTRUMENTS, ids=lambda s: s.module_name)
-    def test_gpr_repeated_calls_are_deterministic(self, spec: StringInstrumentSpec):
-        mod = _mod(spec)
-        pitch = _comfortable_table_pitch(spec)
-        pp = mod.calcular_densidade(pitch, "pp")
-        mf = mod.calcular_densidade(pitch, "mf")
-        ff = mod.calcular_densidade(pitch, "ff")
-        runs = [
-            mod.predict_intermediate_dynamics([pitch], [pp], [mf], [ff])["p"][0]
-            for _ in range(3)
-        ]
-        assert runs[0] == pytest.approx(runs[1])
-        assert runs[1] == pytest.approx(runs[2])
-
-    @pytest.mark.parametrize("spec", STRING_INSTRUMENTS, ids=lambda s: s.module_name)
-    def test_empty_training_data_returns_zeros(self, spec: StringInstrumentSpec):
-        mod = _mod(spec)
-        preds = mod.predict_intermediate_dynamics([], [], [], [])
-        for values in preds.values():
-            assert len(values) == 0
-
-    @pytest.mark.parametrize("spec", STRING_INSTRUMENTS, ids=lambda s: s.module_name)
-    def test_pipeline_uses_gpr_for_intermediate_dynamic(self, spec: StringInstrumentSpec):
+    def test_violin_pipeline_uses_committed_non_anchor(self):
+        from config import DYNAMIC_LEVELS
         from core.converters import make_instrument_event
         from core.orchestration import compute_event_one_player_density
 
-        mod = _mod(spec)
-        pitch = _comfortable_table_pitch(spec)
+        mod = _mod(next(s for s in STRING_INSTRUMENTS if s.module_name == "violin"))
+        pitch = _comfortable_table_pitch(
+            next(s for s in STRING_INSTRUMENTS if s.module_name == "violin")
+        )
+        assert mod.INSTRUMENT_SOURCE.dynamic_levels == tuple(DYNAMIC_LEVELS)
         event = make_instrument_event(
             idx=0,
             note=pitch,
             dynamic="p",
-            instrument_name=spec.registry_ids[0],
+            instrument_name="violino",
             player_count=1,
         )
-
-        def _loader(_name: str):
-            return mod
-
-        with mock.patch.object(
-            mod, "predict_intermediate_dynamics", wraps=mod.predict_intermediate_dynamics
-        ) as gpr_mock:
-            density = compute_event_one_player_density(event, _loader)
-            gpr_mock.assert_called_once()
-        assert math.isfinite(density)
-        assert density > 0.0
+        density = compute_event_one_player_density(event, lambda _: mod)
+        assert density == pytest.approx(mod.spectral_data[pitch]["p"])
 
 
 @pytest.mark.musicological

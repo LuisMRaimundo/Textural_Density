@@ -2,12 +2,13 @@
 """
 Bassoon instrument density module.
 
-The ``spectral_data`` table stores sparse Combined Density Metric (CDM) values
-from **external acoustic sources** (IOWA + ORCH sustain collections,
-midpoint summary at pp/mf/ff). Intermediate dynamics are interpolated via GPR.
+The ``spectral_data`` table stores a committed 10-dynamic Combined Density
+Metric (CDM) ladder from the Dynamics_predicter ``Results`` sheet
+(IOWA + ORCH ordinary sustain anchors at pp/mf/ff; remaining levels
+committed from that workbook — no runtime dynamic extrapolation).
 
-Runtime analysis does not ingest audio; it maps notated pitch + dynamic to these
-pre-loaded acoustic metadata tables.
+Runtime analysis does not ingest audio; it maps notated pitch + dynamic to
+these pre-loaded acoustic metadata tables.
 """
 
 from instrumentos.provenance import InstrumentSource
@@ -15,16 +16,19 @@ from instrumentos.provenance import InstrumentSource
 INSTRUMENT_SOURCE = InstrumentSource(
     source_type="external_acoustic_metadata",
     citation=(
-        "Median/midpoint summary of bassoon sustained-note Combined Density Metrics across IOWA and ORCH sound collections (pp, mf, ff)."
+        "Bassoon CDM ladder: IOWA+ORCH measured pp/mf/ff anchors with "
+        "committed Dynamics_predicter Results sheet values for all 10 "
+        "dynamic levels (not re-extrapolated at runtime)."
     ),
-    source_url_or_identifier='D:\\MADEIRAS\\Bassoon_Zenodo_collections_media.xlsx',
+    source_url_or_identifier='docs/instrument_acoustic_sources.md#bassoon',
     extraction_method=(
-        "Combined Density Metric midpoint of IOWA/ORCH collections (CDM midpoint pass-through; no rescaling); GPR interpolation by pitch/dynamic"
+        "monotone log-CDM ladder enforcement (2026-08-03): pp/mf/ff anchors isotonic-clamped then full DYNAMIC_LEVELS rebuilt via offline internal_default log-linear + adaptive tails; Committed full dynamic ladder from Basson_iowa_orchidea_dynamics.xlsx / sheet 'Results'; "
+        "pitch lookup via MIDI-space spectral_lookup"
     ),
-    dynamic_levels=("pp", "mf", "ff"),
+    dynamic_levels=('pppp', 'ppp', 'pp', 'p', 'mp', 'mf', 'f', 'ff', 'fff', 'ffff'),
     pitch_range=(34, 75),
     uncertainty="medium",
-    version="2026-07-06",
+    version="2026-08-03",
     source_technique="ordinary_sustain",
     table_supported_techniques=("ordinary_sustain",),
 )
@@ -35,50 +39,51 @@ from utils.notes import normalize_note_string
 
 logger = logging.getLogger("bassoon")
 
-# CDM medians: (IOWA + ORCH) / 2 per note at pp, mf, ff (sustains (ordinario)).
+# Full 10-dynamic CDM ladder (Results sheet). Anchors pp/mf/ff match measured
+# IOWA+ORCH midpoints; other levels are workbook-committed.
 spectral_data = {
-    'A#1': {'pp': 60.112884, 'mf': 82.082187, 'ff': 115.200631},
-    'B1': {'pp': 67.334597, 'mf': 70.608465, 'ff': 108.404336},
-    'C2': {'pp': 61.50509, 'mf': 63.451659, 'ff': 93.431898},
-    'C#2': {'pp': 44.632087, 'mf': 45.327772, 'ff': 54.145859},
-    'D2': {'pp': 47.045754, 'mf': 50.818887, 'ff': 51.268523},
-    'D#2': {'pp': 38.161244, 'mf': 45.023381, 'ff': 56.127555},
-    'E2': {'pp': 30.491994, 'mf': 36.698836, 'ff': 46.101874},
-    'F2': {'pp': 37.191381, 'mf': 42.582053, 'ff': 44.376113},
-    'F#2': {'pp': 31.660461, 'mf': 37.079685, 'ff': 41.069527},
-    'G2': {'pp': 22.673724, 'mf': 30.906966, 'ff': 32.645658},
-    'G#2': {'pp': 29.183647, 'mf': 29.203203, 'ff': 34.50579},
-    'A2': {'pp': 24.588876, 'mf': 29.069409, 'ff': 32.445937},
-    'A#2': {'pp': 24.010092, 'mf': 29.111408, 'ff': 30.666221},
-    'B2': {'pp': 22.619395, 'mf': 27.063989, 'ff': 32.944671},
-    'C3': {'pp': 22.650121, 'mf': 25.560195, 'ff': 31.029659},
-    'C#3': {'pp': 16.38565, 'mf': 24.344905, 'ff': 30.834523},
-    'D3': {'pp': 18.670381, 'mf': 24.890236, 'ff': 25.890483},
-    'D#3': {'pp': 18.991454, 'mf': 23.770827, 'ff': 30.881352},
-    'E3': {'pp': 13.079968, 'mf': 17.560663, 'ff': 25.459988},
-    'F3': {'pp': 19.217275, 'mf': 23.505008, 'ff': 31.891148},
-    'F#3': {'pp': 16.472004, 'mf': 19.165129, 'ff': 21.822608},
-    'G3': {'pp': 15.658701, 'mf': 17.8718, 'ff': 22.791335},
-    'G#3': {'pp': 17.443661, 'mf': 19.382364, 'ff': 20.958858},
-    'A3': {'pp': 15.104971, 'mf': 15.356676, 'ff': 17.945941},
-    'A#3': {'pp': 10.820228, 'mf': 12.96143, 'ff': 13.752958},
-    'B3': {'pp': 9.855421, 'mf': 11.679629, 'ff': 12.261966},
-    'C4': {'pp': 13.073926, 'mf': 13.852624, 'ff': 14.201543},
-    'C#4': {'pp': 9.396726, 'mf': 9.331062, 'ff': 11.634741},
-    'D4': {'pp': 8.994419, 'mf': 9.833251, 'ff': 10.521924},
-    'D#4': {'pp': 9.566457, 'mf': 13.481235, 'ff': 13.420602},
-    'E4': {'pp': 9.516094, 'mf': 9.967572, 'ff': 10.610339},
-    'F4': {'pp': 14.362144, 'mf': 12.928177, 'ff': 18.309567},
-    'F#4': {'pp': 10.266545, 'mf': 7.977475, 'ff': 9.269676},
-    'G4': {'pp': 13.694737, 'mf': 13.580782, 'ff': 16.414992},
-    'G#4': {'pp': 12.215962, 'mf': 14.026172, 'ff': 11.106307},
-    'A4': {'pp': 14.831893, 'mf': 7.473162, 'ff': 14.710054},
-    'A#4': {'pp': 6.697716, 'mf': 6.946417, 'ff': 11.142307},
-    'B4': {'pp': 6.281922, 'mf': 7.618266, 'ff': 10.2809},
-    'C5': {'pp': 7.063705, 'mf': 5.596543, 'ff': 8.65714},
-    'C#5': {'pp': 7.082404, 'mf': 3.747398, 'ff': 4.723837},
-    'D5': {'pp': 4.112753, 'mf': 4.800128, 'ff': 6.540951},
-    'D#5': {'pp': 5.943685, 'mf': 5.788072, 'ff': 6.890604},
+    'A#1': {'pppp': 55.609274, 'ppp': 57.071682, 'pp': 60.112884, 'p': 70.2438395, 'mp': 75.9326542, 'mf': 82.082187, 'f': 97.2415535, 'ff': 115.200631, 'fff': 125.3881061, 'ffff': 130.8148612},
+    'B1': {'pppp': 66.5401291, 'ppp': 66.8039047, 'pp': 67.334597, 'p': 68.9521032, 'mp': 69.7753693, 'mf': 70.608465, 'f': 87.4886493, 'ff': 108.404336, 'fff': 120.6685584, 'ffff': 127.3115659},
+    'C2': {'pppp': 61.027851, 'ppp': 61.1865178, 'pp': 61.50509, 'p': 62.4707932, 'mp': 62.9593159, 'mf': 63.451659, 'f': 76.9961618, 'ff': 93.431898, 'fff': 102.9220004, 'ffff': 108.0226289},
+    'C#2': {'pppp': 44.4598405, 'ppp': 44.517182, 'pp': 44.632087, 'p': 44.9785845, 'mp': 45.1528407, 'mf': 45.327772, 'f': 49.5410047, 'ff': 54.145859, 'fff': 56.606391, 'ffff': 57.8782746},
+    'D2': {'pppp': 46.147083, 'ppp': 46.4447163, 'pp': 47.045754, 'p': 48.8959391, 'mp': 49.8481414, 'mf': 50.818887, 'f': 51.0432099, 'ff': 51.268523, 'fff': 51.3815522, 'ffff': 51.4381603},
+    'D#2': {'pppp': 36.6158085, 'ppp': 37.1238714, 'pp': 38.161244, 'p': 41.4505516, 'mp': 43.200046, 'mf': 45.023381, 'f': 50.269795, 'ff': 56.127555, 'fff': 59.3076381, 'ffff': 60.9646214},
+    'E2': {'pppp': 29.1118101, 'ppp': 29.5647866, 'pp': 30.491994, 'p': 33.4517666, 'mp': 35.0377068, 'mf': 36.698836, 'f': 41.1325311, 'ff': 46.101874, 'fff': 48.8073414, 'ffff': 50.2190437},
+    'F2': {'pppp': 35.9539187, 'ppp': 36.3617623, 'pp': 37.191381, 'p': 39.7955444, 'mp': 41.1652278, 'mf': 42.582053, 'f': 43.4698286, 'ff': 44.376113, 'fff': 44.8363163, 'ffff': 45.0682046},
+    'F#2': {'pppp': 30.4342451, 'ppp': 30.8376139, 'pp': 31.660461, 'p': 34.2630985, 'mp': 35.6435815, 'mf': 37.079685, 'f': 39.0236483, 'ff': 41.069527, 'fff': 42.1323436, 'ffff': 42.6740219},
+    'G2': {'pppp': 20.9840579, 'ppp': 21.5328048, 'pp': 22.673724, 'p': 26.4721744, 'mp': 28.6037514, 'mf': 30.906966, 'f': 31.7644179, 'ff': 32.645658, 'fff': 33.0954042, 'ffff': 33.3225955},
+    'G#2': {'pppp': 29.17876, 'ppp': 29.1803889, 'pp': 29.183647, 'p': 29.1934234, 'mp': 29.1983128, 'mf': 29.203203, 'f': 31.7439693, 'ff': 34.50579, 'fff': 35.9755421, 'ffff': 36.7337303},
+    'A2': {'pppp': 23.5811128, 'ppp': 23.912359, 'pp': 24.588876, 'p': 26.7354464, 'mp': 27.8780133, 'mf': 29.069409, 'f': 30.7113043, 'ff': 32.445937, 'fff': 33.3496554, 'ffff': 33.8109104},
+    'A#2': {'pppp': 22.8810778, 'ppp': 23.2513903, 'pp': 24.010092, 'p': 26.4379951, 'mp': 27.7425172, 'mf': 29.111408, 'f': 29.8787026, 'ff': 30.666221, 'fff': 31.0677301, 'ffff': 31.2704517},
+    'B2': {'pppp': 21.6273485, 'ppp': 21.9530996, 'pp': 22.619395, 'p': 24.7420908, 'mp': 25.8770105, 'mf': 27.063989, 'f': 29.8599098, 'ff': 32.944671, 'fff': 34.6045747, 'ffff': 35.4656307},
+    'C3': {'pppp': 21.9759226, 'ppp': 22.1983956, 'pp': 22.650121, 'p': 24.0612034, 'mp': 24.799376, 'mf': 25.560195, 'f': 28.1624597, 'ff': 31.029659, 'fff': 32.570934, 'ffff': 33.370047},
+    'C#3': {'pppp': 14.8414923, 'ppp': 15.3393258, 'pp': 16.38565, 'p': 19.9726586, 'mp': 22.0506797, 'mf': 24.344905, 'f': 27.3982396, 'ff': 30.834523, 'fff': 32.7110528, 'ffff': 33.6917187},
+    'D3': {'pppp': 17.3753764, 'ppp': 17.7967435, 'pp': 18.670381, 'p': 21.5571378, 'mp': 23.1638133, 'mf': 24.890236, 'f': 25.3854335, 'ff': 25.890483, 'fff': 26.1467634, 'ffff': 26.2758533},
+    'D#3': {'pppp': 17.9550532, 'ppp': 18.2940784, 'pp': 18.991454, 'p': 21.2471779, 'mp': 22.4736065, 'mf': 23.770827, 'f': 27.0938236, 'ff': 30.881352, 'fff': 32.9692683, 'ffff': 34.0655818},
+    'E3': {'pppp': 12.1513107, 'ppp': 12.453296, 'pp': 13.079968, 'p': 15.1556231, 'mp': 16.3138833, 'mf': 17.560663, 'f': 21.1446038, 'ff': 25.459988, 'fff': 27.9374984, 'ffff': 29.2652459},
+    'F3': {'pppp': 18.2736228, 'ppp': 18.5829092, 'pp': 19.217275, 'p': 21.2532869, 'mp': 22.3508093, 'mf': 23.505008, 'f': 27.3788548, 'ff': 31.891148, 'fff': 34.4189479, 'ffff': 35.7570193},
+    'F#3': {'pppp': 15.8600705, 'ppp': 16.0614797, 'pp': 16.472004, 'p': 17.7676133, 'mp': 18.4531461, 'mf': 19.165129, 'f': 20.4507481, 'ff': 21.822608, 'fff': 22.5426713, 'ffff': 22.9115642},
+    'G3': {'pppp': 15.1496497, 'ppp': 15.3174676, 'pp': 15.658701, 'p': 16.7286931, 'mp': 17.2908027, 'mf': 17.8718, 'f': 20.1822244, 'ff': 22.791335, 'fff': 24.2197765, 'ffff': 24.9672273},
+    'G#3': {'pppp': 16.9900775, 'ppp': 17.1399462, 'pp': 17.443661, 'p': 18.3874791, 'mp': 18.8783689, 'mf': 19.382364, 'f': 20.1552032, 'ff': 20.958858, 'fff': 21.3726234, 'ffff': 21.5825592},
+    'A3': {'pppp': 15.042692, 'ppp': 15.0634231, 'pp': 15.104971, 'p': 15.2303035, 'mp': 15.2933592, 'mf': 15.356676, 'f': 16.6009036, 'ff': 17.945941, 'fff': 18.6587905, 'ffff': 19.0257645},
+    'A#3': {'pppp': 10.3426609, 'ppp': 10.4994608, 'pp': 10.820228, 'p': 11.8425347, 'mp': 12.3893577, 'mf': 12.96143, 'f': 13.3513296, 'ff': 13.752958, 'fff': 13.9582803, 'ffff': 14.0620881},
+    'B3': {'pppp': 9.4457558, 'ppp': 9.580383, 'pp': 9.855421, 'p': 10.7288238, 'mp': 11.1941361, 'mf': 11.679629, 'f': 11.9672559, 'ff': 12.261966, 'fff': 12.4120316, 'ffff': 12.4877517},
+    'C4': {'pppp': 12.8861896, 'ppp': 12.9484669, 'pp': 13.073926, 'p': 13.457644, 'mp': 13.6537058, 'mf': 13.852624, 'f': 14.0259986, 'ff': 14.201543, 'fff': 14.2901374, 'ffff': 14.3346417},
+    'C#4': {'pppp': 9.396726, 'ppp': 9.396726, 'pp': 9.396726, 'p': 9.396726, 'mp': 9.396726, 'mf': 9.396726, 'f': 10.4560257, 'ff': 11.634741, 'fff': 12.273029, 'ffff': 12.6051866},
+    'D4': {'pppp': 8.7961396, 'ppp': 8.8617422, 'pp': 8.994419, 'p': 9.4044872, 'mp': 9.6164798, 'mf': 9.833251, 'f': 10.1717609, 'ff': 10.521924, 'fff': 10.7015003, 'ffff': 10.7924346},
+    'D#4': {'pppp': 8.780242, 'ppp': 9.0348587, 'pp': 9.566457, 'p': 11.3563927, 'mp': 12.3732857, 'mf': 13.481235, 'f': 13.481235, 'ff': 13.481235, 'fff': 13.481235, 'ffff': 13.481235},
+    'E4': {'pppp': 9.4064567, 'ppp': 9.4428614, 'pp': 9.516094, 'p': 9.7392172, 'mp': 9.8527331, 'mf': 9.967572, 'f': 10.2839349, 'ff': 10.610339, 'fff': 10.7774056, 'ffff': 10.8619229},
+    'F4': {'pppp': 14.362144, 'ppp': 14.362144, 'pp': 14.362144, 'p': 14.362144, 'mp': 14.362144, 'mf': 14.362144, 'f': 16.2161844, 'ff': 18.309567, 'fff': 19.4555169, 'ffff': 20.0551134},
+    'F#4': {'pppp': 10.266545, 'ppp': 10.266545, 'pp': 10.266545, 'p': 10.266545, 'mp': 10.266545, 'mf': 10.266545, 'f': 10.266545, 'ff': 10.266545, 'fff': 10.266545, 'ffff': 10.266545},
+    'G4': {'pppp': 13.694737, 'ppp': 13.694737, 'pp': 13.694737, 'p': 13.694737, 'mp': 13.694737, 'mf': 13.694737, 'f': 14.9932984, 'ff': 16.414992, 'fff': 17.1756199, 'ffff': 17.5690506},
+    'G#4': {'pppp': 11.8011628, 'ppp': 11.9378401, 'pp': 12.215962, 'p': 13.0898122, 'mp': 13.5499062, 'mf': 14.026172, 'f': 14.026172, 'ff': 14.026172, 'fff': 14.026172, 'ffff': 14.026172},
+    'A4': {'pppp': 14.831893, 'ppp': 14.831893, 'pp': 14.831893, 'p': 14.831893, 'mp': 14.831893, 'mf': 14.831893, 'f': 14.831893, 'ff': 14.831893, 'fff': 14.831893, 'ffff': 14.831893},
+    'A#4': {'pppp': 6.6369447, 'ppp': 6.6571403, 'pp': 6.697716, 'p': 6.8209331, 'mp': 6.8833891, 'mf': 6.946417, 'f': 8.7976764, 'ff': 11.142307, 'fff': 12.5394558, 'ffff': 13.3024143},
+    'B4': {'pppp': 5.9862058, 'ppp': 6.0831978, 'pp': 6.281922, 'p': 6.9179009, 'mp': 7.2596425, 'mf': 7.618266, 'f': 8.8500074, 'ff': 10.2809, 'fff': 11.0808962, 'ffff': 11.503944},
+    'C5': {'pppp': 7.063705, 'ppp': 7.063705, 'pp': 7.063705, 'p': 7.063705, 'mp': 7.063705, 'mf': 7.063705, 'f': 7.8199414, 'ff': 8.65714, 'fff': 9.1087737, 'ffff': 9.3433507},
+    'C#5': {'pppp': 7.082404, 'ppp': 7.082404, 'pp': 7.082404, 'p': 7.082404, 'mp': 7.082404, 'mf': 7.082404, 'f': 7.082404, 'ff': 7.082404, 'fff': 7.082404, 'ffff': 7.082404},
+    'D5': {'pppp': 3.9568773, 'ppp': 4.0081681, 'pp': 4.112753, 'p': 4.4431679, 'mp': 4.6182004, 'mf': 4.800128, 'f': 5.6033385, 'ff': 6.540951, 'fff': 7.0670459, 'ffff': 7.3457548},
+    'D#5': {'pppp': 5.943685, 'ppp': 5.943685, 'pp': 5.943685, 'p': 5.943685, 'mp': 5.943685, 'mf': 5.943685, 'f': 6.3996546, 'ff': 6.890604, 'fff': 7.1500268, 'ffff': 7.2833781},
 }
 
 
@@ -93,10 +98,3 @@ def calcular_densidade(nota, dinamica):
         logger=logger,
         preprocess=normalize_note_string,
     )
-
-
-def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
-    """Predict intermediate dynamics using Gaussian Process Regression."""
-    from instrumentos.gpr_dynamic_interpolation import predict_intermediate_dynamics_gpr
-
-    return predict_intermediate_dynamics_gpr(pp_values, mf_values, ff_values, logger=logger)

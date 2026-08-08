@@ -4,73 +4,113 @@
     "inputs": {
       "distinct_pitch_count": 5,
       "event_count": 5,
-      "harmonic_ratio": 0.24908602955964332,
-      "instrument_density": 37.71237006564451,
+      "harmonic_ratio": 0.249086034354754,
+      "instrument_density": 37.71236976351075,
       "instrument_lookup_trace": [
         {
           "audit_flag": null,
-          "corresponding_arco_density": 20.740353,
+          "corresponding_arco_density": 20.7403532,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_0",
           "instrument": "Clarinete",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "clarinet",
           "note": "A#3",
-          "one_player_density": 20.740353,
+          "one_player_density": 20.7403532,
           "resolved_profile_id": "clarinete",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            50,
+            96
+          ]
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 17.525757,
+          "corresponding_arco_density": 17.5257568,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_1",
           "instrument": "Clarinete",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "clarinet",
           "note": "C4",
-          "one_player_density": 17.525757,
+          "one_player_density": 17.5257568,
           "resolved_profile_id": "clarinete",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            50,
+            96
+          ]
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 17.389167,
+          "corresponding_arco_density": 17.3891667,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_2",
           "instrument": "Clarinete",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "clarinet",
           "note": "D4",
-          "one_player_density": 17.389167,
+          "one_player_density": 17.3891667,
           "resolved_profile_id": "clarinete",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            50,
+            96
+          ]
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 14.628142,
+          "corresponding_arco_density": 14.6281418,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_3",
           "instrument": "Clarinete",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "clarinet",
           "note": "D#4",
-          "one_player_density": 14.628142,
+          "one_player_density": 14.6281418,
           "resolved_profile_id": "clarinete",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            50,
+            96
+          ]
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 12.982403,
+          "corresponding_arco_density": 12.9824027,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_4",
           "instrument": "Clarinete",
+          "labelled_table_fallback": false,
+          "labelled_table_fallback_warning": null,
           "module_name": "clarinet",
           "note": "F4",
-          "one_player_density": 12.982403,
+          "one_player_density": 12.9824027,
           "resolved_profile_id": "clarinete",
-          "sordina_arco_ratio": 1.0
+          "sordina_arco_ratio": 1.0,
+          "table_coverage_kind": "full_coverage",
+          "table_excludes_sounding_range": false,
+          "table_span_midi": [
+            50,
+            96
+          ]
         }
       ],
       "interval_compactness_distinct": 0.23609954188252116,
@@ -83,68 +123,108 @@
         "instrument_lookup_trace": [
           {
             "audit_flag": null,
-            "corresponding_arco_density": 20.740353,
+            "corresponding_arco_density": 20.7403532,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_0",
             "instrument": "Clarinete",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "clarinet",
             "note": "A#3",
-            "one_player_density": 20.740353,
+            "one_player_density": 20.7403532,
             "resolved_profile_id": "clarinete",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              50,
+              96
+            ]
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 17.525757,
+            "corresponding_arco_density": 17.5257568,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_1",
             "instrument": "Clarinete",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "clarinet",
             "note": "C4",
-            "one_player_density": 17.525757,
+            "one_player_density": 17.5257568,
             "resolved_profile_id": "clarinete",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              50,
+              96
+            ]
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 17.389167,
+            "corresponding_arco_density": 17.3891667,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_2",
             "instrument": "Clarinete",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "clarinet",
             "note": "D4",
-            "one_player_density": 17.389167,
+            "one_player_density": 17.3891667,
             "resolved_profile_id": "clarinete",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              50,
+              96
+            ]
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 14.628142,
+            "corresponding_arco_density": 14.6281418,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_3",
             "instrument": "Clarinete",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "clarinet",
             "note": "D#4",
-            "one_player_density": 14.628142,
+            "one_player_density": 14.6281418,
             "resolved_profile_id": "clarinete",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              50,
+              96
+            ]
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 12.982403,
+            "corresponding_arco_density": 12.9824027,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_4",
             "instrument": "Clarinete",
+            "labelled_table_fallback": false,
+            "labelled_table_fallback_warning": null,
             "module_name": "clarinet",
             "note": "F4",
-            "one_player_density": 12.982403,
+            "one_player_density": 12.9824027,
             "resolved_profile_id": "clarinete",
-            "sordina_arco_ratio": 1.0
+            "sordina_arco_ratio": 1.0,
+            "table_coverage_kind": "full_coverage",
+            "table_excludes_sounding_range": false,
+            "table_span_midi": [
+              50,
+              96
+            ]
           }
         ],
         "interval_pairs_count_distinct": 10,
@@ -165,7 +245,7 @@
             ],
             "representative_note": "A#3",
             "total_player_count": 1,
-            "total_weight": 20.740353
+            "total_weight": 20.7403532
           },
           {
             "dynamics": [
@@ -181,7 +261,7 @@
             ],
             "representative_note": "C4",
             "total_player_count": 1,
-            "total_weight": 17.525757
+            "total_weight": 17.5257568
           },
           {
             "dynamics": [
@@ -197,7 +277,7 @@
             ],
             "representative_note": "D4",
             "total_player_count": 1,
-            "total_weight": 17.389167
+            "total_weight": 17.3891667
           },
           {
             "dynamics": [
@@ -213,7 +293,7 @@
             ],
             "representative_note": "D#4",
             "total_player_count": 1,
-            "total_weight": 14.628142
+            "total_weight": 14.6281418
           },
           {
             "dynamics": [
@@ -229,11 +309,13 @@
             ],
             "representative_note": "F4",
             "total_player_count": 1,
-            "total_weight": 12.982403
+            "total_weight": 12.9824027
           }
         ],
         "pitch_differentiation_ratio": 1.0,
         "pitch_polyphony": 5,
+        "pitched_event_count": 5,
+        "pitched_player_count": 5,
         "player_count": 5,
         "player_doubling_count": 0,
         "qty_affects_pitch_structure": false,
@@ -242,43 +324,44 @@
             "dynamic": "mf",
             "instrument": "clarinete",
             "midi": 58.0,
-            "one_player_density": 20.740353,
+            "one_player_density": 20.7403532,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "clarinete",
             "midi": 60.0,
-            "one_player_density": 17.525757,
+            "one_player_density": 17.5257568,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "clarinete",
             "midi": 62.0,
-            "one_player_density": 17.389167,
+            "one_player_density": 17.3891667,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "clarinete",
             "midi": 63.0,
-            "one_player_density": 14.628142,
+            "one_player_density": 14.6281418,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "clarinete",
             "midi": 65.0,
-            "one_player_density": 12.982403,
+            "one_player_density": 12.9824027,
             "player_count": 1.0
           }
         ],
         "total_player_count": 5,
-        "unison_doublings_excluded_from_interval_structure": true
+        "unison_doublings_excluded_from_interval_structure": true,
+        "unpitched_event_count": 0
       },
       "registral_span": 7.0,
-      "sonic_mass": 83.265822
+      "sonic_mass": 83.26582119999999
     },
     "overlap_warnings": [],
     "steps": {
@@ -287,7 +370,7 @@
           "symbolic_entropy",
           "pitch_bins"
         ],
-        "value": 2.194949199086572
+        "value": 2.1949491983962224
       },
       "interval_compactness_distinct": {
         "depends_on": [
@@ -304,7 +387,7 @@
           "harmonicity_proxy",
           "pitch_differentiation_ratio"
         ],
-        "value": 15.260986269865796
+        "value": 15.260986253663196
       },
       "sonic_mass": {
         "depends_on": [
@@ -312,28 +395,28 @@
           "player_count",
           "instrument_density"
         ],
-        "value": 83.265822
+        "value": 83.26582119999999
       },
       "total_density": {
         "depends_on": [
           "pitch_structure_density",
           "sonic_mass"
         ],
-        "value": 0.09418645661471664
+        "value": 0.03930826202127634
       },
       "weighted_density": {
         "depends_on": [
           "instrument_density",
           "interval_compactness_distinct"
         ],
-        "value": 2.003668274223486
+        "value": 2.003668259116798
       }
     }
   },
   "metadata": {
     "density.instrument.assumptions": [
-      "Instrument 'Clarinete' uses externally sourced acoustic metadata via instrumentos/clarinet.py (GPR interpolation).",
-      "Instrument density applies pre-loaded external acoustic metadata to notated pitch and dynamic markings; the pipeline does not analyse audio waveforms.",
+      "Instrument 'Clarinete' uses externally sourced acoustic metadata via instrumentos/clarinet.py (committed dynamic ladder).",
+      "Instrument density applies pre-loaded external acoustic metadata to notated pitch and dynamic markings; the pipeline does not analyse audio waveforms and does not extrapolate missing dynamics at runtime.",
       "Quantity scaling model: incoherent source addition (not phase-locked N\u00b2).",
       "Qty affects pressure-equivalent density, not pitch-structure metrics."
     ],
@@ -355,15 +438,15 @@
   },
   "numeric": {
     "density": {
-      "absolute": 3.590091603531766,
-      "instrument": 37.71237006564451,
+      "absolute": 3.5900915764642147,
+      "instrument": 37.71236976351075,
       "interval": 0.23609954188252116,
-      "pitch_structure": 15.260986269865796,
-      "refined": 15.260986269865796,
-      "sonic_mass": 83.265822,
-      "total": 0.09418645661471664,
-      "weighted": 2.003668274223486,
-      "weighted_orchestral": 1.8856185032822252,
+      "pitch_structure": 15.260986253663196,
+      "refined": 15.260986253663196,
+      "sonic_mass": 83.26582119999999,
+      "total": 0.03930826202127634,
+      "weighted": 2.003668259116798,
+      "weighted_orchestral": 1.8856184881755376,
       "weighted_pitch": 0.1180497709412606
     },
     "density_subindices": {
@@ -378,10 +461,10 @@
         }
       },
       "harmonicity_proxy": {
-        "normalized": 0.24908602955964332,
+        "normalized": 0.249086034354754,
         "raw": {
-          "chroma_concentration": 0.24908602955964337,
-          "harmonic_ratio": 0.24908602955964332
+          "chroma_concentration": 0.24908603435475396,
+          "harmonic_ratio": 0.249086034354754
         }
       },
       "interval_compactness": {
@@ -389,8 +472,8 @@
         "raw": 7.222632787885656
       },
       "orchestral_mass": {
-        "normalized": 9.125010794514163,
-        "raw": 83.265822
+        "normalized": 9.125010750678598,
+        "raw": 83.26582119999999
       },
       "registral": {
         "normalized": 0.0,

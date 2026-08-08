@@ -59,6 +59,7 @@ class InstrumentProfile:
     missing_data_warnings: tuple[str, ...] = field(default_factory=tuple)
     module_name: str | None = None
     aliases: tuple[str, ...] = field(default_factory=tuple)
+    unpitched: bool = False
 
 
 def _bands(low: float, mid: float, high: float) -> dict[str, tuple[float, float]]:
@@ -87,6 +88,7 @@ def _profile(
     source_notes: str = "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
     warnings: tuple[str, ...] = ("Spectral density is a coarse fallback without external acoustic metadata.",),
     aliases: tuple[str, ...] = (),
+    unpitched: bool = False,
 ) -> InstrumentProfile:
     low, high = sounding
     mid = low + (high - low) / 3
@@ -111,6 +113,7 @@ def _profile(
         missing_data_warnings=warnings,
         module_name=module_name,
         aliases=aliases,
+        unpitched=unpitched,
     )
 
 
@@ -578,132 +581,6 @@ REGISTRY["violino_nat_harm"] = _profile(
 )
 
 
-REGISTRY["viola_art_harm"] = _profile(
-    "viola_art_harm",
-    "Viola art harm",
-    "strings",
-    sounding=(72, 108),
-    comfortable=(72, 96),
-    brightness="neutral",
-    sustain="sustained",
-    attack="soft",
-    status="literature_derived",
-    uncertainty="high",
-    module_name="viola_art_harm",
-    supported=("arco", "harmonic"),
-    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
-    source_notes=(
-        "Same-instrument viola artificial_harmonic mf table (35 unique sounding pitches) "
-        "from STE measured CSVs; multi-collection mean; no violin transfer."
-    ),
-    warnings=(
-        "Only dynamic mf is calibrated; pp/ff are not fabricated from mf.",
-        "Cross-instrument transfer from violin is disabled.",
-    ),
-    aliases=(
-        "viola_art_harm",
-        "Viola_art_harm",
-        "viola artificial harmonics",
-        "viola_artificial_harmonics",
-        "art_harm_viola",
-    ),
-)
-
-
-REGISTRY["viola_nat_harm"] = _profile(
-    "viola_nat_harm",
-    "Viola nat harm",
-    "strings",
-    sounding=(48, 96),
-    comfortable=(50, 84),
-    brightness="neutral",
-    sustain="sustained",
-    attack="soft",
-    status="coarse_default",
-    uncertainty="high",
-    module_name="viola_nat_harm",
-    supported=("arco", "harmonic"),
-    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
-    source_notes=(
-        "implemented_but_uncalibrated: STE modal register may generate pitches, "
-        "but no viola natural_harmonic EWSD measured table is available."
-    ),
-    warnings=(
-        "Acoustic density lookup returns unavailable until same-instrument calibration exists.",
-        "Do not use violin natural_harmonic coefficients for viola.",
-    ),
-    aliases=(
-        "viola_nat_harm",
-        "Viola_nat_harm",
-        "viola natural harmonics",
-        "viola_natural_harmonics",
-        "nat_harm_viola",
-    ),
-)
-
-
-REGISTRY["cello_art_harm"] = _profile(
-    "cello_art_harm",
-    "Cello art harm",
-    "strings",
-    sounding=(36, 96),
-    comfortable=(36, 84),
-    brightness="dark",
-    sustain="sustained",
-    attack="soft",
-    status="coarse_default",
-    uncertainty="high",
-    module_name="cello_art_harm",
-    supported=("arco", "harmonic"),
-    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
-    source_notes=(
-        "implemented_but_uncalibrated: no cello artificial_harmonic EWSD measured table."
-    ),
-    warnings=(
-        "Acoustic density lookup returns unavailable until same-instrument calibration exists.",
-        "Do not use violin/viola coefficients for cello.",
-    ),
-    aliases=(
-        "cello_art_harm",
-        "violoncelo_art_harm",
-        "cello artificial harmonics",
-        "cello_artificial_harmonics",
-        "art_harm_cello",
-    ),
-)
-
-
-REGISTRY["cello_nat_harm"] = _profile(
-    "cello_nat_harm",
-    "Cello nat harm",
-    "strings",
-    sounding=(36, 96),
-    comfortable=(36, 84),
-    brightness="dark",
-    sustain="sustained",
-    attack="soft",
-    status="coarse_default",
-    uncertainty="high",
-    module_name="cello_nat_harm",
-    supported=("arco", "harmonic"),
-    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
-    source_notes=(
-        "implemented_but_uncalibrated: no cello natural_harmonic EWSD measured table."
-    ),
-    warnings=(
-        "Acoustic density lookup returns unavailable until same-instrument calibration exists.",
-        "Do not use violin/viola coefficients for cello.",
-    ),
-    aliases=(
-        "cello_nat_harm",
-        "violoncelo_nat_harm",
-        "cello natural harmonics",
-        "cello_natural_harmonics",
-        "nat_harm_cello",
-    ),
-)
-
-
 REGISTRY["violoncelo_sordina"] = _profile(
     "violoncelo_sordina",
     "Cello sordina",
@@ -999,18 +876,124 @@ REGISTRY["harpa"] = _profile(
 )
 
 # --- Percussion (pitch where applicable) ---
-_PERCUSSION = (
+# Table-backed unpitched specimens (NonTunPerc Analysis strike composite → CDM).
+REGISTRY["bombo"] = _profile(
+    "bombo",
+    "Bass drum",
+    "percussion",
+    sounding=(28, 48),
+    comfortable=(28, 48),
+    brightness="dark",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="bass_drum",
+    unpitched=True,
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/bass_drum.py from NonTunPerc MC p50 "
+        "bassdrum_82cm strike composite_index (ff) with scaled pp/mf; unpitched — "
+        "note is notation-lookup convention only."
+    ),
+    warnings=(
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_membrane only; note key excluded from pitch-structure metrics.",
+    ),
+    aliases=("bass_drum", "bass drum"),
+)
+
+REGISTRY["pratos"] = _profile(
+    "pratos",
+    "Cymbals",
+    "percussion",
+    sounding=(60, 84),
+    comfortable=(60, 84),
+    brightness="very_bright",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="cymbals",
+    unpitched=True,
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/cymbals.py from NonTunPerc MC p50 "
+        "cymbal_46cm_medium shimmer composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is notation-lookup convention only."
+    ),
+    warnings=(
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
+    ),
+    aliases=("cymbals", "cymbal"),
+)
+
+REGISTRY["tamtam"] = _profile(
+    "tamtam",
+    "Tam-tam",
+    "percussion",
+    sounding=(24, 48),
+    comfortable=(24, 48),
+    brightness="bright",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="tamtam",
+    unpitched=True,
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/tamtam.py from NonTunPerc MC p50 "
+        "tamtam_80cm_bronze shimmer composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is notation-lookup convention only."
+    ),
+    warnings=(
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
+    ),
+    aliases=("tam_tam", "tam-tam", "tam tam"),
+)
+
+REGISTRY["gongo"] = _profile(
+    "gongo",
+    "Gong",
+    "percussion",
+    sounding=(36, 60),
+    comfortable=(36, 60),
+    brightness="bright",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="gong",
+    unpitched=True,
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/gong.py from NonTunPerc MC p50 "
+        "gong_50cm_bronze shimmer composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is notation-lookup convention only."
+    ),
+    warnings=(
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
+    ),
+    aliases=("gong",),
+)
+
+_PERCUSSION_COARSE = (
     ("timpanos", "Timpani", (36, 60), ("timpani", "timbales")),
-    ("bombo", "Bass drum", (28, 48), ("bass_drum",)),
     ("caixa", "Snare drum", (60, 72), ("snare_drum", "snare")),
-    ("pratos", "Cymbals", (60, 84), ("cymbals",)),
-    ("tamtam", "Tam-tam", (24, 48), ("tam_tam", "tam-tam")),
     ("vibrafone", "Vibraphone", (53, 84), ("vibraphone",)),
     ("marimba", "Marimba", (45, 84), ("marimba",)),
     ("metalofone", "Glockenspiel", (72, 108), ("glockenspiel", "glock")),
 )
 
-for _id, _name, _sound, _aliases in _PERCUSSION:
+for _id, _name, _sound, _aliases in _PERCUSSION_COARSE:
     REGISTRY[_id] = _profile(
         _id,
         _name,

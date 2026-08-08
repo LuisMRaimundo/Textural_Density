@@ -27,11 +27,6 @@ from core.defaults import (
 )
 from core.hash_utils import config_hash, input_hash_from_dict
 from core.models import AnalysisConfig, MetricResult, VerticalSlice
-from instrumentos.gpr_dynamic_interpolation import (
-    MEASURED_SUPPORT,
-    TRANSFERRED_ANCHOR_MODULES,
-    tail_saturation_info,
-)
 from instrumentos.registry import resolve_profile
 from instrumentos.violin_sordina_diagnostics import (
     AUDIT_FLAG_CRITICAL,
@@ -47,7 +42,7 @@ def _instrument_density_epistemics(
     """
     Return (source_type, validation_status, assumptions, warnings) for instrument density.
     """
-    has_gpr = False
+    has_table = False
     has_coarse = False
     assumptions: list[str] = []
     warnings: list[str] = []
@@ -58,21 +53,22 @@ def _instrument_density_epistemics(
             has_coarse = True
             continue
         if profile.module_name:
-            has_gpr = True
+            has_table = True
             if profile.profile_status in ("literature_derived", "literature_informed", "empirical_source", "empirical_profile"):
                 assumptions.append(
                     f"Instrument '{event.instrument_name}' uses externally sourced acoustic "
-                    f"metadata via instrumentos/{profile.module_name}.py (GPR interpolation)."
+                    f"metadata via instrumentos/{profile.module_name}.py (committed dynamic ladder)."
                 )
         else:
             has_coarse = True
 
-    if has_gpr:
+    if has_table:
         source_type = "external_acoustic_metadata"
         validation = "partially_calibrated" if not has_coarse else "heuristic"
         assumptions.append(
             "Instrument density applies pre-loaded external acoustic metadata to notated "
-            "pitch and dynamic markings; the pipeline does not analyse audio waveforms."
+            "pitch and dynamic markings; the pipeline does not analyse audio waveforms "
+            "and does not extrapolate missing dynamics at runtime."
         )
     else:
         source_type = "metadata_proxy"
@@ -91,9 +87,8 @@ def _instrument_density_epistemics(
     return source_type, validation, assumptions, warnings
 
 
-# Normalisation constants documented in metadata (not hidden)
-WEIGHTED_DI_MAX = 100.0
-WEIGHTED_DV_MAX = 10.0
+# Normalisation constants documented in metadata (single source: core.composite)
+from core.composite import WEIGHTED_DI_MAX, WEIGHTED_DV_MAX  # noqa: E402
 
 
 @dataclass
@@ -180,66 +175,6 @@ def collect_slice_warnings(
                 "mapped to 'mf' for instrument density."
             )
         profile = resolve_profile(event.instrument_name)
-        if profile is not None and profile.module_name:
-            pitch = (
-                event.sounding_pitch.note_name
-                if event.sounding_pitch is not None
-                else None
-            )
-            a_pp = a_mf = a_ff = None
-            if pitch:
-                try:
-                    from core.pipeline import load_instrument_module
-
-                    mod = load_instrument_module(profile.instrument_id)
-                    a_pp = float(mod.calcular_densidade(pitch, "pp"))
-                    a_mf = float(mod.calcular_densidade(pitch, "mf"))
-                    a_ff = float(mod.calcular_densidade(pitch, "ff"))
-                except Exception:
-                    a_pp = a_mf = a_ff = None
-
-            tail = tail_saturation_info(
-                dyn,
-                a_pp=a_pp,
-                a_mf=a_mf,
-                a_ff=a_ff,
-                module_name=profile.module_name,
-            )
-            if a_pp is not None and a_mf is not None and a_ff is not None and tail is not None:
-                if a_pp > a_mf and tail["region"] == "soft_tail":
-                    warnings.append(
-                        f"Instrument '{event.instrument_name}' pitch '{pitch}' has "
-                        f"inverted measured anchors pp>mf "
-                        f"(pp={a_pp:.6g}, mf={a_mf:.6g}); soft-tail step clamped to 0."
-                    )
-                if a_ff < a_mf and tail["region"] == "loud_tail":
-                    warnings.append(
-                        f"Instrument '{event.instrument_name}' pitch '{pitch}' has "
-                        f"inverted measured anchors ff<mf "
-                        f"(mf={a_mf:.6g}, ff={a_ff:.6g}); loud-tail step clamped to 0."
-                    )
-            if tail is not None:
-                s_txt = (
-                    f"{tail['s']:.6g}" if tail.get("s") is not None else "n/a"
-                )
-                val_txt = (
-                    f"{tail['value']:.6g}" if tail.get("value") is not None else "n/a"
-                )
-                msg = (
-                    f"Instrument '{event.instrument_name}' dynamic "
-                    f"'{tail['requested_level']}' at event {event.event_id}"
-                    + (f" pitch '{pitch}'" if pitch else "")
-                    + f" is outside measured support {tuple(MEASURED_SUPPORT)}; "
-                    f"boundary '{tail['boundary_level']}', "
-                    f"s(m)={s_txt}, γ={tail['gamma']}, value={val_txt}. "
-                    f"{tail['description']}."
-                )
-                if profile.module_name in TRANSFERRED_ANCHOR_MODULES:
-                    msg += (
-                        " pp/ff anchors are extrapolated from mf using violin arco "
-                        "dynamic ratios; tail computed from transferred anchors."
-                    )
-                warnings.append(msg)
         if profile is None:
             warnings.append(
                 f"Instrument '{event.instrument_name}' has no registry profile; "
@@ -268,6 +203,15 @@ def collect_slice_warnings(
                     "Input appears to request violin con sordina, but it did not "
                     "resolve to the violin_sordina profile."
                 )
+        note = event.sounding_pitch.note_name or ""
+        if note and not getattr(event, "unpitched", False):
+            from instrumentos.table_coverage import pitch_outside_table_but_in_sounding_range
+
+            gap_warn = pitch_outside_table_but_in_sounding_range(
+                event.instrument_name, note
+            )
+            if gap_warn and gap_warn not in warnings:
+                warnings.append(gap_warn)
 
     if len(vertical_slice.events) < 2:
         warnings.append(
@@ -385,11 +329,15 @@ def build_metric_metadata(context: MetricAssemblyContext) -> dict[str, Any]:
         interpretation=metrics["density.refined"].interpretation,
     )
 
+    from core.composite import blend_definition_expression, composite_outer_expression
+
     total_assumptions = [
-        "Composite = pitch_structure_density × sqrt(sonic_mass) / MAX_DENS_GLOBAL.",
-        f"Complexity factor (in pitch structure): {context.complexity_factor:.4f}.",
+        f"Composite (all regimes) = {composite_outer_expression(use_log_compression=USE_LOG_COMPRESSION)} "
+        f"with D_blend = density.weighted = {blend_definition_expression()}.",
+        f"Complexity factor (in pitch structure axis): {context.complexity_factor:.4f}.",
         f"Dynamic mass boost sqrt(sonic_mass): {context.dynamic_boost:.4f}.",
-        f"Normalised by MAX_DENS_GLOBAL={MAX_DENS_GLOBAL}.",
+        f"Single REF MAX_DENS_GLOBAL={MAX_DENS_GLOBAL} (Task 8c re-freeze ≈192.6→193; "
+        "not Qty or table size; no event-kind fallback).",
     ]
     if USE_LOG_COMPRESSION:
         total_assumptions.append(

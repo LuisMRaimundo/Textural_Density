@@ -68,7 +68,7 @@ instrumentos/
 ├── pitch_interpolation.py     # Continuous-pitch metadata lookup (chromatic anchors → microtones)
 ├── spectral_lookup.py         # Wrapper used by instrument modules (backward-compatible float API)
 ├── coarse_default.py          # Fallback for unknown instruments
-└── *.py                       # Per-instrument GPR modules
+└── *.py                       # Per-instrument density modules (committed tables)
 
 data_processor.py              # Backward-compatibility shim (re-exports core)
 densidade_intervalar.py        # Interval density library
@@ -105,61 +105,42 @@ score_io/, gui/                # Export and GUI layers (separate from core)
 ### 2.4 Instrument layer (external acoustic metadata)
 
 - Each **instrument module** under `instrumentos/` exposes:
-  - `calcular_densidade(nota, dinamica)` → float
-  - `predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values)` → dict of arrays
-- Modules embed **sparse acoustic amplitude tables** (`spectral_data`) obtained from **external sources** (literature / measurement summaries). **Chromatic-only tables are the canonical model** — quarter-tones and arbitrary cent deviations resolve at runtime via `microtonal.note_to_midi_strict()` and `instrumentos/pitch_interpolation.py` (local linear / PCHIP between chromatic anchors). Optional pasted microtonal rows are curated exact overrides only.
+  - `calcular_densidade(nota, dinamica)` → float (committed `spectral_data` cell)
+- Modules embed acoustic amplitude tables (`spectral_data`) from **external sources**. Production looks up the requested dynamic **exactly**; missing cells raise `MissingCommittedDynamicError` (no runtime GPR). **Chromatic-only pitch tables are the canonical model** — quarter-tones and cent deviations resolve via `microtonal.note_to_midi_strict()` and `instrumentos/pitch_interpolation.py`. Optional pasted microtonal rows are curated exact overrides only.
 - **Strict pitch grammar:** `parse_pitch_strict()` is the **single authoritative pitch grammar** in `microtonal.py`; `note_to_midi_strict()`, `is_valid_note()`, and instrument metadata lookup all delegate to it. It raises `InvalidPitchNotation` on malformed strings (`H4`, `C##4`, `foo`) and never falls back to C4. `is_valid_note()` is a **non-raising strict predicate** (exactly "`parse_pitch_strict` succeeds"); `extract_cents()` is a **compatibility suffix splitter** (alias of `extract_cents_float`, returning `tuple[str, float]`) that does not validate the pitch base. Legacy `note_to_midi()` remains permissive for backward compatibility in non-canonical helpers only.
 - **Canonical core conversion path:** `core/converters.note_string_to_pitch()` and `core/pipeline.calculate_metrics()` (returned pitch list) use the strict parser — MIDI is taken from `ParsedPitch.midi` / `Pitch.midi` before any enharmonic spelling normalization. Invalid input propagates `InvalidPitchNotation`; it never becomes MIDI 60.
 - **Octave-boundary enharmonics:** strict MIDI conversion resolves cross-octave spellings — `Cb4` = B3 (MIDI 59), `B#4` = C5 (MIDI 72) — and applies the octave adjustment before adding cents/quarter-tone offsets (`Cb4+50c` = 59.5, `B#4-50c` = 71.5).
 - **`format_cents_suffix()`:** precision-safe cents suffix formatter (no scientific notation; integer floats omit `.0`; round-trips through `extract_cents_float()`).
 - **Pitch lookup order:** (1) exact table key, (2) normalized MIDI-equivalent match, (3) continuous interpolation/extrapolation. Never collapses to the same pitch class in a distant octave (e.g. D♯6 ≠ D♯4). Cents suffixes support signed decimal values (`+7.5c`, `+125c`, `+7¢`) applied as `cents / 100.0` semitones.
-- **Metadata table validation:** harmless duplicate MIDI rows (identical pp/mf/ff) are deduplicated; conflicting duplicates raise `MetadataTableConflictError`.
-- **Dynamic interpolation** — production method is **deterministic GPR** (`predict_intermediate_dynamics` → `create_dynamic_gpr()`). Piecewise linear and PCHIP appear only in diagnostic audit tools, not in production lookup. Dynamic interpolation is separate from pitch interpolation — each dynamic column is modelled independently over pitch.
-- **GPR determinism:** production dynamic interpolation uses `instrumentos/gpr_dynamic_interpolation.create_dynamic_gpr()` with explicit `GPR_RANDOM_STATE = 0`. The estimator owns deterministic optimizer restarts; production output does **not** depend on global `np.random` state or benchmark/event order. Determinism means repeatability of the numerical procedure — not acoustic, musicological, or perceptual validation. Cross-platform floating-point differences may still be compared with explicit tolerances.
-- **GPR model-quality audit:** `tools/audit_gpr_model_quality.py` compares production GPR against piecewise-linear, quadratic, and PCHIP diagnostic references. Linear/quadratic/PCHIP are **not** production methods. Convex-hull departures and large GPR–reference deviations are flagged for methodological review, not automatic correction.
-- **Interpolation method comparison:** `tools/compare_dynamic_interpolation_methods.py` evaluates analytical impact of GPR vs linear vs PCHIP at source-row, string-scenario, and benchmark levels (357 source rows; 320 positive + 20 negative string scenarios; 5 benchmark excerpts). Production GPR remains default; linear and PCHIP were **not adopted**. Comparison does not establish perceptual validity.
+- **Metadata table validation:** harmless duplicate MIDI rows (identical dynamic values) are deduplicated; conflicting duplicates raise `MetadataTableConflictError`.
+- **Dynamics:** committed ladder cells only (see §2.4.1). Retired GPR/tail code lives under `tools/legacy_gpr_dynamic_interpolation.py` for historical audits.
 - **`instrumentos/registry.py`** maps names/aliases to profiles with `profile_status` (`literature_derived`, `empirical_source`, `coarse_default`) and `uncertainty`.
-- Instruments **without** GPR tables use coarse register/dynamic models only (`coarse_default`), also via `microtonal.note_to_midi_strict` for microtonal input.
+- Instruments **without** dedicated tables use coarse register/dynamic models only (`coarse_default`), also via `microtonal.note_to_midi_strict` for microtonal input.
 - **Per-event resolution:** each note uses its own instrument module via `core/orchestration.py`.
 - Unknown instruments fall back to generic coarse profile with warnings in `metric_metadata`.
 
-#### 2.4.1 Dynamic interpolation methodology (current state)
+#### 2.4.1 Dynamic tables (current state)
 
-Dynamic interpolation is a **computational modelling layer** attached to score events. It supplies modelled CDM values for dynamics that are not stored in source tables. This is score-grounded symbolic/acoustic-metadata validation — **not** perceptual, empirical, or psychoacoustic validation.
-
-**Source anchors vs modelled dynamics**
+Instrument density uses **committed** `spectral_data` cells for the requested
+dynamic. This is score-grounded symbolic/acoustic-metadata lookup — **not**
+perceptual, empirical, or psychoacoustic validation, and **not** runtime
+extrapolation.
 
 | Dynamic | Status |
 |---------|--------|
-| `pp` | source anchor (committed `spectral_data` column) |
-| `p` | modelled (GPR) |
-| `mp` | modelled (GPR at ordinal coordinate **4.5** between `p`=4.0 and `mf`=5.0) — **not** a source-table anchor; **not** mapped to `mf` (PR #20) |
-| `mf` | source anchor |
-| `f` | modelled (GPR) |
-| `ff` | source anchor |
-| `pppp`, `ppp`, `fff`, `ffff` | modelled / extrapolated (GPR) |
+| All ten `DYNAMIC_LEVELS` | **Committed table cells** when present in `spectral_data` |
+| Missing cell | **Error** (`MissingCommittedDynamicError`) — no runtime fill-in |
 
-**Transferred-anchor modules:** Some technique tables (historically `violin_sul_ponticello`) may commit soft/loud anchors derived by ratio transfer. Violin harmonic modules (`violin_art_harm`, `violin_nat_harm`) commit workbook `pp`/`mf`/`ff` from STE harmonic exports. The dynamic status table above still applies once those anchors are committed.
+**Migration (2026-08-03):** Runtime GPR + adaptive tails removed from production.
+Pitched table-backed modules commit 10-level ladders that are soft→loud
+monotone (Results / technique anchors isotonic-clamped, then rebuilt with the
+former `internal_default` log-linear + adaptive-tail rule offline). Unpitched
+percussion uses pitch-independent `DYNAMIC_CDM`. Legacy implementation:
+`tools/legacy_gpr_dynamic_interpolation.py`.
 
-Ordinal dynamic coordinates are modelling controls — not dB, SPL, loudness, or perceptual intensity scales. Source-table monotonicity across pp/mf/ff is **not** assumed.
+**Transferred-anchor modules:** Some technique tables (historically `violin_sul_ponticello`) may commit soft/loud anchors derived by ratio transfer. Violin harmonic modules (`violin_art_harm`, `violin_nat_harm`) commit workbook `pp`/`mf`/`ff` from STE harmonic exports.
 
-**Production method**
-
-- **GPR** with Matérn kernel on pp/mf/ff anchors (`instrumentos/gpr_dynamic_interpolation.py`).
-- **`GPR_RANDOM_STATE = 0`** via `create_dynamic_gpr()` — deterministic by construction (PR #22).
-- Output does not depend on global NumPy RNG state or benchmark/event order.
-- Deterministic ≠ acoustically or perceptually validated.
-
-**Diagnostic conservative references (not production)**
-
-| Method | Status | Production? |
-|--------|--------|-------------|
-| GPR | current deterministic production method | yes |
-| Linear anchor | diagnostic conservative reference | no |
-| PCHIP anchor | diagnostic shape-preserving reference | no |
-| Quadratic anchor | diagnostic reference (source-row audits) | no |
-
-PR #23 (`tools/audit_gpr_model_quality.py`) flagged **49** convex-hull departures (pp–mf band) across GPR modules. PR #24 (`tools/compare_dynamic_interpolation_methods.py`) compared production GPR with linear and PCHIP:
+Historical audits (PR #23 / #24) compared the retired GPR path with linear/PCHIP:
 
 - **357** source-table rows; **320** positive + **20** negative string scenarios; **5** benchmark excerpts (**15** metric rows).
 - Source-row GPR differs from conservative references in some cases — highest local sensitivity in **low-register strings** (cello, double bass).
@@ -167,9 +148,7 @@ PR #23 (`tools/audit_gpr_model_quality.py`) flagged **49** convex-hull departure
 - Largest absolute scenario spreads: low-register mass, very sparse/dense chromatic aggregates, all-four-string scenarios — relative sensitivity remained controlled in tested aggregates.
 - Benchmark diagnostic comparison: all **negligible**; frozen benchmark outputs unchanged.
 
-**Methodological position:** GPR remains the acceptable current production interpolation method. Method sensitivity should be reported where relevant. A future **selectable interpolation policy** (`gpr`, `linear_anchor`, `pchip_anchor`) may be considered but has **not** been adopted. Low-register strings remain the main review area. No source tables, density formulas, or GPR hyperparameters were changed by the diagnostic campaigns.
-
-Reports: `reports/gpr_determinism_audit.md`, `reports/gpr_model_quality_audit.md`, `reports/dynamic_interpolation_method_comparison.md`, `reports/dynamic_interpolation_benchmark_method_comparison.md`.
+**Methodological position (post-2026-08-03):** production no longer interpolates dynamics at runtime. Historical GPR audits remain under `reports/` and `tools/legacy_gpr_*` for method history only.
 
 ### 2.5 Configuration and constants
 
@@ -264,19 +243,26 @@ Implemented in `calcular_densidade_ponderada_normalizada(DI, DV, ...)` with DI =
 ### 3.5 Pitch-structure and composite vertical density
 
 - **Pitch-structure density** (`density.pitch_structure`, alias `density.refined`):
-  Zero when `distinct_pitch_count < 2`. Otherwise:
-  $$D_{\mathrm{pitch}} = D_{\mathrm{int}}^{\mathrm{norm}} \cdot \frac{1}{1 + A_{\mathrm{st}}/12} \cdot (1 + \ln(1+H)) \cdot (1 - 0.15 \cdot r_{\mathrm{harm}}),$$
-  where $H$ is spectral entropy and $r_{\mathrm{harm}}$ is harmonic ratio — both computed over **distinct pitch bins** with mean weight per bin.
+  Zero when `distinct_pitch_count < 2`. Otherwise (extensive form; see `MATHEMATICAL_MANUAL` §H):
+  $$D_{\mathrm{pitch}} = S \cdot (1 + \ln(1+H)) \cdot (1 - 0.15 \cdot r_{\mathrm{harm}}),$$
+  where $S$ is the raw pairwise interval sum, $H$ is spectral entropy and $r_{\mathrm{harm}}$ is harmonic ratio — both over **distinct pitched bins**.
 
-- **Composite vertical density:**
-  $$D_{\mathrm{total}} = \log_{10}\!\left(1 + \frac{D_{\mathrm{pitch}} \cdot \sqrt{M_{\mathrm{sonic}}}}{D_{\max}}\right)$$
-  (when log compression enabled). Sonic mass $M_{\mathrm{sonic}}$ remains event-based; it cannot alone make exact unison the highest vertical-density case.
+- **Composite vertical density (unified, all regimes — Task 8c):**
+  $$D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}} + (1-w)\,\widehat{D}_{\mathrm{int}}\bigr)
+  \quad(= \texttt{density.weighted}),$$
+  $$D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}}}{\mathrm{REF}}, \qquad
+  D_{\mathrm{total}} = \log_{10}(1 + D_{\mathrm{total}}^{\mathrm{raw}})$$
+  when `USE_LOG_COMPRESSION` is true. $\mathrm{REF}$ = `MAX_DENS_GLOBAL` (**193**).
+  Zero interval/pitch contribution is just a numeric zero — **no** event-kind
+  fallback. Header from `core.composite.format_composite_header_line` (same
+  constants as the computation; prints `D_blend=` and `M=`).
+  See `CHANGES.md` for the 575→193 recalibration mapping.
 
 ### 3.6 Sonic mass and dynamic boost
 
 Implemented in `core/orchestration_mass.py`; result used as `dynamic_boost = sqrt(M)`.
 
-**Dynamic treatment:** Written dynamics are applied **once** via instrument-module GPR lookup (`calcular_densidade(note, dynamic)`). The mass formula does **not** apply a second symbolic dynamic multiplier.
+**Dynamic treatment:** Written dynamics are applied **once** via instrument-module table lookup (`calcular_densidade(note, dynamic)`). The mass formula does **not** apply a second symbolic dynamic multiplier.
 
 **Sonic / orchestration mass** (linear player-count scaling):
 
@@ -346,12 +332,38 @@ $$C_{\mathrm{comp}} = 1 + \ln(1 + H).$$
 
 ### 3.12 Total density (final formula)
 
-- **Unnormalised total** (current composite):
-  $$D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{pitch}} \cdot \sqrt{M_{\mathrm{sonic}}}}{D_{\max}}.$$
+Unified composite (Task 8c) — same as §3.5; $D_{\mathrm{pitch}}$ is **not** the product term:
+
+- **Blend** (slider-controlled; equals `density.weighted`; single source in `core.composite`):
+  $$D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}} + (1-w)\,\widehat{D}_{\mathrm{int}}\bigr)
+  = w\cdot\frac{D_{\mathrm{inst}}}{10} + (1-w)\cdot D_{\mathrm{int}}$$
+  with $\mathrm{DI\_max}=100$, $\mathrm{DV\_max}=10$ (equals printed weighted orch + pitch components).
+
+- **Unnormalised total:**
+  $$D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}}}{\mathrm{REF}}, \quad \mathrm{REF}=\texttt{MAX\_DENS\_GLOBAL}=193.$$
 
 - **Optional log compression** (when `USE_LOG_COMPRESSION` is True):
   $$D_{\mathrm{total}} = \log_{10}(1 + D_{\mathrm{total}}^{\mathrm{raw}}).$$
   Otherwise $D_{\mathrm{total}} = D_{\mathrm{total}}^{\mathrm{raw}}$.
+
+Old→new baseline totals: [`CHANGES.md`](../CHANGES.md).
+
+### 3.12.1 Average texture density vs monotone totals
+
+`average_texture_density` is a **per-player mean** of one-player CDM (Qty-weighted). It may
+**decrease** when low-CDM instruments are added and **increase** under Qty expansion
+weighted toward high-CDM instruments. The monotone quantities under event/Qty growth are
+the **totals**: Sonic Mass, instrument RSS, and Composite (`density.total`).
+
+Worked illustrations from the Task 8c GUI acceptance chain
+(`tests/test_composite_unification_acceptance.py`):
+
+| Step | `average_texture_density` | Reading |
+|------|---------------------------|---------|
+| 5 strings ff → +bass drum | ≈40.25 → ≈37.35 | Mean falls: bass drum CDM below the string mean |
+| Unit-qty full mix → Qty 4/5/5/3/10 on strings | ≈28.39 → ≈36.25 | Mean rises: expansion weighted toward higher-CDM strings |
+
+(Session notes sometimes cite ≈39.17→36.46 and ≈27.73→33.24 for the same qualitative pair of behaviours.)
 
 ### 3.13 Absolute density (reference)
 
@@ -362,12 +374,12 @@ $$C_{\mathrm{comp}} = 1 + \ln(1 + H).$$
 
 ### 3.14 Texture metrics (summary)
 
-Implemented in `calculate_texture_density(pitches, instruments_counts)`.
+Implemented in `calculate_texture_density(...)`. See the **unpitched aggregation contract** table in §7.5.1 for which inputs include unpitched events.
 
-- **Average texture density:** $\sum_i n_{\mathrm{instr},i}$.
-- **Texture polyphony:** $\frac{1}{n}\sum_i n_{\mathrm{instr},i}$ (mean instruments per note).
-- **Texture variability:** standard deviation of $m_i$ (semitons).
-- **Texture contrast:** $\max_i m_i - \min_i m_i$ (semitons).
+- **Player count / player-weighted texture mass:** $\sum n_j$ over the **full slice** (pitched + unpitched Qty).
+- **Average texture density:** Qty-weighted mean of one-player CDM values over the **full slice** (includes unpitched CDM).
+- **Texture / pitch polyphony:** distinct **pitched** bins only.
+- **Texture variability / contrast:** std / range of pitched-bin MIDI only.
 
 ### 3.15 Lambda calibration
 
@@ -477,12 +489,12 @@ Calling `from core import calculate_metrics` (preferred) or `AnalysisController.
 
 | Label | Meaning |
 |-------|---------|
-| Event count | Number of notated input rows |
-| Player count | Sum of Qty |
-| Pitch polyphony | Distinct simultaneous pitch bins |
-| Player doubling count | Player count − distinct pitch count |
-| Instrument density | Pressure-equivalent RSS proxy |
-| Sonic / orchestral mass | Linear sum(qty × one-player density) |
+| Event count | Number of notated input rows (**pitched + unpitched**) |
+| Player count | Sum of Qty (**pitched + unpitched**) |
+| Pitch polyphony | Distinct simultaneous **pitched** bins |
+| Event / player doubling | Pitched-only extras beyond distinct pitched bins |
+| Instrument density | Pressure-equivalent RSS proxy (includes unpitched) |
+| Sonic / orchestral mass | Linear sum(qty × one-player density) (includes unpitched) |
 
 ### 4.4 Example numerical ranges (orientation only)
 
@@ -618,7 +630,7 @@ Each `VerticalSliceAnalysis` contains `metrics`, `subindices`, `composite_densit
 |---------|--------------|----------------------|
 | **Registry range** (`sounding_range`) | `registry.sounding_range` | Yes — **sounding** MIDI vs this span |
 | **Comfortable range** | `registry.comfortable_range` | No (orchestration metadata) |
-| **Source-table span** | `spectral_data` keys / `INSTRUMENT_SOURCE.pitch_range` | Density lookup; should ⊆ registry `sounding_range` for GPR modules. Not necessarily equal to practical/comfortable range. |
+| **Source-table span** | `spectral_data` keys / `INSTRUMENT_SOURCE.pitch_range` | Density lookup; should ⊆ registry `sounding_range` for table-backed modules. Not necessarily equal to practical/comfortable range. |
 | **Comfortable range** | `registry.comfortable_range` | Orchestration metadata; narrower central band when documented |
 
 **MusicXML `<transpose>` (applied once):** Exporters include ``<attributes><transpose>`` for transposing parts. Textural Density converts written pitch to concert/sounding pitch:
@@ -642,6 +654,65 @@ Example: B♭ clarinet part with written C4 in `<pitch>` and `<chromatic>-2</chr
 
 Tests: `tests/test_transposing_instrument_sounding_pitch_contract.py`, `tests/test_xml_loader.py::TestMusicXmlTranspose`; register audit battery: `tests/test_instrument_register_contracts.py`, `tests/test_instrument_transposition_contracts.py`, `tests/test_instrument_alias_registers.py`, `tests/test_musicxml_transposing_instruments.py`. Generate audit artefact: `python tools/audit_transposing_instrument_pitch_contract.py` → `reports/transposing_instrument_pitch_contract_audit.{json,md}`. Benchmarks: `benchmarks/corpus/excerpt_003.musicxml`–`excerpt_004.musicxml` (transpose); see [`benchmarks/README.md`](../benchmarks/README.md).
 
+### 7.5 Unpitched percussion entry paths
+
+Bass drum, Cymbals, Tam-tam, and Gong are **unpitched** (`InstrumentProfile.unpitched` / `InstrumentEvent.unpitched`). Density is pitch-independent (`DYNAMIC_CDM`; `nota` ignored). The chromatic note string on the event is a **placeholder only** (registry sounding-range midpoint) — it has **no acoustic meaning** and must not enter pitch-structure metrics.
+
+**Shared event representation (all entry paths):** `unpitched=True` plus the instrument’s canonical placeholder key. GUI, MusicXML, and MIDI must converge on that shape; they must **not** re-implement pitch-structure exclusion. Exclusion stays solely in `core/unpitched_routing.partition_pitched_events`.
+
+Helpers (same module): `canonical_unpitched_note`, `normalize_unpitched_entry_note`, `reject_unpitched_microtones`, `map_gm_percussion_key`, `GM_PERCUSSION_KEY_MAP`.
+
+| Path | Behaviour |
+|------|-----------|
+| **GUI** | Note / octave / cents disabled; dropdown groups the four under `── Unpitched percussion ──`. `adapters/gui_adapter` injects the canonical placeholder regardless of stale note state. Cents/microtones raise `InputError`. |
+| **MusicXML** | `<unpitched>` maps via part/instrument name to a registered unpitched module; `<display-step>` / `<display-octave>` are **never** promoted to sounding pitch. Unmappable `<unpitched>` events are **skipped** with a per-event warning listing **part name and measure**. |
+| **MIDI** | Channel 10 (0-based index 9) only — see GM map below. Unmapped keys are skipped with a warning — **never** a pitched fallback. |
+
+#### Canonical placeholder keys
+
+| Display name | Registry ID | Placeholder | MIDI (midpoint of `sounding_range`) |
+|--------------|-------------|-------------|-------------------------------------|
+| Bass drum | `bombo` | `D2` | 38 |
+| Cymbals | `pratos` | `C5` | 72 |
+| Tam-tam | `tamtam` | `C2` | 36 |
+| Gong | `gongo` | `C3` | 48 |
+
+#### MIDI GM percussion map (channel 10)
+
+| GM key | Role | Module | Log note |
+|--------|------|--------|----------|
+| 35, 36 | Acoustic / bass drum | Bass drum | — |
+| 49, 57 | Crash cymbal 1 / 2 | Cymbals | — |
+| 51, 59 | Ride cymbal 1 / 2 | Cymbals | approximation warning |
+| 52 | Chinese cymbal | Cymbals | approximation noted |
+| other | — | **skip** | per-event warning |
+
+**Skip-with-warning policy:** unmappable unpitched MusicXML or MIDI events are omitted from the event list and logged; the loader never invents a pitched instrument or sounding pitch as a fallback.
+
+#### 7.5.1 Unpitched aggregation contract
+
+Pitch-structure **exclusion** of note keys remains solely in `partition_pitched_events`. Counts, texture, and mass use the decisions below (implement from this table — do not re-filter in the GUI).
+
+| Metric / field | Includes unpitched? | Notes |
+|----------------|---------------------|-------|
+| Event Count / Player Count | **Yes** | Full-slice rows / Qty sum (mixed test: 4/4, not 2/2) |
+| Distinct Pitch Count / Pitch Polyphony | **No** | Pitched bins only |
+| Event / Player Doubling Count | **No** | Pitched extras only |
+| Interval / pitch-structure / spectral / registral | **No** | Pitched bins only |
+| Sonic mass / instrument RSS / weighted orchestral | **Yes** | Full slice |
+| Texture `player_count`, `player_weighted_texture_mass` | **Yes** | Full-slice Qty |
+| Texture `average_texture_density` | **Yes** | Qty-weighted mean CDM (includes unpitched) |
+| Texture `texture_polyphony` / variability / contrast | **No** | Pitch concepts |
+| Composite (unified) | Blend uses instr **yes** / interval only if pitched; mass **yes** | $\log_{10}(1+D_{\mathrm{blend}}\sqrt{M}/193)$; no event-kind branch |
+
+Display: when `unpitched_event_count > 0`, the PITCH STRUCTURE block prints  
+`1 unpitched event excluded…` / `N unpitched events excluded…` via `core.unpitched_labels.format_unpitched_exclusion_note`.  
+Unpitched-only spectral / advanced sections print `n/a — no pitched content`.
+
+Pipeline fields: `pitch_aggregation.pitched_event_count` / `unpitched_event_count`; `resultados["composite_meta"]` (`mode=weighted_blend_mass_log`, `normalization_ref`, `weight_factor`, `formula`) — outside the numeric `density` map.
+
+Tests: `tests/test_unpitched_entry_paths.py`, `tests/test_unpitched_pitch_exclusion.py`, `tests/test_unpitched_aggregation_contract.py`.
+
 ---
 
 ## 8. Validation and verification
@@ -664,7 +735,7 @@ Current status: **`verified_only`** — no external validation corpora loaded by
 | `tests/string_constants.py` | Documented spans, open strings, workbook paths |
 | `tests/test_string_module_contracts.py` | Module surface, table shape, exact anchors, provenance portability |
 | `tests/test_string_source_reproducibility.py` | Workbook → committed module reconstruction (local) |
-| `tests/test_string_musicological_invariants.py` | Pitch spelling, cents, GPR diagnostics, interpolation provenance |
+| `tests/test_string_musicological_invariants.py` | Pitch spelling, cents, committed-dynamics contracts, interpolation provenance |
 | `tests/test_string_score_scenarios.py` | Ensemble slices, MusicXML transposition, Qty invariants |
 | `tests/test_instrument_provenance.py` | `INSTRUMENT_SOURCE` guards |
 
@@ -742,20 +813,24 @@ Phase 10 added automated quality checks (see `tests/test_quality_gates.py` and `
 | Performance | 50-note slice completes in < 5 s (`@pytest.mark.slow`) |
 | Import hygiene | `core/` and `validation/` modules must not import Tkinter |
 
-**Verification layers:** interval-density contracts; instrument registry scaffold; musicological plausibility; Excel importer contracts; **string musicological battery (PR #13)**; **media note-label normalization (PR #14)**; **adaptive dynamic tails (`tests/test_adaptive_dynamic_tails.py`)**. These verify symbolic/metadata-level behaviour — not final acoustic calibration or auditory validation.
+**Verification layers:** interval-density contracts; instrument registry scaffold; musicological plausibility; Excel importer contracts; **string musicological battery (PR #13)**; **media note-label normalization (PR #14)**; **adaptive dynamic tails (`tests/test_adaptive_dynamic_tails.py`)**; **density stress battery (PR #37)** — controlled public-API scenarios A–E via `run_stress_battery.py` (report/CSV/figures; analysis-only, no formula change). These verify symbolic/metadata-level behaviour — not final acoustic calibration or auditory validation.
 
-**CI limitation:** string source-reconstruction tests require local Zenodo workbooks; skipped on runners without `D:\CORDAS\` paths (violin/viola are the two suite skips until deposited; cello/double_bass reconstruction passes when workbooks are present).
+**CI limitation:** string source-reconstruction tests require local Zenodo workbooks; skipped on runners without `D:\CORDAS\` paths (violin/viola are the two suite skips until deposited; cello/double_bass reconstruction passes when workbooks are present). The stress battery is **local/analysis** (not a CI gate); regenerate report after intentional metric changes.
 
 Run locally:
 
 ```bash
 pytest tests/ -q --no-cov -m "not slow" -o addopts=
 pytest -m musicological -q
+pytest tests/test_stress_battery_registry.py -q
+python run_stress_battery.py
 pytest tests/ -q -o addopts= --cov=core --cov=validation --cov-fail-under=80
 mypy core validation --ignore-missing-imports --follow-imports=skip
 python -c "import importlib; importlib.import_module('Main'); print('OK')"
 ```
 
+Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). Working artifacts: `STRESS_TEST_REPORT.md`, `stress_results.csv`, `stress_figures/` (gitignored). Tracked archives: `reports/STRESS_TEST_REPORT_v1.md` (pre D6 hotfix) and `v2.md` (post-hotfix).
+
 ---
 
-*Last updated: 2026-06-25 (PR #13 string battery; PR #14 viola note-label normalization; see [qa_checklist.md](qa_checklist.md)).*
+*Last updated: 2026-08-03 (committed dynamic ladders / runtime GPR removed; PR #37 stress battery; see [qa_checklist.md](qa_checklist.md)).*

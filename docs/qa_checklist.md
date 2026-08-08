@@ -6,9 +6,9 @@ Use alongside [`score_only_90_readiness_checklist.md`](score_only_90_readiness_c
 
 | Gate | Status |
 |------|--------|
-| Full suite | **1542 passed / 2 skipped / 18 xfailed** |
+| Full suite | Re-verify after dynamics migration (adaptive-tail xfails retired) |
 | Skipped | 2 — violin / viola source-workbook reproducibility when Zenodo files absent |
-| Xfailed | 18 — measured/interior non-monotonicity on adaptive-tail grid |
+| Xfailed | Adaptive-tail positivity grid removed with runtime GPR (2026-08-03) |
 | Full-project coverage | gate ≥ 63% (CI quality job) |
 | `core/` + `validation/` coverage | ≥ 80% (CI quality job) |
 | MyPy (`core`, `validation`) | Clean |
@@ -35,7 +35,7 @@ Use alongside [`score_only_90_readiness_checklist.md`](score_only_90_readiness_c
 - `tests/test_string_score_scenarios.py`
 - `tests/test_instrument_provenance.py`
 
-Coverage includes: module/table contracts; exact anchor lookup; source workbook reconstruction (local); pitch spelling; Unicode accidentals; enharmonic normalization; cents/microtonal handling; interpolation provenance; GPR diagnostics; organological fixtures; ensemble/MusicXML scenarios; double-bass sounding-pitch via MusicXML transposition; quantity row-splitting; unison/octave/cluster/register/dynamics/event-order invariants.
+Coverage includes: module/table contracts; exact anchor lookup; source workbook reconstruction (local); pitch spelling; Unicode accidentals; enharmonic normalization; cents/microtonal handling; interpolation provenance; committed-dynamics contracts; organological fixtures; ensemble/MusicXML scenarios; double-bass sounding-pitch via MusicXML transposition; quantity row-splitting; unison/octave/cluster/register/dynamics/event-order invariants.
 
 Run: `pytest -m musicological -q`
 
@@ -65,7 +65,7 @@ CI skips reconstruction when `D:\CORDAS\` workbooks are unavailable on the runne
 1. **Double-bass table span adjudication:** resolved — `source_table_span` E1–C5 aligns with committed module, `INSTRUMENT_SOURCE.pitch_range`, and registry; E1–A3 was obsolete documentation. Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 2. **Technique metadata vs tables:** resolved — `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` distinguish numerical table coverage from registry organological capabilities.
 3. **Tuba range:** MIDI 28–58 is coarse-default validation placeholder — **REVIEW REQUIRED** for authoritative organological range.
-4. **GPR determinism:** production `GaussianProcessRegressor` instances set explicit `random_state=GPR_RANDOM_STATE` (`0`) via `create_dynamic_gpr()`; output is independent of global `np.random` state and benchmark order. Determinism is numerical repeatability only — not general perceptual or empirical validation.
+4. **Committed dynamics (2026-08-03):** runtime GPR removed; all table-backed pitched modules + unpitched percussion commit soft→loud monotone 10-level ladders; coarse-default registry names remain without acoustic tables.
 
 Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now portable doc anchor).
 
@@ -77,6 +77,45 @@ Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now por
 - [x] Excel importer Phase 1a (`tests/test_instrument_profile_excel_importer_additional.py`)
 - [x] String musicological battery (PR #13)
 - [x] Media note-label normalization (`tests/test_notes.py`, PR #14)
+
+## Unpitched percussion entry paths (PR #29)
+
+- [x] GUI: note/octave/cents hidden for Bass drum / Cymbals / Tam-tam / Gong; group label `── Unpitched percussion ──`
+- [x] Adapter injects canonical placeholder (`D2` / `C5` / `C2` / `C3`) regardless of stale note state
+- [x] Cents/microtones for unpitched instruments raise `InputError`
+- [x] MusicXML `<unpitched>` maps by part name; display-step/octave never become sounding pitch
+- [x] MIDI channel 10 GM map (35/36 bass drum; 49/57 crash; 51/59 ride→Cymbals approx; 52 Chinese→Cymbals); unmapped keys skipped with warning
+- [x] Pitch-structure exclusion only in `partition_pitched_events` (no duplicate filters in GUI/loaders)
+- [x] Docs: README, `docs/TECHNICAL_MANUAL.md` §7.5, `docs/instrument_acoustic_sources.md`, `instrumentos/README.md`
+
+Run: `pytest tests/test_unpitched_entry_paths.py tests/test_unpitched_pitch_exclusion.py -q`
+
+## Unpitched aggregation (PR #31 / Task 8b) + unified composite (PR #33 / Task 8c) + labels (PR #35)
+
+- [x] Event Count / Player Count = pitched + unpitched (mixed slice 4/4)
+- [x] Texture `player_count` / `player_weighted_texture_mass` include unpitched Qty
+- [x] Texture `average_texture_density` = Qty-weighted mean CDM (includes unpitched)
+- [x] Texture `texture_polyphony` / variability / contrast remain pitched-only
+- [x] Unified composite: `log10(1 + D_blend*sqrt(M)/REF)` with `REF=193`; no unpitched-only fallback
+- [x] Property tests: monotonicity, mixed > subsets, continuity (`tests/test_unified_composite_contract.py`)
+- [x] Display: singular/plural exclusion; header from `core.composite` with `D_blend=` + `M=`; unpitched-only spectral = `n/a`
+- [x] Acceptance freeze: `tests/test_composite_unification_acceptance.py`
+- [x] All-pitched baselines re-frozen; old→new totals in `CHANGES.md`
+- [x] Docs cross-links: TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1, API, constants, acoustic sources, VERSIONING
+
+Run: `pytest tests/test_unpitched_aggregation_contract.py tests/test_unified_composite_contract.py -q`
+
+## Density stress battery (PR #37)
+
+- [x] Entry point `run_stress_battery.py` uses only public API (`AnalysisRequest` / `calculate_metrics`)
+- [x] Families A–E covered (doubling, dynamics, mix/register, extremes, Monte Carlo + determinism)
+- [x] Artifacts: working `STRESS_TEST_REPORT.md` / CSV / figures (gitignored); tracked `reports/STRESS_TEST_REPORT_v1.md` + `v2.md`
+- [x] D6 hotfix: monotone pitched ladders; C2 Tam-tam ff; git hash populated in report
+- [x] Registry contract: `tests/test_stress_battery_registry.py`
+- [x] Docs: [`tests/stress/README.md`](../tests/stress/README.md), README Testing, CHANGES, TECHNICAL_MANUAL §10
+- [ ] Re-run after formula edits and attach regenerated report to the PR if behaviour shifts
+
+Run: `python run_stress_battery.py` (full battery ≈ 40–60 s locally)
 
 ## GUI architecture
 
@@ -110,7 +149,8 @@ Tests: `tests/test_quantity_scaling.py`, `tests/test_gui_architecture.py`.
 - [x] `benchmarks/corpus/excerpt_003.musicxml` + frozen `expected_outputs/excerpt_003.json`
 - [x] `benchmarks/corpus/excerpt_004.musicxml` (transpose persists measure 2) + frozen output
 - [x] `benchmarks/corpus/excerpt_005.musicxml` (multi-instrument dynamics) + frozen output
-- [x] Dynamic interpolation docs aligned: source anchors vs modelled dynamics; deterministic GPR; PR #24 comparison (diagnostic only); see `docs/TECHNICAL_MANUAL.md` §2.4.1
+- [x] Dynamic docs aligned with committed-ladder lookup; see `docs/TECHNICAL_MANUAL.md` §2.4.1
+- [x] Table-backed pitched + unpitched-percussion full monotone dynamics tables; `MissingCommittedDynamicError` only for truly missing cells
 - [ ] Global onset reconstruction from MusicXML `<duration>` accumulation (not implemented)
 
 ## Frozen outputs (when formulas change)
