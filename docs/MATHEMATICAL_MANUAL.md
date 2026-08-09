@@ -192,7 +192,7 @@ Qty does **not** affect pitch-structure metrics (interval pairs, spectral entrop
 |------|-----------|
 | Dynamic present in row | Exact cell value |
 | Dynamic absent | MissingCommittedDynamicError |
-| Pitched table-backed modules (winds, brass, strings, techniques) | Soft→loud monotone 10-level ladders (anchors isotonic-clamped; former `internal_default` log-linear rebuild offline) |
+| Pitched table-backed modules (winds, brass incl. horn/tuba, strings, techniques) | Full 10-level **data-faithful** Dynamics_predicter v1.5 ladders (2026-08-08/09): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — not forced monotone. Violin harmonics still carry D6 monotone ladders |
 | Unpitched percussion (`bass_drum`, `cymbals`, `tamtam`, `gong`) | Pitch-independent `DYNAMIC_CDM` (former `internal_default` log-linear ladder) |
 
 Pitch interpolation (MIDI-space linear/PCHIP between chromatic anchors) is unchanged and independent of the dynamic column.
@@ -473,7 +473,7 @@ These are **implementation correctness checks**, not empirical validation:
 | Extensive composite (5.0.0) | Adding a distinct note does not decrease composite vertical density (`density.total`) or `pitch_structure`; register-isolated bass never lowers the total (`tests/test_extensive_density_monotonic.py`) |
 | Player mass | Orchestral mass increases linearly with Qty; pressure-equivalent instrument density scales as RSS; interval/pitch-structure unchanged |
 | Qty vs pitch structure | Qty does not increase pitch polyphony, interval pairs, or spectral entropy for unison doublings |
-| Dynamic monotonicity | One-player density is positive; committed pitched ladders are soft→loud monotone `pppp→ffff` (§F.1; D6 hotfix); `tests/test_pitched_dynamic_monotone_ladders.py` |
+| Dynamic ladder hygiene | One-player density is positive; committed pitched ladders carry all 10 levels with interiors inside their measured segments and tapered, non-zigzag outers (§F.1; data-faithful — measured anchors may be locally non-monotone); `tests/test_pitched_dynamic_monotone_ladders.py` |
 | Tail saturation (historical) | Pre-2026-08-03 runtime adaptive tails retired; offline rebuild uses legacy `internal_default` path only when regenerating committed ladders (§F.1) |
 | Row-splitting | One row Qty=N ≡ N identical rows Qty=1 for mass and pressure-equivalent density |
 | Duplicate events | Duplicated pitch rows increase player/event counts; pitch structure uses aggregated bins |

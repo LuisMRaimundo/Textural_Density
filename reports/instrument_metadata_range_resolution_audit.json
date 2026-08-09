@@ -195,10 +195,11 @@
     },
     {
       "instrument_id": "clarinete",
-      "display_name": "Clarinet",
+      "display_name": "Cl",
       "aliases": [
         "clarinet",
-        "clarinete"
+        "clarinete",
+        "cl."
       ],
       "family": "woodwinds",
       "module_name": "clarinet",
@@ -329,11 +330,15 @@
     },
     {
       "instrument_id": "contrabaixo",
-      "display_name": "Double bass",
+      "display_name": "Db",
       "aliases": [
         "double_bass",
+        "double bass",
         "contrabass",
-        "baixo"
+        "baixo",
+        "db.",
+        "cb",
+        "cb."
       ],
       "family": "strings",
       "module_name": "double_bass",
@@ -776,10 +781,13 @@
     },
     {
       "instrument_id": "fagote",
-      "display_name": "Bassoon",
+      "display_name": "Bsn",
       "aliases": [
         "bassoon",
-        "fagot"
+        "fagot",
+        "bsn.",
+        "fg",
+        "fg."
       ],
       "family": "woodwinds",
       "module_name": "bassoon",
@@ -858,10 +866,11 @@
     },
     {
       "instrument_id": "flauta",
-      "display_name": "Flute",
+      "display_name": "Fl",
       "aliases": [
         "flute",
-        "flute_traverso"
+        "flute_traverso",
+        "fl."
       ],
       "family": "woodwinds",
       "module_name": "flute",
@@ -1220,9 +1229,10 @@
     },
     {
       "instrument_id": "oboe",
-      "display_name": "Oboe",
+      "display_name": "Ob",
       "aliases": [
-        "oboe"
+        "oboe",
+        "ob."
       ],
       "family": "woodwinds",
       "module_name": "oboe",
@@ -1661,18 +1671,28 @@
     },
     {
       "instrument_id": "trompa",
-      "display_name": "Horn",
+      "display_name": "Hn",
       "aliases": [
         "horn",
         "french_horn",
-        "trompa"
+        "trompa",
+        "hn."
       ],
       "family": "brass",
-      "module_name": null,
-      "table_backed": false,
-      "profile_status": "coarse_default",
-      "source_table_span": null,
-      "instrument_source_pitch_range": null,
+      "module_name": "horn",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "G1",
+        "last_note": "F5",
+        "row_count": 47,
+        "min_midi": 31,
+        "max_midi": 77
+      },
+      "instrument_source_pitch_range": [
+        31,
+        77
+      ],
       "registry_sounding_range_midi": [
         41,
         77
@@ -1683,7 +1703,18 @@
       ],
       "registry_transposition": 7,
       "registry_transposition_runtime_applied": false,
-      "source_dynamic_anchors": [],
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
       "modelled_dynamics": [
         "p",
         "mp",
@@ -1693,8 +1724,8 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "no_table",
-      "range_classification": "NOT APPLICABLE",
+      "range_alignment": "BUG_table_anchor_outside_registry",
+      "range_classification": "FAIL",
       "technique": {
         "registry_supported_techniques": [
           "legato",
@@ -1702,26 +1733,38 @@
           "stopped",
           "mute"
         ],
-        "table_supported_techniques": [],
-        "source_technique": null,
-        "classification": "NOT APPLICABLE"
+        "table_supported_techniques": [
+          "ordinary_sustain"
+        ],
+        "source_technique": "ordinary_sustain",
+        "registry_not_in_table": [
+          "legato",
+          "staccato",
+          "stopped",
+          "mute"
+        ],
+        "classification": "PASS"
       },
       "documentation_contradictions": [],
-      "table_excludes_sounding_range": true,
-      "exclusion_kind": "no_table",
-      "missing_low_semitones": null,
-      "missing_high_semitones": null,
-      "table_span_midi": null
+      "table_excludes_sounding_range": false,
+      "exclusion_kind": "full_coverage",
+      "missing_low_semitones": 0,
+      "missing_high_semitones": 0,
+      "table_span_midi": [
+        31,
+        77
+      ]
     },
     {
       "instrument_id": "trompete",
-      "display_name": "Trumpet",
+      "display_name": "Tpt",
       "aliases": [
-        "trumpet"
+        "trumpet",
+        "tpt."
       ],
       "family": "brass",
       "module_name": "trumpet",
-      "table_backed": false,
+      "table_backed": true,
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "E3",
@@ -1798,19 +1841,29 @@
     },
     {
       "instrument_id": "tuba",
-      "display_name": "Tuba",
+      "display_name": "Tba",
       "aliases": [
-        "tuba"
+        "tuba",
+        "tba."
       ],
       "family": "brass",
-      "module_name": null,
-      "table_backed": false,
-      "profile_status": "coarse_default",
-      "source_table_span": null,
-      "instrument_source_pitch_range": null,
+      "module_name": "tuba",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "C1",
+        "last_note": "A#4",
+        "row_count": 47,
+        "min_midi": 24,
+        "max_midi": 70
+      },
+      "instrument_source_pitch_range": [
+        24,
+        70
+      ],
       "registry_sounding_range_midi": [
-        28,
-        58
+        24,
+        70
       ],
       "registry_comfortable_range_midi": [
         30,
@@ -1818,7 +1871,18 @@
       ],
       "registry_transposition": 0,
       "registry_transposition_runtime_applied": false,
-      "source_dynamic_anchors": [],
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
       "modelled_dynamics": [
         "p",
         "mp",
@@ -1828,22 +1892,34 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "no_table",
-      "range_classification": "NOT APPLICABLE",
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
       "technique": {
         "registry_supported_techniques": [
-          "arco"
+          "legato",
+          "staccato",
+          "mute"
         ],
-        "table_supported_techniques": [],
-        "source_technique": null,
-        "classification": "NOT APPLICABLE"
+        "table_supported_techniques": [
+          "ordinary_sustain"
+        ],
+        "source_technique": "ordinary_sustain",
+        "registry_not_in_table": [
+          "legato",
+          "staccato",
+          "mute"
+        ],
+        "classification": "PASS"
       },
       "documentation_contradictions": [],
-      "table_excludes_sounding_range": true,
-      "exclusion_kind": "no_table",
-      "missing_low_semitones": null,
-      "missing_high_semitones": null,
-      "table_span_midi": null
+      "table_excludes_sounding_range": false,
+      "exclusion_kind": "full_coverage",
+      "missing_low_semitones": 0,
+      "missing_high_semitones": 0,
+      "table_span_midi": [
+        24,
+        70
+      ]
     },
     {
       "instrument_id": "vibrafone",
@@ -1897,9 +1973,10 @@
     },
     {
       "instrument_id": "viola",
-      "display_name": "Viola",
+      "display_name": "Vla",
       "aliases": [
-        "viola"
+        "viola",
+        "vla."
       ],
       "family": "strings",
       "module_name": "viola",
@@ -2231,9 +2308,12 @@
     },
     {
       "instrument_id": "violino",
-      "display_name": "Violin",
+      "display_name": "Vl",
       "aliases": [
-        "violin"
+        "violin",
+        "vl.",
+        "vln",
+        "vln."
       ],
       "family": "strings",
       "module_name": "violin",
@@ -2743,10 +2823,12 @@
     },
     {
       "instrument_id": "violoncelo",
-      "display_name": "Cello",
+      "display_name": "Vc",
       "aliases": [
         "cello",
-        "violoncello"
+        "violoncello",
+        "vc.",
+        "vcl"
       ],
       "family": "strings",
       "module_name": "cello",
@@ -3094,12 +3176,13 @@
     "rationale": "Committed spectral_data, INSTRUMENT_SOURCE.pitch_range, and registry.sounding_range all agree on E1\u2013C5. E1\u2013A3 was obsolete documentation. Comfortable range remains narrower. Methodological status of upper-register rows (above A3) vs core corpus not independently adjudicated."
   },
   "tuba_review": {
-    "module_name": null,
-    "profile_status": "coarse_default",
-    "sounding_range_midi": "28\u201358",
-    "classification": "REVIEW REQUIRED",
-    "range_kind": "coarse_default_validation_placeholder",
-    "rationale": "No committed tuba spectral_data module. registry.sounding_range (28\u201358) is a coarse orchestration placeholder for validation only \u2014 not a source-table span."
+    "module_name": "tuba",
+    "profile_status": "literature_derived",
+    "sounding_range_midi": "24\u201370",
+    "source_table_span": "C1\u2013A#4 (MIDI 24\u201370)",
+    "classification": "PASS",
+    "range_kind": "source_table_span",
+    "rationale": "Committed tuba spectral_data ladder (IOWA+ORCH medians via Dynamics_predicter); registry.sounding_range matches the committed table span."
   },
   "transposition_review": {
     "contract": "registry.transposition is notation/import metadata only; manual/GUI notes[] are sounding/concert pitch; MusicXML <transpose> converts written\u2192sounding once.",

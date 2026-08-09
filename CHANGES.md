@@ -2,6 +2,46 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-09 — Add tuba: committed 10-level dynamic ladder
+
+New `instrumentos/tuba.py`: 47 pitches (C1–A#4, MIDI 24–70) × 10 dynamics from
+`D:\METAIS\Tuba_Zenodo_collections_media.xlsx` (`Tuba_Media`) via
+Dynamics_predicter v1.5 (measured pp/mf/ff anchors verbatim).
+
+- Registry: tuba wired to the module, display name **Tba**, sounding range
+  updated from the (28–58) placeholder to the table span (24–70).
+- Metadata range audit: tuba review classifies against the committed table
+  (**PASS** when registry matches span); trumpet/horn/tuba added to the
+  table-backed module set.
+- Tests: tuba classification contract updated; coarse-only provenance test now
+  uses trombone + bass trombone. Trombone remains coarse (workbook unfinished).
+
+## 2026-08-08 — Data-faithful 10-level ladders for all pitched instruments
+
+**Numeric change on all pitched table-backed modules.** Ladders regenerated with
+**Dynamics_predicter v1.5** (PCHIP interiors, tapered outers, `--pchip`) from the
+curated Zenodo `*_Media` workbook anchors; measured pp/mf/ff committed
+**verbatim** (the 2026-08-03 isotonic clamp is no longer applied — measured
+non-monotonicity is preserved by design):
+
+- Arco/ordinario rebuilds: violin, viola, cello, double bass, flute, oboe,
+  clarinet, bassoon, trumpet; **new module: horn** (`horn.py`, G1–F5).
+- The 12 string technique modules (sordina / sul tasto / sul ponticello ×
+  violin, viola, cello, double bass) rebuilt from their pre-clamp measured
+  anchors (`*_MEASURED` dicts again match `spectral_data` exactly).
+- Violin harmonic modules keep the D6 monotone ladders pending rebuild.
+- GUI: English orchestral short display names (Vl, Vla, Vc, Db, Fl, Ob, Cl,
+  Bsn, Tpt, Hn); former long names remain as aliases.
+- Contract rewrite: `tests/test_pitched_dynamic_monotone_ladders.py` now checks
+  full-ladder completeness + hygiene (interiors within measured segments,
+  tapered outers, no zigzag) instead of strict monotonicity.
+- Frozen fixtures refrozen (regression baseline, benchmark corpus, composite
+  acceptance goldens, replication snapshots, GPR audit reports).
+- String source reconstruction configs fixed: all four strings verify against
+  their curated Media sheets (violin/viola paths corrected; cello now reads
+  `Cello_Media`).
+- Audit tools tolerate non-git checkouts when recording the repository SHA.
+
 ## 2026-08-03 — Stress-battery D6 hotfix (data layer)
 
 **Numeric change** on pitched table-backed modules: pp/mf/ff anchors are

@@ -28,7 +28,7 @@
 
 **Stress battery (2026-08-03, PR #37):** Public-API density stress suite (`python run_stress_battery.py`). **No computed value changed.** See [Testing](#testing) and [`tests/stress/README.md`](tests/stress/README.md).
 
-**Committed dynamics (2026-08-03):** Runtime GPR / adaptive-tail fill-in removed. Table-backed pitched modules commit soft→loud monotone 10-dynamic ladders; unpitched percussion uses pitch-independent `DYNAMIC_CDM`. See [CHANGES.md](CHANGES.md).
+**Committed dynamics (2026-08-08/09, data-faithful):** Runtime GPR / adaptive-tail fill-in removed (2026-08-03). All table-backed pitched modules — winds, brass (trumpet, horn, tuba), arco strings, string techniques — commit full 10-dynamic ladders from Dynamics_predicter v1.5: measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers, **not** forced monotone. Unpitched percussion uses pitch-independent `DYNAMIC_CDM`. See [CHANGES.md](CHANGES.md).
 
 ---
 
@@ -45,7 +45,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Epistemic metadata** — every metric labelled (`source_type`, `validation_status`, warnings)
 - **Interpretable subindices** — registral, orchestration, harmonicity proxies, etc.
 - **Temporal score analysis** — `analyze_score()` for timed XML/MIDI
-- **Instrument registry** — orchestral profile scaffolding (~28 entries); English GUI labels; table-backed CDM modules for flute, oboe, clarinet, bassoon, trumpet, strings, and selected percussion; metadata corpus still incomplete for many names
+- **Instrument registry** — orchestral profile scaffolding (~42 entries); English orchestral short names in the GUI (Fl, Ob, Cl, Bsn, Tpt, Hn, Tba, Vl, Vla, Vc, Db, …); table-backed CDM modules for flute, oboe, clarinet, bassoon, trumpet, horn, tuba, strings (arco + techniques + violin harmonics), and selected percussion; metadata corpus still incomplete for some names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML sounding pitch** — written `<pitch>` converted to sounding/concert pitch via `<transpose>` before validation and density lookup (PR #21)
 - **Verification scaffolding** — full suite **1542 passed / 2 skipped / 18 xfailed** (2026-07-12, methodology `5.1.0-strict-symbolic`, package `1.1.4`); GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) (see [Testing](#testing))
@@ -147,7 +147,7 @@ Textural_Density/
 │   └── reporting.py           # Interpretability + sensitivity
 ├── validation/                # Verification / validation scaffolding (not GUI stats)
 ├── benchmarks/                # Five project-authored MusicXML excerpts + frozen outputs
-├── instrumentos/              # Instrument registry + GPR/coarse modules (metadata layer incomplete)
+├── instrumentos/              # Instrument registry + table-backed/coarse modules (metadata layer incomplete)
 ├── tools/                     # Auxiliary offline tools (Excel profile importer — not runtime)
 ├── gui/                       # Tkinter panels + AnalysisController (no metric math)
 ├── adapters/                  # gui_adapter → AnalysisRequest → core.pipeline
@@ -189,7 +189,7 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 | Category | What Textural Density provides |
 |----------|-------------------|
 | **Score-derived** | Pitch-class structure, event counts, registral spread from symbolic input |
-| **Metadata proxies** | Instrument GPR tables, spectral moments weighted by symbolic densities |
+| **Metadata proxies** | Instrument CDM tables, spectral moments weighted by symbolic densities |
 | **Calibrated proxies** | Interval decay λ (partially calibrated against consonance ratings) |
 | **Formal validation** | Regression/property tests, benchmark replication scaffolding (`verified_by_tests`) |
 | **Optional empirical** | Expert annotations, listening tests — only if pursuing judgment-prediction research |
@@ -203,7 +203,7 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 
 **Unpitched percussion:** Bass drum, Cymbals, Tam-tam, and Gong use pitch-independent `DYNAMIC_CDM` (note ignored). A canonical placeholder key (`D2` / `C5` / `C2` / `C3`) remains for event-shape compatibility only — **no acoustic / pitch-structure meaning**. Entry paths converge on `unpitched=True` + that key: the GUI hides note/octave/cents and injects the placeholder; MusicXML `<unpitched>` never promotes display-step/octave; MIDI channel-10 maps a small GM key set (35/36 bass drum; 49/57 crash; 51/59 ride and 52 Chinese → Cymbals with a logged approximation). Unmappable events are skipped with a warning — never a pitched fallback. Pitch-structure exclusion is enforced once in `core/unpitched_routing.partition_pitched_events`. Event/Player Count and texture player/CDM averages include unpitched events; texture polyphony stays pitched-only. **Composite (unified):** `log10(1 + D_blend*sqrt(M)/REF)` with `D_blend = density.weighted = w*(DI/10)+(1−w)*DV` (defaults) and `REF = 193` — one formula for pitched, unpitched, and mixed (no fallback). Header text comes from `core.composite.format_composite_header_line`. See [TECHNICAL_MANUAL §7.5](docs/TECHNICAL_MANUAL.md) and [CHANGES.md](CHANGES.md).
 
-**Dynamics:** Production looks up **committed** table cells only — no runtime GPR or adaptive-tail fill-in. Violin arco, viola, cello, double bass, flute, clarinet, bassoon, and oboe use Dynamics_predicter `Results` ladders; unpitched percussion uses pitch-independent `DYNAMIC_CDM`. Other instruments are migrating. Missing cells raise `MissingCommittedDynamicError`. See [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §2.4.1.
+**Dynamics:** Production looks up **committed** table cells only — no runtime GPR or adaptive-tail fill-in. All pitched table-backed modules (violin, viola, cello, double bass arco; the 12 string technique modules; flute, oboe, clarinet, bassoon; trumpet, horn, tuba) use data-faithful Dynamics_predicter `Results` ladders; unpitched percussion uses pitch-independent `DYNAMIC_CDM`. Missing cells raise `MissingCommittedDynamicError`. See [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §2.4.1.
 
 **Acoustic-table pitch rule:** Sparse CDM metadata rows in `instrumentos/*.py` use the pitch basis documented per module (see `docs/instrument_acoustic_sources.md`). The Excel importer does not transpose imported rows.
 
@@ -278,9 +278,9 @@ Current verified status (2026-07-12, methodology **`5.1.0-strict-symbolic`**, pa
 
 | Gate | Result |
 |------|--------|
-| Full suite | **1542 passed / 2 skipped / 18 xfailed** |
-| Skipped | 2 — string source-workbook reproducibility for violin and viola when local Zenodo workbooks are absent (activate once deposited; cello and double_bass workbook reconstruction currently pass) |
-| Xfailed | 18 — measured/interior dynamic non-monotonicity on the adaptive-tail positivity grid (`tests/test_adaptive_dynamic_tails.py`; tables left untouched by design) |
+| Full suite | **1629 passed / 8 skipped** (2026-08-09, local) |
+| Skipped | environment-dependent — e.g. string source-workbook reproducibility skips when local Zenodo workbooks are absent (all four strings **pass** reconstruction where the workbooks are present) |
+| Xfailed | 0 — the former adaptive-tail xfails are obsolete: committed data-faithful ladders replaced runtime tails, and the ladder contract (`tests/test_pitched_dynamic_monotone_ladders.py`) accepts measured non-monotonicity by design |
 | Full-project coverage | gate ≥ 63% (CI quality job) |
 | `core/` + `validation/` coverage | ≥ 80% in CI quality job |
 | MyPy (`core`, `validation`) | Clean (`--follow-imports=skip`) |

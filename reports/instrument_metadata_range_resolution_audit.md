@@ -33,8 +33,8 @@
 
 ## Tuba review
 
-- Classification: **REVIEW REQUIRED**
-- No committed tuba spectral_data module. registry.sounding_range (28–58) is a coarse orchestration placeholder for validation only — not a source-table span.
+- Classification: **PASS**
+- Committed tuba spectral_data ladder (IOWA+ORCH medians via Dynamics_predicter); registry.sounding_range matches the committed table span.
 
 ## Transposition review
 
@@ -70,9 +70,9 @@
 | timpanos | — | 36–60 | 36–60 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | trombone | — | 40–72 | 43–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | trombone_baixo | — | 34–65 | 36–58 | no_table | NOT APPLICABLE | NOT APPLICABLE |
-| trompa | — | 41–77 | 45–72 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| trompa | G1–F5 | 41–77 | 45–72 | full_coverage | FAIL | PASS |
 | trompete | E3–D#6 | 52–87 | 58–80 | full_coverage | PASS | PASS |
-| tuba | — | 28–58 | 30–50 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| tuba | C1–A#4 | 24–70 | 30–50 | full_coverage | PASS | PASS |
 | vibrafone | — | 53–84 | 53–84 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | viola | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
 | viola_sordina | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |

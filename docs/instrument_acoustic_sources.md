@@ -1,6 +1,6 @@
 # Instrument acoustic source provenance
 
-> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Most registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (incl. trumpet and string techniques) and unpitched percussion commit soft→loud monotone 10-level ladders. Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
+> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Some registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (winds, brass incl. horn and tuba, arco strings, string techniques/harmonics) and unpitched percussion commit full 10-level ladders. Ladders are **data-faithful** (2026-08-08/09, Dynamics_predicter v1.5): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — **not** forced monotone. Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
 
 This document records **external acoustic metadata** embedded in `instrumentos/*.py`
 modules. The analysis pipeline performs **score lookup** into these tables — not
@@ -12,9 +12,9 @@ live audio analysis.
 > repository. Intention: deposit in-repo extracts or a citable external archive so
 > reconstruction tests can run without a private machine. Until then,
 > `tests/test_string_source_reproducibility.py` **skips** when a workbook file is
-> absent; on a machine with the deposits present, **cello** and **double_bass**
-> workbook reconstruction currently **PASS**, while **violin** and **viola** are
-> the two suite skips that will activate once those workbooks are deposited for CI.
+> absent; on a machine with the deposits present (2026-08-08 config fix), all four
+> string reconstructions — **violin, viola, cello, double_bass** — verify against
+> their curated `*_Media` sheets and **PASS** (0 value differences).
 > Runtime dynamics lookup is table-only (2026-08-03). Historical GPR audits remain
 > under `tools/legacy_gpr_dynamic_interpolation.py` / `reports/`.
 
@@ -25,7 +25,7 @@ live audio analysis.
 - **Provenance:** Median/midpoint summary of flute sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Flute_Zenodo_collections_media.xlsx`
-- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Uncertainty:** medium — sparse table, not full continuous spectrum.
 
 ## Clarinet (`clarinet`)
@@ -35,7 +35,7 @@ live audio analysis.
 - **Provenance:** Median/midpoint summary of clarinet sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Clarinet_Zenodo_collections_media.xlsx`
-- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Oboe (`oboe`)
@@ -45,8 +45,8 @@ live audio analysis.
 - **Provenance:** Median/midpoint summary of oboe sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Oboe_Zenodo_collections_media.xlsx`
-- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed
-  (`Oboe_iowa_orchidea_dynamics.xlsx`).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results`
+  ladder committed (`Oboe_iowa_orchidea_dynamics.xlsx`).
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Bassoon (`fagote` → `bassoon.py`)
@@ -57,7 +57,7 @@ live audio analysis.
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\MADEIRAS\Bassoon_Zenodo_collections_media.xlsx`
 - **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
-- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Trumpet (`trompete` → `trumpet.py`)
@@ -68,8 +68,29 @@ live audio analysis.
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\METAIS\Trumpet_Zenodo_collections_media.xlsx`
 - **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed
-  (anchors isotonic-clamped + offline `internal_default` rebuild; D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; the earlier D6 isotonic clamp is no longer applied).
+- **Uncertainty:** medium — sparse table, not full continuous spectrum
+
+## Horn (`trompa` → `horn.py`)
+
+- **Module:** `instrumentos/horn.py`
+- **Table (source_table_span):** `spectral_data` (47 chromatic rows, **G1–F5**, MIDI 31–77), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
+- **Provenance:** Median/midpoint summary of horn sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **Source workbook:** `D:\METAIS\Horn_Zenodo_collections_media.xlsx` (sheet `Horn_Media`)
+- **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
+- **Uncertainty:** medium — sparse table, not full continuous spectrum
+
+## Tuba (`tuba` → `tuba.py`)
+
+- **Module:** `instrumentos/tuba.py`
+- **Table (source_table_span):** `spectral_data` (47 chromatic rows, **C1–A#4**, MIDI 24–70), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
+- **Provenance:** Median/midpoint summary of tuba sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **Source workbook:** `D:\METAIS\Tuba_Zenodo_collections_media.xlsx` (sheet `Tuba_Media`)
+- **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
+- **Dynamics (2026-08-09):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Viola (`viola`)
@@ -79,13 +100,13 @@ live audio analysis.
 - **Provenance:** Median/midpoint summary of viola arco sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Portable source anchor:** `docs/instrument_acoustic_sources.md#viola` (in `INSTRUMENT_SOURCE`; PR #14)
-- **Authoritative ingestion sheet:** `VIOLA_Media` in `D:\CORDAS\ViOLA_Zenodo_collections_media.xlsx`
+- **Authoritative ingestion sheet:** `VIOLA_Media` in `D:\CORDAS\VIOLA_Zenodo_collections_Arco_normal.xlsx`
   (Zenodo deposit name: `viola_arco_sustains_median_summary_v1.xlsx`)
 - **Note-label normalization:** duplicate media labels such as `F4 (2)` are stripped by
   `normalize_media_note_label()` before canonical parsing (maps to `F4` with the same CDM values).
 - **Sounding range (registry):** MIDI 48–96 (C3–C7), aligned with committed `spectral_data` table span; comfortable 50–69 (D3–A4)
 - **Extraction:** CDM midpoint pass-through; no rescaling (`identity_v1`)
-- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Uncertainty:** medium — sparse table with known QC flags on extreme-register rows
 
 ## Viola sordina (`viola_sordina`)
@@ -98,7 +119,7 @@ live audio analysis.
   technique `con_sordino`); **not** Zenodo-measured CDM
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_sordina`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
 
@@ -111,7 +132,7 @@ live audio analysis.
   `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (technique `sul_tasto`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_tasto`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
 
@@ -124,7 +145,7 @@ live audio analysis.
   `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (technique `sul_ponticello`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_ponticello`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
 - **Skipped:** artificial/natural harmonics remain `unavailable` in the source
@@ -134,16 +155,15 @@ live audio analysis.
 
 - **Module:** `instrumentos/violin.py`
 - **Table:** `spectral_data` (49 chromatic rows, G3–G7 × **all 10** dynamics)
-- **Provenance (2026-08-03):** IOWA+ORCH measured anchors at pp/mf/ff, with the
-  full dynamic ladder committed from Dynamics_predicter sheet **`Results`**
+- **Provenance (2026-08-08):** IOWA+ORCH measured anchors at pp/mf/ff, with the
+  full dynamic ladder committed from Dynamics_predicter v1.5 sheet **`Results`**
   (data-faithful imputation). Runtime analysis looks up committed cells — it does
   **not** re-run GPR / adaptive-tail extrapolation for violin arco.
-- **Source workbook (committed ladder):** Desktop
-  `Violino - extrapol/Dynamics_predicter/outputs/iowa_orchidea_dynamics.xlsx`
-  (`Results`). Anchor corpus also documented at
-  `D:\CORDAS\VIOLIN_Zenodo_collections_media.xlsx`.
+- **Authoritative ingestion sheet:** `Violin_Media` in
+  `D:\CORDAS\VIOLINO\VIOLIN_Zenodo_collections_Arco_normal.xlsx`.
 - **Regeneration:** `tools/generate_violin_arco_full_dynamics_from_xlsx.py`
-  (`--sheet Results`; switch later if needed).
+  (`--sheet Results`) on a Dynamics_predicter output workbook built from the
+  `Violin_Media` anchors.
 - **Uncertainty:** medium — non-anchor cells remain workbook-modelled, not lab measurements
 
 ## Violin sordina (`violin_sordina`)
@@ -155,7 +175,7 @@ live audio analysis.
   `con_sordino`); **not** Zenodo-measured CDM
 - **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
 - **Source technique:** `arco_sordina`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
@@ -168,7 +188,7 @@ live audio analysis.
   `Violin_mf.xlsx` / `Violin_ff.xlsx` (technique `sul_tasto`)
 - **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
 - **Source technique:** `arco_sul_tasto`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
@@ -183,7 +203,7 @@ live audio analysis.
 - **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
 - **Non-anchor dynamics:** require committed ladder cells (runtime GPR removed)
 - **Source technique:** `arco_sul_ponticello`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
@@ -197,7 +217,7 @@ live audio analysis.
   (`All_Results.estimate_mean`, technique `artificial_harmonic`)
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_artificial_harmonic`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix; harmonics not yet rebuilt data-faithful).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_harmonic_modules_from_xlsx.py`
 
@@ -210,7 +230,7 @@ live audio analysis.
   (`All_Results.estimate_mean`, technique `natural_harmonic`)
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_natural_harmonic`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix; harmonics not yet rebuilt data-faithful).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_harmonic_modules_from_xlsx.py`
 
@@ -220,7 +240,7 @@ live audio analysis.
 - **Table:** `spectral_data` (49 chromatic rows, C2–C6)
 - **Provenance:** IOWA+ORCH arco sustain CDM medians at pp/mf/ff
 - **Source workbook:** `D:\CORDAS\CELLO_Zenodo_collections_media.xlsx`
-- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Uncertainty:** medium
 
 ## Cello sordina (`cello_sordina`)
@@ -233,7 +253,7 @@ live audio analysis.
   technique `con_sordino`); **not** Zenodo-measured CDM
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_sordina`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
 
@@ -246,7 +266,7 @@ live audio analysis.
   `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (technique `sul_tasto`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_tasto`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
 
@@ -259,7 +279,7 @@ live audio analysis.
   `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (technique `sul_ponticello`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_ponticello`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
 - **Skipped:** artificial/natural harmonics remain `unavailable` in the source
@@ -273,7 +293,7 @@ live audio analysis.
 - **Source technique:** `arco_sustain` (`table_supported_techniques`)
 - **Provenance:** IOWA+ORCH arco sustain CDM medians at pp/mf/ff
 - **Source workbook:** `D:\CORDAS\DOUBLEBASS_Zenodo_collections_media.xlsx`
-- **Dynamics (2026-08-03):** full 10-level Dynamics_predicter `Results` ladder committed.
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Uncertainty:** medium
 - **Span status:** E1–A3 in older docs was obsolete; committed span is E1–C5 (**PASS**). Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 
@@ -287,7 +307,7 @@ live audio analysis.
   (`All_Results.estimate_mean`, technique `con_sordino`); **not** Zenodo-measured CDM
 - **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
 - **Source technique:** `arco_sordina`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
 
@@ -300,7 +320,7 @@ live audio analysis.
   `Contrabass-pp.xlsx` / `Contrabass_mf.xlsx` / `Contrabass_ff.xlsx` (technique `sul_tasto`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_tasto`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
 
@@ -314,7 +334,7 @@ live audio analysis.
   (technique `sul_ponticello`)
 - **Workbook anchors:** pp, mf and ff
 - **Source technique:** `arco_sul_ponticello`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix).
+- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
 - **Skipped:** artificial/natural harmonics remain `unavailable` in the source
@@ -325,7 +345,7 @@ live audio analysis.
 Offline curation pipeline (not used at runtime):
 
 1. `tools/populate_td_importer_sheets_from_zenodo_media.py` — builds `AcousticTable`, `Registry`, and `Provenance` sheets from `*_Media` workbooks. Applies `normalize_media_note_label()` when reading media rows (strips trailing `(2)` duplicate markers).
-2. `tools/generate_instrument_modules.py` — emits `instrumentos/flute.py`, `oboe.py`, `clarinet.py`, `violin.py`, `viola.py`, `cello.py`, `double_bass.py`. Viola and double bass source reconstruction use the `VIOLA_Media` / `DBass_Media` sheets via `load_spectral_data_from_media` (their workbooks ship no `AcousticTable` sheet).
+2. `tools/generate_instrument_modules.py` — legacy 3-anchor generator; its `CONFIGS` also drive the source-reconstruction audit. All four string reconstructions read the curated Media sheets (`Violin_Media`, `VIOLA_Media`, `Cello_Media`, `DBass_Media`) via `load_spectral_data_from_media` (2026-08-08 config fix).
 3. `tools/generate_violin_technique_modules_from_xlsx.py` — emits / replaces `violin_sordina.py`, `violin_sul_tasto.py`, `violin_sul_ponticello.py` from Desktop `Violin_mf.xlsx` / `Violin_ff.xlsx` (pp via arco ratio transfer).
 4. `tools/generate_viola_technique_modules_from_xlsx.py` — emits `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` from Desktop `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (pp/mf/ff direct from `estimate_mean`).
 5. `tools/generate_cello_technique_modules_from_xlsx.py` — emits `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` from Desktop `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (pp/mf/ff direct from `estimate_mean`).
@@ -335,7 +355,7 @@ Offline curation pipeline (not used at runtime):
 9. `tools/generate_violin_arco_full_dynamics_from_xlsx.py` — violin arco `Results` ladder regenerator.
 10. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
-**Violin harmonics / string techniques:** regenerators still emit STE workbook anchors (pp/mf/ff). After commit, `tools/enforce_pitched_monotone_dynamic_ladders.py` rebuilds full soft→loud 10-level ladders (D6 hotfix, 2026-08-03). Runtime GPR remains removed.
+**String techniques (2026-08-08):** the 12 technique modules (sordina / sul tasto / sul ponticello × violin, viola, cello, double bass) commit full 10-level ladders built by Dynamics_predicter v1.5 directly on the STE workbook anchors — measured anchors verbatim, no isotonic clamp. **Violin harmonics** still carry the older D6 monotone ladders (`tools/enforce_pitched_monotone_dynamic_ladders.py`, 2026-08-03) pending a data-faithful rebuild. Runtime GPR remains removed.
 
 ## Media note-label normalization (PR #14)
 
@@ -353,12 +373,12 @@ Applied in `tools/populate_td_importer_sheets_from_zenodo_media.py` (`_read_medi
 
 | Workbook | Media sheet | Rows | Local status |
 |----------|-------------|------|--------------|
-| `VIOLIN_Zenodo_collections_media.xlsx` | `Violin_Media` | 49 | **SKIPPED** in suite — workbook path not accessible on this machine (`UNVERIFIED — SOURCE WORKBOOK NOT ACCESSIBLE`); will activate once deposited |
-| `ViOLA_Zenodo_collections_media.xlsx` | `VIOLA_Media` | 49 | **SKIPPED** in suite — workbook path not accessible; will activate once deposited |
-| `CELLO_Zenodo_collections_media.xlsx` | `Cello_Media` | 49 | **PASS** — 0 value differences vs committed module |
+| `VIOLINO\VIOLIN_Zenodo_collections_Arco_normal.xlsx` | `Violin_Media` | 49 | **PASS** — 0 value differences vs committed module |
+| `VIOLA_Zenodo_collections_Arco_normal.xlsx` | `VIOLA_Media` | 49 | **PASS** |
+| `CELLO_Zenodo_collections_media.xlsx` | `Cello_Media` | 49 | **PASS** |
 | `DOUBLEBASS_Zenodo_collections_media.xlsx` | `DBass_Media` | 45 | **PASS** |
 
-**CI:** `tests/test_string_source_reproducibility.py` skips when workbooks are absent on the runner (see archiving note above). Local reconstruction status for cello and double_bass currently **PASS**; violin and viola skip in the suite until deposited. CI verifies committed modules and unit tests; independent reconstruction requires local workbooks or future canonical fixtures.
+**CI:** `tests/test_string_source_reproducibility.py` skips when workbooks are absent on the runner (see archiving note above). Local reconstruction status (2026-08-08) is **PASS for all four strings**. CI verifies committed modules and unit tests; independent reconstruction requires local workbooks or future canonical fixtures.
 
 ## Technique metadata vs source tables
 
@@ -372,7 +392,7 @@ Audit: `tools/audit_instrument_metadata_range_resolution.py` → `reports/instru
 |----|-------|--------|
 | DB-SPAN | Double-bass `source_table_span` E1–C5 aligns with committed table and registry; E1–A3 was obsolete documentation. Upper-register QC (A♯3–C5) open. | **PASS** (span); **REVIEW REQUIRED** (upper QC) |
 | TECHNIQUE | `INSTRUMENT_SOURCE.table_supported_techniques` vs registry `supported_techniques`; tables do not overclaim technique coverage. | **PASS** |
-| TUBA-RNG | Tuba sounding_range MIDI 28–58 is coarse-default validation placeholder without source table. | **REVIEW REQUIRED** |
+| TUBA-RNG | Tuba now ships a committed table (`tuba.py`, C1–A#4); `registry.sounding_range` (MIDI 24–70) matches the table span (2026-08-09). | **PASS** |
 | TRANS-META | `registry.transposition` is metadata-only; manual input is sounding pitch; MusicXML `<transpose>` converts once. | **PASS** |
 | LEGACY-GPR | Runtime GPR retired 2026-08-03; historical code at `tools/legacy_gpr_dynamic_interpolation.py`. | **N/A (retired)** |
 | GPR-MQ | GPR model-quality audit (`tools/audit_gpr_model_quality.py`): 357 source rows (8 GPR modules, incl. bassoon); 58 convex-hull departures (pp–mf); GPR–linear/quadratic/PCHIP diagnostic deviations. Production GPR unchanged; references not adopted. | **REVIEW REQUIRED** (local hull departures; low-register strings) |

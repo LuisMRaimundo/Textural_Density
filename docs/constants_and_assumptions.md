@@ -54,11 +54,11 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 |------|------|--------|------------|
 | `DYNAMIC_LEVELS` | Allowed symbolic markings | `config.py` | Not SPL |
 | Committed ladder cells | Exact `spectral_data` lookup | `instrumentos/*.py` | Must include requested dynamic |
-| Full ordinary-sustain ladders | 10 dynamics from Dynamics_predicter `Results` | `violin`/`viola`/`cello`/`double_bass`/`flute`/`clarinet`/`bassoon`/`oboe` | Non-anchor cells workbook-modelled, not lab-measured |
-| Monotone pitched ladders (D6) | Soft→loud 10-level ladders for all pitched table-backed modules | trumpet, string techniques/harmonics, … | Anchors isotonic-clamped + offline `internal_default` rebuild |
+| Full data-faithful ladders (2026-08-08/09) | 10 dynamics from Dynamics_predicter v1.5 `Results` (measured pp/mf/ff anchors verbatim; PCHIP interiors; tapered outers) | winds (`flute`/`oboe`/`clarinet`/`bassoon`), brass (`trumpet`/`horn`/`tuba`), arco strings, 12 string technique modules | Non-anchor cells workbook-modelled, not lab-measured |
+| Monotone pitched ladders (D6, residual) | Soft→loud 10-level ladders (isotonic-clamped) | violin harmonic modules only (`violin_art_harm`, `violin_nat_harm`) | Pending data-faithful rebuild |
 | Ordinal weights p…ffff | Symbolic orchestration mass (coarse fallback) | `instrumentos/registry.py` | Not loudness |
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
-| Dynamic monotonicity (committed pitched) | Soft→loud `pppp→ffff` enforced | pitched `spectral_data` modules | See `tests/test_pitched_dynamic_monotone_ladders.py` |
+| Ladder hygiene (committed pitched) | All 10 levels present; interiors within measured segments; tapered, non-zigzag outers; **not** forced monotone (measured anchors preserved) | pitched `spectral_data` modules | See `tests/test_pitched_dynamic_monotone_ladders.py` |
 
 **Production rule (2026-08-03):** no runtime GPR / adaptive-tail fill-in. `calcular_densidade` reads committed cells only. Legacy code: `tools/legacy_gpr_dynamic_interpolation.py`. Missing cells still raise `MissingCommittedDynamicError` (coarse fallbacks excepted).
 
@@ -69,7 +69,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | Name | Role | Module |
 |------|------|--------|
 | `REGISTRY` profiles | Register, family, dynamic-response metadata | `instrumentos/registry.py` |
-| Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, strings, percussion, …) | Note×dynamic CDM tables (externally sourced; ordinary-sustain winds/strings listed above = full ladder) | `instrumentos/*.py` |
+| Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `horn`, `tuba`, strings, percussion, …) | Note×dynamic CDM tables (externally sourced; all pitched table-backed modules = full 10-dynamic ladder) | `instrumentos/*.py` |
 | `profile_status` | `literature_derived` / `empirical_profile` / `coarse_default` | Audit: `instrumentos/metadata_audit.py` |
 | `uncertainty` | low / medium / high | All profiles |
 | Unknown instrument | Generic fallback without external acoustic table | `profile_for_event()` |

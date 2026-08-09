@@ -132,11 +132,17 @@ extrapolation.
 | Missing cell | **Error** (`MissingCommittedDynamicError`) — no runtime fill-in |
 
 **Migration (2026-08-03):** Runtime GPR + adaptive tails removed from production.
-Pitched table-backed modules commit 10-level ladders that are soft→loud
-monotone (Results / technique anchors isotonic-clamped, then rebuilt with the
-former `internal_default` log-linear + adaptive-tail rule offline). Unpitched
-percussion uses pitch-independent `DYNAMIC_CDM`. Legacy implementation:
-`tools/legacy_gpr_dynamic_interpolation.py`.
+**Data-faithful rebuild (2026-08-08/09):** all pitched table-backed modules —
+winds (flute, oboe, clarinet, bassoon), brass (trumpet, horn, tuba), arco strings,
+and the 12 string technique modules — commit 10-level ladders generated offline by
+**Dynamics_predicter v1.5** on the measured pp/mf/ff anchors: anchors verbatim,
+PCHIP interiors bounded by their measured segment, geometrically tapered outer
+levels. Ladders are **not** forced monotone; real measured anchors are
+occasionally non-monotone and are preserved. The earlier D6 isotonic clamp
+(2026-08-03) remains only in the violin harmonic modules, pending rebuild.
+Unpitched percussion uses pitch-independent `DYNAMIC_CDM`. Legacy implementation:
+`tools/legacy_gpr_dynamic_interpolation.py`. Ladder hygiene contract:
+`tests/test_pitched_dynamic_monotone_ladders.py`.
 
 **Transferred-anchor modules:** Some technique tables (historically `violin_sul_ponticello`) may commit soft/loud anchors derived by ratio transfer. Violin harmonic modules (`violin_art_harm`, `violin_nat_harm`) commit workbook `pp`/`mf`/`ff` from STE harmonic exports.
 

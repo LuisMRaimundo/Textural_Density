@@ -2,7 +2,7 @@
 
 
 
-> **Metadata status:** The instrument corpus is **incomplete**. Many names resolve to coarse fallbacks; table-backed modules are partial proxies. Full soft→loud 10-dynamic ladders are committed for ordinary-sustain winds/strings, trumpet, string technique/harmonic modules, and unpitched percussion (D6 monotone enforcement 2026-08-03). External acoustic/proxy metadata are curated gradually — not live analysis.
+> **Metadata status:** The instrument corpus is **incomplete**. Some names resolve to coarse fallbacks; table-backed modules are partial proxies. Full 10-dynamic ladders are committed for ordinary-sustain winds (flute, oboe, clarinet, bassoon), brass (trumpet, horn, tuba), arco strings, string technique/harmonic modules, and unpitched percussion. Ladders are **data-faithful** (Dynamics_predicter v1.5, 2026-08-08/09): measured pp/mf/ff anchors are committed verbatim, PCHIP interiors, tapered outers — they are *not* forced to be strictly monotone. External acoustic/proxy metadata are curated gradually — not live analysis.
 
 
 
@@ -23,16 +23,16 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 |--------|-------|--------|
 
 | `flute.py`, `clarinet.py`, `oboe.py`, `bassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
-| `trumpet.py` | `spectral_data` (10 dynamics, monotone) | IOWA+ORCH trumpet sustain CDM medians + D6 ladder rebuild |
+| `trumpet.py`, `horn.py`, `tuba.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH sustain anchors) |
 | `violin.py`, `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
-| `violin_sordina.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`con_sordino`; pp from arco ratios) |
-| `violin_sul_tasto.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_tasto`; pp from arco ratios) |
-| `violin_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Violin_mf/ff.xlsx` (`sul_ponticello`; pp from arco ratios) |
+| `violin_sordina.py` | `spectral_data` (10 dynamics) | STE `Violin_mf/ff.xlsx` anchors (`con_sordino`; pp from arco ratios) + predictor ladder |
+| `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | STE `Violin_mf/ff.xlsx` anchors (`sul_tasto`; pp from arco ratios) + predictor ladder |
+| `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | STE `Violin_mf/ff.xlsx` anchors (`sul_ponticello`; pp from arco ratios) + predictor ladder |
 | `violin_art_harm.py` | `spectral_data` | STE harmonic workbooks pp/mf/ff (`Violin_*_harmo.xlsx`) |
 | `violin_nat_harm.py` | `spectral_data` | STE harmonic workbooks pp/mf/ff (`Violin_*_harmo.xlsx`) |
-| `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Viola_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
-| `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Cello_pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
-| `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` | `spectral_data` | Strings Techniques Extrapolation `Contrabass-pp/mf/ff.xlsx` (pp/mf/ff from `estimate_mean`) |
+| `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | STE `Viola_pp/mf/ff.xlsx` anchors (`estimate_mean`) + predictor ladder |
+| `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` | `spectral_data` (10 dynamics) | STE `Cello_pp/mf/ff.xlsx` anchors (`estimate_mean`) + predictor ladder |
+| `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` | `spectral_data` (10 dynamics) | STE `Contrabass-pp/mf/ff.xlsx` anchors (`estimate_mean`) + predictor ladder |
 | `bass_drum.py`, `cymbals.py`, `tamtam.py`, `gong.py` | `DYNAMIC_CDM` (10 dynamics; pitch-independent) | NonTunPerc MC anchors + committed former `internal_default` ladder |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
@@ -44,7 +44,7 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 **Technique honesty:** registry `supported_techniques` lists organological capabilities. Modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
 
-**Technique / trumpet ladders:** STE regenerators still emit pp/mf/ff anchors; `tools/enforce_pitched_monotone_dynamic_ladders.py` then commits full soft→loud 10-level ladders (D6 hotfix).
+**Technique ladders (2026-08-08 rebuild):** the string technique modules commit full 10-level ladders built by Dynamics_predicter v1.5 directly on the STE workbook anchors. Measured mf/ff (and pp where measured) match the committed `*_MEASURED` dicts verbatim; the earlier isotonic clamp (`tools/enforce_pitched_monotone_dynamic_ladders.py`, D6 hotfix 2026-08-03) is no longer applied.
 
 **Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
 
@@ -54,7 +54,7 @@ Audit: `python tools/audit_instrument_metadata_range_resolution.py` → `reports
 
 
 
-**GUI vs registry IDs:** The Tkinter GUI shows **English display names** (Flute, Violin, …). Registry `instrument_id` keys remain stable internal identifiers (e.g. `flauta`, `violino`) with English aliases (`flute`, `violin`, …) and English **module filenames** (`flute.py`, `violin.py`, …).
+**GUI vs registry IDs:** The Tkinter GUI shows **English orchestral short names** (Fl, Ob, Cl, Bsn, Tpt, Hn, Tba, Vl, Vla, Vc, Db, …). Registry `instrument_id` keys remain stable internal identifiers (e.g. `flauta`, `violino`) with English aliases (`flute`, `violin`, …) and English **module filenames** (`flute.py`, `violin.py`, …). The former long display names (Flute, Violin, …) still resolve as aliases.
 
 
 
@@ -118,10 +118,13 @@ Range policy: never collapse to the same pitch class in a distant octave (e.g. D
 
 
 **Committed dynamic ladders:** production looks up exact `spectral_data` cells for
-the requested dynamic. Pitched table-backed modules (ordinary-sustain,
-trumpet, string techniques/harmonics) and unpitched percussion commit all ten
-`DYNAMIC_LEVELS` as soft→loud monotone ladders (D6 hotfix). The retired GPR +
-adaptive-tail implementation lives only at
+the requested dynamic. Pitched table-backed modules (winds, brass, arco strings,
+string techniques/harmonics) and unpitched percussion commit all ten
+`DYNAMIC_LEVELS`. Ladders are data-faithful: measured pp/mf/ff anchors verbatim,
+PCHIP interiors bounded by their measured segment, geometrically tapered outer
+levels — **not** forced monotone (real measurements are occasionally
+non-monotone). Contract enforced by `tests/test_pitched_dynamic_monotone_ladders.py`.
+The retired GPR + adaptive-tail implementation lives only at
 `tools/legacy_gpr_dynamic_interpolation.py` for historical audits.
 
 
@@ -172,7 +175,7 @@ See [TECHNICAL_MANUAL.md](../docs/TECHNICAL_MANUAL.md) §3.3–§3.6.
 
 
 
-Warnings propagate into `resultados["metric_metadata"]` with `source_type=external_acoustic_metadata` when GPR modules are used.
+Warnings propagate into `resultados["metric_metadata"]` with `source_type=external_acoustic_metadata` when table-backed modules are used.
 
 
 
@@ -180,7 +183,7 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 
 
 
-## Dedicated modules (acoustic-source tables + GPR)
+## Dedicated modules (committed acoustic-source tables)
 
 
 
@@ -196,7 +199,11 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 
 | **Bassoon** | `bassoon.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
-| **Trumpet** | `trumpet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
+| **Trumpet (Tpt)** | `trumpet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
+
+| **Horn (Hn)** | `horn.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
+
+| **Tuba (Tba)** | `tuba.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (C1–A#4) |
 
 | **Violin** | `violin.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 | **Violin sordina** | `violin_sordina.py` | `literature_derived` | Extrapolation workbook mf/ff; pp from arco ratios (high uncertainty) |
@@ -336,7 +343,7 @@ Instruments **without** a dedicated acoustic script receive a **coarse register-
 
 1. Add `new_instrument.py` in this directory implementing the module contract (copy structure from `violin.py` or `flute.py`).
 
-2. Populate `spectral_data` with **chromatic anchors only** (e.g. `C4`, `C#4`, … × `pp`/`mf`/`ff`) from **documented external acoustic sources**; cite provenance in the module docstring and `registry.py` `source_notes`. Microtonal rows are optional — runtime interpolation fills quarter-tones and cents.
+2. Populate `spectral_data` with **chromatic anchors only** (e.g. `C4`, `C#4`, …) carrying **all ten dynamic levels** per note — measured pp/mf/ff anchors from **documented external acoustic sources**, remaining levels committed offline via Dynamics_predicter; cite provenance in the module docstring and `registry.py` `source_notes`. Microtonal rows are optional — runtime interpolation fills quarter-tones and cents.
 
 3. Use `lookup_spectral_density` from `instrumentos/spectral_lookup.py` inside `calcular_densidade` (see existing modules).
 
@@ -362,7 +369,7 @@ REGISTRY["novo_instrumento"] = _profile(
 
     module_name="new_instrument",  # English module filename
 
-    source_notes="Sparse GPR table from [cite acoustic source].",
+    source_notes="Committed 10-dynamic CDM ladder from [cite acoustic source].",
 
     aliases=("alias1", "alias2"),
 
