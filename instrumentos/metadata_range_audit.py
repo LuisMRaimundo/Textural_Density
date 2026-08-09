@@ -49,6 +49,9 @@ _GPR_MODULES = frozenset(
         "double_bass_sordina",
         "double_bass_sul_tasto",
         "double_bass_sul_ponticello",
+        "trumpet",
+        "horn",
+        "tuba",
         "bass_drum",
         "cymbals",
         "tamtam",
@@ -115,15 +118,35 @@ def _double_bass_span_classification(table: dict[str, Any] | None) -> dict[str, 
 def _tuba_classification() -> dict[str, Any]:
     profile = REGISTRY["tuba"]
     lo, hi = profile.sounding_range
+    table = _table_span(profile.module_name)
+    if table is None:
+        return {
+            "module_name": profile.module_name,
+            "profile_status": profile.profile_status,
+            "sounding_range_midi": f"{int(lo)}–{int(hi)}",
+            "classification": "REVIEW REQUIRED",
+            "range_kind": "coarse_default_validation_placeholder",
+            "rationale": (
+                "No committed tuba spectral_data module. registry.sounding_range is a coarse "
+                "orchestration placeholder for validation only — not a source-table span."
+            ),
+        }
+    aligned = int(lo) == table["min_midi"] and int(hi) == table["max_midi"]
     return {
         "module_name": profile.module_name,
         "profile_status": profile.profile_status,
         "sounding_range_midi": f"{int(lo)}–{int(hi)}",
-        "classification": "REVIEW REQUIRED",
-        "range_kind": "coarse_default_validation_placeholder",
+        "source_table_span": (
+            f"{table['first_note']}–{table['last_note']} "
+            f"(MIDI {table['min_midi']}–{table['max_midi']})"
+        ),
+        "classification": "PASS" if aligned else "REVIEW REQUIRED",
+        "range_kind": "source_table_span",
         "rationale": (
-            "No committed tuba spectral_data module. registry.sounding_range (28–58) is a coarse "
-            "orchestration placeholder for validation only — not a source-table span."
+            "Committed tuba spectral_data ladder (IOWA+ORCH medians via Dynamics_predicter); "
+            "registry.sounding_range matches the committed table span."
+            if aligned
+            else "Committed tuba table span disagrees with registry.sounding_range — review."
         ),
     }
 

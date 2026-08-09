@@ -126,9 +126,9 @@ class TestPartialInstrumentDataScaffold:
 class TestSourceProvenanceLabelling:
     def test_coarse_only_slice_labels_metadata_proxy(self):
         # Both instruments must be coarse-only (no dedicated acoustic module):
-        # trompa/Horn now ships instrumentos/horn.py, so use trombone + tuba instead.
+        # tuba now ships instrumentos/tuba.py, so use trombone + bass trombone.
         vs = legacy_input_to_vertical_slice(
-            _symbolic_input(["E3", "C3"], instruments=["trombone", "tuba"])
+            _symbolic_input(["E3", "C3"], instruments=["trombone", "bass_trombone"])
         )
         source_type, validation, _, warnings = _instrument_density_epistemics(vs)
         assert source_type == "metadata_proxy"

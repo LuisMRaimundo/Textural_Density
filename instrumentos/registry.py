@@ -832,19 +832,26 @@ REGISTRY["trombone_baixo"] = _profile(
 
 REGISTRY["tuba"] = _profile(
     "tuba",
-    "Tuba",
+    "Tba",
     "brass",
-    sounding=(28, 58),
+    sounding=(24, 70),
     comfortable=(30, 50),
     brightness="dark",
+    status="literature_derived",
+    uncertainty="medium",
+    module_name="tuba",
+    supported=("legato", "staccato", "mute"),
     source_notes=(
-        "Coarse brass profile without committed acoustic CDM table. "
-        "sounding_range (MIDI 28–58) is a provisional validation placeholder — not source-table validated."
+        "Committed 10-dynamic CDM ladder in instrumentos/tuba.py from IOWA+ORCH "
+        "sustain medians (pp/mf/ff anchors; Dynamics_predicter Results sheet). "
+        "sounding_range (MIDI 24–70, C1–A#4) matches the committed table span."
     ),
     warnings=(
-        "Tuba spectral density uses coarse register/dynamic proxy only; range metadata requires organological review.",
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("tuba",),
+    aliases=("tuba", "tba."),
 )
 
 # --- Keyboard / harp ---
