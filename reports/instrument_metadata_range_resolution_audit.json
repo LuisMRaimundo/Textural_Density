@@ -10,7 +10,7 @@
     "table_supported_techniques": "Techniques with independent numerical rows in the committed table.",
     "registry_supported_techniques": "Organological capabilities listed on InstrumentProfile.supported_techniques."
   },
-  "instrument_count": 43,
+  "instrument_count": 42,
   "table_excludes_sounding_range_count": 0,
   "table_excludes_sounding_range_ids": [],
   "instruments": [
@@ -2394,127 +2394,52 @@
       ]
     },
     {
-      "instrument_id": "violino_art_harm",
-      "display_name": "Violin art harm",
+      "instrument_id": "violino_harm",
+      "display_name": "vl harm",
       "aliases": [
-        "violin_art_harm",
-        "Violin_art_harm",
-        "violin artificial harmonics",
-        "violin_artificial_harmonics",
-        "violino art harm",
-        "violino_art_harm",
-        "violino artificial harmonics",
-        "art harm violin",
-        "art_harm_violin"
-      ],
-      "family": "strings",
-      "module_name": "violin_art_harm",
-      "table_backed": true,
-      "profile_status": "literature_derived",
-      "source_table_span": {
-        "first_note": "G5",
-        "last_note": "C8",
-        "row_count": 30,
-        "min_midi": 79,
-        "max_midi": 108
-      },
-      "instrument_source_pitch_range": [
-        79,
-        108
-      ],
-      "registry_sounding_range_midi": [
-        79,
-        108
-      ],
-      "registry_comfortable_range_midi": [
-        79,
-        100
-      ],
-      "registry_transposition": 0,
-      "registry_transposition_runtime_applied": false,
-      "source_dynamic_anchors": [
-        "pppp",
-        "ppp",
-        "pp",
-        "p",
-        "mp",
-        "mf",
-        "f",
-        "ff",
-        "fff",
-        "ffff"
-      ],
-      "modelled_dynamics": [
-        "p",
-        "mp",
-        "f",
-        "pppp",
-        "ppp",
-        "fff",
-        "ffff"
-      ],
-      "range_alignment": "aligned",
-      "range_classification": "PASS",
-      "technique": {
-        "registry_supported_techniques": [
-          "arco",
-          "harmonic"
-        ],
-        "table_supported_techniques": [
-          "arco_artificial_harmonic"
-        ],
-        "source_technique": "arco_artificial_harmonic",
-        "registry_not_in_table": [
-          "harmonic"
-        ],
-        "classification": "PASS"
-      },
-      "documentation_contradictions": [],
-      "table_excludes_sounding_range": false,
-      "exclusion_kind": "full_coverage",
-      "missing_low_semitones": 0,
-      "missing_high_semitones": 0,
-      "table_span_midi": [
-        79,
-        108
-      ]
-    },
-    {
-      "instrument_id": "violino_nat_harm",
-      "display_name": "Violin nat harm",
-      "aliases": [
+        "violin_harmonics",
+        "Violin_harmonics",
+        "violin harmonics",
+        "violino harmonics",
+        "violino_harmonics",
+        "violin harm",
+        "violin_harm",
+        "violino harm",
+        "harmonics violin",
+        "harmonics_violin",
+        "vl harm",
+        "vl_harm",
         "violin_nat_harm",
-        "Violin_nat_harm",
-        "violin natural harmonics",
-        "violin_natural_harmonics",
-        "violino nat harm",
+        "violin nat harm",
         "violino_nat_harm",
-        "violino natural harmonics",
-        "nat harm violin",
-        "nat_harm_violin"
+        "violin natural harmonics",
+        "violin_art_harm",
+        "violin art harm",
+        "violino_art_harm",
+        "violin artificial harmonics"
       ],
       "family": "strings",
-      "module_name": "violin_nat_harm",
+      "module_name": "violin_harmonics",
       "table_backed": true,
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "G4",
-        "last_note": "B7",
-        "row_count": 20,
+        "last_note": "G7",
+        "row_count": 37,
         "min_midi": 67,
-        "max_midi": 107
+        "max_midi": 103
       },
       "instrument_source_pitch_range": [
         67,
-        107
+        103
       ],
       "registry_sounding_range_midi": [
         67,
-        107
+        103
       ],
       "registry_comfortable_range_midi": [
         67,
-        91
+        96
       ],
       "registry_transposition": 0,
       "registry_transposition_runtime_applied": false,
@@ -2547,9 +2472,9 @@
           "harmonic"
         ],
         "table_supported_techniques": [
-          "arco_natural_harmonic"
+          "arco_harmonic"
         ],
-        "source_technique": "arco_natural_harmonic",
+        "source_technique": "arco_harmonic",
         "registry_not_in_table": [
           "harmonic"
         ],
@@ -2562,15 +2487,16 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         67,
-        107
+        103
       ]
     },
     {
       "instrument_id": "violino_sordina",
-      "display_name": "Violin sordina",
+      "display_name": "vl sord",
       "aliases": [
         "violin_sordina",
         "Violin_sordina",
+        "Violin sordina",
         "violin con sordina",
         "violin_con_sordina",
         "violino sordina",
@@ -2578,7 +2504,9 @@
         "violino con sordina",
         "violino_con_sordina",
         "violin muted",
-        "muted violin"
+        "muted violin",
+        "vl sord",
+        "vl_sord"
       ],
       "family": "strings",
       "module_name": "violin_sordina",
@@ -2654,16 +2582,19 @@
     },
     {
       "instrument_id": "violino_sul_ponticello",
-      "display_name": "Violin sul ponticello",
+      "display_name": "vl sp",
       "aliases": [
         "violin_sul_ponticello",
         "Violin_sul_ponticello",
+        "Violin sul ponticello",
         "violin sul pont",
         "violin_sul_pont",
         "violino sul ponticello",
         "violino_sul_ponticello",
         "sul ponticello violin",
-        "sul_ponticello_violin"
+        "sul_ponticello_violin",
+        "vl sp",
+        "vl_sp"
       ],
       "family": "strings",
       "module_name": "violin_sul_ponticello",
@@ -2739,15 +2670,18 @@
     },
     {
       "instrument_id": "violino_sul_tasto",
-      "display_name": "Violin sul tasto",
+      "display_name": "vl st",
       "aliases": [
         "violin_sul_tasto",
         "Violin_sul_tasto",
+        "Violin sul tasto",
         "violin sul tasto",
         "violino sul tasto",
         "violino_sul_tasto",
         "sul tasto violin",
-        "sul_tasto_violin"
+        "sul_tasto_violin",
+        "vl st",
+        "vl_st"
       ],
       "family": "strings",
       "module_name": "violin_sul_tasto",

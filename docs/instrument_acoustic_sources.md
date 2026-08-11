@@ -169,70 +169,70 @@ live audio analysis.
 ## Violin sordina (`violin_sordina`)
 
 - **Module:** `instrumentos/violin_sordina.py`
-- **Table:** `spectral_data` (49 chromatic rows, G3–G7)
-- **Provenance (2026-07-24):** assumption-based EWSD extrapolations from
-  `Violin_mf.xlsx` / `Violin_ff.xlsx` (`All_Results.estimate_mean`, technique
-  `con_sordino`); **not** Zenodo-measured CDM
-- **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
+- **GUI display name:** `vl sord`
+- **Table:** `spectral_data` (49 chromatic rows, G3–G7 × **all 10** dynamics)
+- **Provenance (2026-08-11):** `Results` sheet of
+  `D:\CORDAS\VIOLINO\OK_VIOLIN_con sordina_dynamics extrapolation.xlsx`
+  (CDM Technique Extrapolator METApool; IOWA+ORCHIDEA collections,
+  Philharmonia removed)
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
+- **Hygiene:** interior cells clamped into their measured pp/mf/ff segment
+  where the workbook marginally overshoots (G7 mp, 0.4%)
 - **Source technique:** `arco_sordina`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
 
 ## Violin sul tasto (`violin_sul_tasto`)
 
 - **Module:** `instrumentos/violin_sul_tasto.py`
-- **GUI display name:** `Violin sul tasto`
-- **Table:** `spectral_data` (49 chromatic rows, G3–G7)
-- **Provenance:** assumption-based EWSD extrapolations from
-  `Violin_mf.xlsx` / `Violin_ff.xlsx` (technique `sul_tasto`)
-- **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
+- **GUI display name:** `vl st`
+- **Table:** `spectral_data` (49 chromatic rows, G3–G7 × **all 10** dynamics)
+- **Provenance (2026-08-11):** `Results` sheet of
+  `D:\CORDAS\VIOLINO\OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx`
+  (CDM Technique Extrapolator METApool; IOWA+ORCHIDEA collections,
+  Philharmonia removed)
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
 - **Source technique:** `arco_sul_tasto`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
 
 ## Violin sul ponticello (`violin_sul_ponticello`)
 
 - **Module:** `instrumentos/violin_sul_ponticello.py`
-- **Table:** `spectral_data` (49 chromatic rows, G3–G7)
-- **Provenance (2026-07-24):** assumption-based EWSD extrapolations from
-  `Violin_mf.xlsx` / `Violin_ff.xlsx` (technique `sul_ponticello`); replaces the
-  earlier mf-only hand-curated Zenodo-style table
-- **Workbook anchors:** mf and ff (`MF_MEASURED`, `FF_MEASURED`)
-- **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
-- **Non-anchor dynamics:** require committed ladder cells (runtime GPR removed)
+- **GUI display name:** `vl sp`
+- **Table:** `spectral_data` (49 chromatic rows, G3–G7 × **all 10** dynamics)
+- **Provenance (2026-08-11):** `Results` sheet of
+  `D:\CORDAS\VIOLINO\OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx`
+  (CDM Technique Extrapolator METApool; IOWA+ORCHIDEA collections,
+  Philharmonia removed)
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
 - **Source technique:** `arco_sul_ponticello`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
 
-## Violin art harm (`violin_art_harm`)
+## Violin harmonics (`violin_harmonics`)
 
-- **Module:** `instrumentos/violin_art_harm.py`
-- **GUI display name:** `Violin art harm`
-- **Table:** `spectral_data` (30 sounding rows, G5–C8)
-- **Provenance (2026-07-24):** Strings Techniques Extrapolation harmonic workbooks
-  `Violin_pp_hamro.xlsx` / `Violin_mf_harmo.xlsx` / `Violin_ff_harmo.xlsx`
-  (`All_Results.estimate_mean`, technique `artificial_harmonic`)
-- **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
-- **Source technique:** `arco_artificial_harmonic`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix; harmonics not yet rebuilt data-faithful).
+- **Module:** `instrumentos/violin_harmonics.py`
+- **GUI display name:** `vl harm`
+- **Table:** `spectral_data` (37 chromatic sounding rows, G4–G7 × **all 10** dynamics)
+- **Provenance (2026-08-11):** `Results` sheet of
+  `D:\CORDAS\VIOLINO\OK_VIOLIN_harmonics_dynamics extrapolation.xlsx`
+  (CDM Technique Extrapolator METApool, pooled natural + artificial harmonics;
+  IOWA+ORCHIDEA collections, Philharmonia removed)
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
+- **Source technique:** `arco_harmonic` (pooled)
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_violin_harmonic_modules_from_xlsx.py`
-
-## Violin nat harm (`violin_nat_harm`)
-
-- **Module:** `instrumentos/violin_nat_harm.py`
-- **GUI display name:** `Violin nat harm`
-- **Table:** `spectral_data` (20 sounding rows, G4–B7; duplicate string productions averaged)
-- **Provenance (2026-07-24):** same harmonic workbooks as art harm
-  (`All_Results.estimate_mean`, technique `natural_harmonic`)
-- **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
-- **Source technique:** `arco_natural_harmonic`
-- **Dynamics (2026-08-03):** full 10-level soft→loud monotone ladder committed (D6 hotfix; harmonics not yet rebuilt data-faithful).
-- **Uncertainty:** high
-- **Regeneration:** `tools/generate_violin_harmonic_modules_from_xlsx.py`
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
+- **History (2026-08-11):** replaces the retired split `violin_nat_harm` /
+  `violin_art_harm` modules; their aliases now resolve to this pooled table
 
 ## Cello (`cello`)
 

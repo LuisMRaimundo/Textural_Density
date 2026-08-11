@@ -195,7 +195,7 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 | **Optional empirical** | Expert annotations, listening tests — only if pursuing judgment-prediction research |
 | **Not provided** | Measured audio spectra, SPL, timbre measurement, live waveform/FFT/STFT analysis, Spectral_Analyser-style signal processing, mandatory human-rating validation, final cross-instrument acoustic calibration |
 
-**Instrument metadata status:** External acoustic/proxy tables are **incomplete** and curated gradually. Missing or coarse instrument data are **expected** at this stage — not runtime bugs when fallback labels and provenance remain honest. Do not treat current GPR modules (e.g. flute, clarinet, oboe, bassoon, trumpet, violin, violin sordina, violin sul ponticello, violin art harm) as final scientific reference corpora.
+**Instrument metadata status:** External acoustic/proxy tables are **incomplete** and curated gradually. Missing or coarse instrument data are **expected** at this stage — not runtime bugs when fallback labels and provenance remain honest. Do not treat current GPR modules (e.g. flute, clarinet, oboe, bassoon, trumpet, violin, violin sordina, violin sul ponticello, violin harmonics) as final scientific reference corpora.
 
 **English module filenames:** Dedicated scripts use English names (`flute.py`, `violin.py`, …). Registry aliases accept both English (`flute`, `violin`) and legacy Portuguese (`flauta`, `violino`) strings in programmatic input.
 

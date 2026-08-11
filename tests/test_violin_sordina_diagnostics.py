@@ -80,8 +80,8 @@ def test_lookup_trace_does_not_change_calculation_results():
     )
 
     resultados, densities, _ = calculate_metrics(request)
-    assert densities == pytest.approx([10.011615, 28.582867], rel=0, abs=1e-5)
-    assert resultados["density"]["instrument"] == pytest.approx(30.28552, rel=0, abs=1e-4)
+    assert densities == pytest.approx([30.4625, 28.582867], rel=0, abs=1e-5)
+    assert resultados["density"]["instrument"] == pytest.approx(41.772529, rel=0, abs=1e-4)
 
     trace = resultados["instrument_lookup_trace"]
     assert len(trace) == 2
@@ -89,7 +89,7 @@ def test_lookup_trace_does_not_change_calculation_results():
     sordina_row = trace[0]
     assert sordina_row["resolved_profile_id"] == "violino_sordina"
     assert sordina_row["module_name"] == "violin_sordina"
-    assert sordina_row["one_player_density"] == pytest.approx(10.011615, rel=0, abs=1e-5)
+    assert sordina_row["one_player_density"] == pytest.approx(30.4625, rel=0, abs=1e-5)
     assert sordina_row["corresponding_arco_density"] == pytest.approx(30.702267, rel=0, abs=1e-5)
     assert sordina_row["sordina_arco_ratio"] < 1.0
     assert sordina_row["density_relation_to_arco"] == "sordina_lt_arco"

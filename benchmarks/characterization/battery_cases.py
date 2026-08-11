@@ -446,10 +446,10 @@ def build_cases(roles: dict[str, str]) -> list[Case]:
     cases.append(Case("XDYN.clarinet_bottom_pppp", cat, "clarinet chalumeau D3-E3, pppp (soft tail at floor)",
                       ["D3", "D#3", "E3"], ["clarinete"] * 3, dynamics=["pppp"] * 3,
                       probe={"group": "xdyn", "case": "clarinet_bottom_pppp"}))
-    # 10: transferred-anchor module at a tail level (art harm G6 A6 B6 = MIDI 91-95; range 79-103).
-    cases.append(Case("XDYN.artharm_top_pppp", cat, "violin art-harm top G6-B6, pppp (transferred-anchor tail)",
-                      ["G6", "A6", "B6"], ["violino_art_harm"] * 3, dynamics=["pppp"] * 3,
-                      probe={"group": "xdyn", "case": "artharm_top_pppp"}))
+    # 10: pooled harmonics module at a tail level (harm G6 A6 B6 = MIDI 91-95; range 67-103).
+    cases.append(Case("XDYN.harm_top_pppp", cat, "violin harmonics top G6-B6, pppp (pooled-harmonics tail)",
+                      ["G6", "A6", "B6"], ["violino_harm"] * 3, dynamics=["pppp"] * 3,
+                      probe={"group": "xdyn", "case": "harm_top_pppp"}))
     # 11-13: mid-register mid-compass references (same 3-semitone cluster shape).
     cases.append(Case("XDYN.ref_flute_mid_pppp", cat, "flute mid C5-D5, pppp (mid-compass soft-tail ref)",
                       ["C5", "C#5", "D5"], ["flauta"] * 3, dynamics=["pppp"] * 3,

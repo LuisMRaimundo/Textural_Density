@@ -55,7 +55,6 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | `DYNAMIC_LEVELS` | Allowed symbolic markings | `config.py` | Not SPL |
 | Committed ladder cells | Exact `spectral_data` lookup | `instrumentos/*.py` | Must include requested dynamic |
 | Full data-faithful ladders (2026-08-08/09) | 10 dynamics from Dynamics_predicter v1.5 `Results` (measured pp/mf/ff anchors verbatim; PCHIP interiors; tapered outers) | winds (`flute`/`oboe`/`clarinet`/`bassoon`), brass (`trumpet`/`horn`/`tuba`), arco strings, 12 string technique modules | Non-anchor cells workbook-modelled, not lab-measured |
-| Monotone pitched ladders (D6, residual) | Soft→loud 10-level ladders (isotonic-clamped) | violin harmonic modules only (`violin_art_harm`, `violin_nat_harm`) | Pending data-faithful rebuild |
 | Ordinal weights p…ffff | Symbolic orchestration mass (coarse fallback) | `instrumentos/registry.py` | Not loudness |
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
 | Ladder hygiene (committed pitched) | All 10 levels present; interiors within measured segments; tapered, non-zigzag outers; **not** forced monotone (measured anchors preserved) | pitched `spectral_data` modules | See `tests/test_pitched_dynamic_monotone_ladders.py` |
