@@ -1,6 +1,6 @@
 # Instrument metadata / range resolution audit
 
-**Instruments audited:** 43
+**Instruments audited:** 42
 
 ## Executive summary
 
@@ -78,7 +78,6 @@
 | viola_harm | C4–C7 | 60–96 | 60–96 | full_coverage | PASS | PASS |
 | viola_sordina | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
 | viola_sul_ponticello | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
-| viola_sul_tasto | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
 | violino | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |
 | violino_harm | G4–G7 | 67–103 | 67–96 | full_coverage | PASS | PASS |
 | violino_sordina | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |

@@ -135,18 +135,12 @@ live audio analysis.
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
 
-## Viola sul tasto (`viola_sul_tasto`)
+## Viola sul tasto — retired (2026-08-11)
 
-- **Module:** `instrumentos/viola_sul_tasto.py`
-- **GUI display name:** `Viola sul tasto`
-- **Table:** `spectral_data` (49 chromatic rows, C3–C7)
-- **Provenance:** assumption-based EWSD extrapolations from
-  `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (technique `sul_tasto`)
-- **Workbook anchors:** pp, mf and ff
-- **Source technique:** `arco_sul_tasto`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
-- **Uncertainty:** high
-- **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
+The assumption-based STE module `viola_sul_tasto.py` (GUI "Viola sul tasto")
+was removed together with its generator; no OK_VIOLA sul tasto dynamics
+workbook exists yet. The technique will return once a measured-anchor
+extrapolation workbook is available.
 
 ## Viola sul ponticello (`viola_sul_ponticello`)
 
@@ -378,13 +372,12 @@ Offline curation pipeline (not used at runtime):
 1. `tools/populate_td_importer_sheets_from_zenodo_media.py` — builds `AcousticTable`, `Registry`, and `Provenance` sheets from `*_Media` workbooks. Applies `normalize_media_note_label()` when reading media rows (strips trailing `(2)` duplicate markers).
 2. `tools/generate_instrument_modules.py` — legacy 3-anchor generator; its `CONFIGS` also drive the source-reconstruction audit. All four string reconstructions read the curated Media sheets (`Violin_Media`, `VIOLA_Media`, `Cello_Media`, `DBass_Media`) via `load_spectral_data_from_media` (2026-08-08 config fix).
 3. `tools/generate_violin_technique_modules_from_xlsx.py` — emits / replaces `violin_sordina.py`, `violin_sul_tasto.py`, `violin_sul_ponticello.py` from Desktop `Violin_mf.xlsx` / `Violin_ff.xlsx` (pp via arco ratio transfer).
-4. `tools/generate_viola_technique_modules_from_xlsx.py` — emits `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` from Desktop `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (pp/mf/ff direct from `estimate_mean`).
+4. `tools/generate_violin_technique_modules_from_ok_workbooks.py` — emits the violin technique modules plus `viola.py`, `viola_sordina.py`, `viola_sul_ponticello.py`, `viola_harmonics.py` from the OK_VIOLIN / OK_VIOLA dynamics workbooks (the retired STE viola generator emitted the removed `viola_sul_tasto.py`).
 5. `tools/generate_cello_technique_modules_from_xlsx.py` — emits `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` from Desktop `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (pp/mf/ff direct from `estimate_mean`).
 6. `tools/generate_double_bass_technique_modules_from_xlsx.py` — emits `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` from Desktop `Contrabass-pp.xlsx` / `Contrabass_mf.xlsx` / `Contrabass_ff.xlsx` (pp/mf/ff direct from `estimate_mean`).
-7. `tools/build_viola_table_from_media.py` — helper to regenerate viola `spectral_data` from `VIOLA_Media`.
-8. `tools/generate_full_dynamics_modules_from_xlsx.py` — commits Dynamics_predicter sheet `Results` ladders into ordinary-sustain modules (`viola`, `cello`, `double_bass`, `flute`, `clarinet`, `bassoon`, `oboe`).
-9. `tools/generate_violin_arco_full_dynamics_from_xlsx.py` — violin arco `Results` ladder regenerator.
-10. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
+7. `tools/generate_full_dynamics_modules_from_xlsx.py` — commits Dynamics_predicter sheet `Results` ladders into ordinary-sustain modules (`cello`, `double_bass`, `flute`, `clarinet`, `bassoon`, `oboe`; `viola` now comes from the OK-workbooks generator).
+8. `tools/generate_violin_arco_full_dynamics_from_xlsx.py` — violin arco `Results` ladder regenerator.
+9. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
 **String techniques (2026-08-08):** the 12 technique modules (sordina / sul tasto / sul ponticello × violin, viola, cello, double bass) commit full 10-level ladders built by Dynamics_predicter v1.5 directly on the STE workbook anchors — measured anchors verbatim, no isotonic clamp. **Violin harmonics** still carry the older D6 monotone ladders (`tools/enforce_pitched_monotone_dynamic_ladders.py`, 2026-08-03) pending a data-faithful rebuild. Runtime GPR remains removed.
 

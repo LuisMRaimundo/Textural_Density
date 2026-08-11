@@ -353,36 +353,6 @@ REGISTRY["viola_sordina"] = _profile(
 )
 
 
-REGISTRY["viola_sul_tasto"] = _profile(
-    "viola_sul_tasto",
-    "Viola sul tasto",
-    "strings",
-    sounding=(48, 96),
-    comfortable=(50, 69),
-    brightness="dark",
-    sustain="sustained",
-    attack="soft",
-    status="literature_derived",
-    uncertainty="high",
-    module_name="viola_sul_tasto",
-    supported=("arco", "sul_tasto"),
-    unsupported=("pizzicato", "mute", "sul_ponticello"),
-    source_notes=(
-        "Sparse GPR table in instrumentos/viola_sul_tasto.py from Strings Techniques "
-        "Extrapolation Viola_pp.xlsx / Viola_mf.xlsx / Viola_ff.xlsx "
-        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
-    ),
-    warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sul_tasto only; pp/mf/ff come from "
-        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
-        "Other registry supported_techniques are organological capabilities without "
-        "technique-specific table rows.",
-    ),
-    aliases=("viola_sul_tasto", "Viola_sul_tasto", "viola sul tasto", "sul tasto viola", "sul_tasto_viola"),
-)
-
-
 REGISTRY["viola_sul_ponticello"] = _profile(
     "viola_sul_ponticello",
     "vla sp",

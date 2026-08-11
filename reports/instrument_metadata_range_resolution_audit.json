@@ -10,7 +10,7 @@
     "table_supported_techniques": "Techniques with independent numerical rows in the committed table.",
     "registry_supported_techniques": "Organological capabilities listed on InstrumentProfile.supported_techniques."
   },
-  "instrument_count": 43,
+  "instrument_count": 42,
   "table_excludes_sounding_range_count": 0,
   "table_excludes_sounding_range_ids": [],
   "instruments": [
@@ -2304,88 +2304,6 @@
         "source_technique": "arco_sul_ponticello",
         "registry_not_in_table": [
           "sul_ponticello"
-        ],
-        "classification": "PASS"
-      },
-      "documentation_contradictions": [],
-      "table_excludes_sounding_range": false,
-      "exclusion_kind": "full_coverage",
-      "missing_low_semitones": 0,
-      "missing_high_semitones": 0,
-      "table_span_midi": [
-        48,
-        96
-      ]
-    },
-    {
-      "instrument_id": "viola_sul_tasto",
-      "display_name": "Viola sul tasto",
-      "aliases": [
-        "viola_sul_tasto",
-        "Viola_sul_tasto",
-        "viola sul tasto",
-        "sul tasto viola",
-        "sul_tasto_viola"
-      ],
-      "family": "strings",
-      "module_name": "viola_sul_tasto",
-      "table_backed": true,
-      "profile_status": "literature_derived",
-      "source_table_span": {
-        "first_note": "C3",
-        "last_note": "C7",
-        "row_count": 49,
-        "min_midi": 48,
-        "max_midi": 96
-      },
-      "instrument_source_pitch_range": [
-        48,
-        96
-      ],
-      "registry_sounding_range_midi": [
-        48,
-        96
-      ],
-      "registry_comfortable_range_midi": [
-        50,
-        69
-      ],
-      "registry_transposition": 0,
-      "registry_transposition_runtime_applied": false,
-      "source_dynamic_anchors": [
-        "pppp",
-        "ppp",
-        "pp",
-        "p",
-        "mp",
-        "mf",
-        "f",
-        "ff",
-        "fff",
-        "ffff"
-      ],
-      "modelled_dynamics": [
-        "p",
-        "mp",
-        "f",
-        "pppp",
-        "ppp",
-        "fff",
-        "ffff"
-      ],
-      "range_alignment": "aligned",
-      "range_classification": "PASS",
-      "technique": {
-        "registry_supported_techniques": [
-          "arco",
-          "sul_tasto"
-        ],
-        "table_supported_techniques": [
-          "arco_sul_tasto"
-        ],
-        "source_technique": "arco_sul_tasto",
-        "registry_not_in_table": [
-          "sul_tasto"
         ],
         "classification": "PASS"
       },

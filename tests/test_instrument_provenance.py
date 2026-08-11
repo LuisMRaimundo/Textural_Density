@@ -20,7 +20,6 @@ ACOUSTIC_MODULES = (
     "violin_harmonics",
     "viola",
     "viola_sordina",
-    "viola_sul_tasto",
     "viola_sul_ponticello",
     "viola_harmonics",
     "cello",
