@@ -24,12 +24,14 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 | `flute.py`, `clarinet.py`, `oboe.py`, `bassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
 | `trumpet.py`, `horn.py`, `tuba.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH sustain anchors) |
-| `violin.py`, `viola.py`, `cello.py`, `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
+| `violin.py`, `cello.py`, `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
+| `viola.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
 | `violin_sordina.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_con sordina_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
 | `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
 | `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
 | `violin_harmonics.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_harmonics_dynamics extrapolation.xlsx` Results ladder (pooled harmonics; measured pp/mf/ff anchors) |
 | `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | STE `Viola_pp/mf/ff.xlsx` anchors (`estimate_mean`) + predictor ladder |
+| `viola_harmonics.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_harmonics_dynamics extrapolation.xlsx` Results ladder (pooled harmonics; measured pp/mf/ff anchors) |
 | `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` | `spectral_data` (10 dynamics) | STE `Cello_pp/mf/ff.xlsx` anchors (`estimate_mean`) + predictor ladder |
 | `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` | `spectral_data` (10 dynamics) | STE `Contrabass-pp/mf/ff.xlsx` anchors (`estimate_mean`) + predictor ladder |
 | `bass_drum.py`, `cymbals.py`, `tamtam.py`, `gong.py` | `DYNAMIC_CDM` (10 dynamics; pitch-independent) | NonTunPerc MC anchors + committed former `internal_default` ladder |
@@ -209,10 +211,11 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **vl st** | `violin_sul_tasto.py` | `literature_derived` | OK_VIOLIN sul tasto Results ladder, measured pp/mf/ff anchors (high uncertainty) |
 | **vl sp** | `violin_sul_ponticello.py` | `literature_derived` | OK_VIOLIN sul ponticello Results ladder, measured pp/mf/ff anchors (high uncertainty) |
 | **vl harm** | `violin_harmonics.py` | `literature_derived` | OK_VIOLIN pooled harmonics Results ladder, G4–G7 (high uncertainty) |
-| **Viola** | `viola.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
+| **vla** | `viola.py` | `literature_derived` | OK_VIOLA arco ordinario Results ladder (IOWA+ORCH pp/mf/ff anchors) |
 | **Viola sordina** | `viola_sordina.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
 | **Viola sul tasto** | `viola_sul_tasto.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
 | **Viola sul ponticello** | `viola_sul_ponticello.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
+| **vla harm** | `viola_harmonics.py` | `literature_derived` | OK_VIOLA pooled harmonics Results ladder, C4–B7 (high uncertainty) |
 
 | **Cello** | `cello.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 | **Cello sordina** | `cello_sordina.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
@@ -261,7 +264,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 | Woodwinds | `flauta`, `flautim`, `oboe`, `cor_anglais`, `clarinete`, `clarinete_baixo`, `fagote`, `contrafagote` |
 
-| Strings | `violino`, `violino_sordina`, `violino_sul_tasto`, `violino_sul_ponticello`, `violino_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `violoncelo`, `violoncelo_sordina`, `violoncelo_sul_tasto`, `violoncelo_sul_ponticello`, `contrabaixo`, `contrabaixo_sordina`, `contrabaixo_sul_tasto`, `contrabaixo_sul_ponticello` |
+| Strings | `violino`, `violino_sordina`, `violino_sul_tasto`, `violino_sul_ponticello`, `violino_harm`, `viola`, `viola_sordina`, `viola_sul_tasto`, `viola_sul_ponticello`, `viola_harm`, `violoncelo`, `violoncelo_sordina`, `violoncelo_sul_tasto`, `violoncelo_sul_ponticello`, `contrabaixo`, `contrabaixo_sordina`, `contrabaixo_sul_tasto`, `contrabaixo_sul_ponticello` |
 
 | Brass | `trompa`, `trompete`, `trombone`, `trombone_baixo`, `tuba` |
 

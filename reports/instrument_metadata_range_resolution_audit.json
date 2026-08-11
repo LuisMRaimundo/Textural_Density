@@ -10,7 +10,7 @@
     "table_supported_techniques": "Techniques with independent numerical rows in the committed table.",
     "registry_supported_techniques": "Organological capabilities listed on InstrumentProfile.supported_techniques."
   },
-  "instrument_count": 42,
+  "instrument_count": 43,
   "table_excludes_sounding_range_count": 0,
   "table_excludes_sounding_range_ids": [],
   "instruments": [
@@ -1973,9 +1973,10 @@
     },
     {
       "instrument_id": "viola",
-      "display_name": "Vla",
+      "display_name": "vla",
       "aliases": [
         "viola",
+        "vla",
         "vla."
       ],
       "family": "strings",
@@ -2054,6 +2055,92 @@
       "table_span_midi": [
         48,
         96
+      ]
+    },
+    {
+      "instrument_id": "viola_harm",
+      "display_name": "vla harm",
+      "aliases": [
+        "viola_harmonics",
+        "Viola_harmonics",
+        "viola harmonics",
+        "viola harm",
+        "viola_harm",
+        "harmonics viola",
+        "harmonics_viola",
+        "vla harm",
+        "vla_harm"
+      ],
+      "family": "strings",
+      "module_name": "viola_harmonics",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "C4",
+        "last_note": "B7",
+        "row_count": 41,
+        "min_midi": 60,
+        "max_midi": 107
+      },
+      "instrument_source_pitch_range": [
+        60,
+        107
+      ],
+      "registry_sounding_range_midi": [
+        60,
+        107
+      ],
+      "registry_comfortable_range_midi": [
+        60,
+        96
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco",
+          "harmonic"
+        ],
+        "table_supported_techniques": [
+          "arco_harmonic"
+        ],
+        "source_technique": "arco_harmonic",
+        "registry_not_in_table": [
+          "harmonic"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": [],
+      "table_excludes_sounding_range": false,
+      "exclusion_kind": "full_coverage",
+      "missing_low_semitones": 0,
+      "missing_high_semitones": 0,
+      "table_span_midi": [
+        60,
+        107
       ]
     },
     {

@@ -51,14 +51,8 @@ class InstrumentSpec:
 
 
 SPECS: tuple[InstrumentSpec, ...] = (
-    InstrumentSpec(
-        module="viola",
-        display="Viola",
-        xlsx_name="Viola_Arco normal_iowa_orchidea_dynamics.xlsx",
-        doc_anchor="viola",
-        source_technique="arco_sustain",
-        family_blurb="arco",
-    ),
+    # viola.py is now generated from the OK_VIOLA arco ordinario workbook via
+    # tools/generate_violin_technique_modules_from_ok_workbooks.py.
     InstrumentSpec(
         module="cello",
         display="Cello",

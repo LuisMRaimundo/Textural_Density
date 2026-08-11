@@ -96,18 +96,23 @@ live audio analysis.
 ## Viola (`viola`)
 
 - **Module:** `instrumentos/viola.py`
-- **Table:** `spectral_data` (49 chromatic rows, C3–C7; 147 AcousticTable rows in source workbook)
-- **Provenance:** Median/midpoint summary of viola arco sustained-note Combined Density
-  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **GUI display name:** `vla`
+- **Table:** `spectral_data` (49 chromatic rows, C3–C7 × **all 10** dynamics)
+- **Provenance (2026-08-11):** `Results` sheet of
+  `D:\CORDAS\VIOLA\OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx`
+  (Dynamics extrapolator v1.5.2.1; IOWA+ORCHIDEA collections, Philharmonia
+  removed). The measured pp/mf/ff anchors are identical to the earlier
+  `VIOLA_Media` sheet in `D:\CORDAS\VIOLA\VIOLA_Zenodo_collections_Arco_normal.xlsx`
+  (Zenodo deposit name: `viola_arco_sustains_median_summary_v1.xlsx`);
+  only the interpolated/extrapolated levels were refreshed.
 - **Portable source anchor:** `docs/instrument_acoustic_sources.md#viola` (in `INSTRUMENT_SOURCE`; PR #14)
-- **Authoritative ingestion sheet:** `VIOLA_Media` in `D:\CORDAS\VIOLA_Zenodo_collections_Arco_normal.xlsx`
-  (Zenodo deposit name: `viola_arco_sustains_median_summary_v1.xlsx`)
-- **Note-label normalization:** duplicate media labels such as `F4 (2)` are stripped by
-  `normalize_media_note_label()` before canonical parsing (maps to `F4` with the same CDM values).
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8)
 - **Sounding range (registry):** MIDI 48–96 (C3–C7), aligned with committed `spectral_data` table span; comfortable 50–69 (D3–A4)
-- **Extraction:** CDM midpoint pass-through; no rescaling (`identity_v1`)
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
-- **Uncertainty:** medium — sparse table with known QC flags on extreme-register rows
+- **Source technique:** `arco_sustain`
+- **Uncertainty:** medium — sparse table, not full continuous spectrum
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
 
 ## Viola sordina (`viola_sordina`)
 
@@ -148,8 +153,23 @@ live audio analysis.
 - **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
-- **Skipped:** artificial/natural harmonics remain `unavailable` in the source
-  workbooks — no `viola_art_harm` module
+
+## Viola harmonics (`viola_harmonics`)
+
+- **Module:** `instrumentos/viola_harmonics.py`
+- **GUI display name:** `vla harm`
+- **Table:** `spectral_data` (41 chromatic sounding rows, C4–B7, sparse above C7,
+  × **all 10** dynamics)
+- **Provenance (2026-08-11):** `Results` sheet of
+  `D:\CORDAS\VIOLA\OK_VIOLA_harmonics_dynamics extrapolation.xlsx`
+  (CDM Technique Extrapolator METApool, pooled natural + artificial harmonics;
+  IOWA+ORCHIDEA collections, Philharmonia removed)
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
+- **Source technique:** `arco_harmonic` (pooled)
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
 
 ## Violin (`violin`)
 

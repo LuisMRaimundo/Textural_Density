@@ -263,7 +263,6 @@ REGISTRY["contrafagote"] = _profile(
 # --- Strings (GPR modules: IOWA+ORCH CDM medians at pp/mf/ff) ---
 for _id, _name, _module, _sound, _comfort, _aliases in (
     ("violino", "Vl", "violin", (55, 103), (55, 76), ("violin", "vl.", "vln", "vln.")),
-    ("viola", "Vla", "viola", (48, 96), (50, 69), ("viola", "vla.")),
     ("violoncelo", "Vc", "cello", (36, 84), (40, 65), ("cello", "violoncello", "vc.", "vcl")),
     ("contrabaixo", "Db", "double_bass", (28, 72), (31, 55), ("double_bass", "double bass", "contrabass", "baixo", "db.", "cb", "cb.")),
 ):
@@ -292,6 +291,35 @@ for _id, _name, _module, _sound, _comfort, _aliases in (
         ),
         aliases=_aliases,
     )
+
+
+REGISTRY["viola"] = _profile(
+    "viola",
+    "vla",
+    "strings",
+    sounding=(48, 96),
+    comfortable=(50, 69),
+    brightness="neutral",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="medium",
+    module_name="viola",
+    supported=("arco", "pizzicato", "tremolo", "harmonic", "mute"),
+    unsupported=("sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/viola.py from "
+        "OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx Results sheet "
+        "(IOWA+ORCHIDEA Zenodo arco sustain medians at pp/mf/ff; PCHIP interiors, "
+        "tapered equal-log outers)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
+    ),
+    aliases=("viola", "vla", "vla."),
+)
 
 
 REGISTRY["viola_sordina"] = _profile(
@@ -562,6 +590,48 @@ REGISTRY["violino_harm"] = _profile(
         "violin art harm",
         "violino_art_harm",
         "violin artificial harmonics",
+    ),
+)
+
+REGISTRY["viola_harm"] = _profile(
+    "viola_harm",
+    "vla harm",
+    "strings",
+    sounding=(60, 107),
+    comfortable=(60, 96),
+    brightness="bright",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="viola_harmonics",
+    supported=("arco", "harmonic"),
+    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/viola_harmonics.py from "
+        "OK_VIOLA_harmonics_dynamics extrapolation.xlsx Results sheet "
+        "(CDM Technique Extrapolator METApool, pooled natural + artificial harmonics; "
+        "measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors come from "
+        "technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Table span is harmonic sounding register (C4\u2013B7, sparse above C7); notes outside "
+        "this range use controlled pitch extrapolation or fallback.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "viola_harmonics",
+        "Viola_harmonics",
+        "viola harmonics",
+        "viola harm",
+        "viola_harm",
+        "harmonics viola",
+        "harmonics_viola",
+        "vla harm",
+        "vla_harm",
     ),
 )
 

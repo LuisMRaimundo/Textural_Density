@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
-"""Generate violin technique instrument modules from OK_VIOLIN dynamics workbooks.
+"""Generate string technique instrument modules from OK_* dynamics workbooks.
 
-Sources (D:\\CORDAS\\VIOLINO, Dynamics extrapolator v1.5.2.1 exports,
-``Results`` sheet = data-faithful full 10-dynamic ladder; pp/mf/ff are
-measured anchors, p/mp/f PCHIP interiors, pppp/ppp/fff/ffff tapered
-equal-log outers, r=0.8):
+Sources (D:\\CORDAS\\VIOLINO and D:\\CORDAS\\VIOLA, Dynamics extrapolator
+v1.5.2.1 exports, ``Results`` sheet = data-faithful full 10-dynamic ladder;
+pp/mf/ff are measured anchors, p/mp/f PCHIP interiors, pppp/ppp/fff/ffff
+tapered equal-log outers, r=0.8):
 
   - OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx → violin_sul_ponticello.py
   - OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx      → violin_sul_tasto.py
   - OK_VIOLIN_con sordina_dynamics extrapolation.xlsx    → violin_sordina.py
   - OK_VIOLIN_harmonics_dynamics extrapolation.xlsx      → violin_harmonics.py
+  - OK_VIOLA_harmonics_dynamics extrapolation.xlsx       → viola_harmonics.py
+  - OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx  → viola.py
 
-Registry display names (GUI): "vl sp", "vl st", "vl sord", "vl harm"
-(registry edits are maintained directly in ``instrumentos/registry.py``).
+Registry display names (GUI): "vl sp", "vl st", "vl sord", "vl harm",
+"vla harm", "vla" (registry edits are maintained directly in
+``instrumentos/registry.py``).
 """
 
 from __future__ import annotations
@@ -64,6 +67,30 @@ TECHNIQUE_SPECS = {
         "source_technique": "arco_harmonic",
         "doc_anchor": "violin-harmonics",
         "pitch_range": (67, 103),
+    },
+    "viola_harmonics": {
+        "workbook": "OK_VIOLA_harmonics_dynamics extrapolation.xlsx",
+        "src_dir": r"d:\CORDAS\VIOLA",
+        "instrument_label": "Viola",
+        "module": "viola_harmonics",
+        "technique_label": "arco harmonics",
+        "source_technique": "arco_harmonic",
+        "doc_anchor": "viola-harmonics",
+        "pitch_range": (60, 107),
+    },
+    "viola_ordinario": {
+        "workbook": "OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx",
+        "src_dir": r"d:\CORDAS\VIOLA",
+        "instrument_label": "Viola",
+        "module": "viola",
+        "technique_label": "arco ordinario",
+        "source_technique": "arco_sustain",
+        "doc_anchor": "viola",
+        "pitch_range": (48, 96),
+        # Base arco table: anchors are direct IOWA+ORCH medians (not a
+        # technique-extrapolated METApool), hence medium uncertainty.
+        "uncertainty": "medium",
+        "citation_pool": "IOWA+ORCHIDEA Zenodo collections, Philharmonia removed",
     },
 }
 
@@ -122,6 +149,11 @@ def _fmt_spectral(ladder: dict[str, dict[str, float]]) -> str:
 
 def render_module(spec: dict, ladder: dict[str, dict[str, float]]) -> str:
     module = spec["module"]
+    instrument_label = spec.get("instrument_label", "Violin")
+    uncertainty = spec.get("uncertainty", "high")
+    citation_pool = spec.get(
+        "citation_pool", "CDM Technique Extrapolator METApool, IOWA+ORCHIDEA collections"
+    )
     technique_label = spec["technique_label"]
     source_technique = spec["source_technique"]
     doc_anchor = spec["doc_anchor"]
@@ -131,7 +163,7 @@ def render_module(spec: dict, ladder: dict[str, dict[str, float]]) -> str:
     spectral_block = _fmt_spectral(ladder)
     return f'''# instrumentos/{module}.py
 """
-Violin ({technique_label}) instrument density module.
+{instrument_label} ({technique_label}) instrument density module.
 
 The ``spectral_data`` table stores a committed 10-dynamic Combined Density
 Metric (CDM) ladder from the ``Results`` sheet of
@@ -148,10 +180,10 @@ from instrumentos.provenance import InstrumentSource
 INSTRUMENT_SOURCE = InstrumentSource(
     source_type="external_acoustic_metadata",
     citation=(
-        "Violin {source_technique} CDM ladder: measured pp/mf/ff anchors with "
+        "{instrument_label} {source_technique} CDM ladder: measured pp/mf/ff anchors with "
         "committed Results sheet values for all 10 dynamic levels from "
         "{workbook} "
-        "(CDM Technique Extrapolator METApool, IOWA+ORCHIDEA collections)."
+        "({citation_pool})."
     ),
     source_url_or_identifier='docs/instrument_acoustic_sources.md#{doc_anchor}',
     extraction_method=(
@@ -162,7 +194,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
     ),
     dynamic_levels={DYNAMIC_LEVELS!r},
     pitch_range=({lo}, {hi}),
-    uncertainty="high",
+    uncertainty="{uncertainty}",
     version="{version}",
     source_technique="{source_technique}",
     table_supported_techniques=("{source_technique}",),
@@ -195,7 +227,7 @@ def calcular_densidade(nota, dinamica):
 
 def main() -> int:
     for technique, spec in TECHNIQUE_SPECS.items():
-        src = SRC_DIR / spec["workbook"]
+        src = Path(spec.get("src_dir", SRC_DIR)) / spec["workbook"]
         if not src.exists():
             print(f"SKIP {technique}: missing {src}", file=sys.stderr)
             continue

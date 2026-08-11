@@ -40,6 +40,7 @@ _GPR_MODULES = frozenset(
         "viola_sordina",
         "viola_sul_tasto",
         "viola_sul_ponticello",
+        "viola_harmonics",
         "cello",
         "cello_sordina",
         "cello_sul_tasto",

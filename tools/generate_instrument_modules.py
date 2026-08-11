@@ -48,7 +48,7 @@ CONFIGS = [
     {
         "module": "viola",
         "display": "Viola",
-        "workbook": Path(r"D:\CORDAS\VIOLA_Zenodo_collections_Arco_normal.xlsx"),
+        "workbook": Path(r"D:\CORDAS\VIOLA\VIOLA_Zenodo_collections_Arco_normal.xlsx"),
         "media_sheet": "VIOLA_Media",
         "registry_id": "viola",
         "technique": "arco / ordinario sustains",
