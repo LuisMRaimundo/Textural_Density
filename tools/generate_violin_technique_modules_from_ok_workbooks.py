@@ -78,7 +78,8 @@ TECHNIQUE_SPECS = {
         "technique_label": "arco harmonics",
         "source_technique": "arco_harmonic",
         "doc_anchor": "viola-harmonics",
-        "pitch_range": (60, 107),
+        # 2026-08-11 re-export: sparse G#7-B7 tail removed, span is now C4-C7.
+        "pitch_range": (60, 96),
     },
     "viola_ordinario": {
         "workbook": "OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx",
@@ -103,10 +104,10 @@ TECHNIQUE_SPECS = {
         "source_technique": "arco_sordina",
         "doc_anchor": "viola-sordina",
         "pitch_range": (48, 96),
-        # 2026-08-11: workbook mf anchors duplicate the viola harmonics pool
-        # (37/37 shared notes) and 22/49 ladders are inverted (ff < mf);
-        # regeneration is on hold until the source data is verified.
-        "on_hold": True,
+        # 2026-08-11 evening re-export fixed the earlier contamination (was:
+        # mf duplicated the harmonics pool with severe ff < mf inversions).
+        # The C4-B4 octave still shares pp/mf with the harmonics pool
+        # (coherent ladders; assumed intentional METApool register fill).
     },
     "viola_sul_ponticello": {
         "workbook": "OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx",

@@ -2077,18 +2077,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "C4",
-        "last_note": "B7",
-        "row_count": 41,
+        "last_note": "C7",
+        "row_count": 37,
         "min_midi": 60,
-        "max_midi": 107
+        "max_midi": 96
       },
       "instrument_source_pitch_range": [
         60,
-        107
+        96
       ],
       "registry_sounding_range_midi": [
         60,
-        107
+        96
       ],
       "registry_comfortable_range_midi": [
         60,
@@ -2140,20 +2140,23 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         60,
-        107
+        96
       ]
     },
     {
       "instrument_id": "viola_sordina",
-      "display_name": "Viola sordina",
+      "display_name": "vla sord",
       "aliases": [
         "viola_sordina",
         "Viola_sordina",
+        "Viola sordina",
         "viola con sordina",
         "viola_con_sordina",
         "viola sordina",
         "viola muted",
-        "muted viola"
+        "muted viola",
+        "vla sord",
+        "vla_sord"
       ],
       "family": "strings",
       "module_name": "viola_sordina",

@@ -1,4 +1,4 @@
-"""Tests for viola technique modules imported from Viola_pp/mf/ff workbooks."""
+"""Tests for viola technique modules (STE workbooks + OK_VIOLA dynamics workbooks)."""
 
 from __future__ import annotations
 
@@ -14,19 +14,6 @@ from instrumentos.registry import resolve_profile
 # STE-workbook modules (assumption-based anchors, PP/MF/FF_MEASURED dicts).
 TECHNIQUES = (
     {
-        "display": "Viola sordina",
-        "module": "viola_sordina",
-        "registry_id": "viola_sordina",
-        "aliases": (
-            "Viola sordina",
-            "viola_sordina",
-            "viola con sordina",
-            "muted viola",
-        ),
-        "probe_note": "C4",
-        "probe_mf": 10.324615,
-    },
-    {
         "display": "Viola sul tasto",
         "module": "viola_sul_tasto",
         "registry_id": "viola_sul_tasto",
@@ -41,24 +28,40 @@ TECHNIQUES = (
     },
 )
 
-# OK-workbook module (measured anchors, clarinet-format spectral_data only).
-SUL_PONTICELLO = {
-    "display": "vla sp",
-    "module": "viola_sul_ponticello",
-    "registry_id": "viola_sul_ponticello",
-    "aliases": (
-        "vla sp",
-        "Viola sul ponticello",
-        "viola_sul_ponticello",
-        "viola sul ponticello",
-        "sul ponticello viola",
-    ),
-    "probe_note": "C4",
-    "probe_mf": 23.1077,
-}
+# OK-workbook modules (measured anchors, clarinet-format spectral_data only).
+OK_TECHNIQUES = (
+    {
+        "display": "vla sp",
+        "module": "viola_sul_ponticello",
+        "registry_id": "viola_sul_ponticello",
+        "aliases": (
+            "vla sp",
+            "Viola sul ponticello",
+            "viola_sul_ponticello",
+            "viola sul ponticello",
+            "sul ponticello viola",
+        ),
+        "probe_note": "C4",
+        "probe_mf": 23.1077,
+    },
+    {
+        "display": "vla sord",
+        "module": "viola_sordina",
+        "registry_id": "viola_sordina",
+        "aliases": (
+            "vla sord",
+            "Viola sordina",
+            "viola_sordina",
+            "viola con sordina",
+            "muted viola",
+        ),
+        "probe_note": "C4",
+        "probe_mf": 17.4591,
+    },
+)
 
 
-ALL_TECHNIQUES = TECHNIQUES + (SUL_PONTICELLO,)
+ALL_TECHNIQUES = TECHNIQUES + OK_TECHNIQUES
 
 
 @pytest.mark.parametrize("tech", ALL_TECHNIQUES, ids=lambda t: t["module"])
@@ -90,8 +93,9 @@ def test_workbook_anchors_preserved(tech: dict):
     assert next(reversed(mod.spectral_data)) == "C7"
 
 
-def test_sul_ponticello_full_ten_level_ladder_committed():
-    mod = importlib.import_module("instrumentos.viola_sul_ponticello")
+@pytest.mark.parametrize("tech", OK_TECHNIQUES, ids=lambda t: t["module"])
+def test_ok_workbook_full_ten_level_ladder_committed(tech: dict):
+    mod = importlib.import_module(f"instrumentos.{tech['module']}")
     levels = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
     assert not hasattr(mod, "PP_MEASURED")
     assert len(mod.spectral_data) == 49
@@ -132,7 +136,8 @@ def test_high_uncertainty_assumption_based_provenance(tech: dict):
     assert "assumption-based" in mod.INSTRUMENT_SOURCE.citation.lower()
 
 
-def test_sul_ponticello_measured_anchor_provenance():
-    mod = importlib.import_module("instrumentos.viola_sul_ponticello")
+@pytest.mark.parametrize("tech", OK_TECHNIQUES, ids=lambda t: t["module"])
+def test_ok_workbook_measured_anchor_provenance(tech: dict):
+    mod = importlib.import_module(f"instrumentos.{tech['module']}")
     assert mod.INSTRUMENT_SOURCE.uncertainty == "high"
     assert "measured pp/mf/ff anchors" in mod.INSTRUMENT_SOURCE.citation

@@ -7,9 +7,9 @@ Sources (assumption-based EWSD extrapolations from Strings_techniques_extrapolat
   - c:\\Users\\lmr20\\Desktop\\Viola_ff.xlsx
 
 Numeric techniques written:
-  - con_sordino    → instrumentos/viola_sordina.py
   - sul_tasto      → instrumentos/viola_sul_tasto.py
-  - sul_ponticello → retired here; viola_sul_ponticello.py now comes from
+  - con_sordino / sul_ponticello → retired here; viola_sordina.py and
+    viola_sul_ponticello.py now come from
     tools/generate_violin_technique_modules_from_ok_workbooks.py
 
 Harmonics are skipped: artificial/natural harmonic cells are unavailable
@@ -33,29 +33,8 @@ SRC_MF = Path(r"c:\Users\lmr20\Desktop\Viola_mf.xlsx")
 SRC_FF = Path(r"c:\Users\lmr20\Desktop\Viola_ff.xlsx")
 
 TECHNIQUE_SPECS = {
-    "con_sordino": {
-        "module": "viola_sordina",
-        "registry_id": "viola_sordina",
-        "display": "Viola sordina",
-        "source_technique": "arco_sordina",
-        "logger": "viola_sordina",
-        "doc_anchor": "viola-sordina",
-        "pitch_range": (48, 96),
-        "comfortable": (50, 69),
-        "brightness": "neutral",
-        "attack": "soft",
-        "supported": ("arco", "mute"),
-        "unsupported": ("pizzicato", "sul_ponticello", "sul_tasto"),
-        "aliases": (
-            "viola_sordina",
-            "Viola_sordina",
-            "viola con sordina",
-            "viola_con_sordina",
-            "viola sordina",
-            "viola muted",
-            "muted viola",
-        ),
-    },
+    # con_sordino is now generated from the OK_VIOLA con sordina workbook
+    # via tools/generate_violin_technique_modules_from_ok_workbooks.py.
     "sul_tasto": {
         "module": "viola_sul_tasto",
         "registry_id": "viola_sul_tasto",

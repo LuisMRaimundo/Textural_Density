@@ -36,9 +36,9 @@ def test_harmonics_appears_in_gui_instrument_list():
 def test_full_ten_level_ladder_committed():
     mod = importlib.import_module("instrumentos.viola_harmonics")
     levels = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
-    assert len(mod.spectral_data) == 41
+    assert len(mod.spectral_data) == 37
     assert next(iter(mod.spectral_data)) == "C4"
-    assert next(reversed(mod.spectral_data)) == "B7"
+    assert next(reversed(mod.spectral_data)) == "C7"
     for note, row in mod.spectral_data.items():
         assert tuple(row.keys()) == levels, note
         assert all(v > 0 for v in row.values()), note

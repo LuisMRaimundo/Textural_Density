@@ -324,7 +324,7 @@ REGISTRY["viola"] = _profile(
 
 REGISTRY["viola_sordina"] = _profile(
     "viola_sordina",
-    "Viola sordina",
+    "vla sord",
     "strings",
     sounding=(48, 96),
     comfortable=(50, 69),
@@ -337,18 +337,19 @@ REGISTRY["viola_sordina"] = _profile(
     supported=("arco", "mute"),
     unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
     source_notes=(
-        "Sparse GPR table in instrumentos/viola_sordina.py from Strings Techniques "
-        "Extrapolation Viola_pp.xlsx / Viola_mf.xlsx / Viola_ff.xlsx "
-        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+        "Committed 10-dynamic CDM ladder in instrumentos/viola_sordina.py from "
+        "OK_VIOLA_con sordina_dynamics extrapolation.xlsx Results sheet "
+        "(CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sordina only; pp/mf/ff come from "
-        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sordina only; anchors come from "
+        "technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
-    aliases=("viola_sordina", "Viola_sordina", "viola con sordina", "viola_con_sordina", "viola sordina", "viola muted", "muted viola"),
+    aliases=("viola_sordina", "Viola_sordina", "Viola sordina", "viola con sordina", "viola_con_sordina", "viola sordina", "viola muted", "muted viola", "vla sord", "vla_sord"),
 )
 
 
@@ -598,7 +599,7 @@ REGISTRY["viola_harm"] = _profile(
     "viola_harm",
     "vla harm",
     "strings",
-    sounding=(60, 107),
+    sounding=(60, 96),
     comfortable=(60, 96),
     brightness="bright",
     sustain="sustained",
@@ -618,8 +619,8 @@ REGISTRY["viola_harm"] = _profile(
         "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors come from "
         "technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
-        "Table span is harmonic sounding register (C4\u2013B7, sparse above C7); notes outside "
-        "this range use controlled pitch extrapolation or fallback.",
+        "Table span is harmonic sounding register (C4\u2013C7); notes outside this range "
+        "use controlled pitch extrapolation or fallback.",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),

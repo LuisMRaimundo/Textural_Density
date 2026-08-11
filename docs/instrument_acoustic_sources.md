@@ -117,16 +117,23 @@ live audio analysis.
 ## Viola sordina (`viola_sordina`)
 
 - **Module:** `instrumentos/viola_sordina.py`
-- **GUI display name:** `Viola sordina`
-- **Table:** `spectral_data` (49 chromatic rows, C3–C7)
-- **Provenance (2026-07-24):** assumption-based EWSD extrapolations from
-  `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (`All_Results.estimate_mean`,
-  technique `con_sordino`); **not** Zenodo-measured CDM
-- **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
+- **GUI display name:** `vla sord`
+- **Table:** `spectral_data` (49 chromatic rows, C3–C7 × **all 10** dynamics)
+- **Provenance (2026-08-11):** `Results` sheet of
+  `D:\CORDAS\VIOLA\OK_VIOLA_con sordina_dynamics extrapolation.xlsx`
+  (CDM Technique Extrapolator METApool; IOWA+ORCHIDEA collections,
+  Philharmonia removed; evening re-export replacing a first export whose
+  mf anchors were contaminated by the harmonics pool). Replaces the
+  earlier assumption-based EWSD table from the STE `Viola_pp/mf/ff.xlsx`
+  workbooks.
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
+- **Known pool overlap:** the C4–B4 octave shares pp/mf anchors with the
+  harmonics pool (coherent ladders; register fill in the source METApool)
 - **Source technique:** `arco_sordina`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
 
 ## Viola sul tasto (`viola_sul_tasto`)
 
@@ -162,12 +169,12 @@ live audio analysis.
 
 - **Module:** `instrumentos/viola_harmonics.py`
 - **GUI display name:** `vla harm`
-- **Table:** `spectral_data` (41 chromatic sounding rows, C4–B7, sparse above C7,
-  × **all 10** dynamics)
+- **Table:** `spectral_data` (37 chromatic sounding rows, C4–C7 × **all 10** dynamics)
 - **Provenance (2026-08-11):** `Results` sheet of
   `D:\CORDAS\VIOLA\OK_VIOLA_harmonics_dynamics extrapolation.xlsx`
   (CDM Technique Extrapolator METApool, pooled natural + artificial harmonics;
-  IOWA+ORCHIDEA collections, Philharmonia removed)
+  IOWA+ORCHIDEA collections, Philharmonia removed; evening re-export removed
+  the sparse G#7–B7 tail and refreshed values)
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1

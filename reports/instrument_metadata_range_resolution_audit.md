@@ -75,7 +75,7 @@
 | tuba | C1–A#4 | 24–70 | 30–50 | full_coverage | PASS | PASS |
 | vibrafone | — | 53–84 | 53–84 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | viola | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
-| viola_harm | C4–B7 | 60–107 | 60–96 | full_coverage | PASS | PASS |
+| viola_harm | C4–C7 | 60–96 | 60–96 | full_coverage | PASS | PASS |
 | viola_sordina | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
 | viola_sul_ponticello | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
 | viola_sul_tasto | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
