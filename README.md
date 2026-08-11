@@ -406,7 +406,7 @@ Documentation-only reconciliation on `5.0.0-strict-symbolic`; **numeric outputs 
 
 - GUI window title uses `core.version.PRODUCT_DISPLAY_NAME` (`Textural Density`)
 - Default output folder is `~/Textural_Density_Output` (was `~/Densidade_Espectral_Output`; custom `output_directory` in saved config is unchanged)
-- CI rejects legacy product names (`Simultaneity Density`, `SDA`, `Densidade Vertical`) outside `tools/rename_docs_branding.py`
+- CI rejects legacy product names outside `tools/rename_docs_branding.py` (see that script for the rename map)
 
 ### Verification updates (2026-06-25) — PR #13, PR #14
 
