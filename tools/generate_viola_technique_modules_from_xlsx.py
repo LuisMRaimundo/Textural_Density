@@ -9,7 +9,8 @@ Sources (assumption-based EWSD extrapolations from Strings_techniques_extrapolat
 Numeric techniques written:
   - con_sordino    → instrumentos/viola_sordina.py
   - sul_tasto      → instrumentos/viola_sul_tasto.py
-  - sul_ponticello → instrumentos/viola_sul_ponticello.py
+  - sul_ponticello → retired here; viola_sul_ponticello.py now comes from
+    tools/generate_violin_technique_modules_from_ok_workbooks.py
 
 Harmonics are skipped: artificial/natural harmonic cells are unavailable
 (no_harmonic_acoustic_calibration_data). No viola_art_harm module is created.
@@ -76,29 +77,8 @@ TECHNIQUE_SPECS = {
             "sul_tasto_viola",
         ),
     },
-    "sul_ponticello": {
-        "module": "viola_sul_ponticello",
-        "registry_id": "viola_sul_ponticello",
-        "display": "Viola sul ponticello",
-        "source_technique": "arco_sul_ponticello",
-        "logger": "viola_sul_ponticello",
-        "doc_anchor": "viola-sul-ponticello",
-        "pitch_range": (48, 96),
-        "comfortable": (50, 69),
-        "brightness": "bright",
-        "attack": "hard",
-        "supported": ("arco", "sul_ponticello"),
-        "unsupported": ("pizzicato", "mute", "sul_tasto"),
-        "aliases": (
-            "viola_sul_ponticello",
-            "Viola_sul_ponticello",
-            "viola sul pont",
-            "viola_sul_pont",
-            "viola sul ponticello",
-            "sul ponticello viola",
-            "sul_ponticello_viola",
-        ),
-    },
+    # sul_ponticello is now generated from the OK_VIOLA sul ponticello workbook
+    # via tools/generate_violin_technique_modules_from_ok_workbooks.py.
 }
 
 NOTE_ORDER = [

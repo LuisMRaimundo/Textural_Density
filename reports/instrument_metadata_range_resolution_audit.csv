@@ -31,7 +31,7 @@ vibrafone,Vibraphone,,False,,,,,53,84,53,84,0,,,struck|rolled,NOT APPLICABLE,NOT
 viola,vla,viola,True,C3,C7,49,"[48, 96]",48,96,50,69,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
 viola_harm,vla harm,viola_harmonics,True,C4,B7,41,"[60, 107]",60,107,60,96,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
 viola_sordina,Viola sordina,viola_sordina,True,C3,C7,49,"[48, 96]",48,96,50,69,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
-viola_sul_ponticello,Viola sul ponticello,viola_sul_ponticello,True,C3,C7,49,"[48, 96]",48,96,50,69,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
+viola_sul_ponticello,vla sp,viola_sul_ponticello,True,C3,C7,49,"[48, 96]",48,96,50,69,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
 viola_sul_tasto,Viola sul tasto,viola_sul_tasto,True,C3,C7,49,"[48, 96]",48,96,50,69,0,arco_sul_tasto,arco_sul_tasto,arco|sul_tasto,PASS,PASS,False,full_coverage,0,0
 violino,Vl,violin,True,G3,G7,49,"[55, 103]",55,103,55,76,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
 violino_harm,vl harm,violin_harmonics,True,G4,G7,37,"[67, 103]",67,103,67,96,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0

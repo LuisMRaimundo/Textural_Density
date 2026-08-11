@@ -2229,15 +2229,18 @@
     },
     {
       "instrument_id": "viola_sul_ponticello",
-      "display_name": "Viola sul ponticello",
+      "display_name": "vla sp",
       "aliases": [
         "viola_sul_ponticello",
         "Viola_sul_ponticello",
+        "Viola sul ponticello",
         "viola sul pont",
         "viola_sul_pont",
         "viola sul ponticello",
         "sul ponticello viola",
-        "sul_ponticello_viola"
+        "sul_ponticello_viola",
+        "vla sp",
+        "vla_sp"
       ],
       "family": "strings",
       "module_name": "viola_sul_ponticello",

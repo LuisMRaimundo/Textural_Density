@@ -13,10 +13,11 @@ tapered equal-log outers, r=0.8):
   - OK_VIOLA_harmonics_dynamics extrapolation.xlsx       → viola_harmonics.py
   - OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx  → viola.py
   - OK_VIOLA_con sordina_dynamics extrapolation.xlsx     → viola_sordina.py
+  - OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx  → viola_sul_ponticello.py
 
 Registry display names (GUI): "vl sp", "vl st", "vl sord", "vl harm",
-"vla harm", "vla", "vla sord" (registry edits are maintained directly in
-``instrumentos/registry.py``).
+"vla harm", "vla", "vla sord", "vla sp" (registry edits are maintained
+directly in ``instrumentos/registry.py``).
 """
 
 from __future__ import annotations
@@ -101,6 +102,20 @@ TECHNIQUE_SPECS = {
         "technique_label": "arco con sordina",
         "source_technique": "arco_sordina",
         "doc_anchor": "viola-sordina",
+        "pitch_range": (48, 96),
+        # 2026-08-11: workbook mf anchors duplicate the viola harmonics pool
+        # (37/37 shared notes) and 22/49 ladders are inverted (ff < mf);
+        # regeneration is on hold until the source data is verified.
+        "on_hold": True,
+    },
+    "viola_sul_ponticello": {
+        "workbook": "OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx",
+        "src_dir": r"d:\CORDAS\VIOLA",
+        "instrument_label": "Viola",
+        "module": "viola_sul_ponticello",
+        "technique_label": "arco sul ponticello",
+        "source_technique": "arco_sul_ponticello",
+        "doc_anchor": "viola-sul-ponticello",
         "pitch_range": (48, 96),
     },
 }
@@ -238,6 +253,9 @@ def calcular_densidade(nota, dinamica):
 
 def main() -> int:
     for technique, spec in TECHNIQUE_SPECS.items():
+        if spec.get("on_hold"):
+            print(f"SKIP {technique}: on hold pending source-data verification", file=sys.stderr)
+            continue
         src = Path(spec.get("src_dir", SRC_DIR)) / spec["workbook"]
         if not src.exists():
             print(f"SKIP {technique}: missing {src}", file=sys.stderr)

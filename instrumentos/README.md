@@ -30,7 +30,8 @@ Dedicated modules embed CDM tables from external sources (partial digitization â
 | `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
 | `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
 | `violin_harmonics.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_harmonics_dynamics extrapolation.xlsx` Results ladder (pooled harmonics; measured pp/mf/ff anchors) |
-| `viola_sordina.py`, `viola_sul_tasto.py`, `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | STE `Viola_pp/mf/ff.xlsx` anchors (`estimate_mean`) + predictor ladder |
+| `viola_sordina.py`, `viola_sul_tasto.py` | `spectral_data` (10 dynamics) | STE `Viola_pp/mf/ff.xlsx` anchors (`estimate_mean`) + predictor ladder |
+| `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
 | `viola_harmonics.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_harmonics_dynamics extrapolation.xlsx` Results ladder (pooled harmonics; measured pp/mf/ff anchors) |
 | `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` | `spectral_data` (10 dynamics) | STE `Cello_pp/mf/ff.xlsx` anchors (`estimate_mean`) + predictor ladder |
 | `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` | `spectral_data` (10 dynamics) | STE `Contrabass-pp/mf/ff.xlsx` anchors (`estimate_mean`) + predictor ladder |
@@ -214,7 +215,7 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **vla** | `viola.py` | `literature_derived` | OK_VIOLA arco ordinario Results ladder (IOWA+ORCH pp/mf/ff anchors) |
 | **Viola sordina** | `viola_sordina.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
 | **Viola sul tasto** | `viola_sul_tasto.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
-| **Viola sul ponticello** | `viola_sul_ponticello.py` | `literature_derived` | Extrapolation workbook pp/mf/ff (high uncertainty) |
+| **vla sp** | `viola_sul_ponticello.py` | `literature_derived` | OK_VIOLA sul ponticello Results ladder (measured pp/mf/ff anchors, high uncertainty) |
 | **vla harm** | `viola_harmonics.py` | `literature_derived` | OK_VIOLA pooled harmonics Results ladder, C4â€“B7 (high uncertainty) |
 
 | **Cello** | `cello.py` | `literature_derived` | IOWA+ORCH arco CDM medians |

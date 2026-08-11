@@ -144,15 +144,19 @@ live audio analysis.
 ## Viola sul ponticello (`viola_sul_ponticello`)
 
 - **Module:** `instrumentos/viola_sul_ponticello.py`
-- **GUI display name:** `Viola sul ponticello`
-- **Table:** `spectral_data` (49 chromatic rows, C3–C7)
-- **Provenance:** assumption-based EWSD extrapolations from
-  `Viola_pp.xlsx` / `Viola_mf.xlsx` / `Viola_ff.xlsx` (technique `sul_ponticello`)
-- **Workbook anchors:** pp, mf and ff
+- **GUI display name:** `vla sp`
+- **Table:** `spectral_data` (49 chromatic rows, C3–C7 × **all 10** dynamics)
+- **Provenance (2026-08-11):** `Results` sheet of
+  `D:\CORDAS\VIOLA\OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx`
+  (CDM Technique Extrapolator METApool; IOWA+ORCHIDEA collections,
+  Philharmonia removed). Replaces the earlier assumption-based EWSD table
+  from the STE `Viola_pp/mf/ff.xlsx` workbooks.
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
 - **Source technique:** `arco_sul_ponticello`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_viola_technique_modules_from_xlsx.py`
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
 
 ## Viola harmonics (`viola_harmonics`)
 

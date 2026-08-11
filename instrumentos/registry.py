@@ -384,7 +384,7 @@ REGISTRY["viola_sul_tasto"] = _profile(
 
 REGISTRY["viola_sul_ponticello"] = _profile(
     "viola_sul_ponticello",
-    "Viola sul ponticello",
+    "vla sp",
     "strings",
     sounding=(48, 96),
     comfortable=(50, 69),
@@ -397,18 +397,19 @@ REGISTRY["viola_sul_ponticello"] = _profile(
     supported=("arco", "sul_ponticello"),
     unsupported=("pizzicato", "mute", "sul_tasto"),
     source_notes=(
-        "Sparse GPR table in instrumentos/viola_sul_ponticello.py from Strings Techniques "
-        "Extrapolation Viola_pp.xlsx / Viola_mf.xlsx / Viola_ff.xlsx "
-        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+        "Committed 10-dynamic CDM ladder in instrumentos/viola_sul_ponticello.py from "
+        "OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx Results sheet "
+        "(CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from "
-        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors come from "
+        "technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
-    aliases=("viola_sul_ponticello", "Viola_sul_ponticello", "viola sul pont", "viola_sul_pont", "viola sul ponticello", "sul ponticello viola", "sul_ponticello_viola"),
+    aliases=("viola_sul_ponticello", "Viola_sul_ponticello", "Viola sul ponticello", "viola sul pont", "viola_sul_pont", "viola sul ponticello", "sul ponticello viola", "sul_ponticello_viola", "vla sp", "vla_sp"),
 )
 
 REGISTRY["violino_sordina"] = _profile(

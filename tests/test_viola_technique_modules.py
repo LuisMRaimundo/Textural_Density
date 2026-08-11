@@ -11,6 +11,7 @@ from core.request import AnalysisRequest
 from gui.state import INSTRUMENTS
 from instrumentos.registry import resolve_profile
 
+# STE-workbook modules (assumption-based anchors, PP/MF/FF_MEASURED dicts).
 TECHNIQUES = (
     {
         "display": "Viola sordina",
@@ -38,23 +39,29 @@ TECHNIQUES = (
         "probe_note": "C4",
         "probe_mf": 23.001624,
     },
-    {
-        "display": "Viola sul ponticello",
-        "module": "viola_sul_ponticello",
-        "registry_id": "viola_sul_ponticello",
-        "aliases": (
-            "Viola sul ponticello",
-            "viola_sul_ponticello",
-            "viola sul ponticello",
-            "sul ponticello viola",
-        ),
-        "probe_note": "C4",
-        "probe_mf": 31.676176,
-    },
 )
 
+# OK-workbook module (measured anchors, clarinet-format spectral_data only).
+SUL_PONTICELLO = {
+    "display": "vla sp",
+    "module": "viola_sul_ponticello",
+    "registry_id": "viola_sul_ponticello",
+    "aliases": (
+        "vla sp",
+        "Viola sul ponticello",
+        "viola_sul_ponticello",
+        "viola sul ponticello",
+        "sul ponticello viola",
+    ),
+    "probe_note": "C4",
+    "probe_mf": 23.1077,
+}
 
-@pytest.mark.parametrize("tech", TECHNIQUES, ids=lambda t: t["module"])
+
+ALL_TECHNIQUES = TECHNIQUES + (SUL_PONTICELLO,)
+
+
+@pytest.mark.parametrize("tech", ALL_TECHNIQUES, ids=lambda t: t["module"])
 @pytest.mark.parametrize("alias_idx", range(4))
 def test_viola_technique_aliases_resolve(tech: dict, alias_idx: int):
     alias = tech["aliases"][alias_idx]
@@ -64,7 +71,7 @@ def test_viola_technique_aliases_resolve(tech: dict, alias_idx: int):
     assert profile.module_name == tech["module"]
 
 
-@pytest.mark.parametrize("tech", TECHNIQUES, ids=lambda t: t["module"])
+@pytest.mark.parametrize("tech", ALL_TECHNIQUES, ids=lambda t: t["module"])
 def test_viola_technique_appears_in_gui(tech: dict):
     assert tech["display"] in INSTRUMENTS
 
@@ -83,7 +90,19 @@ def test_workbook_anchors_preserved(tech: dict):
     assert next(reversed(mod.spectral_data)) == "C7"
 
 
-@pytest.mark.parametrize("tech", TECHNIQUES, ids=lambda t: t["module"])
+def test_sul_ponticello_full_ten_level_ladder_committed():
+    mod = importlib.import_module("instrumentos.viola_sul_ponticello")
+    levels = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
+    assert not hasattr(mod, "PP_MEASURED")
+    assert len(mod.spectral_data) == 49
+    assert next(iter(mod.spectral_data)) == "C3"
+    assert next(reversed(mod.spectral_data)) == "C7"
+    for note, row in mod.spectral_data.items():
+        assert tuple(row.keys()) == levels, note
+        assert all(v > 0 for v in row.values()), note
+
+
+@pytest.mark.parametrize("tech", ALL_TECHNIQUES, ids=lambda t: t["module"])
 def test_mf_lookup_returns_workbook_anchor(tech: dict):
     mod = importlib.import_module(f"instrumentos.{tech['module']}")
     assert mod.calcular_densidade(tech["probe_note"], "mf") == pytest.approx(
@@ -91,7 +110,7 @@ def test_mf_lookup_returns_workbook_anchor(tech: dict):
     )
 
 
-@pytest.mark.parametrize("tech", TECHNIQUES, ids=lambda t: t["module"])
+@pytest.mark.parametrize("tech", ALL_TECHNIQUES, ids=lambda t: t["module"])
 def test_pipeline_accepts_viola_technique(tech: dict):
     request = AnalysisRequest(
         notes=(tech["probe_note"],),
@@ -111,3 +130,9 @@ def test_high_uncertainty_assumption_based_provenance(tech: dict):
     mod = importlib.import_module(f"instrumentos.{tech['module']}")
     assert mod.INSTRUMENT_SOURCE.uncertainty == "high"
     assert "assumption-based" in mod.INSTRUMENT_SOURCE.citation.lower()
+
+
+def test_sul_ponticello_measured_anchor_provenance():
+    mod = importlib.import_module("instrumentos.viola_sul_ponticello")
+    assert mod.INSTRUMENT_SOURCE.uncertainty == "high"
+    assert "measured pp/mf/ff anchors" in mod.INSTRUMENT_SOURCE.citation

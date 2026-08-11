@@ -308,15 +308,15 @@
     },
     {
       "instrument_id": "viola_sul_ponticello",
-      "display_name": "Viola sul ponticello",
+      "display_name": "vla sp",
       "family": "strings",
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Sparse GPR table in instrumentos/viola_sul_ponticello.py from Strings Techniques Extrapolation Viola_pp.xlsx / Viola_mf.xlsx / Viola_ff.xlsx (assumption-based EWSD; pp/mf/ff from estimate_mean).",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_sul_ponticello.py from OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx Results sheet (CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
       "limitations": [
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
@@ -324,8 +324,8 @@
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
