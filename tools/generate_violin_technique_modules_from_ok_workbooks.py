@@ -12,9 +12,10 @@ tapered equal-log outers, r=0.8):
   - OK_VIOLIN_harmonics_dynamics extrapolation.xlsx      → violin_harmonics.py
   - OK_VIOLA_harmonics_dynamics extrapolation.xlsx       → viola_harmonics.py
   - OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx  → viola.py
+  - OK_VIOLA_con sordina_dynamics extrapolation.xlsx     → viola_sordina.py
 
 Registry display names (GUI): "vl sp", "vl st", "vl sord", "vl harm",
-"vla harm", "vla" (registry edits are maintained directly in
+"vla harm", "vla", "vla sord" (registry edits are maintained directly in
 ``instrumentos/registry.py``).
 """
 
@@ -91,6 +92,16 @@ TECHNIQUE_SPECS = {
         # technique-extrapolated METApool), hence medium uncertainty.
         "uncertainty": "medium",
         "citation_pool": "IOWA+ORCHIDEA Zenodo collections, Philharmonia removed",
+    },
+    "viola_con_sordina": {
+        "workbook": "OK_VIOLA_con sordina_dynamics extrapolation.xlsx",
+        "src_dir": r"d:\CORDAS\VIOLA",
+        "instrument_label": "Viola",
+        "module": "viola_sordina",
+        "technique_label": "arco con sordina",
+        "source_technique": "arco_sordina",
+        "doc_anchor": "viola-sordina",
+        "pitch_range": (48, 96),
     },
 }
 
