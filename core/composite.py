@@ -30,6 +30,11 @@ def compute_weighted_density_normalized(
     Normalised weighted blend of instrument and interval density.
 
     D_pond = 10 * (w * DI_norm + (1 - w) * DV_norm)
+
+    Production ``calculate_metrics`` always passes ``metodo="min-max"``.
+    The ``z-score`` branch is unused by the production pipeline.
+    This value is reported as ``density.weighted`` and does **not** enter
+    ``density.total``.
     """
     try:
         if metodo == "min-max":

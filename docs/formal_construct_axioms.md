@@ -45,9 +45,9 @@ Property tests: [`tests/test_formal_construct_axioms.py`](../tests/test_formal_c
 
 ---
 
-## 3. registral_density / registral compactness
+## 3. registral_density / registral compression
 
-**Definition:** Score-derived measure of register compression/dispersion (pitch span, band occupancy, entropy).
+**Definition:** Score-derived measure of register compression/dispersion (pitch span, band occupancy, entropy). Production reports **`registral_compression`** $=1/(1+A_{\mathrm{st}})$ (zero if fewer than two distinct pitches). **`compute_registral_compactness`** $=1/(1+A_{\mathrm{st}}/12)$ is a different, unused helper. Band occupancy uses $c_b/\sum c_b$ over the midis actually passed in (production: distinct bins).
 
 **Axioms:**
 
@@ -58,7 +58,7 @@ Property tests: [`tests/test_formal_construct_axioms.py`](../tests/test_formal_c
 | RD-3 | Register-band definitions are configurable (`config.DEFAULT_REGISTER_BANDS`) and recorded in outputs. |
 | RD-4 | Registral metrics must remain distinct from interval compactness. |
 
-**Verification:** `core/registral_density.py`, `density_subindices.registral`
+**Verification:** `density_subindices.registral` (`core/subindices.py`); occupancy helper `register_band_occupancy`. `compute_registral_density` is a test/helper wrapper, not the `calculate_metrics` call path.
 
 ---
 

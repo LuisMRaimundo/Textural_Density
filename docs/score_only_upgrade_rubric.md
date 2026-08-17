@@ -78,7 +78,7 @@ Explicit definitions and **expected formal behaviours**, e.g.:
 
 - Adding active score events **increases** event density  
 - Adding player count **increases** orchestration mass, **not** interval compactness  
-- Widening pitch span **decreases** registral compactness/cohesion (where applicable)  
+- Widening pitch span **decreases** production `registral_compression` $=1/(1+A_{\mathrm{st}})$ (distinct from unused compactness $1/(1+A_{\mathrm{st}}/12)$)  
 - Tighter pitch spacing **increases** interval compactness  
 - Written dynamics affect **symbolic orchestration mass**, not pitch-only constructs  
 - Enabling legacy/proxy branches **does not silently alter** score-only results  

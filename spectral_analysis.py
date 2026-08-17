@@ -64,6 +64,10 @@ def calculate_spectral_moments(
 
     * ``pitches``  – MIDI heights (floats for microtones)
     * ``amplitudes`` – weights (density, RMS, etc.)
+
+    Moments (centroid, σ, skewness) are computed in MIDI space (population
+    weights). Returned ``centroid.frequency`` and ``spread.deviation`` are Hz:
+    ``spread.deviation = midi_to_hz(μ+σ) - midi_to_hz(μ)``.
     """
     pitches = np.asarray(pitches, dtype=float)
     amps = np.asarray(amplitudes, dtype=float)
@@ -118,7 +122,7 @@ def calculate_extended_spectral_moments(
     Returns:
         Dicionário com todas as métricas espectrais:
             - Centróide: Frequência e nota do centróide
-            - Dispersão: Desvio padrão espectral
+            - spread.deviation: Hz difference f(μ+σ)-f(μ); moments themselves are MIDI-domain
             - Assimetria: Skewness espectral
             - spectral_kurtosis: Curtose espectral
             - spectral_flatness: Planura espectral (0-1)
@@ -272,8 +276,10 @@ def calculate_harmonic_ratio(
     """
     Calcula a razão harmônica: proporção de energia em harmônicos vs. fundamental.
     
-    A razão harmônica mede quanto do espectro consiste em harmônicos (múltiplos
-    inteiros da frequência fundamental) versus componentes não-harmônicos.
+    The implementation operates in MIDI space, not Hz. A bin is treated as
+    harmonic when its interval from the fundamental is an octave class
+    (multiple of 12 semitones) within ``atol=0.25``. This is not an integer
+    frequency-multiple test.
     Valores próximos de 1.0 indicam espectro altamente harmônico, enquanto
     valores próximos de 0.0 indicam espectro inarmônico.
     
@@ -281,8 +287,10 @@ def calculate_harmonic_ratio(
         pitches: Array de valores MIDI das notas (aceita floats para microtons).
         amplitudes: Array opcional de amplitudes correspondentes.
             Se None, todas as notas têm amplitude igual (1.0).
-        fundamental: Frequência fundamental em Hz (opcional).
-            Se None, tenta detectar automaticamente a partir dos pitches.
+        fundamental: MIDI pitch of the reference fundamental (optional).
+            If None, uses ``pitches.min()`` (lowest MIDI), not a frequency in Hz.
+            Harmonic membership is octave-class in semitones:
+            ``isclose((m_i - fundamental) % 12, 0, atol=0.25)``.
     
     Returns:
         Razão harmônica (0.0 a 1.0):

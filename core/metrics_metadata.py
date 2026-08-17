@@ -370,8 +370,9 @@ def build_metric_metadata(context: MetricAssemblyContext) -> dict[str, Any]:
         confidence="medium",
         interpretation=(
             "Vertical pitch-structure density from distinct pitch bins "
-            "(interval compactness, registral compactness, symbolic entropy, harmonicity). "
-            "Zero when distinct_pitch_count < 2. Alias: density.pitch_structure."
+            "(raw pairwise interval sum, symbolic entropy, harmonic-ratio damping). "
+            "Registral span is not a factor. Zero when distinct_pitch_count < 2. "
+            "Alias: density.pitch_structure."
         ),
     )
 
@@ -434,7 +435,11 @@ def build_metric_metadata(context: MetricAssemblyContext) -> dict[str, Any]:
         source_type="score_derived",
         validation_status="theoretical",
         confidence="medium",
-        interpretation="Weighted density × log(1 + event count) reference scalar.",
+        interpretation=(
+            "Weighted density × ln(1 + len(notas)) when distinct_pitch_count ≥ 2; "
+            "otherwise 0. Event count is input rows (including unison doublings), "
+            "not distinct-pitch count."
+        ),
     )
 
     metrics["additional_metrics.harmonic_ratio"] = MetricResult(

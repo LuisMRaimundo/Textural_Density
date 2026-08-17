@@ -44,7 +44,8 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 |------|-------|--------|--------------|
 | `DEFAULT_REGISTER_BANDS` | very_low … very_high MIDI ranges | `config.py` | Yes |
 | Pitch span | max−min MIDI semitones in slice | `core/pitch_structure.py` | Derived from **sounding/concert** pitches |
-| Registral compression | 1/(1+span) | `core/registral_density.py` | Fixed formula |
+| Registral compression (production subindex) | $1/(1+\mathrm{span})$ if $n_{\mathrm{distinct}}\ge 2$, else $0$ | `core/subindices.py` | Distinct from unused compactness $1/(1+\mathrm{span}/12)$ |
+| Register band occupancy | $c_b / \sum c_b$; out-of-band excluded | `core/registral_density.py` | Production passes distinct-bin midis |
 
 ---
 
@@ -54,7 +55,8 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 |------|------|--------|------------|
 | `DYNAMIC_LEVELS` | Allowed symbolic markings | `config.py` | Not SPL |
 | Source CDM anchors | Measured sparse table columns | `instrumentos/*.py` | **pp, mf, ff only** |
-| Modelled dynamics | GPR-interpolated values | `instrumentos/gpr_dynamic_interpolation.py` | **p, mp, f, pppp…ffff** — not measured |
+| Interior modelled dynamics | Runtime GPR | `instrumentos/gpr_dynamic_interpolation.py` | **p, mp, f** — not measured |
+| Tail modelled dynamics | Saturating log-domain extension | `gpr_dynamic_interpolation._apply_adaptive_tails` | **pppp, ppp, fff, ffff** — not GPR extrapolation |
 | `mp` coordinate | Ordinal GPR control between `p` (4.0) and `mf` (5.0) | `gpr_dynamic_interpolation.py` | **4.5** — not dB or perceptual intensity |
 | Ordinal weights p…ffff | Symbolic orchestration mass (coarse fallback) | `instrumentos/registry.py` | Not loudness |
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
@@ -72,9 +74,9 @@ Dedicated GPR modules fit a Matérn kernel on pp/mf/ff anchors and predict inter
 | `mf` | source anchor |
 | `f` | modelled (GPR) |
 | `ff` | source anchor |
-| `pppp` / `ppp` / `fff` / `ffff` | modelled / extrapolated (GPR) |
+| `pppp` / `ppp` / `fff` / `ffff` | modelled tails (saturating log-domain; **not** GPR) |
 
-**Technique modules:** violin harmonics (`violin_art_harm`, `violin_nat_harm`) commit STE workbook pp/mf/ff. Remaining transferred-anchor cases (e.g. some sul ponticello generations) keep high uncertainty. Intermediate/extreme dynamics remain GPR-modelled in `calculate_metrics`.
+**Technique modules:** violin harmonics (`violin_art_harm`, `violin_nat_harm`) commit STE workbook pp/mf/ff. Remaining transferred-anchor cases (e.g. some sul ponticello generations) keep high uncertainty. Interior dynamics (`p`, `mp`, `f`) are GPR-modelled at analysis time in `calculate_metrics`; tails use the saturating log-domain rule.
 
 | Method | Status | Production? |
 |--------|--------|-------------|

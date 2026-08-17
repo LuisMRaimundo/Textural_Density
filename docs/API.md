@@ -353,10 +353,10 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 
 ### `densidade_intervalar`
 
-- `calculate_interval_density(pitches, lamb=...)`
-- `calculate_interval_density_normalized(pitches, lamb=...)`
-- `modified_exponential_decay(delta, lamb)`
-- `calibrate_lambda(experimental_data)` / `load_calibrated_parameters()`
+- `modified_exponential_decay(delta, lamb)` — **production primitive** (called from `core/pitch_structure.py`)
+- `load_calibrated_parameters()` — production λ loader
+- `calculate_interval_density` / `calculate_interval_density_normalized` — **legacy / calibration / tests**; not the `calculate_metrics` path
+- `calibrate_lambda(experimental_data)` — offline calibration only
 
 ### `spectral_analysis`
 
@@ -372,7 +372,7 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 |----------|---------|-------------|
 | `MAX_DENS_GLOBAL` | `575.0` | Total-density normalisation divisor (5.0.0 extensive aggregate) |
 | `USE_LOG_COMPRESSION` | `True` | Apply `log10(1+x)` to total density |
-| `COMPOSITE_HARMONIC_DAMPING` | `0.15` | Harmonic-ratio damping in composite |
+| `COMPOSITE_HARMONIC_DAMPING` | `0.15` | Harmonic-ratio damping **inside** $D_{\mathrm{pitch}}$ (not a second composite multiplier) |
 | `DYN_TAIL_SHRINK` | `0.5` | Geometric shrink γ for register-adaptive saturating dynamic tails (5.1.0) |
 | `DENSITY_FLOOR` | `1e-9` | Unreachable safety assert on saturated tail amplitudes |
 | `DEFAULT_REGISTER_BANDS` | dict | Register bands for subindices |

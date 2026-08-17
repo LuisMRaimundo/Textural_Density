@@ -71,7 +71,11 @@ def compute_registral_span_distinct(aggregation: PitchAggregationResult) -> floa
 
 
 def compute_registral_compactness(registral_span_semitones: float) -> float:
-    """Bounded registral factor — no singular exemption at span = 0."""
+    """Bounded registral factor ``1 / (1 + span/12)``.
+
+    Distinct from production subindex ``registral_compression`` = ``1/(1+span)``.
+    Not called from ``calculate_metrics``.
+    """
     return 1.0 / (1.0 + registral_span_semitones / 12.0)
 
 

@@ -18,7 +18,12 @@ def register_band_occupancy(
     midis: list[float],
     bands: dict[str, tuple[int, int]],
 ) -> dict[str, float]:
-    """Fraction of events per register band (documented bands from config by default)."""
+    """Fraction of *in-band* midis per register band.
+
+    Each MIDI is assigned to at most one half-open band ``[low, high)``.
+    The denominator is ``sum(counts)`` (or 1 if all zero). Midis outside
+    every configured band are excluded from both numerator and denominator.
+    """
     counts = {name: 0 for name in bands}
     for midi in midis:
         for name, (low, high) in bands.items():
@@ -44,7 +49,10 @@ def compute_registral_density(
     """
     Score-derived registral metrics for a vertical slice.
 
-    Registral compactness decreases as pitch span widens (all else equal).
+    Not called from ``calculate_metrics``. Production reporting uses
+    ``core/subindices.py`` (distinct-bin midis + ``registral_compression``).
+    This helper uses **all event** midis and compression ``1/(1+span)``
+    without the ``distinct_pitch_count < 2 → 0`` guard.
     """
     bands = register_bands or dict(DEFAULT_REGISTER_BANDS)
     midis = [float(ev.sounding_pitch.midi) for ev in vertical_slice.events]

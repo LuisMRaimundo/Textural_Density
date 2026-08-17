@@ -54,6 +54,11 @@ def compute_event_one_player_density(
 
     Includes exactly one dynamic treatment via the instrument module lookup.
     Does **not** scale by player count (Qty).
+
+    ``pp``/``mf``/``ff`` use the committed table. Other markings call
+    ``predict_intermediate_dynamics`` (runtime GPR for interior levels;
+    saturating log-domain tails). Direct ``calcular_densidade(note, "mp")``
+    is a different path and collapses to the nearest table row.
     """
     known = known_dynamics or tuple(DYNAMIC_LEVELS) if DYNAMIC_LEVELS else ("pp", "mf", "ff")
     module = load_instrument_module(event.instrument_id)

@@ -4,7 +4,10 @@
 
 This document records **external acoustic metadata** embedded in `instrumentos/*.py`
 modules. The analysis pipeline performs **score lookup** into these tables — not
-live audio analysis.
+live audio analysis. Committed columns are `pp`/`mf`/`ff` only. Catalogue lines
+that say “GPR for intermediate dynamics” mean **interior** markings (`p`, `mp`, `f`)
+at analysis time; tail markings (`pppp`, `ppp`, `fff`, `ffff`) use the saturating
+log-domain rule (see [MATHEMATICAL_MANUAL.md](MATHEMATICAL_MANUAL.md) §F.1).
 
 > **Workbook archiving.** Primary CDM workbooks for winds/brass (and the string
 > Zenodo collections cited below) live at **private local paths** (e.g.
@@ -174,9 +177,9 @@ live audio analysis.
   earlier mf-only hand-curated Zenodo-style table
 - **Workbook anchors:** mf and ff (`MF_MEASURED`, `FF_MEASURED`)
 - **pp anchors:** derived from violin arco pp/mf ratios applied to workbook mf
-- **GPR-modelled dynamics:** pppp, ppp, p, mp, f, fff, ffff predicted by GPR on the pp/mf/ff triple
+- **Modelled dynamics:** interior `p`/`mp`/`f` by runtime GPR; tails `pppp`/`ppp`/`fff`/`ffff` by saturating log-domain extension (not continued GPR)
 - **Source technique:** `arco_sul_ponticello`
-- **Interpolation:** GPR for intermediate dynamics
+- **Interpolation:** GPR for interior dynamics; saturating tails outside measured support
 - **Uncertainty:** high
 - **Regeneration:** `tools/generate_violin_technique_modules_from_xlsx.py`
 
