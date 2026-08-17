@@ -32,7 +32,7 @@ The pipeline is **deterministic** given the same input and configuration; it doe
 
 - **Recommended entry point:** `from core import calculate_metrics` (alias `calcular_metricas`). Implementation lives in **`core/pipeline.py`**. `data_processor.py` is a backward-compatibility shim.
 - **Score-level analysis:** `from core import analyze_score` for timed XML/MIDI or event lists → multiple vertical slices.
-- **Layered metrics:** Raw densities → normalised weighted density → **pitch-structure density** (distinct bins) → composite vertical density with sonic-mass boost.
+- **Layered metrics:** Raw densities → normalised weighted blend $D_{\mathrm{blend}}$ → composite $D_{\mathrm{blend}}\cdot\sqrt{M}/\mathrm{REF}$ (Task 8c). Pitch-structure density is a **reported axis only**.
 - **Epistemic transparency:** Every metric carries `metric_metadata`; interpretable decomposition in `density_subindices`.
 - **GUI independence:** Analytical modules (`core/`, `validation/`) do not import Tkinter at module load time.
 - **Extensibility:** Instrument models are plug-in modules resolved per event via `instrumentos/registry.py`.
@@ -181,9 +181,9 @@ All formulas below are **code-verified**: they match the implementation in `micr
 - **Interval between two notes (semitones):**
   $$\Delta_{\mathrm{st}}(i,j) = |m_i - m_j|.$$
 
-- **Spectral spread (pitch range in semitones):**
-  $$A_{\mathrm{st}} = \max_k m_k - \min_k m_k \quad \text{(over distinct aggregated pitch bins)}.$$
-  Used in bounded registral compactness $1/(1 + A_{\mathrm{st}}/12)$ — not as a singular divisor for density.
+- **Pitch span (semitones over distinct aggregated bins):**
+  $$A_{\mathrm{st}} = \max_k m_k - \min_k m_k.$$
+  Production subindex **registral compression** is $1/(1+A_{\mathrm{st}})$ when $n_{\mathrm{distinct}}\ge 2$, else $0$. The helper **registral compactness** $1/(1+A_{\mathrm{st}}/12)$ exists but is **not** called from `calculate_metrics`. Neither enters $D_{\mathrm{total}}$.
 
 ### 3.2 Interval compactness (distinct pitch bins)
 
@@ -373,10 +373,10 @@ Worked illustrations from the Task 8c GUI acceptance chain
 
 ### 3.13 Absolute density (reference)
 
-- **Tone count:** $N_{\mathrm{tones}} = n$ (number of notated/input symbolic events).
+- **Tone count:** $N_{\mathrm{pitched}}$ = pitched event-row count (`pitched_event_count`). Unpitched events are excluded.
 
-- **Absolute density** (code: `np.log1p(total_tones_count)`):
-  $$D_{\mathrm{abs}} = D_{\mathrm{pond}} \cdot \ln(1 + N_{\mathrm{tones}}).$$
+- **Absolute density** (code: `np.log1p(pitched_event_count)`):
+  $$D_{\mathrm{abs}} = D_{\mathrm{blend}} \cdot \ln(1 + N_{\mathrm{pitched}}) \quad \text{if } n_{\mathrm{distinct}} \ge 2,\qquad D_{\mathrm{abs}} = 0 \text{ otherwise.}$$
 
 ### 3.14 Texture metrics (summary)
 
@@ -441,7 +441,7 @@ input_data = {
 6. **Weighted density:** Normalise $D_{\mathrm{inst}}$ and $D_{\mathrm{int}}$ (min-max), then:
    $$D_{\mathrm{pond}} = 10 \cdot (0.5 \cdot \widehat{D}_{\mathrm{inst}} + 0.5 \cdot \widehat{D}_{\mathrm{int}}).$$
 
-7. **Pitch-structure density:** $D_{\mathrm{pitch}} = D_{\mathrm{int}}^{\mathrm{norm}} \cdot \frac{1}{1 + A_{\mathrm{st}}/12} \cdot (1 + \ln(1+H)) \cdot (1 - 0.15 \cdot r_{\mathrm{harm}})$ over distinct bins.
+7. **Pitch-structure density (reported only):** $D_{\mathrm{pitch}} = S \cdot (1 + \ln(1+H)) \cdot (1 - 0.15 \cdot r_{\mathrm{harm}})$ with $S$ the raw pairwise sum. Registral span is **not** a factor. This value does **not** enter the composite.
 
 8. **Spectral moments:** On distinct-bin MIDI pitches with mean weight per bin; compute centroid, spread, entropy, etc.
 
@@ -449,9 +449,9 @@ input_data = {
 
 10. **Sonic mass:** $M_{\mathrm{sonic}} = \sum_i d_i^{(1)} \cdot n_i$ (linear Qty; here $n_i=1$); $\mathrm{boost} = \sqrt{M_{\mathrm{sonic}}}$.
 
-11. **Composite vertical density:** $D_{\mathrm{total}}^{\mathrm{raw}} = D_{\mathrm{pitch}} \cdot \sqrt{M_{\mathrm{sonic}}} / D_{\max}$; optional $\log_{10}(1+x)$.
+11. **Composite vertical density:** $D_{\mathrm{total}}^{\mathrm{raw}} = D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}} / \mathrm{REF}$ with $\mathrm{REF}=193$; then $\log_{10}(1+x)$ when log compression is on.
 
-12. **Absolute density:** $D_{\mathrm{abs}} = D_{\mathrm{pond}} \cdot \ln(1 + N_{\mathrm{events}})$ when $n_{\mathrm{distinct}} \geq 2$; else 0.
+12. **Absolute density:** $D_{\mathrm{abs}} = D_{\mathrm{blend}} \cdot \ln(1 + N_{\mathrm{pitched}})$ when $n_{\mathrm{distinct}} \geq 2$; else 0. $N_{\mathrm{pitched}}$ counts pitched rows only.
 
 ### 4.3 Expected output structure
 
@@ -839,4 +839,4 @@ Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). W
 
 ---
 
-*Last updated: 2026-08-03 (committed dynamic ladders / runtime GPR removed; PR #37 stress battery; see [qa_checklist.md](qa_checklist.md)).*
+*Last updated: 2026-08-17 (docs aligned to Task 8c blend×mass, REF=193, pitched-only absolute count, compactness ≠ compression).*

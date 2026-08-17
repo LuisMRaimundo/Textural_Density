@@ -273,7 +273,9 @@ def build_density_subindices(context: SubindexContext) -> dict[str, Any]:
             "validation_status": "heuristic",
             "confidence": "medium",
             "interpretation": (
-                "Decomposable composite heuristic; components listed below."
+                "Production composite is blend × √mass / REF (Task 8c). "
+                "The listed pitch-structure × boost product is a diagnostic "
+                "of the reported pitch-structure axis, not the composite numerator."
             ),
             "components": {
                 "pitch_structure_density": float(context.refined_density),

@@ -36,8 +36,8 @@ python scripts/export_instrument_metadata_audit.py
 - **Double-bass span:** `source_table_span` E1–C5 (**PASS**); obsolete E1–A3 documentation; upper-register QC **REVIEW REQUIRED** (see [instrument_acoustic_sources.md](instrument_acoustic_sources.md))
 - **Tuba range:** coarse-default validation placeholder MIDI 28–58 — **REVIEW REQUIRED**
 - **Sounding/concert pitch:** legacy `notes[]`, GUI, and manual input use sounding pitch. MusicXML written `<pitch>` is converted via `<transpose>` to sounding pitch before validation and lookup.
-- **Technique metadata:** `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` on GPR modules; registry lists broader organological capabilities without implying technique-specific numerical tables.
-- **GPR determinism:** production modules use `create_dynamic_gpr()` with explicit `GPR_RANDOM_STATE = 0`; output is independent of global NumPy RNG state and benchmark order.
+- **Technique metadata:** `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` on table-backed modules; registry lists broader organological capabilities without implying technique-specific numerical tables.
+- **Runtime dynamics:** committed 10-level ladder lookup only. Historical GPR (`create_dynamic_gpr`) lives in `tools/legacy_gpr_dynamic_interpolation.py` and is **not** called from `calculate_metrics`.
 
 **Resolved (PR #14):** viola portable provenance (`docs/instrument_acoustic_sources.md#viola`); viola table aligned to `VIOLA_Media` (C3–C7) with `(2)` label normalization.
 

@@ -87,8 +87,11 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | `DEFAULT_WEIGHT_FACTOR` ($w$) | 0.5 | `config.py` / `core.defaults` | Instrument vs interval blend inside $D_{\mathrm{blend}}$ |
 
 **Unified composite (Task 8c):** one formula for pitched, unpitched, and mixed slices — $D_{\mathrm{blend}}=\texttt{density.weighted}=w\cdot(D_{\mathrm{inst}}/10)+(1-w)\cdot D_{\mathrm{int}}$ (defaults), then mass boost / REF. Display strings from `core.composite` only. No unpitched-only fallback. Traceability: `CHANGES.md`.
-| `DYN_TAIL_SHRINK` ($\gamma$) | **0.5** | `config.py` | Geometric shrink for register-adaptive saturating dynamic tails (5.1.0); whole tail ≤ one measured step |
-| `DENSITY_FLOOR` | $10^{-9}$ | `config.py` | Unreachable safety assert on saturated tail amplitudes (not a silent clamp) |
+
+| Name | Value | Module | Role |
+|------|-------|--------|------|
+| `DYN_TAIL_SHRINK` ($\gamma$) | **0.5** | `config.py` / `tools/legacy_gpr_dynamic_interpolation.py` | **Historical (5.1.0).** Not used by runtime `calculate_metrics`. |
+| `DENSITY_FLOOR` | $10^{-9}$ | `config.py` | **Historical** safety assert for the retired tail path. |
 
 Weighted density uses a linear min-max blend only (Stevens' Law removed in 3.0.0). Pitch-structure density is the **extensive** raw pairwise sum $S$ (5.0.0); registral-span damping is **not** applied in the aggregate.
 

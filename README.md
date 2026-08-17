@@ -20,7 +20,7 @@
 
 **Changed in 5.0.0-strict-symbolic:** Pitch-structure density became **extensive** (raw accumulating pairwise interval sum; registral-span damping removed from that axis). See the [Changelog](#changelog).
 
-**Changed in 5.1.0-strict-symbolic:** Instrument-density dynamic tails now **saturate** with a **register-adaptive** log-domain rule instead of continuing the GPR trend. Local step $s(m)$ is taken from the measured pp/mf/ff spread at the event's pitch and shrunk geometrically by `DYN_TAIL_SHRINK=0.5` (whole tail ≤ one measured step). This fixes negative soft-tail weights and non-monotone loud-tail mass, and tracks dynamic-palette compression at range extremes. Interior predictions unchanged; numeric change only for tail-dynamic cases. See the [Changelog](#changelog).
+**Changed in 5.1.0-strict-symbolic (historical):** Dynamic tails used a register-adaptive saturating log-domain rule instead of continued GPR. **Superseded on 2026-08-03:** runtime GPR / adaptive-tail fill-in was removed; production looks up committed 10-level ladders only. See the [Changelog](#changelog) and the committed-dynamics note below.
 
 **Changed in Task 8c (2026-08-03):** Composite vertical density is a **single blend×mass path** for all regimes — `log10(1 + density.weighted·√M / REF)` with `REF=193`. The pitch-gated product and unpitched-only fallback are removed. Baselines re-frozen; see [CHANGES.md](CHANGES.md).
 
@@ -195,7 +195,7 @@ Optional future extractions: [docs/legacy_pipeline_extraction.md](docs/legacy_pi
 | **Optional empirical** | Expert annotations, listening tests — only if pursuing judgment-prediction research |
 | **Not provided** | Measured audio spectra, SPL, timbre measurement, live waveform/FFT/STFT analysis, Spectral_Analyser-style signal processing, mandatory human-rating validation, final cross-instrument acoustic calibration |
 
-**Instrument metadata status:** External acoustic/proxy tables are **incomplete** and curated gradually. Missing or coarse instrument data are **expected** at this stage — not runtime bugs when fallback labels and provenance remain honest. Do not treat current GPR modules (e.g. flute, clarinet, oboe, bassoon, trumpet, violin, violin sordina, violin sul ponticello, violin harmonics) as final scientific reference corpora.
+**Instrument metadata status:** External acoustic/proxy tables are **incomplete** and curated gradually. Missing or coarse instrument data are **expected** at this stage — not runtime bugs when fallback labels and provenance remain honest. Do not treat current table-backed modules (e.g. flute, clarinet, oboe, bassoon, trumpet, violin, violin sordina, violin sul ponticello, violin harmonics) as final scientific reference corpora.
 
 **English module filenames:** Dedicated scripts use English names (`flute.py`, `violin.py`, …). Registry aliases accept both English (`flute`, `violin`) and legacy Portuguese (`flauta`, `violino`) strings in programmatic input.
 
