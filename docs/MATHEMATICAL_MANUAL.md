@@ -462,7 +462,7 @@ When input lacks timing metadata, analysis collapses to a single slice with an e
 
 ### P. MusicXML transposition (concert / sounding pitch)
 
-**Module:** `xml_loader.py` — `_apply_transpose_to_written_pitch()`.
+**Module:** `xml_loader.py` — `_transpose_semitones_from_attributes()` (chromatic $+ 12\times$ octave_change), `_apply_semitone_transpose()` (applies the offset), called from `_extract_musicxml_notes()`.
 
 MusicXML may declare **written** pitch in `<pitch>` and an offset in `<attributes><transpose>`. Textural Density converts written pitch to **sounding/concert pitch** before range validation and density lookup:
 
@@ -490,7 +490,9 @@ These are **implementation correctness checks**, not empirical validation:
 |----------|-------------------|
 | Finite outputs | All `density.*` scalars finite for synthetic cases |
 | Chromatic vs wide | Interval density (compactness, intensive) higher for chromatic cluster than wide-spaced chord |
-| Extensive composite (5.0.0) | Adding a distinct note does not decrease composite vertical density (`density.total`) or `pitch_structure`; register-isolated bass never lowers the total (`tests/test_extensive_density_monotonic.py`) |
+| Raw interval sum $S$ | **Non-decreasing** under addition of a distinct pitch bin (hard guarantee; §H) |
+| Composite `density.total` (Task 8c) | Monotonicity is the tested property of the current blend×mass composite (`tests/test_unified_composite_contract.py`); register-isolated bass with meaningful mass must not lower the total |
+| Pitch-structure `density.pitch_structure` | **Quasi-monotone** only (§H): $S$ never falls, but entropy and harmonic-ratio factors can lower $D_{\mathrm{pitch}}$. No general non-decrease guarantee. `tests/test_extensive_density_monotonic.py` is a 5.0.0 regression vestige, not a general description of the current formula |
 | Player mass | Orchestral mass increases linearly with Qty; pressure-equivalent instrument density scales as RSS; interval/pitch-structure unchanged |
 | Qty vs pitch structure | Qty does not increase pitch polyphony, interval pairs, or spectral entropy for unison doublings |
 | Dynamic ladder hygiene | One-player density is positive; committed pitched ladders carry all 10 levels with interiors inside their measured segments and tapered, non-zigzag outers (§F.1; data-faithful — measured anchors may be locally non-monotone); `tests/test_pitched_dynamic_monotone_ladders.py` |
@@ -560,7 +562,7 @@ flowchart TD
   DI --> DPITCH
   DINST --> W
   DI --> W
-  DPITCH --> TOT
+  W --> TOT
   MASS --> TOT
   PBIN --> SP
   SP --> TOT

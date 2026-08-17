@@ -37,7 +37,10 @@ def _metrics(notes, instruments, dynamics=None, num_instruments=None):
 
 
 def test_no_decrease_on_note_addition():
-    """Adding distinct notes never decreases total or pitch_structure density."""
+    """5.0.0 regression vestige: these specific additions do not decrease total or pitch_structure.
+
+    Not a general guarantee for ``pitch_structure`` (quasi-monotone; see MATH §H).
+    """
     a = _metrics(["C4", "D4", "E4"], ["Trumpet"] * 3)
     b = _metrics(["C4", "D4", "E4", "F4", "A#4"], ["Trumpet"] * 5)
     c = _metrics(

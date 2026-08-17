@@ -2,7 +2,7 @@
 Symbolic orchestration mass — score-derived metadata, not loudness or SPL.
 
 Behaviour-preserving extraction from ``data_processor.calcular_massa_sonora``.
-Written dynamics are applied once via instrument module GPR lookups; this module
+Written dynamics are applied once via instrument-module committed dynamic-table lookup; this module
 does not apply a second symbolic dynamic multiplier when one_player densities
 already include dynamic dependence.
 """
