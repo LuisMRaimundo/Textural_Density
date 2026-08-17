@@ -204,14 +204,15 @@ Normally called internally by `calculate_metrics`; exposed for custom pipelines.
 Legacy scalars (unchanged):
 
 ```python
-resultados["density"]           # interval, instrument, weighted, refined, total, sonic_mass, absolute
+resultados["density"]           # interval, instrument, weighted, refined, total, sonic_mass, absolute (numeric only)
+resultados["composite_meta"]      # mode=weighted_blend_mass_log, normalization_ref (REF), weight_factor, formula, use_log_compression
 resultados["spectral_moments"]
 resultados["additional_metrics"]  # complexity, harmonic_ratio, chroma_vector
-resultados["texture"]
+resultados["texture"]             # players/CDM avg include unpitched; polyphony pitched-only
 resultados["timbre"]
 resultados["orchestration"]
 resultados["input_data"]
-resultados["pitch_aggregation"]   # event/player counts, pitch_polyphony, pitch bins
+resultados["pitch_aggregation"]   # event/player = full slice; pitched_event_count / unpitched_event_count; pitch_polyphony pitched-only
 resultados["quantity_scaling"]    # incoherent source-addition model metadata
 ```
 
@@ -297,9 +298,9 @@ strict helper delegates to it.
 Each instrument module must implement:
 
 - `calcular_densidade(nota: str, dinamica: str) -> float`
-- `predict_intermediate_dynamics(pitches, pp, mf, ff) -> dict`
+- Committed `spectral_data` cells for all requested dynamics (no runtime GPR)
 
-**Metadata tables:** chromatic anchors only (`C4`, `C#4`, … × `pp`/`mf`/`ff`) are enough; microtonal values are modelled at runtime (not measured). See [instrumentos/README.md](../instrumentos/README.md).
+**Metadata tables:** chromatic pitch anchors (`C4`, `C#4`, …) with committed dynamic cells; microtonal pitches are modelled at runtime (not measured). Missing dynamics raise `MissingCommittedDynamicError`. See [instrumentos/README.md](../instrumentos/README.md).
 
 ---
 
@@ -353,10 +354,10 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 
 ### `densidade_intervalar`
 
-- `modified_exponential_decay(delta, lamb)` — **production primitive** (called from `core/pitch_structure.py`)
-- `load_calibrated_parameters()` — production λ loader
-- `calculate_interval_density` / `calculate_interval_density_normalized` — **legacy / calibration / tests**; not the `calculate_metrics` path
-- `calibrate_lambda(experimental_data)` — offline calibration only
+- `calculate_interval_density(pitches, lamb=...)`
+- `calculate_interval_density_normalized(pitches, lamb=...)`
+- `modified_exponential_decay(delta, lamb)`
+- `calibrate_lambda(experimental_data)` / `load_calibrated_parameters()`
 
 ### `spectral_analysis`
 
@@ -370,9 +371,9 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 
 | Constant | Default | Description |
 |----------|---------|-------------|
-| `MAX_DENS_GLOBAL` | `575.0` | Total-density normalisation divisor (5.0.0 extensive aggregate) |
-| `USE_LOG_COMPRESSION` | `True` | Apply `log10(1+x)` to total density |
-| `COMPOSITE_HARMONIC_DAMPING` | `0.15` | Harmonic-ratio damping **inside** $D_{\mathrm{pitch}}$ (not a second composite multiplier) |
+| `MAX_DENS_GLOBAL` | `193.0` | Composite REF; header via `core.composite.format_composite_header_line` |
+| `USE_LOG_COMPRESSION` | `True` | Apply `log10(1+x)` to composite |
+| `COMPOSITE_HARMONIC_DAMPING` | `0.15` | Harmonic-ratio damping in composite |
 | `DYN_TAIL_SHRINK` | `0.5` | Geometric shrink γ for register-adaptive saturating dynamic tails (5.1.0) |
 | `DENSITY_FLOOR` | `1e-9` | Unreachable safety assert on saturated tail amplitudes |
 | `DEFAULT_REGISTER_BANDS` | dict | Register bands for subindices |
@@ -393,4 +394,6 @@ Calibrated λ: `config/density_params.json`.
 
 ---
 
-**Package version:** 1.1.4 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-07-12
+**Package version:** 1.1.4 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-08-03
+
+Unpitched aggregation + unified composite: [TECHNICAL_MANUAL §7.5.1](TECHNICAL_MANUAL.md) · [CHANGES.md](../CHANGES.md). Header / labels: `core.composite.format_composite_header_line`, `core.unpitched_labels`.

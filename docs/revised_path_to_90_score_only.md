@@ -29,7 +29,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 | Benchmark | Synthetic fixture + **5 project-authored excerpts** (`benchmarks/corpus/`); not yet a large licensed corpus |
 | Test suite | **1542 passed / 2 skipped / 18 xfailed** (2026-07-12; GitHub Actions + CircleCI green on Python 3.10/3.11) |
 | Validation contracts | Interval-density, instrument scaffold, scientific/musicological plausibility, Excel importer tests |
-| Instrument metadata | **Incomplete** — coarse fallbacks common; GPR modules for subset only; gradual curation via auxiliary Excel importer |
+| Instrument metadata | **Incomplete** — coarse fallbacks common; table-backed pitched + unpitched-percussion ladders committed (soft→loud monotone); many registry names still coarse-default |
 | Excel importer | Auxiliary offline tool + empty template on main; runtime does not read `.xlsx` |
 | MusicXML transpose | **Implemented** — `<transpose>` → concert pitch; `excerpt_003`–`004` regression |
 | Rubric estimate | **~89/100** (systematic line; licensed corpus still main gap) |
@@ -49,6 +49,15 @@ The research line is the **systematic score-only symbolic method**: formal const
 - ~~GUI adapter audit + `test_gui_architecture.py`~~ ✅
 - ~~Layered snapshot regression~~ ✅
 - ~~MusicXML `<transpose>` → concert pitch + benchmark excerpts (`003`–`005`)~~ ✅
+- ~~Unpitched percussion entry paths (GUI / MusicXML `<unpitched>` / MIDI ch.10) + core-only pitch exclusion (PR #28–#29)~~ ✅
+- ~~Unpitched aggregation contract: counts/texture/composite + display routing (PR #31 / Task 8b)~~ ✅
+- ~~Unified composite (blend × mass, REF=193; no unpitched-only fallback) (Task 8c)~~ ✅
+- ~~Composite header / exclusion label accuracy + acceptance freeze (PR #35; no numeric change)~~ ✅
+- ~~Density stress battery (public API; report/CSV/figures) (PR #37; no numeric change)~~ ✅
+- ~~Runtime GPR removed; violin arco full dynamics ladder committed (2026-08-03)~~ ✅
+- ~~Full dynamics ladders: viola, cello, double bass, flute, clarinet, bassoon, oboe (Results)~~ ✅
+- ~~Unpitched percussion pitch-independent committed ladders (former internal_default)~~ ✅
+- ~~Monotone pitched ladders (D6 hotfix): trumpet + techniques included~~ ✅
 
 ## Optional only
 
@@ -58,6 +67,7 @@ Expert annotations · IRR · human-rating correlation · listening tests · psyc
 
 ```bash
 pytest tests/ -q
+python run_stress_battery.py
 python replication/scripts/reproduce_metrics.py
 python replication/scripts/compare_to_frozen_outputs.py
 python validation/scripts/score_upgrade_rubric.py docs/examples/score_only_rubric_scores_example.json

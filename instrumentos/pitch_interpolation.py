@@ -58,15 +58,8 @@ class PitchLookupResult:
     warnings: tuple[str, ...] = ()
 
 
-def _resolve_dynamic(dinamica: str) -> str:
-    dyn = (dinamica or "mf").strip().lower()
-    if dyn in ("pp", "mf", "ff"):
-        return dyn
-    if dyn in ("pppp", "ppp", "p"):
-        return "pp"
-    if dyn in ("f", "fff", "ffff"):
-        return "ff"
-    return "mf"
+class MissingCommittedDynamicError(KeyError):
+    """Raised when a dynamic marking is absent from a committed spectral row."""
 
 
 def _dynamic_value(
@@ -74,18 +67,20 @@ def _dynamic_value(
     table_key: str,
     dinamica: str,
 ) -> float:
-    """Resolve density for one table row and dynamic marking."""
-    dyn = _resolve_dynamic(dinamica)
+    """Resolve density for one table row and dynamic marking (exact cell only)."""
     row = spectral_data.get(table_key)
     if not row:
         raise KeyError(table_key)
+    dyn_key = (dinamica or "mf").strip().lower()
+    if dyn_key in row:
+        return float(row[dyn_key])
     if dinamica in row:
         return float(row[dinamica])
-    if dyn in row:
-        return float(row[dyn])
-    if "mf" in row:
-        return float(row["mf"])
-    return float(sum(row.values()) / len(row))
+    raise MissingCommittedDynamicError(
+        f"Dynamic {dyn_key!r} not committed in spectral_data[{table_key!r}] "
+        f"(have {sorted(row)}). Runtime GPR/tail extrapolation was removed — "
+        "commit a full dynamic ladder."
+    )
 
 
 def _parse_table_key_midi(
@@ -204,11 +199,17 @@ def _exact_row_lookup(
         if not candidate or candidate not in spectral_data:
             continue
         row = spectral_data[candidate]
+        dyn_key = (dinamica or "mf").strip().lower()
+        if dyn_key in row:
+            return float(row[dyn_key])
         if dinamica in row:
             return float(row[dinamica])
-        dyn = _resolve_dynamic(dinamica)
-        if dyn in row:
-            return float(row[dyn])
+        # Row exists but lacks this dynamic — fail clearly (no pp/mf/ff collapse).
+        raise MissingCommittedDynamicError(
+            f"Dynamic {dyn_key!r} not committed in spectral_data[{candidate!r}] "
+            f"(have {sorted(row)}). Runtime GPR/tail extrapolation was removed — "
+            "commit a full dynamic ladder."
+        )
     return None
 
 
@@ -345,7 +346,8 @@ def resolve_density_from_table(
     label = provenance_label or "instrument metadata"
     note_original = note
     warnings: list[str] = []
-    dyn_resolved = _resolve_dynamic(dynamic)
+    dyn_key = (dynamic or "mf").strip().lower()
+    dyn_resolved = dyn_key
 
     working_table = spectral_table
     if validate_table and spectral_table:

@@ -1,24 +1,26 @@
 {
   "audit_version": "1.0.0",
-  "instrument_count": 28,
+  "instrument_count": 42,
   "profiles": [
     {
       "instrument_id": "flauta",
-      "display_name": "Flute",
+      "display_name": "Fl",
       "family": "woodwinds",
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "medium",
-      "source_notes": "Sparse GPR table in instrumentos/flauta.py from externally sourced acoustic amplitude metadata; not a full measured spectrum.",
+      "source_notes": "Sparse GPR table in instrumentos/flute.py from IOWA+ORCH sustain CDM medians (pp/mf/ff); not a full measured spectrum.",
       "limitations": [
-        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR."
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR."
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
@@ -44,27 +46,29 @@
     },
     {
       "instrument_id": "oboe",
-      "display_name": "Oboe",
+      "display_name": "Ob",
       "family": "woodwinds",
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "medium",
-      "source_notes": "Scaled proxy from flute module (external acoustic metadata); not oboe-specific measured spectra.",
+      "source_notes": "Sparse GPR table in instrumentos/oboe.py from IOWA+ORCH sustain CDM medians (pp/mf/ff); not a full measured spectrum.",
       "limitations": [
-        "Oboe density delegates to scaled flute GPR \u2014 coarse external-acoustic proxy."
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Oboe density delegates to scaled flute GPR \u2014 coarse external-acoustic proxy."
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
     {
       "instrument_id": "cor_anglais",
-      "display_name": "Cor anglais",
+      "display_name": "English horn",
       "family": "woodwinds",
       "profile_status": "symbolic_default",
       "registry_profile_status": "coarse_default",
@@ -84,21 +88,23 @@
     },
     {
       "instrument_id": "clarinete",
-      "display_name": "Clarinet",
+      "display_name": "Cl",
       "family": "woodwinds",
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "medium",
-      "source_notes": "Sparse GPR table in instrumentos/clarinete.py from externally sourced acoustic amplitude metadata.",
+      "source_notes": "Sparse GPR table in instrumentos/clarinet.py from IOWA+ORCH sustain CDM medians (pp/mf/ff); not a full measured spectrum.",
       "limitations": [
-        "Clarinet density uses externally sourced sparse acoustic tables; not full measured spectra."
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Clarinet density uses externally sourced sparse acoustic tables; not full measured spectra."
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
@@ -124,21 +130,23 @@
     },
     {
       "instrument_id": "fagote",
-      "display_name": "Bassoon",
+      "display_name": "Bsn",
       "family": "woodwinds",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Sparse GPR table in instrumentos/bassoon.py from IOWA+ORCH sustain CDM medians (pp/mf/ff); not a full measured spectrum.",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
@@ -164,121 +172,449 @@
     },
     {
       "instrument_id": "violino",
-      "display_name": "Violin",
+      "display_name": "Vl",
       "family": "strings",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Sparse GPR table in instrumentos/violin.py from IOWA+ORCH arco sustain Combined Density Metric medians (pp/mf/ff); not a full measured spectrum.",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
-      ],
-      "claims_empirical_without_notes": false
-    },
-    {
-      "instrument_id": "viola",
-      "display_name": "Viola",
-      "family": "strings",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
-      "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
-      ],
-      "has_range_metadata": true,
-      "has_register_metadata": true,
-      "has_dynamic_weight_metadata": true,
-      "has_technique_metadata": true,
-      "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
     {
       "instrument_id": "violoncelo",
-      "display_name": "Cello",
+      "display_name": "Vc",
       "family": "strings",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Sparse GPR table in instrumentos/cello.py from IOWA+ORCH arco sustain Combined Density Metric medians (pp/mf/ff); not a full measured spectrum.",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
     {
       "instrument_id": "contrabaixo",
-      "display_name": "Double bass",
+      "display_name": "Db",
       "family": "strings",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Sparse GPR table in instrumentos/double_bass.py from IOWA+ORCH arco sustain Combined Density Metric medians (pp/mf/ff); not a full measured spectrum.",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "viola",
+      "display_name": "vla",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola.py from OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx Results sheet (IOWA+ORCHIDEA Zenodo arco sustain medians at pp/mf/ff; PCHIP interiors, tapered equal-log outers).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "viola_sordina",
+      "display_name": "vla sord",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_sordina.py from OK_VIOLA_con sordina_dynamics extrapolation.xlsx Results sheet (CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sordina only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sordina only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "viola_sul_ponticello",
+      "display_name": "vla sp",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_sul_ponticello.py from OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx Results sheet (CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "violino_sordina",
+      "display_name": "vl sord",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sordina.py from OK_VIOLIN_con sordina_dynamics extrapolation.xlsx Results sheet (CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sordina only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sordina only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "violino_sul_ponticello",
+      "display_name": "vl sp",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_ponticello.py from OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx Results sheet (CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "violino_sul_tasto",
+      "display_name": "vl st",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_tasto.py from OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx Results sheet (CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_tasto only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_tasto only; anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "violino_harm",
+      "display_name": "vl harm",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_harmonics.py from OK_VIOLIN_harmonics_dynamics extrapolation.xlsx Results sheet (CDM Technique Extrapolator METApool, pooled natural + artificial harmonics; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Table span is harmonic sounding register (G4\u2013G7); notes outside this range use controlled pitch extrapolation or fallback.",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Table span is harmonic sounding register (G4\u2013G7); notes outside this range use controlled pitch extrapolation or fallback.",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "viola_harm",
+      "display_name": "vla harm",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_harmonics.py from OK_VIOLA_harmonics_dynamics extrapolation.xlsx Results sheet (CDM Technique Extrapolator METApool, pooled natural + artificial harmonics; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Table span is harmonic sounding register (C4\u2013C7); notes outside this range use controlled pitch extrapolation or fallback.",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors come from technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Table span is harmonic sounding register (C4\u2013C7); notes outside this range use controlled pitch extrapolation or fallback.",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "violoncelo_sordina",
+      "display_name": "Cello sordina",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Sparse GPR table in instrumentos/cello_sordina.py from Strings Techniques Extrapolation Cello_pp.xlsx / Cello_mf.xlsx / Cello_ff.xlsx (assumption-based EWSD; pp/mf/ff from estimate_mean).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sordina only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sordina only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "violoncelo_sul_tasto",
+      "display_name": "Cello sul tasto",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Sparse GPR table in instrumentos/cello_sul_tasto.py from Strings Techniques Extrapolation Cello_pp.xlsx / Cello_mf.xlsx / Cello_ff.xlsx (assumption-based EWSD; pp/mf/ff from estimate_mean).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_tasto only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_tasto only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "violoncelo_sul_ponticello",
+      "display_name": "Cello sul ponticello",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Sparse GPR table in instrumentos/cello_sul_ponticello.py from Strings Techniques Extrapolation Cello_pp.xlsx / Cello_mf.xlsx / Cello_ff.xlsx (assumption-based EWSD; pp/mf/ff from estimate_mean).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "contrabaixo_sordina",
+      "display_name": "Double bass sordina",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Sparse GPR table in instrumentos/double_bass_sordina.py from Strings Techniques Extrapolation Contrabass-pp.xlsx / Contrabass_mf.xlsx / Contrabass_ff.xlsx (assumption-based EWSD; pp/mf/ff from estimate_mean).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sordina only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sordina only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "contrabaixo_sul_tasto",
+      "display_name": "Double bass sul tasto",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Sparse GPR table in instrumentos/double_bass_sul_tasto.py from Strings Techniques Extrapolation Contrabass-pp.xlsx / Contrabass_mf.xlsx / Contrabass_ff.xlsx (assumption-based EWSD; pp/mf/ff from estimate_mean).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_tasto only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_tasto only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "contrabaixo_sul_ponticello",
+      "display_name": "Double bass sul ponticello",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Sparse GPR table in instrumentos/double_bass_sul_ponticello.py from Strings Techniques Extrapolation Contrabass-pp.xlsx / Contrabass_mf.xlsx / Contrabass_ff.xlsx (assumption-based EWSD; pp/mf/ff from estimate_mean).",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
     {
       "instrument_id": "trompa",
-      "display_name": "Horn",
+      "display_name": "Hn",
       "family": "brass",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/horn.py from IOWA+ORCH sustain medians (pp/mf/ff anchors; Dynamics_predicter Results sheet).",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
     {
       "instrument_id": "trompete",
-      "display_name": "Trumpet",
+      "display_name": "Tpt",
       "family": "brass",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Sparse GPR table in instrumentos/trumpet.py from IOWA+ORCH sustain CDM medians (pp/mf/ff); not a full measured spectrum.",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
@@ -324,21 +660,23 @@
     },
     {
       "instrument_id": "tuba",
-      "display_name": "Tuba",
+      "display_name": "Tba",
       "family": "brass",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/tuba.py from IOWA+ORCH sustain medians (pp/mf/ff anchors; Dynamics_predicter Results sheet). sounding_range (MIDI 24\u201370, C1\u2013A#4) matches the committed table span.",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
@@ -403,6 +741,94 @@
       "claims_empirical_without_notes": false
     },
     {
+      "instrument_id": "bombo",
+      "display_name": "Bass drum",
+      "family": "percussion",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Sparse GPR table in instrumentos/bass_drum.py from NonTunPerc MC p50 bassdrum_82cm strike composite_index (ff) with scaled pp/mf; unpitched \u2014 note is notation-lookup convention only.",
+      "limitations": [
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_membrane only; note key excluded from pitch-structure metrics."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_membrane only; note key excluded from pitch-structure metrics."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "pratos",
+      "display_name": "Cymbals",
+      "family": "percussion",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Sparse GPR table in instrumentos/cymbals.py from NonTunPerc MC p50 cymbal_46cm_medium shimmer composite_index (ff) with scaled pp/mf; unpitched \u2014 note is notation-lookup convention only.",
+      "limitations": [
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "tamtam",
+      "display_name": "Tam-tam",
+      "family": "percussion",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Sparse GPR table in instrumentos/tamtam.py from NonTunPerc MC p50 tamtam_80cm_bronze shimmer composite_index (ff) with scaled pp/mf; unpitched \u2014 note is notation-lookup convention only.",
+      "limitations": [
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "gongo",
+      "display_name": "Gong",
+      "family": "percussion",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Sparse GPR table in instrumentos/gong.py from NonTunPerc MC p50 gong_50cm_bronze shimmer composite_index (ff) with scaled pp/mf; unpitched \u2014 note is notation-lookup convention only.",
+      "limitations": [
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
       "instrument_id": "timpanos",
       "display_name": "Timpani",
       "family": "percussion",
@@ -423,68 +849,8 @@
       "claims_empirical_without_notes": false
     },
     {
-      "instrument_id": "bombo",
-      "display_name": "Bass drum",
-      "family": "percussion",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Percussion profile uses nominal pitch range when pitched; unpitched events need manual pitch metadata.",
-      "limitations": [
-        "Percussion spectral density is a coarse proxy; unpitched strokes may lack pitch metadata."
-      ],
-      "has_range_metadata": true,
-      "has_register_metadata": true,
-      "has_dynamic_weight_metadata": true,
-      "has_technique_metadata": true,
-      "warnings": [
-        "Percussion spectral density is a coarse proxy; unpitched strokes may lack pitch metadata."
-      ],
-      "claims_empirical_without_notes": false
-    },
-    {
       "instrument_id": "caixa",
       "display_name": "Snare drum",
-      "family": "percussion",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Percussion profile uses nominal pitch range when pitched; unpitched events need manual pitch metadata.",
-      "limitations": [
-        "Percussion spectral density is a coarse proxy; unpitched strokes may lack pitch metadata."
-      ],
-      "has_range_metadata": true,
-      "has_register_metadata": true,
-      "has_dynamic_weight_metadata": true,
-      "has_technique_metadata": true,
-      "warnings": [
-        "Percussion spectral density is a coarse proxy; unpitched strokes may lack pitch metadata."
-      ],
-      "claims_empirical_without_notes": false
-    },
-    {
-      "instrument_id": "pratos",
-      "display_name": "Cymbals",
-      "family": "percussion",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Percussion profile uses nominal pitch range when pitched; unpitched events need manual pitch metadata.",
-      "limitations": [
-        "Percussion spectral density is a coarse proxy; unpitched strokes may lack pitch metadata."
-      ],
-      "has_range_metadata": true,
-      "has_register_metadata": true,
-      "has_dynamic_weight_metadata": true,
-      "has_technique_metadata": true,
-      "warnings": [
-        "Percussion spectral density is a coarse proxy; unpitched strokes may lack pitch metadata."
-      ],
-      "claims_empirical_without_notes": false
-    },
-    {
-      "instrument_id": "tamtam",
-      "display_name": "Tam-tam",
       "family": "percussion",
       "profile_status": "symbolic_default",
       "registry_profile_status": "coarse_default",
@@ -584,31 +950,20 @@
     "claims_empirical_without_notes": false
   },
   "instruments_needing_review": [
-    "bombo",
     "caixa",
     "celesta",
     "clarinete_baixo",
-    "contrabaixo",
     "contrafagote",
     "cor_anglais",
-    "fagote",
     "flautim",
     "harpa",
     "marimba",
     "metalofone",
     "piano",
-    "pratos",
-    "tamtam",
     "timpanos",
     "trombone",
     "trombone_baixo",
-    "trompa",
-    "trompete",
-    "tuba",
-    "vibrafone",
-    "viola",
-    "violino",
-    "violoncelo"
+    "vibrafone"
   ],
   "disclaimer": "Instrument registry audit. GPR-backed modules use externally sourced acoustic amplitude metadata (sparse tables, not runtime audio). Coarse profiles lack such tables. profile_status=empirical_profile requires documented source_notes."
 }

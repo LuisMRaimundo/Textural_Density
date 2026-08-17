@@ -18,6 +18,10 @@ from microtonal import (
 from core.input_validation import validate_no_removed_perceptual_options
 from core.models import AnalysisConfig, InstrumentEvent, Pitch, VerticalSlice
 from core.pitch_range_validation import validate_event_sounding_range
+from core.unpitched_routing import (
+    instrument_is_unpitched,
+    normalize_unpitched_entry_note,
+)
 from instrumentos.registry import resolve_profile
 
 
@@ -73,10 +77,17 @@ def make_instrument_event(
     else:
         inst_id = inst_name.lower()
         family = "unknown"
-    sounding_pitch = note_string_to_pitch(str(note))
+    unpitched = instrument_is_unpitched(inst_name)
+    lookup_note = normalize_unpitched_entry_note(inst_name, str(note))
+    meta = dict(metadata or {"legacy_index": idx})
+    if unpitched:
+        meta["unpitched"] = True
+        meta["pitch_role"] = "notation_lookup_only"
+        meta["entry_note_raw"] = str(note)
+    sounding_pitch = note_string_to_pitch(lookup_note)
     written_pitch = (
         note_string_to_pitch(str(written_note))
-        if written_note is not None
+        if written_note is not None and not unpitched
         else None
     )
     event = InstrumentEvent(
@@ -93,7 +104,8 @@ def make_instrument_event(
         duration=duration,
         part_id=part_id,
         voice_id=voice_id,
-        metadata=metadata or {"legacy_index": idx},
+        unpitched=unpitched,
+        metadata=meta,
     )
     validate_event_sounding_range(event, index=idx)
     return event

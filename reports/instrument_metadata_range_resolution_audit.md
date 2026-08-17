@@ -1,11 +1,13 @@
 # Instrument metadata / range resolution audit
 
-**Instruments audited:** 28
+**Instruments audited:** 42
 
 ## Executive summary
 
-- **Double bass:** source_table_span E1–C5 aligns with committed table and registry; E1–A3 was obsolete documentation.
-- **Technique:** GPR modules declare `source_technique` / `table_supported_techniques`; registry lists broader organological capabilities.
+- **Double bass:** source_table_span E1–C5 (MIDI 28–72) aligns with committed table and registry; E1–A3 was obsolete documentation.
+- **Violin sounding [55,103]:** table G3–G7 aligns (not a double-bass case).
+- **Table excludes sounding range (partial):** 0 instrument(s): none.
+- **Technique:** modules declare `source_technique` / `table_supported_techniques`; registry lists broader organological capabilities.
 - **Tuba:** coarse-default validation placeholder (MIDI 28–58) — **REVIEW REQUIRED** for authoritative range.
 - **Transposition:** registry field is metadata-only; manual input is sounding pitch; MusicXML applies `<transpose>` once.
 
@@ -31,8 +33,8 @@
 
 ## Tuba review
 
-- Classification: **REVIEW REQUIRED**
-- No committed tuba spectral_data module. registry.sounding_range (28–58) is a coarse orchestration placeholder for validation only — not a source-table span.
+- Classification: **PASS**
+- Committed tuba spectral_data ladder (IOWA+ORCH medians via Dynamics_predicter); registry.sounding_range matches the committed table span.
 
 ## Transposition review
 
@@ -41,33 +43,47 @@
 
 ## Per-instrument summary
 
-| ID | Table span | Sounding MIDI | Comfortable | Range | Technique |
-|----|------------|---------------|-------------|-------|-----------|
-| bombo | — | 28–48 | 28–48 | NOT APPLICABLE | NOT APPLICABLE |
-| caixa | — | 60–72 | 60–72 | NOT APPLICABLE | NOT APPLICABLE |
-| celesta | — | 60–96 | 65–88 | NOT APPLICABLE | NOT APPLICABLE |
-| clarinete | D3–C7 | 50–96 | 55–80 | PASS | PASS |
-| clarinete_baixo | — | 34–72 | 40–65 | NOT APPLICABLE | NOT APPLICABLE |
-| contrabaixo | E1–C5 | 28–72 | 31–55 | PASS | PASS |
-| contrafagote | — | 22–77 | 28–65 | NOT APPLICABLE | NOT APPLICABLE |
-| cor_anglais | — | 52–76 | 55–72 | NOT APPLICABLE | NOT APPLICABLE |
-| fagote | — | 34–72 | 40–65 | NOT APPLICABLE | NOT APPLICABLE |
-| flauta | B3–D7 | 59–98 | 62–88 | PASS | PASS |
-| flautim | — | 74–108 | 76–100 | NOT APPLICABLE | NOT APPLICABLE |
-| harpa | — | 23–96 | 40–88 | NOT APPLICABLE | NOT APPLICABLE |
-| marimba | — | 45–84 | 45–84 | NOT APPLICABLE | NOT APPLICABLE |
-| metalofone | — | 72–108 | 72–108 | NOT APPLICABLE | NOT APPLICABLE |
-| oboe | A#3–A6 | 58–93 | 60–81 | PASS | PASS |
-| piano | — | 21–108 | 36–96 | NOT APPLICABLE | NOT APPLICABLE |
-| pratos | — | 60–84 | 60–84 | NOT APPLICABLE | NOT APPLICABLE |
-| tamtam | — | 24–48 | 24–48 | NOT APPLICABLE | NOT APPLICABLE |
-| timpanos | — | 36–60 | 36–60 | NOT APPLICABLE | NOT APPLICABLE |
-| trombone | — | 40–72 | 43–65 | NOT APPLICABLE | NOT APPLICABLE |
-| trombone_baixo | — | 34–65 | 36–58 | NOT APPLICABLE | NOT APPLICABLE |
-| trompa | — | 41–77 | 45–72 | NOT APPLICABLE | NOT APPLICABLE |
-| trompete | — | 55–84 | 58–80 | NOT APPLICABLE | NOT APPLICABLE |
-| tuba | — | 28–58 | 30–50 | NOT APPLICABLE | NOT APPLICABLE |
-| vibrafone | — | 53–84 | 53–84 | NOT APPLICABLE | NOT APPLICABLE |
-| viola | C3–C7 | 48–96 | 50–69 | PASS | PASS |
-| violino | G3–G7 | 55–103 | 55–76 | PASS | PASS |
-| violoncelo | C2–C6 | 36–84 | 40–65 | PASS | PASS |
+| ID | Table span | Sounding MIDI | Comfortable | Excludes range? | Range | Technique |
+|----|------------|---------------|-------------|-----------------|-------|-----------|
+| bombo | D2–D2 | 28–48 | 28–48 | not_applicable_unpitched | PASS | PASS |
+| caixa | — | 60–72 | 60–72 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| celesta | — | 60–96 | 65–88 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| clarinete | D3–C7 | 50–96 | 55–80 | full_coverage | PASS | PASS |
+| clarinete_baixo | — | 34–72 | 40–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| contrabaixo | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo_sordina | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo_sul_ponticello | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo_sul_tasto | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
+| contrafagote | — | 22–77 | 28–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| cor_anglais | — | 52–76 | 55–72 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| fagote | A#1–D#5 | 34–75 | 40–65 | full_coverage | PASS | PASS |
+| flauta | B3–D7 | 59–98 | 62–88 | full_coverage | PASS | PASS |
+| flautim | — | 74–108 | 76–100 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| gongo | C3–C3 | 36–60 | 36–60 | not_applicable_unpitched | PASS | PASS |
+| harpa | — | 23–96 | 40–88 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| marimba | — | 45–84 | 45–84 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| metalofone | — | 72–108 | 72–108 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| oboe | A#3–A6 | 58–93 | 60–81 | full_coverage | PASS | PASS |
+| piano | — | 21–108 | 36–96 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| pratos | C5–C5 | 60–84 | 60–84 | not_applicable_unpitched | PASS | PASS |
+| tamtam | C2–C2 | 24–48 | 24–48 | not_applicable_unpitched | PASS | PASS |
+| timpanos | — | 36–60 | 36–60 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| trombone | — | 40–72 | 43–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| trombone_baixo | — | 34–65 | 36–58 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| trompa | G1–F5 | 41–77 | 45–72 | full_coverage | FAIL | PASS |
+| trompete | E3–D#6 | 52–87 | 58–80 | full_coverage | PASS | PASS |
+| tuba | C1–A#4 | 24–70 | 30–50 | full_coverage | PASS | PASS |
+| vibrafone | — | 53–84 | 53–84 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| viola | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
+| viola_harm | C4–C7 | 60–96 | 60–96 | full_coverage | PASS | PASS |
+| viola_sordina | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
+| viola_sul_ponticello | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
+| violino | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |
+| violino_harm | G4–G7 | 67–103 | 67–96 | full_coverage | PASS | PASS |
+| violino_sordina | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |
+| violino_sul_ponticello | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |
+| violino_sul_tasto | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |
+| violoncelo | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |
+| violoncelo_sordina | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |
+| violoncelo_sul_ponticello | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |
+| violoncelo_sul_tasto | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |

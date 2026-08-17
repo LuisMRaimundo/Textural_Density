@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from core.unpitched_routing import UNPITCHED_INSTRUMENT_GROUP_LABEL
 from instrumentos.registry import list_profiles
 
 NUM_NOTE_ROWS = 60
@@ -13,19 +14,29 @@ OCTAVE_LIST = [str(i) for i in range(10)]
 DYNAMIC_LEVELS = ["pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff"]
 
 
-def _active_instrument_names() -> list[str]:
-    """GUI-selectable instruments: only those backed by a dedicated script.
+def _active_profiles():
+    """Profiles backed by a dedicated acoustic module (GUI-selectable)."""
+    return [p for p in list_profiles() if p.module_name]
 
-    An instrument is "active" when its registry profile declares a
-    ``module_name`` (a committed ``instrumentos/<module>.py`` acoustic table).
-    Coarse-default profiles (no script) are intentionally excluded so the GUI
-    only offers instruments with real acoustic metadata. Registry insertion
-    order is preserved.
-    """
-    return [p.display_name for p in list_profiles() if p.module_name]
+
+def _active_instrument_names() -> list[str]:
+    """Flat list of GUI instrument display names (pitched then unpitched)."""
+    pitched = [p.display_name for p in _active_profiles() if not p.unpitched]
+    unpitched = [p.display_name for p in _active_profiles() if p.unpitched]
+    return pitched + unpitched
+
+
+def instrument_dropdown_values() -> list[str]:
+    """Combobox values with an Unpitched percussion group header."""
+    pitched = [p.display_name for p in _active_profiles() if not p.unpitched]
+    unpitched = [p.display_name for p in _active_profiles() if p.unpitched]
+    if not unpitched:
+        return pitched
+    return pitched + [UNPITCHED_INSTRUMENT_GROUP_LABEL] + unpitched
 
 
 INSTRUMENTS = _active_instrument_names()
+INSTRUMENT_DROPDOWN_VALUES = instrument_dropdown_values()
 CENTS_VALUES = ["0"] + [f"+{i}" for i in range(1, 51)] + [f"-{i}" for i in range(1, 51)]
 NOTAS_BASE = [
     "C",
@@ -58,7 +69,9 @@ __all__ = [
     "CENTS_VALUES",
     "DYNAMIC_LEVELS",
     "INSTRUMENTS",
+    "INSTRUMENT_DROPDOWN_VALUES",
     "NOTAS_BASE",
     "NUM_NOTE_ROWS",
     "OCTAVE_LIST",
+    "instrument_dropdown_values",
 ]

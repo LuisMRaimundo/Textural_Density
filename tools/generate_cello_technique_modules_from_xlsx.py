@@ -275,11 +275,7 @@ def calcular_densidade(nota, dinamica):
     )
 
 
-def predict_intermediate_dynamics(pitches, pp_values, mf_values, ff_values):
-    """Predict intermediate dynamics using Gaussian Process Regression."""
-    from instrumentos.gpr_dynamic_interpolation import predict_intermediate_dynamics_gpr
 
-    return predict_intermediate_dynamics_gpr(pp_values, mf_values, ff_values, logger=logger)
 '''
 
 

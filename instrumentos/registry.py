@@ -59,6 +59,7 @@ class InstrumentProfile:
     missing_data_warnings: tuple[str, ...] = field(default_factory=tuple)
     module_name: str | None = None
     aliases: tuple[str, ...] = field(default_factory=tuple)
+    unpitched: bool = False
 
 
 def _bands(low: float, mid: float, high: float) -> dict[str, tuple[float, float]]:
@@ -87,6 +88,7 @@ def _profile(
     source_notes: str = "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
     warnings: tuple[str, ...] = ("Spectral density is a coarse fallback without external acoustic metadata.",),
     aliases: tuple[str, ...] = (),
+    unpitched: bool = False,
 ) -> InstrumentProfile:
     low, high = sounding
     mid = low + (high - low) / 3
@@ -111,6 +113,7 @@ def _profile(
         missing_data_warnings=warnings,
         module_name=module_name,
         aliases=aliases,
+        unpitched=unpitched,
     )
 
 
@@ -119,7 +122,7 @@ REGISTRY: dict[str, InstrumentProfile] = {}
 # --- Woodwinds ---
 REGISTRY["flauta"] = _profile(
     "flauta",
-    "Flute",
+    "Fl",
     "woodwinds",
     sounding=(59, 98),
     comfortable=(62, 88),
@@ -138,7 +141,7 @@ REGISTRY["flauta"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("flute", "flute_traverso"),
+    aliases=("flute", "flute_traverso", "fl."),
 )
 
 REGISTRY["flautim"] = _profile(
@@ -155,7 +158,7 @@ REGISTRY["flautim"] = _profile(
 
 REGISTRY["oboe"] = _profile(
     "oboe",
-    "Oboe",
+    "Ob",
     "woodwinds",
     sounding=(58, 93),
     comfortable=(60, 81),
@@ -173,7 +176,7 @@ REGISTRY["oboe"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("oboe",),
+    aliases=("oboe", "ob."),
 )
 
 REGISTRY["cor_anglais"] = _profile(
@@ -190,7 +193,7 @@ REGISTRY["cor_anglais"] = _profile(
 
 REGISTRY["clarinete"] = _profile(
     "clarinete",
-    "Clarinet",
+    "Cl",
     "woodwinds",
     sounding=(50, 96),
     comfortable=(55, 80),
@@ -208,7 +211,7 @@ REGISTRY["clarinete"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("clarinet", "clarinete"),
+    aliases=("clarinet", "clarinete", "cl."),
 )
 
 REGISTRY["clarinete_baixo"] = _profile(
@@ -225,7 +228,7 @@ REGISTRY["clarinete_baixo"] = _profile(
 
 REGISTRY["fagote"] = _profile(
     "fagote",
-    "Bassoon",
+    "Bsn",
     "woodwinds",
     sounding=(34, 75),
     comfortable=(40, 65),
@@ -243,7 +246,7 @@ REGISTRY["fagote"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("bassoon", "fagot"),
+    aliases=("bassoon", "fagot", "bsn.", "fg", "fg."),
 )
 
 REGISTRY["contrafagote"] = _profile(
@@ -259,10 +262,9 @@ REGISTRY["contrafagote"] = _profile(
 
 # --- Strings (GPR modules: IOWA+ORCH CDM medians at pp/mf/ff) ---
 for _id, _name, _module, _sound, _comfort, _aliases in (
-    ("violino", "Violin", "violin", (55, 103), (55, 76), ("violin",)),
-    ("viola", "Viola", "viola", (48, 96), (50, 69), ("viola",)),
-    ("violoncelo", "Cello", "cello", (36, 84), (40, 65), ("cello", "violoncello")),
-    ("contrabaixo", "Double bass", "double_bass", (28, 72), (31, 55), ("double_bass", "contrabass", "baixo")),
+    ("violino", "Vl", "violin", (55, 103), (55, 76), ("violin", "vl.", "vln", "vln.")),
+    ("violoncelo", "Vc", "cello", (36, 84), (40, 65), ("cello", "violoncello", "vc.", "vcl")),
+    ("contrabaixo", "Db", "double_bass", (28, 72), (31, 55), ("double_bass", "double bass", "contrabass", "baixo", "db.", "cb", "cb.")),
 ):
     REGISTRY[_id] = _profile(
         _id,
@@ -291,9 +293,38 @@ for _id, _name, _module, _sound, _comfort, _aliases in (
     )
 
 
+REGISTRY["viola"] = _profile(
+    "viola",
+    "vla",
+    "strings",
+    sounding=(48, 96),
+    comfortable=(50, 69),
+    brightness="neutral",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="medium",
+    module_name="viola",
+    supported=("arco", "pizzicato", "tremolo", "harmonic", "mute"),
+    unsupported=("sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/viola.py from "
+        "OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx Results sheet "
+        "(IOWA+ORCHIDEA Zenodo arco sustain medians at pp/mf/ff; PCHIP interiors, "
+        "tapered equal-log outers)."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
+    ),
+    aliases=("viola", "vla", "vla."),
+)
+
+
 REGISTRY["viola_sordina"] = _profile(
     "viola_sordina",
-    "Viola sordina",
+    "vla sord",
     "strings",
     sounding=(48, 96),
     comfortable=(50, 69),
@@ -306,54 +337,25 @@ REGISTRY["viola_sordina"] = _profile(
     supported=("arco", "mute"),
     unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
     source_notes=(
-        "Sparse GPR table in instrumentos/viola_sordina.py from Strings Techniques "
-        "Extrapolation Viola_pp.xlsx / Viola_mf.xlsx / Viola_ff.xlsx "
-        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+        "Committed 10-dynamic CDM ladder in instrumentos/viola_sordina.py from "
+        "OK_VIOLA_con sordina_dynamics extrapolation.xlsx Results sheet "
+        "(CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sordina only; pp/mf/ff come from "
-        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sordina only; anchors come from "
+        "technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
-    aliases=("viola_sordina", "Viola_sordina", "viola con sordina", "viola_con_sordina", "viola sordina", "viola muted", "muted viola"),
-)
-
-
-REGISTRY["viola_sul_tasto"] = _profile(
-    "viola_sul_tasto",
-    "Viola sul tasto",
-    "strings",
-    sounding=(48, 96),
-    comfortable=(50, 69),
-    brightness="dark",
-    sustain="sustained",
-    attack="soft",
-    status="literature_derived",
-    uncertainty="high",
-    module_name="viola_sul_tasto",
-    supported=("arco", "sul_tasto"),
-    unsupported=("pizzicato", "mute", "sul_ponticello"),
-    source_notes=(
-        "Sparse GPR table in instrumentos/viola_sul_tasto.py from Strings Techniques "
-        "Extrapolation Viola_pp.xlsx / Viola_mf.xlsx / Viola_ff.xlsx "
-        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
-    ),
-    warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sul_tasto only; pp/mf/ff come from "
-        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
-        "Other registry supported_techniques are organological capabilities without "
-        "technique-specific table rows.",
-    ),
-    aliases=("viola_sul_tasto", "Viola_sul_tasto", "viola sul tasto", "sul tasto viola", "sul_tasto_viola"),
+    aliases=("viola_sordina", "Viola_sordina", "Viola sordina", "viola con sordina", "viola_con_sordina", "viola sordina", "viola muted", "muted viola", "vla sord", "vla_sord"),
 )
 
 
 REGISTRY["viola_sul_ponticello"] = _profile(
     "viola_sul_ponticello",
-    "Viola sul ponticello",
+    "vla sp",
     "strings",
     sounding=(48, 96),
     comfortable=(50, 69),
@@ -366,23 +368,24 @@ REGISTRY["viola_sul_ponticello"] = _profile(
     supported=("arco", "sul_ponticello"),
     unsupported=("pizzicato", "mute", "sul_tasto"),
     source_notes=(
-        "Sparse GPR table in instrumentos/viola_sul_ponticello.py from Strings Techniques "
-        "Extrapolation Viola_pp.xlsx / Viola_mf.xlsx / Viola_ff.xlsx "
-        "(assumption-based EWSD; pp/mf/ff from estimate_mean)."
+        "Committed 10-dynamic CDM ladder in instrumentos/viola_sul_ponticello.py from "
+        "OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx Results sheet "
+        "(CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sul_ponticello only; pp/mf/ff come from "
-        "assumption-based extrapolation workbooks (not Zenodo-measured CDM).",
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors come from "
+        "technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
-    aliases=("viola_sul_ponticello", "Viola_sul_ponticello", "viola sul pont", "viola_sul_pont", "viola sul ponticello", "sul ponticello viola", "sul_ponticello_viola"),
+    aliases=("viola_sul_ponticello", "Viola_sul_ponticello", "Viola sul ponticello", "viola sul pont", "viola_sul_pont", "viola sul ponticello", "sul ponticello viola", "sul_ponticello_viola", "vla sp", "vla_sp"),
 )
 
 REGISTRY["violino_sordina"] = _profile(
     "violino_sordina",
-    "Violin sordina",
+    "vl sord",
     "strings",
     sounding=(55, 103),
     comfortable=(55, 76),
@@ -395,17 +398,22 @@ REGISTRY["violino_sordina"] = _profile(
     supported=("arco", "mute"),
     unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
     source_notes=(
-        "Sparse GPR table in instrumentos/violin_sordina.py from IOWA+ORCH arco sordina "
-        "Combined Density Metric combined_sord_collection_raw (pp/mf/ff); not a full measured spectrum."
+        "Committed 10-dynamic CDM ladder in instrumentos/violin_sordina.py from "
+        "OK_VIOLIN_con sordina_dynamics extrapolation.xlsx Results sheet "
+        "(CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sordina only; other registry supported_techniques "
-        "are organological capabilities without technique-specific table rows.",
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sordina only; anchors come from technique-"
+        "extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
     ),
     aliases=(
         "violin_sordina",
         "Violin_sordina",
+        "Violin sordina",
         "violin con sordina",
         "violin_con_sordina",
         "violino sordina",
@@ -414,12 +422,14 @@ REGISTRY["violino_sordina"] = _profile(
         "violino_con_sordina",
         "violin muted",
         "muted violin",
+        "vl sord",
+        "vl_sord",
     ),
 )
 
 REGISTRY["violino_sul_ponticello"] = _profile(
     "violino_sul_ponticello",
-    "Violin sul ponticello",
+    "vl sp",
     "strings",
     sounding=(55, 103),
     comfortable=(55, 76),
@@ -432,32 +442,37 @@ REGISTRY["violino_sul_ponticello"] = _profile(
     supported=("arco", "sul_ponticello"),
     unsupported=("pizzicato", "mute", "sul_tasto"),
     source_notes=(
-        "Sparse GPR table in instrumentos/violin_sul_ponticello.py with measured mf CDM "
-        "anchor only; pp/ff extrapolated from violin arco per-note dynamic ratios."
+        "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_ponticello.py from "
+        "OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx Results sheet "
+        "(CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sul_ponticello only; mf/ff come from assumption-based "
-        "extrapolation workbooks; pp anchors are extrapolated from mf using violin arco ratios.",
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors come from technique-"
+        "extrapolated CDM pools (not direct Zenodo technique recordings).",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
     aliases=(
         "violin_sul_ponticello",
         "Violin_sul_ponticello",
+        "Violin sul ponticello",
         "violin sul pont",
         "violin_sul_pont",
         "violino sul ponticello",
         "violino_sul_ponticello",
         "sul ponticello violin",
         "sul_ponticello_violin",
+        "vl sp",
+        "vl_sp",
     ),
 )
 
 
 REGISTRY["violino_sul_tasto"] = _profile(
     "violino_sul_tasto",
-    "Violin sul tasto",
+    "vl st",
     "strings",
     sounding=(55, 103),
     comfortable=(55, 76),
@@ -470,239 +485,127 @@ REGISTRY["violino_sul_tasto"] = _profile(
     supported=("arco", "sul_tasto"),
     unsupported=("pizzicato", "mute", "sul_ponticello"),
     source_notes=(
-        "Sparse GPR table in instrumentos/violin_sul_tasto.py from Strings Techniques "
-        "Extrapolation Violin_mf.xlsx / Violin_ff.xlsx (assumption-based EWSD); "
-        "pp derived from violin arco per-note dynamic ratios."
+        "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_tasto.py from "
+        "OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx Results sheet "
+        "(CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_sul_tasto only; mf/ff come from assumption-based "
-        "extrapolation workbooks; pp anchors are extrapolated from mf using violin arco ratios.",
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_sul_tasto only; anchors come from technique-"
+        "extrapolated CDM pools (not direct Zenodo technique recordings).",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
     aliases=(
         "violin_sul_tasto",
         "Violin_sul_tasto",
+        "Violin sul tasto",
         "violin sul tasto",
         "violino sul tasto",
         "violino_sul_tasto",
         "sul tasto violin",
         "sul_tasto_violin",
+        "vl st",
+        "vl_st",
     ),
 )
 
-REGISTRY["violino_art_harm"] = _profile(
-    "violino_art_harm",
-    "Violin art harm",
+REGISTRY["violino_harm"] = _profile(
+    "violino_harm",
+    "vl harm",
     "strings",
-    sounding=(79, 108),
-    comfortable=(79, 100),
+    sounding=(67, 103),
+    comfortable=(67, 96),
     brightness="bright",
     sustain="sustained",
     attack="soft",
     status="literature_derived",
     uncertainty="high",
-    module_name="violin_art_harm",
+    module_name="violin_harmonics",
     supported=("arco", "harmonic"),
     unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
     source_notes=(
-        "Sparse GPR table in instrumentos/violin_art_harm.py from Strings Techniques "
-        "Extrapolation Violin_pp_hamro.xlsx / Violin_mf_harmo.xlsx / Violin_ff_harmo.xlsx "
-        "(calibrated harmonic descriptor EWSD); sounding pitches G5–C8 (30 rows)."
+        "Committed 10-dynamic CDM ladder in instrumentos/violin_harmonics.py from "
+        "OK_VIOLIN_harmonics_dynamics extrapolation.xlsx Results sheet "
+        "(CDM Technique Extrapolator METApool, pooled natural + artificial harmonics; "
+        "measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_artificial_harmonic only; pp/mf/ff come from "
-        "Strings Techniques Extrapolation harmonic workbooks (calibrated / assumption-based).",
-        "Table span is harmonic sounding register (G5–C8); notes outside this range "
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors come from "
+        "technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Table span is harmonic sounding register (G4\u2013G7); notes outside this range "
         "use controlled pitch extrapolation or fallback.",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
     aliases=(
-        "violin_art_harm",
-        "Violin_art_harm",
-        "violin artificial harmonics",
-        "violin_artificial_harmonics",
-        "violino art harm",
-        "violino_art_harm",
-        "violino artificial harmonics",
-        "art harm violin",
-        "art_harm_violin",
-    ),
-)
-
-
-
-
-REGISTRY["violino_nat_harm"] = _profile(
-    "violino_nat_harm",
-    "Violin nat harm",
-    "strings",
-    sounding=(67, 107),
-    comfortable=(67, 91),
-    brightness="bright",
-    sustain="sustained",
-    attack="soft",
-    status="literature_derived",
-    uncertainty="high",
-    module_name="violin_nat_harm",
-    supported=("arco", "harmonic"),
-    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
-    source_notes=(
-        "Sparse GPR table in instrumentos/violin_nat_harm.py from Strings Techniques "
-        "Extrapolation Violin_pp_hamro.xlsx / Violin_mf_harmo.xlsx / Violin_ff_harmo.xlsx "
-        "(calibrated harmonic descriptor EWSD); sounding pitches G4–B7 (20 rows)."
-    ),
-    warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated by GPR.",
-        "Numerical CDM table covers arco_natural_harmonic only; pp/mf/ff come from "
-        "Strings Techniques Extrapolation harmonic workbooks (calibrated / assumption-based).",
-        "Table span is harmonic sounding register (G4–B7); notes outside this range "
-        "use controlled pitch extrapolation or fallback.",
-        "Other registry supported_techniques are organological capabilities without "
-        "technique-specific table rows.",
-    ),
-    aliases=(
+        "violin_harmonics",
+        "Violin_harmonics",
+        "violin harmonics",
+        "violino harmonics",
+        "violino_harmonics",
+        "violin harm",
+        "violin_harm",
+        "violino harm",
+        "harmonics violin",
+        "harmonics_violin",
+        "vl harm",
+        "vl_harm",
+        # Legacy aliases from the retired split nat/art harmonic modules.
         "violin_nat_harm",
-        "Violin_nat_harm",
-        "violin natural harmonics",
-        "violin_natural_harmonics",
-        "violino nat harm",
+        "violin nat harm",
         "violino_nat_harm",
-        "violino natural harmonics",
-        "nat harm violin",
-        "nat_harm_violin",
+        "violin natural harmonics",
+        "violin_art_harm",
+        "violin art harm",
+        "violino_art_harm",
+        "violin artificial harmonics",
     ),
 )
 
-
-REGISTRY["viola_art_harm"] = _profile(
-    "viola_art_harm",
-    "Viola art harm",
+REGISTRY["viola_harm"] = _profile(
+    "viola_harm",
+    "vla harm",
     "strings",
-    sounding=(72, 108),
-    comfortable=(72, 96),
-    brightness="neutral",
+    sounding=(60, 96),
+    comfortable=(60, 96),
+    brightness="bright",
     sustain="sustained",
     attack="soft",
     status="literature_derived",
     uncertainty="high",
-    module_name="viola_art_harm",
+    module_name="viola_harmonics",
     supported=("arco", "harmonic"),
     unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
     source_notes=(
-        "Same-instrument viola artificial_harmonic mf table (35 unique sounding pitches) "
-        "from STE measured CSVs; multi-collection mean; no violin transfer."
+        "Committed 10-dynamic CDM ladder in instrumentos/viola_harmonics.py from "
+        "OK_VIOLA_harmonics_dynamics extrapolation.xlsx Results sheet "
+        "(CDM Technique Extrapolator METApool, pooled natural + artificial harmonics; "
+        "measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "Only dynamic mf is calibrated; pp/ff are not fabricated from mf.",
-        "Cross-instrument transfer from violin is disabled.",
+        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors come from "
+        "technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "Table span is harmonic sounding register (C4\u2013C7); notes outside this range "
+        "use controlled pitch extrapolation or fallback.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
     ),
     aliases=(
-        "viola_art_harm",
-        "Viola_art_harm",
-        "viola artificial harmonics",
-        "viola_artificial_harmonics",
-        "art_harm_viola",
+        "viola_harmonics",
+        "Viola_harmonics",
+        "viola harmonics",
+        "viola harm",
+        "viola_harm",
+        "harmonics viola",
+        "harmonics_viola",
+        "vla harm",
+        "vla_harm",
     ),
 )
-
-
-REGISTRY["viola_nat_harm"] = _profile(
-    "viola_nat_harm",
-    "Viola nat harm",
-    "strings",
-    sounding=(48, 96),
-    comfortable=(50, 84),
-    brightness="neutral",
-    sustain="sustained",
-    attack="soft",
-    status="coarse_default",
-    uncertainty="high",
-    module_name="viola_nat_harm",
-    supported=("arco", "harmonic"),
-    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
-    source_notes=(
-        "implemented_but_uncalibrated: STE modal register may generate pitches, "
-        "but no viola natural_harmonic EWSD measured table is available."
-    ),
-    warnings=(
-        "Acoustic density lookup returns unavailable until same-instrument calibration exists.",
-        "Do not use violin natural_harmonic coefficients for viola.",
-    ),
-    aliases=(
-        "viola_nat_harm",
-        "Viola_nat_harm",
-        "viola natural harmonics",
-        "viola_natural_harmonics",
-        "nat_harm_viola",
-    ),
-)
-
-
-REGISTRY["cello_art_harm"] = _profile(
-    "cello_art_harm",
-    "Cello art harm",
-    "strings",
-    sounding=(36, 96),
-    comfortable=(36, 84),
-    brightness="dark",
-    sustain="sustained",
-    attack="soft",
-    status="coarse_default",
-    uncertainty="high",
-    module_name="cello_art_harm",
-    supported=("arco", "harmonic"),
-    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
-    source_notes=(
-        "implemented_but_uncalibrated: no cello artificial_harmonic EWSD measured table."
-    ),
-    warnings=(
-        "Acoustic density lookup returns unavailable until same-instrument calibration exists.",
-        "Do not use violin/viola coefficients for cello.",
-    ),
-    aliases=(
-        "cello_art_harm",
-        "violoncelo_art_harm",
-        "cello artificial harmonics",
-        "cello_artificial_harmonics",
-        "art_harm_cello",
-    ),
-)
-
-
-REGISTRY["cello_nat_harm"] = _profile(
-    "cello_nat_harm",
-    "Cello nat harm",
-    "strings",
-    sounding=(36, 96),
-    comfortable=(36, 84),
-    brightness="dark",
-    sustain="sustained",
-    attack="soft",
-    status="coarse_default",
-    uncertainty="high",
-    module_name="cello_nat_harm",
-    supported=("arco", "harmonic"),
-    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
-    source_notes=(
-        "implemented_but_uncalibrated: no cello natural_harmonic EWSD measured table."
-    ),
-    warnings=(
-        "Acoustic density lookup returns unavailable until same-instrument calibration exists.",
-        "Do not use violin/viola coefficients for cello.",
-    ),
-    aliases=(
-        "cello_nat_harm",
-        "violoncelo_nat_harm",
-        "cello natural harmonics",
-        "cello_natural_harmonics",
-        "nat_harm_cello",
-    ),
-)
-
 
 REGISTRY["violoncelo_sordina"] = _profile(
     "violoncelo_sordina",
@@ -886,19 +789,31 @@ REGISTRY["contrabaixo_sul_ponticello"] = _profile(
 # --- Brass ---
 REGISTRY["trompa"] = _profile(
     "trompa",
-    "Horn",
+    "Hn",
     "brass",
     sounding=(41, 77),
     comfortable=(45, 72),
     brightness="neutral",
     transposition=7,
+    status="literature_derived",
+    uncertainty="medium",
+    module_name="horn",
     supported=("legato", "staccato", "stopped", "mute"),
-    aliases=("horn", "french_horn", "trompa"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/horn.py from IOWA+ORCH "
+        "sustain medians (pp/mf/ff anchors; Dynamics_predicter Results sheet)."
+    ),
+    warnings=(
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
+    ),
+    aliases=("horn", "french_horn", "trompa", "hn."),
 )
 
 REGISTRY["trompete"] = _profile(
     "trompete",
-    "Trumpet",
+    "Tpt",
     "brass",
     sounding=(52, 87),
     comfortable=(58, 80),
@@ -918,7 +833,7 @@ REGISTRY["trompete"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("trumpet",),
+    aliases=("trumpet", "tpt."),
 )
 
 REGISTRY["trombone"] = _profile(
@@ -943,19 +858,26 @@ REGISTRY["trombone_baixo"] = _profile(
 
 REGISTRY["tuba"] = _profile(
     "tuba",
-    "Tuba",
+    "Tba",
     "brass",
-    sounding=(28, 58),
+    sounding=(24, 70),
     comfortable=(30, 50),
     brightness="dark",
+    status="literature_derived",
+    uncertainty="medium",
+    module_name="tuba",
+    supported=("legato", "staccato", "mute"),
     source_notes=(
-        "Coarse brass profile without committed acoustic CDM table. "
-        "sounding_range (MIDI 28–58) is a provisional validation placeholder — not source-table validated."
+        "Committed 10-dynamic CDM ladder in instrumentos/tuba.py from IOWA+ORCH "
+        "sustain medians (pp/mf/ff anchors; Dynamics_predicter Results sheet). "
+        "sounding_range (MIDI 24–70, C1–A#4) matches the committed table span."
     ),
     warnings=(
-        "Tuba spectral density uses coarse register/dynamic proxy only; range metadata requires organological review.",
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("tuba",),
+    aliases=("tuba", "tba."),
 )
 
 # --- Keyboard / harp ---
@@ -999,18 +921,124 @@ REGISTRY["harpa"] = _profile(
 )
 
 # --- Percussion (pitch where applicable) ---
-_PERCUSSION = (
+# Table-backed unpitched specimens (NonTunPerc Analysis strike composite → CDM).
+REGISTRY["bombo"] = _profile(
+    "bombo",
+    "Bass drum",
+    "percussion",
+    sounding=(28, 48),
+    comfortable=(28, 48),
+    brightness="dark",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="bass_drum",
+    unpitched=True,
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/bass_drum.py from NonTunPerc MC p50 "
+        "bassdrum_82cm strike composite_index (ff) with scaled pp/mf; unpitched — "
+        "note is notation-lookup convention only."
+    ),
+    warnings=(
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_membrane only; note key excluded from pitch-structure metrics.",
+    ),
+    aliases=("bass_drum", "bass drum"),
+)
+
+REGISTRY["pratos"] = _profile(
+    "pratos",
+    "Cymbals",
+    "percussion",
+    sounding=(60, 84),
+    comfortable=(60, 84),
+    brightness="very_bright",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="cymbals",
+    unpitched=True,
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/cymbals.py from NonTunPerc MC p50 "
+        "cymbal_46cm_medium shimmer composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is notation-lookup convention only."
+    ),
+    warnings=(
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
+    ),
+    aliases=("cymbals", "cymbal"),
+)
+
+REGISTRY["tamtam"] = _profile(
+    "tamtam",
+    "Tam-tam",
+    "percussion",
+    sounding=(24, 48),
+    comfortable=(24, 48),
+    brightness="bright",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="tamtam",
+    unpitched=True,
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/tamtam.py from NonTunPerc MC p50 "
+        "tamtam_80cm_bronze shimmer composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is notation-lookup convention only."
+    ),
+    warnings=(
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
+    ),
+    aliases=("tam_tam", "tam-tam", "tam tam"),
+)
+
+REGISTRY["gongo"] = _profile(
+    "gongo",
+    "Gong",
+    "percussion",
+    sounding=(36, 60),
+    comfortable=(36, 60),
+    brightness="bright",
+    attack="hard",
+    sustain="decaying",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="gong",
+    unpitched=True,
+    supported=("struck", "rolled"),
+    unsupported=("damped",),
+    source_notes=(
+        "Sparse GPR table in instrumentos/gong.py from NonTunPerc MC p50 "
+        "gong_50cm_bronze shimmer composite_index (ff) with scaled pp/mf; "
+        "unpitched — note is notation-lookup convention only."
+    ),
+    warnings=(
+        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
+    ),
+    aliases=("gong",),
+)
+
+_PERCUSSION_COARSE = (
     ("timpanos", "Timpani", (36, 60), ("timpani", "timbales")),
-    ("bombo", "Bass drum", (28, 48), ("bass_drum",)),
     ("caixa", "Snare drum", (60, 72), ("snare_drum", "snare")),
-    ("pratos", "Cymbals", (60, 84), ("cymbals",)),
-    ("tamtam", "Tam-tam", (24, 48), ("tam_tam", "tam-tam")),
     ("vibrafone", "Vibraphone", (53, 84), ("vibraphone",)),
     ("marimba", "Marimba", (45, 84), ("marimba",)),
     ("metalofone", "Glockenspiel", (72, 108), ("glockenspiel", "glock")),
 )
 
-for _id, _name, _sound, _aliases in _PERCUSSION:
+for _id, _name, _sound, _aliases in _PERCUSSION_COARSE:
     REGISTRY[_id] = _profile(
         _id,
         _name,

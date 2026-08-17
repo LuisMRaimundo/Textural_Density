@@ -35,12 +35,11 @@ _GPR_MODULES = frozenset(
         "violin_sordina",
         "violin_sul_tasto",
         "violin_sul_ponticello",
-        "violin_art_harm",
-        "violin_nat_harm",
+        "violin_harmonics",
         "viola",
         "viola_sordina",
-        "viola_sul_tasto",
         "viola_sul_ponticello",
+        "viola_harmonics",
         "cello",
         "cello_sordina",
         "cello_sul_tasto",
@@ -49,6 +48,13 @@ _GPR_MODULES = frozenset(
         "double_bass_sordina",
         "double_bass_sul_tasto",
         "double_bass_sul_ponticello",
+        "trumpet",
+        "horn",
+        "tuba",
+        "bass_drum",
+        "cymbals",
+        "tamtam",
+        "gong",
     }
 )
 
@@ -111,15 +117,35 @@ def _double_bass_span_classification(table: dict[str, Any] | None) -> dict[str, 
 def _tuba_classification() -> dict[str, Any]:
     profile = REGISTRY["tuba"]
     lo, hi = profile.sounding_range
+    table = _table_span(profile.module_name)
+    if table is None:
+        return {
+            "module_name": profile.module_name,
+            "profile_status": profile.profile_status,
+            "sounding_range_midi": f"{int(lo)}–{int(hi)}",
+            "classification": "REVIEW REQUIRED",
+            "range_kind": "coarse_default_validation_placeholder",
+            "rationale": (
+                "No committed tuba spectral_data module. registry.sounding_range is a coarse "
+                "orchestration placeholder for validation only — not a source-table span."
+            ),
+        }
+    aligned = int(lo) == table["min_midi"] and int(hi) == table["max_midi"]
     return {
         "module_name": profile.module_name,
         "profile_status": profile.profile_status,
         "sounding_range_midi": f"{int(lo)}–{int(hi)}",
-        "classification": "REVIEW REQUIRED",
-        "range_kind": "coarse_default_validation_placeholder",
+        "source_table_span": (
+            f"{table['first_note']}–{table['last_note']} "
+            f"(MIDI {table['min_midi']}–{table['max_midi']})"
+        ),
+        "classification": "PASS" if aligned else "REVIEW REQUIRED",
+        "range_kind": "source_table_span",
         "rationale": (
-            "No committed tuba spectral_data module. registry.sounding_range (28–58) is a coarse "
-            "orchestration placeholder for validation only — not a source-table span."
+            "Committed tuba spectral_data ladder (IOWA+ORCH medians via Dynamics_predicter); "
+            "registry.sounding_range matches the committed table span."
+            if aligned
+            else "Committed tuba table span disagrees with registry.sounding_range — review."
         ),
     }
 
@@ -212,11 +238,35 @@ def build_metadata_range_resolution_audit() -> dict[str, Any]:
         }
         if table and pitch_range and (table["min_midi"], table["max_midi"]) != tuple(pitch_range):
             row["documentation_contradictions"].append("INSTRUMENT_SOURCE.pitch_range != spectral_data span")
+        from instrumentos.table_coverage import table_excludes_sounding_range
+
+        coverage = table_excludes_sounding_range(
+            int(lo),
+            int(hi),
+            (table["min_midi"], table["max_midi"]) if table else None,
+            unpitched=bool(getattr(profile, "unpitched", False)),
+        )
+        row.update(coverage)
+        if coverage["table_excludes_sounding_range"] and coverage["exclusion_kind"] == "partial_table":
+            row["range_classification"] = "REVIEW REQUIRED"
+            row["documentation_contradictions"].append(
+                "spectral_data span excludes part of registry sounding_range "
+                f"(missing_low={coverage['missing_low_semitones']}, "
+                f"missing_high={coverage['missing_high_semitones']})"
+            )
         instruments.append(row)
+
+    excluding = [
+        r
+        for r in instruments
+        if r.get("table_excludes_sounding_range") and r.get("exclusion_kind") == "partial_table"
+    ]
 
     return {
         "range_semantics": RANGE_SEMANTICS,
         "instrument_count": len(instruments),
+        "table_excludes_sounding_range_count": len(excluding),
+        "table_excludes_sounding_range_ids": [r["instrument_id"] for r in excluding],
         "instruments": instruments,
         "double_bass_resolution": _double_bass_span_classification(_table_span("double_bass")),
         "tuba_review": _tuba_classification(),

@@ -79,13 +79,18 @@ class TestDoubleBassSpanResolution:
 
 
 class TestTubaClassification:
-    def test_coarse_default_no_module(self):
+    def test_table_backed_module_wired(self):
         profile = REGISTRY["tuba"]
-        assert profile.module_name is None
-        assert profile.profile_status == "coarse_default"
+        assert profile.module_name == "tuba"
+        assert profile.profile_status != "coarse_default"
+        mod = importlib.import_module("instrumentos.tuba")
+        t_lo, t_hi = mod.INSTRUMENT_SOURCE.pitch_range
+        assert profile.sounding_range == (t_lo, t_hi)
 
-    def test_audit_review_required(self, audit_payload):
-        assert audit_payload["tuba_review"]["classification"] == "REVIEW REQUIRED"
+    def test_audit_passes_with_committed_table(self, audit_payload):
+        review = audit_payload["tuba_review"]
+        assert review["classification"] == "PASS"
+        assert review["range_kind"] == "source_table_span"
 
 
 class TestTranspositionMetadata:

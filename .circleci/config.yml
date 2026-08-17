@@ -59,7 +59,8 @@ jobs:
             grep -q "Textural Density" README.md
             legacy_hits=$(
               grep -r --include='*.md' --include='*.py' --include='*.toml' --include='*.yml' --include='*.yaml' \
-                -E 'Simultaneity Density|Densidade Vertical|\<SDA\>' . --exclude-dir=.git 2>/dev/null \
+                -E 'Simultaneity Density|Densidade Vertical|\<SDA\>' . \
+                --exclude-dir=.git --exclude-dir=.github --exclude-dir=.circleci 2>/dev/null \
                 | grep -v 'tools/rename_docs_branding.py' || true
             )
             if [ -n "$legacy_hits" ]; then

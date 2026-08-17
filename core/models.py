@@ -78,6 +78,9 @@ class InstrumentEvent:
     part_id: Optional[str] = None
     source_measure: Optional[str] = None
     source_beat: Optional[str] = None
+    # True for unpitched percussion: sounding_pitch.note_name is a CDM lookup
+    # placeholder only (no acoustic / pitch-structure meaning).
+    unpitched: bool = False
     metadata: dict[str, Any] = field(default_factory=dict)
 
 

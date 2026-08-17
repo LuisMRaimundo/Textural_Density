@@ -13,6 +13,7 @@ from typing import Any
 import numpy as np
 
 from config import MAX_DENS_GLOBAL, USE_LOG_COMPRESSION
+from core.composite import composite_formula_metadata
 from core.composite import compute_weighted_density_normalized
 from core.converters import (
     analysis_config_from_input,
@@ -28,6 +29,7 @@ from core.metrics_metadata import MetricAssemblyContext, attach_metric_metadata
 from core.orchestration import compute_one_player_densities_for_slice, compute_slice_orchestral_metrics
 from core.quantity_scaling import quantity_scaling_metadata
 from core.pitch_aggregation import PitchAggregationResult, aggregate_events_by_pitch
+from core.unpitched_routing import partition_pitched_events
 from core.pitch_structure import (
     compute_composite_vertical_density,
     compute_interval_compactness_distinct,
@@ -152,12 +154,26 @@ def calculate_metrics(
         )
     )
 
-    pitch_agg = aggregate_events_by_pitch(
+    (
+        pitched_notas,
+        pitched_weights,
+        pitched_players,
+        pitched_dynamics,
+        pitched_instruments,
+        unpitched_warnings,
+    ) = partition_pitched_events(
         notas,
         weights=one_player_densities,
         player_counts=numeros_instr,
         dynamics=dinamicas,
         instruments=instrumentos,
+    )
+    pitch_agg = aggregate_events_by_pitch(
+        pitched_notas,
+        weights=pitched_weights,
+        player_counts=pitched_players,
+        dynamics=pitched_dynamics,
+        instruments=pitched_instruments,
     )
 
     densidade_intervalar_raw, densidade_intervalar_val = compute_interval_compactness_distinct(
@@ -176,7 +192,19 @@ def calculate_metrics(
     harm_rat = calculate_harmonic_ratio(bin_midis, bin_weights_spectral)
     spectral_entropy = float(comp_dict.get("spectral_entropy", 0))
 
-    texture = calculate_texture_density(bin_midis, bin_players)
+    full_event_count = len(notas)
+    full_player_count = int(sum(max(1, int(n)) for n in numeros_instr))
+    pitched_event_count = len(pitched_notas)
+    unpitched_event_count = int(full_event_count - pitched_event_count)
+
+    # Texture: polyphony/variability/contrast from pitched bins; players +
+    # average CDM from the full slice (pitched + unpitched).
+    texture = calculate_texture_density(
+        bin_midis,
+        bin_players,
+        all_player_counts=numeros_instr,
+        all_densities=one_player_densities,
+    )
     timbre = calculate_timbre_blend(instrumentos, one_player_densities)
     orch = calculate_orchestration_balance(bin_midis, bin_weights_spectral, instrumentos)
 
@@ -200,23 +228,36 @@ def calculate_metrics(
         harmonic_ratio=float(harm_rat),
     )
 
+    # Unified composite for all regimes: slider blend × √M / REF (no
+    # event-kind fallback). Pitch_structure remains a reported axis only.
     densidade_total_val, densidade_total_pre_log = compute_composite_vertical_density(
-        pitch_structure_density,
+        densidade_ponderada_val,
         massa_sonora_val,
         MAX_DENS_GLOBAL,
         apply_log_compression=USE_LOG_COMPRESSION,
     )
+    composite_mode = "weighted_blend_mass_log"
 
     mass_boost = float(np.sqrt(max(0.0, massa_sonora_val)))
     complexity_factor = 1.0 + float(np.log1p(spectral_entropy))
 
-    total_tones_count = len(notas)
+    # Pitch-structure absolute density counts pitched events only (unpitched
+    # note keys are lookup metadata and do not enlarge the pitch set).
+    total_tones_count = pitched_event_count
     if pitch_agg.distinct_pitch_count < 2:
         densidade_absoluta_val = 0.0
     else:
         densidade_absoluta_val = densidade_ponderada_val * np.log1p(total_tones_count)
 
     pitch_aggregation_dict = pitch_agg.to_dict()
+    # Event/Player Count = full slice (pitched + unpitched). Pitch-structure
+    # fields (distinct bins, doublings, polyphony) remain pitched-only.
+    pitch_aggregation_dict["event_count"] = int(full_event_count)
+    pitch_aggregation_dict["player_count"] = int(full_player_count)
+    pitch_aggregation_dict["total_player_count"] = int(full_player_count)
+    pitch_aggregation_dict["pitched_event_count"] = int(pitched_event_count)
+    pitch_aggregation_dict["unpitched_event_count"] = int(unpitched_event_count)
+    pitch_aggregation_dict["pitched_player_count"] = int(pitch_agg.total_player_count)
     pitch_aggregation_dict["source_groups"] = [s.to_dict() for s in aggregated_sources]
     pitch_aggregation_dict["instrument_lookup_trace"] = instrument_lookup_trace
     resultados = _assemble_results(
@@ -242,8 +283,20 @@ def calculate_metrics(
     )
     resultados["density"]["weighted_pitch"] = float(weighted_pitch)
     resultados["density"]["weighted_orchestral"] = float(weighted_orchestral)
+    resultados["composite_meta"] = {
+        "mode": composite_mode,
+        "normalization_ref": float(MAX_DENS_GLOBAL),
+        "weight_factor": float(weight_factor),
+        "use_log_compression": bool(USE_LOG_COMPRESSION),
+        "formula": composite_formula_metadata(
+            w=float(weight_factor),
+            ref=float(MAX_DENS_GLOBAL),
+            use_log_compression=bool(USE_LOG_COMPRESSION),
+        ),
+        "d_blend": float(densidade_ponderada_val),
+    }
     resultados["quantity_scaling"] = quantity_scaling_metadata(
-        player_count=int(pitch_agg.total_player_count)
+        player_count=int(full_player_count)
     )
 
     try:
@@ -281,6 +334,7 @@ def calculate_metrics(
             complexity_factor=float(complexity_factor),
             dynamic_boost=float(mass_boost),
             pitch_aggregation=pitch_aggregation_dict,
+            extra_warnings=list(unpitched_warnings),
         ),
         input_data=input_data,
         software_version=software_version,

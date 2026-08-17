@@ -13,41 +13,52 @@ from mpl_toolkits.mplot3d import Axes3D
 
 def calculate_texture_density(
     pitches: list[float] | np.ndarray,
-    instruments_counts: list[int] | np.ndarray
+    instruments_counts: list[int] | np.ndarray,
+    *,
+    all_player_counts: list[int] | np.ndarray | None = None,
+    all_densities: list[float] | np.ndarray | None = None,
 ) -> dict[str, float]:
     """
-    Texture metrics from distinct pitch bins (not raw event rows).
+    Texture metrics with pitched-bin polyphony and optional full-slice players/CDM.
 
-    ``pitches`` and ``instruments_counts`` must refer to aggregated pitch bins:
-    one entry per distinct simultaneous pitch. ``instruments_counts`` is the
-    total player count (Qty sum) per pitch bin — not polyphony.
-
-    Returns player-weighted mass and pitch polyphony (distinct pitch count).
+    ``pitches`` / ``instruments_counts`` are **pitched** distinct-bin summaries
+    (polyphony, variability, contrast). When ``all_player_counts`` is given,
+    ``player_count`` and ``player_weighted_texture_mass`` use the full slice
+    (pitched + unpitched Qty). When ``all_densities`` is given (one-player CDM
+    per event, aligned with ``all_player_counts``), ``average_texture_density``
+    is the Qty-weighted mean CDM — including unpitched events.
     """
-    if len(pitches) == 0 or len(instruments_counts) == 0:
-        return {
-            "player_count": 0,
-            "player_weighted_texture_mass": 0,
-            "pitch_polyphony": 0,
-            "average_texture_density": 0,
-            "texture_polyphony": 0,
-            "texture_variability": 0,
-            "texture_contrast": 0,
-        }
+    pitched = list(pitches) if pitches is not None else []
+    pitched_players = list(instruments_counts) if instruments_counts is not None else []
+    pitch_polyphony = len(pitched)
 
-    player_count = int(sum(instruments_counts))
-    pitch_polyphony = len(pitches)
-
-    # Legacy alias: total players across distinct pitch bins
-    player_weighted_texture_mass = float(player_count)
-    average_texture_density = player_weighted_texture_mass
-
-    if len(pitches) > 1:
-        texture_variability = np.std(pitches)
+    if all_player_counts is not None:
+        player_count = int(sum(max(1, int(p)) for p in all_player_counts))
+    elif pitched_players:
+        player_count = int(sum(pitched_players))
     else:
-        texture_variability = 0
+        player_count = 0
 
-    texture_contrast = max(pitches) - min(pitches) if len(pitches) > 1 else 0
+    player_weighted_texture_mass = float(player_count)
+
+    if all_densities is not None and all_player_counts is not None and player_count > 0:
+        dens = list(all_densities)
+        pcs = [max(1, int(p)) for p in all_player_counts]
+        n = min(len(dens), len(pcs))
+        mass = sum(float(dens[i]) * pcs[i] for i in range(n))
+        average_texture_density = float(mass / player_count)
+    elif all_densities is not None and len(all_densities) > 0:
+        average_texture_density = float(np.mean(list(all_densities)))
+    else:
+        # Legacy pitched-only call sites: average equals total players.
+        average_texture_density = player_weighted_texture_mass
+
+    if pitch_polyphony > 1:
+        texture_variability = float(np.std(pitched))
+        texture_contrast = float(max(pitched) - min(pitched))
+    else:
+        texture_variability = 0.0
+        texture_contrast = 0.0
 
     return {
         "player_count": float(player_count),
@@ -55,8 +66,8 @@ def calculate_texture_density(
         "pitch_polyphony": float(pitch_polyphony),
         "average_texture_density": average_texture_density,
         "texture_polyphony": float(pitch_polyphony),
-        "texture_variability": float(texture_variability),
-        "texture_contrast": float(texture_contrast),
+        "texture_variability": texture_variability,
+        "texture_contrast": texture_contrast,
     }
 
 

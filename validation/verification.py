@@ -126,13 +126,17 @@ def run_verification_suite() -> VerificationResult:
 
     unison = _calculate(base_input(["C4", "C4", "C4", "C4"]))
     differentiated = _calculate(base_input(["C4", "C#4", "D4", "E4"]))
+    # Task 8c: composite includes mass for all regimes, so high-qty unison may
+    # outrank a sparse differentiated chord on density.total. Vertical diversity
+    # is asserted on the pitch-structure axis (still zero for exact unison).
     checks.append(
         CheckResult(
-            "property.unison_not_highest_composite",
-            float(differentiated["density"]["total"]) > float(unison["density"]["total"]),
+            "property.unison_not_highest_pitch_structure",
+            float(differentiated["density"]["pitch_structure"])
+            > float(unison["density"]["pitch_structure"]),
             (
-                f"unison total={unison['density']['total']:.4f}, "
-                f"differentiated={differentiated['density']['total']:.4f}"
+                f"unison pitch_structure={unison['density']['pitch_structure']:.4f}, "
+                f"differentiated={differentiated['density']['pitch_structure']:.4f}"
             ),
         )
     )

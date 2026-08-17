@@ -9,6 +9,10 @@ from typing import Any
 
 import numpy as np
 
+from config import MAX_DENS_GLOBAL, USE_LOG_COMPRESSION
+from core.composite import format_composite_header_line
+from core.unpitched_labels import format_unpitched_exclusion_note
+
 logger = logging.getLogger(__name__)
 
 
@@ -27,6 +31,7 @@ def format_output_string(resultados: dict[str, Any]) -> str:
         event_doubling = int(agg.get("event_doubling_count", agg.get("doubling_count", 0)))
         player_doubling = int(agg.get("player_doubling_count", 0))
         total_players = int(agg.get("player_count", agg.get("total_player_count", event_count)))
+        unpitched_events = int(agg.get("unpitched_event_count", 0))
         has_pitch_structure = distinct_pitch >= 2
 
         pitch_structure_val = float(dens.get("pitch_structure", dens.get("refined", 0)))
@@ -35,13 +40,34 @@ def format_output_string(resultados: dict[str, Any]) -> str:
         instrument_sum = float(dens["instrument"])
         weighted_pitch = float(dens.get("weighted_pitch", 0))
         weighted_orch = float(dens.get("weighted_orchestral", dens.get("weighted", 0)))
+        composite_meta = resultados.get("composite_meta") or {}
+        composite_ref = float(composite_meta.get("normalization_ref", MAX_DENS_GLOBAL))
+        weight_w = float(
+            composite_meta.get(
+                "weight_factor",
+                (resultados.get("input_data") or {}).get("weight_factor", 0.5),
+            )
+        )
+        d_blend = float(dens.get("weighted", 0))
+        pitched_events = int(agg.get("pitched_event_count", distinct_pitch))
 
         moments = resultados["spectral_moments"]
         spectral_entropy = max(0.0, float(moments.get("spectral_entropy", 0)))
         complexity = max(0.0, float(resultados["additional_metrics"].get("complexity", 0)))
 
+        composite_norm_line = format_composite_header_line(
+            d_blend=d_blend,
+            sonic_mass=sonic_mass,
+            w=weight_w,
+            ref=composite_ref,
+            use_log_compression=bool(
+                composite_meta.get("use_log_compression", USE_LOG_COMPRESSION)
+            ),
+        )
+
         lines = [
             "==================== PITCH STRUCTURE ====================",
+            composite_norm_line,
             f"Event Count: {event_count}",
             f"Player Count: {total_players}",
             f"Distinct Pitch Count: {distinct_pitch}",
@@ -49,6 +75,8 @@ def format_output_string(resultados: dict[str, Any]) -> str:
             f"Event Doubling Count: {event_doubling}",
             f"Player Doubling Count: {player_doubling}",
         ]
+        if unpitched_events > 0:
+            lines.append(format_unpitched_exclusion_note(unpitched_events))
         if not has_pitch_structure:
             lines.append(
                 "Note: unison / single pitch — no vertical pitch-structure diversity."
@@ -65,18 +93,35 @@ def format_output_string(resultados: dict[str, Any]) -> str:
                 f"Weighted Orchestral Component: {_fmt(weighted_orch)}",
                 f"Weighted Pitch Component: {_fmt(weighted_pitch)}",
                 "",
-                "================ SPECTRAL (distinct pitch bins) ===============",
-                f"Centroid: {moments['centroid']['frequency']:.2f} Hz, Note: {moments['centroid']['note']}",
-                f"Spread: ±{moments['spread']['deviation']:.2f} Hz",
-                f"Entropy: {_fmt(spectral_entropy)}",
-                "",
-                "=============== ADVANCED METRICS ===============",
-                f"Spectral Complexity: {_fmt(complexity)}",
-                f"Harmonic Ratio: {resultados['additional_metrics'].get('harmonic_ratio', 0):.4f}",
-                "",
-                "================== TEXTURE ======================",
             ]
         )
+        if pitched_events == 0:
+            lines.extend(
+                [
+                    "================ SPECTRAL (distinct pitch bins) ===============",
+                    "n/a — no pitched content",
+                    "",
+                    "=============== ADVANCED METRICS ===============",
+                    "n/a — no pitched content",
+                    "",
+                    "================== TEXTURE ======================",
+                ]
+            )
+        else:
+            lines.extend(
+                [
+                    "================ SPECTRAL (distinct pitch bins) ===============",
+                    f"Centroid: {moments['centroid']['frequency']:.2f} Hz, Note: {moments['centroid']['note']}",
+                    f"Spread: ±{moments['spread']['deviation']:.2f} Hz",
+                    f"Entropy: {_fmt(spectral_entropy)}",
+                    "",
+                    "=============== ADVANCED METRICS ===============",
+                    f"Spectral Complexity: {_fmt(complexity)}",
+                    f"Harmonic Ratio: {resultados['additional_metrics'].get('harmonic_ratio', 0):.4f}",
+                    "",
+                    "================== TEXTURE ======================",
+                ]
+            )
 
         output_string = "\n".join(lines) + "\n"
         for k, v in resultados["texture"].items():

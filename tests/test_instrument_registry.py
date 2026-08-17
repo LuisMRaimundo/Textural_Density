@@ -37,6 +37,7 @@ REQUIRED_FAMILIES = {
     "caixa",
     "pratos",
     "tamtam",
+    "gongo",
     "vibrafone",
     "marimba",
     "metalofone",

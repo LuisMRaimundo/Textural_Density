@@ -15,7 +15,7 @@ from instrumentos import get_instrument_module, get_instrument_profile
 from instrumentos.provenance import InstrumentSource
 from instrumentos.spectral_lookup import lookup_spectral_density_detailed
 from microtonal import note_to_midi_strict
-from tests.string_constants import SOURCE_DYNAMICS, STRING_INSTRUMENTS, StringInstrumentSpec
+from tests.string_constants import STRING_INSTRUMENTS, StringInstrumentSpec
 
 FLOAT_TOL = 1e-5
 _WINDOWS_ABS_PATH = re.compile(r"^[A-Za-z]:[\\/]")
@@ -41,16 +41,19 @@ class TestStringModuleImportContract:
         assert hasattr(mod, "spectral_data") and mod.spectral_data
         assert hasattr(mod, "INSTRUMENT_SOURCE")
         assert callable(mod.calcular_densidade)
-        assert callable(mod.predict_intermediate_dynamics)
+        assert not hasattr(mod, "predict_intermediate_dynamics")
         assert getattr(mod, "IS_COARSE_DEFAULT", False) is False
 
     @pytest.mark.parametrize("spec", STRING_INSTRUMENTS, ids=lambda s: s.module_name)
     def test_instrument_source_metadata(self, spec: StringInstrumentSpec):
+        from config import DYNAMIC_LEVELS
+
         src: InstrumentSource = _load_module(spec).INSTRUMENT_SOURCE
         assert src.source_type == "external_acoustic_metadata"
         assert src.citation
         assert src.extraction_method
-        assert src.dynamic_levels == SOURCE_DYNAMICS
+        # Core arco string modules commit full 10-dynamic Results ladders.
+        assert src.dynamic_levels == tuple(DYNAMIC_LEVELS)
         assert src.uncertainty in {"low", "medium", "high"}
         assert src.version
         assert src.pitch_range[0] < src.pitch_range[1]
@@ -68,11 +71,13 @@ class TestStringTableShape:
 
     @pytest.mark.parametrize("spec", STRING_INSTRUMENTS, ids=lambda s: s.module_name)
     def test_every_pitch_has_source_dynamics(self, spec: StringInstrumentSpec):
+        from config import DYNAMIC_LEVELS
+
         table = _load_module(spec).spectral_data
         for pitch, dynamics in table.items():
             note_to_midi_strict(pitch)
-            for dyn in SOURCE_DYNAMICS:
-                assert dyn in dynamics
+            for dyn in DYNAMIC_LEVELS:
+                assert dyn in dynamics, f"{spec.module_name} {pitch} missing {dyn}"
                 val = dynamics[dyn]
                 assert isinstance(val, (int, float))
                 assert math.isfinite(val)

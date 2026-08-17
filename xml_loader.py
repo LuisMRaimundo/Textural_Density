@@ -16,6 +16,10 @@ from microtonal import midi_to_note_name, note_to_midi
 from core.defaults import RESEARCH_ANALYSIS_DEFAULTS, apply_research_defaults
 from core.input_validation import strip_removed_gui_preference_keys
 from core.models import InstrumentEvent
+from core.unpitched_routing import (
+    canonical_unpitched_note,
+    instrument_is_unpitched,
+)
 from utils.notes import extract_cents, normalize_note_string
 
 logger = logging.getLogger(__name__)
@@ -154,6 +158,8 @@ class _ExtractedMusicXmlNote:
     part_id: str
     part_name: str
     transpose_semitones: int
+    unpitched: bool = False
+    source_measure: str | None = None
 
 
 # MusicXML <pitch> is written score pitch; <transpose> converts to concert/sounding
@@ -201,12 +207,19 @@ def _apply_semitone_transpose(note_str: str, semitones: int) -> str:
     return midi_to_note_name(shifted)
 
 
-def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
+def _extract_musicxml_notes(
+    root,
+) -> tuple[list[_ExtractedMusicXmlNote], list[str]]:
     """
     Parse score-partwise / score-timewise MusicXML into note records.
 
     Written ``<pitch>`` is converted to concert/sounding pitch via ``<transpose>``
     when ``_APPLY_MUSICXML_TRANSPOSE`` is enabled (default).
+
+    ``<unpitched>`` notes map to registered unpitched percussion modules using
+    the canonical placeholder lookup key — display-step/octave are never
+    promoted to sounding pitch. Unmappable unpitched events are skipped with
+    a warning (never a pitched fallback).
     """
     part_list = root.find("part-list")
     part_names: dict[str, str] = {}
@@ -217,6 +230,7 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
                 part_names[pid] = _text(sp.find("part-name"), "Part")
 
     extracted: list[_ExtractedMusicXmlNote] = []
+    warnings: list[str] = []
 
     def collect_notes_from_measure(
         measure,
@@ -225,6 +239,7 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
         part_state: dict[str, Any],
     ) -> None:
         cur_dyn = part_state["dynamic"]
+        measure_num = measure.get("number") or "?"
         for el in measure:
             if el.tag == "attributes":
                 offset = _transpose_semitones_from_attributes(el)
@@ -242,7 +257,30 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
             elif el.tag == "note":
                 if el.find("rest") is not None:
                     continue
+                unpitched_el = el.find("unpitched")
                 pitch = el.find("pitch")
+                if unpitched_el is not None:
+                    if not instrument_is_unpitched(part_name):
+                        warnings.append(
+                            f"Skipped unmappable MusicXML <unpitched> event: "
+                            f"part '{part_name}' measure {measure_num} "
+                            f"(no registered unpitched instrument)."
+                        )
+                        continue
+                    placeholder = canonical_unpitched_note(part_name)
+                    extracted.append(
+                        _ExtractedMusicXmlNote(
+                            written_note=placeholder,
+                            sounding_note=placeholder,
+                            dynamic=cur_dyn,
+                            part_id=part_id or "",
+                            part_name=part_name,
+                            transpose_semitones=0,
+                            unpitched=True,
+                            source_measure=str(measure_num),
+                        )
+                    )
+                    continue
                 if pitch is None:
                     continue
                 acc_el = el.find("accidental")
@@ -252,6 +290,11 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
                     sounding = _apply_semitone_transpose(written, transpose)
                 else:
                     sounding = written
+                if instrument_is_unpitched(part_name):
+                    # Staff pitch on an unpitched part is notation only.
+                    sounding = canonical_unpitched_note(part_name)
+                    written = sounding
+                    transpose = 0
                 extracted.append(
                     _ExtractedMusicXmlNote(
                         written_note=written,
@@ -260,6 +303,8 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
                         part_id=part_id or "",
                         part_name=part_name,
                         transpose_semitones=transpose,
+                        unpitched=instrument_is_unpitched(part_name),
+                        source_measure=str(measure_num),
                     )
                 )
 
@@ -279,7 +324,7 @@ def _extract_musicxml_notes(root) -> list[_ExtractedMusicXmlNote]:
                 part_state = {"dynamic": "mf", "transpose": 0}
                 collect_notes_from_measure(part, part_id, part_name, part_state)
 
-    return extracted
+    return extracted, warnings
 
 
 def _parse_musicxml(root) -> dict:
@@ -287,7 +332,9 @@ def _parse_musicxml(root) -> dict:
     Interpreta MusicXML (score-partwise): part-list, part/measure/note, dynamics em direction.
     Retorna o mesmo dict que parse_xml (notes, dynamics, instruments, num_instruments, etc.).
     """
-    extracted = _extract_musicxml_notes(root)
+    extracted, extract_warnings = _extract_musicxml_notes(root)
+    for w in extract_warnings:
+        logger.warning(w)
     if not extracted:
         notes = []
     else:
@@ -539,7 +586,8 @@ def parse_xml_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str,
     warnings: list[str] = []
 
     if root.tag in ("score-partwise", "score-timewise"):
-        extracted = _extract_musicxml_notes(root)
+        extracted, extract_warnings = _extract_musicxml_notes(root)
+        warnings.extend(extract_warnings)
         if not extracted:
             raise ValueError("MusicXML não contém notas (apenas rests ou part-list vazio).")
         warnings.append(
@@ -559,7 +607,11 @@ def parse_xml_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str,
             make_instrument_event(
                 idx=idx,
                 note=n.sounding_note,
-                written_note=n.written_note if n.written_note != n.sounding_note else None,
+                written_note=(
+                    None
+                    if n.unpitched
+                    else (n.written_note if n.written_note != n.sounding_note else None)
+                ),
                 dynamic=n.dynamic,
                 instrument_name=n.part_name,
                 player_count=1,
@@ -567,10 +619,15 @@ def parse_xml_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str,
                 metadata={
                     "source": "musicxml",
                     "transpose_semitones": n.transpose_semitones,
+                    "source_measure": n.source_measure,
+                    **({"unpitched": True} if n.unpitched else {}),
                 },
             )
             for idx, n in enumerate(extracted)
         ]
+        for evt, n in zip(events, extracted):
+            if n.source_measure is not None:
+                evt.source_measure = n.source_measure
         options = apply_research_defaults(
             {
                 "weight_factor": 0.5,

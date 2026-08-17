@@ -29,8 +29,8 @@ This matches **StackEdit**, **Stack Exchange** (MathJax), **VS Code** (Markdown 
    - [D. Interval density — psychoacoustic path](#d-interval-density--psychoacoustic-path)
    - [E. Psychoacoustic primitives (Bark, masking, roughness, loudness)](#e-psychoacoustic-primitives-bark-masking-roughness-loudness)
    - [F. Instrument density and sonic mass](#f-instrument-density-and-sonic-mass)
-   - [F.1 Dynamic interpolation (GPR)](#f1-dynamic-interpolation-gpr)
-   - [G. Weighted density (linear min-max blend)](#g-weighted-density-linear-min-max-blend)
+   - [F.1 Dynamic tables (committed ladders)](#f1-dynamic-tables-committed-ladders)
+   - [G. Weighted density (normalisation + Stevens)](#g-weighted-density-normalisation--stevens)
    - [H. Pitch-structure density and composite vertical density](#h-pitch-structure-density-and-composite-vertical-density)
    - [I. Spectral moments, chroma, harmonic ratio](#i-spectral-moments-chroma-harmonic-ratio)
    - [J. Texture, timbre blend, orchestration](#j-texture-timbre-blend-orchestration)
@@ -53,8 +53,7 @@ This matches **StackEdit**, **Stack Exchange** (MathJax), **VS Code** (Markdown 
 |--------|---------|
 | $m_i$ | MIDI pitch (real-valued; microtones allowed) |
 | $f$ | Frequency in Hz |
-| $n$ | Number of input event rows in the vertical slice (`len(notas)`) |
-| $n_{\mathrm{distinct}}$ | Number of distinct aggregated pitch bins (`distinct_pitch_count`) |
+| $n$ | Number of notes in the vertical (same as `len(notes)`) |
 | $a_i$ | Non-negative weight for pitch $i$ (instrument densities from symbolic metadata) |
 | $S = \sum_i a_i$ | Total weight (for spectral moments) |
 | $\lambda$ | Decay parameter for interval density (`DEFAULT_LAMBDA` or calibrated) |
@@ -123,13 +122,11 @@ $$
 D_{\mathrm{int}}^{\mathrm{raw}} = \sum_{i<j} \phi\bigl(\delta(i,j);\lambda\bigr).
 $$
 
-**Normalised interval density** (average per unordered **distinct-bin** pair; production path):
+**Normalised interval density** (average per unordered pair):
 
 $$
-\bar{D}_{\mathrm{int}} = \frac{2\,D_{\mathrm{int}}^{\mathrm{raw}}}{n_{\mathrm{distinct}}(n_{\mathrm{distinct}}-1)} \quad (n_{\mathrm{distinct}} \ge 2).
+\bar{D}_{\mathrm{int}} = \frac{2\,D_{\mathrm{int}}^{\mathrm{raw}}}{n(n-1)} \quad (n \ge 2).
 $$
-
-If $n_{\mathrm{distinct}} < 2$, both raw and reported interval density are $0$.
 
 If `USE_LOG_COMPRESSION` is true (`config.py`):
 
@@ -187,67 +184,21 @@ Qty does **not** affect pitch-structure metrics (interval pairs, spectral entrop
 
 ---
 
-### F.1 Dynamic interpolation (GPR)
+### F.1 Dynamic tables (committed ladders)
 
-**Module:** `instrumentos/gpr_dynamic_interpolation.py` — `create_dynamic_gpr()`, `predict_intermediate_dynamics()`.
+**Production (2026-08-03):** instrument density looks up committed spectral_data cells for the requested dynamic. There is **no** runtime GPR or adaptive-tail fill-in.
 
-Committed CDM tables store **source-anchor dynamics** only: `pp`, `mf`, `ff` (generated **offline** and committed in `instrumentos/*.py`). Production analysis does **not** re-fit tables. At **runtime analysis** (`core/orchestration.py::compute_event_one_player_density`):
+| Case | Behaviour |
+|------|-----------|
+| Dynamic present in row | Exact cell value |
+| Dynamic absent | MissingCommittedDynamicError |
+| Pitched table-backed modules (winds, brass incl. horn/tuba, strings, techniques) | Full 10-level **data-faithful** Dynamics_predicter v1.5 ladders (2026-08-08/09): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — not forced monotone. Violin harmonics still carry D6 monotone ladders |
+| Unpitched percussion (`bass_drum`, `cymbals`, `tamtam`, `gong`) | Pitch-independent `DYNAMIC_CDM` (former `internal_default` log-linear ladder) |
 
-- `pp` / `mf` / `ff` — direct table lookup (plus **pitch** interpolation between chromatic anchors; pitch interpolation is linear/PCHIP, not GPR);
-- interior markings `p`, `mp`, `f` — **runtime GPR** via `predict_intermediate_dynamics`;
-- tail markings `pppp`, `ppp`, `fff`, `ffff` — **runtime saturating log-domain extension**, not continued GPR.
+Pitch interpolation (MIDI-space linear/PCHIP between chromatic anchors) is unchanged and independent of the dynamic column.
 
-All other allowed markings are therefore **modelled at analysis time**, but the model is **not** GPR for the tails:
+**Historical note:** older releases used Matérn GPR on pp/mf/ff anchors plus register-adaptive saturating tails (5.1.0-strict-symbolic). That implementation is preserved only at 	ools/legacy_gpr_dynamic_interpolation.py for audits; it is not on the production path. See [CHANGES.md](../CHANGES.md) and [TECHNICAL_MANUAL §2.4.1](TECHNICAL_MANUAL.md).
 
-| Dynamic | Status |
-|---------|--------|
-| `pp` | source anchor |
-| `p` | modelled (GPR) |
-| `mp` | modelled (GPR at ordinal coordinate 4.5 between `p`=4.0 and `mf`=5.0) |
-| `mf` | source anchor |
-| `f` | modelled (GPR) |
-| `ff` | source anchor |
-| `p`, `mp`, `f` | **interior** modelled (GPR **inside** measured support) |
-| `pppp`, `ppp`, `fff`, `ffff` | **tail** modelled (saturating log-domain extension **outside** measured support) |
-
-**Measured support.** For every GPR module the committed table is measured at `pp`, `mf`, `ff` only; this triple is the module's `measured_support` (exposed by `instrumentos.gpr_dynamic_interpolation.MEASURED_SUPPORT`). The softest measured level is `pp`, the loudest `ff`. Every other `DYNAMIC_LEVELS` entry is a model output: **interior** levels (`p`, `mp`, `f`, ordinal coordinates in $[3,7]$) are GPR interpolations; the **tails** (`ppp`, `pppp` below `pp`; `fff`, `ffff` above `ff`) are *not* measured and are *not* continued as GPR trend.
-
-**Production method (interior).** Gaussian-process regression with Matérn kernel fitted on $(x_{\mathrm{pp}}, d_{\mathrm{pp}})$, $(x_{\mathrm{mf}}, d_{\mathrm{mf}})$, $(x_{\mathrm{ff}}, d_{\mathrm{ff}})$ at fixed ordinal coordinates. `GPR_RANDOM_STATE = 0` makes the estimator deterministic by construction; output does not depend on global NumPy RNG state or event order. This is numerical repeatability — **not** measured acoustic data for intermediate dynamics and **not** perceptual validation.
-
-For an interior modelled dynamic $d \in \{p, mp, f\}$ at pitch with anchors $(d_{\mathrm{pp}}, d_{\mathrm{mf}}, d_{\mathrm{ff}})$:
-
-$$
-\hat{d}_d = \mathrm{GPR}(x_d \mid \{(x_{\mathrm{pp}}, d_{\mathrm{pp}}), (x_{\mathrm{mf}}, d_{\mathrm{mf}}), (x_{\mathrm{ff}}, d_{\mathrm{ff}})\}),
-$$
-
-where $x_d$ is the ordinal coordinate for dynamic $d$. `mp` is **not** aliased to `mf` and is **not** a table column.
-
-**Saturating register-adaptive tail extrapolation (5.1.0-strict-symbolic).** Before this change the GPR trend was extrapolated *unchanged* into the unmeasured tails. Two failure modes resulted: (i) the soft trend overshot **downward**, producing *negative* one-player densities (e.g. `clarinete` C4 at `pppp` $\approx -2.36$, which drove `harmonic_ratio` negative in the `DYNGRAD.wedge` case); and (ii) the loud trend *bent over*, producing a **non-monotone** dip (e.g. the `flauta` C4–E4–G4 triad had sonic mass $62.32$ at `ff` but $59.95$ at `ffff`). A first saturating fix used *fixed* per-step ratios; that removed the incidents but could not track register-dependent compression of the dynamic palette (e.g. `pppp≈ppp≈pp` at the top of the flute).
-
-The production rule is now **register-adaptive by construction**. At the event's sounding pitch $m$, with measured/interpolated anchors $A_{\mathrm{pp}}(m)$, $A_{\mathrm{mf}}(m)$, $A_{\mathrm{ff}}(m)$:
-
-$$
-s_{\mathrm{soft}}(m)=\max\!\bigl(0,\tfrac{\ln(A_{\mathrm{mf}}/A_{\mathrm{pp}})}{N_{\mathrm{soft}}}\bigr),\qquad
-s_{\mathrm{loud}}(m)=\max\!\bigl(0,\tfrac{\ln(A_{\mathrm{ff}}/A_{\mathrm{mf}})}{N_{\mathrm{loud}}}\bigr),
-$$
-
-where $N_{\mathrm{soft}}=3$ (steps `pp→p→mp→mf`) and $N_{\mathrm{loud}}=2$ (`mf→f→ff`) from `DYNAMIC_LEVELS`. Inverted anchors ($A_{\mathrm{pp}}>A_{\mathrm{mf}}$ or $A_{\mathrm{ff}}<A_{\mathrm{mf}}$) clamp the corresponding step to $0$ (flat tail — zero usable differentiation) and emit a metadata warning naming instrument, pitch, and the inverted pair. For $j$ steps below `pp` or above `ff`:
-
-$$
-\ln A_{\mathrm{soft}}(j)=\ln A_{\mathrm{pp}}-s_{\mathrm{soft}}\sum_{i=1}^{j}\gamma^{i},\qquad
-\ln A_{\mathrm{loud}}(j)=\ln A_{\mathrm{ff}}+s_{\mathrm{loud}}\sum_{i=1}^{j}\gamma^{i},
-$$
-
-with geometric shrink $\gamma=$ `DYN_TAIL_SHRINK` $=0.5$ in `config.py`. The cumulative sum is bounded by $\gamma/(1-\gamma)=1$ when $\gamma=0.5$, so **the entire unmeasured tail never exceeds one measured-step's worth of change**. Because $s(m)$ is taken from the local anchors, the tail automatically compresses where measured differentiation collapses at range extremes — no instrument-independent register model is imposed. Technique modules with transferred (not independently workbooked) `pp`/`ff` anchors (currently `violin_sul_ponticello`) use the same math and additionally warn `"tail computed from transferred anchors"`. `config.DENSITY_FLOOR` remains only as an unreachable safety assert. Interior (in-support) GPR predictions are **unchanged** to within $10^{-9}$. Measured interior non-monotonicity (e.g. `flauta` C4 `mf`>`ff`) is left untouched by design. Fixed per-step `DYN_TAIL_RATIO_*` constants are **removed** and must not reappear in documentation or config.
-
-**Register behaviour (CDM channel at fixed $S$).** Register-dependence of density emerges **naturally** from the instrument CDM tables: at fixed pitch shape the symbolic interval sum $S$ is invariant, while mass / RSS / composite move with the one-player densities. The deconfounded REGNAT sweep (identical 3-semitone cluster at bottom / centre / top-3 within each instrument's compass; clarinete, fagote, violino, contrabaixo) found $S=2.6284$ everywhere and **strictly decreasing** mass/RSS/composite with ascent — see [instrument_acoustic_sources.md](instrument_acoustic_sources.md) Register-dependence audit. Two interpretive cautions: (i) **register-break local reversals** on mf curves (string/break points) are measured organology, not noise — do not assume clean monotone-decreasing register curves; (ii) **microtonal targets on steep local slopes** inherit large gradients from PCHIP/linear interpolation between chromatic anchors.
-
-**Measured-data honesty.**
-
-1. **Interior anchors are occasionally non-ordinal in dynamics.** The adaptive-tail positivity grid (`tests/test_adaptive_dynamic_tails.py::test_a_positivity_and_monotone_grid`) xfails — by design, tables untouched — on the following instrument/pitch sample cells where measured or interior GPR levels are non-monotone (18 xfail inventory, 2026-07-12): `clarinete` C7; `contrabaixo` C5; `fagote` D♯5; `flauta` G5, D7; `oboe` A♯3, E5, A6; `viola` C5, C7; `violino` G7; `violino_art_harm` G6, G7; `violino_sordina` G7; `violino_sul_ponticello` G7; `violoncelo` C2, C4, C6. Soft/loud **tails** remain algebraically monotone even at those pitches.
-2. **Transferred (not independently workbooked) soft/loud anchors.** `violino_sul_ponticello` may still use ratio-transferred `pp`/`ff`. Violin harmonics (`violino_art_harm`, `violino_nat_harm`) commit STE workbook pp/mf/ff. Registry `uncertainty="high"`; transferred-anchor modules warn `"tail computed from transferred anchors"` on tail levels.
-
-**Diagnostic references (not production):** piecewise linear, PCHIP, and quadratic anchor interpolators appear only in audit tools (`tools/audit_gpr_model_quality.py`, `tools/compare_dynamic_interpolation_methods.py`). PR #24 compared methods on 357 source rows (8 GPR modules) and 340 string scenarios; production GPR was unchanged; linear and PCHIP were not adopted. Local method sensitivity is highest in low-register strings at source-row level; scenario-level `density.instrument` showed **0** high/extreme cases in the tested aggregate battery.
 
 ---
 
@@ -267,8 +218,6 @@ $$
 $$
 D_{\mathrm{pond}} = 10 \cdot \bigl( w \, \widehat{D}_{\mathrm{inst}} + (1-w)\, \widehat{D}_{\mathrm{int}} \bigr), \quad w \in [0,1].
 $$
-
-Production `calculate_metrics` hardcodes `metodo="min-max"` (`core/pipeline.py`). A `z-score` branch exists in `compute_weighted_density_normalized` but is **not** used by the production pipeline.
 
 > **Removed:** Stevens power-law (`use_stevens`, `alpha`, `beta`) — see [MIGRATION.md](MIGRATION.md).
 
@@ -290,19 +239,31 @@ D_{\mathrm{pitch}} = S \cdot (1 + \ln(1 + H)) \cdot (1 - 0.15 \cdot \mathrm{harm
 S = \sum_{i<j} e^{-\lambda \delta_{ij}}.
 $$
 
-Here $S$ is the **raw accumulating pairwise interval sum** over distinct pitch bins (the same sum whose mean-per-pair normalisation gives the reported compactness $D_{\mathrm{int}}^{\mathrm{norm}}$). Because $S$ accumulates over pairs, **adding a distinct note never decreases $S$**. $D_{\mathrm{pitch}}$ is only **quasi-monotone** in $S$ (entropy and harmonic-ratio factors can fall; see monotonicity notes below). Registral span $A_{\mathrm{st}}$ is **not** applied here — the pairwise exponential decay $e^{-\lambda\delta}$ already attenuates distant pairs, so a second $1/(1+A_{\mathrm{st}}/12)$ damping would penalise ambitus twice. $A_{\mathrm{st}}$ remains a separately reported subindex (`registral`), not a factor in the aggregate.
+Here $S$ is the **raw accumulating pairwise interval sum** over distinct pitch bins (the same sum whose mean-per-pair normalisation gives the reported compactness $D_{\mathrm{int}}^{\mathrm{norm}}$). Because $S$ accumulates over pairs, **adding a distinct note never decreases $D_{\mathrm{pitch}}$**. Registral span $A_{\mathrm{st}}$ is **not** applied here — the pairwise exponential decay $e^{-\lambda\delta}$ already attenuates distant pairs, so a second $1/(1+A_{\mathrm{st}}/12)$ damping would penalise ambitus twice. $A_{\mathrm{st}}$ remains a separately reported subindex (`registral`), not a factor in the aggregate.
 
 If $n_{\mathrm{distinct}} < 2$, $D_{\mathrm{pitch}} = 0$.
 
-**Composite vertical density:**
+**Composite vertical density (Task 8c — unified):**
 
 $$
-D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{pitch}} \cdot \sqrt{M_{\mathrm{sonic}}}}{D_{\max}}.
+D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}}+(1-w)\,\widehat{D}_{\mathrm{int}}\bigr)
+= w\cdot\frac{D_{\mathrm{inst}}}{10} + (1-w)\cdot D_{\mathrm{int}}
+= \texttt{density.weighted},
+\quad
+D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}}}{\mathrm{REF}},
+\quad
+D_{\mathrm{total}} = \log_{10}(1+D_{\mathrm{total}}^{\mathrm{raw}}).
 $$
 
-Optionally apply $\log_{10}(1 + x)$ if `USE_LOG_COMPRESSION`. The mass channel $\sqrt{M_{\mathrm{sonic}}}$ additionally lets a register-isolated note (e.g. a far-below bass) raise the total. Because $S$ is on a larger scale than the previous mean-per-pair term, `MAX_DENS_GLOBAL` ($D_{\max}$) was recalibrated in 5.0.0-strict-symbolic (median-matched against `benchmarks/expected_outputs`; see `config.py`).
+| Symbol | Default | Role |
+|--------|---------|------|
+| $\mathrm{REF}$ = `MAX_DENS_GLOBAL` | **193** | Task 8c re-freeze: chosen so frozen all-pitched baselines keep pre-unification order of magnitude (match ≈192.6→193); see `CHANGES.md` / `config.py` |
+| $w$ = `weight_factor` | **0.5** (`DEFAULT_WEIGHT_FACTOR`) | Instrument vs interval blend inside $D_{\mathrm{blend}}$ |
+| $\mathrm{DI\_max}$, $\mathrm{DV\_max}$ | 100, 10 | Min-max caps in `core.composite` |
 
-**Production input is $D_{\mathrm{pitch}}$, not the weighted blend.** `density.weighted` ($D_{\mathrm{pond}}$) is computed and reported separately; it does **not** enter $D_{\mathrm{total}}^{\mathrm{raw}}$. There is no production divisor named `REF`.
+$D_{\mathrm{pitch}}$ remains a reported axis; it is **not** the composite product. Zero interval contribution (unpitched-only) is a numeric zero — no event-kind branch.
+
+**Acceptance criterion:** property tests in `tests/test_unified_composite_contract.py` (monotonicity under event/Qty addition, mixed > subsets, continuity when dropping the last pitched event) plus the GUI-chain freeze `tests/test_composite_unification_acceptance.py`. Header text is generated from the same expression as the computation (`core.composite.format_composite_header_line`).
 
 > **Removed:** mean-per-pair normalisation $D_{\mathrm{int}}^{\mathrm{norm}}$ as the aggregate's interval term (replaced by the raw sum $S$); redundant registral-span damping $1/(1+A_{\mathrm{st}}/12)$ in the composite product; earlier `D_{\mathrm{ref}} = D_{\mathrm{pond}}/A_{\mathrm{st}}` with zero-span exemption and cohesion factor $10/(1+A_{\mathrm{st}})$. The reported compactness axis $D_{\mathrm{int}}^{\mathrm{norm}}$ (`density.interval`) is unchanged and remains **intensive** (falls with spread).
 
@@ -313,17 +274,11 @@ Optionally apply $\log_{10}(1 + x)$ if `USE_LOG_COMPRESSION`. The mass channel $
 - **Composite decrease is possible only in one narrow regime:** when the added note contributes **negligible mass** (e.g. a `pppp` doubling, so $\sqrt{M_{\mathrm{sonic}}}$ barely moves) while **sharply raising harmonic fusion**. When the addition carries meaningful mass — including a register-isolated bass — the $\sqrt{M_{\mathrm{sonic}}}$ channel dominates and the composite rises. The far-bass regression (`MONO.farbass_base` → `MONO.farbass_add`, `+E1` at matched dynamics) is the characterisation instance that must **not** decrease the composite. Adversarial probes live in `benchmarks/characterization/battery_cases.py` (category `MONO`) and report OK/DECREASED with the $S$/harm/entropy/mass/$D_{\mathrm{pitch}}$/composite deltas; they never abort the run.
 - **Dynamics do not change $S$; they can change $D_{\mathrm{pitch}}$ and $D_{\mathrm{total}}$.** Characterization category `DYNGRAD` (fixed 6-note C4–F4 cluster, opposed dynamics) shows $S$ identical across uniform / wedge / inverted-wedge / extremes ($S=11.9687$), while PSD and the composite move because spectral entropy and harmonic ratio are computed over **dynamically weighted** pitch bins. In the regenerated dump (`results/characterization/`, 2026-07-12): `DYNGRAD.uniform` PSD $=26.456$ vs `DYNGRAD.extremes` PSD $=23.602$ at fixed pitch content ($\approx 10.8\%$ relative swing); composite $0.15955 \to 0.13119$.
 
-**Absolute density** (reference scalar; **not** an input to $D_{\mathrm{total}}$):
-
-If $n_{\mathrm{distinct}} < 2$, the implementation returns $D_{\mathrm{abs}} = 0$ (`core/pipeline.py`). This is an **implementation guard**, not a separate mathematical identity.
-
-Otherwise:
+**Absolute density** (reference, unchanged):
 
 $$
 D_{\mathrm{abs}} = D_{\mathrm{pond}} \cdot \ln(1 + N_{\mathrm{events}}).
 $$
-
-$N_{\mathrm{events}} = \texttt{len(notas)}$ is the number of **input event rows** in the vertical slice, including exact unison doublings. It is **not** $n_{\mathrm{distinct}}$. The natural logarithm is `np.log1p` (base $e$). MusicXML `<rest>` elements are dropped at load time (`xml_loader.py`) and never appear in `notas`; the absolute-density formula itself does not filter rests or unpitched events.
 
 ---
 
@@ -331,21 +286,13 @@ $N_{\mathrm{events}} = \texttt{len(notas)}$ is the number of **input event rows*
 
 **Module:** `spectral_analysis.py`.
 
-**Moments** are computed in **MIDI pitch space** with weights $a_i$ (weighted **population** moments: divide by $S=\sum a_i$, not $n-1$):
+**Moments** on pitches $m_i$ with weights $a_i$:
 
 $$
 \mu = \frac{1}{S}\sum_i a_i m_i, \quad
 \sigma^2 = \frac{1}{S}\sum_i a_i (m_i-\mu)^2, \quad
 \gamma_1 = \frac{\frac{1}{S}\sum_i a_i (m_i-\mu)^3}{\sigma^3}\ (\sigma>0).
 $$
-
-**Returned representation.** `centroid.frequency` is $f(\mu)$ in Hz. `spread.deviation` is **not** $\sigma$ in MIDI and **not** $\sigma$ computed in Hz. It is the frequency-domain difference
-
-$$
-\texttt{spread["deviation"]} = f(\mu+\sigma) - f(\mu),
-$$
-
-with $f(m)=440\cdot 2^{(m-69)/12}$. If $\sigma=0$ or the spectrum is empty, the returned deviation is $0$.
 
 **Excess kurtosis:**
 
@@ -355,13 +302,13 @@ $$
 
 **Flatness:** ratio of geometric to arithmetic mean of amplitudes (on $a_i > 10^{-10}$).
 
-**Roll-off (85%):** cumulative sum of $a_i$ in **input-array order** (production: first-seen pitch-bin order, **not** sorted by MIDI); MIDI at 85% cumulative energy mapped to Hz.
+**Roll-off (85%):** cumulative sum of $a_i$ in array order; MIDI at 85% cumulative energy mapped to Hz.
 
 **Entropy:** $H = -\sum_i p_i \log_2 p_i$, $p_i = a_i/S$, with small $p_i$ filtered.
 
 **Chroma:** $c_i = \mathrm{round}(m_i) \bmod 12$, energies summed per class and normalised.
 
-**Harmonic ratio:** operates on **MIDI** pitches (not Hz). Fundamental defaults to $m_{\min}$ (lowest MIDI in the array). Energy in bins with $(m_i - m_{\min}) \bmod 12 \approx 0$ (`numpy.isclose`, `atol=0.25` semitones). Production passes distinct-bin midis and mean weight per bin.
+**Harmonic ratio:** fundamental $m_{\min}$; energy in bins with $(m_i - m_{\min}) \bmod 12 \approx 0$ (atol `0.25`).
 
 ---
 
@@ -369,13 +316,13 @@ $$
 
 **Module:** `timbre_texture_analysis.py`.
 
-**Texture** (`calculate_texture_density`) on **distinct pitch bins**:
+**Texture** (`calculate_texture_density`):
 
-- `player_count` / `player_weighted_texture_mass` $= \sum_i n_{\mathrm{instr},i}$ (total players)
-- `pitch_polyphony` $= n_{\mathrm{distinct}}$ (distinct pitch bins — **not** mean Qty)
-- `texture_polyphony` — alias of `pitch_polyphony` (legacy key)
-- `texture_variability` $= \mathrm{std}(m_i)$ (NumPy default: **population** standard deviation, `ddof=0`)
-- `texture_contrast` $= \max m_i - \min m_i$
+- `player_count` / `player_weighted_texture_mass` $= \sum n_j$ over the **full slice** (pitched + unpitched Qty)
+- `average_texture_density` = Qty-weighted mean one-player CDM over the **full slice** (includes unpitched). This is a **per-player mean**, not a total: it may fall when low-CDM instruments are added and rise under Qty expansion toward high-CDM instruments. Monotone under growth are the **totals** (Sonic Mass, RSS, Composite) — see Technical Manual §3.12.1.
+- `pitch_polyphony` / `texture_polyphony` $= n_{\mathrm{distinct}}$ (**pitched** bins only)
+- `texture_variability` $= \mathrm{std}(m_i)$ over pitched bins
+- `texture_contrast` $= \max m_i - \min m_i$ over pitched bins
 
 **Timbre blend** (`calculate_timbre_blend`):
 
@@ -419,7 +366,7 @@ Every scalar in `resultados["density"]` is mirrored in `resultados["metric_metad
 
 Each metric entry includes `value`, optional `raw_value` / `normalized_value`, `interpretation`, `warnings`, and `assumptions`. Global blocks document normalization constants (`MAX_DENS_GLOBAL`, `USE_LOG_COMPRESSION`, weighted-density maxima).
 
-**Rule:** Instrument CDM tables are **`external_acoustic_metadata`** (sparse externally sourced amplitude data, **committed offline** at `pp`/`mf`/`ff`). Interior dynamics (`p`, `mp`, `f`) are **GPR-interpolated at analysis time**; tail dynamics use the saturating log-domain rule (§F.1), not GPR. They must not be cited as full measured spectra or as live audio analysis. Registry-only coarse profiles are **`metadata_proxy`**. Removed branches (Stevens' Law, psychoacoustic corrections, perceptual interval weighting, combination tones) are no longer available.
+**Rule:** Instrument GPR tables are **`external_acoustic_metadata`** (sparse externally sourced amplitude data, GPR-interpolated at analysis time). They must not be cited as full measured spectra or as live audio analysis. Registry-only coarse profiles are **`metadata_proxy`**. Removed branches (Stevens' Law, psychoacoustic corrections, perceptual interval weighting, combination tones) are no longer available.
 
 ---
 
@@ -440,15 +387,11 @@ Decomposes the composite score into interpretable components. Legacy scalars in 
 | `temporal` | timing availability, duration-weighted count | `score_derived` when timed |
 | `composite` | component product and dominant factors | `metadata_proxy` |
 
-**Register band occupancy** (`core/registral_density.py::register_band_occupancy`; default bands in `config.DEFAULT_REGISTER_BANDS`): half-open bands $[L_b, U_b)$. Each input MIDI is assigned to at most one band (`break` after the first match). Let $c_b$ be the count assigned to band $b$. Then
+**Register band occupancy** (default bands in `config.DEFAULT_REGISTER_BANDS`): for MIDI pitches $m_i$, count events per band $b$ with bounds $[L_b, U_b)$:
 
 $$
-O_b = \frac{c_b}{\sum_{b'} c_{b'}},
+O_b = \frac{|\{i : L_b \le m_i < U_b\}|}{n}.
 $$
-
-with denominator $1$ if every count is zero. **Out-of-band midis are excluded** from both numerator and denominator — they never increment $c_b$. This equals $|\{i:L_b\le m_i<U_b\}|/n_{\mathrm{input}}$ only when every input MIDI falls in some configured band.
-
-**Production input set:** `density_subindices.registral` passes **distinct aggregated pitch-bin** midis (`core/subindices.py`), not raw event rows. The unused helper `compute_registral_density` (tests only) would pass all event midis into the same occupancy function.
 
 **Register entropy** (normalised):
 
@@ -456,18 +399,11 @@ $$
 H_{\mathrm{reg}} = \frac{-\sum_b O_b \log_2 O_b}{\log_2 B}, \quad B = \text{number of bands}.
 $$
 
-**Registral compression** (production subindex `registral_compression`; **not** the same as compactness):
+**Registral compression:**
 
 $$
-C_{\mathrm{reg}} = \begin{cases}
-\dfrac{1}{1 + A_{\mathrm{st}}} & n_{\mathrm{distinct}} \ge 2 \\
-0 & n_{\mathrm{distinct}} < 2.
-\end{cases}
+C_{\mathrm{reg}} = \frac{1}{1 + A_{\mathrm{st}}}.
 $$
-
-**Registral compactness** is a **different** helper, `compute_registral_compactness` $= 1/(1+A_{\mathrm{st}}/12)$. It is **not called** from `calculate_metrics` and is **not** written into `density_subindices`. Neither compactness nor compression enters $D_{\mathrm{pitch}}$ or $D_{\mathrm{total}}$.
-
-**Registral dispersion** (production subindex): $A_{\mathrm{st}} / \max(1, n_{\mathrm{distinct}}-1)$ when $n_{\mathrm{distinct}}>1$, else $0$.
 
 **Duration-weighted event count** (when all events have resolvable duration $d_i$):
 
@@ -534,11 +470,11 @@ These are **implementation correctness checks**, not empirical validation:
 |----------|-------------------|
 | Finite outputs | All `density.*` scalars finite for synthetic cases |
 | Chromatic vs wide | Interval density (compactness, intensive) higher for chromatic cluster than wide-spaced chord |
-| Extensive composite (5.0.0) | Raw interval sum $S$ is non-decreasing under distinct-note addition. $D_{\mathrm{pitch}}$ and $D_{\mathrm{total}}$ are **quasi-monotone** (§H): they can fall slightly when an added note raises harmonic fusion while contributing negligible mass. Register-isolated bass with meaningful mass must not lower the total (`tests/test_extensive_density_monotonic.py`) |
+| Extensive composite (5.0.0) | Adding a distinct note does not decrease composite vertical density (`density.total`) or `pitch_structure`; register-isolated bass never lowers the total (`tests/test_extensive_density_monotonic.py`) |
 | Player mass | Orchestral mass increases linearly with Qty; pressure-equivalent instrument density scales as RSS; interval/pitch-structure unchanged |
 | Qty vs pitch structure | Qty does not increase pitch polyphony, interval pairs, or spectral entropy for unison doublings |
-| Dynamic monotonicity | One-player density is positive; soft/loud tails are monotone into measured support; full `pppp→ffff` monotone except measured/interior humps left untouched (§F.1); `tests/test_adaptive_dynamic_tails.py` |
-| Tail saturation | Register-adaptive log-domain tails with local $s(m)$ from measured pp/mf/ff and geometric shrink $\gamma=0.5$; whole tail ≤ one measured step; per-event warning records $s(m)$, $\gamma$, value (§F.1) |
+| Dynamic ladder hygiene | One-player density is positive; committed pitched ladders carry all 10 levels with interiors inside their measured segments and tapered, non-zigzag outers (§F.1; data-faithful — measured anchors may be locally non-monotone); `tests/test_pitched_dynamic_monotone_ladders.py` |
+| Tail saturation (historical) | Pre-2026-08-03 runtime adaptive tails retired; offline rebuild uses legacy `internal_default` path only when regenerating committed ladders (§F.1) |
 | Row-splitting | One row Qty=N ≡ N identical rows Qty=1 for mass and pressure-equivalent density |
 | Duplicate events | Duplicated pitch rows increase player/event counts; pitch structure uses aggregated bins |
 
@@ -631,7 +567,7 @@ It is **not** voice-leading analysis, **not** rhythmic density, and **not** a fu
 ### 4.2 How to read one number
 
 1. Look at **`density.interval`** vs **`density.instrument`**: is the chord “heavy” because of **intervals** or **timbre**?
-2. Check **`density.weighted`** ($D_{\mathrm{pond}}$, a separate blend) and **`density.refined`** / **`density.pitch_structure`** ($D_{\mathrm{pitch}}$). Refined / pitch-structure is the **extensive** raw-sum form (§H); it does **not** divide by pitch span. Wide spacing still lowers the *reported interval compactness* $D_{\mathrm{int}}^{\mathrm{norm}}$ (`density.interval`) because that axis remains intensive.
+2. Check **`density.weighted`** and **`density.refined`**: refined divides by pitch span — **wide spreads** reduce refined density unless compensated elsewhere.
 3. Open **`density_subindices`**: inspect `interval_compactness`, `registral`, `orchestral_mass`, and `composite.components` for a decomposed reading.
 4. Read **`metric_metadata`**: check `source_type`, `validation_status`, and `warnings` before citing a value in research writing.
 5. **Spectral entropy** drives **`complexity`** in the total-density formula — **more spread-out** spectral distributions (higher entropy) increase the factor $C_{\mathrm{comp}}$.
@@ -672,14 +608,6 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 | **MIDI** | Pitch in semitones; fractional MIDI = microtones |
 | **Microtonal steps** | Internal 24-step octave grid; $\delta = 2 \cdot \Delta_{\mathrm{st}}$ in default pairing |
 | **Subindex** | Interpretable component in `density_subindices` |
-| **Interval density / compactness** | Pairwise exponential decay over distinct bins (`density.interval`) |
-| **Pitch-structure density** | Extensive $D_{\mathrm{pitch}}$ (`density.pitch_structure` / `density.refined`) |
-| **Weighted / blend density** | Min–max linear blend $D_{\mathrm{pond}}$ (`density.weighted`); **not** the composite input |
-| **Composite vertical density** | $D_{\mathrm{pitch}}\cdot\sqrt{M_{\mathrm{sonic}}}/D_{\max}$, optional $\log_{10}(1+x)$ (`density.total`) |
-| **Absolute density** | $D_{\mathrm{pond}}\cdot\ln(1+N_{\mathrm{events}})$ with $<2$-pitch guard (`density.absolute`) |
-| **Registral compactness** | Unused helper $1/(1+A_{\mathrm{st}}/12)$ |
-| **Registral compression** | Production subindex $1/(1+A_{\mathrm{st}})$ |
-| **Registral dispersion** | $A_{\mathrm{st}}/\max(1,n_{\mathrm{distinct}}-1)$ |
 
 ---
 
@@ -704,4 +632,4 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 
 For architecture and output JSON keys, see [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md). For upgrading existing scripts, see [MIGRATION.md](MIGRATION.md). For package vs methodology versions, see [VERSIONING.md](VERSIONING.md). For function signatures, see [API.md](API.md).
 
-*Last updated: 2026-08-17 (documentation-alignment: production $D_{\mathrm{pitch}}$ composite; occupancy denominator $\sum c_b$; compactness ≠ compression; absolute-density guard; spectral-spread Hz return; runtime GPR vs saturating tails).*
+*Last updated: 2026-07-12 (docs reconciliation: §B λ-floor inertness; §H DYNGRAD dynamics≠S; §F.1 register + measured-data honesty; 5.1.0-strict-symbolic tails; package 1.1.4).*

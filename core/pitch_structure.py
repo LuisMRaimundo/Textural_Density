@@ -101,19 +101,22 @@ def compute_pitch_structure_density(
 
 
 def compute_composite_vertical_density(
-    pitch_structure_density: float,
+    blend_density: float,
     sonic_mass: float,
     max_dens_global: float,
     apply_log_compression: bool = USE_LOG_COMPRESSION,
 ) -> tuple[float, float]:
     """
-    Composite vertical density = pitch_structure × mass boost.
+    Unified composite: blend density × mass boost / REF.
 
-    Mass boost cannot alone produce high vertical pitch-structure density when
-    ``pitch_structure_density`` is zero (exact unison case).
+    ``blend_density`` is the slider-controlled weighted density from
+    ``core.composite.compute_blend_density`` — the same value as
+    ``density.weighted``. Zero pitch/interval contribution is just a numeric
+    zero; there is no event-kind branch. ``max_dens_global`` is the single REF
+    (``config.MAX_DENS_GLOBAL``). Optional ``log10(1+x)`` follows.
     """
     mass_boost = float(np.sqrt(max(0.0, sonic_mass)))
-    pre_log = pitch_structure_density * mass_boost / float(max_dens_global)
+    pre_log = float(blend_density) * mass_boost / float(max_dens_global)
     total = pre_log
     if apply_log_compression:
         total = float(np.log10(1.0 + pre_log))

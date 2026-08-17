@@ -15,6 +15,8 @@ REPORTS = ROOT / "reports"
 
 
 def _markdown(payload: dict) -> str:
+    excl_ids = payload.get("table_excludes_sounding_range_ids") or []
+    excl_n = payload.get("table_excludes_sounding_range_count", 0)
     lines = [
         "# Instrument metadata / range resolution audit",
         "",
@@ -22,8 +24,11 @@ def _markdown(payload: dict) -> str:
         "",
         "## Executive summary",
         "",
-        "- **Double bass:** source_table_span E1–C5 aligns with committed table and registry; E1–A3 was obsolete documentation.",
-        "- **Technique:** GPR modules declare `source_technique` / `table_supported_techniques`; registry lists broader organological capabilities.",
+        "- **Double bass:** source_table_span E1–C5 (MIDI 28–72) aligns with committed table and registry; E1–A3 was obsolete documentation.",
+        "- **Violin sounding [55,103]:** table G3–G7 aligns (not a double-bass case).",
+        f"- **Table excludes sounding range (partial):** {excl_n} instrument(s): "
+        f"{', '.join(excl_ids) if excl_ids else 'none'}.",
+        "- **Technique:** modules declare `source_technique` / `table_supported_techniques`; registry lists broader organological capabilities.",
         "- **Tuba:** coarse-default validation placeholder (MIDI 28–58) — **REVIEW REQUIRED** for authoritative range.",
         "- **Transposition:** registry field is metadata-only; manual input is sounding pitch; MusicXML applies `<transpose>` once.",
         "",
@@ -55,8 +60,8 @@ def _markdown(payload: dict) -> str:
             "",
             "## Per-instrument summary",
             "",
-            "| ID | Table span | Sounding MIDI | Comfortable | Range | Technique |",
-            "|----|------------|---------------|-------------|-------|-----------|",
+            "| ID | Table span | Sounding MIDI | Comfortable | Excludes range? | Range | Technique |",
+            "|----|------------|---------------|-------------|-----------------|-------|-----------|",
         ]
     )
     for inst in payload["instruments"]:
@@ -64,9 +69,17 @@ def _markdown(payload: dict) -> str:
         span_s = f"{span['first_note']}–{span['last_note']}" if span else "—"
         snd = inst["registry_sounding_range_midi"]
         cft = inst["registry_comfortable_range_midi"]
+        excl = inst.get("exclusion_kind") or "—"
+        if inst.get("table_excludes_sounding_range") and excl == "partial_table":
+            excl_s = (
+                f"YES (lo={inst.get('missing_low_semitones')}, "
+                f"hi={inst.get('missing_high_semitones')})"
+            )
+        else:
+            excl_s = excl
         lines.append(
             f"| {inst['instrument_id']} | {span_s} | {snd[0]}–{snd[1]} | {cft[0]}–{cft[1]} | "
-            f"{inst['range_classification']} | {inst['technique']['classification']} |"
+            f"{excl_s} | {inst['range_classification']} | {inst['technique']['classification']} |"
         )
     lines.append("")
     return "\n".join(lines)
@@ -92,6 +105,10 @@ def _write_csv(payload: dict, path: Path) -> None:
         "registry_supported_techniques",
         "range_classification",
         "technique_classification",
+        "table_excludes_sounding_range",
+        "exclusion_kind",
+        "missing_low_semitones",
+        "missing_high_semitones",
     ]
     with path.open("w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=fieldnames)
@@ -115,10 +132,20 @@ def _write_csv(payload: dict, path: Path) -> None:
                     "registry_comfortable_max": inst["registry_comfortable_range_midi"][1],
                     "registry_transposition": inst["registry_transposition"],
                     "source_technique": tech.get("source_technique") or "",
-                    "table_supported_techniques": "|".join(tech.get("table_supported_techniques") or []),
-                    "registry_supported_techniques": "|".join(tech.get("registry_supported_techniques") or []),
+                    "table_supported_techniques": "|".join(
+                        tech.get("table_supported_techniques") or []
+                    ),
+                    "registry_supported_techniques": "|".join(
+                        tech.get("registry_supported_techniques") or []
+                    ),
                     "range_classification": inst["range_classification"],
                     "technique_classification": tech.get("classification"),
+                    "table_excludes_sounding_range": inst.get(
+                        "table_excludes_sounding_range", ""
+                    ),
+                    "exclusion_kind": inst.get("exclusion_kind", ""),
+                    "missing_low_semitones": inst.get("missing_low_semitones", ""),
+                    "missing_high_semitones": inst.get("missing_high_semitones", ""),
                 }
             )
 

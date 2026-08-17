@@ -1,6 +1,8 @@
 # midi_loader.py
 # Load note list from a MIDI file for use with calcular_metricas (same shape as xml_loader output).
 
+from __future__ import annotations
+
 import logging
 from pathlib import Path
 from typing import Any
@@ -8,6 +10,11 @@ from typing import Any
 from core.converters import make_instrument_event
 from core.defaults import RESEARCH_ANALYSIS_DEFAULTS
 from core.models import InstrumentEvent
+from core.unpitched_routing import (
+    GM_PERCUSSION_CHANNEL,
+    canonical_unpitched_note,
+    map_gm_percussion_key,
+)
 from utils.notes import midi_to_note_name
 
 logger = logging.getLogger(__name__)
@@ -30,11 +37,78 @@ def _default_midi_options() -> dict[str, Any]:
     return dict(RESEARCH_ANALYSIS_DEFAULTS)
 
 
+def _resolve_midi_event(
+    *,
+    channel: int,
+    key: int,
+    velocity: int,
+    onset: float,
+    offset: float,
+    idx: int,
+    warnings: list[str],
+) -> InstrumentEvent | None:
+    """
+    Build one InstrumentEvent from a MIDI note, or skip with warning.
+
+    Channel 10 (0-based index 9) uses the GM percussion map. Unmapped keys are
+    skipped — never promoted to a pitched fallback.
+    """
+    if int(channel) == GM_PERCUSSION_CHANNEL:
+        mapped = map_gm_percussion_key(int(key))
+        if mapped is None:
+            warnings.append(
+                f"Skipped unmappable MIDI channel-10 key {int(key)} "
+                f"(no GM→unpitched instrument mapping)."
+            )
+            return None
+        instrument_name, approx = mapped
+        if approx:
+            warnings.append(
+                f"MIDI GM key {int(key)} on channel 10: {approx}."
+            )
+            logger.info("MIDI GM key %s: %s", key, approx)
+        placeholder = canonical_unpitched_note(instrument_name)
+        return make_instrument_event(
+            idx=idx,
+            note=placeholder,
+            dynamic=_velocity_to_dynamic(velocity),
+            instrument_name=instrument_name,
+            player_count=1,
+            onset=float(onset),
+            offset=float(offset),
+            duration=max(0.0, float(offset) - float(onset)),
+            part_id=f"channel_{channel}",
+            metadata={
+                "midi_channel": int(channel),
+                "midi_key": int(key),
+                "velocity": int(velocity),
+                "unpitched": True,
+                "gm_percussion": True,
+            },
+        )
+
+    note_name = midi_to_note_name(float(key))
+    return make_instrument_event(
+        idx=idx,
+        note=note_name,
+        dynamic=_velocity_to_dynamic(velocity),
+        instrument_name="flute",
+        player_count=1,
+        onset=float(onset),
+        offset=float(offset),
+        duration=max(0.0, float(offset) - float(onset)),
+        part_id=f"channel_{channel}",
+        metadata={"midi_channel": int(channel), "velocity": int(velocity)},
+    )
+
+
 def parse_midi_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str, Any], list[str]]:
     """
     Parse MIDI into timed InstrumentEvent objects (Phase 6).
 
     Returns (events, analysis_options, warnings).
+    Channel 10 maps GM keys to unpitched percussion modules; other channels
+    default to flute (unchanged pitched path).
     """
     try:
         import mido
@@ -48,7 +122,7 @@ def parse_midi_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str
         raise FileNotFoundError(f"Ficheiro não encontrado: {filepath}")
 
     warnings = [
-        "MIDI channel/program are not mapped to orchestral instruments; using generic 'flute'.",
+        "Non-percussion MIDI channels are not mapped to orchestral instruments; using generic 'flute'.",
         "MIDI velocity maps to coarse dynamic labels — not measured loudness.",
         "MIDI may lack articulation, extended techniques, and reliable instrumentation.",
     ]
@@ -71,6 +145,7 @@ def parse_midi_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str
                 "onset": time_sec,
                 "velocity": int(msg.velocity),
                 "channel": int(msg.channel),
+                "key": int(msg.note),
             }
         elif msg.type == "note_off" or (
             msg.type == "note_on" and getattr(msg, "velocity", 0) == 0
@@ -79,21 +154,17 @@ def parse_midi_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str
             if key not in active:
                 continue
             info = active.pop(key)
-            note_name = midi_to_note_name(float(msg.note))
-            events.append(
-                make_instrument_event(
-                    idx=len(events),
-                    note=note_name,
-                    dynamic=_velocity_to_dynamic(info["velocity"]),
-                    instrument_name="flute",
-                    player_count=1,
-                    onset=float(info["onset"]),
-                    offset=float(time_sec),
-                    duration=max(0.0, float(time_sec) - float(info["onset"])),
-                    part_id=f"channel_{info['channel']}",
-                    metadata={"midi_channel": info["channel"], "velocity": info["velocity"]},
-                )
+            event = _resolve_midi_event(
+                channel=int(info["channel"]),
+                key=int(info["key"]),
+                velocity=int(info["velocity"]),
+                onset=float(info["onset"]),
+                offset=float(time_sec),
+                idx=len(events),
+                warnings=warnings,
             )
+            if event is not None:
+                events.append(event)
 
     if not events:
         raise ValueError("MIDI file contains no paired note_on/note_off events.")
@@ -104,9 +175,9 @@ def parse_midi_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str
 
 def parse_midi(filepath: str) -> dict:
     """
-    Parse a MIDI file and return a dict compatible with load_from_xml_data / get_input_data:
-    notes, dynamics, instruments, num_instruments, weight_factor, and options.
-    Uses note_on messages; velocity maps to dynamics; instrument defaults to 'flute'.
+    Parse a MIDI file and return a dict compatible with load_from_xml_data / get_input_data.
+
+    Channel 10 uses the GM→unpitched map; other channels default to flute.
     """
     try:
         import mido
@@ -117,27 +188,51 @@ def parse_midi(filepath: str) -> dict:
     path = Path(filepath)
     if not path.exists():
         raise FileNotFoundError(f"Ficheiro não encontrado: {filepath}")
+
+    notes: list[str] = []
+    dynamics: list[str] = []
+    instruments: list[str] = []
+    warnings: list[str] = []
+
     mid = mido.MidiFile(path)
-    notes = []
-    dynamics = []
-    # Collect (note_num, velocity) from note_on with velocity > 0
     for track in mid.tracks:
         for msg in track:
             if msg.type == "note_on" and getattr(msg, "velocity", 0) > 0:
-                note_num = msg.note
-                vel = getattr(msg, "velocity", 64)
-                notes.append(midi_to_note_name(float(note_num)))
+                channel = int(getattr(msg, "channel", 0))
+                key = int(msg.note)
+                vel = int(getattr(msg, "velocity", 64))
+                if channel == GM_PERCUSSION_CHANNEL:
+                    mapped = map_gm_percussion_key(key)
+                    if mapped is None:
+                        warnings.append(
+                            f"Skipped unmappable MIDI channel-10 key {key} "
+                            f"(no GM→unpitched instrument mapping)."
+                        )
+                        continue
+                    instrument_name, approx = mapped
+                    if approx:
+                        warnings.append(
+                            f"MIDI GM key {key} on channel 10: {approx}."
+                        )
+                    notes.append(canonical_unpitched_note(instrument_name))
+                    instruments.append(instrument_name)
+                else:
+                    notes.append(midi_to_note_name(float(key)))
+                    instruments.append("flute")
                 dynamics.append(_velocity_to_dynamic(vel))
+
+    for w in warnings:
+        logger.warning(w)
     if not notes:
         raise ValueError("O ficheiro MIDI não contém notas (note_on com velocity > 0).")
     n = len(notes)
     out = {
         "notes": notes,
         "dynamics": dynamics,
-        "instruments": ["flute"] * n,
+        "instruments": instruments,
         "num_instruments": [1] * n,
         **RESEARCH_ANALYSIS_DEFAULTS,
         "show_graphs": True,
     }
-    logger.info(f"MIDI carregado: {path.name}, {n} nota(s).")
+    logger.info("MIDI carregado: %s, %d nota(s).", path.name, n)
     return out

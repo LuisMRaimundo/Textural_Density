@@ -7,15 +7,21 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Any, Callable
 
+from core.unpitched_routing import (
+    UNPITCHED_INSTRUMENT_GROUP_LABEL,
+    canonical_unpitched_note,
+    instrument_is_unpitched,
+)
 from gui.state import (
     CENTS_VALUES,
     DYNAMIC_LEVELS,
-    INSTRUMENTS,
+    INSTRUMENT_DROPDOWN_VALUES,
     NOTAS_BASE,
     NUM_NOTE_ROWS,
     OCTAVE_LIST,
 )
 from gui.types import GuiAnalysisInput
+from xml_loader import note_string_to_gui_parts
 
 logger = logging.getLogger("gui.input_panel")
 
@@ -146,16 +152,20 @@ class InputPanel:
             dynamic_menu.grid(row=row, column=4, padx=5, pady=2)
             self.dynamic_menus.append(dynamic_menu)
 
-            instrument_var = tk.StringVar(value="Flute")
+            instrument_var = tk.StringVar(value="Fl")
             self.instrument_vars.append(instrument_var)
             instrument_menu = ttk.Combobox(
                 self.input_frame,
                 textvariable=instrument_var,
-                values=INSTRUMENTS,
-                width=10,
+                values=INSTRUMENT_DROPDOWN_VALUES,
+                width=22,
                 state="disabled",
             )
             instrument_menu.grid(row=row, column=5, padx=5, pady=2)
+            instrument_menu.bind(
+                "<<ComboboxSelected>>",
+                lambda _e, idx=i: self._on_instrument_selected(idx),
+            )
             self.instrument_menus.append(instrument_menu)
 
             num_var = tk.StringVar(value="1")
@@ -181,13 +191,42 @@ class InputPanel:
         ).pack(side=tk.LEFT, padx=5)
 
     def toggle_row(self, index: int) -> None:
-        state = "normal" if self.state_vars[index].get() == 1 else "disabled"
-        self.note_menus[index].config(state=state)
-        self.octave_menus[index].config(state=state)
-        self.cents_menus[index].config(state=state)
+        enabled = self.state_vars[index].get() == 1
+        state = "normal" if enabled else "disabled"
         self.dynamic_menus[index].config(state=state)
         self.instrument_menus[index].config(state=state)
         self.num_instruments_menus[index].config(state=state)
+        if enabled:
+            self._apply_unpitched_row_ui(index)
+        else:
+            self.note_menus[index].config(state="disabled")
+            self.octave_menus[index].config(state="disabled")
+            self.cents_menus[index].config(state="disabled")
+
+    def _on_instrument_selected(self, index: int) -> None:
+        selected = self.instrument_vars[index].get()
+        if selected == UNPITCHED_INSTRUMENT_GROUP_LABEL:
+            # Group header is not a real instrument — revert to Flute.
+            self.instrument_vars[index].set("Fl")
+        if self.state_vars[index].get() == 1:
+            self._apply_unpitched_row_ui(index)
+
+    def _apply_unpitched_row_ui(self, index: int) -> None:
+        """Hide pitch controls for unpitched instruments; keep dynamic/Qty/instrument."""
+        inst = self.instrument_vars[index].get()
+        if instrument_is_unpitched(inst):
+            placeholder = canonical_unpitched_note(inst)
+            note_base, octave_str, _cents = note_string_to_gui_parts(placeholder)
+            self.note_vars[index].set(note_base)
+            self.octave_vars[index].set(octave_str)
+            self.cents_vars[index].set("0")
+            self.note_menus[index].config(state="disabled")
+            self.octave_menus[index].config(state="disabled")
+            self.cents_menus[index].config(state="disabled")
+        else:
+            self.note_menus[index].config(state="normal")
+            self.octave_menus[index].config(state="normal")
+            self.cents_menus[index].config(state="normal")
 
     def clear(self) -> None:
         for var in self.note_vars:
@@ -199,7 +238,7 @@ class InputPanel:
         for var in self.dynamic_vars:
             var.set("mf")
         for var in self.instrument_vars:
-            var.set("Flute")
+            var.set("Fl")
         for var in self.num_instruments_vars:
             var.set("1")
         for var in self.state_vars:
@@ -211,7 +250,16 @@ class InputPanel:
         """Return GUI-collected dict (includes save_results / show_graphs)."""
         active_indices = [i for i in range(len(self.state_vars)) if self.state_vars[i].get() == 1]
         complete_notes: list[str] = []
+        instruments: list[str] = []
         for i in active_indices:
+            inst = self.instrument_vars[i].get()
+            if inst == UNPITCHED_INSTRUMENT_GROUP_LABEL:
+                inst = "Fl"
+            instruments.append(inst)
+            if instrument_is_unpitched(inst):
+                # User never chooses the lookup key — inject canonical placeholder.
+                complete_notes.append(canonical_unpitched_note(inst))
+                continue
             note_part = self.note_vars[i].get()
             octave_part = self.octave_vars[i].get()
             cents_part = self.cents_vars[i].get()
@@ -234,7 +282,7 @@ class InputPanel:
         raw: dict[str, Any] = {
             "notes": complete_notes,
             "dynamics": [self.dynamic_vars[i].get() for i in active_indices],
-            "instruments": [self.instrument_vars[i].get() for i in active_indices],
+            "instruments": instruments,
             "num_instruments": [
                 int(self.num_instruments_vars[i].get()) for i in active_indices
             ],
@@ -246,7 +294,6 @@ class InputPanel:
 
     def load_from_data(self, data: dict[str, Any]) -> None:
         from core.input_validation import strip_removed_gui_preference_keys
-        from xml_loader import note_string_to_gui_parts
 
         data, stripped = strip_removed_gui_preference_keys(dict(data))
         if stripped:
@@ -263,17 +310,23 @@ class InputPanel:
         if len(dynamics) < n:
             dynamics.extend(["mf"] * (n - len(dynamics)))
         if len(instruments) < n:
-            instruments.extend(["Flute"] * (n - len(instruments)))
+            instruments.extend(["Fl"] * (n - len(instruments)))
         if len(num_instruments) < n:
             num_instruments.extend([1] * (n - len(num_instruments)))
         for i in range(n):
             self.state_vars[i].set(1)
-            note_base, octave_str, cents_str = note_string_to_gui_parts(notes[i])
+            inst = instruments[i]
+            self.instrument_vars[i].set(inst)
+            if instrument_is_unpitched(inst):
+                note_base, octave_str, cents_str = note_string_to_gui_parts(
+                    canonical_unpitched_note(inst)
+                )
+            else:
+                note_base, octave_str, cents_str = note_string_to_gui_parts(notes[i])
             self.note_vars[i].set(note_base)
             self.octave_vars[i].set(octave_str)
             self.cents_vars[i].set(cents_str)
             self.dynamic_vars[i].set(dynamics[i])
-            self.instrument_vars[i].set(instruments[i])
             num_val = num_instruments[i]
             self.num_instruments_vars[i].set(str(max(1, min(20, int(num_val)))))
             self.toggle_row(i)

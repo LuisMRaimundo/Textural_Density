@@ -8,8 +8,22 @@ from core import calculate_metrics
 from core.defaults import RESEARCH_ANALYSIS_DEFAULTS
 from core.input_validation import strip_removed_gui_preference_keys
 from core.request import ALLOWED_REQUEST_KEYS, AnalysisRequest
+from core.unpitched_routing import normalize_unpitched_entry_note
 
 _GUI_ONLY_KEYS = frozenset({"save_results", "show_graphs"})
+
+
+def _inject_unpitched_placeholders(analytical: dict[str, Any]) -> dict[str, Any]:
+    """Force canonical lookup keys for unpitched instruments; reject microtones."""
+    notes = list(analytical.get("notes") or [])
+    instruments = list(analytical.get("instruments") or [])
+    if len(notes) != len(instruments):
+        return analytical
+    analytical["notes"] = [
+        normalize_unpitched_entry_note(inst, note)
+        for note, inst in zip(notes, instruments)
+    ]
+    return analytical
 
 
 def build_analysis_request(raw: dict[str, Any]) -> AnalysisRequest:
@@ -17,6 +31,7 @@ def build_analysis_request(raw: dict[str, Any]) -> AnalysisRequest:
     Merge GUI options with research defaults, strip removed keys, build typed request.
 
     GUI-only keys (save_results, show_graphs) are dropped before strict validation.
+    Unpitched rows receive the module's canonical placeholder lookup key.
     """
     cleaned, _stripped = strip_removed_gui_preference_keys(raw)
     merged = dict(RESEARCH_ANALYSIS_DEFAULTS)
@@ -32,6 +47,7 @@ def build_analysis_request(raw: dict[str, Any]) -> AnalysisRequest:
         analytical["instruments"] = cleaned.get("instruments", [])
     if "num_instruments" not in analytical:
         analytical["num_instruments"] = cleaned.get("num_instruments", [])
+    analytical = _inject_unpitched_placeholders(analytical)
     return AnalysisRequest.from_mapping(analytical)
 
 
