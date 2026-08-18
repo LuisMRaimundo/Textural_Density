@@ -13,6 +13,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Literal
 
+from error_handler import InputError
+
 ProfileStatus = Literal[
     "empirical_source",
     "empirical_profile",
@@ -924,12 +926,36 @@ def list_instrument_ids() -> list[str]:
     return sorted(REGISTRY.keys())
 
 
-def profile_for_event(instrument_name: str) -> InstrumentProfile:
-    """Return profile for instrument name; unknown instruments get a generic fallback."""
+def unknown_instrument_error(instrument_name: str) -> InputError:
+    """Build the documented analysis-path error for an unregistered instrument id."""
+    n = len(list_instrument_ids())
+    return InputError(
+        f"Unknown instrument {instrument_name!r}. Analysis does not fall back to a "
+        f"parent module or to the generic coarse proxy. Use a registered id or alias "
+        f"({n} profiles; e.g. violino, flauta, trombone). "
+        f"Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, …) "
+        f"are not remapped.",
+        field="instruments",
+    )
+
+
+def profile_for_event(
+    instrument_name: str,
+    *,
+    allow_unknown: bool = False,
+) -> InstrumentProfile:
+    """Return the registry profile, or raise ``InputError`` if the id is unknown.
+
+    ``allow_unknown=True`` is reserved for metadata-audit tools that need to
+    inspect the generic coarse proxy. The analysis path (``calculate_metrics``,
+    ``get_instrument_module``) must not pass that flag.
+    """
     profile = resolve_profile(instrument_name)
     if profile is not None:
         return profile
-    return _UNKNOWN_PROFILE
+    if allow_unknown:
+        return _UNKNOWN_PROFILE
+    raise unknown_instrument_error(instrument_name)
 
 
 _UNKNOWN_PROFILE = InstrumentProfile(

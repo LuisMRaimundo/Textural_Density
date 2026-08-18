@@ -160,7 +160,7 @@ Removed in **3.0.0-strict-symbolic** (`psychoacoustic_corrections.py` deleted).
 
 **Modules:** `instrumentos/*`, `core/quantity_scaling.py`, `core/source_aggregation.py`, `core/orchestration.py`, `core/orchestration_mass.py`.
 
-Each note uses **its own instrument module**. Unknown instruments fall back to `coarse_default`.
+Each note uses **its own instrument module**. Unknown instrument ids (including withdrawn technique aliases such as `violoncelo_sordina`) raise `InputError` (`field: instruments`). They are **not** remapped to a parent module and **not** served by the generic coarse proxy. The proxy remains available only to metadata-audit tools via `profile_for_event(..., allow_unknown=True)`. Registered coarse ids (`piano`, `harpa`, `trombone_baixo`, …) still use `coarse_default`.
 
 **One-player density** (dynamic applied once in module lookup):
 

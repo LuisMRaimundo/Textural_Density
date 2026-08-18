@@ -10,7 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Sequence
 
-from microtonal import note_to_midi
+from microtonal import note_to_midi_strict
 
 DEFAULT_PITCH_TOLERANCE = 1e-6
 
@@ -158,7 +158,7 @@ def aggregate_events_by_pitch(
     for i, note in enumerate(notas):
         if not note:
             continue
-        midi = float(note_to_midi(note))
+        midi = float(note_to_midi_strict(note))
         w = float(weights[i]) if i < len(weights) else 1.0
         pc = max(1, int(player_counts[i])) if i < len(player_counts) else 1
         dyn = str(dynamics[i]) if i < len(dynamics) else "mf"

@@ -105,7 +105,6 @@ class TestFGHarmonicRatio:
 
 class TestFGSoftSeries:
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_harmonic_series_vs_chromatic(self):
         """SOFT: harmonic-series chord has high ratio and low entropy vs chromatic cluster."""
         series = ["C2", "C3", "G3", "C4", "E4", "G4", "Bb4"]

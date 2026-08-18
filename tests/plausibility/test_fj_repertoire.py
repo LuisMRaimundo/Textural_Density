@@ -42,7 +42,6 @@ def _run(notes, instruments, dynamics, nums=None):
 
 class TestFJRepertoire:
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_repertoire_battery(self):
         """SOFT: encode seven repertoire slices and compare the expected qualitative ordering."""
         cases = {}

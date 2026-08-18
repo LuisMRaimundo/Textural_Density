@@ -157,10 +157,11 @@ class TestTimbralOrchestrationAxioms:
         d_mix = float(mixed["density_subindices"]["timbral_heterogeneity"]["raw"]["family_diversity"])
         assert d_mix >= d_mono
 
-    def test_unknown_instrument_warning(self):
-        resultados, _, _ = calculate_metrics(_input(["C4"], instruments=["totally_unknown_xyz"]))
-        warnings = resultados["metric_metadata"]["warnings"]
-        assert any("unknown" in w.lower() or "registry" in w.lower() or "profile" in w.lower() for w in warnings)
+    def test_unknown_instrument_raises(self):
+        from error_handler import InputError
+
+        with pytest.raises(InputError, match="Unknown instrument"):
+            calculate_metrics(_input(["C4"], instruments=["totally_unknown_xyz"]))
 
 
 class TestTemporalVerticalDensityAxioms:

@@ -27,7 +27,7 @@ def test_every_profile_has_status_and_uncertainty():
 
 
 def test_unknown_instrument_fallback():
-    fb = profile_for_event("not_a_real_instrument_xyz")
+    fb = profile_for_event("not_a_real_instrument_xyz", allow_unknown=True)
     audited = audit_instrument_profile(fb)
     assert audited["profile_status"] == "symbolic_default"
     assert audited["warnings"]

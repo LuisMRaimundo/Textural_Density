@@ -153,7 +153,6 @@ class TestFIUnpitched:
 
 class TestFISoftStaccato:
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_sustained_vs_staccato_timeseries(self):
         """SOFT: tutti sustained vs staccato gaps — report summarize_time_series."""
         sustained = []

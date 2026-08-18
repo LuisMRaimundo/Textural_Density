@@ -187,7 +187,6 @@ class TestFCFullLadderLookups:
 
 class TestFCSoftLadders:
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT: measured ladders may invert by design")
     @pytest.mark.parametrize("module_name", _pitched_table_modules())
     def test_dynamic_non_decreasing(self, module_name: str):
         """SOFT: density non-decreasing from pppp to ffff at every table pitch."""
@@ -225,7 +224,6 @@ class TestFCSoftLadders:
         )
 
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_technique_variants_violin_viola(self):
         """SOFT: sul pont ≥ ordinario ≥ sordina/tasto/harm on shared range (violin/viola)."""
         pairs = [
@@ -279,7 +277,6 @@ class TestFCSoftLadders:
         )
 
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_register_spikes(self):
         """SOFT: flag mf adjacent-semitone jumps > 3× median jump per module."""
         flags = []
@@ -310,7 +307,6 @@ class TestFCSoftLadders:
         )
 
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_cross_family_ordering(self):
         """SOFT: report mid-register mf/ff ordering; trumpet≥oboe≥flute and tuba≥trombone≥horn."""
         probes = {
@@ -344,7 +340,6 @@ class TestFCSoftLadders:
         )
 
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_trombone_between_horn_and_tuba(self):
         """SOFT: trombone mf between trompa and tuba on the shared range."""
         ht = get_instrument_module("trompa")

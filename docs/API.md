@@ -40,7 +40,7 @@ Alias: `calcular_metricas`. Single vertical-slice analysis.
 |-----|------|-------------|
 | `notes` | `list[str]` | Note names (supports cents, e.g. `C4+50c`) |
 | `dynamics` | `list[str]` | Dynamic markings (`pp` … `ffff`) |
-| `instruments` | `list[str]` | Instrument name per note |
+| `instruments` | `list[str]` | Registered instrument id or alias per note. Unknown / withdrawn ids raise `InputError` (`field: instruments`); they do not fall back to a parent module or to the generic coarse proxy. |
 | `num_instruments` | `list[int]` | Player count per note (≥ 1) |
 
 **Common optional keys:**
@@ -263,9 +263,10 @@ from instrumentos.spectral_lookup import lookup_spectral_density, lookup_spectra
 
 | Function | Description |
 |----------|-------------|
-| `get_instrument_module(name)` | Resolve module for instrument (dedicated → coarse → fallback) |
-| `get_instrument_profile(name) -> InstrumentProfile` | Profile metadata including `profile_status` |
-| `resolve_profile(name) -> InstrumentProfile \| None` | Lookup by name/alias |
+| `get_instrument_module(name)` | Resolve module (dedicated table → registered coarse). Unregistered names raise `InputError` |
+| `get_instrument_profile(name) -> InstrumentProfile` | Profile metadata including `profile_status`; unknown ids raise `InputError` |
+| `resolve_profile(name) -> InstrumentProfile \| None` | Lookup by name/alias (`None` if unknown; does not raise) |
+| `profile_for_event(name, *, allow_unknown=False)` | Analysis helper: raises `InputError` when unknown. Audit tools may pass `allow_unknown=True` to inspect the generic coarse proxy |
 | `list_instrument_ids()` | All registered instrument IDs (~28) |
 | `list_profiles()` | All `InstrumentProfile` objects |
 | `resolve_density_from_table(table, note, dynamic, ...)` | Continuous-pitch metadata lookup with provenance (`PitchLookupResult`) |

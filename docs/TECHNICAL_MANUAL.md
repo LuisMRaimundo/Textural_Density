@@ -119,7 +119,7 @@ score_io/, gui/                # Export and GUI layers (separate from core)
 - **`instrumentos/registry.py`** maps names/aliases to profiles with `profile_status` (`literature_derived`, `empirical_source`, `coarse_default`) and `uncertainty`.
 - Instruments **without** dedicated tables use coarse register/dynamic models only (`coarse_default`), also via `microtonal.note_to_midi_strict` for microtonal input.
 - **Per-event resolution:** each note uses its own instrument module via `core/orchestration.py`.
-- Unknown instruments fall back to generic coarse profile with warnings in `metric_metadata`.
+- Unknown instruments raise `InputError` (`field: instruments`). They are not remapped to a parent module or to the generic coarse proxy. The proxy is audit-only (`profile_for_event(..., allow_unknown=True)`).
 
 #### 2.4.1 Dynamic tables (current state)
 

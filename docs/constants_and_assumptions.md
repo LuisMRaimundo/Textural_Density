@@ -71,7 +71,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `horn`, `trombone`, `tuba`, strings, percussion, …) | Note×dynamic CDM tables (externally sourced; all pitched table-backed modules = full 10-dynamic ladder) | `instrumentos/*.py` |
 | `profile_status` | `literature_derived` / `empirical_profile` / `coarse_default` | Audit: `instrumentos/metadata_audit.py` |
 | `uncertainty` | low / medium / high | All profiles |
-| Unknown instrument | Generic fallback without external acoustic table | `profile_for_event()` |
+| Unknown instrument | Analysis rejects the id (`InputError`). The generic coarse proxy is audit-only (`profile_for_event(..., allow_unknown=True)`) | `instrumentos.registry` |
 
 **Epistemic rule:** instrument density uses **externally obtained acoustic metadata** looked up from committed tables where modules exist. The pipeline does **not** analyse audio at runtime and does **not** invent missing dynamics. Written dynamics remain symbolic score markings (not SPL).
 

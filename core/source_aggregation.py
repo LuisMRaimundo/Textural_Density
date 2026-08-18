@@ -15,7 +15,7 @@ from core.quantity_scaling import (
     rss_pressure_equivalent,
     validate_quantity,
 )
-from microtonal import note_to_midi
+from microtonal import note_to_midi_strict
 
 
 @dataclass(frozen=True)
@@ -45,7 +45,7 @@ def _source_key(
     *,
     normalize_dynamic: Callable[[str], str],
 ) -> tuple[float, str, str]:
-    midi = float(note_to_midi(note))
+    midi = float(note_to_midi_strict(note))
     inst = str(instrument).strip().lower()
     dyn = normalize_dynamic(dynamic)
     return midi, inst, dyn

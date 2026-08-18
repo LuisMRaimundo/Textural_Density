@@ -93,7 +93,7 @@ Property tests: [`tests/test_formal_construct_axioms.py`](../tests/test_formal_c
 |----|--------|
 | TO-1 | Adding a new instrument family should increase or maintain family-diversity measures. |
 | TO-2 | Duplicating the same instrument affects mass/player count but not necessarily family diversity. |
-| TO-3 | Unknown instruments must trigger warnings or symbolic fallback metadata. |
+| TO-3 | Unknown instruments raise `InputError`; they must not enter the slice via a silent coarse proxy. |
 | TO-4 | This construct is symbolic orchestration metadata, **not** measured timbre. |
 
 **Verification:** `density_subindices.timbral_heterogeneity`, instrument registry

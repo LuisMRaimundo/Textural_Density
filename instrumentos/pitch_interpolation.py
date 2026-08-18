@@ -105,10 +105,13 @@ def _note_to_target_midi(
 ) -> tuple[float, str, str]:
     """Return (target_midi, normalized_note, preprocessed_note)."""
     note_normalized = normalizar_simbolos_nota(note)
+    # MIDI from the written spelling (strict wrap-around: Cb5=B4, B#3=C4).
+    # Preprocess is only for exact table-key matching, not for the MIDI axis —
+    # utils.notes.to_sharp("Cb5") is "B5" and would shift the lookup by an octave.
+    target_midi = float(note_to_midi_strict(note_normalized))
     candidate = note_normalized
     if preprocess is not None:
         candidate = preprocess(candidate)
-    target_midi = float(note_to_midi_strict(candidate))
     return target_midi, note_normalized, candidate
 
 

@@ -61,7 +61,6 @@ class TestFHRegisterBands:
 
 class TestFHSoftClusters:
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_low_vs_high_cluster(self):
         """SOFT: same interval density, different occupancy and orchestration_balance."""
         low, _, _ = calculate_metrics(slice_input(["C2", "C#2", "D2"], instruments="trombone"))
@@ -87,7 +86,6 @@ class TestFHSoftClusters:
         )
 
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_homogeneous_vs_mixed_diversity(self):
         """SOFT: mixed wind/brass/string chord has higher timbre diversity than homogeneous strings."""
         notes = ["C4", "E4", "G4"]

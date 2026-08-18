@@ -14,7 +14,7 @@ python scripts/export_instrument_metadata_audit.py
 - Registry `coarse_default` profiles lack external acoustic tables; audit label **`symbolic_default`**.
 - `literature_derived` / `literature_informed` profiles document external provenance in `source_notes`.
 - Written dynamics use **symbolic weighting only** — not SPL or loudness.
-- Unknown instruments resolve to a generic fallback with warnings (`instrument_id=unknown`).
+- The generic unknown proxy (`instrument_id=unknown`) is audit-only (`profile_for_event(..., allow_unknown=True)`). Analysis rejects unregistered ids.
 
 ## Audit fields (per instrument)
 
