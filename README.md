@@ -49,7 +49,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Instrument registry** — orchestral profile scaffolding (~42 entries); English orchestral short names in the GUI (Fl, Ob, Cl, Bsn, Tpt, Hn, Tba, Vl, Vla, Vc, Db, …); table-backed CDM modules for flute, oboe, clarinet, bassoon, trumpet, horn, tuba, strings (arco + techniques + violin harmonics), and selected percussion; metadata corpus still incomplete for some names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML sounding pitch** — written `<pitch>` converted to sounding/concert pitch via `<transpose>` before validation and density lookup (PR #21)
-- **Verification scaffolding** — full suite **1542 passed / 2 skipped / 18 xfailed** (2026-07-12, methodology `5.1.0-strict-symbolic`, package `1.1.4`); GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) (see [Testing](#testing))
+- **Verification scaffolding** — full suite **1643 passed / 9 skipped** (2026-08-18, methodology `5.1.0-strict-symbolic`, package `1.1.5`); GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) (see [Testing](#testing)). The 2026-07-12 CI snapshot was 1542 / 2 / 18 on package `1.1.4`.
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -275,11 +275,11 @@ Registry smoke: `pytest tests/test_stress_battery_registry.py -q`.
 
 ### Test Coverage
 
-Current verified status (2026-07-12, methodology **`5.1.0-strict-symbolic`**, package **`1.1.4`**, local Python **3.10**; CI also runs **3.10** and **3.11**):
+Current verified status (2026-08-18, methodology **`5.1.0-strict-symbolic`**, package **`1.1.5`**, local Python **3.10**; CI also runs **3.10** and **3.11**):
 
 | Gate | Result |
 |------|--------|
-| Full suite | **1629 passed / 8 skipped** (2026-08-09, local) |
+| Full suite | **1643 passed / 9 skipped** (2026-08-18, local; 1652 collected) |
 | Skipped | environment-dependent — e.g. string source-workbook reproducibility skips when local Zenodo workbooks are absent (all four strings **pass** reconstruction where the workbooks are present) |
 | Xfailed | 0 — the former adaptive-tail xfails are obsolete: committed data-faithful ladders replaced runtime tails, and the ladder contract (`tests/test_pitched_dynamic_monotone_ladders.py`) accepts measured non-monotonicity by design |
 | Full-project coverage | gate ≥ 63% (CI quality job) |
