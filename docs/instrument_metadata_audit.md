@@ -10,7 +10,7 @@ python scripts/export_instrument_metadata_audit.py
 
 ## Rules
 
-- Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `horn`, `tuba`, `violin`, `viola`, `cello`, `double_bass`, …) use **externally sourced acoustic metadata** (committed 10-dynamic CDM ladders; no runtime interpolation of dynamics). This is applied at score-analysis time — **not** runtime audio analysis.
+- Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `horn`, `trombone`, `tuba`, `violin`, `viola`, `cello`, `double_bass`, …) use **externally sourced acoustic metadata** (committed 10-dynamic CDM ladders; no runtime interpolation of dynamics). This is applied at score-analysis time — **not** runtime audio analysis.
 - Registry `coarse_default` profiles lack external acoustic tables; audit label **`symbolic_default`**.
 - `literature_derived` / `literature_informed` profiles document external provenance in `source_notes`.
 - Written dynamics use **symbolic weighting only** — not SPL or loudness.

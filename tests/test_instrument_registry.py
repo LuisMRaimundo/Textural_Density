@@ -91,9 +91,9 @@ class TestInstrumentRegistry:
 
     def test_calculate_metrics_with_coarse_instrument(self):
         data = {
-            "notes": ["G4", "D4"],
+            "notes": ["C3", "E3"],
             "dynamics": ["mf", "f"],
-            "instruments": ["trombone", "fagote"],
+            "instruments": ["trombone_baixo", "piano"],
             "num_instruments": [1, 1],
         }
         resultados, densidades, _ = calculate_metrics(data)

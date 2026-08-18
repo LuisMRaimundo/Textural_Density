@@ -2,7 +2,7 @@
 
 
 
-> **Metadata status:** The instrument corpus is **incomplete**. Some names resolve to coarse fallbacks; table-backed modules are partial proxies. Full 10-dynamic ladders are committed for ordinary-sustain winds (flute, oboe, clarinet, bassoon), brass (trumpet, horn, tuba), arco strings, string technique/harmonic modules, and unpitched percussion. Ladders are **data-faithful** (Dynamics_predicter v1.5, 2026-08-08/09): measured pp/mf/ff anchors are committed verbatim, PCHIP interiors, tapered outers — they are *not* forced to be strictly monotone. External acoustic/proxy metadata are curated gradually — not live analysis.
+> **Metadata status:** The instrument corpus is **incomplete**. Some names resolve to coarse fallbacks; table-backed modules are partial proxies. Full 10-dynamic ladders are committed for ordinary-sustain winds (flute, oboe, clarinet, bassoon), brass (trumpet, horn, trombone, tuba), arco strings, string technique/harmonic modules, and unpitched percussion. Ladders are **data-faithful** (Dynamics_predicter v1.5, 2026-08-08/09/18): measured pp/mf/ff anchors are committed verbatim, PCHIP interiors, tapered outers — they are *not* forced to be strictly monotone. External acoustic/proxy metadata are curated gradually — not live analysis.
 
 
 
@@ -23,7 +23,7 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 |--------|-------|--------|
 
 | `flute.py`, `clarinet.py`, `oboe.py`, `bassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
-| `trumpet.py`, `horn.py`, `tuba.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH sustain anchors) |
+| `trumpet.py`, `horn.py`, `trombone.py`, `tuba.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH sustain anchors) |
 | `violin.py`, `cello.py`, `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
 | `viola.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
 | `violin_sordina.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_con sordina_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
@@ -56,7 +56,7 @@ Audit: `python tools/audit_instrument_metadata_range_resolution.py` → `reports
 
 
 
-**GUI vs registry IDs:** The Tkinter GUI shows **English orchestral short names** (Fl, Ob, Cl, Bsn, Tpt, Hn, Tba, Vl, Vla, Vc, Db, …). Registry `instrument_id` keys remain stable internal identifiers (e.g. `flauta`, `violino`) with English aliases (`flute`, `violin`, …) and English **module filenames** (`flute.py`, `violin.py`, …). The former long display names (Flute, Violin, …) still resolve as aliases.
+**GUI vs registry IDs:** The Tkinter GUI shows **English orchestral short names** (Fl, Ob, Cl, Bsn, Tpt, Hn, Trb, Tba, Vl, Vla, Vc, Db, …). Registry `instrument_id` keys remain stable internal identifiers (e.g. `flauta`, `violino`) with English aliases (`flute`, `violin`, …) and English **module filenames** (`flute.py`, `violin.py`, …). The former long display names (Flute, Violin, …) still resolve as aliases.
 
 
 
@@ -204,6 +204,8 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **Trumpet (Tpt)** | `trumpet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
 | **Horn (Hn)** | `horn.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
+
+| **Trombone (Trb)** | `trombone.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (C#1–C5) |
 
 | **Tuba (Tba)** | `tuba.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (C1–A#4) |
 

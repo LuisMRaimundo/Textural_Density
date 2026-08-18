@@ -8,7 +8,8 @@
 - **Violin sounding [55,103]:** table G3–G7 aligns (not a double-bass case).
 - **Table excludes sounding range (partial):** 0 instrument(s): none.
 - **Technique:** modules declare `source_technique` / `table_supported_techniques`; registry lists broader organological capabilities.
-- **Tuba:** coarse-default validation placeholder (MIDI 28–58) — **REVIEW REQUIRED** for authoritative range.
+- **Trombone:** committed table (`trombone.py`, C#1–C5) — **PASS** when registry matches the table span.
+- **Tuba:** committed table (`tuba.py`, C1–A#4) — **PASS** when registry matches the table span.
 - **Transposition:** registry field is metadata-only; manual input is sounding pitch; MusicXML applies `<transpose>` once.
 
 ## Range semantics
@@ -30,6 +31,11 @@
 - Obsolete docs span: E1–A3 (obsolete_documentation_only)
 - Upper-register QC: **REVIEW REQUIRED**
 - Committed spectral_data, INSTRUMENT_SOURCE.pitch_range, and registry.sounding_range all agree on E1–C5. E1–A3 was obsolete documentation. Comfortable range remains narrower. Methodological status of upper-register rows (above A3) vs core corpus not independently adjudicated.
+
+## Trombone review
+
+- Classification: **PASS**
+- Committed trombone spectral_data ladder (IOWA+ORCH medians via Dynamics_predicter); registry.sounding_range matches the committed table span.
 
 ## Tuba review
 
@@ -68,7 +74,7 @@
 | pratos | C5–C5 | 60–84 | 60–84 | not_applicable_unpitched | PASS | PASS |
 | tamtam | C2–C2 | 24–48 | 24–48 | not_applicable_unpitched | PASS | PASS |
 | timpanos | — | 36–60 | 36–60 | no_table | NOT APPLICABLE | NOT APPLICABLE |
-| trombone | — | 40–72 | 43–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
+| trombone | C#1–C5 | 25–72 | 43–65 | full_coverage | PASS | PASS |
 | trombone_baixo | — | 34–65 | 36–58 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | trompa | G1–F5 | 41–77 | 45–72 | full_coverage | FAIL | PASS |
 | trompete | E3–D#6 | 52–87 | 58–80 | full_coverage | PASS | PASS |

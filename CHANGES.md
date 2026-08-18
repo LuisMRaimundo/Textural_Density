@@ -2,6 +2,20 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-18 — Add trombone: committed 10-level dynamic ladder
+
+New `instrumentos/trombone.py`: 48 pitches (C#1–C5, MIDI 25–72) × 10 dynamics from
+`D:\METAIS\Trombone_Dynamics.xlsx` (`Results`) via Dynamics_predicter v1.5
+(measured pp/mf/ff anchors verbatim).
+
+- Registry: trombone wired to the module, GUI display name **Trb**, sounding
+  range updated from the (40–72) placeholder to the table span (25–72).
+- Metadata range audit: trombone review classifies against the committed table
+  (**PASS** when registry matches span); trombone added to the table-backed
+  brass module set. Bass trombone remains coarse.
+- Tests: trombone classification contract added; coarse-only provenance tests
+  now use bass trombone (and piano where a second coarse profile is required).
+
 ## 2026-08-18 — Symmetric octave-class harmonic ratio; opt-in blend normalisation (package 1.1.5)
 
 Schema label unchanged (`5.1.0-strict-symbolic`). Two production commits, then this docs/version alignment.
@@ -32,7 +46,8 @@ Dynamics_predicter v1.5 (measured pp/mf/ff anchors verbatim).
   (**PASS** when registry matches span); trumpet/horn/tuba added to the
   table-backed module set.
 - Tests: tuba classification contract updated; coarse-only provenance test now
-  uses trombone + bass trombone. Trombone remains coarse (workbook unfinished).
+  uses trombone + bass trombone. Trombone later gained a committed table
+  (2026-08-18); bass trombone remains coarse.
 
 ## 2026-08-08 — Data-faithful 10-level ladders for all pitched instruments
 

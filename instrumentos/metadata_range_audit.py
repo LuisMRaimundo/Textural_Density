@@ -50,6 +50,7 @@ _GPR_MODULES = frozenset(
         "double_bass_sul_ponticello",
         "trumpet",
         "horn",
+        "trombone",
         "tuba",
         "bass_drum",
         "cymbals",
@@ -146,6 +147,42 @@ def _tuba_classification() -> dict[str, Any]:
             "registry.sounding_range matches the committed table span."
             if aligned
             else "Committed tuba table span disagrees with registry.sounding_range — review."
+        ),
+    }
+
+
+def _trombone_classification() -> dict[str, Any]:
+    profile = REGISTRY["trombone"]
+    lo, hi = profile.sounding_range
+    table = _table_span(profile.module_name)
+    if table is None:
+        return {
+            "module_name": profile.module_name,
+            "profile_status": profile.profile_status,
+            "sounding_range_midi": f"{int(lo)}–{int(hi)}",
+            "classification": "REVIEW REQUIRED",
+            "range_kind": "coarse_default_validation_placeholder",
+            "rationale": (
+                "No committed trombone spectral_data module. registry.sounding_range is a coarse "
+                "orchestration placeholder for validation only — not a source-table span."
+            ),
+        }
+    aligned = int(lo) == table["min_midi"] and int(hi) == table["max_midi"]
+    return {
+        "module_name": profile.module_name,
+        "profile_status": profile.profile_status,
+        "sounding_range_midi": f"{int(lo)}–{int(hi)}",
+        "source_table_span": (
+            f"{table['first_note']}–{table['last_note']} "
+            f"(MIDI {table['min_midi']}–{table['max_midi']})"
+        ),
+        "classification": "PASS" if aligned else "REVIEW REQUIRED",
+        "range_kind": "source_table_span",
+        "rationale": (
+            "Committed trombone spectral_data ladder (IOWA+ORCH medians via Dynamics_predicter); "
+            "registry.sounding_range matches the committed table span."
+            if aligned
+            else "Committed trombone table span disagrees with registry.sounding_range — review."
         ),
     }
 
@@ -270,6 +307,7 @@ def build_metadata_range_resolution_audit() -> dict[str, Any]:
         "instruments": instruments,
         "double_bass_resolution": _double_bass_span_classification(_table_span("double_bass")),
         "tuba_review": _tuba_classification(),
+        "trombone_review": _trombone_classification(),
         "transposition_review": {
             "contract": (
                 "registry.transposition is notation/import metadata only; manual/GUI notes[] are "

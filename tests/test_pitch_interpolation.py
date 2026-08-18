@@ -108,8 +108,8 @@ class TestExistingInstrumentBehaviour:
 
 class TestCoarseDefaultMicrotonal:
     def test_coarse_instrument_microtonal_finite(self):
-        mod = get_instrument_module("trombone")
-        assert math.isfinite(mod.calcular_densidade("F4+50c", "mf"))
+        mod = get_instrument_module("trombone_baixo")
+        assert math.isfinite(mod.calcular_densidade("E3+50c", "mf"))
 
 
 class TestOctaveSafety:

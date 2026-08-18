@@ -89,9 +89,9 @@ class TestMissingInstrumentDataScaffold:
 
 class TestPartialInstrumentDataScaffold:
     def test_registered_coarse_instrument_resolves_without_acoustic_table(self):
-        mod = get_instrument_module("trombone")
+        mod = get_instrument_module("trombone_baixo")
         assert getattr(mod, "IS_COARSE_DEFAULT", False) is True
-        density = mod.calcular_densidade("A4", "mf")
+        density = mod.calcular_densidade("E3", "mf")
         assert math.isfinite(density)
         assert density > 0.0
 
@@ -126,9 +126,9 @@ class TestPartialInstrumentDataScaffold:
 class TestSourceProvenanceLabelling:
     def test_coarse_only_slice_labels_metadata_proxy(self):
         # Both instruments must be coarse-only (no dedicated acoustic module):
-        # tuba now ships instrumentos/tuba.py, so use trombone + bass trombone.
+        # trombone now ships instrumentos/trombone.py, so use bass trombone + piano.
         vs = legacy_input_to_vertical_slice(
-            _symbolic_input(["E3", "C3"], instruments=["trombone", "bass_trombone"])
+            _symbolic_input(["E3", "C3"], instruments=["trombone_baixo", "piano"])
         )
         source_type, validation, _, warnings = _instrument_density_epistemics(vs)
         assert source_type == "metadata_proxy"

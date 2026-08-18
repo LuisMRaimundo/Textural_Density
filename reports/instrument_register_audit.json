@@ -1,11 +1,12 @@
 {
-  "instrument_count": 28,
+  "instrument_count": 42,
   "instruments": [
     {
       "instrument_id": "bombo",
       "display_name": "Bass drum",
       "aliases": [
-        "bass_drum"
+        "bass_drum",
+        "bass drum"
       ],
       "family": "percussion",
       "transposition_semitones": 0,
@@ -14,10 +15,20 @@
       "registry_sounding_max_midi": 48,
       "comfortable_min_midi": 28,
       "comfortable_max_midi": 48,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "bass_drum",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "D2",
+        "last_note": "D2",
+        "row_count": 1,
+        "min_midi": 38,
+        "max_midi": 38,
+        "instrument_source_pitch_range": [
+          28,
+          48
+        ]
+      },
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -70,10 +81,11 @@
     },
     {
       "instrument_id": "clarinete",
-      "display_name": "Clarinet",
+      "display_name": "Cl",
       "aliases": [
         "clarinet",
-        "clarinete"
+        "clarinete",
+        "cl."
       ],
       "family": "woodwinds",
       "transposition_semitones": 0,
@@ -127,11 +139,15 @@
     },
     {
       "instrument_id": "contrabaixo",
-      "display_name": "Double bass",
+      "display_name": "Db",
       "aliases": [
         "double_bass",
+        "double bass",
         "contrabass",
-        "baixo"
+        "baixo",
+        "db.",
+        "cb",
+        "cb."
       ],
       "family": "strings",
       "transposition_semitones": 0,
@@ -141,6 +157,127 @@
       "comfortable_min_midi": 31,
       "comfortable_max_midi": 55,
       "module_name": "double_bass",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "E1",
+        "last_note": "C5",
+        "row_count": 45,
+        "min_midi": 28,
+        "max_midi": 72,
+        "instrument_source_pitch_range": [
+          28,
+          72
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "contrabaixo_sordina",
+      "display_name": "Double bass sordina",
+      "aliases": [
+        "double_bass_sordina",
+        "Double_bass_sordina",
+        "double bass sordina",
+        "contrabass sordina",
+        "contrabass_sordina",
+        "contrabaixo sordina",
+        "contrabaixo_sordina",
+        "bass sordina",
+        "muted double bass",
+        "muted contrabass"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 28,
+      "registry_sounding_max_midi": 72,
+      "comfortable_min_midi": 31,
+      "comfortable_max_midi": 55,
+      "module_name": "double_bass_sordina",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "E1",
+        "last_note": "C5",
+        "row_count": 45,
+        "min_midi": 28,
+        "max_midi": 72,
+        "instrument_source_pitch_range": [
+          28,
+          72
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "contrabaixo_sul_ponticello",
+      "display_name": "Double bass sul ponticello",
+      "aliases": [
+        "double_bass_sul_ponticello",
+        "Double_bass_sul_ponticello",
+        "double bass sul ponticello",
+        "contrabass sul ponticello",
+        "contrabass_sul_ponticello",
+        "contrabaixo sul ponticello",
+        "contrabaixo_sul_ponticello",
+        "sul ponticello double bass",
+        "sul_ponticello_double_bass"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 28,
+      "registry_sounding_max_midi": 72,
+      "comfortable_min_midi": 31,
+      "comfortable_max_midi": 55,
+      "module_name": "double_bass_sul_ponticello",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "E1",
+        "last_note": "C5",
+        "row_count": 45,
+        "min_midi": 28,
+        "max_midi": 72,
+        "instrument_source_pitch_range": [
+          28,
+          72
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "contrabaixo_sul_tasto",
+      "display_name": "Double bass sul tasto",
+      "aliases": [
+        "double_bass_sul_tasto",
+        "Double_bass_sul_tasto",
+        "double bass sul tasto",
+        "contrabass sul tasto",
+        "contrabass_sul_tasto",
+        "contrabaixo sul tasto",
+        "contrabaixo_sul_tasto",
+        "sul tasto double bass",
+        "sul_tasto_double_bass"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 28,
+      "registry_sounding_max_midi": 72,
+      "comfortable_min_midi": 31,
+      "comfortable_max_midi": 55,
+      "module_name": "double_bass_sul_tasto",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "E1",
@@ -208,22 +345,35 @@
     },
     {
       "instrument_id": "fagote",
-      "display_name": "Bassoon",
+      "display_name": "Bsn",
       "aliases": [
         "bassoon",
-        "fagot"
+        "fagot",
+        "bsn.",
+        "fg",
+        "fg."
       ],
       "family": "woodwinds",
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 34,
-      "registry_sounding_max_midi": 72,
+      "registry_sounding_max_midi": 75,
       "comfortable_min_midi": 40,
       "comfortable_max_midi": 65,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "bassoon",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "A#1",
+        "last_note": "D#5",
+        "row_count": 42,
+        "min_midi": 34,
+        "max_midi": 75,
+        "instrument_source_pitch_range": [
+          34,
+          75
+        ]
+      },
+      "range_discrepancy": "aligned",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -231,10 +381,11 @@
     },
     {
       "instrument_id": "flauta",
-      "display_name": "Flute",
+      "display_name": "Fl",
       "aliases": [
         "flute",
-        "flute_traverso"
+        "flute_traverso",
+        "fl."
       ],
       "family": "woodwinds",
       "transposition_semitones": 0,
@@ -279,6 +430,38 @@
       "profile_status": "coarse_default",
       "table_span": null,
       "range_discrepancy": "no_table",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "gongo",
+      "display_name": "Gong",
+      "aliases": [
+        "gong"
+      ],
+      "family": "percussion",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 36,
+      "registry_sounding_max_midi": 60,
+      "comfortable_min_midi": 36,
+      "comfortable_max_midi": 60,
+      "module_name": "gong",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C3",
+        "last_note": "C3",
+        "row_count": 1,
+        "min_midi": 48,
+        "max_midi": 48,
+        "instrument_source_pitch_range": [
+          36,
+          60
+        ]
+      },
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -353,9 +536,10 @@
     },
     {
       "instrument_id": "oboe",
-      "display_name": "Oboe",
+      "display_name": "Ob",
       "aliases": [
-        "oboe"
+        "oboe",
+        "ob."
       ],
       "family": "woodwinds",
       "transposition_semitones": 0,
@@ -410,7 +594,8 @@
       "instrument_id": "pratos",
       "display_name": "Cymbals",
       "aliases": [
-        "cymbals"
+        "cymbals",
+        "cymbal"
       ],
       "family": "percussion",
       "transposition_semitones": 0,
@@ -419,10 +604,20 @@
       "registry_sounding_max_midi": 84,
       "comfortable_min_midi": 60,
       "comfortable_max_midi": 84,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "cymbals",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C5",
+        "last_note": "C5",
+        "row_count": 1,
+        "min_midi": 72,
+        "max_midi": 72,
+        "instrument_source_pitch_range": [
+          60,
+          84
+        ]
+      },
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -433,7 +628,8 @@
       "display_name": "Tam-tam",
       "aliases": [
         "tam_tam",
-        "tam-tam"
+        "tam-tam",
+        "tam tam"
       ],
       "family": "percussion",
       "transposition_semitones": 0,
@@ -442,10 +638,20 @@
       "registry_sounding_max_midi": 48,
       "comfortable_min_midi": 24,
       "comfortable_max_midi": 48,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "tamtam",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C2",
+        "last_note": "C2",
+        "row_count": 1,
+        "min_midi": 36,
+        "max_midi": 36,
+        "instrument_source_pitch_range": [
+          24,
+          48
+        ]
+      },
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -476,21 +682,34 @@
     },
     {
       "instrument_id": "trombone",
-      "display_name": "Trombone",
+      "display_name": "Trb",
       "aliases": [
-        "trombone"
+        "trombone",
+        "Trombone",
+        "trb.",
+        "trombon"
       ],
       "family": "brass",
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
-      "registry_sounding_min_midi": 40,
+      "registry_sounding_min_midi": 25,
       "registry_sounding_max_midi": 72,
       "comfortable_min_midi": 43,
       "comfortable_max_midi": 65,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "trombone",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C#1",
+        "last_note": "C5",
+        "row_count": 48,
+        "min_midi": 25,
+        "max_midi": 72,
+        "instrument_source_pitch_range": [
+          25,
+          72
+        ]
+      },
+      "range_discrepancy": "aligned",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -521,11 +740,12 @@
     },
     {
       "instrument_id": "trompa",
-      "display_name": "Horn",
+      "display_name": "Hn",
       "aliases": [
         "horn",
         "french_horn",
-        "trompa"
+        "trompa",
+        "hn."
       ],
       "family": "brass",
       "transposition_semitones": 7,
@@ -534,10 +754,20 @@
       "registry_sounding_max_midi": 77,
       "comfortable_min_midi": 45,
       "comfortable_max_midi": 72,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "horn",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "G1",
+        "last_note": "F5",
+        "row_count": 47,
+        "min_midi": 31,
+        "max_midi": 77,
+        "instrument_source_pitch_range": [
+          31,
+          77
+        ]
+      },
+      "range_discrepancy": "BUG_table_anchor_outside_registry",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -545,21 +775,32 @@
     },
     {
       "instrument_id": "trompete",
-      "display_name": "Trumpet",
+      "display_name": "Tpt",
       "aliases": [
-        "trumpet"
+        "trumpet",
+        "tpt."
       ],
       "family": "brass",
       "transposition_semitones": 2,
       "transposition_class": "D_interval_transposing",
-      "registry_sounding_min_midi": 55,
-      "registry_sounding_max_midi": 84,
+      "registry_sounding_min_midi": 52,
+      "registry_sounding_max_midi": 87,
       "comfortable_min_midi": 58,
       "comfortable_max_midi": 80,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "trumpet",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "E3",
+        "last_note": "D#6",
+        "row_count": 36,
+        "min_midi": 52,
+        "max_midi": 87,
+        "instrument_source_pitch_range": [
+          52,
+          87
+        ]
+      },
+      "range_discrepancy": "aligned",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -567,21 +808,32 @@
     },
     {
       "instrument_id": "tuba",
-      "display_name": "Tuba",
+      "display_name": "Tba",
       "aliases": [
-        "tuba"
+        "tuba",
+        "tba."
       ],
       "family": "brass",
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
-      "registry_sounding_min_midi": 28,
-      "registry_sounding_max_midi": 58,
+      "registry_sounding_min_midi": 24,
+      "registry_sounding_max_midi": 70,
       "comfortable_min_midi": 30,
       "comfortable_max_midi": 50,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "tuba",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C1",
+        "last_note": "A#4",
+        "row_count": 47,
+        "min_midi": 24,
+        "max_midi": 70,
+        "instrument_source_pitch_range": [
+          24,
+          70
+        ]
+      },
+      "range_discrepancy": "aligned",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -611,9 +863,11 @@
     },
     {
       "instrument_id": "viola",
-      "display_name": "Viola",
+      "display_name": "vla",
       "aliases": [
-        "viola"
+        "viola",
+        "vla",
+        "vla."
       ],
       "family": "strings",
       "transposition_semitones": 0,
@@ -642,10 +896,135 @@
       "registry_transposition_applied_at_runtime": false
     },
     {
-      "instrument_id": "violino",
-      "display_name": "Violin",
+      "instrument_id": "viola_harm",
+      "display_name": "vla harm",
       "aliases": [
-        "violin"
+        "viola_harmonics",
+        "Viola_harmonics",
+        "viola harmonics",
+        "viola harm",
+        "viola_harm",
+        "harmonics viola",
+        "harmonics_viola",
+        "vla harm",
+        "vla_harm"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 60,
+      "registry_sounding_max_midi": 96,
+      "comfortable_min_midi": 60,
+      "comfortable_max_midi": 96,
+      "module_name": "viola_harmonics",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C4",
+        "last_note": "C7",
+        "row_count": 37,
+        "min_midi": 60,
+        "max_midi": 96,
+        "instrument_source_pitch_range": [
+          60,
+          96
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "viola_sordina",
+      "display_name": "vla sord",
+      "aliases": [
+        "viola_sordina",
+        "Viola_sordina",
+        "Viola sordina",
+        "viola con sordina",
+        "viola_con_sordina",
+        "viola sordina",
+        "viola muted",
+        "muted viola",
+        "vla sord",
+        "vla_sord"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 48,
+      "registry_sounding_max_midi": 96,
+      "comfortable_min_midi": 50,
+      "comfortable_max_midi": 69,
+      "module_name": "viola_sordina",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C3",
+        "last_note": "C7",
+        "row_count": 49,
+        "min_midi": 48,
+        "max_midi": 96,
+        "instrument_source_pitch_range": [
+          48,
+          96
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "viola_sul_ponticello",
+      "display_name": "vla sp",
+      "aliases": [
+        "viola_sul_ponticello",
+        "Viola_sul_ponticello",
+        "Viola sul ponticello",
+        "viola sul pont",
+        "viola_sul_pont",
+        "viola sul ponticello",
+        "sul ponticello viola",
+        "sul_ponticello_viola",
+        "vla sp",
+        "vla_sp"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 48,
+      "registry_sounding_max_midi": 96,
+      "comfortable_min_midi": 50,
+      "comfortable_max_midi": 69,
+      "module_name": "viola_sul_ponticello",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C3",
+        "last_note": "C7",
+        "row_count": 49,
+        "min_midi": 48,
+        "max_midi": 96,
+        "instrument_source_pitch_range": [
+          48,
+          96
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violino",
+      "display_name": "Vl",
+      "aliases": [
+        "violin",
+        "vl.",
+        "vln",
+        "vln."
       ],
       "family": "strings",
       "transposition_semitones": 0,
@@ -674,11 +1053,191 @@
       "registry_transposition_applied_at_runtime": false
     },
     {
+      "instrument_id": "violino_harm",
+      "display_name": "vl harm",
+      "aliases": [
+        "violin_harmonics",
+        "Violin_harmonics",
+        "violin harmonics",
+        "violino harmonics",
+        "violino_harmonics",
+        "violin harm",
+        "violin_harm",
+        "violino harm",
+        "harmonics violin",
+        "harmonics_violin",
+        "vl harm",
+        "vl_harm",
+        "violin_nat_harm",
+        "violin nat harm",
+        "violino_nat_harm",
+        "violin natural harmonics",
+        "violin_art_harm",
+        "violin art harm",
+        "violino_art_harm",
+        "violin artificial harmonics"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 67,
+      "registry_sounding_max_midi": 103,
+      "comfortable_min_midi": 67,
+      "comfortable_max_midi": 96,
+      "module_name": "violin_harmonics",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "G4",
+        "last_note": "G7",
+        "row_count": 37,
+        "min_midi": 67,
+        "max_midi": 103,
+        "instrument_source_pitch_range": [
+          67,
+          103
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violino_sordina",
+      "display_name": "vl sord",
+      "aliases": [
+        "violin_sordina",
+        "Violin_sordina",
+        "Violin sordina",
+        "violin con sordina",
+        "violin_con_sordina",
+        "violino sordina",
+        "violino_sordina",
+        "violino con sordina",
+        "violino_con_sordina",
+        "violin muted",
+        "muted violin",
+        "vl sord",
+        "vl_sord"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 55,
+      "registry_sounding_max_midi": 103,
+      "comfortable_min_midi": 55,
+      "comfortable_max_midi": 76,
+      "module_name": "violin_sordina",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "G3",
+        "last_note": "G7",
+        "row_count": 49,
+        "min_midi": 55,
+        "max_midi": 103,
+        "instrument_source_pitch_range": [
+          55,
+          103
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violino_sul_ponticello",
+      "display_name": "vl sp",
+      "aliases": [
+        "violin_sul_ponticello",
+        "Violin_sul_ponticello",
+        "Violin sul ponticello",
+        "violin sul pont",
+        "violin_sul_pont",
+        "violino sul ponticello",
+        "violino_sul_ponticello",
+        "sul ponticello violin",
+        "sul_ponticello_violin",
+        "vl sp",
+        "vl_sp"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 55,
+      "registry_sounding_max_midi": 103,
+      "comfortable_min_midi": 55,
+      "comfortable_max_midi": 76,
+      "module_name": "violin_sul_ponticello",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "G3",
+        "last_note": "G7",
+        "row_count": 49,
+        "min_midi": 55,
+        "max_midi": 103,
+        "instrument_source_pitch_range": [
+          55,
+          103
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violino_sul_tasto",
+      "display_name": "vl st",
+      "aliases": [
+        "violin_sul_tasto",
+        "Violin_sul_tasto",
+        "Violin sul tasto",
+        "violin sul tasto",
+        "violino sul tasto",
+        "violino_sul_tasto",
+        "sul tasto violin",
+        "sul_tasto_violin",
+        "vl st",
+        "vl_st"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 55,
+      "registry_sounding_max_midi": 103,
+      "comfortable_min_midi": 55,
+      "comfortable_max_midi": 76,
+      "module_name": "violin_sul_tasto",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "G3",
+        "last_note": "G7",
+        "row_count": 49,
+        "min_midi": 55,
+        "max_midi": 103,
+        "instrument_source_pitch_range": [
+          55,
+          103
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
       "instrument_id": "violoncelo",
-      "display_name": "Cello",
+      "display_name": "Vc",
       "aliases": [
         "cello",
-        "violoncello"
+        "violoncello",
+        "vc.",
+        "vcl"
       ],
       "family": "strings",
       "transposition_semitones": 0,
@@ -705,11 +1264,129 @@
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
       "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violoncelo_sordina",
+      "display_name": "Cello sordina",
+      "aliases": [
+        "cello_sordina",
+        "Cello_sordina",
+        "cello con sordina",
+        "cello_con_sordina",
+        "cello sordina",
+        "violoncelo sordina",
+        "violoncelo_sordina",
+        "cello muted",
+        "muted cello"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 36,
+      "registry_sounding_max_midi": 84,
+      "comfortable_min_midi": 40,
+      "comfortable_max_midi": 65,
+      "module_name": "cello_sordina",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C2",
+        "last_note": "C6",
+        "row_count": 49,
+        "min_midi": 36,
+        "max_midi": 84,
+        "instrument_source_pitch_range": [
+          36,
+          84
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violoncelo_sul_ponticello",
+      "display_name": "Cello sul ponticello",
+      "aliases": [
+        "cello_sul_ponticello",
+        "Cello_sul_ponticello",
+        "cello sul pont",
+        "cello_sul_pont",
+        "cello sul ponticello",
+        "violoncelo sul ponticello",
+        "violoncelo_sul_ponticello",
+        "sul ponticello cello",
+        "sul_ponticello_cello"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 36,
+      "registry_sounding_max_midi": 84,
+      "comfortable_min_midi": 40,
+      "comfortable_max_midi": 65,
+      "module_name": "cello_sul_ponticello",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C2",
+        "last_note": "C6",
+        "row_count": 49,
+        "min_midi": 36,
+        "max_midi": 84,
+        "instrument_source_pitch_range": [
+          36,
+          84
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violoncelo_sul_tasto",
+      "display_name": "Cello sul tasto",
+      "aliases": [
+        "cello_sul_tasto",
+        "Cello_sul_tasto",
+        "cello sul tasto",
+        "violoncelo sul tasto",
+        "violoncelo_sul_tasto",
+        "sul tasto cello",
+        "sul_tasto_cello"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 36,
+      "registry_sounding_max_midi": 84,
+      "comfortable_min_midi": 40,
+      "comfortable_max_midi": 65,
+      "module_name": "cello_sul_tasto",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C2",
+        "last_note": "C6",
+        "row_count": 49,
+        "min_midi": 36,
+        "max_midi": 84,
+        "instrument_source_pitch_range": [
+          36,
+          84
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
     }
   ],
   "alias_resolution": [
     {
-      "alias": "Flute",
+      "alias": "Fl",
       "canonical_id": "flauta",
       "resolved_id": "flauta"
     },
@@ -724,6 +1401,11 @@
       "resolved_id": "flauta"
     },
     {
+      "alias": "fl.",
+      "canonical_id": "flauta",
+      "resolved_id": "flauta"
+    },
+    {
       "alias": "Piccolo",
       "canonical_id": "flautim",
       "resolved_id": "flautim"
@@ -734,12 +1416,17 @@
       "resolved_id": "flautim"
     },
     {
-      "alias": "Oboe",
+      "alias": "Ob",
       "canonical_id": "oboe",
       "resolved_id": "oboe"
     },
     {
       "alias": "oboe",
+      "canonical_id": "oboe",
+      "resolved_id": "oboe"
+    },
+    {
+      "alias": "ob.",
       "canonical_id": "oboe",
       "resolved_id": "oboe"
     },
@@ -769,7 +1456,7 @@
       "resolved_id": "cor_anglais"
     },
     {
-      "alias": "Clarinet",
+      "alias": "Cl",
       "canonical_id": "clarinete",
       "resolved_id": "clarinete"
     },
@@ -780,6 +1467,11 @@
     },
     {
       "alias": "clarinete",
+      "canonical_id": "clarinete",
+      "resolved_id": "clarinete"
+    },
+    {
+      "alias": "cl.",
       "canonical_id": "clarinete",
       "resolved_id": "clarinete"
     },
@@ -804,7 +1496,7 @@
       "resolved_id": "clarinete_baixo"
     },
     {
-      "alias": "Bassoon",
+      "alias": "Bsn",
       "canonical_id": "fagote",
       "resolved_id": "fagote"
     },
@@ -819,6 +1511,21 @@
       "resolved_id": "fagote"
     },
     {
+      "alias": "bsn.",
+      "canonical_id": "fagote",
+      "resolved_id": "fagote"
+    },
+    {
+      "alias": "fg",
+      "canonical_id": "fagote",
+      "resolved_id": "fagote"
+    },
+    {
+      "alias": "fg.",
+      "canonical_id": "fagote",
+      "resolved_id": "fagote"
+    },
+    {
       "alias": "Contrabassoon",
       "canonical_id": "contrafagote",
       "resolved_id": "contrafagote"
@@ -829,7 +1536,7 @@
       "resolved_id": "contrafagote"
     },
     {
-      "alias": "Violin",
+      "alias": "Vl",
       "canonical_id": "violino",
       "resolved_id": "violino"
     },
@@ -839,17 +1546,22 @@
       "resolved_id": "violino"
     },
     {
-      "alias": "Viola",
-      "canonical_id": "viola",
-      "resolved_id": "viola"
+      "alias": "vl.",
+      "canonical_id": "violino",
+      "resolved_id": "violino"
     },
     {
-      "alias": "viola",
-      "canonical_id": "viola",
-      "resolved_id": "viola"
+      "alias": "vln",
+      "canonical_id": "violino",
+      "resolved_id": "violino"
     },
     {
-      "alias": "Cello",
+      "alias": "vln.",
+      "canonical_id": "violino",
+      "resolved_id": "violino"
+    },
+    {
+      "alias": "Vc",
       "canonical_id": "violoncelo",
       "resolved_id": "violoncelo"
     },
@@ -864,12 +1576,27 @@
       "resolved_id": "violoncelo"
     },
     {
-      "alias": "Double bass",
+      "alias": "vc.",
+      "canonical_id": "violoncelo",
+      "resolved_id": "violoncelo"
+    },
+    {
+      "alias": "vcl",
+      "canonical_id": "violoncelo",
+      "resolved_id": "violoncelo"
+    },
+    {
+      "alias": "Db",
       "canonical_id": "contrabaixo",
       "resolved_id": "contrabaixo"
     },
     {
       "alias": "double_bass",
+      "canonical_id": "contrabaixo",
+      "resolved_id": "contrabaixo"
+    },
+    {
+      "alias": "double bass",
       "canonical_id": "contrabaixo",
       "resolved_id": "contrabaixo"
     },
@@ -884,7 +1611,787 @@
       "resolved_id": "contrabaixo"
     },
     {
-      "alias": "Horn",
+      "alias": "db.",
+      "canonical_id": "contrabaixo",
+      "resolved_id": "contrabaixo"
+    },
+    {
+      "alias": "cb",
+      "canonical_id": "contrabaixo",
+      "resolved_id": "contrabaixo"
+    },
+    {
+      "alias": "cb.",
+      "canonical_id": "contrabaixo",
+      "resolved_id": "contrabaixo"
+    },
+    {
+      "alias": "vla",
+      "canonical_id": "viola",
+      "resolved_id": "viola"
+    },
+    {
+      "alias": "viola",
+      "canonical_id": "viola",
+      "resolved_id": "viola"
+    },
+    {
+      "alias": "vla",
+      "canonical_id": "viola",
+      "resolved_id": "viola"
+    },
+    {
+      "alias": "vla.",
+      "canonical_id": "viola",
+      "resolved_id": "viola"
+    },
+    {
+      "alias": "vla sord",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "viola_sordina",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "Viola_sordina",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "Viola sordina",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "viola con sordina",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "viola_con_sordina",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "viola sordina",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "viola muted",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "muted viola",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "vla sord",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "vla_sord",
+      "canonical_id": "viola_sordina",
+      "resolved_id": "viola_sordina"
+    },
+    {
+      "alias": "vla sp",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "viola_sul_ponticello",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "Viola_sul_ponticello",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "Viola sul ponticello",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "viola sul pont",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "viola_sul_pont",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "viola sul ponticello",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "sul ponticello viola",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "sul_ponticello_viola",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "vla sp",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "vla_sp",
+      "canonical_id": "viola_sul_ponticello",
+      "resolved_id": "viola_sul_ponticello"
+    },
+    {
+      "alias": "vl sord",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "violin_sordina",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "Violin_sordina",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "Violin sordina",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "violin con sordina",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "violin_con_sordina",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "violino sordina",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "violino_sordina",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "violino con sordina",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "violino_con_sordina",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "violin muted",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "muted violin",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "vl sord",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "vl_sord",
+      "canonical_id": "violino_sordina",
+      "resolved_id": "violino_sordina"
+    },
+    {
+      "alias": "vl sp",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "violin_sul_ponticello",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "Violin_sul_ponticello",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "Violin sul ponticello",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "violin sul pont",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "violin_sul_pont",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "violino sul ponticello",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "violino_sul_ponticello",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "sul ponticello violin",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "sul_ponticello_violin",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "vl sp",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "vl_sp",
+      "canonical_id": "violino_sul_ponticello",
+      "resolved_id": "violino_sul_ponticello"
+    },
+    {
+      "alias": "vl st",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "violin_sul_tasto",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "Violin_sul_tasto",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "Violin sul tasto",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "violin sul tasto",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "violino sul tasto",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "violino_sul_tasto",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "sul tasto violin",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "sul_tasto_violin",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "vl st",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "vl_st",
+      "canonical_id": "violino_sul_tasto",
+      "resolved_id": "violino_sul_tasto"
+    },
+    {
+      "alias": "vl harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violin_harmonics",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "Violin_harmonics",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violin harmonics",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violino harmonics",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violino_harmonics",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violin harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violin_harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violino harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "harmonics violin",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "harmonics_violin",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "vl harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "vl_harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violin_nat_harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violin nat harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violino_nat_harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violin natural harmonics",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violin_art_harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violin art harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violino_art_harm",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "violin artificial harmonics",
+      "canonical_id": "violino_harm",
+      "resolved_id": "violino_harm"
+    },
+    {
+      "alias": "vla harm",
+      "canonical_id": "viola_harm",
+      "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "viola_harmonics",
+      "canonical_id": "viola_harm",
+      "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "Viola_harmonics",
+      "canonical_id": "viola_harm",
+      "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "viola harmonics",
+      "canonical_id": "viola_harm",
+      "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "viola harm",
+      "canonical_id": "viola_harm",
+      "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "viola_harm",
+      "canonical_id": "viola_harm",
+      "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "harmonics viola",
+      "canonical_id": "viola_harm",
+      "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "harmonics_viola",
+      "canonical_id": "viola_harm",
+      "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "vla harm",
+      "canonical_id": "viola_harm",
+      "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "vla_harm",
+      "canonical_id": "viola_harm",
+      "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "Cello sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello_sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "Cello_sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello con sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello_con_sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "violoncelo sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "violoncelo_sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello muted",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "muted cello",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "Cello sul tasto",
+      "canonical_id": "violoncelo_sul_tasto",
+      "resolved_id": "violoncelo_sul_tasto"
+    },
+    {
+      "alias": "cello_sul_tasto",
+      "canonical_id": "violoncelo_sul_tasto",
+      "resolved_id": "violoncelo_sul_tasto"
+    },
+    {
+      "alias": "Cello_sul_tasto",
+      "canonical_id": "violoncelo_sul_tasto",
+      "resolved_id": "violoncelo_sul_tasto"
+    },
+    {
+      "alias": "cello sul tasto",
+      "canonical_id": "violoncelo_sul_tasto",
+      "resolved_id": "violoncelo_sul_tasto"
+    },
+    {
+      "alias": "violoncelo sul tasto",
+      "canonical_id": "violoncelo_sul_tasto",
+      "resolved_id": "violoncelo_sul_tasto"
+    },
+    {
+      "alias": "violoncelo_sul_tasto",
+      "canonical_id": "violoncelo_sul_tasto",
+      "resolved_id": "violoncelo_sul_tasto"
+    },
+    {
+      "alias": "sul tasto cello",
+      "canonical_id": "violoncelo_sul_tasto",
+      "resolved_id": "violoncelo_sul_tasto"
+    },
+    {
+      "alias": "sul_tasto_cello",
+      "canonical_id": "violoncelo_sul_tasto",
+      "resolved_id": "violoncelo_sul_tasto"
+    },
+    {
+      "alias": "Cello sul ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "cello_sul_ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "Cello_sul_ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "cello sul pont",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "cello_sul_pont",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "cello sul ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "violoncelo sul ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "violoncelo_sul_ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "sul ponticello cello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "sul_ponticello_cello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "Double bass sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "double_bass_sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "Double_bass_sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "double bass sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "contrabass sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "contrabass_sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "contrabaixo sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "contrabaixo_sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "bass sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "muted double bass",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "muted contrabass",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "Double bass sul tasto",
+      "canonical_id": "contrabaixo_sul_tasto",
+      "resolved_id": "contrabaixo_sul_tasto"
+    },
+    {
+      "alias": "double_bass_sul_tasto",
+      "canonical_id": "contrabaixo_sul_tasto",
+      "resolved_id": "contrabaixo_sul_tasto"
+    },
+    {
+      "alias": "Double_bass_sul_tasto",
+      "canonical_id": "contrabaixo_sul_tasto",
+      "resolved_id": "contrabaixo_sul_tasto"
+    },
+    {
+      "alias": "double bass sul tasto",
+      "canonical_id": "contrabaixo_sul_tasto",
+      "resolved_id": "contrabaixo_sul_tasto"
+    },
+    {
+      "alias": "contrabass sul tasto",
+      "canonical_id": "contrabaixo_sul_tasto",
+      "resolved_id": "contrabaixo_sul_tasto"
+    },
+    {
+      "alias": "contrabass_sul_tasto",
+      "canonical_id": "contrabaixo_sul_tasto",
+      "resolved_id": "contrabaixo_sul_tasto"
+    },
+    {
+      "alias": "contrabaixo sul tasto",
+      "canonical_id": "contrabaixo_sul_tasto",
+      "resolved_id": "contrabaixo_sul_tasto"
+    },
+    {
+      "alias": "contrabaixo_sul_tasto",
+      "canonical_id": "contrabaixo_sul_tasto",
+      "resolved_id": "contrabaixo_sul_tasto"
+    },
+    {
+      "alias": "sul tasto double bass",
+      "canonical_id": "contrabaixo_sul_tasto",
+      "resolved_id": "contrabaixo_sul_tasto"
+    },
+    {
+      "alias": "sul_tasto_double_bass",
+      "canonical_id": "contrabaixo_sul_tasto",
+      "resolved_id": "contrabaixo_sul_tasto"
+    },
+    {
+      "alias": "Double bass sul ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "double_bass_sul_ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "Double_bass_sul_ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "double bass sul ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "contrabass sul ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "contrabass_sul_ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "contrabaixo sul ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "contrabaixo_sul_ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "sul ponticello double bass",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "sul_ponticello_double_bass",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "Hn",
       "canonical_id": "trompa",
       "resolved_id": "trompa"
     },
@@ -904,7 +2411,12 @@
       "resolved_id": "trompa"
     },
     {
-      "alias": "Trumpet",
+      "alias": "hn.",
+      "canonical_id": "trompa",
+      "resolved_id": "trompa"
+    },
+    {
+      "alias": "Tpt",
       "canonical_id": "trompete",
       "resolved_id": "trompete"
     },
@@ -914,12 +2426,32 @@
       "resolved_id": "trompete"
     },
     {
-      "alias": "Trombone",
+      "alias": "tpt.",
+      "canonical_id": "trompete",
+      "resolved_id": "trompete"
+    },
+    {
+      "alias": "Trb",
       "canonical_id": "trombone",
       "resolved_id": "trombone"
     },
     {
       "alias": "trombone",
+      "canonical_id": "trombone",
+      "resolved_id": "trombone"
+    },
+    {
+      "alias": "Trombone",
+      "canonical_id": "trombone",
+      "resolved_id": "trombone"
+    },
+    {
+      "alias": "trb.",
+      "canonical_id": "trombone",
+      "resolved_id": "trombone"
+    },
+    {
+      "alias": "trombon",
       "canonical_id": "trombone",
       "resolved_id": "trombone"
     },
@@ -939,12 +2471,17 @@
       "resolved_id": "trombone_baixo"
     },
     {
-      "alias": "Tuba",
+      "alias": "Tba",
       "canonical_id": "tuba",
       "resolved_id": "tuba"
     },
     {
       "alias": "tuba",
+      "canonical_id": "tuba",
+      "resolved_id": "tuba"
+    },
+    {
+      "alias": "tba.",
       "canonical_id": "tuba",
       "resolved_id": "tuba"
     },
@@ -984,21 +2521,6 @@
       "resolved_id": "harpa"
     },
     {
-      "alias": "Timpani",
-      "canonical_id": "timpanos",
-      "resolved_id": "timpanos"
-    },
-    {
-      "alias": "timpani",
-      "canonical_id": "timpanos",
-      "resolved_id": "timpanos"
-    },
-    {
-      "alias": "timbales",
-      "canonical_id": "timpanos",
-      "resolved_id": "timpanos"
-    },
-    {
       "alias": "Bass drum",
       "canonical_id": "bombo",
       "resolved_id": "bombo"
@@ -1009,19 +2531,9 @@
       "resolved_id": "bombo"
     },
     {
-      "alias": "Snare drum",
-      "canonical_id": "caixa",
-      "resolved_id": "caixa"
-    },
-    {
-      "alias": "snare_drum",
-      "canonical_id": "caixa",
-      "resolved_id": "caixa"
-    },
-    {
-      "alias": "snare",
-      "canonical_id": "caixa",
-      "resolved_id": "caixa"
+      "alias": "bass drum",
+      "canonical_id": "bombo",
+      "resolved_id": "bombo"
     },
     {
       "alias": "Cymbals",
@@ -1030,6 +2542,11 @@
     },
     {
       "alias": "cymbals",
+      "canonical_id": "pratos",
+      "resolved_id": "pratos"
+    },
+    {
+      "alias": "cymbal",
       "canonical_id": "pratos",
       "resolved_id": "pratos"
     },
@@ -1047,6 +2564,51 @@
       "alias": "tam-tam",
       "canonical_id": "tamtam",
       "resolved_id": "tamtam"
+    },
+    {
+      "alias": "tam tam",
+      "canonical_id": "tamtam",
+      "resolved_id": "tamtam"
+    },
+    {
+      "alias": "Gong",
+      "canonical_id": "gongo",
+      "resolved_id": "gongo"
+    },
+    {
+      "alias": "gong",
+      "canonical_id": "gongo",
+      "resolved_id": "gongo"
+    },
+    {
+      "alias": "Timpani",
+      "canonical_id": "timpanos",
+      "resolved_id": "timpanos"
+    },
+    {
+      "alias": "timpani",
+      "canonical_id": "timpanos",
+      "resolved_id": "timpanos"
+    },
+    {
+      "alias": "timbales",
+      "canonical_id": "timpanos",
+      "resolved_id": "timpanos"
+    },
+    {
+      "alias": "Snare drum",
+      "canonical_id": "caixa",
+      "resolved_id": "caixa"
+    },
+    {
+      "alias": "snare_drum",
+      "canonical_id": "caixa",
+      "resolved_id": "caixa"
+    },
+    {
+      "alias": "snare",
+      "canonical_id": "caixa",
+      "resolved_id": "caixa"
     },
     {
       "alias": "Vibraphone",

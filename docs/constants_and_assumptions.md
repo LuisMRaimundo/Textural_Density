@@ -54,7 +54,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 |------|------|--------|------------|
 | `DYNAMIC_LEVELS` | Allowed symbolic markings | `config.py` | Not SPL |
 | Committed ladder cells | Exact `spectral_data` lookup | `instrumentos/*.py` | Must include requested dynamic |
-| Full data-faithful ladders (2026-08-08/09) | 10 dynamics from Dynamics_predicter v1.5 `Results` (measured pp/mf/ff anchors verbatim; PCHIP interiors; tapered outers) | winds (`flute`/`oboe`/`clarinet`/`bassoon`), brass (`trumpet`/`horn`/`tuba`), arco strings, 12 string technique modules | Non-anchor cells workbook-modelled, not lab-measured |
+| Full data-faithful ladders (2026-08-08/09/18) | 10 dynamics from Dynamics_predicter v1.5 `Results` (measured pp/mf/ff anchors verbatim; PCHIP interiors; tapered outers) | winds (`flute`/`oboe`/`clarinet`/`bassoon`), brass (`trumpet`/`horn`/`trombone`/`tuba`), arco strings, 12 string technique modules | Non-anchor cells workbook-modelled, not lab-measured |
 | Ordinal weights p…ffff | Symbolic orchestration mass (coarse fallback) | `instrumentos/registry.py` | Not loudness |
 | Unknown dynamic | Falls back to `mf` with warning | `core/metrics_metadata.py` | Documented |
 | Ladder hygiene (committed pitched) | All 10 levels present; interiors within measured segments; tapered, non-zigzag outers; **not** forced monotone (measured anchors preserved) | pitched `spectral_data` modules | See `tests/test_pitched_dynamic_monotone_ladders.py` |
@@ -68,7 +68,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | Name | Role | Module |
 |------|------|--------|
 | `REGISTRY` profiles | Register, family, dynamic-response metadata | `instrumentos/registry.py` |
-| Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `horn`, `tuba`, strings, percussion, …) | Note×dynamic CDM tables (externally sourced; all pitched table-backed modules = full 10-dynamic ladder) | `instrumentos/*.py` |
+| Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `horn`, `trombone`, `tuba`, strings, percussion, …) | Note×dynamic CDM tables (externally sourced; all pitched table-backed modules = full 10-dynamic ladder) | `instrumentos/*.py` |
 | `profile_status` | `literature_derived` / `empirical_profile` / `coarse_default` | Audit: `instrumentos/metadata_audit.py` |
 | `uncertainty` | low / medium / high | All profiles |
 | Unknown instrument | Generic fallback without external acoustic table | `profile_for_event()` |

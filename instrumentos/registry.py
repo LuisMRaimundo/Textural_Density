@@ -838,12 +838,26 @@ REGISTRY["trompete"] = _profile(
 
 REGISTRY["trombone"] = _profile(
     "trombone",
-    "Trombone",
+    "Trb",
     "brass",
-    sounding=(40, 72),
+    sounding=(25, 72),
     comfortable=(43, 65),
     brightness="neutral",
-    aliases=("trombone",),
+    status="literature_derived",
+    uncertainty="medium",
+    module_name="trombone",
+    supported=("legato", "staccato", "mute"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/trombone.py from "
+        "Trombone_Dynamics.xlsx Results sheet (Dynamics_predicter). "
+        "sounding_range (MIDI 25–72, C#1–C5) matches the committed table span."
+    ),
+    warnings=(
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
+        "are organological capabilities without technique-specific table rows.",
+    ),
+    aliases=("trombone", "Trombone", "trb.", "trombon"),
 )
 
 REGISTRY["trombone_baixo"] = _profile(

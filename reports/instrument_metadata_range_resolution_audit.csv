@@ -22,7 +22,7 @@ piano,Piano,,False,,,,,21,108,36,96,0,,,struck|pedal,NOT APPLICABLE,NOT APPLICAB
 pratos,Cymbals,cymbals,True,C5,C5,1,"[60, 84]",60,84,60,84,0,struck_plate,struck_plate,struck|rolled,PASS,PASS,False,not_applicable_unpitched,0,0
 tamtam,Tam-tam,tamtam,True,C2,C2,1,"[24, 48]",24,48,24,48,0,struck_plate,struck_plate,struck|rolled,PASS,PASS,False,not_applicable_unpitched,0,0
 timpanos,Timpani,,False,,,,,36,60,36,60,0,,,struck|rolled,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
-trombone,Trombone,,False,,,,,40,72,43,65,0,,,arco,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
+trombone,Trb,trombone,True,C#1,C5,48,"[25, 72]",25,72,43,65,0,ordinary_sustain,ordinary_sustain,legato|staccato|mute,PASS,PASS,False,full_coverage,0,0
 trombone_baixo,Bass trombone,,False,,,,,34,65,36,58,0,,,arco,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
 trompa,Hn,horn,True,G1,F5,47,"[31, 77]",41,77,45,72,7,ordinary_sustain,ordinary_sustain,legato|staccato|stopped|mute,FAIL,PASS,False,full_coverage,0,0
 trompete,Tpt,trumpet,True,E3,D#6,36,"[52, 87]",52,87,58,80,2,ordinary_sustain,ordinary_sustain,legato|staccato|mute|flutter_tongue,PASS,PASS,False,full_coverage,0,0

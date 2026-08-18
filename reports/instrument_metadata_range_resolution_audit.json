@@ -1572,18 +1572,30 @@
     },
     {
       "instrument_id": "trombone",
-      "display_name": "Trombone",
+      "display_name": "Trb",
       "aliases": [
-        "trombone"
+        "trombone",
+        "Trombone",
+        "trb.",
+        "trombon"
       ],
       "family": "brass",
-      "module_name": null,
-      "table_backed": false,
-      "profile_status": "coarse_default",
-      "source_table_span": null,
-      "instrument_source_pitch_range": null,
+      "module_name": "trombone",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "C#1",
+        "last_note": "C5",
+        "row_count": 48,
+        "min_midi": 25,
+        "max_midi": 72
+      },
+      "instrument_source_pitch_range": [
+        25,
+        72
+      ],
       "registry_sounding_range_midi": [
-        40,
+        25,
         72
       ],
       "registry_comfortable_range_midi": [
@@ -1592,7 +1604,18 @@
       ],
       "registry_transposition": 0,
       "registry_transposition_runtime_applied": false,
-      "source_dynamic_anchors": [],
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
       "modelled_dynamics": [
         "p",
         "mp",
@@ -1602,22 +1625,34 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "no_table",
-      "range_classification": "NOT APPLICABLE",
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
       "technique": {
         "registry_supported_techniques": [
-          "arco"
+          "legato",
+          "staccato",
+          "mute"
         ],
-        "table_supported_techniques": [],
-        "source_technique": null,
-        "classification": "NOT APPLICABLE"
+        "table_supported_techniques": [
+          "ordinary_sustain"
+        ],
+        "source_technique": "ordinary_sustain",
+        "registry_not_in_table": [
+          "legato",
+          "staccato",
+          "mute"
+        ],
+        "classification": "PASS"
       },
       "documentation_contradictions": [],
-      "table_excludes_sounding_range": true,
-      "exclusion_kind": "no_table",
-      "missing_low_semitones": null,
-      "missing_high_semitones": null,
-      "table_span_midi": null
+      "table_excludes_sounding_range": false,
+      "exclusion_kind": "full_coverage",
+      "missing_low_semitones": 0,
+      "missing_high_semitones": 0,
+      "table_span_midi": [
+        25,
+        72
+      ]
     },
     {
       "instrument_id": "trombone_baixo",
@@ -3128,6 +3163,15 @@
     "classification": "PASS",
     "range_kind": "source_table_span",
     "rationale": "Committed tuba spectral_data ladder (IOWA+ORCH medians via Dynamics_predicter); registry.sounding_range matches the committed table span."
+  },
+  "trombone_review": {
+    "module_name": "trombone",
+    "profile_status": "literature_derived",
+    "sounding_range_midi": "25\u201372",
+    "source_table_span": "C#1\u2013C5 (MIDI 25\u201372)",
+    "classification": "PASS",
+    "range_kind": "source_table_span",
+    "rationale": "Committed trombone spectral_data ladder (IOWA+ORCH medians via Dynamics_predicter); registry.sounding_range matches the committed table span."
   },
   "transposition_review": {
     "contract": "registry.transposition is notation/import metadata only; manual/GUI notes[] are sounding/concert pitch; MusicXML <transpose> converts written\u2192sounding once.",

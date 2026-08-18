@@ -93,6 +93,23 @@ class TestTubaClassification:
         assert review["range_kind"] == "source_table_span"
 
 
+class TestTromboneClassification:
+    def test_table_backed_module_wired(self):
+        profile = REGISTRY["trombone"]
+        assert profile.module_name == "trombone"
+        assert profile.display_name == "Trb"
+        assert profile.profile_status != "coarse_default"
+        mod = importlib.import_module("instrumentos.trombone")
+        t_lo, t_hi = mod.INSTRUMENT_SOURCE.pitch_range
+        assert profile.sounding_range == (t_lo, t_hi)
+        assert (t_lo, t_hi) == (25, 72)
+
+    def test_audit_passes_with_committed_table(self, audit_payload):
+        review = audit_payload["trombone_review"]
+        assert review["classification"] == "PASS"
+        assert review["range_kind"] == "source_table_span"
+
+
 class TestTranspositionMetadata:
     def test_manual_input_contract_documented(self, audit_payload):
         assert audit_payload["transposition_review"]["classification"] == "PASS"
