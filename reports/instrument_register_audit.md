@@ -1,6 +1,6 @@
 # Instrument register audit
 
-**Instruments audited:** 42
+**Instruments audited:** 36
 
 ## Pitch contract
 
@@ -21,9 +21,6 @@
 | clarinete | woodwinds | 50–96 | 0 (A_non_transposing) | D3–C7 (50–96) | aligned |
 | clarinete_baixo | woodwinds | 34–72 | 14 (D_interval_transposing) | — | no_table |
 | contrabaixo | strings | 28–72 | 0 (A_non_transposing) | E1–C5 (28–72) | aligned |
-| contrabaixo_sordina | strings | 28–72 | 0 (A_non_transposing) | E1–C5 (28–72) | aligned |
-| contrabaixo_sul_ponticello | strings | 28–72 | 0 (A_non_transposing) | E1–C5 (28–72) | aligned |
-| contrabaixo_sul_tasto | strings | 28–72 | 0 (A_non_transposing) | E1–C5 (28–72) | aligned |
 | contrafagote | woodwinds | 22–77 | 0 (A_non_transposing) | — | no_table |
 | cor_anglais | woodwinds | 52–76 | 7 (D_interval_transposing) | — | no_table |
 | fagote | woodwinds | 34–75 | 0 (A_non_transposing) | A#1–D#5 (34–75) | aligned |
@@ -54,9 +51,6 @@
 | violino_sul_ponticello | strings | 55–103 | 0 (A_non_transposing) | G3–G7 (55–103) | aligned |
 | violino_sul_tasto | strings | 55–103 | 0 (A_non_transposing) | G3–G7 (55–103) | aligned |
 | violoncelo | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
-| violoncelo_sordina | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
-| violoncelo_sul_ponticello | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
-| violoncelo_sul_tasto | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
 
 ## REVIEW REQUIRED / discrepancies
 

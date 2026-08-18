@@ -2,6 +2,17 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-18 — Withdraw cello and double-bass technique modules
+
+Removed from `instrumentos/` and the GUI (profiles with `module_name` only):
+
+- `cello_sordina`, `cello_sul_tasto`, `cello_sul_ponticello`
+- `double_bass_sordina`, `double_bass_sul_tasto`, `double_bass_sul_ponticello`
+
+Ordinary cello and double-bass arco modules remain. Violin and viola technique /
+harmonic modules are unchanged. Dedicated generators and technique-module tests
+were retired with the tables.
+
 ## 2026-08-18 — Add trombone: committed 10-level dynamic ladder
 
 New `instrumentos/trombone.py`: 48 pitches (C#1–C5, MIDI 25–72) × 10 dynamics from

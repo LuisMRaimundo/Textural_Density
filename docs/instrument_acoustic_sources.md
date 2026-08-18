@@ -1,6 +1,6 @@
 # Instrument acoustic source provenance
 
-> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Some registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (winds, brass incl. horn, trombone and tuba, arco strings, string techniques/harmonics) and unpitched percussion commit full 10-level ladders. Ladders are **data-faithful** (2026-08-08/09/18, Dynamics_predicter v1.5): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — **not** forced monotone. Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
+> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Some registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (winds, brass incl. horn, trombone and tuba, arco strings, violin/viola techniques/harmonics) and unpitched percussion commit full 10-level ladders. Ladders are **data-faithful** (2026-08-08/09/18, Dynamics_predicter v1.5): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — **not** forced monotone. Cello and double-bass technique modules were withdrawn on 2026-08-18. Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
 
 This document records **external acoustic metadata** embedded in `instrumentos/*.py`
 modules. The analysis pipeline performs **score lookup** into these tables — not
@@ -280,47 +280,8 @@ extrapolation workbook is available.
 - **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Uncertainty:** medium
 
-## Cello sordina (`cello_sordina`)
-
-- **Module:** `instrumentos/cello_sordina.py`
-- **GUI display name:** `Cello sordina`
-- **Table:** `spectral_data` (49 chromatic rows, C2–C6)
-- **Provenance (2026-07-24):** assumption-based EWSD extrapolations from
-  `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (`All_Results.estimate_mean`,
-  technique `con_sordino`); **not** Zenodo-measured CDM
-- **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
-- **Source technique:** `arco_sordina`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
-- **Uncertainty:** high
-- **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
-
-## Cello sul tasto (`cello_sul_tasto`)
-
-- **Module:** `instrumentos/cello_sul_tasto.py`
-- **GUI display name:** `Cello sul tasto`
-- **Table:** `spectral_data` (49 chromatic rows, C2–C6)
-- **Provenance:** assumption-based EWSD extrapolations from
-  `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (technique `sul_tasto`)
-- **Workbook anchors:** pp, mf and ff
-- **Source technique:** `arco_sul_tasto`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
-- **Uncertainty:** high
-- **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
-
-## Cello sul ponticello (`cello_sul_ponticello`)
-
-- **Module:** `instrumentos/cello_sul_ponticello.py`
-- **GUI display name:** `Cello sul ponticello`
-- **Table:** `spectral_data` (49 chromatic rows, C2–C6)
-- **Provenance:** assumption-based EWSD extrapolations from
-  `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (technique `sul_ponticello`)
-- **Workbook anchors:** pp, mf and ff
-- **Source technique:** `arco_sul_ponticello`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
-- **Uncertainty:** high
-- **Regeneration:** `tools/generate_cello_technique_modules_from_xlsx.py`
-- **Skipped:** artificial/natural harmonics remain `unavailable` in the source
-  workbooks — no `cello_art_harm` module
+Cello sordina / sul tasto / sul ponticello modules were withdrawn on 2026-08-18
+(assumption-based STE tables; not re-offered in the GUI).
 
 ## Double bass (`double_bass`)
 
@@ -334,48 +295,8 @@ extrapolation workbook is available.
 - **Uncertainty:** medium
 - **Span status:** E1–A3 in older docs was obsolete; committed span is E1–C5 (**PASS**). Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 
-## Double bass sordina (`double_bass_sordina`)
-
-- **Module:** `instrumentos/double_bass_sordina.py`
-- **GUI display name:** `Double bass sordina`
-- **Table:** `spectral_data` (45 chromatic rows, E1–C5)
-- **Provenance (2026-07-24):** assumption-based EWSD extrapolations from
-  `Contrabass-pp.xlsx` / `Contrabass_mf.xlsx` / `Contrabass_ff.xlsx`
-  (`All_Results.estimate_mean`, technique `con_sordino`); **not** Zenodo-measured CDM
-- **Workbook anchors:** pp, mf and ff (`PP_MEASURED`, `MF_MEASURED`, `FF_MEASURED`)
-- **Source technique:** `arco_sordina`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
-- **Uncertainty:** high
-- **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
-
-## Double bass sul tasto (`double_bass_sul_tasto`)
-
-- **Module:** `instrumentos/double_bass_sul_tasto.py`
-- **GUI display name:** `Double bass sul tasto`
-- **Table:** `spectral_data` (45 chromatic rows, E1–C5)
-- **Provenance:** assumption-based EWSD extrapolations from
-  `Contrabass-pp.xlsx` / `Contrabass_mf.xlsx` / `Contrabass_ff.xlsx` (technique `sul_tasto`)
-- **Workbook anchors:** pp, mf and ff
-- **Source technique:** `arco_sul_tasto`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
-- **Uncertainty:** high
-- **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
-
-## Double bass sul ponticello (`double_bass_sul_ponticello`)
-
-- **Module:** `instrumentos/double_bass_sul_ponticello.py`
-- **GUI display name:** `Double bass sul ponticello`
-- **Table:** `spectral_data` (45 chromatic rows, E1–C5)
-- **Provenance:** assumption-based EWSD extrapolations from
-  `Contrabass-pp.xlsx` / `Contrabass_mf.xlsx` / `Contrabass_ff.xlsx`
-  (technique `sul_ponticello`)
-- **Workbook anchors:** pp, mf and ff
-- **Source technique:** `arco_sul_ponticello`
-- **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 ladder rebuilt on the workbook anchors (measured mf/ff — and pp where measured — verbatim; the D6 isotonic clamp is no longer applied).
-- **Uncertainty:** high
-- **Regeneration:** `tools/generate_double_bass_technique_modules_from_xlsx.py`
-- **Skipped:** artificial/natural harmonics remain `unavailable` in the source
-  workbooks — no `double_bass_art_harm` module
+Double-bass sordina / sul tasto / sul ponticello modules were withdrawn on 2026-08-18
+(assumption-based STE tables; not re-offered in the GUI).
 
 ## Generation tooling
 
@@ -385,13 +306,13 @@ Offline curation pipeline (not used at runtime):
 2. `tools/generate_instrument_modules.py` — legacy 3-anchor generator; its `CONFIGS` also drive the source-reconstruction audit. All four string reconstructions read the curated Media sheets (`Violin_Media`, `VIOLA_Media`, `Cello_Media`, `DBass_Media`) via `load_spectral_data_from_media` (2026-08-08 config fix).
 3. `tools/generate_violin_technique_modules_from_xlsx.py` — emits / replaces `violin_sordina.py`, `violin_sul_tasto.py`, `violin_sul_ponticello.py` from Desktop `Violin_mf.xlsx` / `Violin_ff.xlsx` (pp via arco ratio transfer).
 4. `tools/generate_violin_technique_modules_from_ok_workbooks.py` — emits the violin technique modules plus `viola.py`, `viola_sordina.py`, `viola_sul_ponticello.py`, `viola_harmonics.py` from the OK_VIOLIN / OK_VIOLA dynamics workbooks (the retired STE viola generator emitted the removed `viola_sul_tasto.py`).
-5. `tools/generate_cello_technique_modules_from_xlsx.py` — emits `cello_sordina.py`, `cello_sul_tasto.py`, `cello_sul_ponticello.py` from Desktop `Cello_pp.xlsx` / `Cello_mf.xlsx` / `Cello_ff.xlsx` (pp/mf/ff direct from `estimate_mean`).
-6. `tools/generate_double_bass_technique_modules_from_xlsx.py` — emits `double_bass_sordina.py`, `double_bass_sul_tasto.py`, `double_bass_sul_ponticello.py` from Desktop `Contrabass-pp.xlsx` / `Contrabass_mf.xlsx` / `Contrabass_ff.xlsx` (pp/mf/ff direct from `estimate_mean`).
-7. `tools/generate_full_dynamics_modules_from_xlsx.py` — commits Dynamics_predicter sheet `Results` ladders into ordinary-sustain modules (`cello`, `double_bass`, `flute`, `clarinet`, `bassoon`, `oboe`; `viola` now comes from the OK-workbooks generator).
-8. `tools/generate_violin_arco_full_dynamics_from_xlsx.py` — violin arco `Results` ladder regenerator.
-9. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
+5. `tools/generate_full_dynamics_modules_from_xlsx.py` — commits Dynamics_predicter sheet `Results` ladders into ordinary-sustain modules (`cello`, `double_bass`, `flute`, `clarinet`, `bassoon`, `oboe`; `viola` now comes from the OK-workbooks generator).
+6. `tools/generate_violin_arco_full_dynamics_from_xlsx.py` — violin arco `Results` ladder regenerator.
+7. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
-**String techniques (2026-08-08):** the 12 technique modules (sordina / sul tasto / sul ponticello × violin, viola, cello, double bass) commit full 10-level ladders built by Dynamics_predicter v1.5 directly on the STE workbook anchors — measured anchors verbatim, no isotonic clamp. **Violin harmonics** still carry the older D6 monotone ladders (`tools/enforce_pitched_monotone_dynamic_ladders.py`, 2026-08-03) pending a data-faithful rebuild. Runtime GPR remains removed.
+The former cello / double-bass STE technique generators (`generate_cello_technique_modules_from_xlsx.py`, `generate_double_bass_technique_modules_from_xlsx.py`) were retired when those modules were withdrawn (2026-08-18).
+
+**String techniques (2026-08-18):** remaining violin and viola technique modules (sordina / sul tasto / sul ponticello where present) plus violin/viola harmonics commit full 10-level ladders. Cello and double-bass technique tables were withdrawn. **Violin harmonics** still carry the older D6 monotone ladders (`tools/enforce_pitched_monotone_dynamic_ladders.py`, 2026-08-03) pending a data-faithful rebuild. Runtime GPR remains removed.
 
 ## Media note-label normalization (PR #14)
 

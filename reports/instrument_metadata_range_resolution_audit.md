@@ -1,6 +1,6 @@
 # Instrument metadata / range resolution audit
 
-**Instruments audited:** 42
+**Instruments audited:** 36
 
 ## Executive summary
 
@@ -57,9 +57,6 @@
 | clarinete | D3–C7 | 50–96 | 55–80 | full_coverage | PASS | PASS |
 | clarinete_baixo | — | 34–72 | 40–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | contrabaixo | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
-| contrabaixo_sordina | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
-| contrabaixo_sul_ponticello | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
-| contrabaixo_sul_tasto | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
 | contrafagote | — | 22–77 | 28–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | cor_anglais | — | 52–76 | 55–72 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | fagote | A#1–D#5 | 34–75 | 40–65 | full_coverage | PASS | PASS |
@@ -90,6 +87,3 @@
 | violino_sul_ponticello | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |
 | violino_sul_tasto | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |
 | violoncelo | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |
-| violoncelo_sordina | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |
-| violoncelo_sul_ponticello | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |
-| violoncelo_sul_tasto | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |

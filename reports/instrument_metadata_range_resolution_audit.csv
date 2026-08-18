@@ -5,9 +5,6 @@ celesta,Celesta,,False,,,,,60,96,65,88,0,,,struck,NOT APPLICABLE,NOT APPLICABLE,
 clarinete,Cl,clarinet,True,D3,C7,47,"[50, 96]",50,96,55,80,0,ordinary_sustain,ordinary_sustain,legato|staccato|flutter_tongue,PASS,PASS,False,full_coverage,0,0
 clarinete_baixo,Bass clarinet,,False,,,,,34,72,40,65,14,,,legato|staccato,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
 contrabaixo,Db,double_bass,True,E1,C5,45,"[28, 72]",28,72,31,55,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
-contrabaixo_sordina,Double bass sordina,double_bass_sordina,True,E1,C5,45,"[28, 72]",28,72,31,55,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
-contrabaixo_sul_ponticello,Double bass sul ponticello,double_bass_sul_ponticello,True,E1,C5,45,"[28, 72]",28,72,31,55,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
-contrabaixo_sul_tasto,Double bass sul tasto,double_bass_sul_tasto,True,E1,C5,45,"[28, 72]",28,72,31,55,0,arco_sul_tasto,arco_sul_tasto,arco|sul_tasto,PASS,PASS,False,full_coverage,0,0
 contrafagote,Contrabassoon,,False,,,,,22,77,28,65,0,,,arco,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
 cor_anglais,English horn,,False,,,,,52,76,55,72,7,,,legato|staccato,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
 fagote,Bsn,bassoon,True,A#1,D#5,42,"[34, 75]",34,75,40,65,0,ordinary_sustain,ordinary_sustain,legato|staccato|flutter_tongue,PASS,PASS,False,full_coverage,0,0
@@ -38,6 +35,3 @@ violino_sordina,vl sord,violin_sordina,True,G3,G7,49,"[55, 103]",55,103,55,76,0,
 violino_sul_ponticello,vl sp,violin_sul_ponticello,True,G3,G7,49,"[55, 103]",55,103,55,76,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
 violino_sul_tasto,vl st,violin_sul_tasto,True,G3,G7,49,"[55, 103]",55,103,55,76,0,arco_sul_tasto,arco_sul_tasto,arco|sul_tasto,PASS,PASS,False,full_coverage,0,0
 violoncelo,Vc,cello,True,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
-violoncelo_sordina,Cello sordina,cello_sordina,True,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
-violoncelo_sul_ponticello,Cello sul ponticello,cello_sul_ponticello,True,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
-violoncelo_sul_tasto,Cello sul tasto,cello_sul_tasto,True,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sul_tasto,arco_sul_tasto,arco|sul_tasto,PASS,PASS,False,full_coverage,0,0

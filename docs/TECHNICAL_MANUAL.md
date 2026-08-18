@@ -136,7 +136,7 @@ extrapolation.
 **Migration (2026-08-03):** Runtime GPR + adaptive tails removed from production.
 **Data-faithful rebuild (2026-08-08/09):** all pitched table-backed modules —
 winds (flute, oboe, clarinet, bassoon), brass (trumpet, horn, trombone, tuba), arco strings,
-and the 12 string technique modules — commit 10-level ladders generated offline by
+and the remaining violin/viola technique modules — commit 10-level ladders generated offline by
 **Dynamics_predicter v1.5** on the measured pp/mf/ff anchors: anchors verbatim,
 PCHIP interiors bounded by their measured segment, geometrically tapered outer
 levels. Ladders are **not** forced monotone; real measured anchors are
