@@ -70,11 +70,15 @@ def compute_registral_span_distinct(aggregation: PitchAggregationResult) -> floa
     return float(max(midis) - min(midis))
 
 
+# NON-PRODUCTION REFERENCE — retained for documentation only.
+# ``compute_registral_compactness`` is not on any production path
+# (``calculate_metrics`` reports ``registral_compression`` = 1/(1+span)
+# instead). Do not wire this helper into the pipeline.
 def compute_registral_compactness(registral_span_semitones: float) -> float:
     """Bounded registral factor ``1 / (1 + span/12)``.
 
     Distinct from production subindex ``registral_compression`` = ``1/(1+span)``.
-    Not called from ``calculate_metrics``.
+    Non-production reference implementation; not called from ``calculate_metrics``.
     """
     return 1.0 / (1.0 + registral_span_semitones / 12.0)
 

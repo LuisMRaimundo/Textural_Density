@@ -1,0 +1,10 @@
+{
+  "id": "microtonal_octave_class_b1",
+  "description": "12-EDO frozen baselines cannot detect the one-sided octave-class bug in calculate_harmonic_ratio. This fixture is the microtonal regression lock for a tool whose declared domain is 24 steps to the octave.",
+  "pitches": [60.0, 71.85, 64.0],
+  "amplitudes": [1.0, 1.0, 1.0],
+  "notes_if_parsed": ["C4", "C5-15c", "E4"],
+  "expected_harmonic_ratio": 0.6666666666666666,
+  "legacy_one_sided_harmonic_ratio": 0.3333333333333333,
+  "rationale": "Fundamental C4 (60). C5-15c (71.85) is 0.15 semitones flat of an octave (oct_dist=0.15) and must count as harmonic. E4 (64) does not. Equal amplitudes → 2/3. The pre-fix modulo+isclose rule rejected 11.85 and yielded 1/3."
+}

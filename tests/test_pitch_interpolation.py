@@ -10,6 +10,7 @@ import pytest
 from instrumentos import get_instrument_module
 from instrumentos.flute import calcular_densidade as flauta_density, spectral_data as flauta_table
 from instrumentos.pitch_interpolation import (
+    MIN_PCHIP_ANCHORS,
     MetadataTableConflictError,
     resolve_density_from_table,
     validate_metadata_table,
@@ -218,6 +219,23 @@ class TestProvenanceMetadata:
     def test_exact_has_no_modelled_warning(self):
         result = _resolve(CHROMATIC_TABLE, "C4", "mf")
         assert not any("modelled estimate" in w.lower() for w in result.warnings)
+
+
+class TestPchipAnchorThreshold:
+    def test_min_pchip_anchors_is_four(self):
+        assert MIN_PCHIP_ANCHORS == 4
+
+    def test_explicit_pchip_on_three_anchors_matches_linear(self):
+        table = {
+            "C4": {"mf": 10.0},
+            "D4": {"mf": 20.0},
+            "E4": {"mf": 30.0},
+        }
+        pchip = _resolve(table, "C#4", "mf", interpolation_method="pchip")
+        linear = _resolve(table, "C#4", "mf", interpolation_method="linear")
+        auto = _resolve(table, "C#4", "mf", interpolation_method="auto")
+        assert pchip.value == pytest.approx(linear.value)
+        assert auto.value == pytest.approx(linear.value)
 
 
 class TestDynamicSeparation:

@@ -1,5 +1,13 @@
 #!/usr/bin/env python3
-"""Compare production GPR with diagnostic linear and PCHIP interpolation policies."""
+"""Compare production GPR with diagnostic linear and PCHIP interpolation policies.
+
+``pchip_anchor`` here is a *dynamic-axis* 3-point PCHIP on the source
+anchors ``pp``/``mf``/``ff`` (see ``_pchip_value``). It does not use
+``instrumentos.pitch_interpolation.MIN_PCHIP_ANCHORS`` or
+``interpolation_method="pchip"`` on pitch tables. Regenerating these
+reports after the pitch-table PCHIP threshold unification does not
+change the comparison figures.
+"""
 
 from __future__ import annotations
 
@@ -636,6 +644,9 @@ def _markdown(payload: dict[str, Any]) -> str:
     lines = [
         "# Dynamic interpolation method comparison",
         "",
+        "> **Note.** `pchip_anchor` is a dynamic-axis 3-point PCHIP on `pp`/`mf`/`ff`.",
+        "> It does not use `instrumentos.pitch_interpolation.MIN_PCHIP_ANCHORS`.",
+        "",
         f"- SHA: `{s['repository_sha']}`",
         f"- Classification: **{s['classification']}**",
         f"- Production GPR: **unchanged**",
@@ -709,7 +720,10 @@ def write_reports(payload: dict[str, Any]) -> None:
             writer.writeheader()
             writer.writerows(bench)
     (REPORTS / "dynamic_interpolation_benchmark_method_comparison.md").write_text(
-        "# Benchmark method comparison\n\nDiagnostic only; frozen outputs unchanged.\n",
+        "# Benchmark method comparison\n\n"
+        "Diagnostic only; frozen outputs unchanged.\n\n"
+        "> **Note.** PCHIP column is dynamic-axis (3 source anchors), not "
+        "pitch-table `MIN_PCHIP_ANCHORS`.\n",
         encoding="utf-8",
     )
 

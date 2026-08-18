@@ -13,6 +13,7 @@ from __future__ import annotations
 import math
 from typing import Any, Optional
 
+from core.pitch_structure import compute_composite_vertical_density
 from core.sensitivity import DEFAULT_WEIGHT_SETS
 
 DOCUMENTED_COMPOSITE_WEIGHTS: dict[str, float] = dict(
@@ -72,11 +73,14 @@ def compute_composite_from_blend(
     *,
     use_log_compression: bool,
 ) -> float:
-    """Composite from blend, mass, and REF — shared by pipeline and header tests."""
-    pre_log = float(d_blend) * math.sqrt(max(0.0, float(sonic_mass))) / float(ref)
-    if use_log_compression:
-        return float(math.log10(1.0 + pre_log))
-    return float(pre_log)
+    """Composite from blend, mass, and REF — delegates to the production formula."""
+    total, _ = compute_composite_vertical_density(
+        d_blend,
+        sonic_mass,
+        ref,
+        apply_log_compression=use_log_compression,
+    )
+    return total
 
 
 def composite_outer_expression(*, use_log_compression: bool) -> str:

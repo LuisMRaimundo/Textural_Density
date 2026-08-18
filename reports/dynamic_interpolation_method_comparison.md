@@ -1,5 +1,12 @@
 # Dynamic interpolation method comparison
 
+> **Pre-change note (2026-08-18).** This committed report predates
+> `MIN_PCHIP_ANCHORS = 4` in `instrumentos/pitch_interpolation.py`.
+> The tool's `pchip_anchor` path is a **dynamic-axis** 3-point PCHIP on
+> `pp`/`mf`/`ff` (`tools/compare_dynamic_interpolation_methods.py::_pchip_value`)
+> and does not call pitch-table interpolation. Figures here are therefore
+> unchanged by that unification; they were not regenerated.
+
 - SHA: `95729e9ce8702dcfd880a1211159b4995ee97efe`
 - Classification: **PASS**
 - Production GPR: **unchanged**

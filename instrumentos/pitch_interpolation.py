@@ -28,6 +28,10 @@ WARN_DEVIATION_SEMITONES = 1.0
 ERROR_DEVIATION_SEMITONES = 12.0
 MIDI_MATCH_EPS = 1e-6
 VALUE_MATCH_EPS = 1e-9
+# Shared PCHIP gate. Production ``auto`` already required 4 anchors; the
+# interpolator previously accepted 3, so an explicit ``"pchip"`` request
+# could fit a table that ``auto`` refused. Keep the auto default (4).
+MIN_PCHIP_ANCHORS = 4
 
 InterpolationMethod = Literal["auto", "linear", "pchip"]
 LookupProvenance = Literal[
@@ -272,11 +276,11 @@ def _interpolate_pchip(
     entries: list[tuple[float, str]],
     value_at: Callable[[str], float],
 ) -> float | None:
-    if not _HAS_PCHIP or len(entries) < 3:
+    if not _HAS_PCHIP or len(entries) < MIN_PCHIP_ANCHORS:
         return None
     midis = [m for m, _ in entries]
     values = [value_at(k) for _, k in entries]
-    if len(set(midis)) < 3:
+    if len(set(midis)) < MIN_PCHIP_ANCHORS:
         return None
     try:
         interpolator = PchipInterpolator(midis, values, extrapolate=False)
@@ -502,7 +506,7 @@ def resolve_density_from_table(
         density = float(value_at(upper[1]))
         provenance = "exact"
     elif interpolation_method == "pchip" or (
-        interpolation_method == "auto" and in_range and len(entries) >= 4
+        interpolation_method == "auto" and in_range and len(entries) >= MIN_PCHIP_ANCHORS
     ):
         pchip_val = _interpolate_pchip(target_midi, entries, value_at)
         if pchip_val is not None and in_range:

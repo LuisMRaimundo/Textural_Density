@@ -278,8 +278,8 @@ def calculate_harmonic_ratio(
     
     The implementation operates in MIDI space, not Hz. A bin is treated as
     harmonic when its interval from the fundamental is an octave class
-    (multiple of 12 semitones) within ``atol=0.25``. This is not an integer
-    frequency-multiple test.
+    (circular distance to a multiple of 12 semitones) within 0.25 semitones.
+    This is not an integer frequency-multiple test.
     Valores próximos de 1.0 indicam espectro altamente harmônico, enquanto
     valores próximos de 0.0 indicam espectro inarmônico.
     
@@ -289,8 +289,9 @@ def calculate_harmonic_ratio(
             Se None, todas as notas têm amplitude igual (1.0).
         fundamental: MIDI pitch of the reference fundamental (optional).
             If None, uses ``pitches.min()`` (lowest MIDI), not a frequency in Hz.
-            Harmonic membership is octave-class in semitones:
-            ``isclose((m_i - fundamental) % 12, 0, atol=0.25)``.
+            Harmonic membership is a symmetric octave-class distance in
+            semitones: ``oct_dist = min(r, 12-r)`` with ``r = (m_i -
+            fundamental) % 12``; harmonic when ``oct_dist <= 0.25``.
     
     Returns:
         Razão harmônica (0.0 a 1.0):
@@ -329,8 +330,10 @@ def calculate_harmonic_ratio(
     # Calcular distâncias (em semitons) à fundamental
     intervals = pitches - fundamental
     
-    # Identificar harmônicos (intervalos próximos a múltiplos de 12 semitons)
-    harmonic_mask = np.isclose(intervals % 12, 0, atol=0.25)
+    # Symmetric octave-class distance (modulo-then-isclose is one-sided).
+    residue = np.mod(intervals, 12.0)
+    oct_dist = np.minimum(residue, 12.0 - residue)
+    harmonic_mask = oct_dist <= 0.25
 
     # Calcular razão de energia
     harm_energy = amps[harmonic_mask].sum()
