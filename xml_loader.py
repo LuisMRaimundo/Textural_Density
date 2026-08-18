@@ -20,6 +20,7 @@ from core.unpitched_routing import (
     canonical_unpitched_note,
     instrument_is_unpitched,
 )
+from instrumentos.registry import require_registered_instrument
 from utils.notes import extract_cents, normalize_note_string
 
 logger = logging.getLogger(__name__)
@@ -590,6 +591,17 @@ def parse_xml_to_events(filepath: str) -> tuple[list[InstrumentEvent], dict[str,
         warnings.extend(extract_warnings)
         if not extracted:
             raise ValueError("MusicXML não contém notas (apenas rests ou part-list vazio).")
+        seen_parts: set[tuple[str, str]] = set()
+        for n in extracted:
+            key = (n.part_id, n.part_name)
+            if key in seen_parts:
+                continue
+            seen_parts.add(key)
+            require_registered_instrument(
+                n.part_name,
+                part_id=n.part_id or None,
+                part_name=n.part_name,
+            )
         warnings.append(
             "MusicXML loaded without measure timing; treated as a single vertical slice."
         )

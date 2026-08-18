@@ -86,7 +86,7 @@ class TestMusicXmlTranspose:
 <score-partwise version="3.1">
   <part-list>
     <score-part id="P1"><part-name>Flute</part-name></score-part>
-    <score-part id="P2"><part-name>Clarinet in Bb</part-name></score-part>
+    <score-part id="P2"><part-name>Clarinet</part-name></score-part>
   </part-list>
   <part id="P1">
     <measure number="1">
@@ -138,7 +138,7 @@ class TestMusicXmlTranspose:
     def test_transpose_applied_for_horn(self):
         xml = """<?xml version="1.0"?>
 <score-partwise version="3.1">
-  <part-list><score-part id="P1"><part-name>Horn in F</part-name></score-part></part-list>
+  <part-list><score-part id="P1"><part-name>Horn</part-name></score-part></part-list>
   <part id="P1">
     <measure number="1">
       <attributes>
@@ -161,7 +161,7 @@ class TestMusicXmlTranspose:
         """Written C4 with chromatic=4 and octave-change=-1 → sounding E3."""
         xml = """<?xml version="1.0"?>
 <score-partwise version="3.1">
-  <part-list><score-part id="P1"><part-name>Test</part-name></score-part></part-list>
+  <part-list><score-part id="P1"><part-name>Flute</part-name></score-part></part-list>
   <part id="P1">
     <measure number="1">
       <attributes>

@@ -12,7 +12,7 @@ from itertools import combinations
 from typing import Any, Optional
 
 from config import COMPOSITE_HARMONIC_DAMPING, MAX_DENS_GLOBAL, USE_LOG_COMPRESSION
-from microtonal import note_to_midi
+from microtonal import note_to_midi_strict
 
 
 def explain_score_slice(resultados: dict[str, Any]) -> str:
@@ -151,7 +151,9 @@ def explain_vertical_slice(resultados: dict[str, Any]) -> str:
         lines.append("## Interval compactness (not sensory dissonance)")
         pairs = _top_interval_pairs(notes, top_n=3)
         for n1, n2, w in pairs:
-            st = abs(note_to_midi(n1) - note_to_midi(n2))
+            # Report-string-only: these labels are not on the analysis MIDI axis.
+            # Strict parser keeps wrap-around spellings consistent with aggregation.
+            st = abs(note_to_midi_strict(n1) - note_to_midi_strict(n2))
             lines.append(f"- Pair {n1}–{n2} ({st:.1f} st): decay weight ≈ {w:.4f}")
         lines.append("")
 
@@ -336,12 +338,17 @@ def _top_interval_pairs(
     notes: list[str],
     top_n: int = 3,
 ) -> list[tuple[str, str, float]]:
+    """Rank pairs for the slice explanation string only.
+
+    Not on the ``calculate_metrics`` MIDI axis. Uses ``note_to_midi_strict``
+    so wrap-around labels (``Cb5`` = B4) cannot diverge from aggregation.
+    """
     from densidade_intervalar import load_calibrated_parameters, modified_exponential_decay
 
     lamb = load_calibrated_parameters()
     pairs: list[tuple[str, str, float]] = []
     for i, j in combinations(range(len(notes)), 2):
-        delta_st = abs(note_to_midi(notes[i]) - note_to_midi(notes[j]))
+        delta_st = abs(note_to_midi_strict(notes[i]) - note_to_midi_strict(notes[j]))
         delta = delta_st * 2.0
         weight = float(modified_exponential_decay(delta, lamb))
         pairs.append((notes[i], notes[j], weight))

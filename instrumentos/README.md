@@ -171,7 +171,7 @@ See [TECHNICAL_MANUAL.md](../docs/TECHNICAL_MANUAL.md) §3.3–§3.6.
 
 3. **Legacy direct import** by raw lowercase module name
 
-4. **Unknown name** → unknown coarse proxy with warning
+4. **Unknown name** → `InputError` (`field: instruments`); the generic coarse proxy is audit-only (`profile_for_event(..., allow_unknown=True)`), not reachable from `calculate_metrics`
 
 
 

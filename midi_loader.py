@@ -15,6 +15,7 @@ from core.unpitched_routing import (
     canonical_unpitched_note,
     map_gm_percussion_key,
 )
+from instrumentos.registry import require_registered_instrument
 from utils.notes import midi_to_note_name
 
 logger = logging.getLogger(__name__)
@@ -62,6 +63,11 @@ def _resolve_midi_event(
             )
             return None
         instrument_name, approx = mapped
+        require_registered_instrument(
+            instrument_name,
+            part_id=f"channel_{channel}",
+            part_name=instrument_name,
+        )
         if approx:
             warnings.append(
                 f"MIDI GM key {int(key)} on channel 10: {approx}."
@@ -88,6 +94,11 @@ def _resolve_midi_event(
         )
 
     note_name = midi_to_note_name(float(key))
+    require_registered_instrument(
+        "flute",
+        part_id=f"channel_{channel}",
+        part_name="flute",
+    )
     return make_instrument_event(
         idx=idx,
         note=note_name,
@@ -220,6 +231,13 @@ def parse_midi(filepath: str) -> dict:
                     notes.append(midi_to_note_name(float(key)))
                     instruments.append("flute")
                 dynamics.append(_velocity_to_dynamic(vel))
+
+    seen_instruments: set[str] = set()
+    for name in instruments:
+        if name in seen_instruments:
+            continue
+        seen_instruments.add(name)
+        require_registered_instrument(name)
 
     for w in warnings:
         logger.warning(w)

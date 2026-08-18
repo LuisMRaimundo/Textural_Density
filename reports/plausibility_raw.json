@@ -7662,172 +7662,10 @@
       "n_outside": 40,
       "outside": [
         {
-          "note": "C#2",
-          "horn": 45.1250386,
-          "trombone": 75.310915,
-          "tuba": 41.7056178
-        },
-        {
-          "note": "A3",
-          "horn": 14.6915756,
-          "trombone": 24.007599,
-          "tuba": 13.7191069
-        },
-        {
-          "note": "F4",
-          "horn": 9.76851254,
-          "trombone": 14.981449,
-          "tuba": 8.08579343
-        },
-        {
-          "note": "G3",
-          "horn": 22.040788,
-          "trombone": 30.679921,
-          "tuba": 16.3932389
-        },
-        {
-          "note": "E4",
-          "horn": 11.2396489,
-          "trombone": 15.361018,
-          "tuba": 8.63859206
-        },
-        {
-          "note": "B3",
-          "horn": 12.8907628,
-          "trombone": 20.479829,
-          "tuba": 10.3397909
-        },
-        {
-          "note": "E2",
-          "horn": 47.5191841,
-          "trombone": 61.869759,
-          "tuba": 38.6944851
-        },
-        {
-          "note": "F3",
-          "horn": 22.4460055,
-          "trombone": 31.675142,
-          "tuba": 18.6786976
-        },
-        {
-          "note": "A1",
-          "horn": 69.0746999,
-          "trombone": 97.415434,
-          "tuba": 61.1403752
-        },
-        {
-          "note": "G1",
-          "horn": 53.0,
-          "trombone": 109.494132,
-          "tuba": 65.0573533
-        },
-        {
-          "note": "D#4",
-          "horn": 11.184797,
-          "trombone": 17.342626,
-          "tuba": 7.39002691
-        },
-        {
-          "note": "D3",
-          "horn": 21.6730134,
-          "trombone": 38.666573,
-          "tuba": 22.5992566
-        },
-        {
-          "note": "D4",
-          "horn": 11.4969617,
-          "trombone": 19.47231,
-          "tuba": 8.2775697
-        },
-        {
-          "note": "C2",
-          "horn": 64.7745713,
-          "trombone": 93.058973,
-          "tuba": 56.2879791
-        },
-        {
-          "note": "A#4",
-          "horn": 7.86582107,
-          "trombone": 11.653593,
-          "tuba": 4.67087159
-        },
-        {
-          "note": "F#3",
-          "horn": 21.0843899,
-          "trombone": 32.076663,
-          "tuba": 18.2092351
-        },
-        {
-          "note": "D#2",
-          "horn": 47.036582,
-          "trombone": 71.077131,
-          "tuba": 36.0296814
-        },
-        {
-          "note": "A#2",
-          "horn": 32.3414527,
-          "trombone": 52.428547,
-          "tuba": 30.3899148
-        },
-        {
-          "note": "C#4",
-          "horn": 11.9179728,
-          "trombone": 19.393018,
-          "tuba": 9.68433873
-        },
-        {
-          "note": "G2",
-          "horn": 33.8178891,
-          "trombone": 52.752999,
-          "tuba": 33.9053982
-        },
-        {
-          "note": "A#3",
-          "horn": 14.8493427,
-          "trombone": 21.318118,
-          "tuba": 12.3359533
-        },
-        {
-          "note": "G#3",
-          "horn": 16.7510749,
-          "trombone": 26.658228,
-          "tuba": 11.4456243
-        },
-        {
-          "note": "C#3",
-          "horn": 29.7267243,
-          "trombone": 40.512287,
-          "tuba": 25.1883136
-        },
-        {
-          "note": "E3",
-          "horn": 27.4137927,
-          "trombone": 35.429614,
-          "tuba": 21.2874015
-        },
-        {
-          "note": "C4",
-          "horn": 13.4357683,
-          "trombone": 22.821864,
-          "tuba": 8.60089846
-        },
-        {
-          "note": "F2",
-          "horn": 38.8863516,
-          "trombone": 55.537685,
-          "tuba": 38.3741462
-        },
-        {
-          "note": "G#1",
-          "horn": 72.288228,
-          "trombone": 110.173875,
-          "tuba": 61.8377917
-        },
-        {
-          "note": "D2",
-          "horn": 45.5389555,
-          "trombone": 76.89442,
-          "tuba": 41.2164148
+          "note": "F#2",
+          "horn": 35.4903743,
+          "trombone": 55.820111,
+          "tuba": 32.9767179
         },
         {
           "note": "G#4",
@@ -7836,10 +7674,172 @@
           "tuba": 5.73794675
         },
         {
+          "note": "A#1",
+          "horn": 74.446143,
+          "trombone": 107.652869,
+          "tuba": 61.4543183
+        },
+        {
+          "note": "C2",
+          "horn": 64.7745713,
+          "trombone": 93.058973,
+          "tuba": 56.2879791
+        },
+        {
+          "note": "G#2",
+          "horn": 34.3135725,
+          "trombone": 46.962861,
+          "tuba": 26.4535846
+        },
+        {
+          "note": "A#3",
+          "horn": 14.8493427,
+          "trombone": 21.318118,
+          "tuba": 12.3359533
+        },
+        {
+          "note": "A4",
+          "horn": 9.23526834,
+          "trombone": 12.977251,
+          "tuba": 5.10400693
+        },
+        {
+          "note": "E4",
+          "horn": 11.2396489,
+          "trombone": 15.361018,
+          "tuba": 8.63859206
+        },
+        {
+          "note": "C#2",
+          "horn": 45.1250386,
+          "trombone": 75.310915,
+          "tuba": 41.7056178
+        },
+        {
+          "note": "B1",
+          "horn": 50.6215605,
+          "trombone": 91.717796,
+          "tuba": 59.342213
+        },
+        {
+          "note": "F#3",
+          "horn": 21.0843899,
+          "trombone": 32.076663,
+          "tuba": 18.2092351
+        },
+        {
+          "note": "D3",
+          "horn": 21.6730134,
+          "trombone": 38.666573,
+          "tuba": 22.5992566
+        },
+        {
+          "note": "G1",
+          "horn": 53.0,
+          "trombone": 109.494132,
+          "tuba": 65.0573533
+        },
+        {
+          "note": "A#2",
+          "horn": 32.3414527,
+          "trombone": 52.428547,
+          "tuba": 30.3899148
+        },
+        {
+          "note": "G4",
+          "horn": 9.18869896,
+          "trombone": 12.820435,
+          "tuba": 5.6173163
+        },
+        {
+          "note": "D2",
+          "horn": 45.5389555,
+          "trombone": 76.89442,
+          "tuba": 41.2164148
+        },
+        {
           "note": "B2",
           "horn": 27.5581255,
           "trombone": 45.183036,
           "tuba": 25.9200661
+        },
+        {
+          "note": "C#3",
+          "horn": 29.7267243,
+          "trombone": 40.512287,
+          "tuba": 25.1883136
+        },
+        {
+          "note": "D#2",
+          "horn": 47.036582,
+          "trombone": 71.077131,
+          "tuba": 36.0296814
+        },
+        {
+          "note": "F#4",
+          "horn": 9.13032036,
+          "trombone": 14.010708,
+          "tuba": 6.40756332
+        },
+        {
+          "note": "C3",
+          "horn": 31.1716738,
+          "trombone": 41.078675,
+          "tuba": 24.6523026
+        },
+        {
+          "note": "C4",
+          "horn": 13.4357683,
+          "trombone": 22.821864,
+          "tuba": 8.60089846
+        },
+        {
+          "note": "A3",
+          "horn": 14.6915756,
+          "trombone": 24.007599,
+          "tuba": 13.7191069
+        },
+        {
+          "note": "D4",
+          "horn": 11.4969617,
+          "trombone": 19.47231,
+          "tuba": 8.2775697
+        },
+        {
+          "note": "G3",
+          "horn": 22.040788,
+          "trombone": 30.679921,
+          "tuba": 16.3932389
+        },
+        {
+          "note": "A#4",
+          "horn": 7.86582107,
+          "trombone": 11.653593,
+          "tuba": 4.67087159
+        },
+        {
+          "note": "D#3",
+          "horn": 21.0576322,
+          "trombone": 38.146542,
+          "tuba": 23.1238207
+        },
+        {
+          "note": "B3",
+          "horn": 12.8907628,
+          "trombone": 20.479829,
+          "tuba": 10.3397909
+        },
+        {
+          "note": "D#4",
+          "horn": 11.184797,
+          "trombone": 17.342626,
+          "tuba": 7.39002691
+        },
+        {
+          "note": "C#4",
+          "horn": 11.9179728,
+          "trombone": 19.393018,
+          "tuba": 9.68433873
         }
       ],
       "trombone_status": "table-backed",
@@ -7902,7 +7902,7 @@
       "calculate_metrics_silent": false,
       "resolved_profile": "InputError",
       "parent": "violoncelo",
-      "error": "Unknown instrument 'violoncelo_sordina'. Analysis does not fall back to a parent module or to the generic coarse proxy. Use a registered id or alias (36 profiles; e.g. violino, flauta, trombone). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
+      "error": "Unknown instrument 'violoncelo_sordina' (part='violoncelo_sordina'). Analysis does not fall back to a parent module or to the generic coarse proxy. Accepted registry ids: bombo, caixa, celesta, clarinete, clarinete_baixo, contrabaixo, contrafagote, cor_anglais, fagote, flauta, flautim, gongo, harpa, marimba, metalofone, oboe, piano, pratos, tamtam, timpanos, trombone, trombone_baixo, trompa, trompete, tuba, vibrafone, viola, viola_harm, viola_sordina, viola_sul_ponticello, violino, violino_harm, violino_sordina, violino_sul_ponticello, violino_sul_tasto, violoncelo. Display names and aliases also resolve (e.g. Flute\u2192flauta, Violin\u2192violino). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
     },
     {
       "family": "F-C",
@@ -7913,7 +7913,7 @@
       "calculate_metrics_silent": false,
       "resolved_profile": "InputError",
       "parent": "violoncelo",
-      "error": "Unknown instrument 'violoncelo_sul_tasto'. Analysis does not fall back to a parent module or to the generic coarse proxy. Use a registered id or alias (36 profiles; e.g. violino, flauta, trombone). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
+      "error": "Unknown instrument 'violoncelo_sul_tasto' (part='violoncelo_sul_tasto'). Analysis does not fall back to a parent module or to the generic coarse proxy. Accepted registry ids: bombo, caixa, celesta, clarinete, clarinete_baixo, contrabaixo, contrafagote, cor_anglais, fagote, flauta, flautim, gongo, harpa, marimba, metalofone, oboe, piano, pratos, tamtam, timpanos, trombone, trombone_baixo, trompa, trompete, tuba, vibrafone, viola, viola_harm, viola_sordina, viola_sul_ponticello, violino, violino_harm, violino_sordina, violino_sul_ponticello, violino_sul_tasto, violoncelo. Display names and aliases also resolve (e.g. Flute\u2192flauta, Violin\u2192violino). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
     },
     {
       "family": "F-C",
@@ -7924,7 +7924,7 @@
       "calculate_metrics_silent": false,
       "resolved_profile": "InputError",
       "parent": "violoncelo",
-      "error": "Unknown instrument 'violoncelo_sul_ponticello'. Analysis does not fall back to a parent module or to the generic coarse proxy. Use a registered id or alias (36 profiles; e.g. violino, flauta, trombone). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
+      "error": "Unknown instrument 'violoncelo_sul_ponticello' (part='violoncelo_sul_ponticello'). Analysis does not fall back to a parent module or to the generic coarse proxy. Accepted registry ids: bombo, caixa, celesta, clarinete, clarinete_baixo, contrabaixo, contrafagote, cor_anglais, fagote, flauta, flautim, gongo, harpa, marimba, metalofone, oboe, piano, pratos, tamtam, timpanos, trombone, trombone_baixo, trompa, trompete, tuba, vibrafone, viola, viola_harm, viola_sordina, viola_sul_ponticello, violino, violino_harm, violino_sordina, violino_sul_ponticello, violino_sul_tasto, violoncelo. Display names and aliases also resolve (e.g. Flute\u2192flauta, Violin\u2192violino). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
     },
     {
       "family": "F-C",
@@ -7935,7 +7935,7 @@
       "calculate_metrics_silent": false,
       "resolved_profile": "InputError",
       "parent": "contrabaixo",
-      "error": "Unknown instrument 'contrabaixo_sordina'. Analysis does not fall back to a parent module or to the generic coarse proxy. Use a registered id or alias (36 profiles; e.g. violino, flauta, trombone). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
+      "error": "Unknown instrument 'contrabaixo_sordina' (part='contrabaixo_sordina'). Analysis does not fall back to a parent module or to the generic coarse proxy. Accepted registry ids: bombo, caixa, celesta, clarinete, clarinete_baixo, contrabaixo, contrafagote, cor_anglais, fagote, flauta, flautim, gongo, harpa, marimba, metalofone, oboe, piano, pratos, tamtam, timpanos, trombone, trombone_baixo, trompa, trompete, tuba, vibrafone, viola, viola_harm, viola_sordina, viola_sul_ponticello, violino, violino_harm, violino_sordina, violino_sul_ponticello, violino_sul_tasto, violoncelo. Display names and aliases also resolve (e.g. Flute\u2192flauta, Violin\u2192violino). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
     },
     {
       "family": "F-C",
@@ -7946,7 +7946,7 @@
       "calculate_metrics_silent": false,
       "resolved_profile": "InputError",
       "parent": "contrabaixo",
-      "error": "Unknown instrument 'contrabaixo_sul_tasto'. Analysis does not fall back to a parent module or to the generic coarse proxy. Use a registered id or alias (36 profiles; e.g. violino, flauta, trombone). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
+      "error": "Unknown instrument 'contrabaixo_sul_tasto' (part='contrabaixo_sul_tasto'). Analysis does not fall back to a parent module or to the generic coarse proxy. Accepted registry ids: bombo, caixa, celesta, clarinete, clarinete_baixo, contrabaixo, contrafagote, cor_anglais, fagote, flauta, flautim, gongo, harpa, marimba, metalofone, oboe, piano, pratos, tamtam, timpanos, trombone, trombone_baixo, trompa, trompete, tuba, vibrafone, viola, viola_harm, viola_sordina, viola_sul_ponticello, violino, violino_harm, violino_sordina, violino_sul_ponticello, violino_sul_tasto, violoncelo. Display names and aliases also resolve (e.g. Flute\u2192flauta, Violin\u2192violino). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
     },
     {
       "family": "F-C",
@@ -7957,7 +7957,7 @@
       "calculate_metrics_silent": false,
       "resolved_profile": "InputError",
       "parent": "contrabaixo",
-      "error": "Unknown instrument 'contrabaixo_sul_ponticello'. Analysis does not fall back to a parent module or to the generic coarse proxy. Use a registered id or alias (36 profiles; e.g. violino, flauta, trombone). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
+      "error": "Unknown instrument 'contrabaixo_sul_ponticello' (part='contrabaixo_sul_ponticello'). Analysis does not fall back to a parent module or to the generic coarse proxy. Accepted registry ids: bombo, caixa, celesta, clarinete, clarinete_baixo, contrabaixo, contrafagote, cor_anglais, fagote, flauta, flautim, gongo, harpa, marimba, metalofone, oboe, piano, pratos, tamtam, timpanos, trombone, trombone_baixo, trompa, trompete, tuba, vibrafone, viola, viola_harm, viola_sordina, viola_sul_ponticello, violino, violino_harm, violino_sordina, violino_sul_ponticello, violino_sul_tasto, violoncelo. Display names and aliases also resolve (e.g. Flute\u2192flauta, Violin\u2192violino). Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, \u2026) are not remapped. (field: instruments)"
     },
     {
       "family": "F-C",

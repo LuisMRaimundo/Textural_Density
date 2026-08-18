@@ -213,7 +213,7 @@ REGISTRY["clarinete"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("clarinet", "clarinete", "cl."),
+    aliases=("clarinet", "clarinete", "cl.", "clarinet in bb", "clarinet in b♭"),
 )
 
 REGISTRY["clarinete_baixo"] = _profile(
@@ -632,7 +632,7 @@ REGISTRY["trompa"] = _profile(
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
-    aliases=("horn", "french_horn", "trompa", "hn."),
+    aliases=("horn", "french_horn", "trompa", "hn.", "horn in f"),
 )
 
 REGISTRY["trompete"] = _profile(
@@ -926,36 +926,80 @@ def list_instrument_ids() -> list[str]:
     return sorted(REGISTRY.keys())
 
 
-def unknown_instrument_error(instrument_name: str) -> InputError:
+def accepted_instrument_ids_text() -> str:
+    """Comma-separated registered ids for fail-closed error messages."""
+    return ", ".join(list_instrument_ids())
+
+
+def unknown_instrument_error(
+    instrument_name: str,
+    *,
+    part_id: str | None = None,
+    part_name: str | None = None,
+) -> InputError:
     """Build the documented analysis-path error for an unregistered instrument id."""
-    n = len(list_instrument_ids())
+    ids = accepted_instrument_ids_text()
+    loc_bits: list[str] = []
+    if part_id:
+        loc_bits.append(f"part_id={part_id!r}")
+    if part_name:
+        loc_bits.append(f"part={part_name!r}")
+    loc = f" ({', '.join(loc_bits)})" if loc_bits else ""
     return InputError(
-        f"Unknown instrument {instrument_name!r}. Analysis does not fall back to a "
-        f"parent module or to the generic coarse proxy. Use a registered id or alias "
-        f"({n} profiles; e.g. violino, flauta, trombone). "
+        f"Unknown instrument {instrument_name!r}{loc}. Analysis does not fall back "
+        f"to a parent module or to the generic coarse proxy. "
+        f"Accepted registry ids: {ids}. "
+        f"Display names and aliases also resolve (e.g. Flute→flauta, Violin→violino). "
         f"Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, …) "
         f"are not remapped.",
         field="instruments",
     )
 
 
+def require_registered_instrument(
+    instrument_name: str,
+    *,
+    part_id: str | None = None,
+    part_name: str | None = None,
+) -> InstrumentProfile:
+    """Resolve ``instrument_name`` or raise the fail-closed ``InputError``."""
+    profile = resolve_profile(instrument_name)
+    if profile is None:
+        raise unknown_instrument_error(
+            instrument_name,
+            part_id=part_id,
+            part_name=part_name,
+        )
+    return profile
+
+
+# AUDIT-ONLY — ``allow_unknown=True`` is not on any production path
+# (``calculate_metrics`` reports a hard ``InputError`` via
+# ``profile_for_event`` / ``get_instrument_module`` instead).
+# Do not pass that flag from the analysis path.
 def profile_for_event(
     instrument_name: str,
     *,
     allow_unknown: bool = False,
+    part_id: str | None = None,
+    part_name: str | None = None,
 ) -> InstrumentProfile:
     """Return the registry profile, or raise ``InputError`` if the id is unknown.
 
-    ``allow_unknown=True`` is reserved for metadata-audit tools that need to
-    inspect the generic coarse proxy. The analysis path (``calculate_metrics``,
-    ``get_instrument_module``) must not pass that flag.
+    ``allow_unknown=True`` is a non-production audit hook: it is not
+    reachable from ``calculate_metrics``. Metadata-audit tools may pass it
+    to inspect the generic coarse proxy. The analysis path must not.
     """
     profile = resolve_profile(instrument_name)
     if profile is not None:
         return profile
     if allow_unknown:
         return _UNKNOWN_PROFILE
-    raise unknown_instrument_error(instrument_name)
+    raise unknown_instrument_error(
+        instrument_name,
+        part_id=part_id,
+        part_name=part_name,
+    )
 
 
 _UNKNOWN_PROFILE = InstrumentProfile(

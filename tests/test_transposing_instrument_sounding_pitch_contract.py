@@ -160,7 +160,7 @@ class TestBbClarinetMusicXmlSoundingPitch:
 class TestHornInFMusicXmlSoundingPitch:
     _XML = """<?xml version="1.0"?>
 <score-partwise version="3.1">
-  <part-list><score-part id="P1"><part-name>Horn in F</part-name></score-part></part-list>
+  <part-list><score-part id="P1"><part-name>Horn</part-name></score-part></part-list>
   <part id="P1">
     <measure number="1">
       <attributes>
