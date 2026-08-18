@@ -2,6 +2,24 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-18 — Symmetric octave-class harmonic ratio; opt-in blend normalisation (package 1.1.5)
+
+Schema label unchanged (`5.1.0-strict-symbolic`). Two production commits, then this docs/version alignment.
+
+**[`cea577a`](https://github.com/LuisMRaimundo/Textural_Density/commit/cea577a) — defect repairs** (default 12-EDO totals unchanged):
+
+- Harmonic membership is the symmetric octave-class distance $\min(r,12-r)\le 0.25$ with $r=(m_i-m_{\min})\bmod 12$. Microtonal `harmonic_ratio` / `pitch_structure` can change; committed 12-EDO snapshots do not. Lock: `tests/fixtures/microtonal_harmonic_ratio.json`.
+- `MIN_PCHIP_ANCHORS = 4` unifies explicit `"pchip"` with `"auto"` (auto behaviour unchanged).
+- `compute_registral_compactness` marked non-production; README no longer lists it as a reported subindex.
+- `compute_composite_from_blend` delegates to `compute_composite_vertical_density`.
+- Verification tests for the DV $\le\log_{10}(2)$ bound and the triad orch/pitch ratio $\approx 16.1$ at $w=0.5$.
+
+**[`72eb0a5`](https://github.com/LuisMRaimundo/Textural_Density/commit/72eb0a5) — opt-in / diagnostics** (legacy default bit-identical):
+
+- `INTERVAL_BLEND_NORMALISATION = "legacy" | "unit_range"`. `"unit_range"` is approximate parity (DV bounded; DI still divided by the unclamped empirical `DI_max=100`). The two modes are not comparable.
+- `composite_meta.blend_term_contributions` reports realised blend terms; `instrument_to_interval_ratio` is JSON `null` when the interval term is 0.
+- Mathematical Manual §H: divisors are not clamps; double-log asymmetry on DV vs uncompressed DI is pinned, not “fixed”.
+
 ## 2026-08-09 — Add tuba: committed 10-level dynamic ladder
 
 New `instrumentos/tuba.py`: 47 pitches (C1–A#4, MIDI 24–70) × 10 dynamics from

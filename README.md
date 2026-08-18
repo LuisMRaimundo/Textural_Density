@@ -1,12 +1,13 @@
 # Textural Density - Musical Density Analysis Application
 
 **Repository:** [github.com/LuisMRaimundo/Textural_Density](https://github.com/LuisMRaimundo/Textural_Density)  
-**Version (two axes):** package **1.1.4** (`pyproject.toml`) · methodology **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`)  
+**Version (two axes):** package **1.1.5** (`pyproject.toml`) · methodology **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`)  
 **Status:** Active Development  
 **License:** [MIT](LICENSE) (`pyproject.toml` declares MIT; see [docs/VERSIONING.md](docs/VERSIONING.md))  
-**Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)
+**Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)  
+The `.md` manuals are canonical. `docs/MATHEMATICAL_MANUAL.pdf` and `docs/TECHNICAL_MANUAL.pdf` are archival snapshots from the 2026-05-23 initial import (`a439f2c`) and do not include later alignment commits.
 
-> **Versioning:** The header **Version** line always names both axes. Package release **1.1.4** is independent of methodology phase **5.1.0-strict-symbolic** (earlier phases 3.0.0 / 4.0.0 / 5.0.0). Do not treat package semver as a schema bump. See [docs/VERSIONING.md](docs/VERSIONING.md).
+> **Versioning:** The header **Version** line always names both axes. Package release **1.1.5** is independent of methodology phase **5.1.0-strict-symbolic** (earlier phases 3.0.0 / 4.0.0 / 5.0.0). Do not treat package semver as a schema bump. See [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -355,6 +356,15 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 ---
 
 ## Changelog
+
+### Version 1.1.5 (2026-08-18)
+
+Package patch. Methodology remains **`5.1.0-strict-symbolic`**. See [CHANGES.md](CHANGES.md).
+
+- **Harmonic ratio (B1):** symmetric octave-class distance $\min(r,12-r)\le 0.25$. Changes microtonal `harmonic_ratio` / `pitch_structure` only; 12-EDO frozen totals unchanged.
+- **PCHIP gate / compactness / composite wrapper:** `MIN_PCHIP_ANCHORS = 4`; `compute_registral_compactness` is not a reported subindex; one composite formula.
+- **Opt-in blend mode (C):** `INTERVAL_BLEND_NORMALISATION` default `"legacy"`; `"unit_range"` is approximate parity. `composite_meta.blend_term_contributions` (ratio JSON `null` when the interval term is 0).
+- Manuals and `docs/API.md` aligned. `.md` files are canonical over the 2026-05-23 archival PDFs.
 
 ### Documentation reconciliation (2026-07-12) — no schema bump
 

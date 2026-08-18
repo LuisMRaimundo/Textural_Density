@@ -205,7 +205,7 @@ Legacy scalars (unchanged):
 
 ```python
 resultados["density"]           # interval, instrument, weighted, refined, total, sonic_mass, absolute (numeric only)
-resultados["composite_meta"]      # mode=weighted_blend_mass_log, normalization_ref (REF), weight_factor, formula, use_log_compression
+resultados["composite_meta"]      # mode, normalization_ref (REF), weight_factor, formula, use_log_compression, d_blend, blend_term_contributions (instrument_term, interval_term, instrument_to_interval_ratio — JSON null when the interval term is 0)
 resultados["spectral_moments"]
 resultados["additional_metrics"]  # complexity, harmonic_ratio, chroma_vector
 resultados["texture"]             # players/CDM avg include unpitched; polyphony pitched-only
@@ -394,6 +394,6 @@ Calibrated λ: `config/density_params.json`.
 
 ---
 
-**Package version:** 1.1.4 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-08-03
+**Package version:** 1.1.5 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-08-18
 
 Unpitched aggregation + unified composite: [TECHNICAL_MANUAL §7.5.1](TECHNICAL_MANUAL.md) · [CHANGES.md](../CHANGES.md). Header / labels: `core.composite.format_composite_header_line`, `core.unpitched_labels`.

@@ -2,6 +2,8 @@
 
 This document is a comprehensive, pedagogical technical manual for **Textural Density**. It bridges high-level design and low-level mathematical implementation.
 
+> **PDF:** `docs/TECHNICAL_MANUAL.pdf` is an archival snapshot from the 2026-05-23 initial import (`a439f2c`) and predates later alignment commits. This `.md` file is the source of truth.
+
 **Math formatting:** All formulas use **LaTeX** — inline math in `$...$`, display math on **separate lines** as `$$` … `$$` (StackEdit, Stack Exchange MathJax, KaTeX, GitHub, VS Code Markdown Math). Use `\cdot`, `\times`, or `\log_{10}(1+x)`; avoid bare Unicode operators inside expressions.
 
 **Epistemic premise (strictly symbolic):** Score/information input only — no audio waveforms, no measured spectra, no auditory perception model, no FFT/STFT signal processing, no Spectral_Analyser-style live analysis, no EWSD/H/I/S constructs. Textural Density computes analytical density indices from notated/input symbolic events and symbolic metadata only. It does not generate non-notated virtual pitches (including combination or resultant tones) and does not implement acoustic, psychoacoustic, or perceptual modelling. Dynamics are symbolic score markings, not SPL. See [revised_path_to_90_score_only.md](revised_path_to_90_score_only.md).
@@ -237,7 +239,7 @@ Implemented in `calcular_densidade_ponderada_normalizada(DI, DV, ...)` with DI =
 
 - **Min-max normalisation** (method `"min-max"`, configurable maxima):
   $$\widehat{D}_{\mathrm{inst}} = \frac{D_{\mathrm{inst}}}{D_{\mathrm{inst,max}}}, \qquad \widehat{D}_{\mathrm{int}} = \frac{D_{\mathrm{int}}}{D_{\mathrm{int,max}}}.$$
-  Defaults: $D_{\mathrm{inst,max}} = 100$, $D_{\mathrm{int,max}} = 10$ (parameters `DI_max`, `DV_max`).
+  Defaults: $D_{\mathrm{inst,max}} = 100$, $D_{\mathrm{int,max}} = 10$ (parameters `DI_max`, `DV_max`). These are **normalisation divisors, not clamps**. Default `INTERVAL_BLEND_NORMALISATION = "legacy"` keeps `DV_max = 10`; `"unit_range"` is an opt-in approximate-parity mode. See [MATHEMATICAL_MANUAL §H](MATHEMATICAL_MANUAL.md).
 
 - **Alternative: z-score normalisation** (method `"z-score"`): $\widehat{D}_{\mathrm{inst}} = (D_{\mathrm{inst}} - \mu_{\mathrm{inst}})/\sigma_{\mathrm{inst}}$, $\widehat{D}_{\mathrm{int}} = (D_{\mathrm{int}} - \mu_{\mathrm{int}})/\sigma_{\mathrm{int}}$ with configurable $\mu$, $\sigma$ (example values in code: $\mu_{\mathrm{inst}}=50$, $\sigma_{\mathrm{inst}}=25$; $\mu_{\mathrm{int}}=5$, $\sigma_{\mathrm{int}}=2.5$).
 
@@ -324,8 +326,10 @@ Implemented in `calculate_spectral_moments` and `calculate_extended_spectral_mom
 
 ### 3.10 Harmonic ratio
 
-- **Definition:** Ratio of energy in “harmonic” bins (pitches within ±0.25 semitons of a multiple of 12 semitons above the fundamental) to total energy. Fundamental is $m_{\min}$ if not provided.
-  $$\mathrm{harmonicRatio} = \frac{ \sum_{i \in \mathcal{H}} a_i }{ \sum_i a_i }, \quad \mathcal{H} = \bigl\{ i : \bigl| (m_i - m_{\min}) \bmod 12 \bigr| \leq 0.25 \text{ (in code: } \mathrm{isclose}((m_i - m_{\min}) \bmod 12, 0, \mathrm{atol}=0.25) \bigr\}.$$
+- **Definition:** Ratio of energy in harmonic bins to total energy. Fundamental is $m_{\min}$ if not provided. Membership is a **symmetric** octave-class distance (not one-sided `isclose` after modulo):
+  $$\mathrm{harmonicRatio} = \frac{\sum_{i \in \mathcal{H}} a_i}{\sum_i a_i},\quad
+  \mathcal{H}=\bigl\{i:\min(r_i,\,12-r_i)\le 0.25\bigr\},\quad
+  r_i=(m_i-m_{\min})\bmod 12.$$
   If total energy is 0, the ratio is 0.
 
 ### 3.11 Complexity factor (pitch-structure path)
@@ -839,4 +843,4 @@ Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). W
 
 ---
 
-*Last updated: 2026-08-17 (docs aligned to Task 8c blend×mass, REF=193, pitched-only absolute count, compactness ≠ compression).*
+*Last updated: 2026-08-18 (symmetric octave-class harmonic ratio; §3.4 cross-ref to Mathematical Manual §H; `.md` canonical over archival PDF).*

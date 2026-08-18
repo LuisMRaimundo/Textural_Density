@@ -2,6 +2,8 @@
 
 This document is the **canonical reference** for **equations, algorithms, and models** implemented in **Textural Density**, plus a **pedagogical tutorial** for reading results and tuning parameters.
 
+> **PDF:** `docs/MATHEMATICAL_MANUAL.pdf` is an archival snapshot from the 2026-05-23 initial import (`a439f2c`) and predates later alignment commits. This `.md` file is the source of truth.
+
 **Epistemic premise:** Textural Density is a strictly symbolic score-analysis framework. It computes analytical density indices from symbolic score data and symbolic metadata. It does **not** implement an auditory model. Unless explicitly labelled `empirical`, spectral and orchestration outputs are **metadata proxies** — not measured acoustics.
 
 **Removed in 3.0.0-strict-symbolic:** Stevens' Law, psychoacoustic corrections (masking, roughness, loudness, Bark), and perceptual interval weighting. Sections C–E and Stevens portions of G below are retained only as migration reference; they are not active options.
@@ -331,7 +333,7 @@ $$
 
 **Chroma:** $c_i = \mathrm{round}(m_i) \bmod 12$, energies summed per class and normalised.
 
-**Harmonic ratio:** fundamental $m_{\min}$; energy in bins with $(m_i - m_{\min}) \bmod 12 \approx 0$ (atol `0.25`).
+**Harmonic ratio:** fundamental $m_{\min}$. Bin $i$ is harmonic when $\min(r,\,12-r)\le 0.25$ with $r=(m_i-m_{\min})\bmod 12$ (symmetric octave-class distance in `spectral_analysis.calculate_harmonic_ratio`; locked by `tests/fixtures/microtonal_harmonic_ratio.json`).
 
 ---
 
@@ -663,4 +665,4 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 
 For architecture and output JSON keys, see [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md). For upgrading existing scripts, see [MIGRATION.md](MIGRATION.md). For package vs methodology versions, see [VERSIONING.md](VERSIONING.md). For function signatures, see [API.md](API.md).
 
-*Last updated: 2026-08-17 (documentation aligned to Task 8c blend×mass production, REF=193, committed 10-level ladders, no runtime GPR).*
+*Last updated: 2026-08-18 (symmetric octave-class harmonic ratio; §H blend-normalisation note; `.md` canonical over archival PDF).*
