@@ -9,6 +9,7 @@ from core.defaults import RESEARCH_ANALYSIS_DEFAULTS
 from core.input_validation import strip_removed_gui_preference_keys
 from core.request import ALLOWED_REQUEST_KEYS, AnalysisRequest
 from core.unpitched_routing import normalize_unpitched_entry_note
+from instrumentos.registry import require_registered_instrument
 
 _GUI_ONLY_KEYS = frozenset({"save_results", "show_graphs"})
 
@@ -48,6 +49,8 @@ def build_analysis_request(raw: dict[str, Any]) -> AnalysisRequest:
     if "num_instruments" not in analytical:
         analytical["num_instruments"] = cleaned.get("num_instruments", [])
     analytical = _inject_unpitched_placeholders(analytical)
+    for name in analytical.get("instruments") or []:
+        require_registered_instrument(str(name))
     return AnalysisRequest.from_mapping(analytical)
 
 

@@ -102,18 +102,17 @@ def test_lookup_trace_does_not_change_calculation_results():
     assert arco_row["density_relation_to_arco"] == ""
 
 
-def test_sordina_misresolution_warning():
+def test_sordina_misresolution_is_rejected():
+    from error_handler import InputError
+
     request = AnalysisRequest(
         notes=("G4",),
         dynamics=("mf",),
         instruments=("Violin con sordina (typo unresolved)",),
         num_instruments=(1,),
     )
-    resultados, _, _ = calculate_metrics(request)
-    warnings = resultados["metric_metadata"]["warnings"]
-    assert any(
-        "Input appears to request violin con sordina" in warning for warning in warnings
-    )
+    with pytest.raises(InputError, match="Accepted registry ids"):
+        calculate_metrics(request)
 
 
 def test_composite_trace_includes_lookup_trace():

@@ -266,7 +266,7 @@ from instrumentos.spectral_lookup import lookup_spectral_density, lookup_spectra
 | `get_instrument_module(name)` | Resolve module (dedicated table → registered coarse). Unregistered names raise `InputError` |
 | `get_instrument_profile(name) -> InstrumentProfile` | Profile metadata including `profile_status`; unknown ids raise `InputError` |
 | `resolve_profile(name) -> InstrumentProfile \| None` | Lookup by name/alias (`None` if unknown; does not raise) |
-| `profile_for_event(name, *, allow_unknown=False)` | Analysis helper: raises `InputError` when unknown. Audit tools may pass `allow_unknown=True` to inspect the generic coarse proxy |
+| `profile_for_event(name, *, allow_unknown=False)` | Analysis helper: raises `InputError` when unknown (message names the part and lists accepted ids). `allow_unknown=True` is audit-only and is not reachable from `calculate_metrics` |
 | `list_instrument_ids()` | All registered instrument IDs (~28) |
 | `list_profiles()` | All `InstrumentProfile` objects |
 | `resolve_density_from_table(table, note, dynamic, ...)` | Continuous-pitch metadata lookup with provenance (`PitchLookupResult`) |
@@ -395,6 +395,6 @@ Calibrated λ: `config/density_params.json`.
 
 ---
 
-**Package version:** 1.1.5 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-08-18
+**Package version:** 1.1.6 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-08-18
 
 Unpitched aggregation + unified composite: [TECHNICAL_MANUAL §7.5.1](TECHNICAL_MANUAL.md) · [CHANGES.md](../CHANGES.md). Header / labels: `core.composite.format_composite_header_line`, `core.unpitched_labels`.

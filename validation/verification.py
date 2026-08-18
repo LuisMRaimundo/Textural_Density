@@ -203,12 +203,20 @@ def run_verification_suite() -> VerificationResult:
 
     unknown = deepcopy(base_input(["C4", "E4"]))
     unknown["instruments"] = ["flauta", "unknown_xyz_instrument"]
-    warnings = _calculate(unknown).get("metric_metadata", {}).get("warnings", [])
+    unknown_rejected = False
+    unknown_message = ""
+    try:
+        _calculate(unknown)
+    except InputError as exc:
+        unknown_rejected = True
+        unknown_message = str(exc)
     checks.append(
         CheckResult(
-            "property.unknown_instrument_warns",
-            any("unknown" in w.lower() or "registry" in w.lower() for w in warnings),
-            f"warnings={warnings[:2]}",
+            "property.unknown_instrument_rejected",
+            unknown_rejected
+            and "Accepted registry ids" in unknown_message
+            and "unknown_xyz_instrument" in unknown_message,
+            f"message={unknown_message[:120]}",
         )
     )
 

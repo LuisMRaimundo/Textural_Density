@@ -22,7 +22,7 @@ from core.unpitched_routing import (
     instrument_is_unpitched,
     normalize_unpitched_entry_note,
 )
-from instrumentos.registry import resolve_profile
+from instrumentos.registry import require_registered_instrument, resolve_profile
 
 
 def _normalize_note_string(note: str) -> str:
@@ -70,13 +70,13 @@ def make_instrument_event(
 ) -> InstrumentEvent:
     """Build an InstrumentEvent from score fields."""
     inst_name = str(instrument_name).strip()
-    profile = resolve_profile(inst_name)
-    if profile is not None:
-        inst_id = profile.instrument_id
-        family = profile.family
-    else:
-        inst_id = inst_name.lower()
-        family = "unknown"
+    profile = require_registered_instrument(
+        inst_name,
+        part_id=part_id,
+        part_name=inst_name,
+    )
+    inst_id = profile.instrument_id
+    family = profile.family
     unpitched = instrument_is_unpitched(inst_name)
     lookup_note = normalize_unpitched_entry_note(inst_name, str(note))
     meta = dict(metadata or {"legacy_index": idx})

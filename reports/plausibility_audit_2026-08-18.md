@@ -1,8 +1,11 @@
 # Plausibility audit — Textural Density
 
 **Date:** 2026-08-18  
-**Scope:** read-only verification of commit `0bd9d7d` on `main` (package 1.1.5, methodology `5.1.0-strict-symbolic`). Production code was not modified.  
-**Supporting dump:** `reports/plausibility_raw.json` (242 records). Every numeric claim below is taken from a test id in that dump or from the pytest session that produced it.
+**Failures pinned to:** `0bd9d7d` (package 1.1.5; read-only audit; two HARD defect classes).  
+**Fixes pinned to:** `b5e095a` (wrap-around enharmonics + fail-closed unknown-id + SOFT XPASS cleanup).  
+**Package after publish checks:** `1.1.6` · methodology `5.1.0-strict-symbolic`.  
+**Traceability inventory:** `reports/plausibility_traceability.md`.  
+**Supporting dump:** `reports/plausibility_raw.json` (242 records after the fixes). Every numeric claim in §3–§7 is taken from a test id in that dump or from the pytest session that produced it.
 
 ---
 
@@ -10,11 +13,11 @@
 
 | Item | Value |
 |---|---|
-| Branch | `verify/plausibility-battery` (uncommitted tests and this report only) |
-| `HEAD` / `main` | `0bd9d7d550963cdc4210fe7255a346850f36ed92` |
-| Commit subject | `Remove cello and double-bass technique modules from the GUI and instrumentos corpus.` |
-| `main` movement | none — `main` has not moved past the pinned commit |
-| `get_package_version()` / `PACKAGE_VERSION` | `1.1.5` |
+| Branch | `verify/plausibility-battery` |
+| Audit `HEAD` (`0bd9d7d`) | `0bd9d7d550963cdc4210fe7255a346850f36ed92` — battery recorded against this commit |
+| Fix `HEAD` (`b5e095a`) | wrap-around enharmonics + fail-closed unknown-id + SOFT XPASS cleanup |
+| `main` movement | none — `main` remains `0bd9d7d` |
+| `get_package_version()` / `PACKAGE_VERSION` | `1.1.6` after the publish checks (audit baseline was `1.1.5`) |
 | `METRIC_SCHEMA_VERSION` (`core.defaults`) | `5.1.0-strict-symbolic` |
 | Python | 3.10.11 (MSC v.1929, 64-bit) |
 | OS | Windows 10.0.26200 |
@@ -34,17 +37,16 @@
 **Pytest command and runtime**
 
 ```text
+# Audit session on 0bd9d7d (failures as-is)
 python -m pytest tests/plausibility -o addopts="" --tb=line -q
 ======= 7 failed, 202 passed, 2 skipped, 23 xfailed, 9 xpassed in 6.65s =======
+
+# Session after b5e095a / 1.1.6 publish checks
+python -m pytest tests/plausibility -o addopts="" --tb=line -q
+======= 267 passed, 2 skipped, 23 xfailed in 7.25s =======
 ```
 
-Coverage addopts from `pytest.ini` (`--cov-fail-under=63`) were disabled via `-o addopts=""` as specified. The `plausibility` marker is registered in `tests/plausibility/conftest.py`. `INTERVAL_BLEND_NORMALISATION` remained `"legacy"` except in the labelled `FE.unit_range` subset.
-
-**Production diff.** The following command produced empty output:
-
-```text
-git diff --stat main -- core instrumentos spectral_analysis.py timbre_texture_analysis.py densidade_intervalar.py microtonal.py xml_loader.py config.py
-```
+The 9 XPASS rows on `0bd9d7d` were static `@pytest.mark.xfail` markers on SOFT cases that `record_soft` had already counted as met. Those markers were removed on `b5e095a`; pytest XFAIL now comes only from `record_soft` when `met=False`. Coverage addopts from `pytest.ini` (`--cov-fail-under=63`) were disabled via `-o addopts=""`. The `plausibility` marker is registered in `tests/plausibility/conftest.py`. `INTERVAL_BLEND_NORMALISATION` remained `"legacy"` except in the labelled `FE.unit_range` subset.
 
 `config/density_params.json` was left at the committed λ = 0.05. `calibrate_lambda()` in `FB.soft.spearman` was prevented from writing that file.
 
@@ -52,29 +54,31 @@ git diff --stat main -- core instrumentos spectral_analysis.py timbre_texture_an
 
 ## 2. Summary table
 
-Counts are recorded HARD/SOFT items in `reports/plausibility_raw.json`. SOFT “met / not met” follows the recorded status. For F-J the recorded predicate was written loosely and XPASSed; the *stated* qualitative ordering is treated as not met in §4 and §6.
+Counts are recorded HARD/SOFT items in `reports/plausibility_raw.json` after the `b5e095a` / 1.1.6 session. SOFT met / not-met is taken **only** from `record_soft` (`status=met|not_met`). Pytest XFAIL/XPASS is not used as the SOFT counter.
+
+The two HARD defect classes in §3 were observed on `0bd9d7d` and are closed on `b5e095a`. F-J’s *stated* qualitative ordering is discussed in §6; the recorded `record_soft` predicate for `FJ.repertoire` is met.
 
 | Family | HARD pass/fail | SOFT met/not met | Verdict |
 |---|---:|---:|---|
-| F-A Pitch grammar | 21 / 1 | — | One HARD defect: `Cb5` is not treated as enharmonic to `B4` in `density.*` |
+| F-A Pitch grammar | 22 / 0 | — | Wrap-around enharmonics hold (`Cb5` = `B4`) |
 | F-B Interval density | 8 / 0 | 2 / 1 | Documented interval identities hold; calibrated λ does not track `CONSONANCE_RATINGS` |
-| F-C Instrument ladders | 87 / 6 | 1 / 22 | Table contracts hold; withdrawn ids fall back to the unknown coarse proxy; measured ladders invert and spike |
+| F-C Instrument ladders | 93 / 0 | 1 / 22 | Table contracts hold; withdrawn ids now raise; measured ladders invert and spike |
 | F-D Quantity / mass | 9 / 0 | 1 / 0 | RSS and √M identities hold; Qty 1.5 is accepted |
 | F-E Blend / composite | 54 / 0 | — | Independent §H grid matches to 0; `D_pitch` excluded from `total` |
 | F-F Absolute / counts | 4 / 0 | — | `D_abs` formula and unpitched counting hold |
 | F-G Spectral | 4 / 0 | 1 / 0 | Transposition, entropy, and F24 octave-class rule hold |
 | F-H Registral / texture | 2 / 0 | 2 / 0 | Compression formula holds; compactness helper unused |
 | F-I Temporal / score | 8 / 0 | 1 / 0 | Half-open activity and MusicXML transposition hold |
-| F-J Repertoire | — | 1* / 0* | *Recorded XPASS under a relaxed predicate; stated ordering fails (see §6) |
+| F-J Repertoire | — | 1 / 0 | `record_soft` predicate met; stated ordering commentary remains in §6 |
 | F-K Robustness | 6 / 0 | — | Finite JSON, determinism, and `composite_meta` keys hold |
 
-Session: 243 collected items; 7 HARD failures (1 + 6 withdrawn ids).
+Recorded items: 210 HARD pass, 9 SOFT met, 23 SOFT not-met. Pytest session: 267 passed, 2 skipped, 23 xfailed (`record_soft` not-met only).
 
 ---
 
 ## 3. HARD failures
 
-Two defect classes were observed. No other HARD assertion failed in the final session.
+Two defect classes were observed **on `0bd9d7d`**. Both are closed on `b5e095a` (see `tests/test_wraparound_enharmonics.py` and `tests/test_unknown_instrument_policy.py`). No other HARD assertion failed in the audit session. The reproductions below remain the pinned baseline.
 
 ### 3.1 `FA.enh.B4.Cb5` — enharmonic `density.*` (Mathematical Manual §A–§B)
 
@@ -389,25 +393,11 @@ Default totals were bit-identical to an explicit `legacy` re-run. Switching to `
 
 ## Files added
 
-No production file was modified (`git diff --stat main -- core instrumentos … config.py` empty).
+The battery (`f0aaee1`) did not modify production files. Fixes landed in `b5e095a` and the 1.1.6 publish checks.
 
 ```
-tests/plausibility/__init__.py
-tests/plausibility/conftest.py
-tests/plausibility/helpers.py
-tests/plausibility/test_fa_pitch_grammar.py
-tests/plausibility/test_fb_interval_density.py
-tests/plausibility/test_fc_instrument_ladders.py
-tests/plausibility/test_fd_quantity_mass.py
-tests/plausibility/test_fe_blend_composite.py
-tests/plausibility/test_ff_absolute_density.py
-tests/plausibility/test_fg_spectral.py
-tests/plausibility/test_fh_registral_texture.py
-tests/plausibility/test_fi_temporal_score.py
-tests/plausibility/test_fj_repertoire.py
-tests/plausibility/test_fk_robustness.py
+tests/plausibility/
 reports/plausibility_raw.json
 reports/plausibility_audit_2026-08-18.md
+reports/plausibility_traceability.md
 ```
-
-These paths exist only on `verify/plausibility-battery` and have not been committed.

@@ -30,6 +30,7 @@ from core.temporal import (
 )
 from core.pipeline import calculate_metrics
 from error_handler import InputError
+from instrumentos.registry import require_registered_instrument
 
 
 def _default_analysis_options() -> dict[str, Any]:
@@ -202,6 +203,18 @@ def analyze_score(
         mode_val = analysis_config.temporal_config.get("mode", temporal_mode)
         if mode_val in ("event_boundary", "instantaneous"):
             temporal_mode = mode_val
+
+    seen_instruments: set[tuple[str | None, str]] = set()
+    for ev in events:
+        key = (ev.part_id, ev.instrument_name)
+        if key in seen_instruments:
+            continue
+        seen_instruments.add(key)
+        require_registered_instrument(
+            ev.instrument_name,
+            part_id=ev.part_id,
+            part_name=ev.instrument_name,
+        )
 
     slices = group_events_into_slices(events, mode=temporal_mode)
     if len(slices) == 1 and not events_have_timing(events):

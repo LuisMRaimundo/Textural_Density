@@ -1,13 +1,13 @@
 # Textural Density - Musical Density Analysis Application
 
 **Repository:** [github.com/LuisMRaimundo/Textural_Density](https://github.com/LuisMRaimundo/Textural_Density)  
-**Version (two axes):** package **1.1.5** (`pyproject.toml`) · methodology **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`)  
+**Version (two axes):** package **1.1.6** (`pyproject.toml`) · methodology **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`)  
 **Status:** Active Development  
 **License:** [MIT](LICENSE) (`pyproject.toml` declares MIT; see [docs/VERSIONING.md](docs/VERSIONING.md))  
 **Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)  
 The `.md` manuals are canonical. `docs/MATHEMATICAL_MANUAL.pdf` and `docs/TECHNICAL_MANUAL.pdf` are archival snapshots from the 2026-05-23 initial import (`a439f2c`) and do not include later alignment commits.
 
-> **Versioning:** The header **Version** line always names both axes. Package release **1.1.5** is independent of methodology phase **5.1.0-strict-symbolic** (earlier phases 3.0.0 / 4.0.0 / 5.0.0). Do not treat package semver as a schema bump. See [docs/VERSIONING.md](docs/VERSIONING.md).
+> **Versioning:** The header **Version** line always names both axes. Package release **1.1.6** is independent of methodology phase **5.1.0-strict-symbolic** (earlier phases 3.0.0 / 4.0.0 / 5.0.0). Do not treat package semver as a schema bump. See [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -49,7 +49,7 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 - **Instrument registry** — orchestral profile scaffolding (~36 entries); English orchestral short names in the GUI (Fl, Ob, Cl, Bsn, Tpt, Hn, Trb, Tba, Vl, Vla, Vc, Db, …); table-backed CDM modules for flute, oboe, clarinet, bassoon, trumpet, horn, trombone, tuba, strings (arco + violin/viola techniques + harmonics), and selected percussion; metadata corpus still incomplete for some names
 - **Auxiliary Excel importer** — offline human curation of instrument profiles (`tools/import_instrument_profiles_from_excel.py`); not part of the analytical core; runtime does not read raw `.xlsx`
 - **MusicXML sounding pitch** — written `<pitch>` converted to sounding/concert pitch via `<transpose>` before validation and density lookup (PR #21)
-- **Verification scaffolding** — full suite **1643 passed / 9 skipped** (2026-08-18, methodology `5.1.0-strict-symbolic`, package `1.1.5`); GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) (see [Testing](#testing)). The 2026-07-12 CI snapshot was 1542 / 2 / 18 on package `1.1.4`.
+- **Verification scaffolding** — full suite **1778 passed / 11 skipped / 23 xfailed** (2026-08-18, methodology `5.1.0-strict-symbolic`, package `1.1.6`; the 23 xfails are plausibility SOFT `record_soft` not-met only); GitHub Actions (`test` 3.10/3.11, `quality`) and CircleCI (`tests-3.10`, `tests-3.11`) (see [Testing](#testing)). The 2026-08-18 package `1.1.5` snapshot was 1643 passed / 9 skipped; the 2026-07-12 CI snapshot was 1542 / 2 / 18 on package `1.1.4`.
 - **Tkinter GUI** — panel/controller composition; audited adapter boundary (`tests/test_gui_architecture.py`)
 
 ---
@@ -275,13 +275,13 @@ Registry smoke: `pytest tests/test_stress_battery_registry.py -q`.
 
 ### Test Coverage
 
-Current verified status (2026-08-18, methodology **`5.1.0-strict-symbolic`**, package **`1.1.5`**, local Python **3.10**; CI also runs **3.10** and **3.11**):
+Current verified status (2026-08-18, methodology **`5.1.0-strict-symbolic`**, package **`1.1.6`**, local Python **3.10**; CI also runs **3.10** and **3.11**):
 
 | Gate | Result |
 |------|--------|
-| Full suite | **1643 passed / 9 skipped** (2026-08-18, local; 1652 collected) |
-| Skipped | environment-dependent — e.g. string source-workbook reproducibility skips when local Zenodo workbooks are absent (all four strings **pass** reconstruction where the workbooks are present) |
-| Xfailed | 0 — the former adaptive-tail xfails are obsolete: committed data-faithful ladders replaced runtime tails, and the ladder contract (`tests/test_pitched_dynamic_monotone_ladders.py`) accepts measured non-monotonicity by design |
+| Full suite | **1778 passed / 11 skipped / 23 xfailed** (2026-08-18, local; package `1.1.6`) |
+| Skipped | environment-dependent — e.g. string source-workbook reproducibility skips when local Zenodo workbooks are absent (all four strings **pass** reconstruction where the workbooks are present); two plausibility HARD harmonics cells lack `C4`/`C#4` |
+| Xfailed | 23 — plausibility SOFT cases recorded as `not_met` by `record_soft` (`tests/plausibility/`); not production defects |
 | Full-project coverage | gate ≥ 63% (CI quality job) |
 | `core/` + `validation/` coverage | ≥ 80% in CI quality job |
 | MyPy (`core`, `validation`) | Clean (`--follow-imports=skip`) |
@@ -356,6 +356,14 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 ---
 
 ## Changelog
+
+### Version 1.1.6 (2026-08-18)
+
+Package patch. Methodology remains **`5.1.0-strict-symbolic`**. See [CHANGES.md](CHANGES.md).
+
+- **Wrap-around enharmonics:** analysis MIDI uses `note_to_midi_strict` (`Cb5` = B4). Numeric change for `Cb`/`B#` spellings only; golden wrap-substitution lock in `tests/test_wraparound_enharmonics.py`.
+- **Unknown instrument ids:** fail-closed `InputError` naming the part and listing accepted ids. Audit-only `allow_unknown=True` is not reachable from `calculate_metrics`.
+- **Plausibility battery** on `verify/plausibility-battery`: failures pinned to `0bd9d7d`, fixes at `b5e095a`.
 
 ### Version 1.1.5 (2026-08-18)
 

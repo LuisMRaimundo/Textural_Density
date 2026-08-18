@@ -29,7 +29,11 @@ def validate_event_sounding_range(event: InstrumentEvent, *, index: int | None =
     (see ``xml_loader``). ``registry.transposition`` is notation metadata only and is
     not applied to manual input.
     """
-    profile = profile_for_event(event.instrument_name)
+    profile = profile_for_event(
+        event.instrument_name,
+        part_id=event.part_id,
+        part_name=event.instrument_name,
+    )
     low, high = profile.sounding_range
     midi = float(event.sounding_pitch.midi)
     if _midi_in_sounding_range(midi, low, high):

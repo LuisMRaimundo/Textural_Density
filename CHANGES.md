@@ -2,13 +2,14 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
-## 2026-08-18 — Strict wrap-around enharmonics; reject unknown instrument ids
+## 2026-08-18 — Strict wrap-around enharmonics; reject unknown instrument ids (package 1.1.6)
 
-**Numeric change for `Cb` / `B#` spellings only.** Default 12-EDO totals (C, C#, D, … and same-octave flats such as Db/Eb) are unchanged.
+**Numeric change for `Cb` / `B#` spellings only.** Default 12-EDO totals (C, C#, D, … and same-octave flats such as Db/Eb) are unchanged. Locked by `tests/test_wraparound_enharmonics.py::test_golden_baseline_wrap_spellings_match_plain_totals`: the golden regression slice (`C4 E4 G4 C5`) with every wrap-around spelling substituted for its plain equivalent (`C4`→`B#3`, `C5`→`B#4`) yields identical `density.*` totals. The committed 12-EDO golden fixture itself contains no such spellings.
 
 - `core.pitch_aggregation` and `core.source_aggregation` convert note strings with `note_to_midi_strict` (octave wrap: `Cb5` = B4 = 71, `B#3` = C4 = 60). The legacy `note_to_midi` path mapped `Cb5` → 83.
-- `converter_para_sustenido` now wraps `Cb`/`B#` when building `Pitch.note_name` (`Cb5` → `B4`, not `B5`), so the orchestration lookup string and the aggregation key stay on the same MIDI. Instrument-table lookup also reads the MIDI axis from the written spelling before `to_sharp` preprocess. Lock: `tests/test_wraparound_enharmonics.py`.
-- **Unknown-id policy:** unregistered names, including the withdrawn cello/bass technique ids, raise `InputError` (`field: instruments`). They are not remapped to a parent module and not served by the generic coarse proxy. The proxy is audit-only (`profile_for_event(..., allow_unknown=True)`). Registered coarse ids are unchanged. Documented in Mathematical Manual §F and `docs/API.md`.
+- `converter_para_sustenido` now wraps `Cb`/`B#` when building `Pitch.note_name` (`Cb5` → `B4`, not `B5`), so the orchestration lookup string and the aggregation key stay on the same MIDI. Instrument-table lookup also reads the MIDI axis from the written spelling before `to_sharp` preprocess.
+- `core.reporting` interval labels (`explain_score_slice` / `_top_interval_pairs`) are report-string-only and now use `note_to_midi_strict` so wrap-around labels cannot diverge from aggregation.
+- **Unknown-id policy:** unregistered names, including the withdrawn cello/bass technique ids, raise `InputError` (`field: instruments`). They are not remapped to a parent module and not served by the generic coarse proxy. The error names the MusicXML/MIDI part (`part_id`, `part`) and lists accepted registry ids. `analyze_score`, the MusicXML/MIDI importers, and the GUI adapter all fail closed (the adapter no longer relies on the coarse proxy for unrecognised dropdown states). The proxy is audit-only (`profile_for_event(..., allow_unknown=True)`), not reachable from `calculate_metrics`. Registered coarse ids are unchanged. Common MusicXML labels `Clarinet in Bb` and `Horn in F` are aliases of `clarinete` / `trompa` (not a proxy). Benchmark `excerpt_003` is re-frozen now that that part uses the clarinet table instead of the former 8.0 unknown proxy. Documented in Mathematical Manual §F and `docs/API.md`.
 
 ## 2026-08-18 — Withdraw cello and double-bass technique modules
 

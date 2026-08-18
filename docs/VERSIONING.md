@@ -19,7 +19,7 @@ This document defines how **release versions**, **methodology phases**, and **sc
 
 | Field | Location | Current |
 |-------|----------|---------|
-| **Canonical value** | `[project].version` in `pyproject.toml` | **1.1.5** |
+| **Canonical value** | `[project].version` in `pyproject.toml` | **1.1.6** |
 | **Runtime API** | `core.version.get_package_version()` / `core.__version__` | same |
 | **License** | `LICENSE` (MIT) + `[project].license` in `pyproject.toml` | **MIT** |
 
@@ -48,7 +48,7 @@ These describe **scientific scope**, not Python package semver:
 
 **Committed dynamic ladders (2026-08-03, still under `5.1.0-strict-symbolic`):** Runtime GPR / adaptive-tail extrapolation removed. Table-backed pitched modules commit full 10-dynamic ladders; unpitched percussion uses pitch-independent `DYNAMIC_CDM`. **Data-faithful rebuild (2026-08-08/09/18):** ladders regenerated with Dynamics_predicter v1.5 — measured pp/mf/ff anchors verbatim (no isotonic clamp), PCHIP interiors, tapered outers; horn, tuba, and trombone modules added. Schema label unchanged — see [`CHANGES.md`](../CHANGES.md).
 
-Outputs embed `metric_schema_version` (currently **`5.1.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.5`.
+Outputs embed `metric_schema_version` (currently **`5.1.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.6`.
 
 The `.md` manuals are canonical. `docs/MATHEMATICAL_MANUAL.pdf` and `docs/TECHNICAL_MANUAL.pdf` date from the 2026-05-23 initial import (`a439f2c`) and are archival only.
 
@@ -85,4 +85,4 @@ When changing methodology scope (e.g. new strict-symbolic phase):
 
 ---
 
-*Last updated: 2026-08-18 (package 1.1.5; methodology 5.1.0-strict-symbolic; repo slug Textural_Density).*
+*Last updated: 2026-08-18 (package 1.1.6; methodology 5.1.0-strict-symbolic; repo slug Textural_Density).*
