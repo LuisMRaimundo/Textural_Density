@@ -49,28 +49,30 @@ def _symbolic_input(
 
 
 class TestMissingInstrumentDataScaffold:
-    def test_unknown_instrument_full_metrics_does_not_crash(self):
-        resultados, densidades, _ = dp_calculate_metrics(
-            _symbolic_input(["C4", "E4"], instruments=["totally_unregistered_xyz", "also_unknown_abc"])
-        )
-        assert math.isfinite(float(resultados["density"]["instrument"]))
-        assert len(densidades) == 2
+    def test_unknown_instrument_full_metrics_is_rejected(self):
+        from error_handler import InputError
 
-    def test_unknown_instrument_density_finite_and_positive(self):
-        mod = get_instrument_module("instrument_not_in_registry_999")
-        density = mod.calcular_densidade("G4", "mf")
-        assert math.isfinite(density)
-        assert density > 0.0
+        with pytest.raises(InputError, match="Unknown instrument"):
+            dp_calculate_metrics(
+                _symbolic_input(
+                    ["C4", "E4"],
+                    instruments=["totally_unregistered_xyz", "also_unknown_abc"],
+                )
+            )
 
-    def test_unknown_instrument_warnings_do_not_claim_empirical_measurement(self):
-        resultados, _, _ = dp_calculate_metrics(
-            _symbolic_input(["C4"], instruments=["totally_unregistered_xyz"])
-        )
-        warnings = resultados["metric_metadata"]["warnings"]
-        joined = " ".join(warnings).lower()
-        assert "coarse" in joined or "proxy" in joined or "registry" in joined or "unknown" in joined
-        assert "fully calibrated empirical" not in joined
-        assert "measured spectrum" not in joined
+    def test_unknown_instrument_module_is_rejected(self):
+        from error_handler import InputError
+
+        with pytest.raises(InputError, match="Unknown instrument"):
+            get_instrument_module("instrument_not_in_registry_999")
+
+    def test_unknown_instrument_slice_is_rejected(self):
+        from error_handler import InputError
+
+        with pytest.raises(InputError, match="Unknown instrument"):
+            dp_calculate_metrics(
+                _symbolic_input(["C4"], instruments=["totally_unregistered_xyz"])
+            )
 
     def test_empty_spectral_table_returns_documented_fallback(self, caplog):
         logger = logging.getLogger("test.scaffold.empty_table")
@@ -79,12 +81,11 @@ class TestMissingInstrumentDataScaffold:
         assert value == pytest.approx(5.0)
         assert any("vazia" in rec.message.lower() or "fallback" in rec.message.lower() for rec in caplog.records)
 
-    def test_unknown_profile_coarse_module_is_marked(self):
-        mod = get_instrument_module("__nonexistent_registry_name__")
-        assert getattr(mod, "IS_COARSE_DEFAULT", False) is True
-        profile = getattr(mod, "PROFILE", None)
-        assert profile is not None
-        assert profile.instrument_id == "unknown"
+    def test_unknown_profile_is_rejected(self):
+        from error_handler import InputError
+
+        with pytest.raises(InputError, match="Unknown instrument"):
+            get_instrument_module("__nonexistent_registry_name__")
 
 
 class TestPartialInstrumentDataScaffold:
@@ -150,13 +151,15 @@ class TestSourceProvenanceLabelling:
         assert any("does not analyse audio" in a.lower() for a in assumptions)
 
     def test_unknown_profile_audit_status_is_symbolic_default_not_empirical(self):
-        audited = audit_instrument_profile(profile_for_event("__missing_instrument_xyz__"))
+        audited = audit_instrument_profile(
+            profile_for_event("__missing_instrument_xyz__", allow_unknown=True)
+        )
         assert audited["profile_status"] == "symbolic_default"
         assert audited["profile_status"] != "empirical_profile"
         assert audited["claims_empirical_without_notes"] is False
 
     def test_unknown_profile_source_notes_admit_generic_proxy(self):
-        profile = profile_for_event("__missing_instrument_xyz__")
+        profile = profile_for_event("__missing_instrument_xyz__", allow_unknown=True)
         assert "proxy" in profile.source_notes.lower() or "unregistered" in profile.source_notes.lower()
         assert profile.missing_data_warnings
 
@@ -170,7 +173,7 @@ class TestSourceProvenanceLabelling:
 class TestScoreBasedBoundary:
     def test_event_count_matches_notated_inputs_only(self):
         resultados, _, _ = dp_calculate_metrics(
-            _symbolic_input(["C4", "E4", "G4"], instruments=["flauta", "violin", "unknown_xyz"])
+            _symbolic_input(["C4", "E4", "G4"], instruments=["flauta", "violin", "piano"])
         )
         assert resultados["pitch_aggregation"]["event_count"] == 3
 
@@ -202,7 +205,7 @@ class TestDeterminismScaffold:
         assert first == pytest.approx(second)
 
     def test_unknown_coarse_density_idempotent(self):
-        mod = get_instrument_module("unknown_repeat_test_inst")
+        mod = get_instrument_module("trombone_baixo")
         a = mod.calcular_densidade("F4", "f")
         b = mod.calcular_densidade("F4", "f")
         assert a == pytest.approx(b)

@@ -2,6 +2,14 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-18 — Strict wrap-around enharmonics; reject unknown instrument ids
+
+**Numeric change for `Cb` / `B#` spellings only.** Default 12-EDO totals (C, C#, D, … and same-octave flats such as Db/Eb) are unchanged.
+
+- `core.pitch_aggregation` and `core.source_aggregation` convert note strings with `note_to_midi_strict` (octave wrap: `Cb5` = B4 = 71, `B#3` = C4 = 60). The legacy `note_to_midi` path mapped `Cb5` → 83.
+- `converter_para_sustenido` now wraps `Cb`/`B#` when building `Pitch.note_name` (`Cb5` → `B4`, not `B5`), so the orchestration lookup string and the aggregation key stay on the same MIDI. Instrument-table lookup also reads the MIDI axis from the written spelling before `to_sharp` preprocess. Lock: `tests/test_wraparound_enharmonics.py`.
+- **Unknown-id policy:** unregistered names, including the withdrawn cello/bass technique ids, raise `InputError` (`field: instruments`). They are not remapped to a parent module and not served by the generic coarse proxy. The proxy is audit-only (`profile_for_event(..., allow_unknown=True)`). Registered coarse ids are unchanged. Documented in Mathematical Manual §F and `docs/API.md`.
+
 ## 2026-08-18 — Withdraw cello and double-bass technique modules
 
 Removed from `instrumentos/` and the GUI (profiles with `module_name` only):

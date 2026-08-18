@@ -12,8 +12,6 @@ Does not assert real-world acoustic ordering between curated instruments.
 from __future__ import annotations
 
 import math
-from unittest import mock
-
 import pytest
 
 from core.converters import legacy_input_to_vertical_slice, make_instrument_event
@@ -21,7 +19,6 @@ from core.pipeline import calculate_metrics
 from core.registral_density import compute_registral_density
 from core.score_analysis import analyze_score
 from data_processor import calculate_metrics as dp_calculate_metrics
-from instrumentos.registry import profile_for_event
 
 
 def _slice_input(
@@ -249,8 +246,19 @@ class TestInstrumentMetadataHonestyIntegrated:
     """Unknown/coarse instruments remain finite; provenance labels stay honest."""
 
     def test_unknown_instrument_produces_finite_integrated_outputs(self):
+        from error_handler import InputError
+
+        with pytest.raises(InputError, match="Unknown instrument"):
+            dp_calculate_metrics(
+                _slice_input(
+                    ["C4", "E4"],
+                    instruments=["totally_unregistered_xyz", "also_unknown_abc"],
+                )
+            )
+
+    def test_registered_coarse_produces_finite_integrated_outputs(self):
         resultados, _, _ = dp_calculate_metrics(
-            _slice_input(["C4", "E4"], instruments=["totally_unregistered_xyz", "also_unknown_abc"])
+            _slice_input(["C4", "E4"], instruments=["piano", "harpa"])
         )
         for key in ("interval", "instrument", "weighted", "total", "sonic_mass", "pitch_structure"):
             assert math.isfinite(float(resultados["density"][key]))
@@ -266,7 +274,7 @@ class TestInstrumentMetadataHonestyIntegrated:
 
     def test_unknown_instrument_metadata_proxy_not_empirical(self):
         resultados, _, _ = dp_calculate_metrics(
-            _slice_input(["C4"], instruments=["totally_unregistered_xyz"])
+            _slice_input(["C4"], instruments=["piano"])
         )
         inst = resultados["metric_metadata"]["metrics"]["density.instrument"]
         assert inst["source_type"] == "metadata_proxy"
@@ -281,13 +289,18 @@ class TestInstrumentMetadataHonestyIntegrated:
         assert any("externally sourced" in a.lower() or "external acoustic" in a.lower() for a in inst["assumptions"])
         assert any("does not analyse audio" in a.lower() for a in inst["assumptions"])
 
-    def test_monkeypatched_coarse_profile_never_reports_empirical_validation(self):
-        coarse = profile_for_event("__synthetic_coarse_plausibility_xyz__")
+    def test_unknown_instrument_id_is_rejected(self):
+        from error_handler import InputError
 
-        with mock.patch("core.metrics_metadata.resolve_profile", return_value=coarse):
-            resultados, _, _ = dp_calculate_metrics(
+        with pytest.raises(InputError, match="Unknown instrument"):
+            dp_calculate_metrics(
                 _slice_input(["G4"], instruments=["__synthetic_coarse_plausibility_xyz__"])
             )
+
+    def test_registered_coarse_profile_never_reports_empirical_validation(self):
+        resultados, _, _ = dp_calculate_metrics(
+            _slice_input(["C4"], instruments=["piano"])
+        )
         inst = resultados["metric_metadata"]["metrics"]["density.instrument"]
         assert inst["source_type"] == "metadata_proxy"
         assert inst["validation_status"] == "heuristic"
@@ -471,7 +484,7 @@ class TestExportMetadataIntegratedPlausibility:
 
     def test_validation_status_labels_remain_non_empirical_for_heuristic_paths(self):
         result, _, _ = dp_calculate_metrics(
-            _slice_input(["C4"], instruments=["totally_unregistered_xyz"])
+            _slice_input(["C4"], instruments=["piano"])
         )
         inst = result["metric_metadata"]["metrics"]["density.instrument"]
         assert inst["validation_status"] in ("heuristic", "partially_calibrated")

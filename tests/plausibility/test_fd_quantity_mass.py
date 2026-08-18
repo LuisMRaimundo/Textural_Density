@@ -114,7 +114,6 @@ class TestFDQuantityValidation:
 
 class TestFDSoftSixteenVsOne:
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_sixteen_pp_vs_one_ff(self):
         """SOFT: 16 violins at pp vs 1 violin at ff — report magnitudes."""
         many, _, _ = calculate_metrics(

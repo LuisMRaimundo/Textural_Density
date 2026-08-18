@@ -51,7 +51,9 @@ def audit_instrument_profile(profile: Any) -> dict[str, Any]:
 
 def build_instrument_metadata_audit() -> dict[str, Any]:
     profiles = [audit_instrument_profile(p) for p in list_profiles()]
-    unknown_fallback = audit_instrument_profile(profile_for_event("__nonexistent_test_instrument__"))
+    unknown_fallback = audit_instrument_profile(
+        profile_for_event("__nonexistent_test_instrument__", allow_unknown=True)
+    )
     needs_review = [
         p["instrument_id"]
         for p in profiles

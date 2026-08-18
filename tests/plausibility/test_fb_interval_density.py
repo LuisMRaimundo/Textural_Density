@@ -144,7 +144,6 @@ class TestFBLogCompression:
 
 class TestFBSoftClusters:
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_cluster_ranking(self):
         """SOFT: chromatic > diatonic > triad > wide spacing in interval density."""
         chromatic = _interval(["C4", "C#4", "D4", "D#4"])
@@ -167,7 +166,6 @@ class TestFBSoftClusters:
         )
 
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_quarter_tone_cluster_ge_semitone(self):
         """SOFT: quarter-tone cluster ≥ semitone cluster of same cardinality."""
         qt = _interval(["C4", "C4+50c", "C#4", "C#4+50c"])
@@ -183,7 +181,6 @@ class TestFBSoftClusters:
         )
 
     @pytest.mark.plausibility
-    @pytest.mark.xfail(strict=False, reason="SOFT plausibility")
     def test_calibrated_lambda_tracks_consonance_ratings(self, monkeypatch):
         """SOFT: after calibrate_lambda(), dyad ranking Spearman ρ ≥ 0.8 vs CONSONANCE_RATINGS."""
         import densidade_intervalar as di_mod

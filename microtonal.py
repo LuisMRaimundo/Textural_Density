@@ -187,10 +187,22 @@ NOTACAO_QUARTOS_TOM = {
 }
 
 # Equivalências entre notas com bemol e sustenido
+def _apply_enharmonic_map(pitch_class: str, octave: str) -> tuple[str, str]:
+    """Map a flat/special class to a sharp spelling, wrapping Cb/B# across octaves."""
+    mapped = EQUIVALENCIAS_NOTAS[pitch_class]
+    if octave.isdigit():
+        if pitch_class == "Cb":
+            octave = str(int(octave) - 1)
+        elif pitch_class == "B#":
+            octave = str(int(octave) + 1)
+    return mapped, octave
+
+
 EQUIVALENCIAS_NOTAS = {
-    # Bemol → sustenido
+    # Bemol → sustenido (Cb wraps to the octave below: Cb5 → B4)
     'Cb': 'B', 'Db': 'C#', 'Eb': 'D#', 'Fb': 'E', 'Gb': 'F#',
     'Ab': 'G#', 'Bb': 'A#',
+    'B#': 'C',
     # Modificadores especiais (¼-tom em código + / -)
     'C-': 'B#',  'C+': 'B-',
     'D-': 'C#+', 'D+': 'C#-',
@@ -310,7 +322,7 @@ def converter_para_sustenido(nota: str) -> str:
                 
                 # Converter a parte da nota se necessário
                 if nota_parte in EQUIVALENCIAS_NOTAS:
-                    nota_parte = EQUIVALENCIAS_NOTAS[nota_parte]
+                    nota_parte, oitava = _apply_enharmonic_map(nota_parte, oitava)
                     
                 # Reconstruir a nota com símbolo e oitava
                 base_convertida = f"{nota_parte}{simbolo}{oitava}"
@@ -324,7 +336,7 @@ def converter_para_sustenido(nota: str) -> str:
             
             # Converter nota se existir no dicionário de equivalências
             if nota_parte in EQUIVALENCIAS_NOTAS:
-                nota_parte = EQUIVALENCIAS_NOTAS[nota_parte]
+                nota_parte, oitava = _apply_enharmonic_map(nota_parte, oitava)
                 
             base_convertida = f"{nota_parte}{oitava}"
         

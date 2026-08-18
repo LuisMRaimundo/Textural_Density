@@ -60,8 +60,11 @@ def get_instrument_module(instrument_name: str):
 
     Resolution order:
     1. Registry alias → dedicated module if ``module_name`` is set and importable
-    2. Registry → coarse-default module bound to profile
-    3. Direct module import by raw name (legacy)
+    2. Registry → coarse-default module bound to a *registered* profile
+    3. Direct module import by raw name (legacy aliases)
+
+    Unregistered names raise ``InputError``. They do not receive the generic
+    unknown coarse proxy.
     """
     profile = resolve_profile(instrument_name)
     if profile is not None:
@@ -81,19 +84,10 @@ def get_instrument_module(instrument_name: str):
         module = importlib.import_module(f".{raw}", package=__name__)
         _available_instruments[raw] = module
         return module
-    except ImportError as exc:
-        from instrumentos.registry import profile_for_event
-        from instrumentos.coarse_default import build_coarse_module
+    except ImportError:
+        from instrumentos.registry import unknown_instrument_error
 
-        fallback = profile_for_event(instrument_name)
-        cache_key = _coarse_cache_key(fallback.instrument_id)
-        if cache_key not in _available_instruments:
-            _available_instruments[cache_key] = build_coarse_module(fallback)
-        logger.warning(
-            "Instrument '%s' not registered; using unknown coarse proxy.",
-            instrument_name,
-        )
-        return _available_instruments[cache_key]
+        raise unknown_instrument_error(instrument_name) from None
 
 
 # Registered + dedicated module names (legacy list)

@@ -129,11 +129,11 @@ Omitting these preserves single-slice behaviour. For full temporal analysis, pre
 
 **Action:** Remove combination-tone keys from scripts and notebooks. Saved GUI/XML preferences containing these keys are stripped with a migration warning and are not passed to the calculation pipeline.
 
-### 4.3 Unknown instruments → coarse proxy (Phase 7)
+### 4.3 Unknown instruments (Phase 7 proxy, withdrawn 2026-08-18)
 
-Unregistered instrument names resolve to `instrumentos/coarse_default.py` with warnings in `metric_metadata`. Densities remain finite but carry `confidence: low` and `profile_status: coarse_default`.
+Phase 7 served unregistered names through `instrumentos/coarse_default.py` with warnings. As of 2026-08-18 the analysis path **rejects** unknown / withdrawn ids (`InputError`, `field: instruments`). They are not remapped to a parent module. The generic proxy remains available only to metadata-audit tools (`profile_for_event(..., allow_unknown=True)`). Registered coarse ids (`piano`, `harpa`, `trombone_baixo`, …) are unchanged.
 
-**Action:** Register instruments in `instrumentos/registry.py` or accept proxy warnings in research output.
+**Action:** Use a registered id or alias from `list_instrument_ids()`.
 
 ### 4.4 Lambda calibration dyad fix (Phase 4)
 
