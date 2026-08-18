@@ -27,6 +27,13 @@ from typing import Any, Dict, List, Tuple
 # -------------------------------------------------------------------
 MAX_DENS_GLOBAL = 193.0
 USE_LOG_COMPRESSION = True
+# Blend DV normalisation. "legacy" keeps WEIGHTED_DV_MAX = 10.0 (current
+# defaults, bit-identical). "unit_range" divides DV by its true attainable
+# maximum (log10(2) when USE_LOG_COMPRESSION else 1.0). That is approximate
+# parity only: DV then lies in [0, 1], but DI is still divided by the
+# empirical (unclamped) reference DI_max = 100. Results under the two modes
+# are not comparable; state the mode in any methods write-up.
+INTERVAL_BLEND_NORMALISATION = "legacy"  # "legacy" | "unit_range"
 
 # -------------------------------------------------------------------
 # Dynamic-tail saturation (5.1.0-strict-symbolic) — register-adaptive

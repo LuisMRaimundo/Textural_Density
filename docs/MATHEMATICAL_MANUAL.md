@@ -259,7 +259,17 @@ $$
 |--------|---------|------|
 | $\mathrm{REF}$ = `MAX_DENS_GLOBAL` | **193** | Task 8c re-freeze: chosen so frozen all-pitched baselines keep pre-unification order of magnitude (match ≈192.6→193); see `CHANGES.md` / `config.py` |
 | $w$ = `weight_factor` | **0.5** (`DEFAULT_WEIGHT_FACTOR`) | Instrument vs interval blend inside $D_{\mathrm{blend}}$ |
-| $\mathrm{DI\_max}$, $\mathrm{DV\_max}$ | 100, 10 | Min-max caps in `core.composite` |
+| $\mathrm{DI\_max}$, $\mathrm{DV\_max}$ | 100, 10 | Normalisation divisors in `core.composite` (**no clamping applied**). Under `INTERVAL_BLEND_NORMALISATION = "legacy"` (default) $\mathrm{DV\_max}=10$ even though compressed $D_{\mathrm{int}}$ cannot exceed $\log_{10}(2)\approx 0.301$. `"unit_range"` is opt-in and divides DV by that attainable maximum so $w$ approaches **approximate parity** of the two axes (see below). |
+
+**Known asymmetry (do not “fix” by changing `USE_LOG_COMPRESSION`).** `USE_LOG_COMPRESSION` is applied twice to the interval/composite path and never to instrument density:
+
+1. $D_{\mathrm{int}}$ is already $\log_{10}(1+\bar{D})$ inside `normalize_interval_density` before it enters the blend as DV.
+2. $D_{\mathrm{total}}$ applies $\log_{10}(1+D_{\mathrm{blend}}\sqrt{M}/\mathrm{REF})$ again in `compute_composite_vertical_density`.
+3. $D_{\mathrm{inst}}$ (DI) is compressed in neither place.
+
+The default blend therefore compares a raw-scale DI (typical tens) to a log-compressed DV ($\le 0.301$) after dividing them by 100 and 10 respectively. Per-slice realised terms `w·DI/DI_max·scale` and `(1−w)·DV/DV_max·scale` and their ratio are emitted on `composite_meta.blend_term_contributions` so the imbalance is visible. When the interval term is exactly zero (monophonic / unpitched-only slices, or $w=1$), the ratio field is JSON `null`, never `inf`/`nan`. Changing the double-log or compressing DI would move frozen totals; it is documented here and pinned by `tests/test_log_compression_asymmetry.py`.
+
+**`unit_range` is approximate parity, not strict commensurability.** Under that opt-in, DV is divided by its true attainable maximum and therefore lies in $[0,1]$. DI is still divided by $\mathrm{DI\_max}=100$, an empirical reference rather than a bound (DI is unclamped). $w=0.5$ then gives equal *weight* to a bounded quantity and an unbounded one. Results under `"legacy"` and `"unit_range"` are not comparable; the mode used for any analysis must be stated. The identity $\mathrm{orch}/\mathrm{pitch}=(\mathrm{DI}/10)/\mathrm{DV}$ holds only at $w=0.5$, where $w$ cancels; it must not be generalised to other weightings.
 
 $D_{\mathrm{pitch}}$ remains a reported axis; it is **not** the composite product. Zero interval contribution (unpitched-only) is a numeric zero — no event-kind branch.
 

@@ -20,10 +20,25 @@ DOCUMENTED_COMPOSITE_WEIGHTS: dict[str, float] = dict(
     DEFAULT_WEIGHT_SETS["baseline"]
 )
 
-# Blend scale and min-max caps — referenced by compute_* and format_* alike.
+# Blend scale and normalisation divisors (no clamping applied).
 BLEND_SCALE = 10.0
 WEIGHTED_DI_MAX = 100.0
 WEIGHTED_DV_MAX = 10.0
+
+
+def resolve_interval_dv_max(explicit_dv_max: float = WEIGHTED_DV_MAX) -> float:
+    """DV divisor for the blend: legacy 10.0, or unit-range attainable max."""
+    import config as cfg
+
+    mode = getattr(cfg, "INTERVAL_BLEND_NORMALISATION", "legacy")
+    if mode == "unit_range":
+        return math.log10(2.0) if cfg.USE_LOG_COMPRESSION else 1.0
+    if mode != "legacy":
+        raise ValueError(
+            "INTERVAL_BLEND_NORMALISATION must be 'legacy' or 'unit_range', "
+            f"got {mode!r}"
+        )
+    return float(explicit_dv_max)
 
 
 def compute_blend_density(
@@ -38,18 +53,55 @@ def compute_blend_density(
     """
     Slider-controlled blend (``density.weighted``).
 
-    Equivalent forms (same floats when caps/scale are the defaults):
+    Equivalent forms (same floats when divisors/scale are the defaults):
       scale * (w * DI/DI_max + (1-w) * DV/DV_max)
       w * (scale/DI_max) * DI + (1-w) * (scale/DV_max) * DV
     With defaults: ``w*(DI/10) + (1-w)*DV`` — equals weighted_orch + weighted_pitch.
+    No clamping is applied to DI or DV.
     """
-    return float(scale * (w * (DI / DI_max) + (1.0 - w) * (DV / DV_max)))
+    dv_max = resolve_interval_dv_max(DV_max)
+    return float(scale * (w * (DI / DI_max) + (1.0 - w) * (DV / dv_max)))
+
+
+def blend_term_contributions(
+    *,
+    DI: float,
+    DV: float,
+    w: float = 0.5,
+    DI_max: float = WEIGHTED_DI_MAX,
+    DV_max: float = WEIGHTED_DV_MAX,
+    scale: float = BLEND_SCALE,
+) -> dict[str, Any]:
+    """Realised blend-term contributions (diagnostic; does not change density)."""
+    import config as cfg
+
+    dv_max = resolve_interval_dv_max(DV_max)
+    instrument_term = float(w * (DI / DI_max) * scale)
+    interval_term = float((1.0 - w) * (DV / dv_max) * scale)
+    # Zero whenever distinct_pitch_count < 2 (DV=0) or w=1. Never emit inf/nan.
+    if interval_term == 0.0 or not math.isfinite(interval_term):
+        ratio: float | None = None
+    else:
+        raw_ratio = instrument_term / interval_term
+        ratio = raw_ratio if math.isfinite(raw_ratio) else None
+    return {
+        "interval_blend_normalisation": getattr(
+            cfg, "INTERVAL_BLEND_NORMALISATION", "legacy"
+        ),
+        "w": float(w),
+        "DI_max": float(DI_max),
+        "DV_max": float(dv_max),
+        "scale": float(scale),
+        "instrument_term": instrument_term,
+        "interval_term": interval_term,
+        "instrument_to_interval_ratio": ratio,
+    }
 
 
 def blend_definition_expression(
     *,
     DI_max: float = WEIGHTED_DI_MAX,
-    DV_max: float = WEIGHTED_DV_MAX,
+    DV_max: float | None = None,
     scale: float = BLEND_SCALE,
 ) -> str:
     """
@@ -59,6 +111,8 @@ def blend_definition_expression(
     double-counted when auditing against printed weighted components):
     ``w*(DI/(DI_max/scale)) + (1-w)*(DV/(DV_max/scale))``.
     """
+    if DV_max is None:
+        DV_max = resolve_interval_dv_max()
     di_div = DI_max / scale
     dv_div = DV_max / scale
     if abs(dv_div - 1.0) < 1e-12:
@@ -98,13 +152,15 @@ def format_composite_header_line(
     ref: float,
     use_log_compression: bool,
     DI_max: float = WEIGHTED_DI_MAX,
-    DV_max: float = WEIGHTED_DV_MAX,
+    DV_max: float | None = None,
     scale: float = BLEND_SCALE,
 ) -> str:
     """
     Numerical Results header line — formula text is derived from the same
     constants/expression as ``compute_blend_density`` / ``compute_composite_from_blend``.
     """
+    if DV_max is None:
+        DV_max = resolve_interval_dv_max()
     outer = composite_outer_expression(use_log_compression=use_log_compression)
     blend_def = blend_definition_expression(DI_max=DI_max, DV_max=DV_max, scale=scale)
     return (
@@ -120,10 +176,12 @@ def composite_formula_metadata(
     ref: float,
     use_log_compression: bool,
     DI_max: float = WEIGHTED_DI_MAX,
-    DV_max: float = WEIGHTED_DV_MAX,
+    DV_max: float | None = None,
     scale: float = BLEND_SCALE,
 ) -> str:
     """Static formula string for ``composite_meta['formula']`` (no slice values)."""
+    if DV_max is None:
+        DV_max = resolve_interval_dv_max()
     outer = composite_outer_expression(use_log_compression=use_log_compression)
     blend_def = blend_definition_expression(DI_max=DI_max, DV_max=DV_max, scale=scale)
     return f"{outer} with D_blend = {blend_def}"
@@ -184,7 +242,7 @@ def build_composite_component_metadata(
         "blend_parameters": {
             "instrument_interval_blend_w": float(blend_weight_w),
             "DI_max": WEIGHTED_DI_MAX,
-            "DV_max": WEIGHTED_DV_MAX,
+            "DV_max": resolve_interval_dv_max(),
             "blend_scale": BLEND_SCALE,
             "definition": blend_definition_expression(),
         },
