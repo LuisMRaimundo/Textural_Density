@@ -260,12 +260,12 @@ def analyze_score(
             interpretation="Number of vertical slices in temporal analysis.",
         ),
     }
-    for key, val in summary_stats.items():
-        if key == "slice_count":
+    for stat_name, stat_val in summary_stats.items():
+        if stat_name == "slice_count":
             continue
-        global_summary[key] = _metric_from_scalar(
-            key,
-            val,
+        global_summary[stat_name] = _metric_from_scalar(
+            stat_name,
+            stat_val,
             source_type="score_derived",
             validation_status="verified_only",
             confidence="medium",
