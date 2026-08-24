@@ -6,4 +6,4 @@ No licensed representative benchmark corpus is committed. Official frozen benchm
 
 | benchmark_id | synthetic_fixture | density.total | density.interval | density.sonic_mass | event_count | interval_compactness_norm | registral_norm | orchestration_mass | composite_subindex | config_hash | input_hash | metric_schema_version | score_only_mode |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| synthetic_triad | True | 0.030334024217132213 | 0.2137588382139519 | 58.0918049 | 3 | 0.2137588382139519 | 0.0 | 58.0918049 | 0.030334024217132213 | 28befaebd84264a1eca83123a9c10a0bb99b899892d49cbb8c10a0eea0a3d375 | 12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8 | 5.1.0-strict-symbolic | True |
+| synthetic_triad | True | 0.04688897865038914 | 0.2137588382139519 | 80.9247499 | 3 | 0.2137588382139519 | 0.0 | 80.9247499 | 0.04688897865038914 | 28befaebd84264a1eca83123a9c10a0bb99b899892d49cbb8c10a0eea0a3d375 | 12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8 | 5.1.0-strict-symbolic | True |

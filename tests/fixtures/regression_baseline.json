@@ -1,24 +1,24 @@
 {
   "density": {
     "interval": 0.1886837391214329,
-    "instrument": 39.070071960979156,
-    "weighted": 2.0478454676096742,
-    "pitch_structure": 6.218713104322099,
-    "refined": 6.218713104322099,
-    "total": 0.03991827554864195,
-    "sonic_mass": 82.32262087000001,
-    "absolute": 3.295880134377348,
+    "instrument": 54.1848871873847,
+    "weighted": 2.803586228929951,
+    "pitch_structure": 6.333268907802272,
+    "refined": 6.333268907802272,
+    "total": 0.06363638437261204,
+    "sonic_mass": 118.01642129999999,
+    "absolute": 4.512197967618012,
     "weighted_pitch": 0.09434186956071647,
-    "weighted_orchestral": 1.953503598048958
+    "weighted_orchestral": 2.709244359369235
   },
-  "harmonic_ratio": 0.503112720907979,
-  "complexity": 1.8871551527370491,
+  "harmonic_ratio": 0.44959424348645716,
+  "complexity": 1.945156740957147,
   "pitches_primary_count": 4,
   "instrument_densities": [
-    25.9547576,
-    15.1157812,
-    18.2784425,
-    7.85785837
+    28.9076478,
+    24.3976161,
+    27.1307132,
+    13.1828281
   ],
   "note_to_midi_C4": 60.0,
   "midi_to_hz_A4": 440.0,

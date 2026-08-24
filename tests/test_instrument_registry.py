@@ -77,7 +77,7 @@ class TestInstrumentRegistry:
         assert getattr(mod, "IS_COARSE_DEFAULT", False) is False
         density = mod.calcular_densidade("G4", "mf")
         assert density > 0.0
-        assert density == pytest.approx(28.582867, rel=1e-4)
+        assert density == pytest.approx(32.4618617, rel=1e-4)
 
     def test_profile_fields_present(self):
         profile = get_instrument_profile("trompete")

@@ -86,12 +86,12 @@ live audio analysis.
 
 - **Module:** `instrumentos/trombone.py`
 - **GUI display name:** `Trb`
-- **Table (source_table_span):** `spectral_data` (48 chromatic rows, **C#1–C5**, MIDI 25–72), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
-- **Provenance:** Median/midpoint summary of trombone sustained-note Combined Density
-  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
-- **Source workbook:** `D:\METAIS\Trombone_Dynamics.xlsx` (sheet `Results`)
+- **Table (source_table_span):** `spectral_data` (44 chromatic rows, **F1–C5**, MIDI 29–72), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`. C#1–E1 are omitted because dest books lack a complete pp/mf/ff triad.
+- **Provenance:** Midpoint summary of trombone sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff) from dest Zenodo books.
+- **Source workbook:** `D:\METAIS_2\Trombone_dynamics.xlsx` (sheet `Results`)
 - **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
-- **Dynamics (2026-08-18):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
+- **Dynamics (2026-08-24):** full 10-level data-faithful Dynamics_predicter `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
 ## Tuba (`tuba` → `tuba.py`)
@@ -350,7 +350,7 @@ Audit: `tools/audit_instrument_metadata_range_resolution.py` → `reports/instru
 | DB-SPAN | Double-bass `source_table_span` E1–C5 aligns with committed table and registry; E1–A3 was obsolete documentation. Upper-register QC (A♯3–C5) open. | **PASS** (span); **REVIEW REQUIRED** (upper QC) |
 | TECHNIQUE | `INSTRUMENT_SOURCE.table_supported_techniques` vs registry `supported_techniques`; tables do not overclaim technique coverage. | **PASS** |
 | TUBA-RNG | Tuba now ships a committed table (`tuba.py`, C1–A#4); `registry.sounding_range` (MIDI 24–70) matches the table span (2026-08-09). | **PASS** |
-| TBN-RNG | Trombone now ships a committed table (`trombone.py`, C#1–C5); `registry.sounding_range` (MIDI 25–72) matches the table span (2026-08-18). Bass trombone remains coarse. | **PASS** |
+| TBN-RNG | Trombone now ships a committed table (`trombone.py`, F1–C5); `registry.sounding_range` (MIDI 29–72) matches the table span (2026-08-24). Bass trombone remains coarse. | **PASS** |
 | TRANS-META | `registry.transposition` is metadata-only; manual input is sounding pitch; MusicXML `<transpose>` converts once. | **PASS** |
 | LEGACY-GPR | Runtime GPR retired 2026-08-03; historical code at `tools/legacy_gpr_dynamic_interpolation.py`. | **N/A (retired)** |
 | GPR-MQ | GPR model-quality audit (`tools/audit_gpr_model_quality.py`): 357 source rows (8 GPR modules, incl. bassoon); 58 convex-hull departures (pp–mf); GPR–linear/quadratic/PCHIP diagnostic deviations. Production GPR unchanged; references not adopted. | **REVIEW REQUIRED** (local hull departures; low-register strings) |

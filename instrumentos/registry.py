@@ -664,7 +664,7 @@ REGISTRY["trombone"] = _profile(
     "trombone",
     "Trb",
     "brass",
-    sounding=(25, 72),
+    sounding=(29, 72),
     comfortable=(43, 65),
     brightness="neutral",
     status="literature_derived",
@@ -673,8 +673,10 @@ REGISTRY["trombone"] = _profile(
     supported=("legato", "staccato", "mute"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/trombone.py from "
-        "Trombone_Dynamics.xlsx Results sheet (Dynamics_predicter). "
-        "sounding_range (MIDI 25–72, C#1–C5) matches the committed table span."
+        "Trombone_dynamics.xlsx Results sheet (Dynamics_predicter, dest Zenodo "
+        "IOWA+ORCH anchors, 2026-08-24). sounding_range (MIDI 29–72, F1–C5) "
+        "matches the committed table span; C#1–E1 were omitted because dest "
+        "books lack a complete pp/mf/ff triad."
     ),
     warnings=(
         "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",

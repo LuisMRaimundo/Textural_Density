@@ -79,9 +79,11 @@ def test_pipeline_emits_blend_term_contributions():
     assert terms["interval_term"] == pytest.approx(
         float(resultados["density"]["weighted_pitch"]), abs=1e-12
     )
-    assert terms["instrument_to_interval_ratio"] == pytest.approx(16.1, abs=0.05)
     # Density fields stay on the committed snapshot values.
     snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
+    orch = float(snap["density"]["weighted_orchestral"])
+    pitch = float(snap["density"]["weighted_pitch"])
+    assert terms["instrument_to_interval_ratio"] == pytest.approx(orch / pitch, abs=0.05)
     assert float(resultados["density"]["total"]) == pytest.approx(
         float(snap["density"]["total"]), abs=1e-12
     )

@@ -5,9 +5,9 @@ Documents the six progressive slices used to verify blend×mass unification:
   5 strings ff → +bass drum → +cymbals → +flute/oboe ffff → +tam-tam ffff
   → Qty expansion 4/5/5/3/10 on the strings (others Qty=1).
 
-Goldens are live pipeline totals at w=0.5, REF=193. Refrozen 2026-08-08 after
-committing data-faithful Dynamics_predicter `Results` ladders (measured pp/mf/ff
-anchors, PCHIP interiors) for all pitched table-backed instruments.
+Goldens are live pipeline totals at w=0.5, REF=193. Refrozen 2026-08-25 after
+committing dest-Zenodo IOWA+ORCH midpoint CDM ladders (measured pp/mf/ff
+anchors, PCHIP interiors) for ordinary-sustain table-backed instruments.
 Player Count 32 / Player Doubling 22 unchanged.
 """
 
@@ -44,7 +44,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS,
         "instruments": STRING_INSTS,
         "qtys": (1, 1, 1, 1, 1),
-        "expected_total": 0.12661907107921544,
+        "expected_total": 0.11097263710915733,
     },
     {
         "label": "+bass drum",
@@ -52,7 +52,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff",),
         "instruments": STRING_INSTS + ("Bass drum",),
         "qtys": (1, 1, 1, 1, 1, 1),
-        "expected_total": 0.1361756318127127,
+        "expected_total": 0.12076759726730982,
     },
     {
         "label": "+cymbals",
@@ -60,7 +60,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff", "ff"),
         "instruments": STRING_INSTS + ("Bass drum", "Cymbals"),
         "qtys": (1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.14430992747802052,
+        "expected_total": 0.12909176148013493,
     },
     {
         "label": "+flute/oboe ffff",
@@ -68,7 +68,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff", "ff", "ffff", "ffff"),
         "instruments": STRING_INSTS + ("Bass drum", "Cymbals", "Flute", "Oboe"),
         "qtys": (1, 1, 1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.15141692329871317,
+        "expected_total": 0.14015473034620063,
     },
     {
         "label": "+tam-tam ffff",
@@ -77,7 +77,7 @@ SLICES: list[dict] = [
         "instruments": STRING_INSTS
         + ("Bass drum", "Cymbals", "Flute", "Oboe", "Tam-tam"),
         "qtys": (1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.15811079130068034,
+        "expected_total": 0.14692821688654636,
     },
     {
         "label": "Qty expansion 4/5/5/3/10",
@@ -86,7 +86,7 @@ SLICES: list[dict] = [
         "instruments": STRING_INSTS
         + ("Bass drum", "Cymbals", "Flute", "Oboe", "Tam-tam"),
         "qtys": (4, 5, 5, 3, 10, 1, 1, 1, 1, 1),
-        "expected_total": 0.46012341084367625,
+        "expected_total": 0.4067549748899126,
     },
 ]
 

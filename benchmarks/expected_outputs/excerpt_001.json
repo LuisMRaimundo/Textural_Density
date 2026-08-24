@@ -4,12 +4,12 @@
     "inputs": {
       "distinct_pitch_count": 3,
       "event_count": 3,
-      "harmonic_ratio": 0.44678862439682954,
-      "instrument_density": 34.50033721929513,
+      "harmonic_ratio": 0.35721639962708124,
+      "instrument_density": 46.78264113063388,
       "instrument_lookup_trace": [
         {
           "audit_flag": null,
-          "corresponding_arco_density": 25.9547576,
+          "corresponding_arco_density": 28.9076478,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_0",
@@ -18,7 +18,7 @@
           "labelled_table_fallback_warning": null,
           "module_name": "flute",
           "note": "C4",
-          "one_player_density": 25.9547576,
+          "one_player_density": 28.9076478,
           "resolved_profile_id": "flauta",
           "sordina_arco_ratio": 1.0,
           "table_coverage_kind": "full_coverage",
@@ -30,7 +30,7 @@
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 16.4068442,
+          "corresponding_arco_density": 26.2008456,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_1",
@@ -39,7 +39,7 @@
           "labelled_table_fallback_warning": null,
           "module_name": "flute",
           "note": "E4",
-          "one_player_density": 16.4068442,
+          "one_player_density": 26.2008456,
           "resolved_profile_id": "flauta",
           "sordina_arco_ratio": 1.0,
           "table_coverage_kind": "full_coverage",
@@ -51,7 +51,7 @@
         },
         {
           "audit_flag": null,
-          "corresponding_arco_density": 15.7302031,
+          "corresponding_arco_density": 25.8162565,
           "density_relation_to_arco": "",
           "dynamic": "mf",
           "event_id": "evt_2",
@@ -60,7 +60,7 @@
           "labelled_table_fallback_warning": null,
           "module_name": "flute",
           "note": "G4",
-          "one_player_density": 15.7302031,
+          "one_player_density": 25.8162565,
           "resolved_profile_id": "flauta",
           "sordina_arco_ratio": 1.0,
           "table_coverage_kind": "full_coverage",
@@ -81,7 +81,7 @@
         "instrument_lookup_trace": [
           {
             "audit_flag": null,
-            "corresponding_arco_density": 25.9547576,
+            "corresponding_arco_density": 28.9076478,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_0",
@@ -90,7 +90,7 @@
             "labelled_table_fallback_warning": null,
             "module_name": "flute",
             "note": "C4",
-            "one_player_density": 25.9547576,
+            "one_player_density": 28.9076478,
             "resolved_profile_id": "flauta",
             "sordina_arco_ratio": 1.0,
             "table_coverage_kind": "full_coverage",
@@ -102,7 +102,7 @@
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 16.4068442,
+            "corresponding_arco_density": 26.2008456,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_1",
@@ -111,7 +111,7 @@
             "labelled_table_fallback_warning": null,
             "module_name": "flute",
             "note": "E4",
-            "one_player_density": 16.4068442,
+            "one_player_density": 26.2008456,
             "resolved_profile_id": "flauta",
             "sordina_arco_ratio": 1.0,
             "table_coverage_kind": "full_coverage",
@@ -123,7 +123,7 @@
           },
           {
             "audit_flag": null,
-            "corresponding_arco_density": 15.7302031,
+            "corresponding_arco_density": 25.8162565,
             "density_relation_to_arco": "",
             "dynamic": "mf",
             "event_id": "evt_2",
@@ -132,7 +132,7 @@
             "labelled_table_fallback_warning": null,
             "module_name": "flute",
             "note": "G4",
-            "one_player_density": 15.7302031,
+            "one_player_density": 25.8162565,
             "resolved_profile_id": "flauta",
             "sordina_arco_ratio": 1.0,
             "table_coverage_kind": "full_coverage",
@@ -161,7 +161,7 @@
             ],
             "representative_note": "C4",
             "total_player_count": 1,
-            "total_weight": 25.9547576
+            "total_weight": 28.9076478
           },
           {
             "dynamics": [
@@ -177,7 +177,7 @@
             ],
             "representative_note": "E4",
             "total_player_count": 1,
-            "total_weight": 16.4068442
+            "total_weight": 26.2008456
           },
           {
             "dynamics": [
@@ -193,7 +193,7 @@
             ],
             "representative_note": "G4",
             "total_player_count": 1,
-            "total_weight": 15.7302031
+            "total_weight": 25.8162565
           }
         ],
         "pitch_differentiation_ratio": 1.0,
@@ -208,21 +208,21 @@
             "dynamic": "mf",
             "instrument": "flute",
             "midi": 60.0,
-            "one_player_density": 25.9547576,
+            "one_player_density": 28.9076478,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "flute",
             "midi": 64.0,
-            "one_player_density": 16.4068442,
+            "one_player_density": 26.2008456,
             "player_count": 1.0
           },
           {
             "dynamic": "mf",
             "instrument": "flute",
             "midi": 67.0,
-            "one_player_density": 15.7302031,
+            "one_player_density": 25.8162565,
             "player_count": 1.0
           }
         ],
@@ -231,7 +231,7 @@
         "unpitched_event_count": 0
       },
       "registral_span": 7.0,
-      "sonic_mass": 58.0918049
+      "sonic_mass": 80.9247499
     },
     "overlap_warnings": [],
     "steps": {
@@ -240,7 +240,7 @@
           "symbolic_entropy",
           "pitch_bins"
         ],
-        "value": 1.9340713658345106
+        "value": 1.9489927674361553
       },
       "interval_compactness_distinct": {
         "depends_on": [
@@ -257,7 +257,7 @@
           "harmonicity_proxy",
           "pitch_differentiation_ratio"
         ],
-        "value": 3.442397907396781
+        "value": 3.5189123835151137
       },
       "sonic_mass": {
         "depends_on": [
@@ -265,21 +265,21 @@
           "player_count",
           "instrument_density"
         ],
-        "value": 58.0918049
+        "value": 80.9247499
       },
       "total_density": {
         "depends_on": [
           "pitch_structure_density",
           "sonic_mass"
         ],
-        "value": 0.030334024217132213
+        "value": 0.04688897865038914
       },
       "weighted_density": {
         "depends_on": [
           "instrument_density",
           "interval_compactness_distinct"
         ],
-        "value": 1.8318962800717329
+        "value": 2.44601147563867
       }
     }
   },
@@ -308,15 +308,15 @@
   },
   "numeric": {
     "density": {
-      "absolute": 2.539547483219947,
-      "instrument": 34.50033721929513,
+      "absolute": 3.390891915912431,
+      "instrument": 46.78264113063388,
       "interval": 0.2137588382139519,
-      "pitch_structure": 3.442397907396781,
-      "refined": 3.442397907396781,
-      "sonic_mass": 58.0918049,
-      "total": 0.030334024217132213,
-      "weighted": 1.8318962800717329,
-      "weighted_orchestral": 1.7250168609647567,
+      "pitch_structure": 3.5189123835151137,
+      "refined": 3.5189123835151137,
+      "sonic_mass": 80.9247499,
+      "total": 0.04688897865038914,
+      "weighted": 2.44601147563867,
+      "weighted_orchestral": 2.3391320565316938,
       "weighted_pitch": 0.10687941910697595
     },
     "density_subindices": {
@@ -331,10 +331,10 @@
         }
       },
       "harmonicity_proxy": {
-        "normalized": 0.44678862439682954,
+        "normalized": 0.35721639962708124,
         "raw": {
-          "chroma_concentration": 0.44678862439682954,
-          "harmonic_ratio": 0.44678862439682954
+          "chroma_concentration": 0.35721639962708124,
+          "harmonic_ratio": 0.35721639962708124
         }
       },
       "interval_compactness": {
@@ -342,8 +342,8 @@
         "raw": 1.9077235705087667
       },
       "orchestral_mass": {
-        "normalized": 7.621798009656252,
-        "raw": 58.0918049
+        "normalized": 8.995818467488103,
+        "raw": 80.9247499
       },
       "registral": {
         "normalized": 0.0,

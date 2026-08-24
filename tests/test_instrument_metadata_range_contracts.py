@@ -102,7 +102,7 @@ class TestTromboneClassification:
         mod = importlib.import_module("instrumentos.trombone")
         t_lo, t_hi = mod.INSTRUMENT_SOURCE.pitch_range
         assert profile.sounding_range == (t_lo, t_hi)
-        assert (t_lo, t_hi) == (25, 72)
+        assert (t_lo, t_hi) == (29, 72)
 
     def test_audit_passes_with_committed_table(self, audit_payload):
         review = audit_payload["trombone_review"]

@@ -29,7 +29,7 @@ def _markdown(payload: dict) -> str:
         f"- **Table excludes sounding range (partial):** {excl_n} instrument(s): "
         f"{', '.join(excl_ids) if excl_ids else 'none'}.",
         "- **Technique:** modules declare `source_technique` / `table_supported_techniques`; registry lists broader organological capabilities.",
-        "- **Trombone:** committed table (`trombone.py`, C#1–C5) — **PASS** when registry matches the table span.",
+        "- **Trombone:** committed table (`trombone.py`, F1–C5) — **PASS** when registry matches the table span.",
         "- **Tuba:** committed table (`tuba.py`, C1–A#4) — **PASS** when registry matches the table span.",
         "- **Transposition:** registry field is metadata-only; manual input is sounding pitch; MusicXML applies `<transpose>` once.",
         "",

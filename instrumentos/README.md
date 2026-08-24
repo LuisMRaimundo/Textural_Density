@@ -203,7 +203,7 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 
 | **Horn (Hn)** | `horn.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
-| **Trombone (Trb)** | `trombone.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (C#1–C5) |
+| **Trombone (Trb)** | `trombone.py` | `literature_derived` | IOWA+ORCH sustain CDM midpoints (F1–C5) |
 
 | **Tuba (Tba)** | `tuba.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (C1–A#4) |
 

@@ -2,6 +2,16 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-25 — Dest-Zenodo ordinary-sustain ladders: freeze refresh
+
+Ordinary-sustain CDM tables (12 instruments) were rebuilt from dest `_2` Zenodo books via Dynamics_predicter. This commit refreshes the goldens and contracts that those tables drive. Formulae unchanged.
+
+- Trombone sounding span is now MIDI **29–72 (F1–C5)**. C#1–E1 were dropped because dest books have no complete pp/mf/ff triad.
+- Official refresher: `python tools/refresh_regression_fixtures.py` (regression baseline, synthetic triad snapshots, replication freeze, benchmark excerpts).
+- Composite GUI-chain goldens in `tests/test_composite_unification_acceptance.py` re-frozen (5 strings ff total 0.11097 at w=0.5).
+- Violin G4 mf pin is 32.4618617. Sordina mute-attenuation pin moved from A3 pp (now sordina > arco vs dest arco) to A#4 pp, where sordina < arco still holds.
+- Blend orch/pitch ratio is no longer pinned at 16.1; it follows the committed triad snapshot.
+
 ## 2026-08-18 — Strict wrap-around enharmonics; reject unknown instrument ids (package 1.1.6)
 
 **Numeric change for `Cb` / `B#` spellings only.** Default 12-EDO totals (C, C#, D, … and same-octave flats such as Db/Eb) are unchanged. Locked by `tests/test_wraparound_enharmonics.py::test_golden_baseline_wrap_spellings_match_plain_totals`: the golden regression slice (`C4 E4 G4 C5`) with every wrap-around spelling substituted for its plain equivalent (`C4`→`B#3`, `C5`→`B#4`) yields identical `density.*` totals. The committed 12-EDO golden fixture itself contains no such spellings.

@@ -63,14 +63,14 @@ class TestFCSplitAndConstants:
         record_hard(family="F-C", test_id="FC.split", **split)
 
     def test_trombone_table_span(self):
-        """HARD: trombone.py covers MIDI 25–72 × 10 dynamics; sounding range equals span."""
+        """HARD: trombone.py covers MIDI 29–72 × 10 dynamics; sounding range equals span."""
         profile = REGISTRY["trombone"]
         mod = importlib.import_module("instrumentos.trombone")
         notes = sorted(mod.spectral_data, key=note_to_midi_strict)
         lo, hi = int(note_to_midi_strict(notes[0])), int(note_to_midi_strict(notes[-1]))
-        assert (lo, hi) == (25, 72)
-        assert profile.sounding_range == (25, 72)
-        assert mod.INSTRUMENT_SOURCE.pitch_range == (25, 72)
+        assert (lo, hi) == (29, 72)
+        assert profile.sounding_range == (29, 72)
+        assert mod.INSTRUMENT_SOURCE.pitch_range == (29, 72)
         for note, row in mod.spectral_data.items():
             for dyn in DYNAMIC_LEVELS:
                 assert dyn in row

@@ -481,7 +481,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "medium",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/trombone.py from Trombone_Dynamics.xlsx Results sheet (Dynamics_predicter). sounding_range (MIDI 25\u201372, C#1\u2013C5) matches the committed table span.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/trombone.py from Trombone_dynamics.xlsx Results sheet (Dynamics_predicter, dest Zenodo IOWA+ORCH anchors, 2026-08-24). sounding_range (MIDI 29\u201372, F1\u2013C5) matches the committed table span; C#1\u2013E1 were omitted because dest books lack a complete pp/mf/ff triad.",
       "limitations": [
         "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."

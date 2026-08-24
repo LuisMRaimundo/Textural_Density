@@ -3,22 +3,22 @@
   "source": "synthetic_fixture",
   "synthetic_fixture": true,
   "score_only_mode": true,
-  "software_version": "1.1.4",
+  "software_version": "1.1.6",
   "metric_schema_version": "5.1.0-strict-symbolic",
   "config_hash": "28befaebd84264a1eca83123a9c10a0bb99b899892d49cbb8c10a0eea0a3d375",
   "input_hash": "12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8",
-  "timestamp_utc": "2026-08-08T16:38:49.630762+00:00",
+  "timestamp_utc": "2026-08-24T23:12:14.213057+00:00",
   "density": {
     "interval": 0.2137588382139519,
-    "instrument": 34.50033721929513,
-    "weighted": 1.8318962800717329,
-    "pitch_structure": 3.442397907396781,
-    "refined": 3.442397907396781,
-    "total": 0.030334024217132213,
-    "sonic_mass": 58.0918049,
-    "absolute": 2.539547483219947,
+    "instrument": 46.78264113063388,
+    "weighted": 2.44601147563867,
+    "pitch_structure": 3.5189123835151137,
+    "refined": 3.5189123835151137,
+    "total": 0.04688897865038914,
+    "sonic_mass": 80.9247499,
+    "absolute": 3.390891915912431,
     "weighted_pitch": 0.10687941910697595,
-    "weighted_orchestral": 1.7250168609647567
+    "weighted_orchestral": 2.3391320565316938
   },
   "density_subindices": {
     "event_count": {
@@ -78,7 +78,7 @@
       "normalized": 0.0
     },
     "orchestral_mass": {
-      "raw": 58.0918049,
+      "raw": 80.9247499,
       "source_type": "symbolic_metadata",
       "validation_status": "verified_only",
       "confidence": "medium",
@@ -91,7 +91,7 @@
         "Dynamic-to-weight mapping is symbolic dynamic weighting for score analysis.",
         "Instrument density component uses externally sourced acoustic metadata where GPR modules exist."
       ],
-      "normalized": 7.621798009656252
+      "normalized": 8.995818467488103
     },
     "timbral_heterogeneity": {
       "raw": {
@@ -113,8 +113,8 @@
     },
     "harmonicity_proxy": {
       "raw": {
-        "harmonic_ratio": 0.44678862439682954,
-        "chroma_concentration": 0.44678862439682954
+        "harmonic_ratio": 0.35721639962708124,
+        "chroma_concentration": 0.35721639962708124
       },
       "source_type": "metadata_proxy",
       "validation_status": "heuristic",
@@ -125,7 +125,7 @@
         "Harmonicity and interval compactness are separate constructs."
       ],
       "assumptions": [],
-      "normalized": 0.44678862439682954
+      "normalized": 0.35721639962708124
     },
     "temporal": {
       "raw": {
@@ -143,19 +143,19 @@
       "assumptions": []
     },
     "composite": {
-      "value": 0.030334024217132213,
-      "pre_log": 0.07234374829713691,
+      "value": 0.04688897865038914,
+      "pre_log": 0.11400971608413564,
       "source_type": "metadata_proxy",
       "validation_status": "heuristic",
       "confidence": "medium",
-      "interpretation": "Decomposable composite heuristic; components listed below.",
+      "interpretation": "Production composite is blend \u00d7 \u221amass / REF (Task 8c). The listed pitch-structure \u00d7 boost product is a diagnostic of the reported pitch-structure axis, not the composite numerator.",
       "components": {
-        "pitch_structure_density": 3.442397907396781,
-        "dynamic_boost": 7.621798009656252,
+        "pitch_structure_density": 3.5189123835151137,
+        "dynamic_boost": 8.995818467488103,
         "normalization_divisor": 193.0,
         "log_compression_applied": true
       },
-      "component_product_pre_norm": 26.23726151904163,
+      "component_product_pre_norm": 31.65549700509784,
       "dominant_factors": [
         "dynamic_boost",
         "pitch_structure_density"
@@ -238,7 +238,7 @@
     },
     "orchestration_mass": {
       "construct_id": "orchestration_mass",
-      "value": 58.0918049,
+      "value": 80.9247499,
       "source_type": "symbolic_metadata",
       "verification_status": "verified_only",
       "assumptions": [
@@ -249,8 +249,8 @@
         "Written dynamics (p, mf, ff) are symbolic score markings, not SPL."
       ],
       "included_in_composite": true,
-      "raw_value": 58.0918049,
-      "normalized_value": 7.621798009656252,
+      "raw_value": 80.9247499,
+      "normalized_value": 8.995818467488103,
       "component_weight": 0.15
     },
     "timbral_orchestration_complexity": {
@@ -298,7 +298,7 @@
     },
     "composite_symbolic_density": {
       "construct_id": "composite_symbolic_density",
-      "value": 0.030334024217132213,
+      "value": 0.04688897865038914,
       "source_type": "metadata_proxy",
       "verification_status": "heuristic",
       "assumptions": [],
@@ -314,8 +314,8 @@
         "temporal_vertical_density": 0.15
       },
       "components": {
-        "pitch_structure_density": 3.442397907396781,
-        "dynamic_boost": 7.621798009656252,
+        "pitch_structure_density": 3.5189123835151137,
+        "dynamic_boost": 8.995818467488103,
         "normalization_divisor": 193.0,
         "log_compression_applied": true
       }
@@ -345,7 +345,7 @@
       },
       "density.instrument": {
         "name": "density.instrument",
-        "value": 34.50033721929513,
+        "value": 46.78264113063388,
         "source_type": "external_acoustic_metadata",
         "validation_status": "partially_calibrated",
         "confidence": "medium",
@@ -361,7 +361,7 @@
       },
       "density.weighted": {
         "name": "density.weighted",
-        "value": 1.8318962800717329,
+        "value": 2.44601147563867,
         "source_type": "metadata_proxy",
         "validation_status": "heuristic",
         "confidence": "medium",
@@ -377,11 +377,11 @@
       },
       "density.refined": {
         "name": "density.refined",
-        "value": 3.442397907396781,
+        "value": 3.5189123835151137,
         "source_type": "score_derived",
         "validation_status": "verified_only",
         "confidence": "medium",
-        "interpretation": "Vertical pitch-structure density from distinct pitch bins (interval compactness, registral compactness, symbolic entropy, harmonicity). Zero when distinct_pitch_count < 2. Alias: density.pitch_structure.",
+        "interpretation": "Vertical pitch-structure density from distinct pitch bins (raw pairwise interval sum, symbolic entropy, harmonic-ratio damping). Registral span is not a factor. Zero when distinct_pitch_count < 2. Alias: density.pitch_structure.",
         "warnings": [],
         "assumptions": [],
         "unit": "dimensionless",
@@ -389,18 +389,18 @@
       },
       "density.pitch_structure": {
         "name": "density.pitch_structure",
-        "value": 3.442397907396781,
+        "value": 3.5189123835151137,
         "source_type": "score_derived",
         "validation_status": "verified_only",
         "confidence": "medium",
-        "interpretation": "Vertical pitch-structure density from distinct pitch bins (interval compactness, registral compactness, symbolic entropy, harmonicity). Zero when distinct_pitch_count < 2. Alias: density.pitch_structure.",
+        "interpretation": "Vertical pitch-structure density from distinct pitch bins (raw pairwise interval sum, symbolic entropy, harmonic-ratio damping). Registral span is not a factor. Zero when distinct_pitch_count < 2. Alias: density.pitch_structure.",
         "warnings": [],
         "assumptions": [],
         "unit": "dimensionless"
       },
       "density.total": {
         "name": "density.total",
-        "value": 0.030334024217132213,
+        "value": 0.04688897865038914,
         "source_type": "metadata_proxy",
         "validation_status": "heuristic",
         "confidence": "medium",
@@ -408,18 +408,18 @@
         "warnings": [],
         "assumptions": [
           "Composite (all regimes) = log10(1 + D_blend*sqrt(M)/REF) with D_blend = density.weighted = w*(DI/10) + (1-w)*DV.",
-          "Complexity factor (in pitch structure axis): 1.9341.",
-          "Dynamic mass boost sqrt(sonic_mass): 7.6218.",
+          "Complexity factor (in pitch structure axis): 1.9490.",
+          "Dynamic mass boost sqrt(sonic_mass): 8.9958.",
           "Single REF MAX_DENS_GLOBAL=193.0 (Task 8c re-freeze \u2248192.6\u2192193; not Qty or table size; no event-kind fallback).",
-          "log10(1+x) compression applied (USE_LOG_COMPRESSION=True); pre-log value\u22480.07234374829713691."
+          "log10(1+x) compression applied (USE_LOG_COMPRESSION=True); pre-log value\u22480.11400971608413564."
         ],
         "unit": "dimensionless",
-        "raw_value": 0.07234374829713691,
-        "normalized_value": 0.030334024217132213
+        "raw_value": 0.11400971608413564,
+        "normalized_value": 0.04688897865038914
       },
       "density.sonic_mass": {
         "name": "density.sonic_mass",
-        "value": 58.0918049,
+        "value": 80.9247499,
         "source_type": "symbolic_metadata",
         "validation_status": "verified_only",
         "confidence": "medium",
@@ -433,18 +433,18 @@
       },
       "density.absolute": {
         "name": "density.absolute",
-        "value": 2.539547483219947,
+        "value": 3.390891915912431,
         "source_type": "score_derived",
         "validation_status": "theoretical",
         "confidence": "medium",
-        "interpretation": "Weighted density \u00d7 log(1 + event count) reference scalar.",
+        "interpretation": "Weighted density \u00d7 ln(1 + len(notas)) when distinct_pitch_count \u2265 2; otherwise 0. Event count is input rows (including unison doublings), not distinct-pitch count.",
         "warnings": [],
         "assumptions": [],
         "unit": "dimensionless"
       },
       "additional_metrics.harmonic_ratio": {
         "name": "additional_metrics.harmonic_ratio",
-        "value": 0.44678862439682954,
+        "value": 0.35721639962708124,
         "source_type": "metadata_proxy",
         "validation_status": "heuristic",
         "confidence": "low",
@@ -455,7 +455,7 @@
       },
       "additional_metrics.complexity": {
         "name": "additional_metrics.complexity",
-        "value": 1.5448491262647588,
+        "value": 1.5831065595298455,
         "source_type": "metadata_proxy",
         "validation_status": "heuristic",
         "confidence": "medium",
@@ -466,7 +466,7 @@
       },
       "spectral_moments.centroid": {
         "name": "spectral_moments.centroid",
-        "value": 311.58002864931683,
+        "value": 320.76541986227426,
         "source_type": "metadata_proxy",
         "validation_status": "heuristic",
         "confidence": "low",
@@ -480,14 +480,14 @@
       "additional_metrics.chroma_vector": {
         "name": "additional_metrics.chroma_vector",
         "value": [
-          0.44678862439682954,
+          0.35721639962708124,
           0.0,
           0.0,
           0.0,
-          0.2824295824211859,
+          0.32376801451196086,
           0.0,
           0.0,
-          0.27078179318198464,
+          0.319015585860958,
           0.0,
           0.0,
           0.0,
@@ -551,7 +551,7 @@
         {
           "midi": 60.0,
           "event_count": 1,
-          "total_weight": 25.9547576,
+          "total_weight": 28.9076478,
           "total_player_count": 1,
           "original_event_indices": [
             0
@@ -567,7 +567,7 @@
         {
           "midi": 64.0,
           "event_count": 1,
-          "total_weight": 16.4068442,
+          "total_weight": 26.2008456,
           "total_player_count": 1,
           "original_event_indices": [
             1
@@ -583,7 +583,7 @@
         {
           "midi": 67.0,
           "event_count": 1,
-          "total_weight": 15.7302031,
+          "total_weight": 25.8162565,
           "total_player_count": 1,
           "original_event_indices": [
             2
@@ -605,21 +605,21 @@
           "midi": 60.0,
           "instrument": "flauta",
           "dynamic": "mf",
-          "one_player_density": 25.9547576,
+          "one_player_density": 28.9076478,
           "player_count": 1.0
         },
         {
           "midi": 64.0,
           "instrument": "flauta",
           "dynamic": "mf",
-          "one_player_density": 16.4068442,
+          "one_player_density": 26.2008456,
           "player_count": 1.0
         },
         {
           "midi": 67.0,
           "instrument": "flauta",
           "dynamic": "mf",
-          "one_player_density": 15.7302031,
+          "one_player_density": 25.8162565,
           "player_count": 1.0
         }
       ],
@@ -631,8 +631,8 @@
           "instrument": "flauta",
           "resolved_profile_id": "flauta",
           "module_name": "flute",
-          "one_player_density": 25.9547576,
-          "corresponding_arco_density": 25.9547576,
+          "one_player_density": 28.9076478,
+          "corresponding_arco_density": 28.9076478,
           "sordina_arco_ratio": 1.0,
           "density_relation_to_arco": "",
           "table_span_midi": [
@@ -652,8 +652,8 @@
           "instrument": "flauta",
           "resolved_profile_id": "flauta",
           "module_name": "flute",
-          "one_player_density": 16.4068442,
-          "corresponding_arco_density": 16.4068442,
+          "one_player_density": 26.2008456,
+          "corresponding_arco_density": 26.2008456,
           "sordina_arco_ratio": 1.0,
           "density_relation_to_arco": "",
           "table_span_midi": [
@@ -673,8 +673,8 @@
           "instrument": "flauta",
           "resolved_profile_id": "flauta",
           "module_name": "flute",
-          "one_player_density": 15.7302031,
-          "corresponding_arco_density": 15.7302031,
+          "one_player_density": 25.8162565,
+          "corresponding_arco_density": 25.8162565,
           "sordina_arco_ratio": 1.0,
           "density_relation_to_arco": "",
           "table_span_midi": [
@@ -697,8 +697,8 @@
         "instrument": "flauta",
         "resolved_profile_id": "flauta",
         "module_name": "flute",
-        "one_player_density": 25.9547576,
-        "corresponding_arco_density": 25.9547576,
+        "one_player_density": 28.9076478,
+        "corresponding_arco_density": 28.9076478,
         "sordina_arco_ratio": 1.0,
         "density_relation_to_arco": "",
         "table_span_midi": [
@@ -718,8 +718,8 @@
         "instrument": "flauta",
         "resolved_profile_id": "flauta",
         "module_name": "flute",
-        "one_player_density": 16.4068442,
-        "corresponding_arco_density": 16.4068442,
+        "one_player_density": 26.2008456,
+        "corresponding_arco_density": 26.2008456,
         "sordina_arco_ratio": 1.0,
         "density_relation_to_arco": "",
         "table_span_midi": [
@@ -739,8 +739,8 @@
         "instrument": "flauta",
         "resolved_profile_id": "flauta",
         "module_name": "flute",
-        "one_player_density": 15.7302031,
-        "corresponding_arco_density": 15.7302031,
+        "one_player_density": 25.8162565,
+        "corresponding_arco_density": 25.8162565,
         "sordina_arco_ratio": 1.0,
         "density_relation_to_arco": "",
         "table_span_midi": [
@@ -755,6 +755,6 @@
       }
     ],
     "input_hash": "12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8",
-    "software_version": "1.1.4"
+    "software_version": "1.1.6"
   }
 }
