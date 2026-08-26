@@ -206,68 +206,62 @@ extrapolation workbook is available.
 ## Violin sordina (`violin_sordina`)
 
 - **Module:** `instrumentos/violin_sordina.py`
-- **GUI display name:** `vl sord`
+- **GUI display name:** `vl_con_sord` (aliases: `vl sord`, `vl_sord`)
 - **Table:** `spectral_data` (49 chromatic rows, G3–G7 × **all 10** dynamics)
-- **Provenance (2026-08-11):** `Results` sheet of
-  `D:\CORDAS\VIOLINO\OK_VIOLIN_con sordina_dynamics extrapolation.xlsx`
-  (CDM Technique Extrapolator METApool; IOWA+ORCHIDEA collections,
-  Philharmonia removed)
+- **Provenance (2026-08-26):** `Results` sheet of
+  `D:\CORDAS_2\Violin_con_sordino_dynamics.xlsx`
+  (dest Zenodo con sordino Media = average of available IOWA W and Orchidea F)
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
-  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
-- **Hygiene:** interior cells clamped into their measured pp/mf/ff segment
-  where the workbook marginally overshoots (G7 mp, 0.4%)
+  equal-log outers (r=0.8), Dynamics_predicter v1.5.2.1
 - **Source technique:** `arco_sordina`
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py --violin-only`
 
 ## Violin sul tasto (`violin_sul_tasto`)
 
 - **Module:** `instrumentos/violin_sul_tasto.py`
-- **GUI display name:** `vl st`
+- **GUI display name:** `vl_sul_tast` (aliases: `vl st`, `vl_st`)
 - **Table:** `spectral_data` (49 chromatic rows, G3–G7 × **all 10** dynamics)
-- **Provenance (2026-08-11):** `Results` sheet of
-  `D:\CORDAS\VIOLINO\OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx`
-  (CDM Technique Extrapolator METApool; IOWA+ORCHIDEA collections,
-  Philharmonia removed)
+- **Provenance (2026-08-26):** `Results` sheet of
+  `D:\CORDAS_2\Violin_sul_tasto_dynamics.xlsx`
+  (dest Zenodo sul tasto Media)
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
-  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
+  equal-log outers (r=0.8), Dynamics_predicter v1.5.2.1
 - **Source technique:** `arco_sul_tasto`
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py --violin-only`
 
 ## Violin sul ponticello (`violin_sul_ponticello`)
 
 - **Module:** `instrumentos/violin_sul_ponticello.py`
-- **GUI display name:** `vl sp`
-- **Table:** `spectral_data` (49 chromatic rows, G3–G7 × **all 10** dynamics)
-- **Provenance (2026-08-11):** `Results` sheet of
-  `D:\CORDAS\VIOLINO\OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx`
-  (CDM Technique Extrapolator METApool; IOWA+ORCHIDEA collections,
-  Philharmonia removed)
+- **GUI display name:** `vl_sul_pont` (aliases: `vl sp`, `vl_sp`)
+- **Table:** `spectral_data` (53 chromatic rows, G3–B7 × **all 10** dynamics)
+- **Provenance (2026-08-26):** `Results` sheet of
+  `D:\CORDAS_2\Violin_sul_ponticello_dynamics.xlsx`
+  (dest Zenodo sul ponticello Media)
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
-  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
+  equal-log outers (r=0.8), Dynamics_predicter v1.5.2.1
 - **Source technique:** `arco_sul_ponticello`
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py --violin-only`
 
 ## Violin harmonics (`violin_harmonics`)
 
 - **Module:** `instrumentos/violin_harmonics.py`
-- **GUI display name:** `vl harm`
-- **Table:** `spectral_data` (37 chromatic sounding rows, G4–G7 × **all 10** dynamics)
-- **Provenance (2026-08-11):** `Results` sheet of
-  `D:\CORDAS\VIOLINO\OK_VIOLIN_harmonics_dynamics extrapolation.xlsx`
-  (CDM Technique Extrapolator METApool, pooled natural + artificial harmonics;
-  IOWA+ORCHIDEA collections, Philharmonia removed)
+- **GUI display name:** `vl_harm` (alias: `vl harm`)
+- **Table:** `spectral_data` (36 chromatic sounding rows, C5–B7 × **all 10** dynamics)
+- **Provenance (2026-08-26):** `Results` sheet of
+  `D:\CORDAS_2\Violin_harmonics_dynamics.xlsx`
+  (dest Zenodo harmonics Media; notes with a complete pp/mf/ff triad only)
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
-  equal-log outers (r=0.8), Dynamics extrapolator v1.5.2.1
+  equal-log outers (r=0.8), Dynamics_predicter v1.5.2.1
 - **Source technique:** `arco_harmonic` (pooled)
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py`
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py --violin-only`
 - **History (2026-08-11):** replaces the retired split `violin_nat_harm` /
   `violin_art_harm` modules; their aliases now resolve to this pooled table
 
@@ -305,14 +299,14 @@ Offline curation pipeline (not used at runtime):
 1. `tools/populate_td_importer_sheets_from_zenodo_media.py` — builds `AcousticTable`, `Registry`, and `Provenance` sheets from `*_Media` workbooks. Applies `normalize_media_note_label()` when reading media rows (strips trailing `(2)` duplicate markers).
 2. `tools/generate_instrument_modules.py` — legacy 3-anchor generator; its `CONFIGS` also drive the source-reconstruction audit. All four string reconstructions read the curated Media sheets (`Violin_Media`, `VIOLA_Media`, `Cello_Media`, `DBass_Media`) via `load_spectral_data_from_media` (2026-08-08 config fix).
 3. `tools/generate_violin_technique_modules_from_xlsx.py` — emits / replaces `violin_sordina.py`, `violin_sul_tasto.py`, `violin_sul_ponticello.py` from Desktop `Violin_mf.xlsx` / `Violin_ff.xlsx` (pp via arco ratio transfer).
-4. `tools/generate_violin_technique_modules_from_ok_workbooks.py` — emits the violin technique modules plus `viola.py`, `viola_sordina.py`, `viola_sul_ponticello.py`, `viola_harmonics.py` from the OK_VIOLIN / OK_VIOLA dynamics workbooks (the retired STE viola generator emitted the removed `viola_sul_tasto.py`).
+4. `tools/generate_violin_technique_modules_from_ok_workbooks.py` — violin techniques (`--violin-only`) from `D:\CORDAS_2\Violin_*_dynamics.xlsx`; viola modules from the OK_VIOLA workbooks when run without that flag.
 5. `tools/generate_full_dynamics_modules_from_xlsx.py` — commits Dynamics_predicter sheet `Results` ladders into ordinary-sustain modules (`cello`, `double_bass`, `flute`, `clarinet`, `bassoon`, `oboe`; `viola` now comes from the OK-workbooks generator).
 6. `tools/generate_violin_arco_full_dynamics_from_xlsx.py` — violin arco `Results` ladder regenerator.
 7. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
 The former cello / double-bass STE technique generators (`generate_cello_technique_modules_from_xlsx.py`, `generate_double_bass_technique_modules_from_xlsx.py`) were retired when those modules were withdrawn (2026-08-18).
 
-**String techniques (2026-08-18):** remaining violin and viola technique modules (sordina / sul tasto / sul ponticello where present) plus violin/viola harmonics commit full 10-level ladders. Cello and double-bass technique tables were withdrawn. **Violin harmonics** still carry the older D6 monotone ladders (`tools/enforce_pitched_monotone_dynamic_ladders.py`, 2026-08-03) pending a data-faithful rebuild. Runtime GPR remains removed.
+**String techniques (2026-08-26):** violin sordina / sul tasto / sul ponticello / harmonics rebuilt from dest-Zenodo Dynamics_predicter `Results` ladders (`D:\CORDAS_2\Violin_*_dynamics.xlsx`). Harmonics span is C5–B7 (36 notes); ponticello G3–B7 (53 notes). Viola technique modules unchanged. Cello and double-bass technique tables remain withdrawn. Runtime GPR remains removed.
 
 ## Media note-label normalization (PR #14)
 

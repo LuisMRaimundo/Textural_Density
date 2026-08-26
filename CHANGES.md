@@ -2,6 +2,10 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-26 — Violin technique ladders from dest-Zenodo dynamics
+
+Rebuilt `violin_sordina`, `violin_sul_tasto`, `violin_sul_ponticello`, and `violin_harmonics` from `D:\CORDAS_2\Violin_*_dynamics.xlsx` (`Results`, Dynamics_predicter v1.5.2.1). Same commit path as the existing harmonics generator (`--violin-only`). GUI display names are now `vl_con_sord`, `vl_sul_pont`, `vl_sul_tast`, `vl_harm` (old short names remain aliases). Harmonics table is C5–B7 (36 notes); ponticello is G3–B7 (53 notes). Formulae unchanged.
+
 ## 2026-08-25 — Dest-Zenodo ordinary-sustain ladders: freeze refresh
 
 Ordinary-sustain CDM tables (12 instruments) were rebuilt from dest `_2` Zenodo books via Dynamics_predicter. This commit refreshes the goldens and contracts that those tables drive. Formulae unchanged.

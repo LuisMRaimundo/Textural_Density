@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
-"""Generate string technique instrument modules from OK_* dynamics workbooks.
+"""Generate string technique instrument modules from dynamics workbooks.
 
-Sources (D:\\CORDAS\\VIOLINO and D:\\CORDAS\\VIOLA, Dynamics extrapolator
-v1.5.2.1 exports, ``Results`` sheet = data-faithful full 10-dynamic ladder;
-pp/mf/ff are measured anchors, p/mp/f PCHIP interiors, pppp/ppp/fff/ffff
+Violin techniques (2026-08-26) read dest-Zenodo Dynamics_predicter exports in
+``D:\\CORDAS_2`` (``Results`` sheet = data-faithful 10-dynamic ladder;
+pp/mf/ff measured Media anchors, p/mp/f PCHIP interiors, pppp/ppp/fff/ffff
 tapered equal-log outers, r=0.8):
 
-  - OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx → violin_sul_ponticello.py
-  - OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx      → violin_sul_tasto.py
-  - OK_VIOLIN_con sordina_dynamics extrapolation.xlsx    → violin_sordina.py
-  - OK_VIOLIN_harmonics_dynamics extrapolation.xlsx      → violin_harmonics.py
-  - OK_VIOLA_harmonics_dynamics extrapolation.xlsx       → viola_harmonics.py
-  - OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx  → viola.py
-  - OK_VIOLA_con sordina_dynamics extrapolation.xlsx     → viola_sordina.py
-  - OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx  → viola_sul_ponticello.py
+  - Violin_sul_ponticello_dynamics.xlsx → violin_sul_ponticello.py
+  - Violin_sul_tasto_dynamics.xlsx      → violin_sul_tasto.py
+  - Violin_con_sordino_dynamics.xlsx    → violin_sordina.py
+  - Violin_harmonics_dynamics.xlsx      → violin_harmonics.py
 
-Registry display names (GUI): "vl sp", "vl st", "vl sord", "vl harm",
-"vla harm", "vla", "vla sord", "vla sp" (registry edits are maintained
-directly in ``instrumentos/registry.py``).
+Viola modules still read the OK_VIOLA workbooks under ``D:\\CORDAS\\VIOLA``.
+
+Registry display names (GUI): ``vl_sul_pont``, ``vl_sul_tast``, ``vl_con_sord``,
+``vl_harm``, ``vla harm``, ``vla``, ``vla sord``, ``vla sp`` (registry edits
+are maintained directly in ``instrumentos/registry.py``).
+
+    python tools/generate_violin_technique_modules_from_ok_workbooks.py --violin-only
 """
 
 from __future__ import annotations
@@ -34,41 +34,63 @@ if str(ROOT) not in sys.path:
 from utils.notes import normalize_note_string  # noqa: E402
 
 SRC_DIR = Path(r"d:\CORDAS\VIOLINO")
+VIOLIN_SRC_DIR = Path(r"D:\CORDAS_2")
 
 DYNAMIC_LEVELS = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
+VIOLIN_KEYS = ("sul_ponticello", "sul_tasto", "con_sordina", "harmonics")
 
 TECHNIQUE_SPECS = {
     "sul_ponticello": {
-        "workbook": "OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx",
+        "workbook": "Violin_sul_ponticello_dynamics.xlsx",
+        "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_sul_ponticello",
         "technique_label": "arco sul ponticello",
         "source_technique": "arco_sul_ponticello",
         "doc_anchor": "violin-sul-ponticello",
-        "pitch_range": (55, 103),
+        "pitch_range": (55, 107),
+        "citation_pool": (
+            "dest Zenodo Violin_sul ponticello Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
     },
     "sul_tasto": {
-        "workbook": "OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx",
+        "workbook": "Violin_sul_tasto_dynamics.xlsx",
+        "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_sul_tasto",
         "technique_label": "arco sul tasto",
         "source_technique": "arco_sul_tasto",
         "doc_anchor": "violin-sul-tasto",
         "pitch_range": (55, 103),
+        "citation_pool": (
+            "dest Zenodo Violin_sul tasto Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
     },
     "con_sordina": {
-        "workbook": "OK_VIOLIN_con sordina_dynamics extrapolation.xlsx",
+        "workbook": "Violin_con_sordino_dynamics.xlsx",
+        "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_sordina",
-        "technique_label": "arco con sordina",
+        "technique_label": "arco con sordino",
         "source_technique": "arco_sordina",
         "doc_anchor": "violin-sordina",
         "pitch_range": (55, 103),
+        "citation_pool": (
+            "dest Zenodo Violin_con sordino Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
     },
     "harmonics": {
-        "workbook": "OK_VIOLIN_harmonics_dynamics extrapolation.xlsx",
+        "workbook": "Violin_harmonics_dynamics.xlsx",
+        "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_harmonics",
         "technique_label": "arco harmonics",
         "source_technique": "arco_harmonic",
         "doc_anchor": "violin-harmonics",
-        "pitch_range": (67, 103),
+        "pitch_range": (72, 107),
+        "citation_pool": (
+            "dest Zenodo Violin_harmonics Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
     },
     "viola_harmonics": {
         "workbook": "OK_VIOLA_harmonics_dynamics extrapolation.xlsx",
@@ -121,7 +143,7 @@ TECHNIQUE_SPECS = {
     },
 }
 
-VERSION = "2026-08-11"
+VERSION = "2026-08-26"
 
 
 def load_results_ladder(path: Path) -> dict[str, dict[str, float]]:
@@ -252,8 +274,12 @@ def calcular_densidade(nota, dinamica):
 '''
 
 
-def main() -> int:
-    for technique, spec in TECHNIQUE_SPECS.items():
+def main(argv: list[str] | None = None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    specs = TECHNIQUE_SPECS
+    if "--violin-only" in argv:
+        specs = {k: TECHNIQUE_SPECS[k] for k in VIOLIN_KEYS}
+    for technique, spec in specs.items():
         if spec.get("on_hold"):
             print(f"SKIP {technique}: on hold pending source-data verification", file=sys.stderr)
             continue

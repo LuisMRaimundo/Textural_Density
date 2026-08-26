@@ -29,7 +29,7 @@ def test_sul_tasto_aliases_resolve(alias: str):
 
 
 def test_sul_tasto_appears_in_gui_instrument_list():
-    assert "vl st" in INSTRUMENTS
+    assert "vl_sul_tast" in INSTRUMENTS
 
 
 def test_full_ten_level_ladder_committed():
@@ -45,19 +45,19 @@ def test_full_ten_level_ladder_committed():
 
 def test_mf_lookup_returns_workbook_anchor():
     mod = importlib.import_module("instrumentos.violin_sul_tasto")
-    assert mod.calcular_densidade("G4", "mf") == pytest.approx(18.1157, rel=0, abs=1e-5)
-    assert mod.calcular_densidade("G3", "mf") == pytest.approx(36.0887, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("G4", "mf") == pytest.approx(27.431408, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("G3", "mf") == pytest.approx(47.293283, rel=0, abs=1e-5)
 
 
 def test_pipeline_accepts_violin_sul_tasto():
     request = AnalysisRequest(
         notes=("G4",),
         dynamics=("mf",),
-        instruments=("Violin sul tasto",),
+        instruments=("vl_sul_tast",),
         num_instruments=(1,),
     )
     resultados, densities, _ = calculate_metrics(request)
-    assert densities[0] == pytest.approx(18.1157, rel=0, abs=1e-5)
+    assert densities[0] == pytest.approx(27.431408, rel=0, abs=1e-5)
     trace = resultados["instrument_lookup_trace"][0]
     assert trace["resolved_profile_id"] == "violino_sul_tasto"
     assert trace["module_name"] == "violin_sul_tasto"

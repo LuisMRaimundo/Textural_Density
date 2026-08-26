@@ -387,7 +387,7 @@ REGISTRY["viola_sul_ponticello"] = _profile(
 
 REGISTRY["violino_sordina"] = _profile(
     "violino_sordina",
-    "vl sord",
+    "vl_con_sord",
     "strings",
     sounding=(55, 103),
     comfortable=(55, 76),
@@ -401,14 +401,14 @@ REGISTRY["violino_sordina"] = _profile(
     unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/violin_sordina.py from "
-        "OK_VIOLIN_con sordina_dynamics extrapolation.xlsx Results sheet "
-        "(CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, "
+        "D:\\CORDAS_2\\Violin_con_sordino_dynamics.xlsx Results sheet "
+        "(dest Zenodo con sordino Media; measured pp/mf/ff anchors, "
         "PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
-        "Numerical CDM table covers arco_sordina only; anchors come from technique-"
-        "extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media "
+        "(IOWA+Orchidea average) at pp/mf/ff.",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
@@ -418,6 +418,8 @@ REGISTRY["violino_sordina"] = _profile(
         "Violin sordina",
         "violin con sordina",
         "violin_con_sordina",
+        "violin con sordino",
+        "violin_con_sordino",
         "violino sordina",
         "violino_sordina",
         "violino con sordina",
@@ -426,14 +428,15 @@ REGISTRY["violino_sordina"] = _profile(
         "muted violin",
         "vl sord",
         "vl_sord",
+        "vl_con_sord",
     ),
 )
 
 REGISTRY["violino_sul_ponticello"] = _profile(
     "violino_sul_ponticello",
-    "vl sp",
+    "vl_sul_pont",
     "strings",
-    sounding=(55, 103),
+    sounding=(55, 107),
     comfortable=(55, 76),
     brightness="bright",
     sustain="sustained",
@@ -445,14 +448,14 @@ REGISTRY["violino_sul_ponticello"] = _profile(
     unsupported=("pizzicato", "mute", "sul_tasto"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_ponticello.py from "
-        "OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx Results sheet "
-        "(CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, "
-        "PCHIP interiors, tapered equal-log outers)."
+        "D:\\CORDAS_2\\Violin_sul_ponticello_dynamics.xlsx Results sheet "
+        "(dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers). Table span G3–B7."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
-        "Numerical CDM table covers arco_sul_ponticello only; anchors come from technique-"
-        "extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media "
+        "(IOWA+Orchidea average) at pp/mf/ff.",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
@@ -468,13 +471,14 @@ REGISTRY["violino_sul_ponticello"] = _profile(
         "sul_ponticello_violin",
         "vl sp",
         "vl_sp",
+        "vl_sul_pont",
     ),
 )
 
 
 REGISTRY["violino_sul_tasto"] = _profile(
     "violino_sul_tasto",
-    "vl st",
+    "vl_sul_tast",
     "strings",
     sounding=(55, 103),
     comfortable=(55, 76),
@@ -488,14 +492,14 @@ REGISTRY["violino_sul_tasto"] = _profile(
     unsupported=("pizzicato", "mute", "sul_ponticello"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_tasto.py from "
-        "OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx Results sheet "
-        "(CDM Technique Extrapolator METApool; measured pp/mf/ff anchors, "
+        "D:\\CORDAS_2\\Violin_sul_tasto_dynamics.xlsx Results sheet "
+        "(dest Zenodo sul tasto Media; measured pp/mf/ff anchors, "
         "PCHIP interiors, tapered equal-log outers)."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
-        "Numerical CDM table covers arco_sul_tasto only; anchors come from technique-"
-        "extrapolated CDM pools (not direct Zenodo technique recordings).",
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sul_tasto only; anchors are dest-Zenodo Media "
+        "(IOWA+Orchidea average) at pp/mf/ff.",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
@@ -510,15 +514,16 @@ REGISTRY["violino_sul_tasto"] = _profile(
         "sul_tasto_violin",
         "vl st",
         "vl_st",
+        "vl_sul_tast",
     ),
 )
 
 REGISTRY["violino_harm"] = _profile(
     "violino_harm",
-    "vl harm",
+    "vl_harm",
     "strings",
-    sounding=(67, 103),
-    comfortable=(67, 96),
+    sounding=(72, 107),
+    comfortable=(72, 96),
     brightness="bright",
     sustain="sustained",
     attack="soft",
@@ -529,15 +534,15 @@ REGISTRY["violino_harm"] = _profile(
     unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/violin_harmonics.py from "
-        "OK_VIOLIN_harmonics_dynamics extrapolation.xlsx Results sheet "
-        "(CDM Technique Extrapolator METApool, pooled natural + artificial harmonics; "
-        "measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers)."
+        "D:\\CORDAS_2\\Violin_harmonics_dynamics.xlsx Results sheet "
+        "(dest Zenodo harmonics Media; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers). Table span C5–B7."
     ),
     warnings=(
-        "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
-        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors come from "
-        "technique-extrapolated CDM pools (not direct Zenodo technique recordings).",
-        "Table span is harmonic sounding register (G4\u2013G7); notes outside this range "
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are "
+        "dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
+        "Table span is the harmonic sounding register (C5–B7); notes outside this range "
         "use controlled pitch extrapolation or fallback.",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",

@@ -13,6 +13,8 @@ SORDINA_INPUT_KEYWORDS: tuple[str, ...] = (
     "muted",
     "con_sordina",
     "con sordina",
+    "con_sord",
+    "vl_con_sord",
 )
 
 AUDIT_FLAG_HIGH = "sordina_gt_arco_high"
