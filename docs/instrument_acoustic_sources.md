@@ -298,7 +298,7 @@ Offline curation pipeline (not used at runtime):
 
 The former cello / double-bass STE technique generators (`generate_cello_technique_modules_from_xlsx.py`, `generate_double_bass_technique_modules_from_xlsx.py`) were retired when those modules were withdrawn (2026-08-18).
 
-**String techniques (2026-08-26):** violin and viola sordina / sul ponticello / harmonics (and violin sul tasto) rebuilt from dest-Zenodo Dynamics_predicter `Results` ladders (`D:\CORDAS_2\Violin_*_dynamics.xlsx`, `D:\CORDAS_2\Viola_*_dynamics.xlsx`). Violin harmonics C5–B7 (36 notes); violin ponticello G3–B7 (53 notes). Viola sordina/ponticello C3–A#6 (47 notes); viola harmonics C5–B7 (36 notes). No viola sul tasto workbook. Cello and double-bass technique tables remain withdrawn. Runtime GPR remains removed.
+**String techniques (2026-08-26):** violin and viola sordina / sul ponticello / harmonics (and violin sul tasto) rebuilt from dest-Zenodo Dynamics_predicter `Results` ladders (`D:\CORDAS_2\Violin_*_dynamics.xlsx`, `D:\CORDAS_2\Viola_*_dynamics.xlsx`). Violin harmonics C5–B7 (36 notes); violin ponticello G3–B7 (53 notes). Viola sordina/ponticello C3–A#6 (47 notes); viola harmonics C5–B7 (36 notes). GUI display names: violin `vl_con_sord` / `vl_sul_pont` / `vl_sul_tast` / `vl_harm`; viola `vla sord` / `vla sp` / `vla harm`. No viola sul tasto workbook. Cello and double-bass technique tables remain withdrawn. Runtime GPR remains removed.
 
 ## Media note-label normalization (PR #14)
 
