@@ -20,8 +20,8 @@ Viola modules (2026-08-26) read dest-Zenodo Dynamics_predicter exports in
   - Viola_harmonics_dynamics.xlsx     → viola_harmonics.py  (C5–B7 only)
 
 No sul tasto workbook. Registry display names (GUI): ``vl_sul_pont``,
-``vl_sul_tast``, ``vl_con_sord``, ``vl_harm``, ``vla``, ``vla_con_sord``,
-``vla_sul_pont``, ``vla_harm`` (registry edits are maintained in
+``vl_sul_tast``, ``vl_con_sord``, ``vl_harm``, ``vla``, ``vla sord``,
+``vla sp``, ``vla harm`` (registry edits are maintained in
 ``instrumentos/registry.py``).
 
     python tools/generate_violin_technique_modules_from_ok_workbooks.py --viola-only

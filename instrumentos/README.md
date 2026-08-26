@@ -213,9 +213,9 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **vl_sul_pont** | `violin_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, G3–B7 (high uncertainty) |
 | **vl_harm** | `violin_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C5–B7 (high uncertainty) |
 | **vla** | `viola.py` | `literature_derived` | dest Zenodo arco ordinario Results ladder (IOWA+ORCH pp/mf/ff anchors) |
-| **vla_con_sord** | `viola_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, C3–A#6 (high uncertainty) |
-| **vla_sul_pont** | `viola_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, C3–A#6 (high uncertainty) |
-| **vla_harm** | `viola_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C5–B7 (high uncertainty) |
+| **vla sord** | `viola_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, C3–A#6 (high uncertainty) |
+| **vla sp** | `viola_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, C3–A#6 (high uncertainty) |
+| **vla harm** | `viola_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C5–B7 (high uncertainty) |
 
 | **Cello** | `cello.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 | **Double bass** | `double_bass.py` | `literature_derived` | IOWA+ORCH arco CDM medians |

@@ -126,7 +126,7 @@ live audio analysis.
 ## Viola sordina (`viola_sordina`)
 
 - **Module:** `instrumentos/viola_sordina.py`
-- **GUI display name:** `vla_con_sord` (aliases: `vla sord`, `vla_sord`)
+- **GUI display name:** `vla sord` (aliases: `vla_sord`, `vla_con_sord`)
 - **Table:** `spectral_data` (47 chromatic rows, C3–A#6 × **all 10** dynamics)
 - **Provenance (2026-08-26):** `Results` sheet of
   `D:\CORDAS_2\Viola_con_sordino_dynamics.xlsx`
@@ -150,7 +150,7 @@ extrapolation workbook is available.
 ## Viola sul ponticello (`viola_sul_ponticello`)
 
 - **Module:** `instrumentos/viola_sul_ponticello.py`
-- **GUI display name:** `vla_sul_pont` (aliases: `vla sp`, `vla_sp`)
+- **GUI display name:** `vla sp` (aliases: `vla_sp`, `vla_sul_pont`)
 - **Table:** `spectral_data` (47 chromatic rows, C3–A#6 × **all 10** dynamics)
 - **Provenance (2026-08-26):** `Results` sheet of
   `D:\CORDAS_2\Viola_sul_ponticello_dynamics.xlsx`
@@ -166,7 +166,7 @@ extrapolation workbook is available.
 ## Viola harmonics (`viola_harmonics`)
 
 - **Module:** `instrumentos/viola_harmonics.py`
-- **GUI display name:** `vla_harm` (aliases: `vla harm`, `vla_harm`)
+- **GUI display name:** `vla harm` (aliases: `vla_harm`)
 - **Table:** `spectral_data` (36 chromatic sounding rows, C5–B7 × **all 10** dynamics)
 - **Provenance (2026-08-26):** `Results` sheet of
   `D:\CORDAS_2\Viola_harmonics_dynamics.xlsx`
