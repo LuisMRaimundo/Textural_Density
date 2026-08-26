@@ -11,13 +11,20 @@ tapered equal-log outers, r=0.8):
   - Violin_con_sordino_dynamics.xlsx    → violin_sordina.py
   - Violin_harmonics_dynamics.xlsx      → violin_harmonics.py
 
-Viola modules still read the OK_VIOLA workbooks under ``D:\\CORDAS\\VIOLA``.
+Viola modules (2026-08-26) read dest-Zenodo Dynamics_predicter exports in
+``D:\\CORDAS_2``:
 
-Registry display names (GUI): ``vl_sul_pont``, ``vl_sul_tast``, ``vl_con_sord``,
-``vl_harm``, ``vla harm``, ``vla``, ``vla sord``, ``vla sp`` (registry edits
-are maintained directly in ``instrumentos/registry.py``).
+  - Viola_dynamics.xlsx               → viola.py
+  - Viola_con_sordino_dynamics.xlsx   → viola_sordina.py
+  - Viola_sul_ponticello_dynamics.xlsx → viola_sul_ponticello.py
+  - Viola_harmonics_dynamics.xlsx     → viola_harmonics.py  (C5–B7 only)
 
-    python tools/generate_violin_technique_modules_from_ok_workbooks.py --violin-only
+No sul tasto workbook. Registry display names (GUI): ``vl_sul_pont``,
+``vl_sul_tast``, ``vl_con_sord``, ``vl_harm``, ``vla``, ``vla_con_sord``,
+``vla_sul_pont``, ``vla_harm`` (registry edits are maintained in
+``instrumentos/registry.py``).
+
+    python tools/generate_violin_technique_modules_from_ok_workbooks.py --viola-only
 """
 
 from __future__ import annotations
@@ -35,9 +42,11 @@ from utils.notes import normalize_note_string  # noqa: E402
 
 SRC_DIR = Path(r"d:\CORDAS\VIOLINO")
 VIOLIN_SRC_DIR = Path(r"D:\CORDAS_2")
+VIOLA_SRC_DIR = Path(r"D:\CORDAS_2")
 
 DYNAMIC_LEVELS = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
 VIOLIN_KEYS = ("sul_ponticello", "sul_tasto", "con_sordina", "harmonics")
+VIOLA_KEYS = ("viola_ordinario", "viola_con_sordina", "viola_sul_ponticello", "viola_harmonics")
 
 TECHNIQUE_SPECS = {
     "sul_ponticello": {
@@ -93,53 +102,63 @@ TECHNIQUE_SPECS = {
         ),
     },
     "viola_harmonics": {
-        "workbook": "OK_VIOLA_harmonics_dynamics extrapolation.xlsx",
-        "src_dir": r"d:\CORDAS\VIOLA",
+        "workbook": "Viola_harmonics_dynamics.xlsx",
+        "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola_harmonics",
         "technique_label": "arco harmonics",
         "source_technique": "arco_harmonic",
         "doc_anchor": "viola-harmonics",
-        # 2026-08-11 re-export: sparse G#7-B7 tail removed, span is now C4-C7.
-        "pitch_range": (60, 96),
+        # dest-Zenodo Media harmonics start at C5; C#7–B7 are real measured rows.
+        "pitch_range": (72, 107),
+        "citation_pool": (
+            "dest Zenodo Viola_harmonics Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
     },
     "viola_ordinario": {
-        "workbook": "OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx",
-        "src_dir": r"d:\CORDAS\VIOLA",
+        "workbook": "Viola_dynamics.xlsx",
+        "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola",
         "technique_label": "arco ordinario",
         "source_technique": "arco_sustain",
         "doc_anchor": "viola",
         "pitch_range": (48, 96),
-        # Base arco table: anchors are direct IOWA+ORCH medians (not a
-        # technique-extrapolated METApool), hence medium uncertainty.
+        # Base arco table: dest-Zenodo Media anchors (IOWA+ORCH average).
         "uncertainty": "medium",
-        "citation_pool": "IOWA+ORCHIDEA Zenodo collections, Philharmonia removed",
+        "citation_pool": (
+            "dest Zenodo VIOLA_Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
     },
     "viola_con_sordina": {
-        "workbook": "OK_VIOLA_con sordina_dynamics extrapolation.xlsx",
-        "src_dir": r"d:\CORDAS\VIOLA",
+        "workbook": "Viola_con_sordino_dynamics.xlsx",
+        "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola_sordina",
-        "technique_label": "arco con sordina",
+        "technique_label": "arco con sordino",
         "source_technique": "arco_sordina",
         "doc_anchor": "viola-sordina",
-        "pitch_range": (48, 96),
-        # 2026-08-11 evening re-export fixed the earlier contamination (was:
-        # mf duplicated the harmonics pool with severe ff < mf inversions).
-        # The C4-B4 octave still shares pp/mf with the harmonics pool
-        # (coherent ladders; assumed intentional METApool register fill).
+        "pitch_range": (48, 94),
+        "citation_pool": (
+            "dest Zenodo Viola_con sordino Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
     },
     "viola_sul_ponticello": {
-        "workbook": "OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx",
-        "src_dir": r"d:\CORDAS\VIOLA",
+        "workbook": "Viola_sul_ponticello_dynamics.xlsx",
+        "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola_sul_ponticello",
         "technique_label": "arco sul ponticello",
         "source_technique": "arco_sul_ponticello",
         "doc_anchor": "viola-sul-ponticello",
-        "pitch_range": (48, 96),
+        "pitch_range": (48, 94),
+        "citation_pool": (
+            "dest Zenodo Viola_sul ponticello Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
     },
 }
 
@@ -279,6 +298,8 @@ def main(argv: list[str] | None = None) -> int:
     specs = TECHNIQUE_SPECS
     if "--violin-only" in argv:
         specs = {k: TECHNIQUE_SPECS[k] for k in VIOLIN_KEYS}
+    elif "--viola-only" in argv:
+        specs = {k: TECHNIQUE_SPECS[k] for k in VIOLA_KEYS}
     for technique, spec in specs.items():
         if spec.get("on_hold"):
             print(f"SKIP {technique}: on hold pending source-data verification", file=sys.stderr)

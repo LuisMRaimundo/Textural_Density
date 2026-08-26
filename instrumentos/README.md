@@ -25,14 +25,14 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 | `flute.py`, `clarinet.py`, `oboe.py`, `bassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
 | `trumpet.py`, `horn.py`, `trombone.py`, `tuba.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH sustain anchors) |
 | `violin.py`, `cello.py`, `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
-| `viola.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
+| `viola.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
 | `violin_sordina.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_con_sordino_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
 | `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_sul_tasto_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
 | `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_sul_ponticello_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
 | `violin_harmonics.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_harmonics_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C5–B7) |
-| `viola_sordina.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_con sordina_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
-| `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
-| `viola_harmonics.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_harmonics_dynamics extrapolation.xlsx` Results ladder (pooled harmonics; measured pp/mf/ff anchors) |
+| `viola_sordina.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_con_sordino_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C3–A#6) |
+| `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_sul_ponticello_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C3–A#6) |
+| `viola_harmonics.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_harmonics_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C5–B7) |
 | `bass_drum.py`, `cymbals.py`, `tamtam.py`, `gong.py` | `DYNAMIC_CDM` (10 dynamics; pitch-independent) | NonTunPerc MC anchors + committed former `internal_default` ladder |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
@@ -212,10 +212,10 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **vl_sul_tast** | `violin_sul_tasto.py` | `literature_derived` | dest Zenodo sul tasto Results ladder, G3–G7 (high uncertainty) |
 | **vl_sul_pont** | `violin_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, G3–B7 (high uncertainty) |
 | **vl_harm** | `violin_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C5–B7 (high uncertainty) |
-| **vla** | `viola.py` | `literature_derived` | OK_VIOLA arco ordinario Results ladder (IOWA+ORCH pp/mf/ff anchors) |
-| **vla sord** | `viola_sordina.py` | `literature_derived` | OK_VIOLA con sordina Results ladder (measured pp/mf/ff anchors, high uncertainty) |
-| **vla sp** | `viola_sul_ponticello.py` | `literature_derived` | OK_VIOLA sul ponticello Results ladder (measured pp/mf/ff anchors, high uncertainty) |
-| **vla harm** | `viola_harmonics.py` | `literature_derived` | OK_VIOLA pooled harmonics Results ladder, C4–C7 (high uncertainty) |
+| **vla** | `viola.py` | `literature_derived` | dest Zenodo arco ordinario Results ladder (IOWA+ORCH pp/mf/ff anchors) |
+| **vla_con_sord** | `viola_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, C3–A#6 (high uncertainty) |
+| **vla_sul_pont** | `viola_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, C3–A#6 (high uncertainty) |
+| **vla_harm** | `viola_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C5–B7 (high uncertainty) |
 
 | **Cello** | `cello.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 | **Double bass** | `double_bass.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
