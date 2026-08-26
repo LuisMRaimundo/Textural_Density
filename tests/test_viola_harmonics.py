@@ -15,8 +15,8 @@ from instrumentos.registry import resolve_profile
 @pytest.mark.parametrize(
     "alias",
     [
-        "vla_harm",
         "vla harm",
+        "vla_harm",
         "viola_harmonics",
         "viola harmonics",
         "viola harm",
@@ -31,7 +31,8 @@ def test_harmonics_aliases_resolve(alias: str):
 
 
 def test_harmonics_appears_in_gui_instrument_list():
-    assert "vla_harm" in INSTRUMENTS
+    assert "vla harm" in INSTRUMENTS
+    assert "vla_harm" not in INSTRUMENTS
 
 
 def test_full_ten_level_ladder_committed():
@@ -55,7 +56,7 @@ def test_pipeline_accepts_viola_harmonics():
     request = AnalysisRequest(
         notes=("C5",),
         dynamics=("mf",),
-        instruments=("vla_harm",),
+        instruments=("vla harm",),
         num_instruments=(1,),
     )
     resultados, densities, _ = calculate_metrics(request)

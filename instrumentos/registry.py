@@ -326,7 +326,7 @@ REGISTRY["viola"] = _profile(
 
 REGISTRY["viola_sordina"] = _profile(
     "viola_sordina",
-    "vla_con_sord",
+    "vla sord",
     "strings",
     sounding=(48, 94),
     comfortable=(50, 69),
@@ -371,7 +371,7 @@ REGISTRY["viola_sordina"] = _profile(
 
 REGISTRY["viola_sul_ponticello"] = _profile(
     "viola_sul_ponticello",
-    "vla_sul_pont",
+    "vla sp",
     "strings",
     sounding=(48, 94),
     comfortable=(50, 69),
@@ -600,7 +600,7 @@ REGISTRY["violino_harm"] = _profile(
 
 REGISTRY["viola_harm"] = _profile(
     "viola_harm",
-    "vla_harm",
+    "vla harm",
     "strings",
     sounding=(72, 107),
     comfortable=(72, 96),

@@ -13,12 +13,12 @@ from instrumentos.registry import resolve_profile
 
 DEST_TECHNIQUES = (
     {
-        "display": "vla_sul_pont",
+        "display": "vla sp",
         "module": "viola_sul_ponticello",
         "registry_id": "viola_sul_ponticello",
         "aliases": (
-            "vla_sul_pont",
             "vla sp",
+            "vla_sul_pont",
             "Viola sul ponticello",
             "viola_sul_ponticello",
             "viola sul ponticello",
@@ -31,12 +31,12 @@ DEST_TECHNIQUES = (
         "last": "A#6",
     },
     {
-        "display": "vla_con_sord",
+        "display": "vla sord",
         "module": "viola_sordina",
         "registry_id": "viola_sordina",
         "aliases": (
-            "vla_con_sord",
             "vla sord",
+            "vla_con_sord",
             "Viola sordina",
             "viola_sordina",
             "viola con sordina",
@@ -64,6 +64,8 @@ def test_viola_technique_aliases_resolve(tech: dict, alias_idx: int):
 @pytest.mark.parametrize("tech", DEST_TECHNIQUES, ids=lambda t: t["module"])
 def test_viola_technique_appears_in_gui(tech: dict):
     assert tech["display"] in INSTRUMENTS
+    assert "vla_con_sord" not in INSTRUMENTS
+    assert "vla_sul_pont" not in INSTRUMENTS
 
 
 def test_retired_sul_tasto_absent():
