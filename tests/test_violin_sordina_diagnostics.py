@@ -6,6 +6,7 @@ import pytest
 
 from core.pipeline import calculate_metrics
 from core.request import AnalysisRequest
+from gui.state import INSTRUMENTS
 from instrumentos.registry import resolve_profile
 from instrumentos.violin_sordina_diagnostics import (
     compare_violin_sordina_to_arco,
@@ -14,9 +15,14 @@ from instrumentos.violin_sordina_diagnostics import (
 )
 
 
+def test_sordina_appears_in_gui_instrument_list():
+    assert "vl_con_sord" in INSTRUMENTS
+
+
 @pytest.mark.parametrize(
     "alias",
     [
+        "vl_con_sord",
         "Violin sordina",
         "violin_sordina",
         "Violin con sordina",
@@ -82,9 +88,9 @@ def test_lookup_trace_does_not_change_calculation_results():
     )
 
     resultados, densities, _ = calculate_metrics(request)
-    assert densities == pytest.approx([30.4625, 32.4618617], rel=0, abs=1e-5)
+    assert densities == pytest.approx([33.37175, 32.4618617], rel=0, abs=1e-5)
     assert resultados["density"]["instrument"] == pytest.approx(
-        (30.4625 ** 2 + 32.4618617 ** 2) ** 0.5, rel=0, abs=1e-4
+        (33.37175 ** 2 + 32.4618617 ** 2) ** 0.5, rel=0, abs=1e-4
     )
 
     trace = resultados["instrument_lookup_trace"]
@@ -93,11 +99,11 @@ def test_lookup_trace_does_not_change_calculation_results():
     sordina_row = trace[0]
     assert sordina_row["resolved_profile_id"] == "violino_sordina"
     assert sordina_row["module_name"] == "violin_sordina"
-    assert sordina_row["one_player_density"] == pytest.approx(30.4625, rel=0, abs=1e-5)
+    assert sordina_row["one_player_density"] == pytest.approx(33.37175, rel=0, abs=1e-5)
     assert sordina_row["corresponding_arco_density"] == pytest.approx(21.9763192, rel=0, abs=1e-5)
     assert sordina_row["sordina_arco_ratio"] > 1.0
     assert sordina_row["density_relation_to_arco"] == "sordina_gt_arco"
-    assert sordina_row["audit_flag"] == "sordina_gt_arco_high"
+    assert sordina_row["audit_flag"] == "sordina_gt_arco_critical"
 
     arco_row = trace[1]
     assert arco_row["module_name"] == "violin"

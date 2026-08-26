@@ -26,10 +26,10 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 | `trumpet.py`, `horn.py`, `trombone.py`, `tuba.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH sustain anchors) |
 | `violin.py`, `cello.py`, `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
 | `viola.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_Arco ordinario_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
-| `violin_sordina.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_con sordina_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
-| `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_sul_tasto_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
-| `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_sul_ponticello_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
-| `violin_harmonics.py` | `spectral_data` (10 dynamics) | `OK_VIOLIN_harmonics_dynamics extrapolation.xlsx` Results ladder (pooled harmonics; measured pp/mf/ff anchors) |
+| `violin_sordina.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_con_sordino_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
+| `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_sul_tasto_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
+| `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_sul_ponticello_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
+| `violin_harmonics.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_harmonics_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C5–B7) |
 | `viola_sordina.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_con sordina_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
 | `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_sul ponticello_dynamics extrapolation.xlsx` Results ladder (measured pp/mf/ff anchors) |
 | `viola_harmonics.py` | `spectral_data` (10 dynamics) | `OK_VIOLA_harmonics_dynamics extrapolation.xlsx` Results ladder (pooled harmonics; measured pp/mf/ff anchors) |
@@ -208,10 +208,10 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **Tuba (Tba)** | `tuba.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (C1–A#4) |
 
 | **Violin** | `violin.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
-| **vl sord** | `violin_sordina.py` | `literature_derived` | OK_VIOLIN con sordina Results ladder, measured pp/mf/ff anchors (high uncertainty) |
-| **vl st** | `violin_sul_tasto.py` | `literature_derived` | OK_VIOLIN sul tasto Results ladder, measured pp/mf/ff anchors (high uncertainty) |
-| **vl sp** | `violin_sul_ponticello.py` | `literature_derived` | OK_VIOLIN sul ponticello Results ladder, measured pp/mf/ff anchors (high uncertainty) |
-| **vl harm** | `violin_harmonics.py` | `literature_derived` | OK_VIOLIN pooled harmonics Results ladder, G4–G7 (high uncertainty) |
+| **vl_con_sord** | `violin_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, G3–G7 (high uncertainty) |
+| **vl_sul_tast** | `violin_sul_tasto.py` | `literature_derived` | dest Zenodo sul tasto Results ladder, G3–G7 (high uncertainty) |
+| **vl_sul_pont** | `violin_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, G3–B7 (high uncertainty) |
+| **vl_harm** | `violin_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C5–B7 (high uncertainty) |
 | **vla** | `viola.py` | `literature_derived` | OK_VIOLA arco ordinario Results ladder (IOWA+ORCH pp/mf/ff anchors) |
 | **vla sord** | `viola_sordina.py` | `literature_derived` | OK_VIOLA con sordina Results ladder (measured pp/mf/ff anchors, high uncertainty) |
 | **vla sp** | `viola_sul_ponticello.py` | `literature_derived` | OK_VIOLA sul ponticello Results ladder (measured pp/mf/ff anchors, high uncertainty) |
