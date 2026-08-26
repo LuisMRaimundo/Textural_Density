@@ -2,6 +2,10 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-26 — Refresh string technique range-audit docs
+
+Regenerated `reports/instrument_register_audit.*` and `reports/instrument_metadata_range_resolution_audit.*` so committed spans match dest-Zenodo tables (viola sordina/ponticello C3–A#6; viola/violin harmonics C5–B7; violin ponticello G3–B7). GUI names for viola techniques remain `vla sord`, `vla sp`, `vla harm`. Formulae unchanged.
+
 ## 2026-08-26 — Viola technique ladders from dest-Zenodo dynamics
 
 Rebuilt `viola`, `viola_sordina`, `viola_sul_ponticello`, and `viola_harmonics` from `D:\CORDAS_2\Viola_*_dynamics.xlsx` (`Results`, Dynamics_predicter v1.5.2.1 `--pchip` r=0.8). Same commit path as the violin techniques (`--viola-only`). GUI display names remain `vla sord`, `vla sp`, `vla harm`. Sordina and ponticello tables are C3–A#6 (47 notes); harmonics is C5–B7 (36 notes). Formulae unchanged.
