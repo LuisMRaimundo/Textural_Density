@@ -1,6 +1,6 @@
 # Instrument register audit
 
-**Instruments audited:** 36
+**Instruments audited:** 39
 
 ## Pitch contract
 
@@ -51,6 +51,9 @@
 | violino_sul_ponticello | strings | 55–107 | 0 (A_non_transposing) | G3–B7 (55–107) | aligned |
 | violino_sul_tasto | strings | 55–103 | 0 (A_non_transposing) | G3–G7 (55–103) | aligned |
 | violoncelo | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
+| violoncelo_harm | strings | 60–100 | 0 (A_non_transposing) | C4–E7 (60–100) | aligned |
+| violoncelo_sordina | strings | 36–81 | 0 (A_non_transposing) | C2–A5 (36–81) | aligned |
+| violoncelo_sul_ponticello | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
 
 ## REVIEW REQUIRED / discrepancies
 

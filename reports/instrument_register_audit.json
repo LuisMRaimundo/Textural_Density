@@ -1,5 +1,5 @@
 {
-  "instrument_count": 36,
+  "instrument_count": 39,
   "instruments": [
     {
       "instrument_id": "bombo",
@@ -1155,6 +1155,135 @@
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
       "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violoncelo_harm",
+      "display_name": "vlc_harm",
+      "aliases": [
+        "cello_harmonics",
+        "Cello_harmonics",
+        "cello harmonics",
+        "cello harm",
+        "cello_harm",
+        "harmonics cello",
+        "harmonics_cello",
+        "violoncelo_harm",
+        "vlc_harm",
+        "vlc harm"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 60,
+      "registry_sounding_max_midi": 100,
+      "comfortable_min_midi": 60,
+      "comfortable_max_midi": 84,
+      "module_name": "cello_harmonics",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C4",
+        "last_note": "E7",
+        "row_count": 41,
+        "min_midi": 60,
+        "max_midi": 100,
+        "instrument_source_pitch_range": [
+          60,
+          100
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violoncelo_sordina",
+      "display_name": "vlc_sord",
+      "aliases": [
+        "cello_sordina",
+        "Cello_sordina",
+        "Cello sordina",
+        "cello con sordina",
+        "cello_con_sordina",
+        "cello con sordino",
+        "cello_con_sordino",
+        "violoncelo sordina",
+        "violoncelo_sordina",
+        "cello muted",
+        "muted cello",
+        "vlc_sord",
+        "vlc sord",
+        "vlc_con_sord"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 36,
+      "registry_sounding_max_midi": 81,
+      "comfortable_min_midi": 40,
+      "comfortable_max_midi": 65,
+      "module_name": "cello_sordina",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C2",
+        "last_note": "A5",
+        "row_count": 46,
+        "min_midi": 36,
+        "max_midi": 81,
+        "instrument_source_pitch_range": [
+          36,
+          81
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "violoncelo_sul_ponticello",
+      "display_name": "vlc_sp",
+      "aliases": [
+        "cello_sul_ponticello",
+        "Cello_sul_ponticello",
+        "Cello sul ponticello",
+        "cello sul pont",
+        "cello_sul_pont",
+        "cello sul ponticello",
+        "sul ponticello cello",
+        "sul_ponticello_cello",
+        "violoncelo_sul_ponticello",
+        "vlc_sp",
+        "vlc sp",
+        "vlc_sul_pont"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 36,
+      "registry_sounding_max_midi": 84,
+      "comfortable_min_midi": 40,
+      "comfortable_max_midi": 65,
+      "module_name": "cello_sul_ponticello",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C2",
+        "last_note": "C6",
+        "row_count": 49,
+        "min_midi": 36,
+        "max_midi": 84,
+        "instrument_source_pitch_range": [
+          36,
+          84
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
     }
   ],
   "alias_resolution": [
@@ -1922,6 +2051,201 @@
       "alias": "vla_harm",
       "canonical_id": "viola_harm",
       "resolved_id": "viola_harm"
+    },
+    {
+      "alias": "vlc_sord",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello_sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "Cello_sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "Cello sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello con sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello_con_sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello con sordino",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello_con_sordino",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "violoncelo sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "violoncelo_sordina",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "cello muted",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "muted cello",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "vlc_sord",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "vlc sord",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "vlc_con_sord",
+      "canonical_id": "violoncelo_sordina",
+      "resolved_id": "violoncelo_sordina"
+    },
+    {
+      "alias": "vlc_sp",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "cello_sul_ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "Cello_sul_ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "Cello sul ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "cello sul pont",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "cello_sul_pont",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "cello sul ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "sul ponticello cello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "sul_ponticello_cello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "violoncelo_sul_ponticello",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "vlc_sp",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "vlc sp",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "vlc_sul_pont",
+      "canonical_id": "violoncelo_sul_ponticello",
+      "resolved_id": "violoncelo_sul_ponticello"
+    },
+    {
+      "alias": "vlc_harm",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "cello_harmonics",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "Cello_harmonics",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "cello harmonics",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "cello harm",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "cello_harm",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "harmonics cello",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "harmonics_cello",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "violoncelo_harm",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "vlc_harm",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "vlc harm",
+      "canonical_id": "violoncelo_harm",
+      "resolved_id": "violoncelo_harm"
     },
     {
       "alias": "Hn",

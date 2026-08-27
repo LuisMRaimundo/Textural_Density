@@ -35,3 +35,6 @@ violino_sordina,vl_con_sord,violin_sordina,True,G3,G7,49,"[55, 103]",55,103,55,7
 violino_sul_ponticello,vl_sul_pont,violin_sul_ponticello,True,G3,B7,53,"[55, 107]",55,107,55,76,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
 violino_sul_tasto,vl_sul_tast,violin_sul_tasto,True,G3,G7,49,"[55, 103]",55,103,55,76,0,arco_sul_tasto,arco_sul_tasto,arco|sul_tasto,PASS,PASS,False,full_coverage,0,0
 violoncelo,Vc,cello,True,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
+violoncelo_harm,vlc_harm,cello_harmonics,False,C4,E7,41,"[60, 100]",60,100,60,84,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
+violoncelo_sordina,vlc_sord,cello_sordina,False,C2,A5,46,"[36, 81]",36,81,40,65,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
+violoncelo_sul_ponticello,vlc_sp,cello_sul_ponticello,False,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0

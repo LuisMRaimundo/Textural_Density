@@ -20,9 +20,7 @@ from xml_loader import parse_xml_to_events
 
 
 WITHDRAWN = (
-    "violoncelo_sordina",
     "violoncelo_sul_tasto",
-    "violoncelo_sul_ponticello",
     "contrabaixo_sordina",
     "contrabaixo_sul_tasto",
     "contrabaixo_sul_ponticello",
@@ -31,7 +29,7 @@ WITHDRAWN = (
 
 def test_resolve_profile_is_none_for_unknown():
     assert resolve_profile("__not_an_instrument__") is None
-    assert resolve_profile("violoncelo_sordina") is None
+    assert resolve_profile("violoncelo_sul_tasto") is None
 
 
 def test_profile_for_event_raises_by_default():
@@ -148,7 +146,7 @@ def test_gui_adapter_rejects_unrecognised_dropdown_state():
             {
                 "notes": ["C4"],
                 "dynamics": ["mf"],
-                "instruments": ["violoncelo_sordina"],
+                "instruments": ["violoncelo_sul_tasto"],
                 "num_instruments": [1],
             }
         )
