@@ -1,6 +1,6 @@
 # Instrument metadata / range resolution audit
 
-**Instruments audited:** 39
+**Instruments audited:** 42
 
 ## Executive summary
 
@@ -57,6 +57,9 @@
 | clarinete | D3–C7 | 50–96 | 55–80 | full_coverage | PASS | PASS |
 | clarinete_baixo | — | 34–72 | 40–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | contrabaixo | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo_harm | E1–G4 | 28–67 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo_sordina | F1–G4 | 29–67 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo_sul_ponticello | E1–G4 | 28–67 | 31–55 | full_coverage | PASS | PASS |
 | contrafagote | — | 22–77 | 28–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | cor_anglais | — | 52–76 | 55–72 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | fagote | A#1–D#5 | 34–75 | 40–65 | full_coverage | PASS | PASS |

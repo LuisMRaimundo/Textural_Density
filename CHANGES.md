@@ -2,6 +2,10 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-27 — Double-bass technique ladders from dest-Zenodo dynamics
+
+Added `double_bass_sordina`, `double_bass_sul_ponticello`, and `double_bass_harmonics` from `D:\CORDAS_2\DoubleBass_*_dynamics.xlsx` (`Results`, Dynamics_predicter v1.5.2.1 `--pchip` r=0.8). Same commit path as the violin/viola/cello techniques (`--dbass-only`). GUI display names are `cb_sord`, `cb_sp`, `cb_harm`. Sordina is F1–G4 (39 notes; E1 has no complete triad). Ponticello and harmonics are E1–G4 (40 notes); harmonics C♯5–G6 stay blank and are not invented. Double-bass sul tasto stays withdrawn. Formulae unchanged.
+
 ## 2026-08-27 — Cello technique ladders from dest-Zenodo dynamics
 
 Added `cello_sordina`, `cello_sul_ponticello`, and `cello_harmonics` from `D:\CORDAS_2\Cello_*_dynamics.xlsx` (`Results`, Dynamics_predicter v1.5.2.1 `--pchip` r=0.8). Same commit path as the violin/viola techniques (`--cello-only`). GUI display names are `vlc_sord`, `vlc_sp`, `vlc_harm`. Sordina is C2–A5 (46 notes); ponticello is C2–C6 (49 notes); harmonics is C4–E7 (41 notes; C2–B3 withdrawn from the dest book). Cello sul tasto stays withdrawn. Formulae unchanged.

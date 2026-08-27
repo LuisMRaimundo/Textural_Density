@@ -21,9 +21,7 @@ from xml_loader import parse_xml_to_events
 
 WITHDRAWN = (
     "violoncelo_sul_tasto",
-    "contrabaixo_sordina",
     "contrabaixo_sul_tasto",
-    "contrabaixo_sul_ponticello",
 )
 
 

@@ -10,7 +10,7 @@
     "table_supported_techniques": "Techniques with independent numerical rows in the committed table.",
     "registry_supported_techniques": "Organological capabilities listed on InstrumentProfile.supported_techniques."
   },
-  "instrument_count": 39,
+  "instrument_count": 42,
   "table_excludes_sounding_range_count": 0,
   "table_excludes_sounding_range_ids": [],
   "instruments": [
@@ -418,6 +418,273 @@
       "table_span_midi": [
         28,
         72
+      ]
+    },
+    {
+      "instrument_id": "contrabaixo_harm",
+      "display_name": "cb_harm",
+      "aliases": [
+        "double_bass_harmonics",
+        "Double_bass_harmonics",
+        "double bass harmonics",
+        "double bass harm",
+        "double_bass_harm",
+        "harmonics double bass",
+        "harmonics_double_bass",
+        "contrabaixo_harm",
+        "cb_harm",
+        "cb harm"
+      ],
+      "family": "strings",
+      "module_name": "double_bass_harmonics",
+      "table_backed": false,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "E1",
+        "last_note": "G4",
+        "row_count": 40,
+        "min_midi": 28,
+        "max_midi": 67
+      },
+      "instrument_source_pitch_range": [
+        28,
+        67
+      ],
+      "registry_sounding_range_midi": [
+        28,
+        67
+      ],
+      "registry_comfortable_range_midi": [
+        31,
+        55
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco",
+          "harmonic"
+        ],
+        "table_supported_techniques": [
+          "arco_harmonic"
+        ],
+        "source_technique": "arco_harmonic",
+        "registry_not_in_table": [
+          "harmonic"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": [],
+      "table_excludes_sounding_range": false,
+      "exclusion_kind": "full_coverage",
+      "missing_low_semitones": 0,
+      "missing_high_semitones": 0,
+      "table_span_midi": [
+        28,
+        67
+      ]
+    },
+    {
+      "instrument_id": "contrabaixo_sordina",
+      "display_name": "cb_sord",
+      "aliases": [
+        "double_bass_sordina",
+        "Double_bass_sordina",
+        "Double bass sordina",
+        "double bass con sordina",
+        "double_bass_con_sordina",
+        "double bass con sordino",
+        "double_bass_con_sordino",
+        "contrabaixo sordina",
+        "contrabaixo_sordina",
+        "double bass muted",
+        "muted double bass",
+        "cb_sord",
+        "cb sord",
+        "cb_con_sord"
+      ],
+      "family": "strings",
+      "module_name": "double_bass_sordina",
+      "table_backed": false,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "F1",
+        "last_note": "G4",
+        "row_count": 39,
+        "min_midi": 29,
+        "max_midi": 67
+      },
+      "instrument_source_pitch_range": [
+        29,
+        67
+      ],
+      "registry_sounding_range_midi": [
+        29,
+        67
+      ],
+      "registry_comfortable_range_midi": [
+        31,
+        55
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco",
+          "mute"
+        ],
+        "table_supported_techniques": [
+          "arco_sordina"
+        ],
+        "source_technique": "arco_sordina",
+        "registry_not_in_table": [
+          "mute"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": [],
+      "table_excludes_sounding_range": false,
+      "exclusion_kind": "full_coverage",
+      "missing_low_semitones": 0,
+      "missing_high_semitones": 0,
+      "table_span_midi": [
+        29,
+        67
+      ]
+    },
+    {
+      "instrument_id": "contrabaixo_sul_ponticello",
+      "display_name": "cb_sp",
+      "aliases": [
+        "double_bass_sul_ponticello",
+        "Double_bass_sul_ponticello",
+        "Double bass sul ponticello",
+        "double bass sul pont",
+        "double_bass_sul_pont",
+        "double bass sul ponticello",
+        "sul ponticello double bass",
+        "sul_ponticello_double_bass",
+        "contrabaixo_sul_ponticello",
+        "cb_sp",
+        "cb sp",
+        "cb_sul_pont"
+      ],
+      "family": "strings",
+      "module_name": "double_bass_sul_ponticello",
+      "table_backed": false,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "E1",
+        "last_note": "G4",
+        "row_count": 40,
+        "min_midi": 28,
+        "max_midi": 67
+      },
+      "instrument_source_pitch_range": [
+        28,
+        67
+      ],
+      "registry_sounding_range_midi": [
+        28,
+        67
+      ],
+      "registry_comfortable_range_midi": [
+        31,
+        55
+      ],
+      "registry_transposition": 0,
+      "registry_transposition_runtime_applied": false,
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
+      "modelled_dynamics": [
+        "p",
+        "mp",
+        "f",
+        "pppp",
+        "ppp",
+        "fff",
+        "ffff"
+      ],
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
+      "technique": {
+        "registry_supported_techniques": [
+          "arco",
+          "sul_ponticello"
+        ],
+        "table_supported_techniques": [
+          "arco_sul_ponticello"
+        ],
+        "source_technique": "arco_sul_ponticello",
+        "registry_not_in_table": [
+          "sul_ponticello"
+        ],
+        "classification": "PASS"
+      },
+      "documentation_contradictions": [],
+      "table_excludes_sounding_range": false,
+      "exclusion_kind": "full_coverage",
+      "missing_low_semitones": 0,
+      "missing_high_semitones": 0,
+      "table_span_midi": [
+        28,
+        67
       ]
     },
     {
