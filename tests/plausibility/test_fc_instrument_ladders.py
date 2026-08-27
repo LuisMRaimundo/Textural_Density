@@ -450,9 +450,7 @@ class TestFCWithdrawal:
         sources = (REPO_ROOT / "docs" / "instrument_acoustic_sources.md").read_text(encoding="utf-8")
         readme = (REPO_ROOT / "instrumentos" / "README.md").read_text(encoding="utf-8")
         banned = [
-            "instrumentos/cello_sordina.py",
             "instrumentos/cello_sul_tasto.py",
-            "instrumentos/cello_sul_ponticello.py",
             "instrumentos/double_bass_sordina.py",
             "instrumentos/double_bass_sul_tasto.py",
             "instrumentos/double_bass_sul_ponticello.py",

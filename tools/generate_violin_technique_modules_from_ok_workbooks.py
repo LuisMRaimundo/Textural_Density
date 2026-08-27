@@ -19,12 +19,19 @@ Viola modules (2026-08-26) read dest-Zenodo Dynamics_predicter exports in
   - Viola_sul_ponticello_dynamics.xlsx → viola_sul_ponticello.py
   - Viola_harmonics_dynamics.xlsx     → viola_harmonics.py  (C5–B7 only)
 
-No sul tasto workbook. Registry display names (GUI): ``vl_sul_pont``,
-``vl_sul_tast``, ``vl_con_sord``, ``vl_harm``, ``vla``, ``vla sord``,
-``vla sp``, ``vla harm`` (registry edits are maintained in
-``instrumentos/registry.py``).
+Cello techniques (2026-08-27) read dest-Zenodo Dynamics_predicter exports in
+``D:\\CORDAS_2``:
 
-    python tools/generate_violin_technique_modules_from_ok_workbooks.py --viola-only
+  - Cello_con_sordino_dynamics.xlsx    → cello_sordina.py
+  - Cello_sul_ponticello_dynamics.xlsx → cello_sul_ponticello.py
+  - Cello_harmonics_dynamics.xlsx      → cello_harmonics.py  (C4–E7)
+
+No cello sul tasto workbook. Registry display names (GUI): ``vl_sul_pont``,
+``vl_sul_tast``, ``vl_con_sord``, ``vl_harm``, ``vla``, ``vla sord``,
+``vla sp``, ``vla harm``, ``vlc_sord``, ``vlc_sp``, ``vlc_harm``
+(registry edits are maintained in ``instrumentos/registry.py``).
+
+    python tools/generate_violin_technique_modules_from_ok_workbooks.py --cello-only
 """
 
 from __future__ import annotations
@@ -43,10 +50,12 @@ from utils.notes import normalize_note_string  # noqa: E402
 SRC_DIR = Path(r"d:\CORDAS\VIOLINO")
 VIOLIN_SRC_DIR = Path(r"D:\CORDAS_2")
 VIOLA_SRC_DIR = Path(r"D:\CORDAS_2")
+CELLO_SRC_DIR = Path(r"D:\CORDAS_2")
 
 DYNAMIC_LEVELS = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
 VIOLIN_KEYS = ("sul_ponticello", "sul_tasto", "con_sordina", "harmonics")
 VIOLA_KEYS = ("viola_ordinario", "viola_con_sordina", "viola_sul_ponticello", "viola_harmonics")
+CELLO_KEYS = ("cello_con_sordina", "cello_sul_ponticello", "cello_harmonics")
 
 TECHNIQUE_SPECS = {
     "sul_ponticello": {
@@ -160,6 +169,51 @@ TECHNIQUE_SPECS = {
             "Dynamics_predicter Results ladder"
         ),
     },
+    "cello_con_sordina": {
+        "workbook": "Cello_con_sordino_dynamics.xlsx",
+        "src_dir": str(CELLO_SRC_DIR),
+        "instrument_label": "Cello",
+        "module": "cello_sordina",
+        "technique_label": "arco con sordino",
+        "source_technique": "arco_sordina",
+        "doc_anchor": "cello-sordina",
+        "pitch_range": (36, 81),
+        "version": "2026-08-27",
+        "citation_pool": (
+            "dest Zenodo Cello_con sordino Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
+    },
+    "cello_sul_ponticello": {
+        "workbook": "Cello_sul_ponticello_dynamics.xlsx",
+        "src_dir": str(CELLO_SRC_DIR),
+        "instrument_label": "Cello",
+        "module": "cello_sul_ponticello",
+        "technique_label": "arco sul ponticello",
+        "source_technique": "arco_sul_ponticello",
+        "doc_anchor": "cello-sul-ponticello",
+        "pitch_range": (36, 84),
+        "version": "2026-08-27",
+        "citation_pool": (
+            "dest Zenodo Cello_sul ponticello Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
+    },
+    "cello_harmonics": {
+        "workbook": "Cello_harmonics_dynamics.xlsx",
+        "src_dir": str(CELLO_SRC_DIR),
+        "instrument_label": "Cello",
+        "module": "cello_harmonics",
+        "technique_label": "arco harmonics",
+        "source_technique": "arco_harmonic",
+        "doc_anchor": "cello-harmonics",
+        "pitch_range": (60, 100),
+        "version": "2026-08-27",
+        "citation_pool": (
+            "dest Zenodo Cello_harmonics Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
+    },
 }
 
 VERSION = "2026-08-26"
@@ -226,7 +280,7 @@ def render_module(spec: dict, ladder: dict[str, dict[str, float]]) -> str:
     source_technique = spec["source_technique"]
     doc_anchor = spec["doc_anchor"]
     workbook = spec["workbook"]
-    version = VERSION
+    version = spec.get("version", VERSION)
     lo, hi = spec["pitch_range"]
     spectral_block = _fmt_spectral(ladder)
     return f'''# instrumentos/{module}.py
@@ -300,6 +354,8 @@ def main(argv: list[str] | None = None) -> int:
         specs = {k: TECHNIQUE_SPECS[k] for k in VIOLIN_KEYS}
     elif "--viola-only" in argv:
         specs = {k: TECHNIQUE_SPECS[k] for k in VIOLA_KEYS}
+    elif "--cello-only" in argv:
+        specs = {k: TECHNIQUE_SPECS[k] for k in CELLO_KEYS}
     for technique, spec in specs.items():
         if spec.get("on_hold"):
             print(f"SKIP {technique}: on hold pending source-data verification", file=sys.stderr)

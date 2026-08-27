@@ -641,6 +641,140 @@ REGISTRY["viola_harm"] = _profile(
 )
 
 
+REGISTRY["violoncelo_sordina"] = _profile(
+    "violoncelo_sordina",
+    "vlc_sord",
+    "strings",
+    sounding=(36, 81),
+    comfortable=(40, 65),
+    brightness="neutral",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="cello_sordina",
+    supported=("arco", "mute"),
+    unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/cello_sordina.py from "
+        "D:\\CORDAS_2\\Cello_con_sordino_dynamics.xlsx Results sheet "
+        "(dest Zenodo con sordino Media; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers). Table span C2–A5."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media "
+        "(IOWA+Orchidea average) at pp/mf/ff.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "cello_sordina",
+        "Cello_sordina",
+        "Cello sordina",
+        "cello con sordina",
+        "cello_con_sordina",
+        "cello con sordino",
+        "cello_con_sordino",
+        "violoncelo sordina",
+        "violoncelo_sordina",
+        "cello muted",
+        "muted cello",
+        "vlc_sord",
+        "vlc sord",
+        "vlc_con_sord",
+    ),
+)
+
+
+REGISTRY["violoncelo_sul_ponticello"] = _profile(
+    "violoncelo_sul_ponticello",
+    "vlc_sp",
+    "strings",
+    sounding=(36, 84),
+    comfortable=(40, 65),
+    brightness="bright",
+    sustain="sustained",
+    attack="hard",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="cello_sul_ponticello",
+    supported=("arco", "sul_ponticello"),
+    unsupported=("pizzicato", "mute", "sul_tasto"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/cello_sul_ponticello.py from "
+        "D:\\CORDAS_2\\Cello_sul_ponticello_dynamics.xlsx Results sheet "
+        "(dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers). Table span C2–C6."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media "
+        "(IOWA+Orchidea average) at pp/mf/ff.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "cello_sul_ponticello",
+        "Cello_sul_ponticello",
+        "Cello sul ponticello",
+        "cello sul pont",
+        "cello_sul_pont",
+        "cello sul ponticello",
+        "sul ponticello cello",
+        "sul_ponticello_cello",
+        "violoncelo_sul_ponticello",
+        "vlc_sp",
+        "vlc sp",
+        "vlc_sul_pont",
+    ),
+)
+
+
+REGISTRY["violoncelo_harm"] = _profile(
+    "violoncelo_harm",
+    "vlc_harm",
+    "strings",
+    sounding=(60, 100),
+    comfortable=(60, 84),
+    brightness="bright",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="cello_harmonics",
+    supported=("arco", "harmonic"),
+    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/cello_harmonics.py from "
+        "D:\\CORDAS_2\\Cello_harmonics_dynamics.xlsx Results sheet "
+        "(dest Zenodo harmonics Media; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers). Table span C4–E7."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are "
+        "dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
+        "Table span is the harmonic sounding register (C4–E7); C2–B3 were withdrawn "
+        "from the dest book and are not invented.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "cello_harmonics",
+        "Cello_harmonics",
+        "cello harmonics",
+        "cello harm",
+        "cello_harm",
+        "harmonics cello",
+        "harmonics_cello",
+        "violoncelo_harm",
+        "vlc_harm",
+        "vlc harm",
+    ),
+)
+
+
 # --- Brass ---
 REGISTRY["trompa"] = _profile(
     "trompa",
@@ -983,7 +1117,7 @@ def unknown_instrument_error(
         f"to a parent module or to the generic coarse proxy. "
         f"Accepted registry ids: {ids}. "
         f"Display names and aliases also resolve (e.g. Flute→flauta, Violin→violino). "
-        f"Withdrawn technique ids (violoncelo_sordina, contrabaixo_sul_tasto, …) "
+        f"Withdrawn technique ids (violoncelo_sul_tasto, contrabaixo_sul_tasto, …) "
         f"are not remapped.",
         field="instruments",
     )

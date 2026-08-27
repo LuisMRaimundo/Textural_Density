@@ -33,6 +33,9 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 | `viola_sordina.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_con_sordino_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C3–A#6) |
 | `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_sul_ponticello_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C3–A#6) |
 | `viola_harmonics.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_harmonics_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C5–B7) |
+| `cello_sordina.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Cello_con_sordino_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C2–A5) |
+| `cello_sul_ponticello.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Cello_sul_ponticello_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C2–C6) |
+| `cello_harmonics.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Cello_harmonics_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C4–E7) |
 | `bass_drum.py`, `cymbals.py`, `tamtam.py`, `gong.py` | `DYNAMIC_CDM` (10 dynamics; pitch-independent) | NonTunPerc MC anchors + committed former `internal_default` ladder |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
@@ -44,7 +47,7 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 **Technique honesty:** registry `supported_techniques` lists organological capabilities. Modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
 
-**Technique ladders (2026-08-08 rebuild):** remaining violin and viola technique modules commit full 10-level ladders built by Dynamics_predicter v1.5 on the STE / OK workbook anchors. Measured mf/ff (and pp where measured) match the committed `*_MEASURED` dicts verbatim. Cello and double-bass technique modules were withdrawn (2026-08-18).
+**Technique ladders (2026-08-27):** violin, viola, and cello sordina / sul ponticello / harmonics (and violin sul tasto) commit full 10-level ladders from dest-Zenodo Dynamics_predicter `Results` books. Cello sul tasto and double-bass technique modules remain withdrawn (2026-08-18).
 
 **Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
 
@@ -218,6 +221,9 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **vla harm** | `viola_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C5–B7 (high uncertainty) |
 
 | **Cello** | `cello.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
+| **vlc_sord** | `cello_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, C2–A5 (high uncertainty) |
+| **vlc_sp** | `cello_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, C2–C6 (high uncertainty) |
+| **vlc_harm** | `cello_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C4–E7 (high uncertainty) |
 | **Double bass** | `double_bass.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 
 
@@ -248,7 +254,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 
 
-~**41 orchestral instruments / technique profiles** are registered with metadata (family, ranges, register bands, `profile_status`, `uncertainty`, aliases). Examples:
+~**44 orchestral instruments / technique profiles** are registered with metadata (family, ranges, register bands, `profile_status`, `uncertainty`, aliases). Examples:
 
 
 
@@ -258,7 +264,7 @@ See [instrument_acoustic_sources.md](../docs/instrument_acoustic_sources.md) for
 
 | Woodwinds | `flauta`, `flautim`, `oboe`, `cor_anglais`, `clarinete`, `clarinete_baixo`, `fagote`, `contrafagote` |
 
-| Strings | `violino`, `violino_sordina`, `violino_sul_tasto`, `violino_sul_ponticello`, `violino_harm`, `viola`, `viola_sordina`, `viola_sul_ponticello`, `viola_harm`, `violoncelo`, `contrabaixo` |
+| Strings | `violino`, `violino_sordina`, `violino_sul_tasto`, `violino_sul_ponticello`, `violino_harm`, `viola`, `viola_sordina`, `viola_sul_ponticello`, `viola_harm`, `violoncelo`, `violoncelo_sordina`, `violoncelo_sul_ponticello`, `violoncelo_harm`, `contrabaixo` |
 
 | Brass | `trompa`, `trompete`, `trombone`, `trombone_baixo`, `tuba` |
 
