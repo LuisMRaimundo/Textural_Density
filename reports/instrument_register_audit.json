@@ -1,5 +1,5 @@
 {
-  "instrument_count": 39,
+  "instrument_count": 42,
   "instruments": [
     {
       "instrument_id": "bombo",
@@ -169,6 +169,135 @@
         "instrument_source_pitch_range": [
           28,
           72
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "contrabaixo_harm",
+      "display_name": "cb_harm",
+      "aliases": [
+        "double_bass_harmonics",
+        "Double_bass_harmonics",
+        "double bass harmonics",
+        "double bass harm",
+        "double_bass_harm",
+        "harmonics double bass",
+        "harmonics_double_bass",
+        "contrabaixo_harm",
+        "cb_harm",
+        "cb harm"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 28,
+      "registry_sounding_max_midi": 67,
+      "comfortable_min_midi": 31,
+      "comfortable_max_midi": 55,
+      "module_name": "double_bass_harmonics",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "E1",
+        "last_note": "G4",
+        "row_count": 40,
+        "min_midi": 28,
+        "max_midi": 67,
+        "instrument_source_pitch_range": [
+          28,
+          67
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "contrabaixo_sordina",
+      "display_name": "cb_sord",
+      "aliases": [
+        "double_bass_sordina",
+        "Double_bass_sordina",
+        "Double bass sordina",
+        "double bass con sordina",
+        "double_bass_con_sordina",
+        "double bass con sordino",
+        "double_bass_con_sordino",
+        "contrabaixo sordina",
+        "contrabaixo_sordina",
+        "double bass muted",
+        "muted double bass",
+        "cb_sord",
+        "cb sord",
+        "cb_con_sord"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 29,
+      "registry_sounding_max_midi": 67,
+      "comfortable_min_midi": 31,
+      "comfortable_max_midi": 55,
+      "module_name": "double_bass_sordina",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "F1",
+        "last_note": "G4",
+        "row_count": 39,
+        "min_midi": 29,
+        "max_midi": 67,
+        "instrument_source_pitch_range": [
+          29,
+          67
+        ]
+      },
+      "range_discrepancy": "aligned",
+      "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
+      "manual_input_convention": "sounding_concert_pitch_no_transposition",
+      "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
+      "registry_transposition_applied_at_runtime": false
+    },
+    {
+      "instrument_id": "contrabaixo_sul_ponticello",
+      "display_name": "cb_sp",
+      "aliases": [
+        "double_bass_sul_ponticello",
+        "Double_bass_sul_ponticello",
+        "Double bass sul ponticello",
+        "double bass sul pont",
+        "double_bass_sul_pont",
+        "double bass sul ponticello",
+        "sul ponticello double bass",
+        "sul_ponticello_double_bass",
+        "contrabaixo_sul_ponticello",
+        "cb_sp",
+        "cb sp",
+        "cb_sul_pont"
+      ],
+      "family": "strings",
+      "transposition_semitones": 0,
+      "transposition_class": "A_non_transposing",
+      "registry_sounding_min_midi": 28,
+      "registry_sounding_max_midi": 67,
+      "comfortable_min_midi": 31,
+      "comfortable_max_midi": 55,
+      "module_name": "double_bass_sul_ponticello",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "E1",
+        "last_note": "G4",
+        "row_count": 40,
+        "min_midi": 28,
+        "max_midi": 67,
+        "instrument_source_pitch_range": [
+          28,
+          67
         ]
       },
       "range_discrepancy": "aligned",
@@ -2246,6 +2375,201 @@
       "alias": "vlc harm",
       "canonical_id": "violoncelo_harm",
       "resolved_id": "violoncelo_harm"
+    },
+    {
+      "alias": "cb_sord",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "double_bass_sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "Double_bass_sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "Double bass sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "double bass con sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "double_bass_con_sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "double bass con sordino",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "double_bass_con_sordino",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "contrabaixo sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "contrabaixo_sordina",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "double bass muted",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "muted double bass",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "cb_sord",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "cb sord",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "cb_con_sord",
+      "canonical_id": "contrabaixo_sordina",
+      "resolved_id": "contrabaixo_sordina"
+    },
+    {
+      "alias": "cb_sp",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "double_bass_sul_ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "Double_bass_sul_ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "Double bass sul ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "double bass sul pont",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "double_bass_sul_pont",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "double bass sul ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "sul ponticello double bass",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "sul_ponticello_double_bass",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "contrabaixo_sul_ponticello",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "cb_sp",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "cb sp",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "cb_sul_pont",
+      "canonical_id": "contrabaixo_sul_ponticello",
+      "resolved_id": "contrabaixo_sul_ponticello"
+    },
+    {
+      "alias": "cb_harm",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
+    },
+    {
+      "alias": "double_bass_harmonics",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
+    },
+    {
+      "alias": "Double_bass_harmonics",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
+    },
+    {
+      "alias": "double bass harmonics",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
+    },
+    {
+      "alias": "double bass harm",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
+    },
+    {
+      "alias": "double_bass_harm",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
+    },
+    {
+      "alias": "harmonics double bass",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
+    },
+    {
+      "alias": "harmonics_double_bass",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
+    },
+    {
+      "alias": "contrabaixo_harm",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
+    },
+    {
+      "alias": "cb_harm",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
+    },
+    {
+      "alias": "cb harm",
+      "canonical_id": "contrabaixo_harm",
+      "resolved_id": "contrabaixo_harm"
     },
     {
       "alias": "Hn",

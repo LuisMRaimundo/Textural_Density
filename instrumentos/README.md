@@ -47,7 +47,7 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 **Technique honesty:** registry `supported_techniques` lists organological capabilities. Modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
 
-**Technique ladders (2026-08-27):** violin, viola, and cello sordina / sul ponticello / harmonics (and violin sul tasto) commit full 10-level ladders from dest-Zenodo Dynamics_predicter `Results` books. Cello sul tasto and double-bass technique modules remain withdrawn (2026-08-18).
+**Technique ladders (2026-08-27):** violin, viola, cello, and double-bass sordina / sul ponticello / harmonics (and violin sul tasto) commit full 10-level ladders from dest-Zenodo Dynamics_predicter `Results` books. Cello and double-bass sul tasto remain withdrawn (2026-08-18).
 
 **Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
 
@@ -225,6 +225,9 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **vlc_sp** | `cello_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, C2–C6 (high uncertainty) |
 | **vlc_harm** | `cello_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C4–E7 (high uncertainty) |
 | **Double bass** | `double_bass.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
+| **cb_sord** | `double_bass_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, F1–G4 (high uncertainty) |
+| **cb_sp** | `double_bass_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, E1–G4 (high uncertainty) |
+| **cb_harm** | `double_bass_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, E1–G4 (high uncertainty) |
 
 
 

@@ -439,7 +439,7 @@ class TestFCWithdrawal:
         )
 
     def test_withdrawn_module_files_absent(self):
-        """HARD: no instrumentos/cello_*_*.py or double_bass_*_*.py technique files."""
+        """HARD: withdrawn sul-tasto technique files stay absent."""
         folder = REPO_ROOT / "instrumentos"
         present = [name for name in WITHDRAWN_MODULE_GLOBS if (folder / name).exists()]
         assert present == []
@@ -451,9 +451,7 @@ class TestFCWithdrawal:
         readme = (REPO_ROOT / "instrumentos" / "README.md").read_text(encoding="utf-8")
         banned = [
             "instrumentos/cello_sul_tasto.py",
-            "instrumentos/double_bass_sordina.py",
             "instrumentos/double_bass_sul_tasto.py",
-            "instrumentos/double_bass_sul_ponticello.py",
         ]
         hits = [b for b in banned if b in sources or b in readme]
         # Mentions of withdrawal are allowed; live module paths are not.

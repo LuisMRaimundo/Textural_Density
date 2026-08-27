@@ -48,15 +48,11 @@ DYNAMIC_LEVELS = (
 )
 WITHDRAWN_IDS = (
     "violoncelo_sul_tasto",
-    "contrabaixo_sordina",
     "contrabaixo_sul_tasto",
-    "contrabaixo_sul_ponticello",
 )
 WITHDRAWN_MODULE_GLOBS = (
     "cello_sul_tasto.py",
-    "double_bass_sordina.py",
     "double_bass_sul_tasto.py",
-    "double_bass_sul_ponticello.py",
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]

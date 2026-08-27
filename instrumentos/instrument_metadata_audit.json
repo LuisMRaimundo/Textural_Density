@@ -1,6 +1,6 @@
 {
   "audit_version": "1.0.0",
-  "instrument_count": 39,
+  "instrument_count": 42,
   "profiles": [
     {
       "instrument_id": "flauta",
@@ -500,6 +500,80 @@
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
         "Table span is the harmonic sounding register (C4\u2013E7); C2\u2013B3 were withdrawn from the dest book and are not invented.",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "contrabaixo_sordina",
+      "display_name": "cb_sord",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sordina.py from D:\\CORDAS_2\\DoubleBass_con_sordino_dynamics.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span F1\u2013G4. E1 has no complete triad and is not invented.",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "contrabaixo_sul_ponticello",
+      "display_name": "cb_sp",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sul_ponticello.py from D:\\CORDAS_2\\DoubleBass_sul_ponticello_dynamics.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E1\u2013G4.",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "claims_empirical_without_notes": false
+    },
+    {
+      "instrument_id": "contrabaixo_harm",
+      "display_name": "cb_harm",
+      "family": "strings",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "high",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_harmonics.py from D:\\CORDAS_2\\DoubleBass_harmonics_dynamics.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E1\u2013G4. C#5\u2013G6 are blank in dest Media and are not invented.",
+      "limitations": [
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
+        "Table span is the dest-Zenodo harmonic register (E1\u2013G4); C#5\u2013G6 were blank in the dest book and are not invented.",
+        "Other registry supported_techniques are organological capabilities without technique-specific table rows."
+      ],
+      "has_range_metadata": true,
+      "has_register_metadata": true,
+      "has_dynamic_weight_metadata": true,
+      "has_technique_metadata": true,
+      "warnings": [
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
+        "Table span is the dest-Zenodo harmonic register (E1\u2013G4); C#5\u2013G6 were blank in the dest book and are not invented.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false

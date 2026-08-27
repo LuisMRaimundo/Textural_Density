@@ -775,6 +775,142 @@ REGISTRY["violoncelo_harm"] = _profile(
 )
 
 
+REGISTRY["contrabaixo_sordina"] = _profile(
+    "contrabaixo_sordina",
+    "cb_sord",
+    "strings",
+    sounding=(29, 67),
+    comfortable=(31, 55),
+    brightness="neutral",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="double_bass_sordina",
+    supported=("arco", "mute"),
+    unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sordina.py from "
+        "D:\\CORDAS_2\\DoubleBass_con_sordino_dynamics.xlsx Results sheet "
+        "(dest Zenodo con sordino Media; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers). Table span F1–G4. "
+        "E1 has no complete triad and is not invented."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media "
+        "(IOWA+Orchidea average) at pp/mf/ff.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "double_bass_sordina",
+        "Double_bass_sordina",
+        "Double bass sordina",
+        "double bass con sordina",
+        "double_bass_con_sordina",
+        "double bass con sordino",
+        "double_bass_con_sordino",
+        "contrabaixo sordina",
+        "contrabaixo_sordina",
+        "double bass muted",
+        "muted double bass",
+        "cb_sord",
+        "cb sord",
+        "cb_con_sord",
+    ),
+)
+
+
+REGISTRY["contrabaixo_sul_ponticello"] = _profile(
+    "contrabaixo_sul_ponticello",
+    "cb_sp",
+    "strings",
+    sounding=(28, 67),
+    comfortable=(31, 55),
+    brightness="bright",
+    sustain="sustained",
+    attack="hard",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="double_bass_sul_ponticello",
+    supported=("arco", "sul_ponticello"),
+    unsupported=("pizzicato", "mute", "sul_tasto"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sul_ponticello.py from "
+        "D:\\CORDAS_2\\DoubleBass_sul_ponticello_dynamics.xlsx Results sheet "
+        "(dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers). Table span E1–G4."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media "
+        "(IOWA+Orchidea average) at pp/mf/ff.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "double_bass_sul_ponticello",
+        "Double_bass_sul_ponticello",
+        "Double bass sul ponticello",
+        "double bass sul pont",
+        "double_bass_sul_pont",
+        "double bass sul ponticello",
+        "sul ponticello double bass",
+        "sul_ponticello_double_bass",
+        "contrabaixo_sul_ponticello",
+        "cb_sp",
+        "cb sp",
+        "cb_sul_pont",
+    ),
+)
+
+
+REGISTRY["contrabaixo_harm"] = _profile(
+    "contrabaixo_harm",
+    "cb_harm",
+    "strings",
+    sounding=(28, 67),
+    comfortable=(31, 55),
+    brightness="bright",
+    sustain="sustained",
+    attack="soft",
+    status="literature_derived",
+    uncertainty="high",
+    module_name="double_bass_harmonics",
+    supported=("arco", "harmonic"),
+    unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
+    source_notes=(
+        "Committed 10-dynamic CDM ladder in instrumentos/double_bass_harmonics.py from "
+        "D:\\CORDAS_2\\DoubleBass_harmonics_dynamics.xlsx Results sheet "
+        "(dest Zenodo harmonics Media; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers). Table span E1–G4. "
+        "C#5–G6 are blank in dest Media and are not invented."
+    ),
+    warnings=(
+        "String density uses externally sourced sparse CDM tables interpolated in note space.",
+        "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are "
+        "dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
+        "Table span is the dest-Zenodo harmonic register (E1–G4); C#5–G6 were blank "
+        "in the dest book and are not invented.",
+        "Other registry supported_techniques are organological capabilities without "
+        "technique-specific table rows.",
+    ),
+    aliases=(
+        "double_bass_harmonics",
+        "Double_bass_harmonics",
+        "double bass harmonics",
+        "double bass harm",
+        "double_bass_harm",
+        "harmonics double bass",
+        "harmonics_double_bass",
+        "contrabaixo_harm",
+        "cb_harm",
+        "cb harm",
+    ),
+)
+
+
 # --- Brass ---
 REGISTRY["trompa"] = _profile(
     "trompa",

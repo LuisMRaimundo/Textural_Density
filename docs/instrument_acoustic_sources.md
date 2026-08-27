@@ -1,6 +1,6 @@
 # Instrument acoustic source provenance
 
-> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Some registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (winds, brass incl. horn, trombone and tuba, arco strings, violin/viola/cello techniques/harmonics) and unpitched percussion commit full 10-level ladders. Ladders are **data-faithful** (2026-08-08/09/18/27, Dynamics_predicter v1.5): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — **not** forced monotone. Cello sul tasto and double-bass technique modules remain withdrawn (2026-08-18). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
+> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Some registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (winds, brass incl. horn, trombone and tuba, arco strings, violin/viola/cello/double-bass techniques/harmonics) and unpitched percussion commit full 10-level ladders. Ladders are **data-faithful** (2026-08-08/09/18/27, Dynamics_predicter v1.5): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — **not** forced monotone. Cello and double-bass sul tasto remain withdrawn (2026-08-18). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
 
 This document records **external acoustic metadata** embedded in `instrumentos/*.py`
 modules. The analysis pipeline performs **score lookup** into these tables — not
@@ -333,8 +333,60 @@ dest-Zenodo cello sul tasto dynamics workbook exists.
 - **Uncertainty:** medium
 - **Span status:** E1–A3 in older docs was obsolete; committed span is E1–C5 (**PASS**). Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 
-Double-bass sordina / sul tasto / sul ponticello modules were withdrawn on 2026-08-18
-(assumption-based STE tables; not re-offered in the GUI).
+Double-bass sul tasto remains withdrawn (2026-08-18; no dest-Zenodo sul tasto workbook).
+
+## Double bass sordina (`double_bass_sordina`)
+
+- **Module:** `instrumentos/double_bass_sordina.py`
+- **GUI display name:** `cb_sord` (aliases: `cb_con_sord`, `contrabaixo_sordina`)
+- **Table:** `spectral_data` (39 chromatic rows, F1–G4 × **all 10** dynamics)
+- **Provenance (2026-08-27):** `Results` sheet of
+  `D:\CORDAS_2\DoubleBass_con_sordino_dynamics.xlsx`
+  (dest Zenodo con sordino Media; Dynamics_predicter `--pchip` r=0.8).
+  E1 has no complete pp/mf/ff triad and is not invented. G♯4–C5 are
+  absent from dest Media and are not invented.
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8)
+- **Source technique:** `arco_sordina`
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py --dbass-only`
+
+## Double bass sul tasto — withdrawn (2026-08-18)
+
+The assumption-based STE module `double_bass_sul_tasto.py` remains withdrawn; no
+dest-Zenodo double-bass sul tasto dynamics workbook exists.
+
+## Double bass sul ponticello (`double_bass_sul_ponticello`)
+
+- **Module:** `instrumentos/double_bass_sul_ponticello.py`
+- **GUI display name:** `cb_sp` (aliases: `cb_sul_pont`, `contrabaixo_sul_ponticello`)
+- **Table:** `spectral_data` (40 chromatic rows, E1–G4 × **all 10** dynamics)
+- **Provenance (2026-08-27):** `Results` sheet of
+  `D:\CORDAS_2\DoubleBass_sul_ponticello_dynamics.xlsx`
+  (dest Zenodo sul ponticello Media; Dynamics_predicter `--pchip` r=0.8).
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8)
+- **Source technique:** `arco_sul_ponticello`
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py --dbass-only`
+
+## Double bass harmonics (`double_bass_harmonics`)
+
+- **Module:** `instrumentos/double_bass_harmonics.py`
+- **GUI display name:** `cb_harm`
+- **Table:** `spectral_data` (40 chromatic sounding rows, E1–G4 × **all 10** dynamics)
+- **Provenance (2026-08-27):** `Results` sheet of
+  `D:\CORDAS_2\DoubleBass_harmonics_dynamics.xlsx`
+  (dest Zenodo harmonics Media; Dynamics_predicter `--pchip` r=0.8).
+  C♯5–G6 are blank in dest Media and are not invented.
+- **Workbook anchors:** measured pp, mf and ff committed verbatim in
+  `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
+  equal-log outers (r=0.8)
+- **Source technique:** `arco_harmonic` (pooled)
+- **Uncertainty:** high
+- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py --dbass-only`
 
 ## Generation tooling
 
@@ -343,14 +395,14 @@ Offline curation pipeline (not used at runtime):
 1. `tools/populate_td_importer_sheets_from_zenodo_media.py` — builds `AcousticTable`, `Registry`, and `Provenance` sheets from `*_Media` workbooks. Applies `normalize_media_note_label()` when reading media rows (strips trailing `(2)` duplicate markers).
 2. `tools/generate_instrument_modules.py` — legacy 3-anchor generator; its `CONFIGS` also drive the source-reconstruction audit. All four string reconstructions read the curated Media sheets (`Violin_Media`, `VIOLA_Media`, `Cello_Media`, `DBass_Media`) via `load_spectral_data_from_media` (2026-08-08 config fix).
 3. `tools/generate_violin_technique_modules_from_xlsx.py` — emits / replaces `violin_sordina.py`, `violin_sul_tasto.py`, `violin_sul_ponticello.py` from Desktop `Violin_mf.xlsx` / `Violin_ff.xlsx` (pp via arco ratio transfer).
-4. `tools/generate_violin_technique_modules_from_ok_workbooks.py` — violin techniques (`--violin-only`) from `D:\CORDAS_2\Violin_*_dynamics.xlsx`; viola modules (`--viola-only`) from `D:\CORDAS_2\Viola_*_dynamics.xlsx`; cello techniques (`--cello-only`) from `D:\CORDAS_2\Cello_*_dynamics.xlsx`.
+4. `tools/generate_violin_technique_modules_from_ok_workbooks.py` — violin techniques (`--violin-only`) from `D:\CORDAS_2\Violin_*_dynamics.xlsx`; viola modules (`--viola-only`) from `D:\CORDAS_2\Viola_*_dynamics.xlsx`; cello techniques (`--cello-only`) from `D:\CORDAS_2\Cello_*_dynamics.xlsx`; double-bass techniques (`--dbass-only`) from `D:\CORDAS_2\DoubleBass_*_dynamics.xlsx`.
 5. `tools/generate_full_dynamics_modules_from_xlsx.py` — commits Dynamics_predicter sheet `Results` ladders into ordinary-sustain modules (`cello`, `double_bass`, `flute`, `clarinet`, `bassoon`, `oboe`; `viola` comes from the dest-Zenodo workbooks generator).
 6. `tools/generate_violin_arco_full_dynamics_from_xlsx.py` — violin arco `Results` ladder regenerator.
 7. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
 The former cello / double-bass STE technique generators (`generate_cello_technique_modules_from_xlsx.py`, `generate_double_bass_technique_modules_from_xlsx.py`) were retired when those modules were withdrawn (2026-08-18).
 
-**String techniques (2026-08-27):** violin, viola, and cello sordina / sul ponticello / harmonics (and violin sul tasto) rebuilt from dest-Zenodo Dynamics_predicter `Results` ladders (`D:\CORDAS_2\Violin_*_dynamics.xlsx`, `D:\CORDAS_2\Viola_*_dynamics.xlsx`, `D:\CORDAS_2\Cello_*_dynamics.xlsx`). Violin harmonics C5–B7 (36 notes); violin ponticello G3–B7 (53 notes). Viola sordina/ponticello C3–A#6 (47 notes); viola harmonics C5–B7 (36 notes). Cello sordina C2–A5 (46 notes); cello ponticello C2–C6 (49 notes); cello harmonics C4–E7 (41 notes, no C2–B3). GUI display names: violin `vl_con_sord` / `vl_sul_pont` / `vl_sul_tast` / `vl_harm`; viola `vla sord` / `vla sp` / `vla harm`; cello `vlc_sord` / `vlc_sp` / `vlc_harm`. No cello/viola sul tasto workbook. Double-bass technique tables remain withdrawn. Runtime GPR remains removed.
+**String techniques (2026-08-27):** violin, viola, cello, and double-bass sordina / sul ponticello / harmonics (and violin sul tasto) rebuilt from dest-Zenodo Dynamics_predicter `Results` ladders (`D:\CORDAS_2\Violin_*_dynamics.xlsx`, `D:\CORDAS_2\Viola_*_dynamics.xlsx`, `D:\CORDAS_2\Cello_*_dynamics.xlsx`, `D:\CORDAS_2\DoubleBass_*_dynamics.xlsx`). Violin harmonics C5–B7 (36 notes); violin ponticello G3–B7 (53 notes). Viola sordina/ponticello C3–A#6 (47 notes); viola harmonics C5–B7 (36 notes). Cello sordina C2–A5 (46 notes); cello ponticello C2–C6 (49 notes); cello harmonics C4–E7 (41 notes, no C2–B3). Double-bass sordina F1–G4 (39 notes; no E1); ponticello and harmonics E1–G4 (40 notes; harmonics C♯5–G6 not invented). GUI display names: violin `vl_con_sord` / `vl_sul_pont` / `vl_sul_tast` / `vl_harm`; viola `vla sord` / `vla sp` / `vla harm`; cello `vlc_sord` / `vlc_sp` / `vlc_harm`; double bass `cb_sord` / `cb_sp` / `cb_harm`. No cello/viola/double-bass sul tasto workbook. Runtime GPR remains removed.
 
 ## Media note-label normalization (PR #14)
 

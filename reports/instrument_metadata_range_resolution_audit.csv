@@ -5,6 +5,9 @@ celesta,Celesta,,False,,,,,60,96,65,88,0,,,struck,NOT APPLICABLE,NOT APPLICABLE,
 clarinete,Cl,clarinet,True,D3,C7,47,"[50, 96]",50,96,55,80,0,ordinary_sustain,ordinary_sustain,legato|staccato|flutter_tongue,PASS,PASS,False,full_coverage,0,0
 clarinete_baixo,Bass clarinet,,False,,,,,34,72,40,65,14,,,legato|staccato,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
 contrabaixo,Db,double_bass,True,E1,C5,45,"[28, 72]",28,72,31,55,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
+contrabaixo_harm,cb_harm,double_bass_harmonics,False,E1,G4,40,"[28, 67]",28,67,31,55,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
+contrabaixo_sordina,cb_sord,double_bass_sordina,False,F1,G4,39,"[29, 67]",29,67,31,55,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
+contrabaixo_sul_ponticello,cb_sp,double_bass_sul_ponticello,False,E1,G4,40,"[28, 67]",28,67,31,55,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
 contrafagote,Contrabassoon,,False,,,,,22,77,28,65,0,,,arco,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
 cor_anglais,English horn,,False,,,,,52,76,55,72,7,,,legato|staccato,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
 fagote,Bsn,bassoon,True,A#1,D#5,42,"[34, 75]",34,75,40,65,0,ordinary_sustain,ordinary_sustain,legato|staccato|flutter_tongue,PASS,PASS,False,full_coverage,0,0
