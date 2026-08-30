@@ -39,6 +39,6 @@ python scripts/export_instrument_metadata_audit.py
 - **Technique metadata:** `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` on table-backed modules; registry lists broader organological capabilities without implying technique-specific numerical tables.
 - **Runtime dynamics:** committed 10-level ladder lookup only. Historical GPR (`create_dynamic_gpr`) lives in `tools/legacy_gpr_dynamic_interpolation.py` and is **not** called from `calculate_metrics`.
 
-**Resolved (PR #14):** viola portable provenance (`docs/instrument_acoustic_sources.md#viola`); viola table aligned to `VIOLA_Media` (C3–C7) with `(2)` label normalization.
+**Resolved (PR #14):** viola portable provenance (`docs/instrument_acoustic_sources.md#viola`); viola table aligned to dest-Zenodo `VIOLA_Media` (`F4 (2)` label normalization). Dynamics10 (2026-08-30) span is C3–A#6 (47 rows).
 
 See also [`instrumentos/registry.py`](../instrumentos/registry.py) and [`docs/constants_and_assumptions.md`](constants_and_assumptions.md).

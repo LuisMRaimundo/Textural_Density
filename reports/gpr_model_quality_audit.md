@@ -1,11 +1,11 @@
 # GPR model-quality diagnostic audit
 
-- Repository SHA: `43cfa989ea540bed8fb0e0da8a4eddf376d16115`
+- Repository SHA: `3e7733db5d2c4b94ed2d29e15e8c69b4ad09677f`
 - Classification: **PASS**
 - Instruments: 8
-- Source rows: 357
-- Convex-hull departures (pp–mf): **49**
-- Convex-hull departures (pp–mf–ff): **14**
+- Source rows: 359
+- Convex-hull departures (pp–mf): **53**
+- Convex-hull departures (pp–mf–ff): **16**
 - PCHIP available: True
 - REVIEW REQUIRED rows: 124
 
@@ -14,13 +14,13 @@
 ## Per-instrument summary
 
 - **bassoon**: 42 rows, hull departures=6 (14.3%), max |GPR−linear|=0.686
-- **cello**: 49 rows, hull departures=6 (12.2%), max |GPR−linear|=1.330
+- **cello**: 49 rows, hull departures=9 (18.4%), max |GPR−linear|=1.330
 - **clarinet**: 47 rows, hull departures=1 (2.1%), max |GPR−linear|=0.888
-- **double_bass**: 45 rows, hull departures=8 (17.8%), max |GPR−linear|=1.102
+- **double_bass**: 45 rows, hull departures=7 (15.6%), max |GPR−linear|=1.102
 - **flute**: 40 rows, hull departures=5 (12.5%), max |GPR−linear|=0.515
 - **oboe**: 36 rows, hull departures=8 (22.2%), max |GPR−linear|=0.529
-- **viola**: 49 rows, hull departures=9 (18.4%), max |GPR−linear|=0.629
-- **violin**: 49 rows, hull departures=6 (12.2%), max |GPR−linear|=0.523
+- **viola**: 47 rows, hull departures=10 (21.3%), max |GPR−linear|=0.629
+- **violin**: 53 rows, hull departures=7 (13.2%), max |GPR−linear|=0.523
 
 ## Convex-hull departures (pp–mf)
 
@@ -28,8 +28,9 @@
 - violin C#4 (MIDI 61, low): pp=23.567 mp=24.020 mf=23.995 |Δlin|=0.131 |Δquad|=0.184 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 - violin A4 (MIDI 69, low): pp=22.034 mp=20.903 mf=21.085 |Δlin|=0.420 |Δquad|=0.121 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - violin G#5 (MIDI 80, middle): pp=18.060 mp=17.924 mf=18.111 |Δlin|=0.174 |Δquad|=0.229 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; non-monotonic source anchors
-- violin D#6 (MIDI 87, high): pp=14.310 mp=14.593 mf=14.557 |Δlin|=0.097 |Δquad|=0.240 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
+- violin D#6 (MIDI 87, middle): pp=14.310 mp=14.593 mf=14.557 |Δlin|=0.097 |Δquad|=0.240 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 - violin E7 (MIDI 100, high): pp=6.814 mp=6.652 mf=6.859 |Δlin|=0.196 |Δquad|=0.270 [REVIEW REQUIRED] mp outside pp–mf interval; non-monotonic source anchors
+- violin F#7 (MIDI 102, high): pp=3.570 mp=3.336 mf=3.370 |Δlin|=0.084 |Δquad|=0.098 [REVIEW REQUIRED] mp outside pp–mf interval
 - viola C#5 (MIDI 73, middle): pp=19.036 mp=19.272 mf=19.078 |Δlin|=0.205 |Δquad|=0.287 [REVIEW REQUIRED] mp outside pp–mf interval
 - viola E5 (MIDI 76, middle): pp=18.010 mp=17.935 mf=18.313 |Δlin|=0.302 |Δquad|=0.424 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; non-monotonic source anchors
 - viola G#5 (MIDI 80, high): pp=14.792 mp=15.090 mf=14.906 |Δlin|=0.212 |Δquad|=0.302 [REVIEW REQUIRED] mp outside pp–mf interval
@@ -38,12 +39,11 @@
 - viola F6 (MIDI 89, high): pp=9.387 mp=9.559 mf=9.443 |Δlin|=0.130 |Δquad|=0.167 [REVIEW REQUIRED] mp outside pp–mf interval
 - viola F#6 (MIDI 90, high): pp=9.882 mp=10.198 mf=10.040 |Δlin|=0.198 |Δquad|=0.285 [REVIEW REQUIRED] mp outside pp–mf interval
 - viola G6 (MIDI 91, high): pp=9.281 mp=9.417 mf=9.164 |Δlin|=0.224 |Δquad|=0.309 [REVIEW REQUIRED] mp outside pp–mf interval; non-monotonic source anchors
-- viola C7 (MIDI 96, high): pp=7.483 mp=7.227 mf=7.245 |Δlin|=0.077 |Δquad|=0.093 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
+- viola A6 (MIDI 93, high): pp=4.840 mp=4.831 mf=5.167 |Δlin|=0.255 |Δquad|=0.072 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
+- viola A#6 (MIDI 94, high): pp=4.634 mp=3.827 mf=3.974 |Δlin|=0.312 |Δquad|=0.099 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; non-monotonic source anchors
 - cello C2 (MIDI 36, low): pp=55.940 mp=56.461 mf=55.763 |Δlin|=0.654 |Δquad|=0.063 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
 - cello E2 (MIDI 40, low): pp=43.638 mp=39.499 mf=39.600 |Δlin|=1.110 |Δquad|=0.241 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - cello G3 (MIDI 55, middle): pp=29.856 mp=28.572 mf=28.740 |Δlin|=0.446 |Δquad|=0.126 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
-- cello G4 (MIDI 67, middle): pp=26.705 mp=27.946 mf=27.900 |Δlin|=0.344 |Δquad|=0.096 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
-- cello A4 (MIDI 69, high): pp=24.484 mp=24.190 mf=24.395 |Δlin|=0.227 |Δquad|=0.336 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 
 ## Top 20 |GPR−linear|
 
@@ -54,7 +54,6 @@
 - cello D2 (MIDI 38, low): pp=49.338 mp=55.954 mf=56.976 |Δlin|=0.888 |Δquad|=0.210 [OK] non-monotonic source anchors
 - cello D#2 (MIDI 39, low): pp=43.278 mp=50.515 mf=51.761 |Δlin|=0.875 |Δquad|=0.235 [OK] non-monotonic source anchors
 - cello C3 (MIDI 48, low): pp=43.408 mp=49.236 mf=50.044 |Δlin|=0.851 |Δquad|=0.193 [OK] non-monotonic source anchors
-- double_bass D#4 (MIDI 63, high): pp=22.065 mp=17.546 mf=17.068 |Δlin|=0.771 |Δquad|=0.272 [OK] non-monotonic source anchors
 - bassoon F2 (MIDI 41, low): pp=46.104 mp=42.647 mf=42.410 |Δlin|=0.686 |Δquad|=0.187 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - double_bass C#3 (MIDI 49, middle): pp=28.027 mp=25.852 mf=26.008 |Δlin|=0.661 |Δquad|=0.154 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - cello C2 (MIDI 36, low): pp=55.940 mp=56.461 mf=55.763 |Δlin|=0.654 |Δquad|=0.063 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
@@ -64,9 +63,10 @@
 - cello A#2 (MIDI 46, low): pp=39.990 mp=44.211 mf=44.809 |Δlin|=0.606 |Δquad|=0.150 [OK] non-monotonic source anchors
 - cello E3 (MIDI 52, low): pp=38.568 mp=44.177 mf=45.253 |Δlin|=0.595 |Δquad|=0.184 [OK] non-monotonic source anchors
 - viola D#3 (MIDI 51, low): pp=38.789 mp=43.518 mf=44.328 |Δlin|=0.575 |Δquad|=0.162 [OK] non-monotonic source anchors
-- double_bass A#4 (MIDI 70, high): pp=21.305 mp=23.875 mf=23.999 |Δlin|=0.550 |Δquad|=0.115 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - clarinet F3 (MIDI 53, low): pp=21.540 mp=32.636 mf=35.609 |Δlin|=0.544 |Δquad|=0.400 [OK] within expected diagnostic envelope
 - viola G3 (MIDI 55, low): pp=40.863 mp=44.683 mf=45.237 |Δlin|=0.539 |Δquad|=0.140 [OK] non-monotonic source anchors
+- oboe E4 (MIDI 64, low): pp=28.715 mp=24.846 mf=24.263 |Δlin|=0.529 |Δquad|=0.206 [OK] non-monotonic source anchors
+- violin A#3 (MIDI 58, low): pp=24.929 mp=25.340 mf=26.174 |Δlin|=0.523 |Δquad|=0.075 [OK] within expected diagnostic envelope
 
 ## Top 20 |GPR−quadratic|
 
@@ -77,9 +77,10 @@
 - bassoon D2 (MIDI 38, low): pp=41.346 mp=41.736 mf=42.380 |Δlin|=0.386 |Δquad|=0.566 [REVIEW REQUIRED] mp near pp anchor; non-monotonic source anchors
 - bassoon F#3 (MIDI 54, middle): pp=28.099 mp=28.050 mf=27.496 |Δlin|=0.403 |Δquad|=0.561 [REVIEW REQUIRED] mp near pp anchor; non-monotonic source anchors
 - clarinet G6 (MIDI 91, high): pp=8.829 mp=8.705 mf=8.133 |Δlin|=0.398 |Δquad|=0.559 [OK] non-monotonic source anchors
+- violin G7 (MIDI 103, high): pp=2.881 mp=3.118 mf=3.691 |Δlin|=0.370 |Δquad|=0.529 [OK] non-monotonic source anchors
 - double_bass G#1 (MIDI 32, low): pp=30.405 mp=30.839 mf=31.432 |Δlin|=0.336 |Δquad|=0.502 [OK] non-monotonic source anchors
 - flute G6 (MIDI 91, high): pp=7.611 mp=7.932 mf=8.483 |Δlin|=0.332 |Δquad|=0.486 [OK] non-monotonic source anchors
-- viola G5 (MIDI 79, middle): pp=14.793 mp=15.104 mf=15.647 |Δlin|=0.330 |Δquad|=0.482 [OK] non-monotonic source anchors
+- viola G5 (MIDI 79, high): pp=14.793 mp=15.104 mf=15.647 |Δlin|=0.330 |Δquad|=0.482 [OK] non-monotonic source anchors
 - oboe A6 (MIDI 93, high): pp=8.676 mp=9.085 mf=9.649 |Δlin|=0.321 |Δquad|=0.479 [OK] non-monotonic source anchors
 - cello D#5 (MIDI 75, high): pp=17.021 mp=17.479 mf=18.007 |Δlin|=0.281 |Δquad|=0.429 [OK] non-monotonic source anchors
 - viola E5 (MIDI 76, middle): pp=18.010 mp=17.935 mf=18.313 |Δlin|=0.302 |Δquad|=0.424 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; non-monotonic source anchors
@@ -88,8 +89,7 @@
 - clarinet E6 (MIDI 88, high): pp=9.978 mp=10.454 mf=10.971 |Δlin|=0.269 |Δquad|=0.413 [OK] non-monotonic source anchors
 - clarinet F#6 (MIDI 90, high): pp=9.016 mp=8.976 mf=8.570 |Δlin|=0.294 |Δquad|=0.410 [REVIEW REQUIRED] mp near pp anchor; non-monotonic source anchors
 - bassoon A#4 (MIDI 70, high): pp=19.190 mp=19.360 mf=19.033 |Δlin|=0.288 |Δquad|=0.409 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; non-monotonic source anchors
-- clarinet F3 (MIDI 53, low): pp=21.540 mp=32.636 mf=35.609 |Δlin|=0.544 |Δquad|=0.400 [OK] within expected diagnostic envelope
-- bassoon C#4 (MIDI 61, middle): pp=18.712 mp=18.939 mf=18.647 |Δlin|=0.276 |Δquad|=0.396 [REVIEW REQUIRED] mp outside pp–mf interval; non-monotonic source anchors
+- cello C6 (MIDI 84, high): pp=12.848 mp=12.916 mf=12.549 |Δlin|=0.292 |Δquad|=0.407 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; non-monotonic source anchors
 
 ## Top 20 |GPR−PCHIP|
 
@@ -119,7 +119,6 @@
 - clarinet E3 (MIDI 52, low): pp=21.939 mp=35.960 mf=39.450 |Δlin|=0.888 |Δquad|=0.582 [OK] within expected diagnostic envelope
 - cello E2 (MIDI 40, low): pp=43.638 mp=39.499 mf=39.600 |Δlin|=1.110 |Δquad|=0.241 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - cello B2 (MIDI 47, low): pp=39.672 mp=47.375 mf=48.168 |Δlin|=1.330 |Δquad|=0.264 [OK] non-monotonic source anchors
-- double_bass D#4 (MIDI 63, high): pp=22.065 mp=17.546 mf=17.068 |Δlin|=0.771 |Δquad|=0.272 [OK] non-monotonic source anchors
 - double_bass A2 (MIDI 45, middle): pp=35.800 mp=37.439 mf=36.516 |Δlin|=1.102 |Δquad|=0.034 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; non-monotonic source anchors
 - clarinet F3 (MIDI 53, low): pp=21.540 mp=32.636 mf=35.609 |Δlin|=0.544 |Δquad|=0.400 [OK] within expected diagnostic envelope
 - clarinet D#3 (MIDI 51, low): pp=24.310 mp=35.510 mf=38.563 |Δlin|=0.510 |Δquad|=0.376 [OK] within expected diagnostic envelope
@@ -136,6 +135,7 @@
 - cello F#2 (MIDI 42, low): pp=29.508 mp=34.749 mf=35.658 |Δlin|=0.628 |Δquad|=0.188 [OK] non-monotonic source anchors
 - viola A3 (MIDI 57, low): pp=25.629 mp=30.087 mf=30.735 |Δlin|=0.629 |Δquad|=0.170 [OK] non-monotonic source anchors
 - clarinet E4 (MIDI 64, low): pp=16.122 mp=22.450 mf=23.981 |Δlin|=0.434 |Δquad|=0.248 [OK] within expected diagnostic envelope
+- cello E3 (MIDI 52, low): pp=38.568 mp=44.177 mf=45.253 |Δlin|=0.595 |Δquad|=0.184 [OK] non-monotonic source anchors
 
 ## Near pp
 
@@ -144,11 +144,12 @@
 - viola G#3 (MIDI 56, low): pp=31.180 mp=31.254 mf=31.309 |Δlin|=0.023 |Δquad|=0.175 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor
 - viola E5 (MIDI 76, middle): pp=18.010 mp=17.935 mf=18.313 |Δlin|=0.302 |Δquad|=0.424 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; non-monotonic source anchors
 - viola F5 (MIDI 77, middle): pp=16.652 mp=16.671 mf=16.802 |Δlin|=0.093 |Δquad|=0.129 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor; non-monotonic source anchors
+- viola A6 (MIDI 93, high): pp=4.840 mp=4.831 mf=5.167 |Δlin|=0.255 |Δquad|=0.072 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
 - cello C2 (MIDI 36, low): pp=55.940 mp=56.461 mf=55.763 |Δlin|=0.654 |Δquad|=0.063 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
 - cello C#4 (MIDI 61, middle): pp=30.852 mp=30.598 mf=30.218 |Δlin|=0.222 |Δquad|=0.329 [REVIEW REQUIRED] mp near pp anchor; non-monotonic source anchors
 - cello B4 (MIDI 71, high): pp=24.663 mp=24.551 mf=24.189 |Δlin|=0.243 |Δquad|=0.346 [REVIEW REQUIRED] mp near pp anchor; non-monotonic source anchors
 - cello F5 (MIDI 77, high): pp=16.721 mp=16.888 mf=17.011 |Δlin|=0.051 |Δquad|=0.085 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor; non-monotonic source anchors
-- cello B5 (MIDI 83, high): pp=12.618 mp=12.653 mf=12.947 |Δlin|=0.212 |Δquad|=0.294 [REVIEW REQUIRED] mp near pp anchor; non-monotonic source anchors
+- cello C6 (MIDI 84, high): pp=12.848 mp=12.916 mf=12.549 |Δlin|=0.292 |Δquad|=0.407 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; non-monotonic source anchors
 - double_bass A1 (MIDI 33, low): pp=32.494 mp=32.676 mf=32.588 |Δlin|=0.112 |Δquad|=0.138 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; mp near mf anchor
 - double_bass C2 (MIDI 36, low): pp=34.332 mp=34.295 mf=34.528 |Δlin|=0.184 |Δquad|=0.123 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor; mp near mf anchor
 - double_bass C#2 (MIDI 37, low): pp=27.704 mp=27.747 mf=27.530 |Δlin|=0.174 |Δquad|=0.236 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; mp near mf anchor; non-monotonic source anchors
@@ -185,7 +186,7 @@
 - violin D5 (MIDI 74, middle): pp=20.666 mp=21.351 mf=21.402 |Δlin|=0.133 |Δquad|=0.245 [REVIEW REQUIRED] mp near mf anchor
 - violin A#5 (MIDI 82, middle): pp=16.110 mp=16.565 mf=16.610 |Δlin|=0.080 |Δquad|=0.139 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - violin D6 (MIDI 86, middle): pp=13.319 mp=13.800 mf=13.834 |Δlin|=0.095 |Δquad|=0.131 [REVIEW REQUIRED] mp near mf anchor
-- violin D#6 (MIDI 87, high): pp=14.310 mp=14.593 mf=14.557 |Δlin|=0.097 |Δquad|=0.240 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
+- violin D#6 (MIDI 87, middle): pp=14.310 mp=14.593 mf=14.557 |Δlin|=0.097 |Δquad|=0.240 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 - violin G6 (MIDI 91, high): pp=10.117 mp=10.254 mf=10.280 |Δlin|=0.014 |Δquad|=0.008 [REVIEW REQUIRED] mp near mf anchor
 - viola G#3 (MIDI 56, low): pp=31.180 mp=31.254 mf=31.309 |Δlin|=0.023 |Δquad|=0.175 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor
 - viola D#4 (MIDI 63, low): pp=25.058 mp=25.864 mf=25.965 |Δlin|=0.126 |Δquad|=0.194 [REVIEW REQUIRED] mp near mf anchor
@@ -196,14 +197,12 @@
 - viola A5 (MIDI 81, high): pp=14.042 mp=13.874 mf=13.787 |Δlin|=0.024 |Δquad|=0.049 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - viola B5 (MIDI 83, high): pp=15.871 mp=15.492 mf=15.369 |Δlin|=0.003 |Δquad|=0.009 [REVIEW REQUIRED] mp near mf anchor
 - viola C#6 (MIDI 85, high): pp=13.236 mp=12.980 mf=13.046 |Δlin|=0.113 |Δquad|=0.151 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
-- viola C7 (MIDI 96, high): pp=7.483 mp=7.227 mf=7.245 |Δlin|=0.077 |Δquad|=0.093 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 - cello E2 (MIDI 40, low): pp=43.638 mp=39.499 mf=39.600 |Δlin|=1.110 |Δquad|=0.241 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - cello G2 (MIDI 43, low): pp=33.503 mp=35.525 mf=35.663 |Δlin|=0.403 |Δquad|=0.108 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - cello G#2 (MIDI 44, low): pp=37.719 mp=38.224 mf=38.259 |Δlin|=0.100 |Δquad|=0.136 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - cello G3 (MIDI 55, middle): pp=29.856 mp=28.572 mf=28.740 |Δlin|=0.446 |Δquad|=0.126 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - cello B3 (MIDI 59, middle): pp=31.007 mp=32.759 mf=33.043 |Δlin|=0.225 |Δquad|=0.122 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - cello C4 (MIDI 60, middle): pp=32.133 mp=29.878 mf=29.713 |Δlin|=0.440 |Δquad|=0.150 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
-- cello D4 (MIDI 62, middle): pp=32.167 mp=32.591 mf=32.600 |Δlin|=0.100 |Δquad|=0.134 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - cello G4 (MIDI 67, middle): pp=26.705 mp=27.946 mf=27.900 |Δlin|=0.344 |Δquad|=0.096 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - cello A4 (MIDI 69, high): pp=24.484 mp=24.190 mf=24.395 |Δlin|=0.227 |Δquad|=0.336 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 - cello C#5 (MIDI 73, high): pp=17.604 mp=18.558 mf=18.688 |Δlin|=0.142 |Δquad|=0.128 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
@@ -212,8 +211,8 @@
 - cello F5 (MIDI 77, high): pp=16.721 mp=16.888 mf=17.011 |Δlin|=0.051 |Δquad|=0.085 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor; non-monotonic source anchors
 - cello F#5 (MIDI 78, high): pp=16.902 mp=17.763 mf=17.924 |Δlin|=0.094 |Δquad|=0.141 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - cello G#5 (MIDI 80, high): pp=15.708 mp=15.285 mf=15.157 |Δlin|=0.010 |Δquad|=0.004 [REVIEW REQUIRED] mp near mf anchor
-- cello A#5 (MIDI 82, high): pp=15.660 mp=15.410 mf=15.311 |Δlin|=0.012 |Δquad|=0.147 [REVIEW REQUIRED] mp near mf anchor
-- cello C6 (MIDI 84, high): pp=13.207 mp=12.958 mf=12.947 |Δlin|=0.054 |Δquad|=0.057 [REVIEW REQUIRED] mp near mf anchor
+- cello A#5 (MIDI 82, high): pp=14.569 mp=14.346 mf=14.454 |Δlin|=0.137 |Δquad|=0.184 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
+- cello B5 (MIDI 83, high): pp=12.776 mp=12.972 mf=12.871 |Δlin|=0.125 |Δquad|=0.164 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 - double_bass A1 (MIDI 33, low): pp=32.494 mp=32.676 mf=32.588 |Δlin|=0.112 |Δquad|=0.138 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; mp near mf anchor
 - double_bass C2 (MIDI 36, low): pp=34.332 mp=34.295 mf=34.528 |Δlin|=0.184 |Δquad|=0.123 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor; mp near mf anchor
 - double_bass C#2 (MIDI 37, low): pp=27.704 mp=27.747 mf=27.530 |Δlin|=0.174 |Δquad|=0.236 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; mp near mf anchor; non-monotonic source anchors
@@ -224,9 +223,8 @@
 - double_bass F#3 (MIDI 54, middle): pp=23.582 mp=24.280 mf=24.483 |Δlin|=0.023 |Δquad|=0.024 [REVIEW REQUIRED] mp near mf anchor
 - double_bass A3 (MIDI 57, middle): pp=21.818 mp=24.045 mf=24.246 |Δlin|=0.406 |Δquad|=0.115 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - double_bass A#3 (MIDI 58, high): pp=20.330 mp=20.950 mf=21.091 |Δlin|=0.049 |Δquad|=0.064 [REVIEW REQUIRED] mp near mf anchor
-- double_bass F#4 (MIDI 66, high): pp=24.351 mp=22.094 mf=21.922 |Δlin|=0.435 |Δquad|=0.153 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
-- double_bass A#4 (MIDI 70, high): pp=21.305 mp=23.875 mf=23.999 |Δlin|=0.550 |Δquad|=0.115 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
-- double_bass B4 (MIDI 71, high): pp=17.729 mp=18.219 mf=18.128 |Δlin|=0.191 |Δquad|=0.299 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
+- double_bass D#4 (MIDI 63, high): pp=22.065 mp=20.249 mf=20.089 |Δlin|=0.334 |Δquad|=0.143 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
+- double_bass F#4 (MIDI 66, high): pp=24.351 mp=22.415 mf=22.274 |Δlin|=0.378 |Δquad|=0.144 [REVIEW REQUIRED] mp near mf anchor; non-monotonic source anchors
 - flute C#6 (MIDI 85, high): pp=10.583 mp=10.630 mf=10.634 |Δlin|=0.008 |Δquad|=0.008 [REVIEW REQUIRED] mp near pp anchor; mp near mf anchor
 - flute D#6 (MIDI 87, high): pp=10.025 mp=10.320 mf=10.391 |Δlin|=0.020 |Δquad|=0.013 [REVIEW REQUIRED] mp near mf anchor
 - flute F6 (MIDI 89, high): pp=7.903 mp=7.995 mf=7.986 |Δlin|=0.030 |Δquad|=0.034 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
@@ -272,8 +270,9 @@
 - violin C#4 (MIDI 61, low): pp=23.567 mp=24.020 mf=23.995 |Δlin|=0.131 |Δquad|=0.184 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 - violin A4 (MIDI 69, low): pp=22.034 mp=20.903 mf=21.085 |Δlin|=0.420 |Δquad|=0.121 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - violin G#5 (MIDI 80, middle): pp=18.060 mp=17.924 mf=18.111 |Δlin|=0.174 |Δquad|=0.229 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; non-monotonic source anchors
-- violin D#6 (MIDI 87, high): pp=14.310 mp=14.593 mf=14.557 |Δlin|=0.097 |Δquad|=0.240 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
+- violin D#6 (MIDI 87, middle): pp=14.310 mp=14.593 mf=14.557 |Δlin|=0.097 |Δquad|=0.240 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 - violin E7 (MIDI 100, high): pp=6.814 mp=6.652 mf=6.859 |Δlin|=0.196 |Δquad|=0.270 [REVIEW REQUIRED] mp outside pp–mf interval; non-monotonic source anchors
+- violin F#7 (MIDI 102, high): pp=3.570 mp=3.336 mf=3.370 |Δlin|=0.084 |Δquad|=0.098 [REVIEW REQUIRED] mp outside pp–mf interval
 - viola C#5 (MIDI 73, middle): pp=19.036 mp=19.272 mf=19.078 |Δlin|=0.205 |Δquad|=0.287 [REVIEW REQUIRED] mp outside pp–mf interval
 - viola E5 (MIDI 76, middle): pp=18.010 mp=17.935 mf=18.313 |Δlin|=0.302 |Δquad|=0.424 [REVIEW REQUIRED] mp outside pp–mf interval; mp near pp anchor; non-monotonic source anchors
 - viola G#5 (MIDI 80, high): pp=14.792 mp=15.090 mf=14.906 |Δlin|=0.212 |Δquad|=0.302 [REVIEW REQUIRED] mp outside pp–mf interval
@@ -282,34 +281,33 @@
 - viola F6 (MIDI 89, high): pp=9.387 mp=9.559 mf=9.443 |Δlin|=0.130 |Δquad|=0.167 [REVIEW REQUIRED] mp outside pp–mf interval
 - viola F#6 (MIDI 90, high): pp=9.882 mp=10.198 mf=10.040 |Δlin|=0.198 |Δquad|=0.285 [REVIEW REQUIRED] mp outside pp–mf interval
 - viola G6 (MIDI 91, high): pp=9.281 mp=9.417 mf=9.164 |Δlin|=0.224 |Δquad|=0.309 [REVIEW REQUIRED] mp outside pp–mf interval; non-monotonic source anchors
-- viola C7 (MIDI 96, high): pp=7.483 mp=7.227 mf=7.245 |Δlin|=0.077 |Δquad|=0.093 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
+- viola A6 (MIDI 93, high): pp=4.840 mp=4.831 mf=5.167 |Δlin|=0.255 |Δquad|=0.072 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
+- viola A#6 (MIDI 94, high): pp=4.634 mp=3.827 mf=3.974 |Δlin|=0.312 |Δquad|=0.099 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; non-monotonic source anchors
 - cello C2 (MIDI 36, low): pp=55.940 mp=56.461 mf=55.763 |Δlin|=0.654 |Δquad|=0.063 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near pp anchor
 - cello E2 (MIDI 40, low): pp=43.638 mp=39.499 mf=39.600 |Δlin|=1.110 |Δquad|=0.241 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
 - cello G3 (MIDI 55, middle): pp=29.856 mp=28.572 mf=28.740 |Δlin|=0.446 |Δquad|=0.126 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
-- cello G4 (MIDI 67, middle): pp=26.705 mp=27.946 mf=27.900 |Δlin|=0.344 |Δquad|=0.096 [REVIEW REQUIRED] mp outside pp–mf interval; mp outside pp–mf–ff hull; mp near mf anchor; non-monotonic source anchors
-- cello A4 (MIDI 69, high): pp=24.484 mp=24.190 mf=24.395 |Δlin|=0.227 |Δquad|=0.336 [REVIEW REQUIRED] mp outside pp–mf interval; mp near mf anchor
 
 ## Model interpretation
 
 ### 1. Convex-hull departures by instrument
-- Concentrated in **viola** (9 of 49 rows, 18.4%).
+- Concentrated in **viola** (10 of 47 rows, 21.3%).
 - **double_bass** and **cello** show the highest departure rates in low register rows.
 
 ### 2. Register concentration
-- Highest absolute departure count in **high** register band (24 rows).
+- Highest absolute departure count in **high** register band (27 rows).
 - Low-register string rows dominate convex-hull departures.
 
 ### 3. Non-monotonic source rows
-- Non-monotonic pp/mf/ff rows: **160** of 357.
-- Convex-hull departures overlapping non-monotonic rows: **20**.
+- Non-monotonic pp/mf/ff rows: **161** of 359.
+- Convex-hull departures overlapping non-monotonic rows: **22**.
 - Departures are **associated** with non-monotonic anchors but also occur when mf lies between pp and ff.
 
 ### 4. Anchor geometry / uncertainty
 - GPR fits only three anchors; high `gpr_std_mp` correlates with steep or non-monotonic local anchor geometry.
 
 ### 5. Reference closeness
-- Mean |GPR−linear|: 0.1906; mean |GPR−quadratic|: 0.1781.
-- Mean |GPR−PCHIP|: 0.2260.
+- Mean |GPR−linear|: 0.1919; mean |GPR−quadratic|: 0.1794.
+- Mean |GPR−PCHIP|: 0.2301.
 - GPR is often closest to **quadratic** on average; case-by-case variation is large.
 
 ### 6. PCHIP conservatism
@@ -321,7 +319,7 @@
 - Extreme overshoot/undershoot is reproducible and concentrated in low strings.
 
 ### 9. Near-anchor collapse
-- near_pp: 33; near_mf: 90.
+- near_pp: 34; near_mf: 87.
 - Few cases suggest practical anchor collapse; most mp values are distinct from pp and mf.
 
 ### 10. Future campaigns

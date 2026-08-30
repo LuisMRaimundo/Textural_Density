@@ -40,7 +40,7 @@ CONFIGS = [
     {
         "module": "violin",
         "display": "Violin",
-        "workbook": Path(r"D:\CORDAS\VIOLINO\VIOLIN_Zenodo_collections_Arco_normal.xlsx"),
+        "workbook": Path(r"C:\Users\lmr20\Desktop\Código extrapolação\VIOLIN_3\VIOLIN_Zenodo_collections_Arco_normal.xlsx"),
         "media_sheet": "Violin_Media",
         "registry_id": "violin",
         "technique": "arco / ordinario sustains",
@@ -48,7 +48,7 @@ CONFIGS = [
     {
         "module": "viola",
         "display": "Viola",
-        "workbook": Path(r"D:\CORDAS\VIOLA\VIOLA_Zenodo_collections_Arco_normal.xlsx"),
+        "workbook": Path(r"C:\Users\lmr20\Desktop\Código extrapolação\VIOLA\VIOLA_Zenodo_collections_Arco_normal.xlsx"),
         "media_sheet": "VIOLA_Media",
         "registry_id": "viola",
         "technique": "arco / ordinario sustains",
@@ -56,7 +56,7 @@ CONFIGS = [
     {
         "module": "cello",
         "display": "Cello",
-        "workbook": Path(r"D:\CORDAS\CELLO_Zenodo_collections_media.xlsx"),
+        "workbook": Path(r"C:\Users\lmr20\Desktop\Código extrapolação\CELLO\CELLO_Zenodo_collections_media.xlsx"),
         "media_sheet": "Cello_Media",
         "registry_id": "cello",
         "technique": "arco / ordinario sustains",
@@ -64,7 +64,7 @@ CONFIGS = [
     {
         "module": "double_bass",
         "display": "Double bass",
-        "workbook": Path(r"D:\CORDAS\DOUBLEBASS_Zenodo_collections_media.xlsx"),
+        "workbook": Path(r"C:\Users\lmr20\Desktop\Código extrapolação\DOUBLE_BASS\DOUBLEBASS_Zenodo_collections_media.xlsx"),
         "media_sheet": "DBass_Media",
         "registry_id": "double_bass",
         "technique": "arco / ordinario sustains",

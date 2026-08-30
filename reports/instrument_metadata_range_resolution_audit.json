@@ -440,19 +440,19 @@
       "table_backed": false,
       "profile_status": "literature_derived",
       "source_table_span": {
-        "first_note": "E1",
-        "last_note": "G4",
-        "row_count": 40,
-        "min_midi": 28,
-        "max_midi": 67
+        "first_note": "E3",
+        "last_note": "C5",
+        "row_count": 21,
+        "min_midi": 52,
+        "max_midi": 72
       },
       "instrument_source_pitch_range": [
-        28,
-        67
+        52,
+        72
       ],
       "registry_sounding_range_midi": [
-        28,
-        67
+        52,
+        72
       ],
       "registry_comfortable_range_midi": [
         31,
@@ -503,8 +503,8 @@
       "missing_low_semitones": 0,
       "missing_high_semitones": 0,
       "table_span_midi": [
-        28,
-        67
+        52,
+        72
       ]
     },
     {
@@ -531,19 +531,19 @@
       "table_backed": false,
       "profile_status": "literature_derived",
       "source_table_span": {
-        "first_note": "F1",
-        "last_note": "G4",
-        "row_count": 39,
-        "min_midi": 29,
-        "max_midi": 67
+        "first_note": "E1",
+        "last_note": "C5",
+        "row_count": 45,
+        "min_midi": 28,
+        "max_midi": 72
       },
       "instrument_source_pitch_range": [
-        29,
-        67
+        28,
+        72
       ],
       "registry_sounding_range_midi": [
-        29,
-        67
+        28,
+        72
       ],
       "registry_comfortable_range_midi": [
         31,
@@ -594,8 +594,8 @@
       "missing_low_semitones": 0,
       "missing_high_semitones": 0,
       "table_span_midi": [
-        29,
-        67
+        28,
+        72
       ]
     },
     {
@@ -621,18 +621,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "E1",
-        "last_note": "G4",
-        "row_count": 40,
+        "last_note": "C5",
+        "row_count": 45,
         "min_midi": 28,
-        "max_midi": 67
+        "max_midi": 72
       },
       "instrument_source_pitch_range": [
         28,
-        67
+        72
       ],
       "registry_sounding_range_midi": [
         28,
-        67
+        72
       ],
       "registry_comfortable_range_midi": [
         31,
@@ -684,7 +684,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         28,
-        67
+        72
       ]
     },
     {
@@ -2031,18 +2031,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "C3",
-        "last_note": "C7",
-        "row_count": 49,
+        "last_note": "A#6",
+        "row_count": 47,
         "min_midi": 48,
-        "max_midi": 96
+        "max_midi": 94
       },
       "instrument_source_pitch_range": [
         48,
-        96
+        94
       ],
       "registry_sounding_range_midi": [
         48,
-        96
+        94
       ],
       "registry_comfortable_range_midi": [
         50,
@@ -2100,7 +2100,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         48,
-        96
+        94
       ]
     },
     {
@@ -2123,18 +2123,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "C5",
-        "last_note": "B7",
-        "row_count": 36,
+        "last_note": "A#6",
+        "row_count": 23,
         "min_midi": 72,
-        "max_midi": 107
+        "max_midi": 94
       },
       "instrument_source_pitch_range": [
         72,
-        107
+        94
       ],
       "registry_sounding_range_midi": [
         72,
-        107
+        94
       ],
       "registry_comfortable_range_midi": [
         72,
@@ -2186,7 +2186,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         72,
-        107
+        94
       ]
     },
     {
@@ -2301,18 +2301,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "C3",
-        "last_note": "A#6",
-        "row_count": 47,
+        "last_note": "A6",
+        "row_count": 46,
         "min_midi": 48,
-        "max_midi": 94
+        "max_midi": 93
       },
       "instrument_source_pitch_range": [
         48,
-        94
+        93
       ],
       "registry_sounding_range_midi": [
         48,
-        94
+        93
       ],
       "registry_comfortable_range_midi": [
         50,
@@ -2364,7 +2364,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         48,
-        94
+        93
       ]
     },
     {
@@ -2382,18 +2382,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "G3",
-        "last_note": "G7",
-        "row_count": 49,
+        "last_note": "B7",
+        "row_count": 53,
         "min_midi": 55,
-        "max_midi": 103
+        "max_midi": 107
       },
       "instrument_source_pitch_range": [
         55,
-        103
+        107
       ],
       "registry_sounding_range_midi": [
         55,
-        103
+        107
       ],
       "registry_comfortable_range_midi": [
         55,
@@ -2451,7 +2451,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         55,
-        103
+        107
       ]
     },
     {
@@ -2484,18 +2484,18 @@
       "table_backed": true,
       "profile_status": "literature_derived",
       "source_table_span": {
-        "first_note": "C5",
+        "first_note": "G5",
         "last_note": "B7",
-        "row_count": 36,
-        "min_midi": 72,
+        "row_count": 29,
+        "min_midi": 79,
         "max_midi": 107
       },
       "instrument_source_pitch_range": [
-        72,
+        79,
         107
       ],
       "registry_sounding_range_midi": [
-        72,
+        79,
         107
       ],
       "registry_comfortable_range_midi": [
@@ -2547,7 +2547,7 @@
       "missing_low_semitones": 0,
       "missing_high_semitones": 0,
       "table_span_midi": [
-        72,
+        79,
         107
       ]
     },
@@ -2578,18 +2578,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "G3",
-        "last_note": "G7",
-        "row_count": 49,
+        "last_note": "B7",
+        "row_count": 53,
         "min_midi": 55,
-        "max_midi": 103
+        "max_midi": 107
       },
       "instrument_source_pitch_range": [
         55,
-        103
+        107
       ],
       "registry_sounding_range_midi": [
         55,
-        103
+        107
       ],
       "registry_comfortable_range_midi": [
         55,
@@ -2641,7 +2641,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         55,
-        103
+        107
       ]
     },
     {
@@ -2755,18 +2755,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "G3",
-        "last_note": "G7",
-        "row_count": 49,
+        "last_note": "B7",
+        "row_count": 53,
         "min_midi": 55,
-        "max_midi": 103
+        "max_midi": 107
       },
       "instrument_source_pitch_range": [
         55,
-        103
+        107
       ],
       "registry_sounding_range_midi": [
         55,
-        103
+        107
       ],
       "registry_comfortable_range_midi": [
         55,
@@ -2818,7 +2818,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         55,
-        103
+        107
       ]
     },
     {
@@ -2929,18 +2929,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "C4",
-        "last_note": "E7",
-        "row_count": 41,
+        "last_note": "C6",
+        "row_count": 25,
         "min_midi": 60,
-        "max_midi": 100
+        "max_midi": 84
       },
       "instrument_source_pitch_range": [
         60,
-        100
+        84
       ],
       "registry_sounding_range_midi": [
         60,
-        100
+        84
       ],
       "registry_comfortable_range_midi": [
         60,
@@ -2992,7 +2992,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         60,
-        100
+        84
       ]
     },
     {
@@ -3020,18 +3020,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "C2",
-        "last_note": "A5",
-        "row_count": 46,
+        "last_note": "C6",
+        "row_count": 49,
         "min_midi": 36,
-        "max_midi": 81
+        "max_midi": 84
       },
       "instrument_source_pitch_range": [
         36,
-        81
+        84
       ],
       "registry_sounding_range_midi": [
         36,
-        81
+        84
       ],
       "registry_comfortable_range_midi": [
         40,
@@ -3083,7 +3083,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         36,
-        81
+        84
       ]
     },
     {

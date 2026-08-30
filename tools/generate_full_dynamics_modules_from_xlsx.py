@@ -51,7 +51,7 @@ class InstrumentSpec:
 
 
 SPECS: tuple[InstrumentSpec, ...] = (
-    # viola.py is generated from D:\CORDAS_2\Viola_dynamics.xlsx via
+    # viola.py is generated from Dynamics10 Viola_Dynamics10_Arco_normal.xlsx via
     # tools/generate_violin_technique_modules_from_ok_workbooks.py --viola-only.
     InstrumentSpec(
         module="cello",

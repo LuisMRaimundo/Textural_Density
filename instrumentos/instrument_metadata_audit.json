@@ -177,7 +177,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "medium",
-      "source_notes": "Sparse GPR table in instrumentos/violin.py from IOWA+ORCH arco sustain Combined Density Metric medians (pp/mf/ff); not a full measured spectrum.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin.py from Dynamics10 dest-Zenodo Results (IOWA+ORCH Media pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated by GPR.",
         "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
@@ -199,7 +199,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "medium",
-      "source_notes": "Sparse GPR table in instrumentos/cello.py from IOWA+ORCH arco sustain Combined Density Metric medians (pp/mf/ff); not a full measured spectrum.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello.py from Dynamics10 dest-Zenodo Results (IOWA+ORCH Media pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated by GPR.",
         "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
@@ -221,7 +221,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "medium",
-      "source_notes": "Sparse GPR table in instrumentos/double_bass.py from IOWA+ORCH arco sustain Combined Density Metric medians (pp/mf/ff); not a full measured spectrum.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass.py from Dynamics10 dest-Zenodo Results (IOWA+ORCH Media pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated by GPR.",
         "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
@@ -243,7 +243,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "medium",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola.py from D:\\CORDAS_2\\Viola_dynamics.xlsx Results sheet (dest Zenodo VIOLA_Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola.py from Dynamics10 Viola_Dynamics10_Arco_normal.xlsx Results sheet (dest Zenodo VIOLA_Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C3\u2013A#6.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in MIDI space.",
         "Numerical CDM table covers arco_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
@@ -265,7 +265,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_sordina.py from D:\\CORDAS_2\\Viola_con_sordino_dynamics.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C3\u2013A#6.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_sordina.py from Dynamics10 Viola_Dynamics10_con_sordino.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C3\u2013A#6.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -289,7 +289,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_sul_ponticello.py from D:\\CORDAS_2\\Viola_sul_ponticello_dynamics.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C3\u2013A#6.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_sul_ponticello.py from Dynamics10 Viola_Dynamics10_sul_ponticello.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C3\u2013A6.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -313,7 +313,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sordina.py from D:\\CORDAS_2\\Violin_con_sordino_dynamics.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sordina.py from Dynamics10 Violin_Dynamics10_con_sordino.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span G3\u2013B7.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -337,7 +337,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_ponticello.py from D:\\CORDAS_2\\Violin_sul_ponticello_dynamics.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span G3\u2013B7.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_ponticello.py from Dynamics10 Violin_Dynamics10_sul_ponticello.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span G3\u2013B7.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -361,7 +361,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_tasto.py from D:\\CORDAS_2\\Violin_sul_tasto_dynamics.xlsx Results sheet (dest Zenodo sul tasto Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers).",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_tasto.py from Dynamics10 Violin_Dynamics10_sul_tasto.xlsx Results sheet (dest Zenodo sul tasto Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span G3\u2013B7.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sul_tasto only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -385,11 +385,11 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_harmonics.py from D:\\CORDAS_2\\Violin_harmonics_dynamics.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C5\u2013B7.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_harmonics.py from Dynamics10 Violin_Dynamics10_harmonics.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span G5\u2013B7.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the harmonic sounding register (C5\u2013B7); notes outside this range use controlled pitch extrapolation or fallback.",
+        "Table span is the harmonic sounding register (G5\u2013B7); notes outside this range use controlled pitch extrapolation or fallback.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
@@ -399,7 +399,7 @@
       "warnings": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the harmonic sounding register (C5\u2013B7); notes outside this range use controlled pitch extrapolation or fallback.",
+        "Table span is the harmonic sounding register (G5\u2013B7); notes outside this range use controlled pitch extrapolation or fallback.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
@@ -411,11 +411,11 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_harmonics.py from D:\\CORDAS_2\\Viola_harmonics_dynamics.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C5\u2013B7.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_harmonics.py from Dynamics10 Viola_Dynamics10_harmonics.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C5\u2013A#6.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the harmonic sounding register (C5\u2013B7); notes outside this range use controlled pitch extrapolation or fallback.",
+        "Table span is the harmonic sounding register (C5\u2013A#6); notes outside this range use controlled pitch extrapolation or fallback.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
@@ -425,7 +425,7 @@
       "warnings": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the harmonic sounding register (C5\u2013B7); notes outside this range use controlled pitch extrapolation or fallback.",
+        "Table span is the harmonic sounding register (C5\u2013A#6); notes outside this range use controlled pitch extrapolation or fallback.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
@@ -437,7 +437,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello_sordina.py from D:\\CORDAS_2\\Cello_con_sordino_dynamics.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C2\u2013A5.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello_sordina.py from Dynamics10 Cello_Dynamics10_con_sordino.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C2\u2013C6.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -461,7 +461,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello_sul_ponticello.py from D:\\CORDAS_2\\Cello_sul_ponticello_dynamics.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C2\u2013C6.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello_sul_ponticello.py from Dynamics10 Cello_Dynamics10_sul_ponticello.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C2\u2013C6.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -485,11 +485,11 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello_harmonics.py from D:\\CORDAS_2\\Cello_harmonics_dynamics.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C4\u2013E7.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello_harmonics.py from Dynamics10 Cello_Dynamics10_harmonics.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C4\u2013C6.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the harmonic sounding register (C4\u2013E7); C2\u2013B3 were withdrawn from the dest book and are not invented.",
+        "Table span is the harmonic sounding register (C4\u2013C6); C2\u2013B3 were withdrawn from the dest book and are not invented.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
@@ -499,7 +499,7 @@
       "warnings": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the harmonic sounding register (C4\u2013E7); C2\u2013B3 were withdrawn from the dest book and are not invented.",
+        "Table span is the harmonic sounding register (C4\u2013C6); C2\u2013B3 were withdrawn from the dest book and are not invented.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
@@ -511,7 +511,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sordina.py from D:\\CORDAS_2\\DoubleBass_con_sordino_dynamics.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span F1\u2013G4. E1 has no complete triad and is not invented.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sordina.py from Dynamics10 DoubleBass_Dynamics10_con_sordino.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E1\u2013C5.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -535,7 +535,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sul_ponticello.py from D:\\CORDAS_2\\DoubleBass_sul_ponticello_dynamics.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E1\u2013G4.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sul_ponticello.py from Dynamics10 DoubleBass_Dynamics10_sul_ponticello.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E1\u2013C5.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -559,11 +559,11 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_harmonics.py from D:\\CORDAS_2\\DoubleBass_harmonics_dynamics.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E1\u2013G4. C#5\u2013G6 are blank in dest Media and are not invented.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_harmonics.py from Dynamics10 DoubleBass_Dynamics10_harmonics.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E3\u2013C5. Notes below E3 and the old C#5\u2013G6 tail are not invented.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the dest-Zenodo harmonic register (E1\u2013G4); C#5\u2013G6 were blank in the dest book and are not invented.",
+        "Table span is the dest-Zenodo harmonic register (E3\u2013C5); notes below E3 and C#5\u2013G6 are not invented.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
@@ -573,7 +573,7 @@
       "warnings": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the dest-Zenodo harmonic register (E1\u2013G4); C#5\u2013G6 were blank in the dest book and are not invented.",
+        "Table span is the dest-Zenodo harmonic register (E3\u2013C5); notes below E3 and C#5\u2013G6 are not invented.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false

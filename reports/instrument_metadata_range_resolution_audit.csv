@@ -5,9 +5,9 @@ celesta,Celesta,,False,,,,,60,96,65,88,0,,,struck,NOT APPLICABLE,NOT APPLICABLE,
 clarinete,Cl,clarinet,True,D3,C7,47,"[50, 96]",50,96,55,80,0,ordinary_sustain,ordinary_sustain,legato|staccato|flutter_tongue,PASS,PASS,False,full_coverage,0,0
 clarinete_baixo,Bass clarinet,,False,,,,,34,72,40,65,14,,,legato|staccato,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
 contrabaixo,Db,double_bass,True,E1,C5,45,"[28, 72]",28,72,31,55,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
-contrabaixo_harm,cb_harm,double_bass_harmonics,False,E1,G4,40,"[28, 67]",28,67,31,55,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
-contrabaixo_sordina,cb_sord,double_bass_sordina,False,F1,G4,39,"[29, 67]",29,67,31,55,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
-contrabaixo_sul_ponticello,cb_sp,double_bass_sul_ponticello,False,E1,G4,40,"[28, 67]",28,67,31,55,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
+contrabaixo_harm,cb_harm,double_bass_harmonics,False,E3,C5,21,"[52, 72]",52,72,31,55,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
+contrabaixo_sordina,cb_sord,double_bass_sordina,False,E1,C5,45,"[28, 72]",28,72,31,55,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
+contrabaixo_sul_ponticello,cb_sp,double_bass_sul_ponticello,False,E1,C5,45,"[28, 72]",28,72,31,55,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
 contrafagote,Contrabassoon,,False,,,,,22,77,28,65,0,,,arco,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
 cor_anglais,English horn,,False,,,,,52,76,55,72,7,,,legato|staccato,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
 fagote,Bsn,bassoon,True,A#1,D#5,42,"[34, 75]",34,75,40,65,0,ordinary_sustain,ordinary_sustain,legato|staccato|flutter_tongue,PASS,PASS,False,full_coverage,0,0
@@ -28,16 +28,16 @@ trompa,Hn,horn,True,A#1,F5,44,"[34, 77]",41,77,45,72,7,ordinary_sustain,ordinary
 trompete,Tpt,trumpet,True,E3,D#6,36,"[52, 87]",52,87,58,80,2,ordinary_sustain,ordinary_sustain,legato|staccato|mute|flutter_tongue,PASS,PASS,False,full_coverage,0,0
 tuba,Tba,tuba,True,C1,A#4,47,"[24, 70]",24,70,30,50,0,ordinary_sustain,ordinary_sustain,legato|staccato|mute,PASS,PASS,False,full_coverage,0,0
 vibrafone,Vibraphone,,False,,,,,53,84,53,84,0,,,struck|rolled,NOT APPLICABLE,NOT APPLICABLE,True,no_table,,
-viola,vla,viola,True,C3,C7,49,"[48, 96]",48,96,50,69,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
-viola_harm,vla harm,viola_harmonics,True,C5,B7,36,"[72, 107]",72,107,72,96,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
+viola,vla,viola,True,C3,A#6,47,"[48, 94]",48,94,50,69,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
+viola_harm,vla harm,viola_harmonics,True,C5,A#6,23,"[72, 94]",72,94,72,96,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
 viola_sordina,vla sord,viola_sordina,True,C3,A#6,47,"[48, 94]",48,94,50,69,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
-viola_sul_ponticello,vla sp,viola_sul_ponticello,True,C3,A#6,47,"[48, 94]",48,94,50,69,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
-violino,Vl,violin,True,G3,G7,49,"[55, 103]",55,103,55,76,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
-violino_harm,vl_harm,violin_harmonics,True,C5,B7,36,"[72, 107]",72,107,72,96,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
-violino_sordina,vl_con_sord,violin_sordina,True,G3,G7,49,"[55, 103]",55,103,55,76,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
+viola_sul_ponticello,vla sp,viola_sul_ponticello,True,C3,A6,46,"[48, 93]",48,93,50,69,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
+violino,Vl,violin,True,G3,B7,53,"[55, 107]",55,107,55,76,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
+violino_harm,vl_harm,violin_harmonics,True,G5,B7,29,"[79, 107]",79,107,72,96,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
+violino_sordina,vl_con_sord,violin_sordina,True,G3,B7,53,"[55, 107]",55,107,55,76,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
 violino_sul_ponticello,vl_sul_pont,violin_sul_ponticello,True,G3,B7,53,"[55, 107]",55,107,55,76,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0
-violino_sul_tasto,vl_sul_tast,violin_sul_tasto,True,G3,G7,49,"[55, 103]",55,103,55,76,0,arco_sul_tasto,arco_sul_tasto,arco|sul_tasto,PASS,PASS,False,full_coverage,0,0
+violino_sul_tasto,vl_sul_tast,violin_sul_tasto,True,G3,B7,53,"[55, 107]",55,107,55,76,0,arco_sul_tasto,arco_sul_tasto,arco|sul_tasto,PASS,PASS,False,full_coverage,0,0
 violoncelo,Vc,cello,True,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
-violoncelo_harm,vlc_harm,cello_harmonics,False,C4,E7,41,"[60, 100]",60,100,60,84,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
-violoncelo_sordina,vlc_sord,cello_sordina,False,C2,A5,46,"[36, 81]",36,81,40,65,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
+violoncelo_harm,vlc_harm,cello_harmonics,False,C4,C6,25,"[60, 84]",60,84,60,84,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
+violoncelo_sordina,vlc_sord,cello_sordina,False,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sordina,arco_sordina,arco|mute,PASS,PASS,False,full_coverage,0,0
 violoncelo_sul_ponticello,vlc_sp,cello_sul_ponticello,False,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0

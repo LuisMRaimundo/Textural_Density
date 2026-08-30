@@ -24,18 +24,23 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 | `flute.py`, `clarinet.py`, `oboe.py`, `bassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
 | `trumpet.py`, `horn.py`, `trombone.py`, `tuba.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH sustain anchors) |
-| `violin.py`, `cello.py`, `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
-| `viola.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
-| `violin_sordina.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_con_sordino_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
-| `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_sul_tasto_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
-| `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_sul_ponticello_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors) |
-| `violin_harmonics.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Violin_harmonics_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C5–B7) |
-| `viola_sordina.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_con_sordino_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C3–A#6) |
-| `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_sul_ponticello_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C3–A#6) |
-| `viola_harmonics.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Viola_harmonics_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C5–B7) |
-| `cello_sordina.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Cello_con_sordino_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C2–A5) |
-| `cello_sul_ponticello.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Cello_sul_ponticello_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C2–C6) |
-| `cello_harmonics.py` | `spectral_data` (10 dynamics) | `D:\CORDAS_2\Cello_harmonics_dynamics.xlsx` Results ladder (dest Zenodo Media pp/mf/ff anchors; C4–E7) |
+| `violin.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_Arco_normal.xlsx` Results (dest Zenodo Media pp/mf/ff; G3–B7) |
+| `viola.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Dynamics10_Arco_normal.xlsx` Results (dest Zenodo Media pp/mf/ff; C3–A#6) |
+| `cello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Dynamics10_Arco_normal.xlsx` Results (dest Zenodo Media pp/mf/ff; C2–C6) |
+| `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics10 `DoubleBass_Dynamics10_Arco_normal.xlsx` Results (dest Zenodo Media pp/mf/ff; E1–C5) |
+| `violin_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_con_sordino.xlsx` Results (G3–B7) |
+| `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_sul_tasto.xlsx` Results (G3–B7) |
+| `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_sul_ponticello.xlsx` Results (G3–B7) |
+| `violin_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_harmonics.xlsx` Results (G5–B7) |
+| `viola_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Dynamics10_con_sordino.xlsx` Results (C3–A#6) |
+| `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Dynamics10_sul_ponticello.xlsx` Results (C3–A6) |
+| `viola_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Dynamics10_harmonics.xlsx` Results (C5–A#6) |
+| `cello_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Dynamics10_con_sordino.xlsx` Results (C2–C6) |
+| `cello_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Dynamics10_sul_ponticello.xlsx` Results (C2–C6) |
+| `cello_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Dynamics10_harmonics.xlsx` Results (C4–C6) |
+| `double_bass_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `DoubleBass_Dynamics10_con_sordino.xlsx` Results (E1–C5) |
+| `double_bass_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `DoubleBass_Dynamics10_sul_ponticello.xlsx` Results (E1–C5) |
+| `double_bass_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `DoubleBass_Dynamics10_harmonics.xlsx` Results (E3–C5) |
 | `bass_drum.py`, `cymbals.py`, `tamtam.py`, `gong.py` | `DYNAMIC_CDM` (10 dynamics; pitch-independent) | NonTunPerc MC anchors + committed former `internal_default` ladder |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
@@ -47,7 +52,7 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 **Technique honesty:** registry `supported_techniques` lists organological capabilities. Modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
 
-**Technique ladders (2026-08-27):** violin, viola, cello, and double-bass sordina / sul ponticello / harmonics (and violin sul tasto) commit full 10-level ladders from dest-Zenodo Dynamics_predicter `Results` books. Cello and double-bass sul tasto remain withdrawn (2026-08-18).
+**Technique ladders (2026-08-30):** violin, viola, cello, and double-bass ordinary arco plus sordina / sul ponticello / harmonics (and violin sul tasto) commit full 10-level ladders from dest-Zenodo Dynamics10 `Results` books. Cello, viola, and double-bass sul tasto remain withdrawn (2026-08-18).
 
 **Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
 

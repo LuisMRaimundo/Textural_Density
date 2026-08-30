@@ -44,7 +44,7 @@ Run: `pytest -m musicological -q`
 ## Viola source-label correction (PR #14)
 
 - [x] `normalize_media_note_label()` strips trailing `(2)` before canonical parsing (`F4 (2)` → `F4`)
-- [x] Viola `spectral_data` aligned to `VIOLA_Media` (C3–C7, 49 rows)
+- [x] Viola `spectral_data` aligned to dest-Zenodo `VIOLA_Media` / Dynamics10 (C3–A#6, 47 rows)
 - [x] `calcular_densidade("C3", "mf")` → 62.806258 (corrected anchor)
 - [x] Portable viola provenance: `docs/instrument_acoustic_sources.md#viola`
 - [x] Violin, cello, double-bass tables unchanged by PR #14

@@ -25,7 +25,7 @@ def _markdown(payload: dict) -> str:
         "## Executive summary",
         "",
         "- **Double bass:** source_table_span E1–C5 (MIDI 28–72) aligns with committed table and registry; E1–A3 was obsolete documentation.",
-        "- **Violin sounding [55,103]:** table G3–G7 aligns (not a double-bass case).",
+        "- **Violin sounding [55,107]:** table G3–B7 aligns (not a double-bass case).",
         f"- **Table excludes sounding range (partial):** {excl_n} instrument(s): "
         f"{', '.join(excl_ids) if excl_ids else 'none'}.",
         "- **Technique:** modules declare `source_technique` / `table_supported_techniques`; registry lists broader organological capabilities.",

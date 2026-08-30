@@ -25,10 +25,10 @@ DEST_TECHNIQUES = (
             "muted double bass",
         ),
         "probe_note": "F1",
-        "probe_mf": 50.492454,
-        "n_notes": 39,
-        "first": "F1",
-        "last": "G4",
+        "probe_mf": 45.06363,
+        "n_notes": 45,
+        "first": "E1",
+        "last": "C5",
     },
     {
         "display": "cb_sp",
@@ -43,10 +43,10 @@ DEST_TECHNIQUES = (
             "sul ponticello double bass",
         ),
         "probe_note": "E1",
-        "probe_mf": 60.379684,
-        "n_notes": 40,
+        "probe_mf": 51.658048,
+        "n_notes": 45,
         "first": "E1",
-        "last": "G4",
+        "last": "C5",
     },
     {
         "display": "cb_harm",
@@ -59,11 +59,11 @@ DEST_TECHNIQUES = (
             "contrabaixo_harm",
             "harmonics double bass",
         ),
-        "probe_note": "E1",
-        "probe_mf": 38.921391,
-        "n_notes": 40,
-        "first": "E1",
-        "last": "G4",
+        "probe_note": "E3",
+        "probe_mf": 25.779643,
+        "n_notes": 21,
+        "first": "E3",
+        "last": "C5",
     },
 )
 
@@ -133,7 +133,8 @@ def test_dest_workbook_measured_anchor_provenance(tech: dict):
     assert mod.INSTRUMENT_SOURCE.uncertainty == "high"
     assert "measured pp/mf/ff anchors" in mod.INSTRUMENT_SOURCE.citation
     if tech["module"] == "double_bass_sordina":
-        assert "E1" not in mod.spectral_data
+        assert "E1" in mod.spectral_data
     if tech["module"] == "double_bass_harmonics":
+        assert "E1" not in mod.spectral_data
         assert "C#5" not in mod.spectral_data
         assert "G6" not in mod.spectral_data

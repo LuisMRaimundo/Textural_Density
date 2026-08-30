@@ -21,9 +21,9 @@
 | clarinete | woodwinds | 50–96 | 0 (A_non_transposing) | D3–C7 (50–96) | aligned |
 | clarinete_baixo | woodwinds | 34–72 | 14 (D_interval_transposing) | — | no_table |
 | contrabaixo | strings | 28–72 | 0 (A_non_transposing) | E1–C5 (28–72) | aligned |
-| contrabaixo_harm | strings | 28–67 | 0 (A_non_transposing) | E1–G4 (28–67) | aligned |
-| contrabaixo_sordina | strings | 29–67 | 0 (A_non_transposing) | F1–G4 (29–67) | aligned |
-| contrabaixo_sul_ponticello | strings | 28–67 | 0 (A_non_transposing) | E1–G4 (28–67) | aligned |
+| contrabaixo_harm | strings | 52–72 | 0 (A_non_transposing) | E3–C5 (52–72) | aligned |
+| contrabaixo_sordina | strings | 28–72 | 0 (A_non_transposing) | E1–C5 (28–72) | aligned |
+| contrabaixo_sul_ponticello | strings | 28–72 | 0 (A_non_transposing) | E1–C5 (28–72) | aligned |
 | contrafagote | woodwinds | 22–77 | 0 (A_non_transposing) | — | no_table |
 | cor_anglais | woodwinds | 52–76 | 7 (D_interval_transposing) | — | no_table |
 | fagote | woodwinds | 34–75 | 0 (A_non_transposing) | A#1–D#5 (34–75) | aligned |
@@ -44,18 +44,18 @@
 | trompete | brass | 52–87 | 2 (D_interval_transposing) | E3–D#6 (52–87) | aligned |
 | tuba | brass | 24–70 | 0 (A_non_transposing) | C1–A#4 (24–70) | aligned |
 | vibrafone | percussion | 53–84 | 0 (A_non_transposing) | — | no_table |
-| viola | strings | 48–96 | 0 (A_non_transposing) | C3–C7 (48–96) | aligned |
-| viola_harm | strings | 72–107 | 0 (A_non_transposing) | C5–B7 (72–107) | aligned |
+| viola | strings | 48–94 | 0 (A_non_transposing) | C3–A#6 (48–94) | aligned |
+| viola_harm | strings | 72–94 | 0 (A_non_transposing) | C5–A#6 (72–94) | aligned |
 | viola_sordina | strings | 48–94 | 0 (A_non_transposing) | C3–A#6 (48–94) | aligned |
-| viola_sul_ponticello | strings | 48–94 | 0 (A_non_transposing) | C3–A#6 (48–94) | aligned |
-| violino | strings | 55–103 | 0 (A_non_transposing) | G3–G7 (55–103) | aligned |
-| violino_harm | strings | 72–107 | 0 (A_non_transposing) | C5–B7 (72–107) | aligned |
-| violino_sordina | strings | 55–103 | 0 (A_non_transposing) | G3–G7 (55–103) | aligned |
+| viola_sul_ponticello | strings | 48–93 | 0 (A_non_transposing) | C3–A6 (48–93) | aligned |
+| violino | strings | 55–107 | 0 (A_non_transposing) | G3–B7 (55–107) | aligned |
+| violino_harm | strings | 79–107 | 0 (A_non_transposing) | G5–B7 (79–107) | aligned |
+| violino_sordina | strings | 55–107 | 0 (A_non_transposing) | G3–B7 (55–107) | aligned |
 | violino_sul_ponticello | strings | 55–107 | 0 (A_non_transposing) | G3–B7 (55–107) | aligned |
-| violino_sul_tasto | strings | 55–103 | 0 (A_non_transposing) | G3–G7 (55–103) | aligned |
+| violino_sul_tasto | strings | 55–107 | 0 (A_non_transposing) | G3–B7 (55–107) | aligned |
 | violoncelo | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
-| violoncelo_harm | strings | 60–100 | 0 (A_non_transposing) | C4–E7 (60–100) | aligned |
-| violoncelo_sordina | strings | 36–81 | 0 (A_non_transposing) | C2–A5 (36–81) | aligned |
+| violoncelo_harm | strings | 60–84 | 0 (A_non_transposing) | C4–C6 (60–84) | aligned |
+| violoncelo_sordina | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
 | violoncelo_sul_ponticello | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
 
 ## REVIEW REQUIRED / discrepancies
