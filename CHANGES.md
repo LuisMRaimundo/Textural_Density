@@ -2,6 +2,16 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-08-30 — Dynamics10 string ladders (violin, viola, cello, double bass)
+
+Rebuilt ordinary arco and technique modules from the dest-Zenodo Dynamics10 `Results` books (`Desktop\\Código extrapolação\\<INSTR>\\Dynamics10`). Generator: `tools/generate_violin_technique_modules_from_ok_workbooks.py` (now also writes `violin.py` / `cello.py` / `double_bass.py` / `viola.py`). `F4 (2)` Media labels collapse via `normalize_media_note_label`. Formulae unchanged.
+
+- Violin arco / sordina / tasto / ponticello: G3–B7 (53 notes). Harmonics: G5–B7 (29).
+- Viola arco / sordina: C3–A#6 (47). Ponticello: C3–A6 (46). Harmonics: C5–A#6 (23).
+- Cello arco / sordina / ponticello: C2–C6 (49). Harmonics: C4–C6 (25).
+- Double-bass arco / sordina / ponticello: E1–C5 (45). Harmonics: E3–C5 (21). No C#5–G6 tail.
+- Arco pp/mf/ff mid-register anchors stay close to the previous commit; interiors, extremes, and technique tables follow the new Dynamics10 ladders. Cello/viola/double-bass sul tasto stay withdrawn.
+
 ## 2026-08-27 — Double-bass technique ladders from dest-Zenodo dynamics
 
 Added `double_bass_sordina`, `double_bass_sul_ponticello`, and `double_bass_harmonics` from `D:\CORDAS_2\DoubleBass_*_dynamics.xlsx` (`Results`, Dynamics_predicter v1.5.2.1 `--pchip` r=0.8). Same commit path as the violin/viola/cello techniques (`--dbass-only`). GUI display names are `cb_sord`, `cb_sp`, `cb_harm`. Sordina is F1–G4 (39 notes; E1 has no complete triad). Ponticello and harmonics are E1–G4 (40 notes); harmonics C♯5–G6 stay blank and are not invented. Double-bass sul tasto stays withdrawn. Formulae unchanged.

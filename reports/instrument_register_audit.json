@@ -195,21 +195,21 @@
       "family": "strings",
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
-      "registry_sounding_min_midi": 28,
-      "registry_sounding_max_midi": 67,
+      "registry_sounding_min_midi": 52,
+      "registry_sounding_max_midi": 72,
       "comfortable_min_midi": 31,
       "comfortable_max_midi": 55,
       "module_name": "double_bass_harmonics",
       "profile_status": "literature_derived",
       "table_span": {
-        "first_note": "E1",
-        "last_note": "G4",
-        "row_count": 40,
-        "min_midi": 28,
-        "max_midi": 67,
+        "first_note": "E3",
+        "last_note": "C5",
+        "row_count": 21,
+        "min_midi": 52,
+        "max_midi": 72,
         "instrument_source_pitch_range": [
-          28,
-          67
+          52,
+          72
         ]
       },
       "range_discrepancy": "aligned",
@@ -240,21 +240,21 @@
       "family": "strings",
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
-      "registry_sounding_min_midi": 29,
-      "registry_sounding_max_midi": 67,
+      "registry_sounding_min_midi": 28,
+      "registry_sounding_max_midi": 72,
       "comfortable_min_midi": 31,
       "comfortable_max_midi": 55,
       "module_name": "double_bass_sordina",
       "profile_status": "literature_derived",
       "table_span": {
-        "first_note": "F1",
-        "last_note": "G4",
-        "row_count": 39,
-        "min_midi": 29,
-        "max_midi": 67,
+        "first_note": "E1",
+        "last_note": "C5",
+        "row_count": 45,
+        "min_midi": 28,
+        "max_midi": 72,
         "instrument_source_pitch_range": [
-          29,
-          67
+          28,
+          72
         ]
       },
       "range_discrepancy": "aligned",
@@ -284,20 +284,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 28,
-      "registry_sounding_max_midi": 67,
+      "registry_sounding_max_midi": 72,
       "comfortable_min_midi": 31,
       "comfortable_max_midi": 55,
       "module_name": "double_bass_sul_ponticello",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "E1",
-        "last_note": "G4",
-        "row_count": 40,
+        "last_note": "C5",
+        "row_count": 45,
         "min_midi": 28,
-        "max_midi": 67,
+        "max_midi": 72,
         "instrument_source_pitch_range": [
           28,
-          67
+          72
         ]
       },
       "range_discrepancy": "aligned",
@@ -884,20 +884,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 48,
-      "registry_sounding_max_midi": 96,
+      "registry_sounding_max_midi": 94,
       "comfortable_min_midi": 50,
       "comfortable_max_midi": 69,
       "module_name": "viola",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "C3",
-        "last_note": "C7",
-        "row_count": 49,
+        "last_note": "A#6",
+        "row_count": 47,
         "min_midi": 48,
-        "max_midi": 96,
+        "max_midi": 94,
         "instrument_source_pitch_range": [
           48,
-          96
+          94
         ]
       },
       "range_discrepancy": "aligned",
@@ -924,20 +924,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 72,
-      "registry_sounding_max_midi": 107,
+      "registry_sounding_max_midi": 94,
       "comfortable_min_midi": 72,
       "comfortable_max_midi": 96,
       "module_name": "viola_harmonics",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "C5",
-        "last_note": "B7",
-        "row_count": 36,
+        "last_note": "A#6",
+        "row_count": 23,
         "min_midi": 72,
-        "max_midi": 107,
+        "max_midi": 94,
         "instrument_source_pitch_range": [
           72,
-          107
+          94
         ]
       },
       "range_discrepancy": "aligned",
@@ -1010,20 +1010,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 48,
-      "registry_sounding_max_midi": 94,
+      "registry_sounding_max_midi": 93,
       "comfortable_min_midi": 50,
       "comfortable_max_midi": 69,
       "module_name": "viola_sul_ponticello",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "C3",
-        "last_note": "A#6",
-        "row_count": 47,
+        "last_note": "A6",
+        "row_count": 46,
         "min_midi": 48,
-        "max_midi": 94,
+        "max_midi": 93,
         "instrument_source_pitch_range": [
           48,
-          94
+          93
         ]
       },
       "range_discrepancy": "aligned",
@@ -1045,20 +1045,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 55,
-      "registry_sounding_max_midi": 103,
+      "registry_sounding_max_midi": 107,
       "comfortable_min_midi": 55,
       "comfortable_max_midi": 76,
       "module_name": "violin",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "G3",
-        "last_note": "G7",
-        "row_count": 49,
+        "last_note": "B7",
+        "row_count": 53,
         "min_midi": 55,
-        "max_midi": 103,
+        "max_midi": 107,
         "instrument_source_pitch_range": [
           55,
-          103
+          107
         ]
       },
       "range_discrepancy": "aligned",
@@ -1095,20 +1095,20 @@
       "family": "strings",
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
-      "registry_sounding_min_midi": 72,
+      "registry_sounding_min_midi": 79,
       "registry_sounding_max_midi": 107,
       "comfortable_min_midi": 72,
       "comfortable_max_midi": 96,
       "module_name": "violin_harmonics",
       "profile_status": "literature_derived",
       "table_span": {
-        "first_note": "C5",
+        "first_note": "G5",
         "last_note": "B7",
-        "row_count": 36,
-        "min_midi": 72,
+        "row_count": 29,
+        "min_midi": 79,
         "max_midi": 107,
         "instrument_source_pitch_range": [
-          72,
+          79,
           107
         ]
       },
@@ -1143,20 +1143,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 55,
-      "registry_sounding_max_midi": 103,
+      "registry_sounding_max_midi": 107,
       "comfortable_min_midi": 55,
       "comfortable_max_midi": 76,
       "module_name": "violin_sordina",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "G3",
-        "last_note": "G7",
-        "row_count": 49,
+        "last_note": "B7",
+        "row_count": 53,
         "min_midi": 55,
-        "max_midi": 103,
+        "max_midi": 107,
         "instrument_source_pitch_range": [
           55,
-          103
+          107
         ]
       },
       "range_discrepancy": "aligned",
@@ -1228,20 +1228,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 55,
-      "registry_sounding_max_midi": 103,
+      "registry_sounding_max_midi": 107,
       "comfortable_min_midi": 55,
       "comfortable_max_midi": 76,
       "module_name": "violin_sul_tasto",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "G3",
-        "last_note": "G7",
-        "row_count": 49,
+        "last_note": "B7",
+        "row_count": 53,
         "min_midi": 55,
-        "max_midi": 103,
+        "max_midi": 107,
         "instrument_source_pitch_range": [
           55,
-          103
+          107
         ]
       },
       "range_discrepancy": "aligned",
@@ -1304,20 +1304,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 60,
-      "registry_sounding_max_midi": 100,
+      "registry_sounding_max_midi": 84,
       "comfortable_min_midi": 60,
       "comfortable_max_midi": 84,
       "module_name": "cello_harmonics",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "C4",
-        "last_note": "E7",
-        "row_count": 41,
+        "last_note": "C6",
+        "row_count": 25,
         "min_midi": 60,
-        "max_midi": 100,
+        "max_midi": 84,
         "instrument_source_pitch_range": [
           60,
-          100
+          84
         ]
       },
       "range_discrepancy": "aligned",
@@ -1349,20 +1349,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 36,
-      "registry_sounding_max_midi": 81,
+      "registry_sounding_max_midi": 84,
       "comfortable_min_midi": 40,
       "comfortable_max_midi": 65,
       "module_name": "cello_sordina",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "C2",
-        "last_note": "A5",
-        "row_count": 46,
+        "last_note": "C6",
+        "row_count": 49,
         "min_midi": 36,
-        "max_midi": 81,
+        "max_midi": 84,
         "instrument_source_pitch_range": [
           36,
-          81
+          84
         ]
       },
       "range_discrepancy": "aligned",

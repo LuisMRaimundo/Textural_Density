@@ -1,16 +1,12 @@
 # Dynamic interpolation method comparison
 
-> **Pre-change note (2026-08-18).** This committed report predates
-> `MIN_PCHIP_ANCHORS = 4` in `instrumentos/pitch_interpolation.py`.
-> The tool's `pchip_anchor` path is a **dynamic-axis** 3-point PCHIP on
-> `pp`/`mf`/`ff` (`tools/compare_dynamic_interpolation_methods.py::_pchip_value`)
-> and does not call pitch-table interpolation. Figures here are therefore
-> unchanged by that unification; they were not regenerated.
+> **Note.** `pchip_anchor` is a dynamic-axis 3-point PCHIP on `pp`/`mf`/`ff`.
+> It does not use `instrumentos.pitch_interpolation.MIN_PCHIP_ANCHORS`.
 
-- SHA: `95729e9ce8702dcfd880a1211159b4995ee97efe`
+- SHA: `3e7733db5d2c4b94ed2d29e15e8c69b4ad09677f`
 - Classification: **PASS**
 - Production GPR: **unchanged**
-- Source rows: 357
+- Source rows: 359
 - Positive scenarios: 320
 - Negative scenarios: 20
 - High/extreme sensitivity scenarios: 0
@@ -26,49 +22,49 @@ and can propagate into orchestral density metrics, especially for low-register s
 
 ## Top source-row GPR–linear (mp)
 
-- double_bass A2: GPR=54.323 linear=51.065 Δ=3.258
-- bassoon B1: GPR=66.719 linear=69.790 Δ=3.071
-- cello D2: GPR=74.351 linear=71.454 Δ=2.897
-- cello G2: GPR=29.130 linear=31.868 Δ=2.738
-- double_bass G1: GPR=61.854 linear=59.313 Δ=2.541
-- cello D3: GPR=53.482 linear=51.025 Δ=2.457
-- bassoon C2: GPR=60.509 linear=62.965 Δ=2.456
-- double_bass C#3: GPR=37.708 linear=39.660 Δ=1.952
-- double_bass F#1: GPR=70.341 linear=68.398 Δ=1.943
-- double_bass F1: GPR=66.155 linear=68.020 Δ=1.864
-- double_bass C2: GPR=38.582 linear=40.361 Δ=1.779
-- cello C3: GPR=54.662 linear=53.082 Δ=1.580
-- cello B2: GPR=56.132 linear=54.555 Δ=1.577
-- double_bass F#4: GPR=15.450 linear=17.018 Δ=1.569
-- double_bass C3: GPR=48.238 linear=46.792 Δ=1.446
-- double_bass E1: GPR=65.379 linear=66.823 Δ=1.445
-- clarinet D#3: GPR=39.920 linear=38.510 Δ=1.410
-- clarinet E3: GPR=36.373 linear=34.969 Δ=1.404
-- cello F#2: GPR=37.899 linear=39.299 Δ=1.400
-- cello A#3: GPR=34.347 linear=32.994 Δ=1.353
+- cello B2: GPR=47.375 linear=46.044 Δ=1.330
+- cello E2: GPR=39.499 linear=40.609 Δ=1.110
+- double_bass A2: GPR=37.439 linear=36.337 Δ=1.102
+- clarinet E3: GPR=35.960 linear=35.072 Δ=0.888
+- cello D2: GPR=55.954 linear=55.067 Δ=0.888
+- cello D#2: GPR=50.515 linear=49.641 Δ=0.875
+- cello C3: GPR=49.236 linear=48.385 Δ=0.851
+- bassoon F2: GPR=42.647 linear=43.334 Δ=0.686
+- double_bass C#3: GPR=25.852 linear=26.513 Δ=0.661
+- cello C2: GPR=56.461 linear=55.807 Δ=0.654
+- viola A3: GPR=30.087 linear=29.458 Δ=0.629
+- cello F#2: GPR=34.749 linear=34.121 Δ=0.628
+- viola F#3: GPR=36.836 linear=36.216 Δ=0.620
+- cello A#2: GPR=44.211 linear=43.605 Δ=0.606
+- cello E3: GPR=44.177 linear=43.582 Δ=0.595
+- viola D#3: GPR=43.518 linear=42.943 Δ=0.575
+- clarinet F3: GPR=32.636 linear=32.092 Δ=0.544
+- viola G3: GPR=44.683 linear=44.144 Δ=0.539
+- oboe E4: GPR=24.846 linear=25.376 Δ=0.529
+- violin A#3: GPR=25.340 linear=25.863 Δ=0.523
 
 ## Top scenario GPR–linear (density.instrument)
 
-- pos_0102_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0104_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0106_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0108_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0110_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0112_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0114_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0116_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0118_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0120_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0122_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0124_low_register_mass (low_register_mass): GPR=184.9184 Δ=4.0860 [low]
-- pos_0054_very_sparse_aggregate (very_sparse_aggregate): GPR=72.9914 Δ=2.6841 [moderate]
-- pos_0022_very_dense_chromatic (very_dense_chromatic): GPR=46.4590 Δ=2.6825 [moderate]
-- pos_0278_all_four_strings (all_four_strings): GPR=116.5995 Δ=2.6747 [low]
-- pos_0012_very_dense_chromatic (very_dense_chromatic): GPR=34.4458 Δ=2.3473 [moderate]
-- pos_0011_very_dense_chromatic (very_dense_chromatic): GPR=118.0986 Δ=2.1739 [low]
-- pos_0078_registrally_stratified (registrally_stratified): GPR=77.3534 Δ=1.9549 [low]
-- pos_0083_registrally_stratified (registrally_stratified): GPR=77.3534 Δ=1.9549 [low]
-- pos_0088_registrally_stratified (registrally_stratified): GPR=77.3534 Δ=1.9549 [low]
+- pos_0001_very_dense_chromatic (very_dense_chromatic): GPR=76.2192 Δ=0.0000 [negligible]
+- pos_0002_very_dense_chromatic (very_dense_chromatic): GPR=96.3034 Δ=0.0000 [negligible]
+- pos_0003_very_dense_chromatic (very_dense_chromatic): GPR=86.2907 Δ=0.0000 [negligible]
+- pos_0004_very_dense_chromatic (very_dense_chromatic): GPR=15.0004 Δ=0.0000 [negligible]
+- pos_0005_very_dense_chromatic (very_dense_chromatic): GPR=25.4844 Δ=0.0000 [negligible]
+- pos_0006_very_dense_chromatic (very_dense_chromatic): GPR=104.2109 Δ=0.0000 [negligible]
+- pos_0007_very_dense_chromatic (very_dense_chromatic): GPR=78.5295 Δ=0.0000 [negligible]
+- pos_0008_very_dense_chromatic (very_dense_chromatic): GPR=73.9918 Δ=0.0000 [negligible]
+- pos_0009_very_dense_chromatic (very_dense_chromatic): GPR=27.3402 Δ=0.0000 [negligible]
+- pos_0010_very_dense_chromatic (very_dense_chromatic): GPR=37.9271 Δ=0.0000 [negligible]
+- pos_0011_very_dense_chromatic (very_dense_chromatic): GPR=84.3411 Δ=0.0000 [negligible]
+- pos_0012_very_dense_chromatic (very_dense_chromatic): GPR=60.5577 Δ=0.0000 [negligible]
+- pos_0013_very_dense_chromatic (very_dense_chromatic): GPR=126.8405 Δ=0.0000 [negligible]
+- pos_0014_very_dense_chromatic (very_dense_chromatic): GPR=44.8579 Δ=0.0000 [negligible]
+- pos_0015_very_dense_chromatic (very_dense_chromatic): GPR=87.7638 Δ=0.0000 [negligible]
+- pos_0016_very_dense_chromatic (very_dense_chromatic): GPR=76.3919 Δ=0.0000 [negligible]
+- pos_0017_very_dense_chromatic (very_dense_chromatic): GPR=115.4523 Δ=0.0000 [negligible]
+- pos_0018_very_dense_chromatic (very_dense_chromatic): GPR=47.4855 Δ=0.0000 [negligible]
+- pos_0019_very_dense_chromatic (very_dense_chromatic): GPR=51.6406 Δ=0.0000 [negligible]
+- pos_0020_very_dense_chromatic (very_dense_chromatic): GPR=49.5877 Δ=0.0000 [negligible]
 
 ## Interpretation
 

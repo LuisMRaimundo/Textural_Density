@@ -146,7 +146,7 @@ Unpitched percussion uses pitch-independent `DYNAMIC_CDM`. Legacy implementation
 `tools/legacy_gpr_dynamic_interpolation.py`. Ladder hygiene contract:
 `tests/test_pitched_dynamic_monotone_ladders.py`.
 
-**Transferred-anchor modules:** Some technique tables (historically `violin_sul_ponticello`) may commit soft/loud anchors derived by ratio transfer. Since 2026-08-26 the violin technique modules (`violin_sordina`, `violin_sul_tasto`, `violin_sul_ponticello`, `violin_harmonics`) commit measured dest-Zenodo Media `pp`/`mf`/`ff` anchors from `D:\CORDAS_2\Violin_*_dynamics.xlsx`.
+**Transferred-anchor modules:** Some technique tables (historically `violin_sul_ponticello`) may commit soft/loud anchors derived by ratio transfer. Since 2026-08-30 the violin/viola/cello/double-bass technique modules commit measured dest-Zenodo Media `pp`/`mf`/`ff` anchors from Dynamics10 `*_Dynamics10_*.xlsx` `Results` books.
 
 Historical audits (PR #23 / #24) compared the retired GPR path with linear/PCHIP:
 

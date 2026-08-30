@@ -45,18 +45,18 @@ def test_full_ten_level_ladder_committed():
 
 def test_mf_lookup_returns_workbook_anchor():
     mod = importlib.import_module("instrumentos.violin_sul_ponticello")
-    assert mod.calcular_densidade("G4", "mf") == pytest.approx(33.832693, rel=0, abs=1e-5)
-    assert mod.calcular_densidade("A3", "mf") == pytest.approx(31.104002, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("G4", "mf") == pytest.approx(31.351427, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("A3", "mf") == pytest.approx(32.939491, rel=0, abs=1e-5)
 
 
 def test_ff_lookup_returns_workbook_anchor():
     mod = importlib.import_module("instrumentos.violin_sul_ponticello")
-    assert mod.calcular_densidade("G4", "ff") == pytest.approx(34.86448, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("G4", "ff") == pytest.approx(31.639468, rel=0, abs=1e-5)
 
 
 def test_pp_is_measured_workbook_anchor():
     mod = importlib.import_module("instrumentos.violin_sul_ponticello")
-    assert mod.calcular_densidade("G4", "pp") == pytest.approx(33.833192, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("G4", "pp") == pytest.approx(25.706331, rel=0, abs=1e-5)
 
 
 def test_pp_and_ff_are_not_equal_to_mf_for_typical_note():
@@ -74,7 +74,7 @@ def test_pipeline_accepts_violin_sul_ponticello():
         num_instruments=(1,),
     )
     resultados, densities, _ = calculate_metrics(request)
-    assert densities[0] == pytest.approx(33.832693, rel=0, abs=1e-5)
+    assert densities[0] == pytest.approx(31.351427, rel=0, abs=1e-5)
     trace = resultados["instrument_lookup_trace"][0]
     assert trace["resolved_profile_id"] == "violino_sul_ponticello"
     assert trace["module_name"] == "violin_sul_ponticello"

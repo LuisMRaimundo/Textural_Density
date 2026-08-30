@@ -5,7 +5,7 @@
 ## Executive summary
 
 - **Double bass:** source_table_span E1–C5 (MIDI 28–72) aligns with committed table and registry; E1–A3 was obsolete documentation.
-- **Violin sounding [55,103]:** table G3–G7 aligns (not a double-bass case).
+- **Violin sounding [55,107]:** table G3–B7 aligns (not a double-bass case).
 - **Table excludes sounding range (partial):** 0 instrument(s): none.
 - **Technique:** modules declare `source_technique` / `table_supported_techniques`; registry lists broader organological capabilities.
 - **Trombone:** committed table (`trombone.py`, F1–C5) — **PASS** when registry matches the table span.
@@ -57,9 +57,9 @@
 | clarinete | D3–C7 | 50–96 | 55–80 | full_coverage | PASS | PASS |
 | clarinete_baixo | — | 34–72 | 40–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | contrabaixo | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
-| contrabaixo_harm | E1–G4 | 28–67 | 31–55 | full_coverage | PASS | PASS |
-| contrabaixo_sordina | F1–G4 | 29–67 | 31–55 | full_coverage | PASS | PASS |
-| contrabaixo_sul_ponticello | E1–G4 | 28–67 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo_harm | E3–C5 | 52–72 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo_sordina | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo_sul_ponticello | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
 | contrafagote | — | 22–77 | 28–65 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | cor_anglais | — | 52–76 | 55–72 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | fagote | A#1–D#5 | 34–75 | 40–65 | full_coverage | PASS | PASS |
@@ -80,16 +80,16 @@
 | trompete | E3–D#6 | 52–87 | 58–80 | full_coverage | PASS | PASS |
 | tuba | C1–A#4 | 24–70 | 30–50 | full_coverage | PASS | PASS |
 | vibrafone | — | 53–84 | 53–84 | no_table | NOT APPLICABLE | NOT APPLICABLE |
-| viola | C3–C7 | 48–96 | 50–69 | full_coverage | PASS | PASS |
-| viola_harm | C5–B7 | 72–107 | 72–96 | full_coverage | PASS | PASS |
+| viola | C3–A#6 | 48–94 | 50–69 | full_coverage | PASS | PASS |
+| viola_harm | C5–A#6 | 72–94 | 72–96 | full_coverage | PASS | PASS |
 | viola_sordina | C3–A#6 | 48–94 | 50–69 | full_coverage | PASS | PASS |
-| viola_sul_ponticello | C3–A#6 | 48–94 | 50–69 | full_coverage | PASS | PASS |
-| violino | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |
-| violino_harm | C5–B7 | 72–107 | 72–96 | full_coverage | PASS | PASS |
-| violino_sordina | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |
+| viola_sul_ponticello | C3–A6 | 48–93 | 50–69 | full_coverage | PASS | PASS |
+| violino | G3–B7 | 55–107 | 55–76 | full_coverage | PASS | PASS |
+| violino_harm | G5–B7 | 79–107 | 72–96 | full_coverage | PASS | PASS |
+| violino_sordina | G3–B7 | 55–107 | 55–76 | full_coverage | PASS | PASS |
 | violino_sul_ponticello | G3–B7 | 55–107 | 55–76 | full_coverage | PASS | PASS |
-| violino_sul_tasto | G3–G7 | 55–103 | 55–76 | full_coverage | PASS | PASS |
+| violino_sul_tasto | G3–B7 | 55–107 | 55–76 | full_coverage | PASS | PASS |
 | violoncelo | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |
-| violoncelo_harm | C4–E7 | 60–100 | 60–84 | full_coverage | PASS | PASS |
-| violoncelo_sordina | C2–A5 | 36–81 | 40–65 | full_coverage | PASS | PASS |
+| violoncelo_harm | C4–C6 | 60–84 | 60–84 | full_coverage | PASS | PASS |
+| violoncelo_sordina | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |
 | violoncelo_sul_ponticello | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |

@@ -1,45 +1,19 @@
 #!/usr/bin/env python3
-"""Generate string technique instrument modules from dynamics workbooks.
+"""Generate string instrument modules from Dynamics10 Results workbooks.
 
-Violin techniques (2026-08-26) read dest-Zenodo Dynamics_predicter exports in
-``D:\\CORDAS_2`` (``Results`` sheet = data-faithful 10-dynamic ladder;
-pp/mf/ff measured Media anchors, p/mp/f PCHIP interiors, pppp/ppp/fff/ffff
-tapered equal-log outers, r=0.8):
+Reads dest-Zenodo Dynamics_predicter exports under
+``Desktop\\Código extrapolação\\<INSTRUMENT>\\Dynamics10``
+(``Results`` sheet = data-faithful 10-dynamic ladder; Media pp/mf/ff anchors,
+PCHIP interiors, tapered equal-log outers r=0.8). Note labels such as
+``F4 (2)`` are collapsed via ``normalize_media_note_label``.
 
-  - Violin_sul_ponticello_dynamics.xlsx → violin_sul_ponticello.py
-  - Violin_sul_tasto_dynamics.xlsx      → violin_sul_tasto.py
-  - Violin_con_sordino_dynamics.xlsx    → violin_sordina.py
-  - Violin_harmonics_dynamics.xlsx      → violin_harmonics.py
+No cello / viola / double-bass sul tasto workbook. GUI names remain
+``vl_sul_pont``, ``vl_sul_tast``, ``vl_con_sord``, ``vl_harm``, ``vla``,
+``vla sord``, ``vla sp``, ``vla harm``, ``vlc_sord``, ``vlc_sp``,
+``vlc_harm``, ``cb_sord``, ``cb_sp``, ``cb_harm``.
 
-Viola modules (2026-08-26) read dest-Zenodo Dynamics_predicter exports in
-``D:\\CORDAS_2``:
-
-  - Viola_dynamics.xlsx               → viola.py
-  - Viola_con_sordino_dynamics.xlsx   → viola_sordina.py
-  - Viola_sul_ponticello_dynamics.xlsx → viola_sul_ponticello.py
-  - Viola_harmonics_dynamics.xlsx     → viola_harmonics.py  (C5–B7 only)
-
-Cello techniques (2026-08-27) read dest-Zenodo Dynamics_predicter exports in
-``D:\\CORDAS_2``:
-
-  - Cello_con_sordino_dynamics.xlsx    → cello_sordina.py
-  - Cello_sul_ponticello_dynamics.xlsx → cello_sul_ponticello.py
-  - Cello_harmonics_dynamics.xlsx      → cello_harmonics.py  (C4–E7)
-
-No cello sul tasto workbook. Double-bass techniques (2026-08-27) read
-dest-Zenodo Dynamics_predicter exports in ``D:\\CORDAS_2``:
-
-  - DoubleBass_con_sordino_dynamics.xlsx    → double_bass_sordina.py
-  - DoubleBass_sul_ponticello_dynamics.xlsx → double_bass_sul_ponticello.py
-  - DoubleBass_harmonics_dynamics.xlsx      → double_bass_harmonics.py  (E1–G4)
-
-No double-bass sul tasto workbook. Registry display names (GUI): ``vl_sul_pont``,
-``vl_sul_tast``, ``vl_con_sord``, ``vl_harm``, ``vla``, ``vla sord``,
-``vla sp``, ``vla harm``, ``vlc_sord``, ``vlc_sp``, ``vlc_harm``,
-``cb_sord``, ``cb_sp``, ``cb_harm``
-(registry edits are maintained in ``instrumentos/registry.py``).
-
-    python tools/generate_violin_technique_modules_from_ok_workbooks.py --dbass-only
+    python tools/generate_violin_technique_modules_from_ok_workbooks.py
+    python tools/generate_violin_technique_modules_from_ok_workbooks.py --violin-only
 """
 
 from __future__ import annotations
@@ -53,23 +27,39 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from utils.notes import normalize_note_string  # noqa: E402
+from microtonal import note_to_midi_strict  # noqa: E402
+from utils.notes import normalize_media_note_label  # noqa: E402
 
-SRC_DIR = Path(r"d:\CORDAS\VIOLINO")
-VIOLIN_SRC_DIR = Path(r"D:\CORDAS_2")
-VIOLA_SRC_DIR = Path(r"D:\CORDAS_2")
-CELLO_SRC_DIR = Path(r"D:\CORDAS_2")
-DBASS_SRC_DIR = Path(r"D:\CORDAS_2")
+DESK = Path(r"C:\Users\lmr20\Desktop\Código extrapolação")
+VIOLIN_SRC_DIR = DESK / "VIOLIN_3" / "Dynamics10"
+VIOLA_SRC_DIR = DESK / "VIOLA" / "Dynamics10"
+CELLO_SRC_DIR = DESK / "CELLO" / "Dynamics10"
+DBASS_SRC_DIR = DESK / "DOUBLE_BASS" / "Dynamics10"
+SRC_DIR = VIOLIN_SRC_DIR
 
 DYNAMIC_LEVELS = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
-VIOLIN_KEYS = ("sul_ponticello", "sul_tasto", "con_sordina", "harmonics")
+VIOLIN_KEYS = ("violin_ordinario", "sul_ponticello", "sul_tasto", "con_sordina", "harmonics")
 VIOLA_KEYS = ("viola_ordinario", "viola_con_sordina", "viola_sul_ponticello", "viola_harmonics")
-CELLO_KEYS = ("cello_con_sordina", "cello_sul_ponticello", "cello_harmonics")
-DBASS_KEYS = ("dbass_con_sordina", "dbass_sul_ponticello", "dbass_harmonics")
+CELLO_KEYS = ("cello_ordinario", "cello_con_sordina", "cello_sul_ponticello", "cello_harmonics")
+DBASS_KEYS = ("dbass_ordinario", "dbass_con_sordina", "dbass_sul_ponticello", "dbass_harmonics")
 
 TECHNIQUE_SPECS = {
+    "violin_ordinario": {
+        "workbook": "Violin_Dynamics10_Arco_normal.xlsx",
+        "src_dir": str(VIOLIN_SRC_DIR),
+        "instrument_label": "Violin",
+        "module": "violin",
+        "technique_label": "arco ordinario",
+        "source_technique": "arco_sustain",
+        "doc_anchor": "violin",
+        "uncertainty": "medium",
+        "citation_pool": (
+            "Dynamics10 dest-Zenodo Violin_Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
+    },
     "sul_ponticello": {
-        "workbook": "Violin_sul_ponticello_dynamics.xlsx",
+        "workbook": "Violin_Dynamics10_sul_ponticello.xlsx",
         "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_sul_ponticello",
         "technique_label": "arco sul ponticello",
@@ -82,7 +72,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "sul_tasto": {
-        "workbook": "Violin_sul_tasto_dynamics.xlsx",
+        "workbook": "Violin_Dynamics10_sul_tasto.xlsx",
         "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_sul_tasto",
         "technique_label": "arco sul tasto",
@@ -95,7 +85,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "con_sordina": {
-        "workbook": "Violin_con_sordino_dynamics.xlsx",
+        "workbook": "Violin_Dynamics10_con_sordino.xlsx",
         "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_sordina",
         "technique_label": "arco con sordino",
@@ -108,7 +98,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "harmonics": {
-        "workbook": "Violin_harmonics_dynamics.xlsx",
+        "workbook": "Violin_Dynamics10_harmonics.xlsx",
         "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_harmonics",
         "technique_label": "arco harmonics",
@@ -121,7 +111,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "viola_harmonics": {
-        "workbook": "Viola_harmonics_dynamics.xlsx",
+        "workbook": "Viola_Dynamics10_harmonics.xlsx",
         "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola_harmonics",
@@ -136,7 +126,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "viola_ordinario": {
-        "workbook": "Viola_dynamics.xlsx",
+        "workbook": "Viola_Dynamics10_Arco_normal.xlsx",
         "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola",
@@ -152,7 +142,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "viola_con_sordina": {
-        "workbook": "Viola_con_sordino_dynamics.xlsx",
+        "workbook": "Viola_Dynamics10_con_sordino.xlsx",
         "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola_sordina",
@@ -166,7 +156,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "viola_sul_ponticello": {
-        "workbook": "Viola_sul_ponticello_dynamics.xlsx",
+        "workbook": "Viola_Dynamics10_sul_ponticello.xlsx",
         "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola_sul_ponticello",
@@ -179,8 +169,22 @@ TECHNIQUE_SPECS = {
             "Dynamics_predicter Results ladder"
         ),
     },
+    "cello_ordinario": {
+        "workbook": "Cello_Dynamics10_Arco_normal.xlsx",
+        "src_dir": str(CELLO_SRC_DIR),
+        "instrument_label": "Cello",
+        "module": "cello",
+        "technique_label": "arco ordinario",
+        "source_technique": "arco_sustain",
+        "doc_anchor": "cello",
+        "uncertainty": "medium",
+        "citation_pool": (
+            "Dynamics10 dest-Zenodo Cello_Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
+    },
     "cello_con_sordina": {
-        "workbook": "Cello_con_sordino_dynamics.xlsx",
+        "workbook": "Cello_Dynamics10_con_sordino.xlsx",
         "src_dir": str(CELLO_SRC_DIR),
         "instrument_label": "Cello",
         "module": "cello_sordina",
@@ -195,7 +199,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "cello_sul_ponticello": {
-        "workbook": "Cello_sul_ponticello_dynamics.xlsx",
+        "workbook": "Cello_Dynamics10_sul_ponticello.xlsx",
         "src_dir": str(CELLO_SRC_DIR),
         "instrument_label": "Cello",
         "module": "cello_sul_ponticello",
@@ -210,7 +214,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "cello_harmonics": {
-        "workbook": "Cello_harmonics_dynamics.xlsx",
+        "workbook": "Cello_Dynamics10_harmonics.xlsx",
         "src_dir": str(CELLO_SRC_DIR),
         "instrument_label": "Cello",
         "module": "cello_harmonics",
@@ -224,8 +228,22 @@ TECHNIQUE_SPECS = {
             "Dynamics_predicter Results ladder"
         ),
     },
+    "dbass_ordinario": {
+        "workbook": "DoubleBass_Dynamics10_Arco_normal.xlsx",
+        "src_dir": str(DBASS_SRC_DIR),
+        "instrument_label": "Double bass",
+        "module": "double_bass",
+        "technique_label": "arco ordinario",
+        "source_technique": "arco_sustain",
+        "doc_anchor": "double-bass-double_bass",
+        "uncertainty": "medium",
+        "citation_pool": (
+            "Dynamics10 dest-Zenodo DBass_Media (IOWA+Orchidea average); "
+            "Dynamics_predicter Results ladder"
+        ),
+    },
     "dbass_con_sordina": {
-        "workbook": "DoubleBass_con_sordino_dynamics.xlsx",
+        "workbook": "DoubleBass_Dynamics10_con_sordino.xlsx",
         "src_dir": str(DBASS_SRC_DIR),
         "instrument_label": "Double bass",
         "module": "double_bass_sordina",
@@ -240,7 +258,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "dbass_sul_ponticello": {
-        "workbook": "DoubleBass_sul_ponticello_dynamics.xlsx",
+        "workbook": "DoubleBass_Dynamics10_sul_ponticello.xlsx",
         "src_dir": str(DBASS_SRC_DIR),
         "instrument_label": "Double bass",
         "module": "double_bass_sul_ponticello",
@@ -255,7 +273,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "dbass_harmonics": {
-        "workbook": "DoubleBass_harmonics_dynamics.xlsx",
+        "workbook": "DoubleBass_Dynamics10_harmonics.xlsx",
         "src_dir": str(DBASS_SRC_DIR),
         "instrument_label": "Double bass",
         "module": "double_bass_harmonics",
@@ -271,7 +289,7 @@ TECHNIQUE_SPECS = {
     },
 }
 
-VERSION = "2026-08-26"
+VERSION = "2026-08-30"
 
 
 def load_results_ladder(path: Path) -> dict[str, dict[str, float]]:
@@ -292,11 +310,11 @@ def load_results_ladder(path: Path) -> dict[str, dict[str, float]]:
         values = {dyn: row[col[dyn]] for dyn in DYNAMIC_LEVELS}
         if any(not isinstance(v, (int, float)) for v in values.values()):
             continue
-        note = normalize_note_string(raw_note)
+        note = normalize_media_note_label(raw_note)
         row = {dyn: float(v) for dyn, v in values.items()}
         _clamp_interiors(note, row)
         ladder[note] = {dyn: round(v, 6) for dyn, v in row.items()}
-    return ladder
+    return dict(sorted(ladder.items(), key=lambda item: note_to_midi_strict(item[0])))
 
 
 def _clamp_interiors(note: str, row: dict[str, float]) -> None:
@@ -336,7 +354,8 @@ def render_module(spec: dict, ladder: dict[str, dict[str, float]]) -> str:
     doc_anchor = spec["doc_anchor"]
     workbook = spec["workbook"]
     version = spec.get("version", VERSION)
-    lo, hi = spec["pitch_range"]
+    midis = [int(note_to_midi_strict(n)) for n in ladder]
+    lo, hi = min(midis), max(midis)
     spectral_block = _fmt_spectral(ladder)
     return f'''# instrumentos/{module}.py
 """
@@ -425,6 +444,8 @@ def main(argv: list[str] | None = None) -> int:
         if not ladder:
             print(f"SKIP {technique}: no numeric rows in {src}", file=sys.stderr)
             continue
+        midis = [int(note_to_midi_strict(n)) for n in ladder]
+        spec = {**spec, "pitch_range": (min(midis), max(midis))}
         code = render_module(spec, ladder)
         out = ROOT / "instrumentos" / f"{spec['module']}.py"
         out.write_text(code, encoding="utf-8")

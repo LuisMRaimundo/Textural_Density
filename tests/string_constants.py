@@ -22,20 +22,20 @@ STRING_INSTRUMENTS: tuple[StringInstrumentSpec, ...] = (
     StringInstrumentSpec(
         module_name="violin",
         registry_ids=("violino", "violin"),
-        documented_row_count=49,
+        documented_row_count=53,
         documented_first_pitch="G3",
-        documented_last_pitch="G7",
+        documented_last_pitch="B7",
         open_strings=("G3", "D4", "A4", "E5"),
-        workbook_path=r"D:\CORDAS\VIOLIN_Zenodo_collections_media.xlsx",
+        workbook_path=r"C:\Users\lmr20\Desktop\Código extrapolação\VIOLIN_3\VIOLIN_Zenodo_collections_Arco_normal.xlsx",
     ),
     StringInstrumentSpec(
         module_name="viola",
         registry_ids=("viola",),
-        documented_row_count=49,
+        documented_row_count=47,
         documented_first_pitch="C3",
-        documented_last_pitch="C7",
+        documented_last_pitch="A#6",
         open_strings=("C3", "G3", "D4", "A4"),
-        workbook_path=r"D:\CORDAS\ViOLA_Zenodo_collections_media.xlsx",
+        workbook_path=r"C:\Users\lmr20\Desktop\Código extrapolação\VIOLA\VIOLA_Zenodo_collections_Arco_normal.xlsx",
     ),
     StringInstrumentSpec(
         module_name="cello",
@@ -44,7 +44,7 @@ STRING_INSTRUMENTS: tuple[StringInstrumentSpec, ...] = (
         documented_first_pitch="C2",
         documented_last_pitch="C6",
         open_strings=("C2", "G2", "D3", "A3"),
-        workbook_path=r"D:\CORDAS\CELLO_Zenodo_collections_media.xlsx",
+        workbook_path=r"C:\Users\lmr20\Desktop\Código extrapolação\CELLO\CELLO_Zenodo_collections_media.xlsx",
     ),
     StringInstrumentSpec(
         module_name="double_bass",
@@ -53,7 +53,7 @@ STRING_INSTRUMENTS: tuple[StringInstrumentSpec, ...] = (
         documented_first_pitch="E1",
         documented_last_pitch="C5",
         open_strings=("E1", "A1", "D2", "G2"),
-        workbook_path=r"D:\CORDAS\DOUBLEBASS_Zenodo_collections_media.xlsx",
+        workbook_path=r"C:\Users\lmr20\Desktop\Código extrapolação\DOUBLE_BASS\DOUBLEBASS_Zenodo_collections_media.xlsx",
     ),
 )
 
