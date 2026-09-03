@@ -162,7 +162,7 @@ Historical audits (PR #23 / #24) compared the retired GPR path with linear/PCHIP
 ### 2.5 Configuration and constants
 
 - **`config.py`**: `MAX_DENS_GLOBAL`, `USE_LOG_COMPRESSION`, `DEFAULT_REGISTER_BANDS`, `COMPOSITE_HARMONIC_DAMPING` (0.15), `DYNAMIC_LEVELS`, etc.
-- **`densidade_intervalar`**: Calibrated $\lambda$ in `config/density_params.json`, loaded by `load_calibrated_parameters()`.
+- **`densidade_intervalar`**: Calibrated $\lambda$ in `parameters/density_params.json`, loaded by `load_calibrated_parameters()` (cached per resolved path; `save_calibrated_parameters` invalidates; `clear_lambda_cache()` for tests/tooling).
 - **`AnalysisConfig`** (`core/models.py`): typed options for strictly symbolic analysis (`weight_factor`, normalization/temporal configs).
 
 ---
@@ -401,7 +401,7 @@ Implemented in `calibrate_lambda(experimental_data)`. Reference data: `CONSONANC
 - **Prediction:** For each interval $k$, build a two-note chord and compute raw interval density $D_{\mathrm{int}}(k; \lambda)$. Normalise to $[-1, 1]$ using the **maximum experimental rating** $R_{\max} = \max_j \{\mathrm{rating}_j\}$:
   $$\mathrm{pred\_norm}_k(\lambda) = 2 \cdot \frac{D_{\mathrm{int}}(k; \lambda)}{R_{\max}} - 1.$$
 
-- **Optimisation:** $\lambda^* = \mathrm{argmin}_{\lambda} \sum_k \bigl( \mathrm{pred\_norm}_k(\lambda) - \mathrm{rating}_k \bigr)^2$, with bounds $\lambda \in [0.01, 1]$, method L-BFGS-B. Optimised $\lambda$ is stored in `config/density_params.json` and loaded by `load_calibrated_parameters()`.
+- **Optimisation:** $\lambda^* = \mathrm{argmin}_{\lambda} \sum_k \bigl( \mathrm{pred\_norm}_k(\lambda) - \mathrm{rating}_k \bigr)^2$, with bounds $\lambda \in [0.01, 1]$, method L-BFGS-B. Optimised $\lambda$ is stored in `parameters/density_params.json` and loaded by `load_calibrated_parameters()`.
 
 ### 3.16 Removed: combination-tone analysis (4.0.0)
 
@@ -542,12 +542,12 @@ These ranges are indicative; the manual does not fix a single “expected” num
 | Pitch structure | `core.pitch_structure` | `compute_pitch_structure_density`, composite assembly |
 | Pipeline | `core.pipeline` | `calculate_metrics` |
 | Sonic mass | `core.orchestration_mass` | `compute_orchestration_mass` |
-| Weighted density | `core.composite` | `compute_weighted_density_normalized` |
+| Weighted density | `core.composite` | `compute_weighted_density_normalized` (returns `float`; failures propagate) |
 | Spectral moments | `spectral_analysis` | `calculate_spectral_moments`, `calculate_extended_spectral_moments` |
 | Chroma | `spectral_analysis` | `calculate_chroma_vector` |
 | Harmonic ratio | `spectral_analysis` | `calculate_harmonic_ratio` |
 | Legacy shim | `data_processor` | `calculate_metrics`, `calcular_massa_sonora` (delegates to core) |
-| Lambda calibration | `densidade_intervalar` | `calibrate_lambda`, `load_calibrated_parameters` |
+| Lambda calibration | `densidade_intervalar` | `calibrate_lambda`, `load_calibrated_parameters`, `clear_lambda_cache` |
 | Publication figures | `utils.plotting_style` | `create_professional_figure`, `enhance_axes`, `finalize_figure` | to be stable with respect to the mathematical model; implementation details and exact defaults can be read from the source when needed.
 
 ---
@@ -844,4 +844,4 @@ Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). W
 
 ---
 
-*Last updated: 2026-09-03 (dest-Zenodo Dynamics10 refresh; Picc / E_Horn / Bass_Clar / Contr_Basson table-backed; `.md` canonical over archival PDF).*
+*Last updated: 2026-09-03 (package 1.1.7 packaging/lookup repairs; dest-Zenodo Dynamics10 tables; `.md` canonical over archival PDF).*

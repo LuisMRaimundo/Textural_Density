@@ -123,7 +123,7 @@ def generate_validation_report(
             "",
             "## Calibration residuals",
             "",
-            "See `densidade_intervalar.calibrate_lambda` and `config/density_params.json`. "
+            "See `densidade_intervalar.calibrate_lambda` and `parameters/density_params.json`. "
             "Full model external validation pending annotated corpora.",
             "",
         ]

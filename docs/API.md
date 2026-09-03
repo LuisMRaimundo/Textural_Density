@@ -381,7 +381,7 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 | `DYNAMIC_LEVELS` | tuple | Supported dynamics |
 | `DEFAULT_LAMBDA` | `0.05` | Interval decay default |
 
-Calibrated λ: `config/density_params.json`.
+Calibrated λ: `parameters/density_params.json` (`load_calibrated_parameters`; `clear_lambda_cache()`).
 
 ---
 
@@ -391,10 +391,10 @@ Calibrated λ: `config/density_params.json`.
 |---------|-------------|
 | `python Main.py` | Tkinter GUI |
 | `python run.py` | Launcher (sets cwd) |
-| `densidade-vertical` | Console script after `pip install -e .` |
+| `densidade-vertical` | Console script after `pip install -e .` (`--help` prints usage and exits) |
 
 ---
 
-**Package version:** 1.1.6 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-08-18
+**Package version:** 1.1.7 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-09-03
 
 Unpitched aggregation + unified composite: [TECHNICAL_MANUAL §7.5.1](TECHNICAL_MANUAL.md) · [CHANGES.md](../CHANGES.md). Header / labels: `core.composite.format_composite_header_line`, `core.unpitched_labels`.

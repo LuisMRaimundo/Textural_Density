@@ -31,8 +31,9 @@ from utils.notes import dyad_notes_from_semitone_interval
 # ------------------------------------------------------------------------------
 TAMANHO_OITAVA_MICROTONAL = 24
 
-# Path to calibrated parameters config file
-CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'config', 'density_params.json')
+# Path to calibrated parameters file (directory renamed from config/ to avoid colliding with config.py)
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'parameters', 'density_params.json')
+_LAMBDA_CACHE: dict = {}
 
 # Reference values for empirical dyad consonance ratings
 # Baseados em dados de Hutchinson & Knopoff, Malmberg, Kameoka & Kuriyagawa
@@ -58,23 +59,38 @@ lista_notas_cromaticas = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 
 # Gerenciamento de parâmetros calibrados
 # ------------------------------------------------------------------------------
 
+def _resolved_config_path():
+    return os.path.abspath(CONFIG_PATH)
+
+
+def clear_lambda_cache():
+    """Drop cached λ values. For tests and tooling after an out-of-band write."""
+    _LAMBDA_CACHE.clear()
+
+
 def load_calibrated_parameters():
     """
     Load calibrated parameters from a JSON file.
     Returns the lambda value based on experimental data.
+    Cached per resolved CONFIG_PATH; save_calibrated_parameters invalidates.
     """
+    key = _resolved_config_path()
+    if key in _LAMBDA_CACHE:
+        return _LAMBDA_CACHE[key]
     try:
         if os.path.exists(CONFIG_PATH):
             with open(CONFIG_PATH, 'r') as f:
                 params = json.load(f)
                 logger.info(f"Parameters loaded: {params}")
-                return params.get('lambda', DEFAULT_LAMBDA)
+                value = params.get('lambda', DEFAULT_LAMBDA)
         else:
             logger.warning(f"Config file not found: {CONFIG_PATH}")
-            return DEFAULT_LAMBDA
+            value = DEFAULT_LAMBDA
     except Exception as e:
         logger.error(f"Error loading parameters: {e}")
-        return DEFAULT_LAMBDA
+        value = DEFAULT_LAMBDA
+    _LAMBDA_CACHE[key] = value
+    return value
 
 def save_calibrated_parameters(params):
     """
@@ -85,6 +101,7 @@ def save_calibrated_parameters(params):
         with open(CONFIG_PATH, 'w') as f:
             json.dump(params, f, indent=4)
             logger.info(f"Parameters saved: {params}")
+        _LAMBDA_CACHE.pop(_resolved_config_path(), None)
         return True
     except Exception as e:
         logger.error(f"Error saving parameters: {e}")
@@ -532,6 +549,7 @@ __all__ = [
     "calibrate_lambda",
     "load_calibrated_parameters",
     "save_calibrated_parameters",
+    "clear_lambda_cache",
     "visualize_decay_function",
     "test_calibrated_model",
     "analyze_consonance_vs_lambda",

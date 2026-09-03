@@ -10,6 +10,13 @@ from pathlib import Path
 
 
 def main():
+    if any(arg in ("-h", "--help") for arg in sys.argv[1:]):
+        print(
+            "Textural Density GUI launcher.\n"
+            "Usage: densidade-vertical\n"
+            "Opens the Tkinter analysis application. No analysis flags are accepted."
+        )
+        return 0
     root_dir = Path(__file__).resolve().parent
     os.chdir(root_dir)
     if str(root_dir) not in sys.path:

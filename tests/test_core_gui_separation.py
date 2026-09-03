@@ -114,6 +114,7 @@ class TestCoreAPI:
         assert not _module_imports_tkinter("gui.state")
 
     def test_density_calculator_gui_composes_panels(self):
+        pytest.importorskip("tkinter")
         from gui.app import DensityCalculatorGUI
         from gui.widgets import InputPanel, ResultsPanel
 

@@ -14,7 +14,7 @@ import logging
 from utils.notes import dyad_notes_from_semitone_interval
 
 logger = logging.getLogger('calibration')
-DEFAULT_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'config', 'density_params.json')
+DEFAULT_CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'parameters', 'density_params.json')
 DEFAULT_LAMBDA = 0.05
 
 CONSONANCE_RATINGS = {

@@ -137,7 +137,7 @@ Phase 7 served unregistered names through `instrumentos/coarse_default.py` with 
 
 ### 4.4 Lambda calibration dyad fix (Phase 4)
 
-`calibrate_lambda()` now builds dyads with `utils/notes.dyad_notes_from_semitone_interval()`. Stored `config/density_params.json` value (`lambda: 0.05`) is unchanged; **re-run calibration** only if you depend on newly fitted λ from the corrected routine.
+`calibrate_lambda()` now builds dyads with `utils/notes.dyad_notes_from_semitone_interval()`. Stored `parameters/density_params.json` value (`lambda: 0.05`) is unchanged; **re-run calibration** only if you depend on newly fitted λ from the corrected routine. The file lived under `config/` before package 1.1.7.
 
 ---
 
