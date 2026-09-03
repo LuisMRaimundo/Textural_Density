@@ -373,7 +373,7 @@ $$
 
 **Module:** `densidade_intervalar.py` — `calibrate_lambda`.
 
-Reference ratings `CONSONANCE_RATINGS` map interval classes to empirical scores. Dyad intervals are built with `utils/notes.dyad_notes_from_semitone_interval()` (Phase 4 fix). For candidate $\lambda$, minimise squared error between predicted normalised density and ratings (see [Technical Manual](TECHNICAL_MANUAL.md), Section 3.15). Optimal $\lambda$ is saved to `config/density_params.json`. Calibration calls the **legacy** floored `calculate_interval_density`; as noted in §B, the $0.25$-st floor never fires on these 12-EDO dyads ($\Delta_{\mathrm{st}}\geq 1$), so the fitted $\lambda$ is unaffected by the legacy/core path split.
+Reference ratings `CONSONANCE_RATINGS` map interval classes to empirical scores. Dyad intervals are built with `utils/notes.dyad_notes_from_semitone_interval()` (Phase 4 fix). For candidate $\lambda$, minimise squared error between predicted normalised density and ratings (see [Technical Manual](TECHNICAL_MANUAL.md), Section 3.15). Optimal $\lambda$ is saved to `parameters/density_params.json`. Calibration calls the **legacy** floored `calculate_interval_density`; as noted in §B, the $0.25$-st floor never fires on these 12-EDO dyads ($\Delta_{\mathrm{st}}\geq 1$), so the fitted $\lambda$ is unaffected by the legacy/core path split.
 
 ---
 
@@ -665,4 +665,4 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 
 For architecture and output JSON keys, see [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md). For upgrading existing scripts, see [MIGRATION.md](MIGRATION.md). For package vs methodology versions, see [VERSIONING.md](VERSIONING.md). For function signatures, see [API.md](API.md).
 
-*Last updated: 2026-09-03 (dest-Zenodo Dynamics10 refresh; Picc / E_Horn / Bass_Clar / Contr_Basson table-backed; `.md` canonical over archival PDF).*
+*Last updated: 2026-09-03 (package 1.1.7; dest-Zenodo Dynamics10 tables; `.md` canonical over archival PDF).*

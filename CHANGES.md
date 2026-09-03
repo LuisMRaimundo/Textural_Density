@@ -2,6 +2,23 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-09-03 — Package 1.1.7: non-numeric packaging and lookup repairs
+
+Package patch. **No computed value changed.** `METRIC_SCHEMA_VERSION` remains `5.1.0-strict-symbolic`. Frozen numeric artefacts were not regenerated.
+
+- Ship top-level modules (`config`, `run`, …) via `[tool.setuptools] py-modules` so a wheel install can import `core` and run `densidade-vertical`.
+- Rename `config/` → `parameters/` so `density_params.json` no longer collides with `config.py`; ship it as package data.
+- Raise the Python floor to `>=3.9` (PEP 585 annotations on the public import path).
+- Declare `mido` and `statsmodels` in `[project] dependencies` (already in `requirements.txt`).
+- Composite failures now propagate instead of being rewritten as density `0.0`.
+- Cache calibrated λ keyed on the resolved `CONFIG_PATH`; `save_calibrated_parameters` invalidates; `clear_lambda_cache()` is public.
+- Headless runners skip the Tkinter composition test instead of failing on a missing `tkinter`.
+- `densidade-vertical --help` prints usage and exits instead of opening the Tkinter window.
+
+**Deferred:** recording resolved λ in `resultados["composite_meta"]` (would edit a metadata snapshot).
+
+**Proposed separately (not done):** exclude `benchmarks`, `replication`, `scripts`, and `tools` from the wheel. They are research artefacts but `replication/` is used by reproduction scripts.
+
 ## 2026-09-03 — Dynamics10 ladders for all dest-Zenodo instruments
 
 Rebuilt every table-backed pitched module (except violin sul tasto, which has no new book) from `Desktop\para dinâmicas\*_Dynamics10.xlsx` `Results` sheets (Dynamics_predicter v1.5.2.1, PCHIP, n_boot=200). Generator: `tools/commit_dynamics_from_para_dinamicas.py`. Measured pp/mf/ff anchors stay verbatim; interiors clamped into their measured segment. Formulae unchanged.

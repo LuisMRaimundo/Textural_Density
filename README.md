@@ -1,13 +1,13 @@
 # Textural Density - Musical Density Analysis Application
 
 **Repository:** [github.com/LuisMRaimundo/Textural_Density](https://github.com/LuisMRaimundo/Textural_Density)  
-**Version (two axes):** package **1.1.6** (`pyproject.toml`) · methodology **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`)  
+**Version (two axes):** package **1.1.7** (`pyproject.toml`) · methodology **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`)  
 **Status:** Active Development  
 **License:** [MIT](LICENSE) (`pyproject.toml` declares MIT; see [docs/VERSIONING.md](docs/VERSIONING.md))  
 **Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)  
 The `.md` manuals are canonical. `docs/MATHEMATICAL_MANUAL.pdf` and `docs/TECHNICAL_MANUAL.pdf` are archival snapshots from the 2026-05-23 initial import (`a439f2c`) and do not include later alignment commits.
 
-> **Versioning:** The header **Version** line always names both axes. Package release **1.1.6** is independent of methodology phase **5.1.0-strict-symbolic** (earlier phases 3.0.0 / 4.0.0 / 5.0.0). Do not treat package semver as a schema bump. See [docs/VERSIONING.md](docs/VERSIONING.md).
+> **Versioning:** The header **Version** line always names both axes. Package release **1.1.7** is independent of methodology phase **5.1.0-strict-symbolic** (earlier phases 3.0.0 / 4.0.0 / 5.0.0). Do not treat package semver as a schema bump. See [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -58,13 +58,18 @@ The **public research API** lives in `core/` (`core.pipeline.calculate_metrics`)
 
 ### Requirements
 
-- Python 3.8+
-- Required packages (see `requirements.txt`):
+- Python 3.9+
+- Required packages (see `requirements.txt` / `[project] dependencies`):
   - numpy
   - pandas
   - matplotlib
   - scipy
-  - tkinter (usually included with Python)
+  - scikit-learn
+  - seaborn
+  - openpyxl
+  - mido
+  - statsmodels
+  - tkinter (usually included with Python; GUI only)
 
 ### Setup
 
@@ -320,7 +325,7 @@ Tiered CI policy (see [CONTRIBUTING.md](CONTRIBUTING.md)):
   - UI settings
   - Calculation parameters
 
-- **`config/density_params.json`**: Calibration parameters
+- **`parameters/density_params.json`**: Calibration parameters (directory renamed from `config/` so it does not collide with `config.py`)
   - Lambda values
   - Calibration data
 
@@ -356,6 +361,16 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 ---
 
 ## Changelog
+
+### Version 1.1.7 (2026-09-03)
+
+Package patch. Methodology remains **`5.1.0-strict-symbolic`**. **No computed value changed.** See [CHANGES.md](CHANGES.md).
+
+- Wheel install now ships top-level modules (`config`, `run`, …) and `parameters/density_params.json`.
+- Python floor is `>=3.9`; `mido` and `statsmodels` are declared install dependencies.
+- Composite computation failures propagate instead of becoming density `0.0`.
+- Calibrated λ is cached per resolved path; `clear_lambda_cache()` is public.
+- `densidade-vertical --help` prints usage and exits.
 
 ### Version 1.1.6 (2026-08-18)
 

@@ -194,31 +194,23 @@ def compute_weighted_density_normalized(
     w: float = 0.5,
     DI_max: float = WEIGHTED_DI_MAX,
     DV_max: float = WEIGHTED_DV_MAX,
-) -> Optional[float]:
+) -> float:
     """
     Normalised weighted blend of instrument and interval density.
 
     Min-max path delegates to ``compute_blend_density`` (single expression).
     """
-    try:
-        if metodo == "min-max":
-            return compute_blend_density(
-                DI, DV, w, DI_max=DI_max, DV_max=DV_max, scale=BLEND_SCALE
-            )
-        if metodo == "z-score":
-            DI_mean, DI_std = 50, 25
-            DV_mean, DV_std = 5, 2.5
-            DI_norm = (DI - DI_mean) / DI_std if DI_std > 0 else 0
-            DV_norm = (DV - DV_mean) / DV_std if DV_std > 0 else 0
-            return float(BLEND_SCALE * (w * DI_norm + (1 - w) * DV_norm))
-        raise ValueError(f"Invalid method: '{metodo}'. Choose 'min-max' or 'z-score'.")
-    except ValueError:
-        raise
-    except Exception as e:
-        import logging
-
-        logging.error(f"Error computing weighted density: {e}")
-        return None
+    if metodo == "min-max":
+        return compute_blend_density(
+            DI, DV, w, DI_max=DI_max, DV_max=DV_max, scale=BLEND_SCALE
+        )
+    if metodo == "z-score":
+        DI_mean, DI_std = 50, 25
+        DV_mean, DV_std = 5, 2.5
+        DI_norm = (DI - DI_mean) / DI_std if DI_std > 0 else 0
+        DV_norm = (DV - DV_mean) / DV_std if DV_std > 0 else 0
+        return float(BLEND_SCALE * (w * DI_norm + (1 - w) * DV_norm))
+    raise ValueError(f"Invalid method: '{metodo}'. Choose 'min-max' or 'z-score'.")
 
 
 def build_composite_component_metadata(

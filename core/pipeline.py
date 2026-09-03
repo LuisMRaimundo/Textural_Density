@@ -214,13 +214,13 @@ def calculate_metrics(
         densidade_intervalar_val,
         metodo="min-max",
         w=weight_factor,
-    ) or 0.0
+    )
     weighted_orchestral = compute_weighted_density_normalized(
         densidade_instrumento_val, 0.0, metodo="min-max", w=weight_factor
-    ) or 0.0
+    )
     weighted_pitch = compute_weighted_density_normalized(
         0.0, densidade_intervalar_val, metodo="min-max", w=weight_factor
-    ) or 0.0
+    )
 
     pitch_structure_density = compute_pitch_structure_density(
         interval_sum_raw=densidade_intervalar_raw,
