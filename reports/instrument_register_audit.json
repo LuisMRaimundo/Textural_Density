@@ -117,23 +117,36 @@
     },
     {
       "instrument_id": "clarinete_baixo",
-      "display_name": "Bass clarinet",
+      "display_name": "Bass_Clar",
       "aliases": [
         "bass_clarinet",
+        "Bass clarinet",
         "clarinete baixo",
-        "clarinete_baixo"
+        "clarinete_baixo",
+        "Bass_Clar",
+        "bass_clar"
       ],
       "family": "woodwinds",
       "transposition_semitones": 14,
       "transposition_class": "D_interval_transposing",
       "registry_sounding_min_midi": 34,
-      "registry_sounding_max_midi": 72,
+      "registry_sounding_max_midi": 82,
       "comfortable_min_midi": 40,
       "comfortable_max_midi": 65,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "bass_clarinet",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "C#2",
+        "last_note": "A#5",
+        "row_count": 46,
+        "min_midi": 37,
+        "max_midi": 82,
+        "instrument_source_pitch_range": [
+          37,
+          82
+        ]
+      },
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -196,20 +209,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 52,
-      "registry_sounding_max_midi": 72,
+      "registry_sounding_max_midi": 91,
       "comfortable_min_midi": 31,
       "comfortable_max_midi": 55,
       "module_name": "double_bass_harmonics",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "E3",
-        "last_note": "C5",
-        "row_count": 21,
+        "last_note": "G6",
+        "row_count": 40,
         "min_midi": 52,
-        "max_midi": 72,
+        "max_midi": 91,
         "instrument_source_pitch_range": [
           52,
-          72
+          91
         ]
       },
       "range_discrepancy": "aligned",
@@ -248,16 +261,16 @@
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "E1",
-        "last_note": "C5",
-        "row_count": 45,
+        "last_note": "G4",
+        "row_count": 40,
         "min_midi": 28,
-        "max_midi": 72,
+        "max_midi": 67,
         "instrument_source_pitch_range": [
           28,
-          72
+          67
         ]
       },
-      "range_discrepancy": "aligned",
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -291,16 +304,16 @@
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "E1",
-        "last_note": "C5",
-        "row_count": 45,
+        "last_note": "G4",
+        "row_count": 40,
         "min_midi": 28,
-        "max_midi": 72,
+        "max_midi": 67,
         "instrument_source_pitch_range": [
           28,
-          72
+          67
         ]
       },
-      "range_discrepancy": "aligned",
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -308,9 +321,13 @@
     },
     {
       "instrument_id": "contrafagote",
-      "display_name": "Contrabassoon",
+      "display_name": "Contr_Basson",
       "aliases": [
-        "contrabassoon"
+        "contrabassoon",
+        "Contrabassoon",
+        "Contr_Basson",
+        "contr_basson",
+        "contrafagote"
       ],
       "family": "woodwinds",
       "transposition_semitones": 0,
@@ -319,10 +336,20 @@
       "registry_sounding_max_midi": 77,
       "comfortable_min_midi": 28,
       "comfortable_max_midi": 65,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "contrabassoon",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "A#1",
+        "last_note": "D#5",
+        "row_count": 42,
+        "min_midi": 34,
+        "max_midi": 75,
+        "instrument_source_pitch_range": [
+          34,
+          75
+        ]
+      },
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -330,24 +357,37 @@
     },
     {
       "instrument_id": "cor_anglais",
-      "display_name": "English horn",
+      "display_name": "E_Horn",
       "aliases": [
         "corne_ingles",
         "english_horn",
+        "English horn",
         "cor anglais",
-        "cor_anglais"
+        "cor_anglais",
+        "E_Horn",
+        "e_horn"
       ],
       "family": "woodwinds",
       "transposition_semitones": 7,
       "transposition_class": "D_interval_transposing",
       "registry_sounding_min_midi": 52,
-      "registry_sounding_max_midi": 76,
+      "registry_sounding_max_midi": 92,
       "comfortable_min_midi": 55,
       "comfortable_max_midi": 72,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "english_horn",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "A#3",
+        "last_note": "G#6",
+        "row_count": 35,
+        "min_midi": 58,
+        "max_midi": 92,
+        "instrument_source_pitch_range": [
+          58,
+          92
+        ]
+      },
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -425,21 +465,35 @@
     },
     {
       "instrument_id": "flautim",
-      "display_name": "Piccolo",
+      "display_name": "Picc",
       "aliases": [
-        "piccolo"
+        "piccolo",
+        "Piccolo",
+        "picc",
+        "Picc",
+        "flautim"
       ],
       "family": "woodwinds",
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
-      "registry_sounding_min_midi": 74,
+      "registry_sounding_min_midi": 59,
       "registry_sounding_max_midi": 108,
       "comfortable_min_midi": 76,
       "comfortable_max_midi": 100,
-      "module_name": null,
-      "profile_status": "coarse_default",
-      "table_span": null,
-      "range_discrepancy": "no_table",
+      "module_name": "piccolo",
+      "profile_status": "literature_derived",
+      "table_span": {
+        "first_note": "B3",
+        "last_note": "D7",
+        "row_count": 40,
+        "min_midi": 59,
+        "max_midi": 98,
+        "instrument_source_pitch_range": [
+          59,
+          98
+        ]
+      },
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -761,7 +815,7 @@
       "family": "brass",
       "transposition_semitones": 7,
       "transposition_class": "D_interval_transposing",
-      "registry_sounding_min_midi": 41,
+      "registry_sounding_min_midi": 34,
       "registry_sounding_max_midi": 77,
       "comfortable_min_midi": 45,
       "comfortable_max_midi": 72,
@@ -778,7 +832,7 @@
           77
         ]
       },
-      "range_discrepancy": "BUG_table_anchor_outside_registry",
+      "range_discrepancy": "aligned",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -1017,16 +1071,16 @@
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "C3",
-        "last_note": "A6",
-        "row_count": 46,
+        "last_note": "E6",
+        "row_count": 41,
         "min_midi": 48,
-        "max_midi": 93,
+        "max_midi": 88,
         "instrument_source_pitch_range": [
           48,
-          93
+          88
         ]
       },
-      "range_discrepancy": "aligned",
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -1150,16 +1204,16 @@
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "G3",
-        "last_note": "B7",
-        "row_count": 53,
+        "last_note": "C7",
+        "row_count": 42,
         "min_midi": 55,
-        "max_midi": 107,
+        "max_midi": 96,
         "instrument_source_pitch_range": [
           55,
-          107
+          96
         ]
       },
-      "range_discrepancy": "aligned",
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -1193,16 +1247,16 @@
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "G3",
-        "last_note": "B7",
-        "row_count": 53,
+        "last_note": "C7",
+        "row_count": 42,
         "min_midi": 55,
-        "max_midi": 107,
+        "max_midi": 96,
         "instrument_source_pitch_range": [
           55,
-          107
+          96
         ]
       },
-      "range_discrepancy": "aligned",
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -1356,16 +1410,16 @@
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "C2",
-        "last_note": "C6",
-        "row_count": 49,
+        "last_note": "A5",
+        "row_count": 46,
         "min_midi": 36,
-        "max_midi": 84,
+        "max_midi": 81,
         "instrument_source_pitch_range": [
           36,
-          84
+          81
         ]
       },
-      "range_discrepancy": "aligned",
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -1399,16 +1453,16 @@
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "C2",
-        "last_note": "C6",
-        "row_count": 49,
+        "last_note": "A5",
+        "row_count": 46,
         "min_midi": 36,
-        "max_midi": 84,
+        "max_midi": 81,
         "instrument_source_pitch_range": [
           36,
-          84
+          81
         ]
       },
-      "range_discrepancy": "aligned",
+      "range_discrepancy": "OK_registry_covers_table",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",
@@ -1437,12 +1491,32 @@
       "resolved_id": "flauta"
     },
     {
-      "alias": "Piccolo",
+      "alias": "Picc",
       "canonical_id": "flautim",
       "resolved_id": "flautim"
     },
     {
       "alias": "piccolo",
+      "canonical_id": "flautim",
+      "resolved_id": "flautim"
+    },
+    {
+      "alias": "Piccolo",
+      "canonical_id": "flautim",
+      "resolved_id": "flautim"
+    },
+    {
+      "alias": "picc",
+      "canonical_id": "flautim",
+      "resolved_id": "flautim"
+    },
+    {
+      "alias": "Picc",
+      "canonical_id": "flautim",
+      "resolved_id": "flautim"
+    },
+    {
+      "alias": "flautim",
       "canonical_id": "flautim",
       "resolved_id": "flautim"
     },
@@ -1462,7 +1536,7 @@
       "resolved_id": "oboe"
     },
     {
-      "alias": "English horn",
+      "alias": "E_Horn",
       "canonical_id": "cor_anglais",
       "resolved_id": "cor_anglais"
     },
@@ -1477,12 +1551,27 @@
       "resolved_id": "cor_anglais"
     },
     {
+      "alias": "English horn",
+      "canonical_id": "cor_anglais",
+      "resolved_id": "cor_anglais"
+    },
+    {
       "alias": "cor anglais",
       "canonical_id": "cor_anglais",
       "resolved_id": "cor_anglais"
     },
     {
       "alias": "cor_anglais",
+      "canonical_id": "cor_anglais",
+      "resolved_id": "cor_anglais"
+    },
+    {
+      "alias": "E_Horn",
+      "canonical_id": "cor_anglais",
+      "resolved_id": "cor_anglais"
+    },
+    {
+      "alias": "e_horn",
       "canonical_id": "cor_anglais",
       "resolved_id": "cor_anglais"
     },
@@ -1517,12 +1606,17 @@
       "resolved_id": "clarinete"
     },
     {
-      "alias": "Bass clarinet",
+      "alias": "Bass_Clar",
       "canonical_id": "clarinete_baixo",
       "resolved_id": "clarinete_baixo"
     },
     {
       "alias": "bass_clarinet",
+      "canonical_id": "clarinete_baixo",
+      "resolved_id": "clarinete_baixo"
+    },
+    {
+      "alias": "Bass clarinet",
       "canonical_id": "clarinete_baixo",
       "resolved_id": "clarinete_baixo"
     },
@@ -1533,6 +1627,16 @@
     },
     {
       "alias": "clarinete_baixo",
+      "canonical_id": "clarinete_baixo",
+      "resolved_id": "clarinete_baixo"
+    },
+    {
+      "alias": "Bass_Clar",
+      "canonical_id": "clarinete_baixo",
+      "resolved_id": "clarinete_baixo"
+    },
+    {
+      "alias": "bass_clar",
       "canonical_id": "clarinete_baixo",
       "resolved_id": "clarinete_baixo"
     },
@@ -1567,12 +1671,32 @@
       "resolved_id": "fagote"
     },
     {
-      "alias": "Contrabassoon",
+      "alias": "Contr_Basson",
       "canonical_id": "contrafagote",
       "resolved_id": "contrafagote"
     },
     {
       "alias": "contrabassoon",
+      "canonical_id": "contrafagote",
+      "resolved_id": "contrafagote"
+    },
+    {
+      "alias": "Contrabassoon",
+      "canonical_id": "contrafagote",
+      "resolved_id": "contrafagote"
+    },
+    {
+      "alias": "Contr_Basson",
+      "canonical_id": "contrafagote",
+      "resolved_id": "contrafagote"
+    },
+    {
+      "alias": "contr_basson",
+      "canonical_id": "contrafagote",
+      "resolved_id": "contrafagote"
+    },
+    {
+      "alias": "contrafagote",
       "canonical_id": "contrafagote",
       "resolved_id": "contrafagote"
     },

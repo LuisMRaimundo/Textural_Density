@@ -26,21 +26,23 @@
     },
     {
       "instrument_id": "flautim",
-      "display_name": "Piccolo",
+      "display_name": "Picc",
       "family": "woodwinds",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/piccolo.py from Piccolo_Zenodo_collections_ordinario_Dynamics10.xlsx Results (IOWA+ORCH Media pp/mf/ff anchors, PCHIP interiors, tapered outers). Table span B3\u2013D7 (MIDI 59\u201398).",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
@@ -68,21 +70,23 @@
     },
     {
       "instrument_id": "cor_anglais",
-      "display_name": "English horn",
+      "display_name": "E_Horn",
       "family": "woodwinds",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/english_horn.py from English_horn_Zenodo_collections_ordinario_Dynamics10.xlsx Results (IOWA+ORCH Media pp/mf/ff anchors, PCHIP interiors, tapered outers). Table span A#3\u2013G#6 (MIDI 58\u201392).",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
@@ -110,21 +114,23 @@
     },
     {
       "instrument_id": "clarinete_baixo",
-      "display_name": "Bass clarinet",
+      "display_name": "Bass_Clar",
       "family": "woodwinds",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/bass_clarinet.py from Bass_clarinet_in_Bb_Zenodo_collections_ordinario_Dynamics10.xlsx Results (IOWA+ORCH Media pp/mf/ff anchors, PCHIP interiors, tapered outers). Table span C#2\u2013A#5 (MIDI 37\u201382).",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
@@ -152,21 +158,23 @@
     },
     {
       "instrument_id": "contrafagote",
-      "display_name": "Contrabassoon",
+      "display_name": "Contr_Basson",
       "family": "woodwinds",
-      "profile_status": "symbolic_default",
-      "registry_profile_status": "coarse_default",
-      "uncertainty": "high",
-      "source_notes": "Coarse register/dynamic model; no externally sourced acoustic amplitude table.",
+      "profile_status": "literature_informed",
+      "registry_profile_status": "literature_derived",
+      "uncertainty": "medium",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/contrabassoon.py from Contrabassoon_Zenodo_collections_ordinario_Dynamics10.xlsx Results (IOWA+ORCH Media pp/mf/ff anchors, PCHIP interiors, tapered outers). Table span A#1\u2013D#5 (MIDI 34\u201375).",
       "limitations": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
       "has_register_metadata": true,
       "has_dynamic_weight_metadata": true,
       "has_technique_metadata": true,
       "warnings": [
-        "Spectral density is a coarse fallback without external acoustic metadata."
+        "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
+        "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
     },
@@ -289,7 +297,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_sul_ponticello.py from Dynamics10 Viola_Dynamics10_sul_ponticello.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C3\u2013A6.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/viola_sul_ponticello.py from Viola_Zenodo_collections_sul_ponticello_Dynamics10.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C3\u2013E6.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -313,7 +321,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sordina.py from Dynamics10 Violin_Dynamics10_con_sordino.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span G3\u2013B7.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sordina.py from Violin_Zenodo_collections_con_sordino_Dynamics10.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span G3\u2013C7.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -337,7 +345,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_ponticello.py from Dynamics10 Violin_Dynamics10_sul_ponticello.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span G3\u2013B7.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_ponticello.py from Violin_Zenodo_collections_sul_ponticello_Dynamics10.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span G3\u2013C7.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -437,7 +445,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello_sordina.py from Dynamics10 Cello_Dynamics10_con_sordino.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C2\u2013C6.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello_sordina.py from Cello_Zenodo_collections_con_sordino_Dynamics10.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C2\u2013A5.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -461,7 +469,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello_sul_ponticello.py from Dynamics10 Cello_Dynamics10_sul_ponticello.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C2\u2013C6.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/cello_sul_ponticello.py from Cello_Zenodo_collections_sul_ponticello_Dynamics10.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span C2\u2013A5.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -511,7 +519,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sordina.py from Dynamics10 DoubleBass_Dynamics10_con_sordino.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E1\u2013C5.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sordina.py from Double_bass_Zenodo_collections_con_sordino_Dynamics10.xlsx Results sheet (dest Zenodo con sordino Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E1\u2013G4.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sordina only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -535,7 +543,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sul_ponticello.py from Dynamics10 DoubleBass_Dynamics10_sul_ponticello.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E1\u2013C5.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_sul_ponticello.py from Double_bass_Zenodo_collections_sul_ponticello_Dynamics10.xlsx Results sheet (dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E1\u2013G4.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
@@ -559,11 +567,11 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "high",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_harmonics.py from Dynamics10 DoubleBass_Dynamics10_harmonics.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E3\u2013C5. Notes below E3 and the old C#5\u2013G6 tail are not invented.",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/double_bass_harmonics.py from Double_bass_Zenodo_collections_harmonics_Dynamics10.xlsx Results sheet (dest Zenodo harmonics Media; measured pp/mf/ff anchors, PCHIP interiors, tapered equal-log outers). Table span E3\u2013G6.",
       "limitations": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the dest-Zenodo harmonic register (E3\u2013C5); notes below E3 and C#5\u2013G6 are not invented.",
+        "Table span is the dest-Zenodo harmonic register (E3\u2013G6); notes below E3 are not invented.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "has_range_metadata": true,
@@ -573,7 +581,7 @@
       "warnings": [
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the dest-Zenodo harmonic register (E3\u2013C5); notes below E3 and C#5\u2013G6 are not invented.",
+        "Table span is the dest-Zenodo harmonic register (E3\u2013G6); notes below E3 are not invented.",
         "Other registry supported_techniques are organological capabilities without technique-specific table rows."
       ],
       "claims_empirical_without_notes": false
@@ -585,7 +593,7 @@
       "profile_status": "literature_informed",
       "registry_profile_status": "literature_derived",
       "uncertainty": "medium",
-      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/horn.py from IOWA+ORCH sustain medians (pp/mf/ff anchors; Dynamics_predicter Results sheet).",
+      "source_notes": "Committed 10-dynamic CDM ladder in instrumentos/horn.py from Horn_in_F_Zenodo_collections_ordinario_Dynamics10.xlsx Results (IOWA+ORCH Media pp/mf/ff anchors, PCHIP interiors, tapered outers). Table span A#1\u2013F5 (MIDI 34\u201377).",
       "limitations": [
         "Instrument density uses externally sourced acoustic tables (committed full dynamic ladder).",
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques are organological capabilities without technique-specific table rows."
@@ -958,10 +966,6 @@
   "instruments_needing_review": [
     "caixa",
     "celesta",
-    "clarinete_baixo",
-    "contrafagote",
-    "cor_anglais",
-    "flautim",
     "harpa",
     "marimba",
     "metalofone",

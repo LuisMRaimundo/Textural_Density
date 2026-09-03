@@ -11,8 +11,20 @@
     "registry_supported_techniques": "Organological capabilities listed on InstrumentProfile.supported_techniques."
   },
   "instrument_count": 42,
-  "table_excludes_sounding_range_count": 0,
-  "table_excludes_sounding_range_ids": [],
+  "table_excludes_sounding_range_count": 11,
+  "table_excludes_sounding_range_ids": [
+    "clarinete_baixo",
+    "contrabaixo_sordina",
+    "contrabaixo_sul_ponticello",
+    "contrafagote",
+    "cor_anglais",
+    "flautim",
+    "viola_sul_ponticello",
+    "violino_sordina",
+    "violino_sul_ponticello",
+    "violoncelo_sordina",
+    "violoncelo_sul_ponticello"
+  ],
   "instruments": [
     {
       "instrument_id": "bombo",
@@ -280,21 +292,33 @@
     },
     {
       "instrument_id": "clarinete_baixo",
-      "display_name": "Bass clarinet",
+      "display_name": "Bass_Clar",
       "aliases": [
         "bass_clarinet",
+        "Bass clarinet",
         "clarinete baixo",
-        "clarinete_baixo"
+        "clarinete_baixo",
+        "Bass_Clar",
+        "bass_clar"
       ],
       "family": "woodwinds",
-      "module_name": null,
-      "table_backed": false,
-      "profile_status": "coarse_default",
-      "source_table_span": null,
-      "instrument_source_pitch_range": null,
+      "module_name": "bass_clarinet",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "C#2",
+        "last_note": "A#5",
+        "row_count": 46,
+        "min_midi": 37,
+        "max_midi": 82
+      },
+      "instrument_source_pitch_range": [
+        37,
+        82
+      ],
       "registry_sounding_range_midi": [
         34,
-        72
+        82
       ],
       "registry_comfortable_range_midi": [
         40,
@@ -302,7 +326,18 @@
       ],
       "registry_transposition": 14,
       "registry_transposition_runtime_applied": false,
-      "source_dynamic_anchors": [],
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
       "modelled_dynamics": [
         "p",
         "mp",
@@ -312,23 +347,34 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "no_table",
-      "range_classification": "NOT APPLICABLE",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
           "legato",
           "staccato"
         ],
-        "table_supported_techniques": [],
-        "source_technique": null,
-        "classification": "NOT APPLICABLE"
+        "table_supported_techniques": [
+          "ordinary_sustain"
+        ],
+        "source_technique": "ordinary_sustain",
+        "registry_not_in_table": [
+          "legato",
+          "staccato"
+        ],
+        "classification": "PASS"
       },
-      "documentation_contradictions": [],
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=3, missing_high=0)"
+      ],
       "table_excludes_sounding_range": true,
-      "exclusion_kind": "no_table",
-      "missing_low_semitones": null,
-      "missing_high_semitones": null,
-      "table_span_midi": null
+      "exclusion_kind": "partial_table",
+      "missing_low_semitones": 3,
+      "missing_high_semitones": 0,
+      "table_span_midi": [
+        37,
+        82
+      ]
     },
     {
       "instrument_id": "contrabaixo",
@@ -441,18 +487,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "E3",
-        "last_note": "C5",
-        "row_count": 21,
+        "last_note": "G6",
+        "row_count": 40,
         "min_midi": 52,
-        "max_midi": 72
+        "max_midi": 91
       },
       "instrument_source_pitch_range": [
         52,
-        72
+        91
       ],
       "registry_sounding_range_midi": [
         52,
-        72
+        91
       ],
       "registry_comfortable_range_midi": [
         31,
@@ -504,7 +550,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         52,
-        72
+        91
       ]
     },
     {
@@ -532,14 +578,14 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "E1",
-        "last_note": "C5",
-        "row_count": 45,
+        "last_note": "G4",
+        "row_count": 40,
         "min_midi": 28,
-        "max_midi": 72
+        "max_midi": 67
       },
       "instrument_source_pitch_range": [
         28,
-        72
+        67
       ],
       "registry_sounding_range_midi": [
         28,
@@ -572,8 +618,8 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "aligned",
-      "range_classification": "PASS",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
           "arco",
@@ -588,14 +634,16 @@
         ],
         "classification": "PASS"
       },
-      "documentation_contradictions": [],
-      "table_excludes_sounding_range": false,
-      "exclusion_kind": "full_coverage",
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=5)"
+      ],
+      "table_excludes_sounding_range": true,
+      "exclusion_kind": "partial_table",
       "missing_low_semitones": 0,
-      "missing_high_semitones": 0,
+      "missing_high_semitones": 5,
       "table_span_midi": [
         28,
-        72
+        67
       ]
     },
     {
@@ -621,14 +669,14 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "E1",
-        "last_note": "C5",
-        "row_count": 45,
+        "last_note": "G4",
+        "row_count": 40,
         "min_midi": 28,
-        "max_midi": 72
+        "max_midi": 67
       },
       "instrument_source_pitch_range": [
         28,
-        72
+        67
       ],
       "registry_sounding_range_midi": [
         28,
@@ -661,8 +709,8 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "aligned",
-      "range_classification": "PASS",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
           "arco",
@@ -677,28 +725,43 @@
         ],
         "classification": "PASS"
       },
-      "documentation_contradictions": [],
-      "table_excludes_sounding_range": false,
-      "exclusion_kind": "full_coverage",
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=5)"
+      ],
+      "table_excludes_sounding_range": true,
+      "exclusion_kind": "partial_table",
       "missing_low_semitones": 0,
-      "missing_high_semitones": 0,
+      "missing_high_semitones": 5,
       "table_span_midi": [
         28,
-        72
+        67
       ]
     },
     {
       "instrument_id": "contrafagote",
-      "display_name": "Contrabassoon",
+      "display_name": "Contr_Basson",
       "aliases": [
-        "contrabassoon"
+        "contrabassoon",
+        "Contrabassoon",
+        "Contr_Basson",
+        "contr_basson",
+        "contrafagote"
       ],
       "family": "woodwinds",
-      "module_name": null,
-      "table_backed": false,
-      "profile_status": "coarse_default",
-      "source_table_span": null,
-      "instrument_source_pitch_range": null,
+      "module_name": "contrabassoon",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "A#1",
+        "last_note": "D#5",
+        "row_count": 42,
+        "min_midi": 34,
+        "max_midi": 75
+      },
+      "instrument_source_pitch_range": [
+        34,
+        75
+      ],
       "registry_sounding_range_midi": [
         22,
         77
@@ -709,7 +772,18 @@
       ],
       "registry_transposition": 0,
       "registry_transposition_runtime_applied": false,
-      "source_dynamic_anchors": [],
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
       "modelled_dynamics": [
         "p",
         "mp",
@@ -719,41 +793,65 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "no_table",
-      "range_classification": "NOT APPLICABLE",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
-          "arco"
+          "legato",
+          "staccato"
         ],
-        "table_supported_techniques": [],
-        "source_technique": null,
-        "classification": "NOT APPLICABLE"
+        "table_supported_techniques": [
+          "ordinary_sustain"
+        ],
+        "source_technique": "ordinary_sustain",
+        "registry_not_in_table": [
+          "legato",
+          "staccato"
+        ],
+        "classification": "PASS"
       },
-      "documentation_contradictions": [],
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=12, missing_high=2)"
+      ],
       "table_excludes_sounding_range": true,
-      "exclusion_kind": "no_table",
-      "missing_low_semitones": null,
-      "missing_high_semitones": null,
-      "table_span_midi": null
+      "exclusion_kind": "partial_table",
+      "missing_low_semitones": 12,
+      "missing_high_semitones": 2,
+      "table_span_midi": [
+        34,
+        75
+      ]
     },
     {
       "instrument_id": "cor_anglais",
-      "display_name": "English horn",
+      "display_name": "E_Horn",
       "aliases": [
         "corne_ingles",
         "english_horn",
+        "English horn",
         "cor anglais",
-        "cor_anglais"
+        "cor_anglais",
+        "E_Horn",
+        "e_horn"
       ],
       "family": "woodwinds",
-      "module_name": null,
-      "table_backed": false,
-      "profile_status": "coarse_default",
-      "source_table_span": null,
-      "instrument_source_pitch_range": null,
+      "module_name": "english_horn",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "A#3",
+        "last_note": "G#6",
+        "row_count": 35,
+        "min_midi": 58,
+        "max_midi": 92
+      },
+      "instrument_source_pitch_range": [
+        58,
+        92
+      ],
       "registry_sounding_range_midi": [
         52,
-        76
+        92
       ],
       "registry_comfortable_range_midi": [
         55,
@@ -761,7 +859,18 @@
       ],
       "registry_transposition": 7,
       "registry_transposition_runtime_applied": false,
-      "source_dynamic_anchors": [],
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
       "modelled_dynamics": [
         "p",
         "mp",
@@ -771,23 +880,34 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "no_table",
-      "range_classification": "NOT APPLICABLE",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
           "legato",
           "staccato"
         ],
-        "table_supported_techniques": [],
-        "source_technique": null,
-        "classification": "NOT APPLICABLE"
+        "table_supported_techniques": [
+          "ordinary_sustain"
+        ],
+        "source_technique": "ordinary_sustain",
+        "registry_not_in_table": [
+          "legato",
+          "staccato"
+        ],
+        "classification": "PASS"
       },
-      "documentation_contradictions": [],
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=6, missing_high=0)"
+      ],
       "table_excludes_sounding_range": true,
-      "exclusion_kind": "no_table",
-      "missing_low_semitones": null,
-      "missing_high_semitones": null,
-      "table_span_midi": null
+      "exclusion_kind": "partial_table",
+      "missing_low_semitones": 6,
+      "missing_high_semitones": 0,
+      "table_span_midi": [
+        58,
+        92
+      ]
     },
     {
       "instrument_id": "fagote",
@@ -959,18 +1079,31 @@
     },
     {
       "instrument_id": "flautim",
-      "display_name": "Piccolo",
+      "display_name": "Picc",
       "aliases": [
-        "piccolo"
+        "piccolo",
+        "Piccolo",
+        "picc",
+        "Picc",
+        "flautim"
       ],
       "family": "woodwinds",
-      "module_name": null,
-      "table_backed": false,
-      "profile_status": "coarse_default",
-      "source_table_span": null,
-      "instrument_source_pitch_range": null,
+      "module_name": "piccolo",
+      "table_backed": true,
+      "profile_status": "literature_derived",
+      "source_table_span": {
+        "first_note": "B3",
+        "last_note": "D7",
+        "row_count": 40,
+        "min_midi": 59,
+        "max_midi": 98
+      },
+      "instrument_source_pitch_range": [
+        59,
+        98
+      ],
       "registry_sounding_range_midi": [
-        74,
+        59,
         108
       ],
       "registry_comfortable_range_midi": [
@@ -979,7 +1112,18 @@
       ],
       "registry_transposition": 0,
       "registry_transposition_runtime_applied": false,
-      "source_dynamic_anchors": [],
+      "source_dynamic_anchors": [
+        "pppp",
+        "ppp",
+        "pp",
+        "p",
+        "mp",
+        "mf",
+        "f",
+        "ff",
+        "fff",
+        "ffff"
+      ],
       "modelled_dynamics": [
         "p",
         "mp",
@@ -989,23 +1133,34 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "no_table",
-      "range_classification": "NOT APPLICABLE",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
           "legato",
           "staccato"
         ],
-        "table_supported_techniques": [],
-        "source_technique": null,
-        "classification": "NOT APPLICABLE"
+        "table_supported_techniques": [
+          "ordinary_sustain"
+        ],
+        "source_technique": "ordinary_sustain",
+        "registry_not_in_table": [
+          "legato",
+          "staccato"
+        ],
+        "classification": "PASS"
       },
-      "documentation_contradictions": [],
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=10)"
+      ],
       "table_excludes_sounding_range": true,
-      "exclusion_kind": "no_table",
-      "missing_low_semitones": null,
-      "missing_high_semitones": null,
-      "table_span_midi": null
+      "exclusion_kind": "partial_table",
+      "missing_low_semitones": 0,
+      "missing_high_semitones": 10,
+      "table_span_midi": [
+        59,
+        98
+      ]
     },
     {
       "instrument_id": "gongo",
@@ -1740,7 +1895,7 @@
         77
       ],
       "registry_sounding_range_midi": [
-        41,
+        34,
         77
       ],
       "registry_comfortable_range_midi": [
@@ -1770,8 +1925,8 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "BUG_table_anchor_outside_registry",
-      "range_classification": "FAIL",
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
       "technique": {
         "registry_supported_techniques": [
           "legato",
@@ -2301,14 +2456,14 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "C3",
-        "last_note": "A6",
-        "row_count": 46,
+        "last_note": "E6",
+        "row_count": 41,
         "min_midi": 48,
-        "max_midi": 93
+        "max_midi": 88
       },
       "instrument_source_pitch_range": [
         48,
-        93
+        88
       ],
       "registry_sounding_range_midi": [
         48,
@@ -2341,8 +2496,8 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "aligned",
-      "range_classification": "PASS",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
           "arco",
@@ -2357,14 +2512,16 @@
         ],
         "classification": "PASS"
       },
-      "documentation_contradictions": [],
-      "table_excludes_sounding_range": false,
-      "exclusion_kind": "full_coverage",
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=5)"
+      ],
+      "table_excludes_sounding_range": true,
+      "exclusion_kind": "partial_table",
       "missing_low_semitones": 0,
-      "missing_high_semitones": 0,
+      "missing_high_semitones": 5,
       "table_span_midi": [
         48,
-        93
+        88
       ]
     },
     {
@@ -2578,14 +2735,14 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "G3",
-        "last_note": "B7",
-        "row_count": 53,
+        "last_note": "C7",
+        "row_count": 42,
         "min_midi": 55,
-        "max_midi": 107
+        "max_midi": 96
       },
       "instrument_source_pitch_range": [
         55,
-        107
+        96
       ],
       "registry_sounding_range_midi": [
         55,
@@ -2618,8 +2775,8 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "aligned",
-      "range_classification": "PASS",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
           "arco",
@@ -2634,14 +2791,16 @@
         ],
         "classification": "PASS"
       },
-      "documentation_contradictions": [],
-      "table_excludes_sounding_range": false,
-      "exclusion_kind": "full_coverage",
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=11)"
+      ],
+      "table_excludes_sounding_range": true,
+      "exclusion_kind": "partial_table",
       "missing_low_semitones": 0,
-      "missing_high_semitones": 0,
+      "missing_high_semitones": 11,
       "table_span_midi": [
         55,
-        107
+        96
       ]
     },
     {
@@ -2667,14 +2826,14 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "G3",
-        "last_note": "B7",
-        "row_count": 53,
+        "last_note": "C7",
+        "row_count": 42,
         "min_midi": 55,
-        "max_midi": 107
+        "max_midi": 96
       },
       "instrument_source_pitch_range": [
         55,
-        107
+        96
       ],
       "registry_sounding_range_midi": [
         55,
@@ -2707,8 +2866,8 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "aligned",
-      "range_classification": "PASS",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
           "arco",
@@ -2723,14 +2882,16 @@
         ],
         "classification": "PASS"
       },
-      "documentation_contradictions": [],
-      "table_excludes_sounding_range": false,
-      "exclusion_kind": "full_coverage",
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=11)"
+      ],
+      "table_excludes_sounding_range": true,
+      "exclusion_kind": "partial_table",
       "missing_low_semitones": 0,
-      "missing_high_semitones": 0,
+      "missing_high_semitones": 11,
       "table_span_midi": [
         55,
-        107
+        96
       ]
     },
     {
@@ -3020,14 +3181,14 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "C2",
-        "last_note": "C6",
-        "row_count": 49,
+        "last_note": "A5",
+        "row_count": 46,
         "min_midi": 36,
-        "max_midi": 84
+        "max_midi": 81
       },
       "instrument_source_pitch_range": [
         36,
-        84
+        81
       ],
       "registry_sounding_range_midi": [
         36,
@@ -3060,8 +3221,8 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "aligned",
-      "range_classification": "PASS",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
           "arco",
@@ -3076,14 +3237,16 @@
         ],
         "classification": "PASS"
       },
-      "documentation_contradictions": [],
-      "table_excludes_sounding_range": false,
-      "exclusion_kind": "full_coverage",
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=3)"
+      ],
+      "table_excludes_sounding_range": true,
+      "exclusion_kind": "partial_table",
       "missing_low_semitones": 0,
-      "missing_high_semitones": 0,
+      "missing_high_semitones": 3,
       "table_span_midi": [
         36,
-        84
+        81
       ]
     },
     {
@@ -3109,14 +3272,14 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "C2",
-        "last_note": "C6",
-        "row_count": 49,
+        "last_note": "A5",
+        "row_count": 46,
         "min_midi": 36,
-        "max_midi": 84
+        "max_midi": 81
       },
       "instrument_source_pitch_range": [
         36,
-        84
+        81
       ],
       "registry_sounding_range_midi": [
         36,
@@ -3149,8 +3312,8 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "aligned",
-      "range_classification": "PASS",
+      "range_alignment": "OK_registry_covers_table",
+      "range_classification": "REVIEW REQUIRED",
       "technique": {
         "registry_supported_techniques": [
           "arco",
@@ -3165,14 +3328,16 @@
         ],
         "classification": "PASS"
       },
-      "documentation_contradictions": [],
-      "table_excludes_sounding_range": false,
-      "exclusion_kind": "full_coverage",
+      "documentation_contradictions": [
+        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=3)"
+      ],
+      "table_excludes_sounding_range": true,
+      "exclusion_kind": "partial_table",
       "missing_low_semitones": 0,
-      "missing_high_semitones": 0,
+      "missing_high_semitones": 3,
       "table_span_midi": [
         36,
-        84
+        81
       ]
     }
   ],

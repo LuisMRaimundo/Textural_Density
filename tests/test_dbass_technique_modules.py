@@ -26,9 +26,9 @@ DEST_TECHNIQUES = (
         ),
         "probe_note": "F1",
         "probe_mf": 45.06363,
-        "n_notes": 45,
+        "n_notes": 40,
         "first": "E1",
-        "last": "C5",
+        "last": "G4",
     },
     {
         "display": "cb_sp",
@@ -44,9 +44,9 @@ DEST_TECHNIQUES = (
         ),
         "probe_note": "E1",
         "probe_mf": 51.658048,
-        "n_notes": 45,
+        "n_notes": 40,
         "first": "E1",
-        "last": "C5",
+        "last": "G4",
     },
     {
         "display": "cb_harm",
@@ -61,9 +61,9 @@ DEST_TECHNIQUES = (
         ),
         "probe_note": "E3",
         "probe_mf": 25.779643,
-        "n_notes": 21,
+        "n_notes": 40,
         "first": "E3",
-        "last": "C5",
+        "last": "G6",
     },
 )
 
@@ -136,5 +136,5 @@ def test_dest_workbook_measured_anchor_provenance(tech: dict):
         assert "E1" in mod.spectral_data
     if tech["module"] == "double_bass_harmonics":
         assert "E1" not in mod.spectral_data
-        assert "C#5" not in mod.spectral_data
-        assert "G6" not in mod.spectral_data
+        assert "C#5" in mod.spectral_data
+        assert "G6" in mod.spectral_data

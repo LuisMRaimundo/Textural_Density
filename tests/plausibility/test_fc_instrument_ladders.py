@@ -369,7 +369,7 @@ class TestFCSoftLadders:
 
 
 class TestFCCoarseFallback:
-    @pytest.mark.parametrize("iid", ["trombone_baixo", "piano", "harpa", "cor_anglais"])
+    @pytest.mark.parametrize("iid", ["trombone_baixo", "piano", "harpa"])
     def test_coarse_path_and_unknown_dynamic_weight(self, iid: str):
         """HARD: named coarse ids use coarse_default; unknown dynamics use weight 1.0."""
         mod = get_instrument_module(iid)
@@ -383,7 +383,6 @@ class TestFCCoarseFallback:
             "trombone_baixo": "trombone",
             "piano": "violino",
             "harpa": "violino",
-            "cor_anglais": "oboe",
         }[iid]
         nmod = get_instrument_module(neighbour)
         nnote = note if neighbour != "trombone" else "E3"

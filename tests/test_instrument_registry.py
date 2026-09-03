@@ -54,9 +54,39 @@ class TestInstrumentRegistry:
         assert resolve_profile("Flute").instrument_id == "flauta"
         assert resolve_profile("bass_clarinet").instrument_id == "clarinete_baixo"
         assert resolve_profile("glockenspiel").instrument_id == "metalofone"
+        assert resolve_profile("Picc").instrument_id == "flautim"
+        assert resolve_profile("E_Horn").instrument_id == "cor_anglais"
+        assert resolve_profile("Bass_Clar").instrument_id == "clarinete_baixo"
+        assert resolve_profile("Contr_Basson").instrument_id == "contrafagote"
+
+    def test_new_woodwind_gui_names(self):
+        from gui.state import INSTRUMENTS
+
+        assert REGISTRY["flautim"].display_name == "Picc"
+        assert REGISTRY["cor_anglais"].display_name == "E_Horn"
+        assert REGISTRY["clarinete_baixo"].display_name == "Bass_Clar"
+        assert REGISTRY["contrafagote"].display_name == "Contr_Basson"
+        for name in ("Picc", "E_Horn", "Bass_Clar", "Contr_Basson"):
+            assert name in INSTRUMENTS
+            mod = get_instrument_module(name)
+            assert getattr(mod, "IS_COARSE_DEFAULT", False) is False
+            assert hasattr(mod, "spectral_data")
 
     def test_dedicated_modules_for_literature_profiles(self):
-        for iid in ("flauta", "clarinete", "oboe", "fagote", "violino", "viola", "violoncelo", "contrabaixo"):
+        for iid in (
+            "flauta",
+            "clarinete",
+            "oboe",
+            "fagote",
+            "flautim",
+            "cor_anglais",
+            "clarinete_baixo",
+            "contrafagote",
+            "violino",
+            "viola",
+            "violoncelo",
+            "contrabaixo",
+        ):
             profile = REGISTRY[iid]
             assert profile.module_name is not None
             mod = get_instrument_module(iid)
@@ -66,6 +96,10 @@ class TestInstrumentRegistry:
                 "clarinet",
                 "oboe",
                 "bassoon",
+                "piccolo",
+                "english_horn",
+                "bass_clarinet",
+                "contrabassoon",
                 "violin",
                 "viola",
                 "cello",

@@ -5,8 +5,8 @@ Documents the six progressive slices used to verify blend×mass unification:
   5 strings ff → +bass drum → +cymbals → +flute/oboe ffff → +tam-tam ffff
   → Qty expansion 4/5/5/3/10 on the strings (others Qty=1).
 
-Goldens are live pipeline totals at w=0.5, REF=193. Refrozen 2026-08-25 after
-committing dest-Zenodo IOWA+ORCH midpoint CDM ladders (measured pp/mf/ff
+Goldens are live pipeline totals at w=0.5, REF=193. Refrozen 2026-09-03 after
+committing dest-Zenodo Dynamics10 Results ladders (measured pp/mf/ff
 anchors, PCHIP interiors) for ordinary-sustain table-backed instruments.
 Player Count 32 / Player Doubling 22 unchanged.
 """
@@ -68,7 +68,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff", "ff", "ffff", "ffff"),
         "instruments": STRING_INSTS + ("Bass drum", "Cymbals", "Flute", "Oboe"),
         "qtys": (1, 1, 1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.14015473034620063,
+        "expected_total": 0.1405447032447646,
     },
     {
         "label": "+tam-tam ffff",
@@ -77,7 +77,7 @@ SLICES: list[dict] = [
         "instruments": STRING_INSTS
         + ("Bass drum", "Cymbals", "Flute", "Oboe", "Tam-tam"),
         "qtys": (1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.14692821688654636,
+        "expected_total": 0.1473125021895525,
     },
     {
         "label": "Qty expansion 4/5/5/3/10",
@@ -86,7 +86,7 @@ SLICES: list[dict] = [
         "instruments": STRING_INSTS
         + ("Bass drum", "Cymbals", "Flute", "Oboe", "Tam-tam"),
         "qtys": (4, 5, 5, 3, 10, 1, 1, 1, 1, 1),
-        "expected_total": 0.4067549748899126,
+        "expected_total": 0.4069651180509932,
     },
 ]
 

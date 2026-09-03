@@ -48,7 +48,7 @@ def test_full_ten_level_ladder_committed():
 def test_mf_lookup_returns_workbook_anchor():
     mod = importlib.import_module("instrumentos.violin_harmonics")
     assert mod.calcular_densidade("G5", "mf") == pytest.approx(15.728918, rel=0, abs=1e-5)
-    assert mod.calcular_densidade("B7", "mf") == pytest.approx(4.818004, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("B7", "mf") == pytest.approx(4.811925, rel=0, abs=1e-5)
 
 
 def test_pipeline_accepts_violin_harmonics():

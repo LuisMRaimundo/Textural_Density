@@ -11,10 +11,36 @@ from instrumentos.metadata_range_audit import build_metadata_range_resolution_au
 from instrumentos.registry import REGISTRY, list_profiles, resolve_profile
 
 GPR_MODULE_NAMES = frozenset(
-    {"flute", "oboe", "clarinet", "bassoon", "violin", "viola", "cello", "double_bass"}
+    {
+        "flute",
+        "oboe",
+        "clarinet",
+        "bassoon",
+        "piccolo",
+        "english_horn",
+        "bass_clarinet",
+        "contrabassoon",
+        "violin",
+        "viola",
+        "cello",
+        "double_bass",
+    }
 )
 GPR_REGISTRY_IDS = frozenset(
-    {"flauta", "oboe", "clarinete", "fagote", "violino", "viola", "violoncelo", "contrabaixo"}
+    {
+        "flauta",
+        "oboe",
+        "clarinete",
+        "fagote",
+        "flautim",
+        "cor_anglais",
+        "clarinete_baixo",
+        "contrafagote",
+        "violino",
+        "viola",
+        "violoncelo",
+        "contrabaixo",
+    }
 )
 
 

@@ -1,6 +1,6 @@
 # Instrument acoustic source provenance
 
-> **Corpus status (2026-08):** The instrument metadata layer is **incomplete and under gradual curation**. Some registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (winds, brass incl. horn, trombone and tuba, arco strings, violin/viola/cello/double-bass techniques/harmonics) and unpitched percussion commit full 10-level ladders. Ladders are **data-faithful** (2026-08-08/09/18/27, Dynamics_predicter v1.5): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — **not** forced monotone. Cello and double-bass sul tasto remain withdrawn (2026-08-18). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
+> **Corpus status (2026-09-03):** The instrument metadata layer is **incomplete and under gradual curation**. Some registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (winds including piccolo / English horn / bass clarinet / contrabassoon, brass incl. horn, trombone and tuba, arco strings, violin/viola/cello/double-bass techniques/harmonics) and unpitched percussion commit full 10-level ladders. Ladders are **data-faithful** (2026-08-08/09/18/27, Dynamics_predicter v1.5): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — **not** forced monotone. Cello and double-bass sul tasto remain withdrawn (2026-08-18). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
 
 This document records **external acoustic metadata** embedded in `instrumentos/*.py`
 modules. The analysis pipeline performs **score lookup** into these tables — not
@@ -60,6 +60,54 @@ live audio analysis.
 - **Dynamics (2026-08-08):** full 10-level data-faithful Dynamics_predicter v1.5 `Results` ladder committed (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
 
+## Piccolo (`flautim` → `piccolo.py`)
+
+- **Module:** `instrumentos/piccolo.py`
+- **GUI display name:** `Picc`
+- **Table (source_table_span):** `spectral_data` (40 chromatic rows, **B3–D7**, MIDI 59–98)
+- **Provenance:** Median/midpoint summary of piccolo sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **Source workbook:** `Piccolo_Zenodo_collections_ordinario_Dynamics10.xlsx` (sheet `Results`)
+- **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
+- **Dynamics (2026-09-03):** full 10-level data-faithful Dynamics_predicter v1.5.2.1 `Results` ladder.
+- **Uncertainty:** medium — sparse table, not full continuous spectrum
+
+## English horn (`cor_anglais` → `english_horn.py`)
+
+- **Module:** `instrumentos/english_horn.py`
+- **GUI display name:** `E_Horn`
+- **Table (source_table_span):** `spectral_data` (35 chromatic rows, **A#3–G#6**, MIDI 58–92)
+- **Provenance:** Median/midpoint summary of English-horn sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **Source workbook:** `English_horn_Zenodo_collections_ordinario_Dynamics10.xlsx` (sheet `Results`)
+- **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
+- **Dynamics (2026-09-03):** full 10-level data-faithful Dynamics_predicter v1.5.2.1 `Results` ladder.
+- **Uncertainty:** medium — sparse table, not full continuous spectrum
+
+## Bass clarinet (`clarinete_baixo` → `bass_clarinet.py`)
+
+- **Module:** `instrumentos/bass_clarinet.py`
+- **GUI display name:** `Bass_Clar`
+- **Table (source_table_span):** `spectral_data` (46 chromatic rows, **C#2–A#5**, MIDI 37–82)
+- **Provenance:** Median/midpoint summary of bass-clarinet sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **Source workbook:** `Bass_clarinet_in_Bb_Zenodo_collections_ordinario_Dynamics10.xlsx` (sheet `Results`)
+- **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
+- **Dynamics (2026-09-03):** full 10-level data-faithful Dynamics_predicter v1.5.2.1 `Results` ladder.
+- **Uncertainty:** medium — sparse table, not full continuous spectrum
+
+## Contrabassoon (`contrafagote` → `contrabassoon.py`)
+
+- **Module:** `instrumentos/contrabassoon.py`
+- **GUI display name:** `Contr_Basson`
+- **Table (source_table_span):** `spectral_data` (42 chromatic rows, **A#1–D#5**, MIDI 34–75)
+- **Provenance:** Median/midpoint summary of contrabassoon sustained-note Combined Density
+  Metrics across IOWA and ORCH sound collections (pp, mf, ff).
+- **Source workbook:** `Contrabassoon_Zenodo_collections_ordinario_Dynamics10.xlsx` (sheet `Results`)
+- **Source technique:** `ordinary_sustain` (`table_supported_techniques`)
+- **Dynamics (2026-09-03):** full 10-level data-faithful Dynamics_predicter v1.5.2.1 `Results` ladder.
+- **Uncertainty:** medium — sparse table, not full continuous spectrum
+
 ## Trumpet (`trompete` → `trumpet.py`)
 
 - **Module:** `instrumentos/trumpet.py`
@@ -74,7 +122,7 @@ live audio analysis.
 ## Horn (`trompa` → `horn.py`)
 
 - **Module:** `instrumentos/horn.py`
-- **Table (source_table_span):** `spectral_data` (47 chromatic rows, **G1–F5**, MIDI 31–77), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
+- **Table (source_table_span):** `spectral_data` (44 chromatic rows, **A#1–F5**, MIDI 34–77), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
 - **Provenance:** Median/midpoint summary of horn sustained-note Combined Density
   Metrics across IOWA and ORCH sound collections (pp, mf, ff).
 - **Source workbook:** `D:\METAIS\Horn_Zenodo_collections_media.xlsx` (sheet `Horn_Media`)

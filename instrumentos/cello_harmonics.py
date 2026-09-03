@@ -4,7 +4,7 @@ Cello (arco harmonics) instrument density module.
 
 The ``spectral_data`` table stores a committed 10-dynamic Combined Density
 Metric (CDM) ladder from the ``Results`` sheet of
-``Cello_Dynamics10_harmonics.xlsx``
+``Cello_Zenodo_collections_harmonics_Dynamics10.xlsx``
 (measured pp/mf/ff anchors; remaining levels committed from that workbook —
 no runtime dynamic extrapolation).
 
@@ -19,7 +19,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
     citation=(
         "Cello arco_harmonic CDM ladder: measured pp/mf/ff anchors with "
         "committed Results sheet values for all 10 dynamic levels from "
-        "Cello_Dynamics10_harmonics.xlsx "
+        "Cello_Zenodo_collections_harmonics_Dynamics10.xlsx "
         "(dest Zenodo Cello_harmonics Media (IOWA+Orchidea average); Dynamics_predicter Results ladder)."
     ),
     source_url_or_identifier='docs/instrument_acoustic_sources.md#cello-harmonics',
@@ -32,7 +32,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
     dynamic_levels=('pppp', 'ppp', 'pp', 'p', 'mp', 'mf', 'f', 'ff', 'fff', 'ffff'),
     pitch_range=(60, 84),
     uncertainty="high",
-    version="2026-08-27",
+    version="2026-09-03",
     source_technique="arco_harmonic",
     table_supported_techniques=("arco_harmonic",),
 )
@@ -48,7 +48,7 @@ logger = logging.getLogger("cello_harmonics")
 spectral_data = {
     'C4': {'pppp': 22.88461, 'ppp': 22.441255, 'pp': 21.899122, 'p': 20.725169, 'mp': 20.308708, 'mf': 20.2499, 'f': 21.016675, 'ff': 22.886292, 'fff': 24.222592, 'ffff': 25.347595},
     'C#4': {'pppp': 18.452082, 'ppp': 18.374946, 'pp': 18.27898, 'p': 18.05123, 'mp': 17.935679, 'mf': 17.903298, 'f': 17.988486, 'ff': 18.205448, 'fff': 18.278119, 'ffff': 18.336464},
-    'D4': {'pppp': 17.792076, 'ppp': 18.593493, 'pp': 19.646216, 'p': 21.599395, 'mp': 22.903454, 'mf': 23.367825, 'f': 23.010992, 'ff': 21.894156, 'fff': 21.20996, 'ffff': 20.678029},
+    'D4': {'pppp': 22.592387, 'ppp': 22.713901, 'pp': 22.866712, 'p': 23.218213, 'mp': 23.349071, 'mf': 23.367825, 'f': 22.894852, 'ff': 21.894156, 'fff': 21.230902, 'ffff': 20.714794},
     'D#4': {'pppp': 27.451503, 'ppp': 27.104379, 'pp': 26.676639, 'p': 26.373845, 'mp': 25.889106, 'mf': 25.304073, 'f': 24.536171, 'ff': 23.57236, 'fff': 22.788876, 'ffff': 22.18088},
     'E4': {'pppp': 21.675471, 'ppp': 21.870151, 'pp': 22.115962, 'p': 22.580799, 'mp': 22.874665, 'mf': 22.976599, 'f': 22.902158, 'ff': 22.659422, 'fff': 22.471585, 'ffff': 22.322437},
     'F4': {'pppp': 17.335689, 'ppp': 17.959397, 'pp': 18.770682, 'p': 20.342462, 'mp': 21.279639, 'mf': 21.580538, 'f': 21.098103, 'ff': 19.844348, 'fff': 19.055283, 'ffff': 18.446683},

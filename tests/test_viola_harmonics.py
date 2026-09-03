@@ -48,8 +48,8 @@ def test_full_ten_level_ladder_committed():
 
 def test_mf_lookup_returns_workbook_anchor():
     mod = importlib.import_module("instrumentos.viola_harmonics")
-    assert mod.calcular_densidade("C5", "mf") == pytest.approx(21.05477, rel=0, abs=1e-5)
-    assert mod.calcular_densidade("G5", "mf") == pytest.approx(17.194475, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("C5", "mf") == pytest.approx(20.648320, rel=0, abs=1e-5)
+    assert mod.calcular_densidade("G5", "mf") == pytest.approx(16.466028, rel=0, abs=1e-5)
 
 
 def test_pipeline_accepts_viola_harmonics():
@@ -60,7 +60,7 @@ def test_pipeline_accepts_viola_harmonics():
         num_instruments=(1,),
     )
     resultados, densities, _ = calculate_metrics(request)
-    assert densities[0] == pytest.approx(21.05477, rel=0, abs=1e-5)
+    assert densities[0] == pytest.approx(20.648320, rel=0, abs=1e-5)
     trace = resultados["instrument_lookup_trace"][0]
     assert trace["resolved_profile_id"] == "viola_harm"
     assert trace["module_name"] == "viola_harmonics"

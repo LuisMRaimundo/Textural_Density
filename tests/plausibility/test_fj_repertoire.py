@@ -51,11 +51,11 @@ class TestFJRepertoire:
             "result": _row(
                 _run(
                     ["F2", "B2", "D#4", "G#4"],
-                    ["violoncelo", "fagote", "oboe", "oboe"],
+                    ["violoncelo", "fagote", "oboe", "cor_anglais"],
                     "p",
                 )
             ),
-            "notes": "cor_anglais is coarse — substituted with oboe",
+            "notes": "cor_anglais now table-backed (E_Horn)",
             "status": {
                 "violoncelo": instrument_status("violoncelo"),
                 "fagote": instrument_status("fagote"),
