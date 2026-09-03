@@ -194,7 +194,7 @@ Qty does **not** affect pitch-structure metrics (interval pairs, spectral entrop
 |------|-----------|
 | Dynamic present in row | Exact cell value |
 | Dynamic absent | MissingCommittedDynamicError |
-| Pitched table-backed modules (winds, brass incl. horn/trombone/tuba, strings, techniques) | Full 10-level **data-faithful** Dynamics_predicter v1.5 ladders (2026-08-08/09/18): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — not forced monotone. Violin harmonics still carry D6 monotone ladders |
+| Pitched table-backed modules (winds incl. piccolo / English horn / bass clarinet / contrabassoon, brass incl. horn/trombone/tuba, strings, techniques) | Full 10-level **data-faithful** Dynamics_predicter v1.5.2.1 ladders (2026-08-08/09/18/30; dest-Zenodo refresh 2026-09-03): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — not forced monotone |
 | Unpitched percussion (`bass_drum`, `cymbals`, `tamtam`, `gong`) | Pitch-independent `DYNAMIC_CDM` (former `internal_default` log-linear ladder) |
 
 Pitch interpolation (MIDI-space linear/PCHIP between chromatic anchors) is unchanged and independent of the dynamic column.
@@ -665,4 +665,4 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 
 For architecture and output JSON keys, see [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md). For upgrading existing scripts, see [MIGRATION.md](MIGRATION.md). For package vs methodology versions, see [VERSIONING.md](VERSIONING.md). For function signatures, see [API.md](API.md).
 
-*Last updated: 2026-08-18 (symmetric octave-class harmonic ratio; §H blend-normalisation note; `.md` canonical over archival PDF).*
+*Last updated: 2026-09-03 (dest-Zenodo Dynamics10 refresh; Picc / E_Horn / Bass_Clar / Contr_Basson table-backed; `.md` canonical over archival PDF).*

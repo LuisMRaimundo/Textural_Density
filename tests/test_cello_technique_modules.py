@@ -26,9 +26,9 @@ DEST_TECHNIQUES = (
         ),
         "probe_note": "C2",
         "probe_mf": 62.349097,
-        "n_notes": 49,
+        "n_notes": 46,
         "first": "C2",
-        "last": "C6",
+        "last": "A5",
     },
     {
         "display": "vlc_sp",
@@ -44,9 +44,9 @@ DEST_TECHNIQUES = (
         ),
         "probe_note": "C2",
         "probe_mf": 64.153127,
-        "n_notes": 49,
+        "n_notes": 46,
         "first": "C2",
-        "last": "C6",
+        "last": "A5",
     },
     {
         "display": "vlc_harm",

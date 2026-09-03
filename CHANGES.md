@@ -2,6 +2,15 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-09-03 — Dynamics10 ladders for all dest-Zenodo instruments
+
+Rebuilt every table-backed pitched module (except violin sul tasto, which has no new book) from `Desktop\para dinâmicas\*_Dynamics10.xlsx` `Results` sheets (Dynamics_predicter v1.5.2.1, PCHIP, n_boot=200). Generator: `tools/commit_dynamics_from_para_dinamicas.py`. Measured pp/mf/ff anchors stay verbatim; interiors clamped into their measured segment. Formulae unchanged.
+
+- New GUI-backed modules: **Picc** (`piccolo.py`, B3–D7), **E_Horn** (`english_horn.py`, A#3–G#6), **Bass_Clar** (`bass_clarinet.py`, C#2–A#5), **Contr_Basson** (`contrabassoon.py`, A#1–D#5). Registry ids stay `flautim` / `cor_anglais` / `clarinete_baixo` / `contrafagote`.
+- Technique span refresh where dest Media is shorter or longer: violin sordina/ponticello G3–C7 (42); viola ponticello C3–E6 (41); cello sordina/ponticello C2–A5 (46); double-bass sordina/ponticello E1–G4 (40); double-bass harmonics E3–G6 (40). Violin arco G4 mf remains 32.461862.
+- Horn sounding range aligned to the committed table (A#1–F5, MIDI 34–77).
+- Manuals and READMEs aligned to the committed 2026-09-03 tables and GUI names (Picc / E_Horn / Bass_Clar / Contr_Basson) before merge.
+
 ## 2026-08-30 — Dynamics10 string ladders (violin, viola, cello, double bass)
 
 Rebuilt ordinary arco and technique modules from the dest-Zenodo Dynamics10 `Results` books (`Desktop\\Código extrapolação\\<INSTR>\\Dynamics10`). Generator: `tools/generate_violin_technique_modules_from_ok_workbooks.py` (now also writes `violin.py` / `cello.py` / `double_bass.py` / `viola.py`). `F4 (2)` Media labels collapse via `normalize_media_note_label`. Formulae unchanged.

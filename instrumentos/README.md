@@ -2,7 +2,7 @@
 
 
 
-> **Metadata status:** The instrument corpus is **incomplete**. Some names resolve to coarse fallbacks; table-backed modules are partial proxies. Full 10-dynamic ladders are committed for ordinary-sustain winds (flute, oboe, clarinet, bassoon), brass (trumpet, horn, trombone, tuba), arco strings, string technique/harmonic modules, and unpitched percussion. Ladders are **data-faithful** (Dynamics_predicter v1.5, 2026-08-08/09/18): measured pp/mf/ff anchors are committed verbatim, PCHIP interiors, tapered outers — they are *not* forced to be strictly monotone. External acoustic/proxy metadata are curated gradually — not live analysis.
+> **Metadata status:** The instrument corpus is **incomplete**. Some names resolve to coarse fallbacks; table-backed modules are partial proxies. Full 10-dynamic ladders are committed for ordinary-sustain winds (flute, piccolo, oboe, English horn, clarinet, bass clarinet, bassoon, contrabassoon), brass (trumpet, horn, trombone, tuba), arco strings, string technique/harmonic modules, and unpitched percussion. Ladders are **data-faithful** (Dynamics_predicter v1.5.2.1, 2026-08-08/09/18/30, dest-Zenodo refresh 2026-09-03): measured pp/mf/ff anchors are committed verbatim, PCHIP interiors, tapered outers — they are *not* forced to be strictly monotone. External acoustic/proxy metadata are curated gradually — not live analysis.
 
 
 
@@ -22,25 +22,25 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 |--------|-------|--------|
 
-| `flute.py`, `clarinet.py`, `oboe.py`, `bassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
+| `flute.py`, `piccolo.py`, `clarinet.py`, `bass_clarinet.py`, `oboe.py`, `english_horn.py`, `bassoon.py`, `contrabassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
 | `trumpet.py`, `horn.py`, `trombone.py`, `tuba.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH sustain anchors) |
-| `violin.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_Arco_normal.xlsx` Results (dest Zenodo Media pp/mf/ff; G3–B7) |
-| `viola.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Dynamics10_Arco_normal.xlsx` Results (dest Zenodo Media pp/mf/ff; C3–A#6) |
-| `cello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Dynamics10_Arco_normal.xlsx` Results (dest Zenodo Media pp/mf/ff; C2–C6) |
-| `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics10 `DoubleBass_Dynamics10_Arco_normal.xlsx` Results (dest Zenodo Media pp/mf/ff; E1–C5) |
-| `violin_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_con_sordino.xlsx` Results (G3–B7) |
-| `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_sul_tasto.xlsx` Results (G3–B7) |
-| `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_sul_ponticello.xlsx` Results (G3–B7) |
-| `violin_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_harmonics.xlsx` Results (G5–B7) |
-| `viola_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Dynamics10_con_sordino.xlsx` Results (C3–A#6) |
-| `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Dynamics10_sul_ponticello.xlsx` Results (C3–A6) |
-| `viola_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Dynamics10_harmonics.xlsx` Results (C5–A#6) |
-| `cello_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Dynamics10_con_sordino.xlsx` Results (C2–C6) |
-| `cello_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Dynamics10_sul_ponticello.xlsx` Results (C2–C6) |
-| `cello_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Dynamics10_harmonics.xlsx` Results (C4–C6) |
-| `double_bass_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `DoubleBass_Dynamics10_con_sordino.xlsx` Results (E1–C5) |
-| `double_bass_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `DoubleBass_Dynamics10_sul_ponticello.xlsx` Results (E1–C5) |
-| `double_bass_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `DoubleBass_Dynamics10_harmonics.xlsx` Results (E3–C5) |
+| `violin.py` | `spectral_data` (10 dynamics) | Dynamics10 `VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (dest Zenodo Media pp/mf/ff; G3–B7) |
+| `viola.py` | `spectral_data` (10 dynamics) | Dynamics10 `VIOLA_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (dest Zenodo Media pp/mf/ff; C3–A#6) |
+| `cello.py` | `spectral_data` (10 dynamics) | Dynamics10 `CELLO_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (dest Zenodo Media pp/mf/ff; C2–C6) |
+| `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics10 `DOUBLEBASS_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (dest Zenodo Media pp/mf/ff; E1–C5) |
+| `violin_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (G3–C7) |
+| `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_sul_tasto.xlsx` Results (G3–B7; no 2026-09-03 book) |
+| `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (G3–C7) |
+| `violin_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (G5–B7) |
+| `viola_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (C3–A#6) |
+| `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (C3–E6) |
+| `viola_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (C5–A#6) |
+| `cello_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (C2–A5) |
+| `cello_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (C2–A5) |
+| `cello_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (C4–C6) |
+| `double_bass_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Double_bass_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (E1–G4) |
+| `double_bass_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Double_bass_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (E1–G4) |
+| `double_bass_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Double_bass_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (E3–G6) |
 | `bass_drum.py`, `cymbals.py`, `tamtam.py`, `gong.py` | `DYNAMIC_CDM` (10 dynamics; pitch-independent) | NonTunPerc MC anchors + committed former `internal_default` ladder |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
@@ -52,7 +52,7 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 **Technique honesty:** registry `supported_techniques` lists organological capabilities. Modules declare `INSTRUMENT_SOURCE.source_technique` and `table_supported_techniques` for the committed numerical table only (e.g. `arco_sustain`, `arco_sordina`, `arco_sul_tasto`, `arco_sul_ponticello`, `arco_artificial_harmonic`, `ordinary_sustain`). Pizzicato, tremolo, natural harmonics, mute, and similar techniques are not acoustically modelled unless separate technique-specific tables exist.
 
-**Technique ladders (2026-08-30):** violin, viola, cello, and double-bass ordinary arco plus sordina / sul ponticello / harmonics (and violin sul tasto) commit full 10-level ladders from dest-Zenodo Dynamics10 `Results` books. Cello, viola, and double-bass sul tasto remain withdrawn (2026-08-18).
+**Technique ladders (2026-09-03):** violin, viola, cello, and double-bass ordinary arco plus sordina / sul ponticello / harmonics commit dest-Zenodo Dynamics10 `Results` ladders via `tools/commit_dynamics_from_para_dinamicas.py`. Violin sul tasto is unchanged (no new book). Cello, viola, and double-bass sul tasto remain withdrawn (2026-08-18).
 
 **Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
 
@@ -62,7 +62,7 @@ Audit: `python tools/audit_instrument_metadata_range_resolution.py` → `reports
 
 
 
-**GUI vs registry IDs:** The Tkinter GUI shows **English orchestral short names** (Fl, Ob, Cl, Bsn, Tpt, Hn, Trb, Tba, Vl, Vla, Vc, Db, …). Registry `instrument_id` keys remain stable internal identifiers (e.g. `flauta`, `violino`) with English aliases (`flute`, `violin`, …) and English **module filenames** (`flute.py`, `violin.py`, …). The former long display names (Flute, Violin, …) still resolve as aliases.
+**GUI vs registry IDs:** The Tkinter GUI shows **English orchestral short names** (Fl, Picc, Ob, E_Horn, Cl, Bass_Clar, Bsn, Contr_Basson, Tpt, Hn, Trb, Tba, Vl, Vla, Vc, Db, …). Registry `instrument_id` keys remain stable internal identifiers (e.g. `flauta`, `flautim`, `violino`) with English aliases (`flute`, `piccolo`, `violin`, …) and English **module filenames** (`flute.py`, `piccolo.py`, `violin.py`, …). The former long display names (Flute, Piccolo, Violin, …) still resolve as aliases.
 
 
 
@@ -207,6 +207,14 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 
 | **Bassoon** | `bassoon.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
+| **Picc** | `piccolo.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (B3–D7) |
+
+| **E_Horn** | `english_horn.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (A#3–G#6) |
+
+| **Bass_Clar** | `bass_clarinet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (C#2–A#5) |
+
+| **Contr_Basson** | `contrabassoon.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (A#1–D#5) |
+
 | **Trumpet (Tpt)** | `trumpet.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
 
 | **Horn (Hn)** | `horn.py` | `literature_derived` | IOWA+ORCH sustain CDM medians |
@@ -216,23 +224,23 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **Tuba (Tba)** | `tuba.py` | `literature_derived` | IOWA+ORCH sustain CDM medians (C1–A#4) |
 
 | **Violin** | `violin.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
-| **vl_con_sord** | `violin_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, G3–G7 (high uncertainty) |
-| **vl_sul_tast** | `violin_sul_tasto.py` | `literature_derived` | dest Zenodo sul tasto Results ladder, G3–G7 (high uncertainty) |
-| **vl_sul_pont** | `violin_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, G3–B7 (high uncertainty) |
-| **vl_harm** | `violin_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C5–B7 (high uncertainty) |
+| **vl_con_sord** | `violin_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, G3–C7 (high uncertainty) |
+| **vl_sul_tast** | `violin_sul_tasto.py` | `literature_derived` | dest Zenodo sul tasto Results ladder, G3–B7 (high uncertainty) |
+| **vl_sul_pont** | `violin_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, G3–C7 (high uncertainty) |
+| **vl_harm** | `violin_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, G5–B7 (high uncertainty) |
 | **vla** | `viola.py` | `literature_derived` | dest Zenodo arco ordinario Results ladder (IOWA+ORCH pp/mf/ff anchors) |
 | **vla sord** | `viola_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, C3–A#6 (high uncertainty) |
-| **vla sp** | `viola_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, C3–A#6 (high uncertainty) |
-| **vla harm** | `viola_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C5–B7 (high uncertainty) |
+| **vla sp** | `viola_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, C3–E6 (high uncertainty) |
+| **vla harm** | `viola_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C5–A#6 (high uncertainty) |
 
 | **Cello** | `cello.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 | **vlc_sord** | `cello_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, C2–A5 (high uncertainty) |
-| **vlc_sp** | `cello_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, C2–C6 (high uncertainty) |
-| **vlc_harm** | `cello_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C4–E7 (high uncertainty) |
+| **vlc_sp** | `cello_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, C2–A5 (high uncertainty) |
+| **vlc_harm** | `cello_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C4–C6 (high uncertainty) |
 | **Double bass** | `double_bass.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
-| **cb_sord** | `double_bass_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, F1–G4 (high uncertainty) |
+| **cb_sord** | `double_bass_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, E1–G4 (high uncertainty) |
 | **cb_sp** | `double_bass_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, E1–G4 (high uncertainty) |
-| **cb_harm** | `double_bass_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, E1–G4 (high uncertainty) |
+| **cb_harm** | `double_bass_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, E3–G6 (high uncertainty) |
 
 
 
@@ -242,9 +250,11 @@ Regenerate CDM modules from Zenodo workbooks:
 
 ```bash
 
+python tools/commit_dynamics_from_para_dinamicas.py             # 2026-09-03 dest-Zenodo Dynamics10 commit
+
 python tools/populate_td_importer_sheets_from_zenodo_media.py   # AcousticTable + provenance sheets
 
-python tools/generate_instrument_modules.py                     # instrumentos/*.py
+python tools/generate_instrument_modules.py                     # legacy 3-anchor emitter / reconstruction audit
 
 ```
 

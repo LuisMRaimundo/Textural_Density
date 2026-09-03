@@ -4,7 +4,7 @@ Violin (arco ordinario) instrument density module.
 
 The ``spectral_data`` table stores a committed 10-dynamic Combined Density
 Metric (CDM) ladder from the ``Results`` sheet of
-``Violin_Dynamics10_Arco_normal.xlsx``
+``VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx``
 (measured pp/mf/ff anchors; remaining levels committed from that workbook —
 no runtime dynamic extrapolation).
 
@@ -19,8 +19,8 @@ INSTRUMENT_SOURCE = InstrumentSource(
     citation=(
         "Violin arco_sustain CDM ladder: measured pp/mf/ff anchors with "
         "committed Results sheet values for all 10 dynamic levels from "
-        "Violin_Dynamics10_Arco_normal.xlsx "
-        "(Dynamics10 dest-Zenodo Violin_Media (IOWA+Orchidea average); Dynamics_predicter Results ladder)."
+        "VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx "
+        "(dest Zenodo Violin_Media (IOWA+Orchidea average); Dynamics_predicter Results ladder)."
     ),
     source_url_or_identifier='docs/instrument_acoustic_sources.md#violin',
     extraction_method=(
@@ -32,7 +32,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
     dynamic_levels=('pppp', 'ppp', 'pp', 'p', 'mp', 'mf', 'f', 'ff', 'fff', 'ffff'),
     pitch_range=(55, 107),
     uncertainty="medium",
-    version="2026-08-30",
+    version="2026-09-03",
     source_technique="arco_sustain",
     table_supported_techniques=("arco_sustain",),
 )
@@ -92,13 +92,13 @@ spectral_data = {
     'D7': {'pppp': 7.531342, 'ppp': 7.624381, 'pp': 7.742298, 'p': 7.933068, 'mp': 8.047569, 'mf': 8.08543, 'f': 8.041673, 'ff': 7.916259, 'fff': 7.854261, 'ffff': 7.805013},
     'D#7': {'pppp': 6.935441, 'ppp': 7.087996, 'pp': 7.283419, 'p': 7.624471, 'mp': 7.849938, 'mf': 7.930614, 'f': 7.885343, 'ff': 7.724403, 'fff': 7.64119, 'ffff': 7.575265},
     'E7': {'pppp': 6.760945, 'ppp': 6.784477, 'pp': 6.814008, 'p': 6.845655, 'mp': 6.857351, 'mf': 6.859024, 'f': 6.60773, 'ff': 6.110714, 'fff': 5.812714, 'ffff': 5.584811},
-    'F7': {'pppp': 2.703893, 'ppp': 2.85341, 'pp': 3.051986, 'p': 3.438352, 'mp': 3.685625, 'mf': 3.769573, 'f': 3.665291, 'ff': 3.383747, 'fff': 3.217393, 'ffff': 3.090218},
-    'F#7': {'pppp': 3.670775, 'ppp': 3.625845, 'pp': 3.570454, 'p': 3.540419, 'mp': 3.465791, 'mf': 3.369747, 'f': 3.221576, 'ff': 3.019499, 'fff': 2.875394, 'ffff': 2.765077},
-    'G7': {'pppp': 2.49476, 'ppp': 2.659657, 'pp': 2.881187, 'p': 3.378004, 'mp': 3.629442, 'mf': 3.690796, 'f': 3.40726, 'ff': 2.81368, 'fff': 2.470613, 'ffff': 2.226531},
-    'G#7': {'pppp': 2.259473, 'ppp': 2.35489, 'pp': 2.479848, 'p': 2.684842, 'mp': 2.848087, 'mf': 2.926471, 'f': 2.944224, 'ff': 2.951165, 'fff': 2.963699, 'ffff': 2.973763},
-    'A7': {'pppp': 3.099745, 'ppp': 2.917117, 'pp': 2.703889, 'p': 2.353595, 'mp': 2.173525, 'mf': 2.118963, 'f': 2.194841, 'ff': 2.421008, 'fff': 2.579293, 'ffff': 2.713341},
-    'A#7': {'pppp': 1.954552, 'ppp': 2.029471, 'pp': 2.127171, 'p': 2.334121, 'mp': 2.437368, 'mf': 2.463498, 'f': 2.357839, 'ff': 2.120485, 'fff': 1.977501, 'ffff': 1.870087},
-    'B7': {'pppp': 3.148537, 'ppp': 2.998563, 'pp': 2.821101, 'p': 2.564842, 'mp': 2.386993, 'mf': 2.299766, 'f': 2.268416, 'ff': 2.255637, 'fff': 2.236477, 'ffff': 2.221266},
+    'F7': {'pppp': 6.272799, 'ppp': 6.417317, 'pp': 6.602657, 'p': 6.947802, 'mp': 7.151139, 'mf': 7.216458, 'f': 7.118262, 'ff': 6.855774, 'fff': 6.705247, 'ffff': 6.587209},
+    'F#7': {'pppp': 6.548505, 'ppp': 6.57152, 'pp': 6.600403, 'p': 6.610076, 'mp': 6.613643, 'mf': 6.614153, 'f': 6.50721, 'ff': 6.289246, 'fff': 6.168871, 'ffff': 6.074232},
+    'G7': {'pppp': 5.29194, 'ppp': 5.504095, 'pp': 5.781287, 'p': 6.353139, 'mp': 6.657403, 'mf': 6.741951, 'f': 6.48521, 'ff': 5.889204, 'fff': 5.530562, 'ffff': 5.259439},
+    'G#7': {'pppp': 4.706078, 'ppp': 4.865113, 'pp': 5.071487, 'p': 5.403518, 'mp': 5.665174, 'mf': 5.793452, 'f': 5.827136, 'ff': 5.84048, 'fff': 5.86449, 'ffff': 5.883769},
+    'A7': {'pppp': 4.597618, 'ppp': 4.636113, 'pp': 4.684686, 'p': 4.701914, 'mp': 4.747117, 'mf': 4.810665, 'f': 4.934978, 'ff': 5.132061, 'fff': 5.278868, 'ffff': 5.399331},
+    'A#7': {'pppp': 3.982529, 'ppp': 4.129909, 'pp': 4.321827, 'p': 4.683005, 'mp': 4.911068, 'mf': 4.988615, 'f': 4.903131, 'ff': 4.661139, 'fff': 4.520276, 'ffff': 4.410656},
+    'B7': {'pppp': 4.910701, 'ppp': 4.887441, 'pp': 4.858522, 'p': 4.776023, 'mp': 4.713237, 'mf': 4.676359, 'f': 4.656883, 'ff': 4.648332, 'fff': 4.641813, 'ffff': 4.636605},
 }
 
 

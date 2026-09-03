@@ -29,7 +29,7 @@ The research line is the **systematic score-only symbolic method**: formal const
 | Benchmark | Synthetic fixture + **5 project-authored excerpts** (`benchmarks/corpus/`); not yet a large licensed corpus |
 | Test suite | **1542 passed / 2 skipped / 18 xfailed** (2026-07-12; GitHub Actions + CircleCI green on Python 3.10/3.11) |
 | Validation contracts | Interval-density, instrument scaffold, scientific/musicological plausibility, Excel importer tests |
-| Instrument metadata | **Incomplete** — coarse fallbacks common; table-backed pitched + unpitched-percussion ladders committed (soft→loud monotone); many registry names still coarse-default |
+| Instrument metadata | **Incomplete** — ordinary-sustain winds/brass + arco/technique strings + unpitched percussion now table-backed (2026-09-03); piano, harp, bass trombone, and pitched percussion remain coarse-default |
 | Excel importer | Auxiliary offline tool + empty template on main; runtime does not read `.xlsx` |
 | MusicXML transpose | **Implemented** — `<transpose>` → concert pitch; `excerpt_003`–`004` regression |
 | Rubric estimate | **~89/100** (systematic line; licensed corpus still main gap) |
