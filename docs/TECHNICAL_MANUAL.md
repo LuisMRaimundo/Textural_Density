@@ -8,7 +8,7 @@ This document is a comprehensive, pedagogical technical manual for **Textural De
 
 **Epistemic premise (strictly symbolic):** Score/information input only — no audio waveforms, no measured spectra, no auditory perception model, no FFT/STFT signal processing, no Spectral_Analyser-style live analysis, no EWSD/H/I/S constructs. Textural Density computes analytical density indices from notated/input symbolic events and symbolic metadata only. It does not generate non-notated virtual pitches (including combination or resultant tones) and does not implement acoustic, psychoacoustic, or perceptual modelling. Dynamics are symbolic score markings, not SPL. See [revised_path_to_90_score_only.md](revised_path_to_90_score_only.md).
 
-**Instrument metadata (incomplete):** The external acoustic/proxy corpus is under gradual curation. Many registry entries use coarse fallbacks; final cross-instrument calibration is not complete. Missing data are expected when provenance labels remain honest.
+**Instrument metadata (incomplete):** The external acoustic/proxy corpus is under gradual curation. Ordinary-sustain winds (including Picc, E_Horn, Bass_Clar, Contr_Basson), brass, arco strings, and string techniques now ship committed 10-dynamic ladders; remaining names (piano, harp, bass trombone, pitched percussion) still use coarse fallbacks. Final cross-instrument calibration is not complete. Missing data are expected when provenance labels remain honest.
 
 **Auxiliary Excel importer:** `tools/import_instrument_profiles_from_excel.py` validates human-curated workbooks offline and emits JSON packages. It is not part of the analytical core; runtime does not read raw `.xlsx`. Imported acoustic rows are always in **sounding/concert pitch** (`note_sounding`, `midi_sounding`); the importer never transposes metadata rows. See [instrument_profile_importer.md](instrument_profile_importer.md).
 
@@ -134,14 +134,15 @@ extrapolation.
 | Missing cell | **Error** (`MissingCommittedDynamicError`) — no runtime fill-in |
 
 **Migration (2026-08-03):** Runtime GPR + adaptive tails removed from production.
-**Data-faithful rebuild (2026-08-08/09):** all pitched table-backed modules —
-winds (flute, oboe, clarinet, bassoon), brass (trumpet, horn, trombone, tuba), arco strings,
-and the remaining violin/viola technique modules — commit 10-level ladders generated offline by
-**Dynamics_predicter v1.5** on the measured pp/mf/ff anchors: anchors verbatim,
-PCHIP interiors bounded by their measured segment, geometrically tapered outer
-levels. Ladders are **not** forced monotone; real measured anchors are
-occasionally non-monotone and are preserved. The earlier D6 isotonic clamp
-(2026-08-03) remains only in the violin harmonic modules, pending rebuild.
+**Data-faithful rebuild (2026-08-08/09; dest-Zenodo refresh 2026-09-03):** all
+pitched table-backed modules — winds (flute, piccolo, oboe, English horn,
+clarinet, bass clarinet, bassoon, contrabassoon), brass (trumpet, horn,
+trombone, tuba), arco strings, and violin/viola/cello/double-bass technique
+modules — commit 10-level ladders generated offline by **Dynamics_predicter
+v1.5.2.1** on the measured pp/mf/ff anchors: anchors verbatim, PCHIP interiors
+bounded by their measured segment, geometrically tapered outer levels. Ladders
+are **not** forced monotone; real measured anchors are occasionally
+non-monotone and are preserved. Violin sul tasto is unchanged (no new book).
 Unpitched percussion uses pitch-independent `DYNAMIC_CDM`. Legacy implementation:
 `tools/legacy_gpr_dynamic_interpolation.py`. Ladder hygiene contract:
 `tests/test_pitched_dynamic_monotone_ladders.py`.
@@ -843,4 +844,4 @@ Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). W
 
 ---
 
-*Last updated: 2026-08-18 (symmetric octave-class harmonic ratio; §3.4 cross-ref to Mathematical Manual §H; `.md` canonical over archival PDF).*
+*Last updated: 2026-09-03 (dest-Zenodo Dynamics10 refresh; Picc / E_Horn / Bass_Clar / Contr_Basson table-backed; `.md` canonical over archival PDF).*

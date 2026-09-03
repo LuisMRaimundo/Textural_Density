@@ -10,7 +10,7 @@ python scripts/export_instrument_metadata_audit.py
 
 ## Rules
 
-- Table-backed modules (`flute`, `oboe`, `clarinet`, `bassoon`, `trumpet`, `horn`, `trombone`, `tuba`, `violin`, `viola`, `cello`, `double_bass`, …) use **externally sourced acoustic metadata** (committed 10-dynamic CDM ladders; no runtime interpolation of dynamics). This is applied at score-analysis time — **not** runtime audio analysis.
+- Table-backed modules (`flute`, `piccolo`, `oboe`, `english_horn`, `clarinet`, `bass_clarinet`, `bassoon`, `contrabassoon`, `trumpet`, `horn`, `trombone`, `tuba`, `violin`, `viola`, `cello`, `double_bass`, and string technique/harmonic modules) use **externally sourced acoustic metadata** (committed 10-dynamic CDM ladders; no runtime interpolation of dynamics). This is applied at score-analysis time — **not** runtime audio analysis.
 - Registry `coarse_default` profiles lack external acoustic tables; audit label **`symbolic_default`**.
 - `literature_derived` / `literature_informed` profiles document external provenance in `source_notes`.
 - Written dynamics use **symbolic weighting only** — not SPL or loudness.
@@ -34,11 +34,13 @@ python scripts/export_instrument_metadata_audit.py
 - Review all `symbolic_default` profiles with `uncertainty=high` before claiming registry maturity.
 - Do not upgrade status to `empirical_profile` without committing supporting source notes in the repository.
 - **Double-bass span:** `source_table_span` E1–C5 (**PASS**); obsolete E1–A3 documentation; upper-register QC **REVIEW REQUIRED** (see [instrument_acoustic_sources.md](instrument_acoustic_sources.md))
-- **Tuba range:** coarse-default validation placeholder MIDI 28–58 — **REVIEW REQUIRED**
+- **Tuba range:** committed table C1–A#4 (MIDI 24–70) matches registry sounding range (**PASS**, 2026-08-09; refreshed 2026-09-03)
 - **Sounding/concert pitch:** legacy `notes[]`, GUI, and manual input use sounding pitch. MusicXML written `<pitch>` is converted via `<transpose>` to sounding pitch before validation and lookup.
 - **Technique metadata:** `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` on table-backed modules; registry lists broader organological capabilities without implying technique-specific numerical tables.
 - **Runtime dynamics:** committed 10-level ladder lookup only. Historical GPR (`create_dynamic_gpr`) lives in `tools/legacy_gpr_dynamic_interpolation.py` and is **not** called from `calculate_metrics`.
 
-**Resolved (PR #14):** viola portable provenance (`docs/instrument_acoustic_sources.md#viola`); viola table aligned to dest-Zenodo `VIOLA_Media` (`F4 (2)` label normalization). Dynamics10 (2026-08-30) span is C3–A#6 (47 rows).
+**Resolved (PR #14):** viola portable provenance (`docs/instrument_acoustic_sources.md#viola`); viola table aligned to dest-Zenodo `VIOLA_Media` (`F4 (2)` label normalization). Dynamics10 (2026-09-03) ordinary/sordina span is C3–A#6 (47 rows); ponticello is C3–E6 (41).
+
+**Resolved (2026-09-03):** Picc / E_Horn / Bass_Clar / Contr_Basson are table-backed GUI modules (`piccolo.py`, `english_horn.py`, `bass_clarinet.py`, `contrabassoon.py`). Remaining coarse-default names include piano, harp, bass trombone, and pitched percussion.
 
 See also [`instrumentos/registry.py`](../instrumentos/registry.py) and [`docs/constants_and_assumptions.md`](constants_and_assumptions.md).

@@ -9,6 +9,7 @@ Rebuilt every table-backed pitched module (except violin sul tasto, which has no
 - New GUI-backed modules: **Picc** (`piccolo.py`, B3–D7), **E_Horn** (`english_horn.py`, A#3–G#6), **Bass_Clar** (`bass_clarinet.py`, C#2–A#5), **Contr_Basson** (`contrabassoon.py`, A#1–D#5). Registry ids stay `flautim` / `cor_anglais` / `clarinete_baixo` / `contrafagote`.
 - Technique span refresh where dest Media is shorter or longer: violin sordina/ponticello G3–C7 (42); viola ponticello C3–E6 (41); cello sordina/ponticello C2–A5 (46); double-bass sordina/ponticello E1–G4 (40); double-bass harmonics E3–G6 (40). Violin arco G4 mf remains 32.461862.
 - Horn sounding range aligned to the committed table (A#1–F5, MIDI 34–77).
+- Manuals and READMEs aligned to the committed 2026-09-03 tables and GUI names (Picc / E_Horn / Bass_Clar / Contr_Basson) before merge.
 
 ## 2026-08-30 — Dynamics10 string ladders (violin, viola, cello, double bass)
 

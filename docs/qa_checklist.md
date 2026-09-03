@@ -64,8 +64,8 @@ CI skips reconstruction when `D:\CORDAS\` workbooks are unavailable on the runne
 
 1. **Double-bass table span adjudication:** resolved — `source_table_span` E1–C5 aligns with committed module, `INSTRUMENT_SOURCE.pitch_range`, and registry; E1–A3 was obsolete documentation. Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 2. **Technique metadata vs tables:** resolved — `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` distinguish numerical table coverage from registry organological capabilities.
-3. **Tuba range:** MIDI 28–58 is coarse-default validation placeholder — **REVIEW REQUIRED** for authoritative organological range.
-4. **Committed dynamics (2026-08-03; data-faithful 2026-08-08/09):** runtime GPR removed; all table-backed pitched modules + unpitched percussion commit full 10-level ladders (Dynamics_predicter v1.5 — measured anchors verbatim, not forced monotone); coarse-default registry names remain without acoustic tables.
+3. **Tuba range:** resolved — committed table `tuba.py` is C1–A#4 (MIDI 24–70) and matches `registry.sounding_range` (2026-08-09; refreshed 2026-09-03). Bass trombone remains coarse.
+4. **Committed dynamics (2026-08-03; data-faithful 2026-08-08/09; dest-Zenodo refresh 2026-09-03):** runtime GPR removed; all table-backed pitched modules (including Picc, E_Horn, Bass_Clar, Contr_Basson) + unpitched percussion commit full 10-level ladders (Dynamics_predicter v1.5.2.1 — measured anchors verbatim, not forced monotone); remaining coarse-default names include piano, harp, bass trombone, and pitched percussion.
 
 Resolved by PR #14: viola machine-local `D:\CORDAS\...` provenance path (now portable doc anchor).
 
@@ -150,7 +150,7 @@ Tests: `tests/test_quantity_scaling.py`, `tests/test_gui_architecture.py`.
 - [x] `benchmarks/corpus/excerpt_004.musicxml` (transpose persists measure 2) + frozen output
 - [x] `benchmarks/corpus/excerpt_005.musicxml` (multi-instrument dynamics) + frozen output
 - [x] Dynamic docs aligned with committed-ladder lookup; see `docs/TECHNICAL_MANUAL.md` §2.4.1
-- [x] Table-backed pitched + unpitched-percussion full 10-dynamic tables (data-faithful, 2026-08-08/09); `MissingCommittedDynamicError` only for truly missing cells
+- [x] Table-backed pitched + unpitched-percussion full 10-dynamic tables (data-faithful, 2026-08-08/09; dest-Zenodo refresh 2026-09-03 including Picc / E_Horn / Bass_Clar / Contr_Basson); `MissingCommittedDynamicError` only for truly missing cells
 - [ ] Global onset reconstruction from MusicXML `<duration>` accumulation (not implemented)
 
 ## Frozen outputs (when formulas change)
