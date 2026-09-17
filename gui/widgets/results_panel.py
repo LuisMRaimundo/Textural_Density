@@ -165,6 +165,7 @@ class ResultsPanel:
         timbre_id = self.tree.insert("", "end", text="Timbre", open=True)
         orchestration_id = self.tree.insert("", "end", text="Orchestration", open=True)
 
+        has_order_quantile = "input_order_weight_quantile_hz" in results["spectral_moments"]
         for k, v in results["spectral_moments"].items():
             if k == "centroid":
                 self.tree.insert(
@@ -180,20 +181,36 @@ class ResultsPanel:
                     text="Spread",
                     values=(f"±{v['deviation']:.2f} Hz",),
                 )
+            elif k == "spectral_rolloff" and has_order_quantile:
+                continue
             elif isinstance(v, (int, float)) and not np.isnan(v) and not np.isinf(v):
                 display = max(0.0, float(v))
+                if k in ("input_order_weight_quantile_hz", "spectral_rolloff"):
+                    label = "Input-order 85% cumulative note-weight frequency"
+                else:
+                    label = k.replace("spectral_", "").capitalize()
                 self.tree.insert(
                     moments_id,
                     "end",
-                    text=k.replace("spectral_", "").capitalize(),
-                    values=(f"{display:.4f}",),
+                    text=label,
+                    values=(f"{display:.4f} Hz" if k in (
+                        "input_order_weight_quantile_hz",
+                        "spectral_rolloff",
+                    ) else f"{display:.4f}",),
                 )
 
+        _ADDITIONAL_LABELS = {
+            "harmonic_ratio": "Octave-class weight share",
+            "complexity": "Complexity",
+        }
         for k, v in results["additional_metrics"].items():
             if k != "chroma_vector" and isinstance(v, (int, float)):
                 if not np.isnan(v) and not np.isinf(v):
                     self.tree.insert(
-                        additional_id, "end", text=k.capitalize(), values=(f"{v:.4f}",)
+                        additional_id,
+                        "end",
+                        text=_ADDITIONAL_LABELS.get(k, k.capitalize()),
+                        values=(f"{v:.4f}",),
                     )
 
         for k, v in results["texture"].items():

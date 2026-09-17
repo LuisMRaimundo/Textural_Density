@@ -327,7 +327,7 @@ $$
 
 **Flatness:** ratio of geometric to arithmetic mean of amplitudes (on $a_i > 10^{-10}$).
 
-**Roll-off (85%):** cumulative sum of $a_i$ in array order; MIDI at 85% cumulative energy mapped to Hz.
+**Input-order 85% weight quantile:** cumulative sum of $a_i$ in array order; MIDI at 85% cumulative weight mapped to Hz. Export key `input_order_weight_quantile_hz`; deprecated alias `spectral_rolloff` (same number). Not classical frequency-sorted spectral-energy roll-off.
 
 **Entropy:** $H = -\sum_i p_i \log_2 p_i$, $p_i = a_i/S$, with small $p_i$ filtered.
 

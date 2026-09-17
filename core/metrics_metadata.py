@@ -397,7 +397,11 @@ def build_metric_metadata(context: MetricAssemblyContext) -> dict[str, Any]:
         source_type="metadata_proxy",
         validation_status="heuristic",
         confidence="low",
-        interpretation="Harmonic-template match on symbolic pitch/weight arrays — not measured harmonicity.",
+        interpretation=(
+            "Octave-class weight share versus the lowest MIDI (circular distance "
+            "≤ 0.25 semitone). Compatibility key harmonic_ratio; not k·f0 harmonicity. "
+            "Damps density.pitch_structure only."
+        ),
     )
 
     metrics["additional_metrics.complexity"] = MetricResult(

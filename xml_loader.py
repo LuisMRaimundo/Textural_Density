@@ -12,7 +12,12 @@ from pathlib import Path
 from typing import Any
 
 from core.converters import make_instrument_event
-from microtonal import midi_to_note_name, note_to_midi
+from error_handler import InputError
+from microtonal import (
+    InvalidPitchNotation,
+    midi_to_note_name,
+    note_to_midi_strict,
+)
 from core.defaults import RESEARCH_ANALYSIS_DEFAULTS, apply_research_defaults
 from core.input_validation import strip_removed_gui_preference_keys
 from core.models import InstrumentEvent
@@ -102,51 +107,134 @@ _MUSICXML_DYNAMICS = {
 }
 
 
-def _musicxml_pitch_to_note(pitch_el, accidental_el=None):
-    """Converte elemento <pitch> (step, alter, octave) + opcional accidental em string C4, C#4, etc."""
-    if pitch_el is None:
-        return "C4"
-    step_el = pitch_el.find("step")
-    octave_el = pitch_el.find("octave")
-    alter_el = pitch_el.find("alter")
-    step = _text(step_el, "C").upper()
-    octave = _text(octave_el, "4")
-    alter = 0
-    if alter_el is not None and _text(alter_el):
+# MusicXML <step> pitch-class offsets (C=0). Alter is added in semitones.
+_MUSICXML_STEP_SEMITONE = {
+    "C": 0,
+    "D": 2,
+    "E": 4,
+    "F": 5,
+    "G": 7,
+    "A": 9,
+    "B": 11,
+}
+
+
+@dataclass(frozen=True)
+class MusicXmlWrittenPitch:
+    """Written MusicXML pitch as MIDI plus a spelling for event construction."""
+
+    step: str
+    octave: int
+    alter: float
+    accidental_cents: float
+    written_midi: float
+    written_spelling: str
+
+
+def musicxml_written_midi(step: str, octave: int, alter: float = 0.0) -> float:
+    """Independent MusicXML written MIDI: ``(octave + 1) * 12 + step_pc + alter``.
+
+    ``Cb5`` is 71 (B4), not 83. ``B#3`` is 60 (C4), not 48. Double accidentals
+    are ordinary integer ``alter`` values (±2).
+    """
+    letter = str(step).strip().upper()
+    if letter not in _MUSICXML_STEP_SEMITONE:
+        raise InputError(
+            f"Unsupported MusicXML <step> {step!r}; expected one of C D E F G A B.",
+            field="pitch.step",
+        )
+    return float((int(octave) + 1) * 12 + _MUSICXML_STEP_SEMITONE[letter] + float(alter))
+
+
+def _accidental_cents(accidental_el) -> float:
+    if accidental_el is None:
+        return 0.0
+    acc = _text(accidental_el).lower()
+    if not acc:
+        return 0.0
+    if "quarter-flat" in acc or acc == "flat-down":
+        return -25.0
+    if "quarter-sharp" in acc or acc == "sharp-up":
+        return 25.0
+    if "three-quarters-sharp" in acc:
+        return 75.0
+    if "three-quarters-flat" in acc:
+        return -75.0
+    return 0.0
+
+
+def _pipeline_safe_spelling(midi: float, preferred: str | None = None) -> str:
+    """Return a note string the strict parser accepts, preferring ``preferred``."""
+    include_cents = abs(float(midi) - round(float(midi))) > 1e-6
+    if preferred:
         try:
-            alter = int(float(_text(alter_el)))
-        except ValueError:
+            if abs(note_to_midi_strict(preferred) - float(midi)) <= 1e-6:
+                return preferred
+        except InvalidPitchNotation:
             pass
-    # Microtonal a partir de accidental (MusicXML)
-    cents = 0
-    if accidental_el is not None:
-        acc = _text(accidental_el).lower()
-        if "quarter-flat" in acc or acc == "flat-down":
-            cents = -25
-        elif "quarter-sharp" in acc or acc == "sharp-up":
-            cents = 25
-        elif "three-quarters-sharp" in acc:
-            cents = 75
-        elif "three-quarters-flat" in acc:
-            cents = -75
-    if cents != 0:
-        base = step
-        if alter == 1:
-            base = step + "#"
-        elif alter == -1:
-            base = step + "b"
-        note = f"{base}{octave}"
-        sign = "+" if cents > 0 else ""
-        return f"{note}{sign}{cents}c"
-    if alter == 1:
-        step = step + "#"
-    elif alter == -1:
-        step = step + "b"
-    elif alter == 2:
-        step = step + "##"
-    elif alter == -2:
-        step = step + "bb"
-    return f"{step}{octave}"
+    return midi_to_note_name(float(midi), include_cents=include_cents)
+
+
+def _musicxml_alter_token(alter: float) -> str | None:
+    if abs(alter - round(alter)) > 1e-9:
+        return None
+    return {0: "", 1: "#", -1: "b", 2: "##", -2: "bb"}.get(int(round(alter)))
+
+
+def parse_musicxml_written_pitch(pitch_el, accidental_el=None) -> MusicXmlWrittenPitch:
+    """Parse MusicXML ``<pitch>`` to MIDI. Never substitutes C4."""
+    if pitch_el is None:
+        raise InputError("MusicXML note is missing <pitch>.", field="pitch")
+    step_raw = _text(pitch_el.find("step"))
+    octave_raw = _text(pitch_el.find("octave"))
+    if not step_raw:
+        raise InputError("MusicXML <pitch> is missing <step>.", field="pitch.step")
+    if not octave_raw:
+        raise InputError("MusicXML <pitch> is missing <octave>.", field="pitch.octave")
+    try:
+        octave = int(octave_raw)
+    except ValueError as exc:
+        raise InputError(
+            f"Unsupported MusicXML <octave> {octave_raw!r}; expected an integer.",
+            field="pitch.octave",
+        ) from exc
+    alter = 0.0
+    alter_el = pitch_el.find("alter")
+    if alter_el is not None and _text(alter_el):
+        raw_alter = _text(alter_el)
+        try:
+            alter = float(raw_alter)
+        except ValueError as exc:
+            raise InputError(
+                f"Unsupported MusicXML <alter> {raw_alter!r}; expected a number of semitones.",
+                field="pitch.alter",
+            ) from exc
+        if not (alter == alter):  # NaN
+            raise InputError(
+                f"Unsupported MusicXML <alter> {raw_alter!r}.",
+                field="pitch.alter",
+            )
+    cents = _accidental_cents(accidental_el)
+    written_midi = musicxml_written_midi(step_raw, octave, alter) + cents / 100.0
+    token = _musicxml_alter_token(alter)
+    if token is not None and abs(cents) < 1e-9:
+        spelling = f"{step_raw.strip().upper()}{token}{octave}"
+    else:
+        spelling = midi_to_note_name(written_midi, include_cents=True)
+    return MusicXmlWrittenPitch(
+        step=step_raw.strip().upper(),
+        octave=octave,
+        alter=float(alter),
+        accidental_cents=float(cents),
+        written_midi=float(written_midi),
+        written_spelling=spelling,
+    )
+
+
+def _musicxml_pitch_to_note(pitch_el, accidental_el=None) -> str:
+    """Written spelling from MusicXML ``<pitch>``. Raises ``InputError`` if invalid."""
+    parsed = parse_musicxml_written_pitch(pitch_el, accidental_el)
+    return _pipeline_safe_spelling(parsed.written_midi, parsed.written_spelling)
 
 
 @dataclass
@@ -158,7 +246,7 @@ class _ExtractedMusicXmlNote:
     dynamic: str
     part_id: str
     part_name: str
-    transpose_semitones: int
+    transpose_semitones: float
     unpitched: bool = False
     source_measure: str | None = None
 
@@ -169,43 +257,80 @@ class _ExtractedMusicXmlNote:
 _APPLY_MUSICXML_TRANSPOSE = True
 
 
-def _transpose_semitones_from_attributes(attributes_el) -> int | None:
+def _transpose_semitones_from_attributes(attributes_el) -> float | None:
     """
     Concert-pitch offset from MusicXML ``<attributes><transpose>``.
 
     sounding_midi = written_midi + chromatic + 12 * octave_change
+
+    Chromatic is applied as written (semitones, possibly fractional).
+    ``octave-change`` must be an integer. Invalid numbers raise ``InputError``
+    rather than being rounded or ignored.
     """
     if attributes_el is None:
         return None
     transpose_el = attributes_el.find("transpose")
     if transpose_el is None:
         return None
-    chromatic = 0
+    chromatic = 0.0
     chrom_el = transpose_el.find("chromatic")
     if chrom_el is not None and _text(chrom_el):
+        raw = _text(chrom_el)
         try:
-            chromatic = int(float(_text(chrom_el)))
-        except ValueError:
-            pass
+            chromatic = float(raw)
+        except ValueError as exc:
+            raise InputError(
+                f"Unsupported MusicXML <chromatic> {raw!r}; expected a number of semitones.",
+                field="transpose.chromatic",
+            ) from exc
+        if not (chromatic == chromatic):
+            raise InputError(
+                f"Unsupported MusicXML <chromatic> {raw!r}.",
+                field="transpose.chromatic",
+            )
     octave_change = 0
     oct_el = transpose_el.find("octave-change")
     if oct_el is not None and _text(oct_el):
+        raw_oct = _text(oct_el)
         try:
-            octave_change = int(float(_text(oct_el)))
-        except ValueError:
-            pass
-    return chromatic + 12 * octave_change
+            octave_change_f = float(raw_oct)
+        except ValueError as exc:
+            raise InputError(
+                f"Unsupported MusicXML <octave-change> {raw_oct!r}; expected an integer.",
+                field="transpose.octave-change",
+            ) from exc
+        if abs(octave_change_f - round(octave_change_f)) > 1e-9:
+            raise InputError(
+                f"Unsupported MusicXML <octave-change> {raw_oct!r}; fractional octave-change is not supported.",
+                field="transpose.octave-change",
+            )
+        octave_change = int(round(octave_change_f))
+    return float(chromatic + 12 * octave_change)
 
 
-def _apply_semitone_transpose(note_str: str, semitones: int) -> str:
-    """Map a written note string to concert/sounding pitch."""
-    if semitones == 0:
+def _apply_semitone_transpose(note_str: str, semitones: float) -> str:
+    """Map a written note string to concert/sounding pitch using strict MIDI."""
+    if abs(float(semitones)) < 1e-12:
         return note_str
-    shifted = note_to_midi(note_str) + semitones
-    _, cents = extract_cents(normalize_note_string(note_str))
-    if abs(cents) > 0 or abs(shifted - round(shifted)) > 1e-6:
-        return midi_to_note_name(shifted, include_cents=True)
-    return midi_to_note_name(shifted)
+    try:
+        written_midi = note_to_midi_strict(note_str)
+    except InvalidPitchNotation as exc:
+        raise InputError(
+            f"Unsupported written pitch {note_str!r} during MusicXML transpose.",
+            field="pitch",
+        ) from exc
+    shifted = written_midi + float(semitones)
+    include_cents = abs(shifted - round(shifted)) > 1e-6
+    return midi_to_note_name(shifted, include_cents=include_cents)
+
+
+def apply_written_midi_transpose(written_midi: float, semitones: float, written_spelling: str) -> str:
+    """Apply ``<transpose>`` once in MIDI space; never substitutes C4."""
+    if abs(float(semitones)) < 1e-12:
+        return _pipeline_safe_spelling(written_midi, written_spelling)
+    shifted = float(written_midi) + float(semitones)
+    include_cents = abs(shifted - round(shifted)) > 1e-6
+    return midi_to_note_name(shifted, include_cents=include_cents)
 
 
 def _extract_musicxml_notes(
@@ -285,10 +410,13 @@ def _extract_musicxml_notes(
                 if pitch is None:
                     continue
                 acc_el = el.find("accidental")
-                written = _musicxml_pitch_to_note(pitch, acc_el)
-                transpose = int(part_state["transpose"])
+                parsed = parse_musicxml_written_pitch(pitch, acc_el)
+                written = _pipeline_safe_spelling(parsed.written_midi, parsed.written_spelling)
+                transpose = float(part_state["transpose"])
                 if _APPLY_MUSICXML_TRANSPOSE:
-                    sounding = _apply_semitone_transpose(written, transpose)
+                    sounding = apply_written_midi_transpose(
+                        parsed.written_midi, transpose, parsed.written_spelling
+                    )
                 else:
                     sounding = written
                 if instrument_is_unpitched(part_name):

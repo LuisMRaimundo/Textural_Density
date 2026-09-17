@@ -478,10 +478,10 @@ Calling `from core import calculate_metrics` (preferred) or `AnalysisController.
   `event_count`, `interval_compactness`, `registral`, `orchestral_mass`, `timbral_heterogeneity`, `harmonicity_proxy`, `temporal`, `composite`.
 
 - **`resultados["spectral_moments"]`:**  
-  `centroid` (frequency, note), `spread` (deviation), `spectral_skewness`, `spectral_kurtosis`, `spectral_flatness`, `spectral_rolloff`, `spectral_entropy`.
+  `centroid` (frequency, note), `spread` (deviation), `spectral_skewness`, `spectral_kurtosis`, `spectral_flatness`, `input_order_weight_quantile_hz` (input-order 85% cumulative note-weight frequency; **not** classical spectral-energy roll-off), deprecated alias `spectral_rolloff` (same number), `spectral_entropy`. Existing workbooks that store `spectral_rolloff` keep that historical column name.
 
 - **`resultados["additional_metrics"]`:**  
-  `complexity`, `harmonic_ratio`, `chroma_vector`.
+  `complexity`, `harmonic_ratio` (octave-class weight share versus the lowest MIDI; compatibility key), `chroma_vector`.
 
 - **`resultados["texture"]`:**  
   `player_count`, `pitch_polyphony`, `player_weighted_texture_mass`, `texture_variability`, `texture_contrast` (`texture_polyphony` = distinct pitch count, not mean Qty).
@@ -644,13 +644,14 @@ Each `VerticalSliceAnalysis` contains `metrics`, `subindices`, `composite_densit
 | **Source-table span** | `spectral_data` keys / `INSTRUMENT_SOURCE.pitch_range` | Density lookup; should ⊆ registry `sounding_range` for table-backed modules. Not necessarily equal to practical/comfortable range. |
 | **Comfortable range** | `registry.comfortable_range` | Orchestration metadata; narrower central band when documented |
 
-**MusicXML `<transpose>` (applied once):** Exporters include ``<attributes><transpose>`` for transposing parts. Textural Density converts written pitch to concert/sounding pitch:
+**MusicXML `<transpose>` (applied once):** Exporters include ``<attributes><transpose>`` for transposing parts. Written MIDI is taken from `<step>`, `<octave>`, and `<alter>` (not legacy `note_to_midi`, which mapped `Cb5` to 83). Invalid or unsupported values raise `InputError`; there is no silent C4 substitution. Concert pitch applies chromatic + octave-change **once** in MIDI space:
 
 $$
+m_{\mathrm{written}} = 12(o+1)+s+a,\qquad
 m_{\mathrm{sounding}} = m_{\mathrm{written}} + \mathrm{chromatic} + 12 \times \mathrm{octave\_change}
 $$
 
-Example: B♭ clarinet part with written C4 in `<pitch>` and `<chromatic>-2</chromatic>` — analysis uses **B♭3** (sounding), not C4.
+Example: B♭ clarinet part with written C4 in `<pitch>` and `<chromatic>-2</chromatic>` — analysis uses **B♭3** (sounding), not C4. Written `Cb5` is MIDI 71 before any transpose.
 
 | Function | Returns | Notes |
 |----------|---------|-------|
@@ -663,7 +664,7 @@ Example: B♭ clarinet part with written C4 in `<pitch>` and `<chromatic>-2</chr
 - Global onset times are **not** reconstructed from cumulative `<duration>` unless explicit `<onset>` is present in custom XML.
 - Parser is hand-rolled (`xml.etree`); it does not use music21. Transposition follows MusicXML `<transpose>` elements only.
 
-Tests: `tests/test_transposing_instrument_sounding_pitch_contract.py`, `tests/test_xml_loader.py::TestMusicXmlTranspose`; register audit battery: `tests/test_instrument_register_contracts.py`, `tests/test_instrument_transposition_contracts.py`, `tests/test_instrument_alias_registers.py`, `tests/test_musicxml_transposing_instruments.py`. Generate audit artefact: `python tools/audit_transposing_instrument_pitch_contract.py` → `reports/transposing_instrument_pitch_contract_audit.{json,md}`. Benchmarks: `benchmarks/corpus/excerpt_003.musicxml`–`excerpt_004.musicxml` (transpose); see [`benchmarks/README.md`](../benchmarks/README.md).
+Tests: `tests/test_musicxml_pitch_transpose.py`, `tests/test_transposing_instrument_sounding_pitch_contract.py`, `tests/test_xml_loader.py::TestMusicXmlTranspose`; register audit battery: `tests/test_instrument_register_contracts.py`, `tests/test_instrument_transposition_contracts.py`, `tests/test_instrument_alias_registers.py`, `tests/test_musicxml_transposing_instruments.py`. Generate audit artefact: `python tools/audit_transposing_instrument_pitch_contract.py` → `reports/transposing_instrument_pitch_contract_audit.{json,md}`. Benchmarks: `benchmarks/corpus/excerpt_003.musicxml`–`excerpt_004.musicxml` (transpose); see [`benchmarks/README.md`](../benchmarks/README.md).
 
 ### 7.5 Unpitched percussion entry paths
 
@@ -779,7 +780,7 @@ See README files in each subdirectory for JSON schemas.
 
 ### 8.4 Statistical metrics (for future validation)
 
-`validation.metrics` provides `spearman_correlation`, `kendall_tau`, `root_mean_square_error`, `mean_absolute_error`, `bootstrap_ci`, and a Krippendorff α placeholder.
+`validation.metrics` provides `spearman_correlation`, `kendall_tau`, `root_mean_square_error`, `mean_absolute_error`, `bootstrap_ci`, and `mean_pairwise_pearson` (optional IRR hint; **not** Krippendorff’s α). `krippendorff_alpha_placeholder` remains as a deprecated alias of that Pearson mean.
 
 ---
 

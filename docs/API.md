@@ -364,7 +364,7 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 
 - `calculate_spectral_moments` / `calculate_extended_spectral_moments`
 - `calculate_chroma_vector`
-- `calculate_harmonic_ratio`
+- `calculate_harmonic_ratio` (octave-class weight share; export key unchanged)
 
 ---
 
@@ -374,9 +374,9 @@ from xml_loader import parse_xml, parse_xml_to_events, note_string_to_gui_parts
 |----------|---------|-------------|
 | `MAX_DENS_GLOBAL` | `193.0` | Composite REF; header via `core.composite.format_composite_header_line` |
 | `USE_LOG_COMPRESSION` | `True` | Apply `log10(1+x)` to composite |
-| `COMPOSITE_HARMONIC_DAMPING` | `0.15` | Harmonic-ratio damping in composite |
-| `DYN_TAIL_SHRINK` | `0.5` | Geometric shrink γ for register-adaptive saturating dynamic tails (5.1.0) |
-| `DENSITY_FLOOR` | `1e-9` | Unreachable safety assert on saturated tail amplitudes |
+| `COMPOSITE_HARMONIC_DAMPING` | `0.15` | Octave-class weight-share damping inside `density.pitch_structure` only (not `density.total`) |
+| `DYN_TAIL_SHRINK` | `0.5` | **Offline/legacy only.** Read by `tools/legacy_gpr_dynamic_interpolation.py`. Unused by `calculate_metrics`. |
+| `DENSITY_FLOOR` | `1e-9` | Offline tail safety floor. Production missing dynamics raise `MissingCommittedDynamicError`. |
 | `DEFAULT_REGISTER_BANDS` | dict | Register bands for subindices |
 | `DYNAMIC_LEVELS` | tuple | Supported dynamics |
 | `DEFAULT_LAMBDA` | `0.05` | Interval decay default |

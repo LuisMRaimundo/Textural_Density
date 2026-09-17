@@ -14,6 +14,7 @@ from validation.metrics import (
     kendall_tau,
     krippendorff_alpha_placeholder,
     mean_absolute_error,
+    mean_pairwise_pearson,
     root_mean_square_error,
     spearman_correlation,
 )
@@ -54,6 +55,21 @@ class TestValidationMetrics:
         alpha = krippendorff_alpha_placeholder(matrix)
         assert alpha is not None
         assert -1.0 <= alpha <= 1.0
+
+    def test_mean_pairwise_pearson_matches_corrcoef_and_alias(self):
+        matrix = np.array([[1.0, 2.0, 3.0], [1.1, 2.1, 2.9]])
+        expected = float(np.corrcoef(matrix[0], matrix[1])[0, 1])
+        reported = mean_pairwise_pearson(matrix)
+        assert reported == pytest.approx(expected)
+        assert krippendorff_alpha_placeholder(matrix) == pytest.approx(reported)
+
+    def test_undefined_pairs_are_none(self):
+        missing = np.array([[1.0, 2.0, np.nan], [1.1, 2.1, 2.9]])
+        constant = np.array([[1.0, 1.0, 1.0], [2.0, 3.0, 4.0]])
+        assert mean_pairwise_pearson(missing) is None
+        assert mean_pairwise_pearson(constant) is None
+        tiny = np.array([[1.0]])
+        assert mean_pairwise_pearson(tiny) is None
 
 
 class TestExpertAnnotationSchema:

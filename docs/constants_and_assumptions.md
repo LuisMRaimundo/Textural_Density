@@ -83,7 +83,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 |------|-------|--------|------|
 | `MAX_DENS_GLOBAL` (REF) | **193.0** | `config.py` | Fixed composite reference in $\log_{10}(1+D_{\mathrm{blend}}\sqrt{M}/\mathrm{REF})$. Task 8c re-freeze: chosen so frozen all-pitched baselines keep pre-unification order of magnitude (match ≈192.6→193). Traceability: `CHANGES.md` “Task 8c”. **Not** Qty or table size. |
 | `USE_LOG_COMPRESSION` | True | `config.py` | log10(1+x) on composite |
-| `COMPOSITE_HARMONIC_DAMPING` | 0.15 | `config.py` | Harmonic ratio adjustment in $D_{\mathrm{pitch}}$ (reported axis; not the composite product) |
+| `COMPOSITE_HARMONIC_DAMPING` | 0.15 | `config.py` | Octave-class weight-share damping inside `density.pitch_structure` only (not `density.total`) |
 | `DEFAULT_WEIGHT_FACTOR` ($w$) | 0.5 | `config.py` / `core.defaults` | Instrument vs interval blend inside $D_{\mathrm{blend}}$ |
 
 **Unified composite (Task 8c):** one formula for pitched, unpitched, and mixed slices — $D_{\mathrm{blend}}=\texttt{density.weighted}=w\cdot(D_{\mathrm{inst}}/10)+(1-w)\cdot D_{\mathrm{int}}$ (defaults), then mass boost / REF. Display strings from `core.composite` only. No unpitched-only fallback. Traceability: `CHANGES.md`.

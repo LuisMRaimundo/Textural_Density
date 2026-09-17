@@ -286,6 +286,18 @@ See [TECHNICAL_MANUAL.md §7.4](TECHNICAL_MANUAL.md#74-musicxml-loading-and-tran
 
 ---
 
+## 13. MusicXML wrap-around pitches and metric labels (2026-09-17)
+
+**MusicXML written MIDI** now uses step/octave/alter (`Cb5` = 71). Legacy `note_to_midi` is no longer on the transpose path, so wrap-around spellings with a non-zero `<transpose>` no longer shift by an extra octave. Invalid input raises `InputError` instead of becoming C4. Ordinary clarinet/horn/octave-change cases are unchanged.
+
+**Labels only (numbers unchanged):** the exported 85% weight statistic is an input-order cumulative quantile (`input_order_weight_quantile_hz`; alias `spectral_rolloff`). `harmonic_ratio` is an octave-class weight share. Optional IRR prints mean pairwise Pearson, not Krippendorff’s α. Runtime density lookup remains committed tables (`MissingCommittedDynamicError`); `DYN_TAIL_SHRINK` is offline/legacy.
+
+Existing research workbooks were **not** regenerated. Historical `spectral_rolloff` column names stay as they were.
+
+See [CHANGES.md](../CHANGES.md) (2026-09-17) and [Textural_Density_math_formula.md](Textural_Density_math_formula.md).
+
+---
+
 ## 11. Getting help
 
 - **Formulas:** [MATHEMATICAL_MANUAL.md](MATHEMATICAL_MANUAL.md)
@@ -295,4 +307,4 @@ See [TECHNICAL_MANUAL.md §7.4](TECHNICAL_MANUAL.md#74-musicxml-loading-and-tran
 
 ---
 
-*Last updated: 2026-06-01 (1.1.1 — MusicXML transpose, documentation alignment).*
+*Last updated: 2026-09-17 (MusicXML wrap-around pitches; metric-label clarifications).*

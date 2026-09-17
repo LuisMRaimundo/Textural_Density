@@ -2,6 +2,18 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-09-17 — Metric semantics labels and MusicXML transpose
+
+Branch work on `fix/metric-semantics-and-musicxml-transpose`. These changes do **not** establish scientific validity of the application. Existing research outputs were **not** modified, relabelled, or regenerated.
+
+- **MusicXML pitch conversion is corrected** for wrap-around spellings and unsupported accidentals. Written MIDI is `(octave+1)·12 + step_pc + alter` (so `Cb5` = 71, not 83). Concert pitch applies `<chromatic>` + `12·<octave-change>` **once** in MIDI space via the strict converter. Invalid or unsupported input raises `InputError`; there is no silent C4 substitution. Ordinary notes (C4, B♭ clarinet −2, horn −7, octave-change) keep their previous concert MIDI.
+- **The order-dependent 85% weight quantile is relabelled, not numerically replaced.** Canonical key: `input_order_weight_quantile_hz` (“Input-order 85% cumulative note-weight frequency”). `spectral_rolloff` remains as a deprecated compatibility alias with the same value. Existing workbooks retain their historical `spectral_rolloff` column name. A frequency-sorted acoustic roll-off is **not** added.
+- **`harmonic_ratio` descriptions** now state octave-class weight share (circular distance ≤ 0.25 semitone from the lowest MIDI). The calculation, B1 tests, and export key are unchanged. `COMPOSITE_HARMONIC_DAMPING` applies only inside `density.pitch_structure`.
+- **Optional agreement statistic** is `mean_pairwise_pearson`. Printed/docs labels no longer present it as Krippendorff’s α. `krippendorff_alpha_placeholder` is a documented alias. No new α estimator and no fabricated annotations.
+- **Runtime lookup vs GPR:** `config.py`, `docs/API.md`, and remaining registry “GPR interpolation” strings now state that `calculate_metrics` uses committed tables and `MissingCommittedDynamicError`. `DYN_TAIL_SHRINK` is marked offline/legacy (`tools/legacy_gpr_dynamic_interpolation.py`). Table cell values are unchanged.
+
+`METRIC_SCHEMA_VERSION` remains `5.1.0-strict-symbolic`.
+
 ## 2026-09-03 — Package 1.1.7: non-numeric packaging and lookup repairs
 
 Package patch. **No computed value changed.** `METRIC_SCHEMA_VERSION` remains `5.1.0-strict-symbolic`. Frozen numeric artefacts were not regenerated.

@@ -111,7 +111,10 @@ def calculate_extended_spectral_moments(
     Esta função estende calculate_spectral_moments() com métricas adicionais:
     - Kurtosis: Mede a "cauda" da distribuição espectral
     - Flatness: Razão entre média geométrica e aritmética (mede uniformidade)
-    - Roll-off: Frequência abaixo da qual 85% da energia está concentrada
+    - Input-order 85% weight quantile (exported as input_order_weight_quantile_hz;
+      spectral_rolloff is a deprecated compatibility alias): frequency of the
+      bin at which the running sum of weights first reaches 85% **in input
+      order**. This is not classical frequency-sorted spectral-energy roll-off.
     - Entropia: Mede a "desordem" ou uniformidade do espectro
     
     Args:
@@ -126,7 +129,8 @@ def calculate_extended_spectral_moments(
             - Assimetria: Skewness espectral
             - spectral_kurtosis: Curtose espectral
             - spectral_flatness: Planura espectral (0-1)
-            - spectral_rolloff: Frequência de roll-off (Hz)
+            - input_order_weight_quantile_hz: Hz at the 85% input-order weight quantile
+            - spectral_rolloff: deprecated alias of input_order_weight_quantile_hz
             - spectral_entropy: Entropia espectral (bits)
     
     Example:
@@ -150,7 +154,8 @@ def calculate_extended_spectral_moments(
         base.update({
             "spectral_kurtosis": 0.0,
             "spectral_flatness": 0.0,
-            "spectral_rolloff": 0.0,
+            "input_order_weight_quantile_hz": 0.0,
+            "spectral_rolloff": 0.0,  # deprecated alias of input_order_weight_quantile_hz
             "spectral_entropy": 0.0,
         })
         return base
@@ -176,15 +181,16 @@ def calculate_extended_spectral_moments(
     else:
         flatness = 0.0
 
-    # Calcular roll-off (85%)
+    # Input-order 85% cumulative note-weight frequency (not frequency-sorted).
+    # Historical export key spectral_rolloff is retained as a compatibility alias.
     if len(pitches) > 0:
         cumsum = np.cumsum(amps)
         threshold = 0.85 * cumsum[-1]
         idx = np.searchsorted(cumsum, threshold)
-        rolloff_midi = pitches[min(idx, len(pitches)-1)]
-        rolloff_freq = midi_to_hz(rolloff_midi)
+        quantile_midi = pitches[min(idx, len(pitches)-1)]
+        quantile_freq = midi_to_hz(quantile_midi)
     else:
-        rolloff_freq = 0.0
+        quantile_freq = 0.0
 
     # Calcular entropia espectral
     # Normalizar amplitudes para formar uma distribuição de probabilidade
@@ -206,7 +212,8 @@ def calculate_extended_spectral_moments(
     base.update({
         "spectral_kurtosis": kurtosis,
         "spectral_flatness": flatness,
-        "spectral_rolloff": rolloff_freq,
+        "input_order_weight_quantile_hz": quantile_freq,
+        "spectral_rolloff": quantile_freq,  # deprecated alias; same numeric value
         "spectral_entropy": entropy,
     })
     return base
@@ -274,14 +281,16 @@ def calculate_harmonic_ratio(
     fundamental: float | None = None
 ) -> float:
     """
-    Calcula a razão harmônica: proporção de energia em harmônicos vs. fundamental.
-    
-    The implementation operates in MIDI space, not Hz. A bin is treated as
-    harmonic when its interval from the fundamental is an octave class
-    (circular distance to a multiple of 12 semitones) within 0.25 semitones.
-    This is not an integer frequency-multiple test.
-    Valores próximos de 1.0 indicam espectro altamente harmônico, enquanto
-    valores próximos de 0.0 indicam espectro inarmônico.
+    Octave-class weight share relative to the lowest MIDI reference.
+
+    A bin is counted when its circular pitch-class distance from the reference
+    is at most 0.25 semitone: ``oct_dist = min(r, 12-r)`` with
+    ``r = (m_i - fundamental) % 12``. The returned value is the share of
+    supplied weights on those bins. This is **not** alignment with integer
+    frequency multiples of an acoustic f0 (a C–G fifth scores 0.5).
+    Production uses this value to damp ``density.pitch_structure`` only
+    (``COMPOSITE_HARMONIC_DAMPING``); it does not enter ``density.total``.
+    The export key remains ``additional_metrics.harmonic_ratio`` for compatibility.
     
     Args:
         pitches: Array de valores MIDI das notas (aceita floats para microtons).
@@ -294,10 +303,10 @@ def calculate_harmonic_ratio(
             fundamental) % 12``; harmonic when ``oct_dist <= 0.25``.
     
     Returns:
-        Razão harmônica (0.0 a 1.0):
-            - 1.0: Espectro completamente harmônico
-            - 0.0: Espectro completamente inarmônico
-            - Valores intermediários: Mistura de harmônicos e não-harmônicos
+        Octave-class weight share in ``[0.0, 1.0]``:
+            - 1.0: all supplied weight is within 0.25 semitone of the reference class
+            - 0.0: none of the weight is on that class
+            - Intermediate values: mixed octave-class membership (not k·f0 harmonicity)
     
     Example:
         >>> pitches = [60.0, 72.0, 84.0]  # C4, C5, C6 (harmônicos)
