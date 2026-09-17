@@ -94,19 +94,20 @@ def bootstrap_ci(
     return float(np.mean(arr)), lower, upper
 
 
-def krippendorff_alpha_placeholder(
+def mean_pairwise_pearson(
     ratings_matrix: np.ndarray,
 ) -> Optional[float]:
     """
-    Placeholder for inter-rater reliability.
+    Mean pairwise Pearson product-moment correlation across rater rows.
 
-    Returns None with insufficient data; full implementation deferred until
-    multi-rater annotation corpora exist in the repository.
+    This is **not** Krippendorff's alpha. A pair is included only when both
+    rows have strictly positive sample standard deviation. Any NaN in a row
+    makes ``std`` NaN, so that pair is skipped. Returns None when the matrix
+    is too small or no pair has two finite, non-constant rows.
     """
     matrix = np.asarray(ratings_matrix, dtype=float)
     if matrix.ndim != 2 or matrix.shape[0] < 2 or matrix.shape[1] < 2:
         return None
-    # Minimal fallback: mean pairwise Pearson as rough agreement hint only.
     rows = [matrix[i, :] for i in range(matrix.shape[0])]
     correlations = []
     for i in range(len(rows)):
@@ -117,3 +118,10 @@ def krippendorff_alpha_placeholder(
     if not correlations:
         return None
     return float(np.mean(correlations))
+
+
+def krippendorff_alpha_placeholder(
+    ratings_matrix: np.ndarray,
+) -> Optional[float]:
+    """Deprecated alias of ``mean_pairwise_pearson``. Not Krippendorff's alpha."""
+    return mean_pairwise_pearson(ratings_matrix)

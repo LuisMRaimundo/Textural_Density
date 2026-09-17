@@ -36,36 +36,25 @@ USE_LOG_COMPRESSION = True
 INTERVAL_BLEND_NORMALISATION = "legacy"  # "legacy" | "unit_range"
 
 # -------------------------------------------------------------------
-# Dynamic-tail saturation (5.1.0-strict-symbolic) — register-adaptive
+# Offline / legacy dynamic-tail constant (NOT used by calculate_metrics)
 # -------------------------------------------------------------------
-# The instrument GPR dynamic->amplitude model is fitted on the measured source
-# anchors (pp, mf, ff). Levels outside that measured support (soft tail:
-# ppp/pppp below pp; loud tail: fff/ffff above ff) are NOT continued as raw GPR
-# trend — that overshoots downward at the soft end (producing negative pppp
-# weights, e.g. clarinet C4) and bends over at the loud end (producing a
-# non-monotone ffff mass dip, e.g. flute C4/E4/G4 triad).
+# Production instrument density looks up committed spectral_data cells.
+# A missing dynamic raises MissingCommittedDynamicError
+# (instrumentos.pitch_interpolation). There is no runtime GPR or tail fill-in.
 #
-# Tails use a saturating log-domain extension whose *local step* derives from
-# the measured pp/mf/ff spread at the event's pitch m:
-#     s_soft(m) = max(0, ln(A_mf/A_pp) / N_soft)   # N_soft = steps pp→mf (=3)
-#     s_loud(m) = max(0, ln(A_ff/A_mf) / N_loud)   # N_loud = steps mf→ff (=2)
-# For j steps outside support:
-#     soft:  ln A = ln A_pp − s_soft · Σ_{i=1..j} γ^i
-#     loud:  ln A = ln A_ff + s_loud · Σ_{i=1..j} γ^i
-# with geometric shrink γ = DYN_TAIL_SHRINK. The cumulative sum is bounded by
-# γ/(1−γ) = 1 when γ=0.5, so the entire unmeasured tail never exceeds one
-# measured-step's worth of change. Because s(m) comes from local anchors, the
-# tail automatically compresses where measured differentiation collapses
-# (e.g. top-of-flute, bottom-of-bass) — no instrument-independent register
-# model is imposed. Inverted anchors (A_pp > A_mf or A_ff < A_mf) clamp the
-# corresponding step to 0 (flat tail) and emit a metadata warning.
-DYN_TAIL_SHRINK = 0.5  # γ: each unmeasured step is half the previous; bound = s
+# DYN_TAIL_SHRINK remains because tools/legacy_gpr_dynamic_interpolation.py
+# still reads it for historical / offline audits. Changing this value does
+# not affect calculate_metrics. The register-adaptive tail equations below
+# describe that retired offline model only:
+#     s_soft(m) = max(0, ln(A_mf/A_pp) / N_soft)
+#     s_loud(m) = max(0, ln(A_ff/A_mf) / N_loud)
+#     soft: ln A = ln A_pp − s_soft · Σ_i γ^i
+#     loud: ln A = ln A_ff + s_loud · Σ_i γ^i
+# with γ = DYN_TAIL_SHRINK. Do not treat these as live runtime formulas.
+DYN_TAIL_SHRINK = 0.5  # offline/legacy γ only; unused by calculate_metrics
 
-# Safety floor for instrument density. This is an UNREACHABLE assert only: the
-# saturating-tail construction above is already strictly positive whenever the
-# boundary anchor is positive. It exists so a future regression that
-# reintroduces negative extrapolation fails loudly rather than silently.
-# It is not the positivity mechanism.
+# Safety floor retained for the offline tail helper. Production table lookup
+# does not apply this floor; missing cells error instead.
 DENSITY_FLOOR = 1e-9
 
 # Register bands for registral-density subindex (MIDI inclusive lower, exclusive upper).

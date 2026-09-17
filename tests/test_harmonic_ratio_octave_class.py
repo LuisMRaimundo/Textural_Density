@@ -32,6 +32,14 @@ def test_octave_class_distance_symmetric(interval: float, harmonic: bool):
     assert ratio == pytest.approx(1.0 if harmonic else 0.5)
 
 
+def test_c4_g4_and_c4_c5_equal_weight():
+    """Fifth is not an octave class; octave is. Equal-weight convention."""
+    fifth = calculate_harmonic_ratio([60.0, 67.0], [1.0, 1.0])
+    octave = calculate_harmonic_ratio([60.0, 72.0], [1.0, 1.0])
+    assert fifth == pytest.approx(0.5)
+    assert octave == pytest.approx(1.0)
+
+
 def test_negative_intervals_when_fundamental_is_above():
     # Interval −11.85 wraps to 0.15 — accepted by both old and new rules.
     assert _pair_ratio(-11.85, fundamental=72.0) == pytest.approx(1.0)

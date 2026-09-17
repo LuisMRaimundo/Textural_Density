@@ -11,6 +11,7 @@ from validation.metrics import (
     kendall_tau,
     krippendorff_alpha_placeholder,
     mean_absolute_error,
+    mean_pairwise_pearson,
     root_mean_square_error,
     spearman_correlation,
 )
@@ -24,6 +25,7 @@ __all__ = [
     "root_mean_square_error",
     "mean_absolute_error",
     "bootstrap_ci",
+    "mean_pairwise_pearson",
     "krippendorff_alpha_placeholder",
     "ExpertAnnotation",
     "load_expert_annotations",

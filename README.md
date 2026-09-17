@@ -362,6 +362,14 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ## Changelog
 
+### 2026-09-17 — Metric semantics and MusicXML transpose
+
+Working-tree / PR documentation of MusicXML wrap-around correction and metric-label clarifications. Package remains **1.1.7**; methodology remains **`5.1.0-strict-symbolic`**. Existing research outputs were not regenerated. See [CHANGES.md](CHANGES.md).
+
+- MusicXML written MIDI uses step/octave/alter (`Cb5` = 71). Transpose is applied once; invalid input raises `InputError`.
+- The 85% weight statistic is relabelled as input-order cumulative frequency (`input_order_weight_quantile_hz`); `spectral_rolloff` is a compatibility alias.
+- `harmonic_ratio`, optional IRR, and GPR/tail comments are clarified. Density table values are unchanged.
+
 ### Version 1.1.7 (2026-09-03)
 
 Package patch. Methodology remains **`5.1.0-strict-symbolic`**. **No computed value changed.** See [CHANGES.md](CHANGES.md).
@@ -395,7 +403,9 @@ Docs-only pass aligning manuals/README with live `5.1.0-strict-symbolic` / packa
 
 ### Version 5.1.0-strict-symbolic (2026-07-12) — register-adaptive tails
 
-**Numeric change for tail-dynamic cases only.** Fixes exaggerated dynamic-tail extrapolation in instrument density lookup. Package release remains **1.1.4**; `METRIC_SCHEMA_VERSION` is `5.1.0-strict-symbolic`.
+**Historical changelog only.** Runtime GPR / adaptive-tail fill-in was removed on 2026-08-03. Production now looks up committed tables and raises `MissingCommittedDynamicError` for missing dynamics. `DYN_TAIL_SHRINK` remains for the offline legacy generator. The bullets below describe the 2026-07-12 behaviour, not current `calculate_metrics`.
+
+**Numeric change for tail-dynamic cases only (2026-07-12).** Fixes exaggerated dynamic-tail extrapolation in instrument density lookup. Package release remains **1.1.4**; `METRIC_SCHEMA_VERSION` is `5.1.0-strict-symbolic`.
 
 - **Root cause.** The GPR dynamic→amplitude model, fitted on the measured `pp`/`mf`/`ff` anchors, previously continued its trend **unchanged** into the unmeasured tails. This overshot **downward** at the soft end (negative one-player density, e.g. `clarinete` C4 at `pppp` ≈ −2.36, which drove `DYNGRAD.wedge` `harmonic_ratio` negative) and **bent over** at the loud end (non-monotone dip, e.g. the `flauta` C4–E4–G4 triad had sonic mass 62.32 at `ff` but 59.95 at `ffff`). Fixed per-step ratios removed the incidents but could not track register-dependent compression of the dynamic palette.
 - **Fix (register-adaptive saturating tails).** Local steps $s_{\mathrm{soft}}(m)=\max(0,\ln(A_{\mathrm{mf}}/A_{\mathrm{pp}})/N_{\mathrm{soft}})$ and $s_{\mathrm{loud}}(m)=\max(0,\ln(A_{\mathrm{ff}}/A_{\mathrm{mf}})/N_{\mathrm{loud}})$ are taken from the measured anchors at the event's pitch; tails apply $\ln A = \ln A_b \mp s\cdot\sum_{i=1}^{j}\gamma^i$ with `DYN_TAIL_SHRINK` $\gamma=0.5$ (whole tail ≤ one measured step). Inverted anchors clamp the step to 0 with a metadata warning. **Interior (in-support) predictions are unchanged** to within 1e-9. `DENSITY_FLOOR` kept only as an unreachable safety assert. Fixed `DYN_TAIL_RATIO_*` constants removed.

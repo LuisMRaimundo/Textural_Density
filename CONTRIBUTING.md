@@ -68,9 +68,9 @@ GUI code (`Main.py`, `gui_components.py`) is **best-effort** for typing unless C
 
 1. **Score/information input only** — no audio waveform analysis; do not introduce acoustic-measurement claims.
 
-2. **Dynamics (`p`, `mf`, `ff`, `mp`, …)** are symbolic/ordinal markings or modelled GPR values — not measured SPL. Source-table anchors are **pp, mf, ff** only.
+2. **Dynamics (`p`, `mf`, `ff`, `mp`, …)** are symbolic/ordinal markings. Production looks up committed table cells (not measured SPL and not live GPR). Source-table anchors are **pp, mf, ff** only.
 
-3. **Dynamic interpolation changes** must preserve the production GPR path unless a dedicated policy PR explicitly adopts an alternative. Diagnostic linear/PCHIP references must not be described as production methods.
+3. **Dynamic interpolation changes** must not reintroduce runtime GPR or adaptive-tail fill-in unless a dedicated policy PR explicitly adopts an alternative. `DYN_TAIL_SHRINK` is offline/legacy (`tools/legacy_gpr_dynamic_interpolation.py`). Diagnostic linear/PCHIP references must not be described as production methods.
 
 4. **New metrics** must include in metadata:
    - `source_type` (`score_derived`, `metadata_proxy`, `calibrated_proxy`, or `empirical`)
@@ -98,7 +98,7 @@ GUI code (`Main.py`, `gui_components.py`) is **best-effort** for typing unless C
 
 14. **MusicXML intake** changes must update [docs/TECHNICAL_MANUAL.md](docs/TECHNICAL_MANUAL.md) §7.4, [docs/MIGRATION.md](docs/MIGRATION.md), and transpose tests in `tests/test_xml_loader.py`.
 
-15. **Instrument tables** (GPR modules) require durable source provenance (`INSTRUMENT_SOURCE`, `docs/instrument_acoustic_sources.md`). Prefer repository-relative anchors (`docs/instrument_acoustic_sources.md#<module>`) over machine-local paths.
+15. **Instrument tables** (committed `spectral_data` modules) require durable source provenance (`INSTRUMENT_SOURCE`, `docs/instrument_acoustic_sources.md`). Prefer repository-relative anchors (`docs/instrument_acoustic_sources.md#<module>`) over machine-local paths.
 
 16. **Media workbook labels:** duplicate suffixes such as `F4 (2)` must be normalized via `normalize_media_note_label()` before canonical pitch parsing. Do not treat interpolation outputs as source data.
 

@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from validation.metrics import krippendorff_alpha_placeholder
+from validation.metrics import mean_pairwise_pearson
 from validation.score_schemas import load_score_annotations
 
 
@@ -47,10 +47,19 @@ def main() -> int:
             if rid in multi[sk]:
                 matrix[i, j] = multi[sk][rid]
 
-    alpha = krippendorff_alpha_placeholder(matrix)
+    pearson = mean_pairwise_pearson(matrix)
     print(f"Multi-rater slice-dimensions: {len(slice_keys)}")
     print(f"Raters: {len(rater_ids)}")
-    print(f"Krippendorff alpha (placeholder): {alpha}")
+    if pearson is None:
+        print(
+            "Mean pairwise Pearson: undefined "
+            "(no pair of rater rows with finite, non-constant ratings). "
+            "This is not Krippendorff's alpha."
+        )
+    else:
+        print(
+            f"Mean pairwise Pearson (not Krippendorff's alpha): {pearson}"
+        )
     return 0
 
 

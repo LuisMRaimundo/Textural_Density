@@ -2,10 +2,11 @@
 Orchestral instrument registry (Phase 7).
 
 Profiles document register, family, and dynamic-response metadata. Where
-``module_name`` is set, per-note instrument density uses sparse GPR tables in
-``instrumentos/<module>.py`` built from **externally obtained acoustic
-metadata** (literature / measurement summaries — not runtime audio analysis).
-Instruments without such tables use ``coarse_default`` register/dynamic models.
+``module_name`` is set, per-note instrument density looks up committed cells in
+``instrumentos/<module>.py`` (externally obtained acoustic metadata — not
+runtime audio analysis and not live GPR/tail fill-in). Missing dynamics raise
+``MissingCommittedDynamicError``. Instruments without such tables use
+``coarse_default`` register/dynamic models.
 """
 
 from __future__ import annotations
@@ -135,11 +136,11 @@ REGISTRY["flauta"] = _profile(
     supported=("legato", "staccato", "flutter_tongue"),
     unsupported=("multiphonic",),
     source_notes=(
-        "Sparse GPR table in instrumentos/flute.py from IOWA+ORCH sustain CDM medians "
-        "(pp/mf/ff); not a full measured spectrum."
+        "Committed CDM table in instrumentos/flute.py from IOWA+ORCH sustain medians "
+        "(pp/mf/ff); runtime lookup is table-only, not a live spectrum or GPR fill-in."
     ),
     warnings=(
-        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Runtime instrument density looks up committed table cells only; missing dynamics raise MissingCommittedDynamicError (no GPR/tail fill-in).",
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
@@ -184,11 +185,11 @@ REGISTRY["oboe"] = _profile(
     module_name="oboe",
     supported=("legato", "staccato", "flutter_tongue"),
     source_notes=(
-        "Sparse GPR table in instrumentos/oboe.py from IOWA+ORCH sustain CDM medians "
+        "Committed CDM table in instrumentos/oboe.py from IOWA+ORCH sustain medians "
         "(pp/mf/ff); not a full measured spectrum."
     ),
     warnings=(
-        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Runtime instrument density looks up committed table cells only; missing dynamics raise MissingCommittedDynamicError (no GPR/tail fill-in).",
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
@@ -241,11 +242,11 @@ REGISTRY["clarinete"] = _profile(
     module_name="clarinet",
     supported=("legato", "staccato", "flutter_tongue"),
     source_notes=(
-        "Sparse GPR table in instrumentos/clarinet.py from IOWA+ORCH sustain CDM medians "
+        "Committed CDM table in instrumentos/clarinet.py from IOWA+ORCH sustain medians "
         "(pp/mf/ff); not a full measured spectrum."
     ),
     warnings=(
-        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Runtime instrument density looks up committed table cells only; missing dynamics raise MissingCommittedDynamicError (no GPR/tail fill-in).",
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
@@ -297,11 +298,11 @@ REGISTRY["fagote"] = _profile(
     module_name="bassoon",
     supported=("legato", "staccato", "flutter_tongue"),
     source_notes=(
-        "Sparse GPR table in instrumentos/bassoon.py from IOWA+ORCH sustain CDM medians "
+        "Committed CDM table in instrumentos/bassoon.py from IOWA+ORCH sustain medians "
         "(pp/mf/ff); not a full measured spectrum."
     ),
     warnings=(
-        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Runtime instrument density looks up committed table cells only; missing dynamics raise MissingCommittedDynamicError (no GPR/tail fill-in).",
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
@@ -360,7 +361,7 @@ for _id, _name, _module, _sound, _comfort, _aliases in (
             "PCHIP interiors, tapered equal-log outers)."
         ),
         warnings=(
-            "String density uses externally sourced sparse CDM tables interpolated by GPR.",
+            "Runtime string density looks up committed table cells only; missing dynamics raise MissingCommittedDynamicError (no GPR/tail fill-in).",
             "Numerical CDM table covers arco_sustain only; other registry supported_techniques "
             "are organological capabilities without technique-specific table rows.",
         ),
@@ -1023,11 +1024,11 @@ REGISTRY["trompete"] = _profile(
     module_name="trumpet",
     supported=("legato", "staccato", "mute", "flutter_tongue"),
     source_notes=(
-        "Sparse GPR table in instrumentos/trumpet.py from IOWA+ORCH sustain CDM medians "
+        "Committed CDM table in instrumentos/trumpet.py from IOWA+ORCH sustain medians "
         "(pp/mf/ff); not a full measured spectrum."
     ),
     warnings=(
-        "Instrument density uses externally sourced sparse acoustic tables interpolated by GPR.",
+        "Runtime instrument density looks up committed table cells only; missing dynamics raise MissingCommittedDynamicError (no GPR/tail fill-in).",
         "Numerical CDM table covers ordinary_sustain only; other registry supported_techniques "
         "are organological capabilities without technique-specific table rows.",
     ),
@@ -1152,12 +1153,12 @@ REGISTRY["bombo"] = _profile(
     supported=("struck", "rolled"),
     unsupported=("damped",),
     source_notes=(
-        "Sparse GPR table in instrumentos/bass_drum.py from NonTunPerc MC p50 "
+        "Committed pitch-independent CDM table in instrumentos/bass_drum.py from NonTunPerc MC p50 "
         "bassdrum_82cm strike composite_index (ff) with scaled pp/mf; unpitched — "
         "note is notation-lookup convention only."
     ),
     warnings=(
-        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Runtime percussion density looks up committed DYNAMIC_CDM cells only; missing dynamics raise MissingCommittedDynamicError (no GPR/tail fill-in).",
         "Numerical table covers struck_membrane only; note key excluded from pitch-structure metrics.",
     ),
     aliases=("bass_drum", "bass drum"),
@@ -1179,12 +1180,12 @@ REGISTRY["pratos"] = _profile(
     supported=("struck", "rolled"),
     unsupported=("damped",),
     source_notes=(
-        "Sparse GPR table in instrumentos/cymbals.py from NonTunPerc MC p50 "
+        "Committed pitch-independent CDM table in instrumentos/cymbals.py from NonTunPerc MC p50 "
         "cymbal_46cm_medium shimmer composite_index (ff) with scaled pp/mf; "
         "unpitched — note is notation-lookup convention only."
     ),
     warnings=(
-        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Runtime percussion density looks up committed DYNAMIC_CDM cells only; missing dynamics raise MissingCommittedDynamicError (no GPR/tail fill-in).",
         "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
     ),
     aliases=("cymbals", "cymbal"),
@@ -1206,12 +1207,12 @@ REGISTRY["tamtam"] = _profile(
     supported=("struck", "rolled"),
     unsupported=("damped",),
     source_notes=(
-        "Sparse GPR table in instrumentos/tamtam.py from NonTunPerc MC p50 "
+        "Committed pitch-independent CDM table in instrumentos/tamtam.py from NonTunPerc MC p50 "
         "tamtam_80cm_bronze shimmer composite_index (ff) with scaled pp/mf; "
         "unpitched — note is notation-lookup convention only."
     ),
     warnings=(
-        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Runtime percussion density looks up committed DYNAMIC_CDM cells only; missing dynamics raise MissingCommittedDynamicError (no GPR/tail fill-in).",
         "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
     ),
     aliases=("tam_tam", "tam-tam", "tam tam"),
@@ -1233,12 +1234,12 @@ REGISTRY["gongo"] = _profile(
     supported=("struck", "rolled"),
     unsupported=("damped",),
     source_notes=(
-        "Sparse GPR table in instrumentos/gong.py from NonTunPerc MC p50 "
+        "Committed pitch-independent CDM table in instrumentos/gong.py from NonTunPerc MC p50 "
         "gong_50cm_bronze shimmer composite_index (ff) with scaled pp/mf; "
         "unpitched — note is notation-lookup convention only."
     ),
     warnings=(
-        "Instrument density uses model-derived NonTunPerc CDM proxies interpolated by GPR.",
+        "Runtime percussion density looks up committed DYNAMIC_CDM cells only; missing dynamics raise MissingCommittedDynamicError (no GPR/tail fill-in).",
         "Numerical table covers struck_plate only; note key excluded from pitch-structure metrics.",
     ),
     aliases=("gong",),
