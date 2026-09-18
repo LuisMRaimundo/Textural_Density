@@ -19,7 +19,7 @@ This document defines how **release versions**, **methodology phases**, and **sc
 
 | Field | Location | Current |
 |-------|----------|---------|
-| **Canonical value** | `[project].version` in `pyproject.toml` | **1.1.7** |
+| **Canonical value** | `[project].version` in `pyproject.toml` | **1.2.0** |
 | **Runtime API** | `core.version.get_package_version()` / `core.__version__` | same |
 | **License** | `LICENSE` (MIT) + `[project].license` in `pyproject.toml` | **MIT** |
 

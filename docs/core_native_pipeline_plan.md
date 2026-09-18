@@ -44,7 +44,7 @@ All steps are auditable inside `core/` without GUI-era internals.
 
 | `compute_orchestration_mass` | `core/orchestration_mass.py` | score-derived | `test_core_extraction`, axioms | low | ✅ done |
 
-| `compute_weighted_density_normalized` | `core/composite.py` | score-derived | `test_core_extraction` | medium | ✅ done |
+| `compute_blend_density` | `core/composite.py` | score-derived | `test_core_extraction` | medium | ✅ done |
 
 | `build_construct_records` | `core/construct_metadata.py` | epistemic | `test_construct_metadata` | low | ✅ done |
 

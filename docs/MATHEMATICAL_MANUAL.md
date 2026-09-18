@@ -648,4 +648,4 @@ For two notes $m_1=60$, $m_2=64$, $\lambda=0.05$: compute $\delta = 8$, $\phi(\d
 
 For architecture and output JSON keys, see [TECHNICAL_MANUAL.md](TECHNICAL_MANUAL.md). For upgrading existing scripts, see [MIGRATION.md](MIGRATION.md). For package vs methodology versions, see [VERSIONING.md](VERSIONING.md). For function signatures, see [API.md](API.md).
 
-*Last updated: 2026-09-03 (package 1.1.7; dest-Zenodo Dynamics10 tables; `.md` canonical over archival PDF).*
+*Last updated: 2026-09-18 (package 1.2.0; methodology 5.2.0-strict-symbolic; effective interval cardinality; `.md` canonical over archival PDF).*

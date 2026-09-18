@@ -837,4 +837,4 @@ Stress battery details: [`tests/stress/README.md`](../tests/stress/README.md). W
 
 ---
 
-*Last updated: 2026-09-03 (package 1.1.7 packaging/lookup repairs; dest-Zenodo Dynamics10 tables; `.md` canonical over archival PDF).*
+*Last updated: 2026-09-18 (package 1.2.0; methodology 5.2.0-strict-symbolic; effective interval cardinality; `.md` canonical over archival PDF).*
