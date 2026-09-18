@@ -134,7 +134,7 @@ extrapolation.
 | Missing cell | **Error** (`MissingCommittedDynamicError`) — no runtime fill-in |
 
 **Migration (2026-08-03):** Runtime GPR + adaptive tails removed from production.
-**Data-faithful rebuild (2026-08-08/09; dest-Zenodo refresh 2026-09-03):** all
+**Data-faithful rebuild (2026-08-08/09; dest-Zenodo refresh 2026-09-03; string CORDAS_4 refresh 2026-09-18):** all
 pitched table-backed modules — winds (flute, piccolo, oboe, English horn,
 clarinet, bass clarinet, bassoon, contrabassoon), brass (trumpet, horn,
 trombone, tuba), arco strings, and violin/viola/cello/double-bass technique
@@ -142,7 +142,7 @@ modules — commit 10-level ladders generated offline by **Dynamics_predicter
 v1.5.2.1** on the measured pp/mf/ff anchors: anchors verbatim, PCHIP interiors
 bounded by their measured segment, geometrically tapered outer levels. Ladders
 are **not** forced monotone; real measured anchors are occasionally
-non-monotone and are preserved. Violin sul tasto is unchanged (no new book).
+non-monotone and are preserved. Violin sul tasto is now committed from the CORDAS_4 dest-Zenodo Dynamics10 book.
 Unpitched percussion uses pitch-independent `DYNAMIC_CDM`. Legacy implementation:
 `tools/legacy_gpr_dynamic_interpolation.py`. Ladder hygiene contract:
 `tests/test_pitched_dynamic_monotone_ladders.py`.

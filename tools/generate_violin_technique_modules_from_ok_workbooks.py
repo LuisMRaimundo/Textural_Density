@@ -31,10 +31,14 @@ from microtonal import note_to_midi_strict  # noqa: E402
 from utils.notes import normalize_media_note_label  # noqa: E402
 
 DESK = Path(r"C:\Users\lmr20\Desktop\Código extrapolação")
-VIOLIN_SRC_DIR = DESK / "VIOLIN_3" / "Dynamics10"
-VIOLA_SRC_DIR = DESK / "VIOLA" / "Dynamics10"
-CELLO_SRC_DIR = DESK / "CELLO" / "Dynamics10"
-DBASS_SRC_DIR = DESK / "DOUBLE_BASS" / "Dynamics10"
+VIOLIN_SRC_DIR = Path(r"D:\CORDAS_4\VIOLIN 4\Violin_Extrapoled_effects")
+VIOLIN_ARCO_DIR = Path(r"D:\CORDAS_4\VIOLIN 4")
+VIOLA_SRC_DIR = Path(r"D:\CORDAS_4\VIOLA 4\Viola_Extrapoled_effects")
+VIOLA_ARCO_DIR = Path(r"D:\CORDAS_4\VIOLA 4")
+CELLO_SRC_DIR = Path(r"D:\CORDAS_4\CELLO\Cello_Extrapoled_effects")
+CELLO_ARCO_DIR = Path(r"D:\CORDAS_4\CELLO")
+DBASS_SRC_DIR = Path(r"D:\CORDAS_4\DOUBLE_BASS\Double_bass_Extrapoled_effects")
+DBASS_ARCO_DIR = Path(r"D:\CORDAS_4\DOUBLE_BASS")
 SRC_DIR = VIOLIN_SRC_DIR
 
 DYNAMIC_LEVELS = ("pppp", "ppp", "pp", "p", "mp", "mf", "f", "ff", "fff", "ffff")
@@ -45,8 +49,8 @@ DBASS_KEYS = ("dbass_ordinario", "dbass_con_sordina", "dbass_sul_ponticello", "d
 
 TECHNIQUE_SPECS = {
     "violin_ordinario": {
-        "workbook": "Violin_Dynamics10_Arco_normal.xlsx",
-        "src_dir": str(VIOLIN_SRC_DIR),
+        "workbook": "VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx",
+        "src_dir": str(VIOLIN_ARCO_DIR),
         "instrument_label": "Violin",
         "module": "violin",
         "technique_label": "arco ordinario",
@@ -59,20 +63,20 @@ TECHNIQUE_SPECS = {
         ),
     },
     "sul_ponticello": {
-        "workbook": "Violin_Dynamics10_sul_ponticello.xlsx",
+        "workbook": "Violin_Zenodo_collections_sul_ponticello_Dynamics10.xlsx",
         "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_sul_ponticello",
         "technique_label": "arco sul ponticello",
         "source_technique": "arco_sul_ponticello",
         "doc_anchor": "violin-sul-ponticello",
-        "pitch_range": (55, 107),
+        "pitch_range": (55, 93),
         "citation_pool": (
             "dest Zenodo Violin_sul ponticello Media (IOWA+Orchidea average); "
             "Dynamics_predicter Results ladder"
         ),
     },
     "sul_tasto": {
-        "workbook": "Violin_Dynamics10_sul_tasto.xlsx",
+        "workbook": "Violin_Zenodo_collections_sul_tasto_Dynamics10.xlsx",
         "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_sul_tasto",
         "technique_label": "arco sul tasto",
@@ -85,7 +89,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "con_sordina": {
-        "workbook": "Violin_Dynamics10_con_sordino.xlsx",
+        "workbook": "Violin_Zenodo_collections_con_sordino_Dynamics10.xlsx",
         "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_sordina",
         "technique_label": "arco con sordino",
@@ -98,7 +102,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "harmonics": {
-        "workbook": "Violin_Dynamics10_harmonics.xlsx",
+        "workbook": "Violin_Zenodo_collections_harmonics_Dynamics10.xlsx",
         "src_dir": str(VIOLIN_SRC_DIR),
         "module": "violin_harmonics",
         "technique_label": "arco harmonics",
@@ -111,7 +115,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "viola_harmonics": {
-        "workbook": "Viola_Dynamics10_harmonics.xlsx",
+        "workbook": "Viola_Zenodo_collections_harmonics_Dynamics10.xlsx",
         "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola_harmonics",
@@ -126,8 +130,8 @@ TECHNIQUE_SPECS = {
         ),
     },
     "viola_ordinario": {
-        "workbook": "Viola_Dynamics10_Arco_normal.xlsx",
-        "src_dir": str(VIOLA_SRC_DIR),
+        "workbook": "VIOLA_Zenodo_collections_Arco_normal_Dynamics10.xlsx",
+        "src_dir": str(VIOLA_ARCO_DIR),
         "instrument_label": "Viola",
         "module": "viola",
         "technique_label": "arco ordinario",
@@ -142,7 +146,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "viola_con_sordina": {
-        "workbook": "Viola_Dynamics10_con_sordino.xlsx",
+        "workbook": "Viola_Zenodo_collections_con_sordino_Dynamics10.xlsx",
         "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola_sordina",
@@ -156,7 +160,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "viola_sul_ponticello": {
-        "workbook": "Viola_Dynamics10_sul_ponticello.xlsx",
+        "workbook": "Viola_Zenodo_collections_sul_ponticello_Dynamics10.xlsx",
         "src_dir": str(VIOLA_SRC_DIR),
         "instrument_label": "Viola",
         "module": "viola_sul_ponticello",
@@ -170,8 +174,8 @@ TECHNIQUE_SPECS = {
         ),
     },
     "cello_ordinario": {
-        "workbook": "Cello_Dynamics10_Arco_normal.xlsx",
-        "src_dir": str(CELLO_SRC_DIR),
+        "workbook": "CELLO_Zenodo_collections_Arco_normal_Dynamics10.xlsx",
+        "src_dir": str(CELLO_ARCO_DIR),
         "instrument_label": "Cello",
         "module": "cello",
         "technique_label": "arco ordinario",
@@ -184,7 +188,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "cello_con_sordina": {
-        "workbook": "Cello_Dynamics10_con_sordino.xlsx",
+        "workbook": "Cello_Zenodo_collections_con_sordino_Dynamics10.xlsx",
         "src_dir": str(CELLO_SRC_DIR),
         "instrument_label": "Cello",
         "module": "cello_sordina",
@@ -199,7 +203,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "cello_sul_ponticello": {
-        "workbook": "Cello_Dynamics10_sul_ponticello.xlsx",
+        "workbook": "Cello_STE_sul_ponticello_IOWA_ORCH_Dynamics10.xlsx",
         "src_dir": str(CELLO_SRC_DIR),
         "instrument_label": "Cello",
         "module": "cello_sul_ponticello",
@@ -207,14 +211,13 @@ TECHNIQUE_SPECS = {
         "source_technique": "arco_sul_ponticello",
         "doc_anchor": "cello-sul-ponticello",
         "pitch_range": (36, 84),
-        "version": "2026-08-27",
+        "version": "2026-09-18",
         "citation_pool": (
-            "dest Zenodo Cello_sul ponticello Media (IOWA+Orchidea average); "
-            "Dynamics_predicter Results ladder"
+            "STE IOWA+ORCH sul ponticello Dynamics10 Results (CORDAS_4)"
         ),
     },
     "cello_harmonics": {
-        "workbook": "Cello_Dynamics10_harmonics.xlsx",
+        "workbook": "Cello_Zenodo_collections_harmonics_Dynamics10.xlsx",
         "src_dir": str(CELLO_SRC_DIR),
         "instrument_label": "Cello",
         "module": "cello_harmonics",
@@ -229,8 +232,8 @@ TECHNIQUE_SPECS = {
         ),
     },
     "dbass_ordinario": {
-        "workbook": "DoubleBass_Dynamics10_Arco_normal.xlsx",
-        "src_dir": str(DBASS_SRC_DIR),
+        "workbook": "DOUBLEBASS_Zenodo_collections_Arco_normal_Dynamics10.xlsx",
+        "src_dir": str(DBASS_ARCO_DIR),
         "instrument_label": "Double bass",
         "module": "double_bass",
         "technique_label": "arco ordinario",
@@ -243,7 +246,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "dbass_con_sordina": {
-        "workbook": "DoubleBass_Dynamics10_con_sordino.xlsx",
+        "workbook": "Double_bass_Zenodo_collections_con_sordino_Dynamics10.xlsx",
         "src_dir": str(DBASS_SRC_DIR),
         "instrument_label": "Double bass",
         "module": "double_bass_sordina",
@@ -258,7 +261,7 @@ TECHNIQUE_SPECS = {
         ),
     },
     "dbass_sul_ponticello": {
-        "workbook": "DoubleBass_Dynamics10_sul_ponticello.xlsx",
+        "workbook": "Double_bass_Zenodo_collections_sul_ponticello_Dynamics10.xlsx",
         "src_dir": str(DBASS_SRC_DIR),
         "instrument_label": "Double bass",
         "module": "double_bass_sul_ponticello",
@@ -273,15 +276,15 @@ TECHNIQUE_SPECS = {
         ),
     },
     "dbass_harmonics": {
-        "workbook": "DoubleBass_Dynamics10_harmonics.xlsx",
+        "workbook": "Double_bass_Zenodo_collections_harmonics_Dynamics10.xlsx",
         "src_dir": str(DBASS_SRC_DIR),
         "instrument_label": "Double bass",
         "module": "double_bass_harmonics",
         "technique_label": "arco harmonics",
         "source_technique": "arco_harmonic",
         "doc_anchor": "double-bass-harmonics",
-        "pitch_range": (28, 67),
-        "version": "2026-08-27",
+        "pitch_range": (52, 72),
+        "version": "2026-09-18",
         "citation_pool": (
             "dest Zenodo DoubleBass_harmonics Media (IOWA+Orchidea average); "
             "Dynamics_predicter Results ladder"

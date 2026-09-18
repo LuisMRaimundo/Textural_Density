@@ -2,6 +2,43 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-09-18 — Cello Dynamics10 refresh from CORDAS_4
+
+Rebuilt all four cello table modules from the CORDAS_4 Dynamics10 `Results` books (Dynamics_predicter v1.5.2.1, PCHIP, r=0.8, n_boot=200). Generator path: `tools/commit_dynamics_from_para_dinamicas.py` (`load_results_ladder` + interior clamp). Formulae unchanged. Cello sul tasto stays withdrawn.
+
+- `cello`: `D:\CORDAS_4\CELLO\CELLO_Zenodo_collections_Arco_normal_Dynamics10.xlsx` — same C2–C6 (49) ladder as 2026-09-03; C2 mf remains 55.763080.
+- `cello_sordina`: `D:\CORDAS_4\CELLO\Cello_Extrapoled_effects\Cello_Zenodo_collections_con_sordino_Dynamics10.xlsx` — same C2–A5 (46) span; C2 mf 62.349097 → 61.104590 (pp/ff anchors unchanged).
+- `cello_sul_ponticello`: `Cello_STE_sul_ponticello_IOWA_ORCH_Dynamics10.xlsx` — C2–C6 (49). C2 mf remains 64.153127. Dest-Zenodo ponticello sibling stops at A5 (46 notes; overlap max |Δ| ≈ 0.131) and is not the production table.
+- `cello_harmonics`: `Cello_Zenodo_collections_harmonics_Dynamics10.xlsx` — same C4–C6 (25) span; C4 mf remains 20.2499; outer levels refreshed.
+
+## 2026-09-18 — Double-bass Dynamics10 refresh from CORDAS_4
+
+Rebuilt all four double-bass table modules from the CORDAS_4 Dynamics10 `Results` books (Dynamics_predicter v1.5.2.1, PCHIP, r=0.8, n_boot=200). Same commit path as the cello refresh. Formulae unchanged. Double-bass sul tasto stays withdrawn.
+
+- `double_bass`: `D:\CORDAS_4\DOUBLE_BASS\DOUBLEBASS_Zenodo_collections_Arco_normal_Dynamics10.xlsx` — same E1–C5 (45) ladder as 2026-09-03; E1 mf remains 48.759456. Effects sibling `Double_bass_Zenodo_collections_ordinario_Dynamics10.xlsx` is identical.
+- `double_bass_sordina`: `Double_bass_Extrapoled_effects\Double_bass_Zenodo_collections_con_sordino_Dynamics10.xlsx` — same E1–G4 (40) span; F1 mf 45.063630 → 43.607569.
+- `double_bass_sul_ponticello`: dest-Zenodo `Double_bass_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` — same E1–G4 (40) ladder; E1 mf remains 51.658048.
+- `double_bass_harmonics`: `Double_bass_Zenodo_collections_harmonics_Dynamics10.xlsx` — dest Media now stops at C5 (21 notes, E3–C5). E3 mf 25.779643 → 26.191633. The old C#5–G6 tail is not invented.
+
+## 2026-09-18 — Viola Dynamics10 refresh from CORDAS_4
+
+Rebuilt all four viola table modules from the CORDAS_4 Dynamics10 `Results` books (Dynamics_predicter v1.5.2.1, PCHIP, r=0.8, n_boot=200). Same commit path as cello/double bass. Formulae unchanged. Viola sul tasto stays retired.
+
+- `viola`: `D:\CORDAS_4\VIOLA 4\VIOLA_Zenodo_collections_Arco_normal_Dynamics10.xlsx` — same C3–A#6 (47) ladder as 2026-09-03; C4 mf remains 33.177078.
+- `viola_sordina`: `Viola_Extrapoled_effects\Viola_Zenodo_collections_con_sordino_Dynamics10.xlsx` — same C3–A#6 (47) span; C4 mf 26.158056 → 25.246485.
+- `viola_sul_ponticello`: `Viola_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` — same C3–E6 (41) span; C4 mf 34.115549 → 32.926671.
+- `viola_harmonics`: `Viola_Zenodo_collections_harmonics_Dynamics10.xlsx` — same C5–A#6 (23) span; C5 mf 20.648320 → 19.508970.
+
+## 2026-09-18 — Violin Dynamics10 refresh from CORDAS_4
+
+Rebuilt all five violin table modules from the CORDAS_4 Dynamics10 `Results` books (Dynamics_predicter v1.5.2.1, PCHIP, r=0.8, n_boot=200). Same commit path as cello/double bass/viola. Formulae unchanged. Violin sul tasto now has a dest-Zenodo Dynamics10 book.
+
+- `violin`: `D:\CORDAS_4\VIOLIN 4\VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx` — same G3–B7 (53) ladder as 2026-09-03; G4 mf remains 32.461862.
+- `violin_sordina`: `Violin_Extrapoled_effects\Violin_Zenodo_collections_con_sordino_Dynamics10.xlsx` — same G3–C7 (42) span; G4 mf 30.232629 → 22.970686 (A3 pp remains 30.232629).
+- `violin_sul_ponticello`: `Violin_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` — dest Media now stops at A6 (39 notes, G3–A6). G4 mf/pp/ff unchanged. A#6–C7 are not invented.
+- `violin_sul_tasto`: `Violin_Zenodo_collections_sul_tasto_Dynamics10.xlsx` — same G3–B7 (53) span; G4 mf remains 41.350741; interiors/outers refreshed.
+- `violin_harmonics`: `Violin_Zenodo_collections_harmonics_Dynamics10.xlsx` — same G5–B7 (29) span; G5 mf 15.728918 → 15.935195; B7 mf remains 4.811925.
+
 ## 2026-09-18 — Effective interval cardinality (5.2.0 / package 1.2.0)
 
 Breaking numeric change. Package **1.1.7 → 1.2.0**. Methodology **5.1.0-strict-symbolic → 5.2.0-strict-symbolic**.

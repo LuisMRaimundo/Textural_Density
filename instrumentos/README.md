@@ -24,23 +24,23 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 | `flute.py`, `piccolo.py`, `clarinet.py`, `bass_clarinet.py`, `oboe.py`, `english_horn.py`, `bassoon.py`, `contrabassoon.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH anchors) |
 | `trumpet.py`, `horn.py`, `trombone.py`, `tuba.py` | `spectral_data` (10 dynamics) | Dynamics_predicter `Results` ladders (IOWA+ORCH sustain anchors) |
-| `violin.py` | `spectral_data` (10 dynamics) | Dynamics10 `VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (dest Zenodo Media pp/mf/ff; G3–B7) |
-| `viola.py` | `spectral_data` (10 dynamics) | Dynamics10 `VIOLA_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (dest Zenodo Media pp/mf/ff; C3–A#6) |
-| `cello.py` | `spectral_data` (10 dynamics) | Dynamics10 `CELLO_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (dest Zenodo Media pp/mf/ff; C2–C6) |
-| `double_bass.py` | `spectral_data` (10 dynamics) | Dynamics10 `DOUBLEBASS_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (dest Zenodo Media pp/mf/ff; E1–C5) |
-| `violin_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (G3–C7) |
-| `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Dynamics10_sul_tasto.xlsx` Results (G3–B7; no 2026-09-03 book) |
-| `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (G3–C7) |
-| `violin_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Violin_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (G5–B7) |
-| `viola_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (C3–A#6) |
-| `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (C3–E6) |
-| `viola_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Viola_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (C5–A#6) |
-| `cello_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (C2–A5) |
-| `cello_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (C2–A5) |
-| `cello_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Cello_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (C4–C6) |
-| `double_bass_sordina.py` | `spectral_data` (10 dynamics) | Dynamics10 `Double_bass_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (E1–G4) |
-| `double_bass_sul_ponticello.py` | `spectral_data` (10 dynamics) | Dynamics10 `Double_bass_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (E1–G4) |
-| `double_bass_harmonics.py` | `spectral_data` (10 dynamics) | Dynamics10 `Double_bass_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (E3–G6) |
+| `violin.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (G3–B7) |
+| `viola.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `VIOLA_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (C3–A#6) |
+| `cello.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `CELLO_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (C2–C6) |
+| `double_bass.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `DOUBLEBASS_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (E1–C5) |
+| `violin_sordina.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Violin_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (G3–C7) |
+| `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Violin_Zenodo_collections_sul_tasto_Dynamics10.xlsx` Results (G3–B7) |
+| `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Violin_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (G3–A6) |
+| `violin_harmonics.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Violin_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (G5–B7) |
+| `viola_sordina.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Viola_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (C3–A#6) |
+| `viola_sul_ponticello.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Viola_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (C3–E6) |
+| `viola_harmonics.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Viola_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (C5–A#6) |
+| `cello_sordina.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Cello_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (C2–A5) |
+| `cello_sul_ponticello.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Cello_STE_sul_ponticello_IOWA_ORCH_Dynamics10.xlsx` Results (C2–C6) |
+| `cello_harmonics.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Cello_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (C4–C6) |
+| `double_bass_sordina.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Double_bass_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (E1–G4) |
+| `double_bass_sul_ponticello.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Double_bass_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (E1–G4) |
+| `double_bass_harmonics.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Double_bass_Zenodo_collections_harmonics_Dynamics10.xlsx` Results (E3–C5) |
 | `bass_drum.py`, `cymbals.py`, `tamtam.py`, `gong.py` | `DYNAMIC_CDM` (10 dynamics; pitch-independent) | NonTunPerc MC anchors + committed former `internal_default` ladder |
 | Registry-only entries | — | Coarse register/dynamic model (`coarse_default.py`) |
 
@@ -226,7 +226,7 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 | **Violin** | `violin.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 | **vl_con_sord** | `violin_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, G3–C7 (high uncertainty) |
 | **vl_sul_tast** | `violin_sul_tasto.py` | `literature_derived` | dest Zenodo sul tasto Results ladder, G3–B7 (high uncertainty) |
-| **vl_sul_pont** | `violin_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, G3–C7 (high uncertainty) |
+| **vl_sul_pont** | `violin_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, G3–A6 (high uncertainty) |
 | **vl_harm** | `violin_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, G5–B7 (high uncertainty) |
 | **vla** | `viola.py` | `literature_derived` | dest Zenodo arco ordinario Results ladder (IOWA+ORCH pp/mf/ff anchors) |
 | **vla sord** | `viola_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, C3–A#6 (high uncertainty) |
@@ -235,12 +235,12 @@ Warnings propagate into `resultados["metric_metadata"]` with `source_type=extern
 
 | **Cello** | `cello.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 | **vlc_sord** | `cello_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, C2–A5 (high uncertainty) |
-| **vlc_sp** | `cello_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, C2–A5 (high uncertainty) |
+| **vlc_sp** | `cello_sul_ponticello.py` | `literature_derived` | STE IOWA+ORCH sul ponticello Results ladder, C2–C6 (high uncertainty) |
 | **vlc_harm** | `cello_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, C4–C6 (high uncertainty) |
 | **Double bass** | `double_bass.py` | `literature_derived` | IOWA+ORCH arco CDM medians |
 | **cb_sord** | `double_bass_sordina.py` | `literature_derived` | dest Zenodo con sordino Results ladder, E1–G4 (high uncertainty) |
 | **cb_sp** | `double_bass_sul_ponticello.py` | `literature_derived` | dest Zenodo sul ponticello Results ladder, E1–G4 (high uncertainty) |
-| **cb_harm** | `double_bass_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, E3–G6 (high uncertainty) |
+| **cb_harm** | `double_bass_harmonics.py` | `literature_derived` | dest Zenodo pooled harmonics Results ladder, E3–C5 (high uncertainty) |
 
 
 

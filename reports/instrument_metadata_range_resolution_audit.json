@@ -11,7 +11,7 @@
     "registry_supported_techniques": "Organological capabilities listed on InstrumentProfile.supported_techniques."
   },
   "instrument_count": 42,
-  "table_excludes_sounding_range_count": 11,
+  "table_excludes_sounding_range_count": 10,
   "table_excludes_sounding_range_ids": [
     "clarinete_baixo",
     "contrabaixo_sordina",
@@ -22,8 +22,7 @@
     "viola_sul_ponticello",
     "violino_sordina",
     "violino_sul_ponticello",
-    "violoncelo_sordina",
-    "violoncelo_sul_ponticello"
+    "violoncelo_sordina"
   ],
   "instruments": [
     {
@@ -487,18 +486,18 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "E3",
-        "last_note": "G6",
-        "row_count": 40,
+        "last_note": "C5",
+        "row_count": 21,
         "min_midi": 52,
-        "max_midi": 91
+        "max_midi": 72
       },
       "instrument_source_pitch_range": [
         52,
-        91
+        72
       ],
       "registry_sounding_range_midi": [
         52,
-        91
+        72
       ],
       "registry_comfortable_range_midi": [
         31,
@@ -550,7 +549,7 @@
       "missing_high_semitones": 0,
       "table_span_midi": [
         52,
-        91
+        72
       ]
     },
     {
@@ -2826,14 +2825,14 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "G3",
-        "last_note": "C7",
-        "row_count": 42,
+        "last_note": "A6",
+        "row_count": 39,
         "min_midi": 55,
-        "max_midi": 96
+        "max_midi": 93
       },
       "instrument_source_pitch_range": [
         55,
-        96
+        93
       ],
       "registry_sounding_range_midi": [
         55,
@@ -2883,15 +2882,15 @@
         "classification": "PASS"
       },
       "documentation_contradictions": [
-        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=11)"
+        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=14)"
       ],
       "table_excludes_sounding_range": true,
       "exclusion_kind": "partial_table",
       "missing_low_semitones": 0,
-      "missing_high_semitones": 11,
+      "missing_high_semitones": 14,
       "table_span_midi": [
         55,
-        96
+        93
       ]
     },
     {
@@ -3272,14 +3271,14 @@
       "profile_status": "literature_derived",
       "source_table_span": {
         "first_note": "C2",
-        "last_note": "A5",
-        "row_count": 46,
+        "last_note": "C6",
+        "row_count": 49,
         "min_midi": 36,
-        "max_midi": 81
+        "max_midi": 84
       },
       "instrument_source_pitch_range": [
         36,
-        81
+        84
       ],
       "registry_sounding_range_midi": [
         36,
@@ -3312,8 +3311,8 @@
         "fff",
         "ffff"
       ],
-      "range_alignment": "OK_registry_covers_table",
-      "range_classification": "REVIEW REQUIRED",
+      "range_alignment": "aligned",
+      "range_classification": "PASS",
       "technique": {
         "registry_supported_techniques": [
           "arco",
@@ -3328,16 +3327,14 @@
         ],
         "classification": "PASS"
       },
-      "documentation_contradictions": [
-        "spectral_data span excludes part of registry sounding_range (missing_low=0, missing_high=3)"
-      ],
-      "table_excludes_sounding_range": true,
-      "exclusion_kind": "partial_table",
+      "documentation_contradictions": [],
+      "table_excludes_sounding_range": false,
+      "exclusion_kind": "full_coverage",
       "missing_low_semitones": 0,
-      "missing_high_semitones": 3,
+      "missing_high_semitones": 0,
       "table_span_midi": [
         36,
-        81
+        84
       ]
     }
   ],

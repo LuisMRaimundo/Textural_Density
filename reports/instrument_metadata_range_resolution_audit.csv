@@ -5,7 +5,7 @@ celesta,Celesta,,False,,,,,60,96,65,88,0,,,struck,NOT APPLICABLE,NOT APPLICABLE,
 clarinete,Cl,clarinet,True,D3,C7,47,"[50, 96]",50,96,55,80,0,ordinary_sustain,ordinary_sustain,legato|staccato|flutter_tongue,PASS,PASS,False,full_coverage,0,0
 clarinete_baixo,Bass_Clar,bass_clarinet,True,C#2,A#5,46,"[37, 82]",34,82,40,65,14,ordinary_sustain,ordinary_sustain,legato|staccato,REVIEW REQUIRED,PASS,True,partial_table,3,0
 contrabaixo,Db,double_bass,True,E1,C5,45,"[28, 72]",28,72,31,55,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
-contrabaixo_harm,cb_harm,double_bass_harmonics,False,E3,G6,40,"[52, 91]",52,91,31,55,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
+contrabaixo_harm,cb_harm,double_bass_harmonics,False,E3,C5,21,"[52, 72]",52,72,31,55,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
 contrabaixo_sordina,cb_sord,double_bass_sordina,False,E1,G4,40,"[28, 67]",28,72,31,55,0,arco_sordina,arco_sordina,arco|mute,REVIEW REQUIRED,PASS,True,partial_table,0,5
 contrabaixo_sul_ponticello,cb_sp,double_bass_sul_ponticello,False,E1,G4,40,"[28, 67]",28,72,31,55,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,REVIEW REQUIRED,PASS,True,partial_table,0,5
 contrafagote,Contr_Basson,contrabassoon,True,A#1,D#5,42,"[34, 75]",22,77,28,65,0,ordinary_sustain,ordinary_sustain,legato|staccato,REVIEW REQUIRED,PASS,True,partial_table,12,2
@@ -35,9 +35,9 @@ viola_sul_ponticello,vla sp,viola_sul_ponticello,True,C3,E6,41,"[48, 88]",48,93,
 violino,Vl,violin,True,G3,B7,53,"[55, 107]",55,107,55,76,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
 violino_harm,vl_harm,violin_harmonics,True,G5,B7,29,"[79, 107]",79,107,72,96,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
 violino_sordina,vl_con_sord,violin_sordina,True,G3,C7,42,"[55, 96]",55,107,55,76,0,arco_sordina,arco_sordina,arco|mute,REVIEW REQUIRED,PASS,True,partial_table,0,11
-violino_sul_ponticello,vl_sul_pont,violin_sul_ponticello,True,G3,C7,42,"[55, 96]",55,107,55,76,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,REVIEW REQUIRED,PASS,True,partial_table,0,11
+violino_sul_ponticello,vl_sul_pont,violin_sul_ponticello,True,G3,A6,39,"[55, 93]",55,107,55,76,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,REVIEW REQUIRED,PASS,True,partial_table,0,14
 violino_sul_tasto,vl_sul_tast,violin_sul_tasto,True,G3,B7,53,"[55, 107]",55,107,55,76,0,arco_sul_tasto,arco_sul_tasto,arco|sul_tasto,PASS,PASS,False,full_coverage,0,0
 violoncelo,Vc,cello,True,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sustain,arco_sustain,arco|pizzicato|tremolo|harmonic|mute,PASS,PASS,False,full_coverage,0,0
 violoncelo_harm,vlc_harm,cello_harmonics,False,C4,C6,25,"[60, 84]",60,84,60,84,0,arco_harmonic,arco_harmonic,arco|harmonic,PASS,PASS,False,full_coverage,0,0
 violoncelo_sordina,vlc_sord,cello_sordina,False,C2,A5,46,"[36, 81]",36,84,40,65,0,arco_sordina,arco_sordina,arco|mute,REVIEW REQUIRED,PASS,True,partial_table,0,3
-violoncelo_sul_ponticello,vlc_sp,cello_sul_ponticello,False,C2,A5,46,"[36, 81]",36,84,40,65,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,REVIEW REQUIRED,PASS,True,partial_table,0,3
+violoncelo_sul_ponticello,vlc_sp,cello_sul_ponticello,False,C2,C6,49,"[36, 84]",36,84,40,65,0,arco_sul_ponticello,arco_sul_ponticello,arco|sul_ponticello,PASS,PASS,False,full_coverage,0,0

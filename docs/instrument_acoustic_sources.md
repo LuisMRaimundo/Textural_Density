@@ -1,6 +1,6 @@
 # Instrument acoustic source provenance
 
-> **Corpus status (2026-09-03):** The instrument metadata layer is **incomplete and under gradual curation**. Some registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (winds including piccolo / English horn / bass clarinet / contrabassoon, brass incl. horn, trombone and tuba, arco strings, violin/viola/cello/double-bass techniques/harmonics) and unpitched percussion commit full 10-level ladders. Ladders are **data-faithful** (2026-08-08/09/18/27/30, dest-Zenodo refresh 2026-09-03, Dynamics_predicter v1.5.2.1): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — **not** forced monotone. Cello and double-bass sul tasto remain withdrawn (2026-08-18). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
+> **Corpus status (2026-09-18):** The instrument metadata layer is **incomplete and under gradual curation**. Some registry entries lack dedicated acoustic tables; table-backed modules are **partial proxies**. Runtime no longer fills missing dynamics with GPR — table-backed pitched modules (winds including piccolo / English horn / bass clarinet / contrabassoon, brass incl. horn, trombone and tuba, arco strings, violin/viola/cello/double-bass techniques/harmonics) and unpitched percussion commit full 10-level ladders. Ladders are **data-faithful** (2026-08-08/09/18/27/30, dest-Zenodo refresh 2026-09-03, string CORDAS_4 refresh 2026-09-18, Dynamics_predicter v1.5.2.1): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — **not** forced monotone. Cello and double-bass sul tasto remain withdrawn (2026-08-18). Missing or coarse values are expected when `source_type`, `profile_status`, and warnings remain honest.
 
 This document records **external acoustic metadata** embedded in `instrumentos/*.py`
 modules. The analysis pipeline performs **score lookup** into these tables — not
@@ -157,10 +157,10 @@ live audio analysis.
 - **Module:** `instrumentos/viola.py`
 - **GUI display name:** `vla`
 - **Table:** `spectral_data` (47 chromatic rows, C3–A#6 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `VIOLA_Zenodo_collections_Arco_normal_Dynamics10.xlsx`
-  (Dynamics10 dest-Zenodo). Anchors are dest-Zenodo
-  `VIOLA_Media` M:N:O (IOWA+Orchidea average) at pp/mf/ff.
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\VIOLA 4\VIOLA_Zenodo_collections_Arco_normal_Dynamics10.xlsx`
+  (identical to the 2026-09-03 dest-Zenodo ladder; C4 mf 33.177078).
+  Anchors are dest-Zenodo `VIOLA_Media` (IOWA+Orchidea average) at pp/mf/ff.
 - **Portable source anchor:** `docs/instrument_acoustic_sources.md#viola` (in `INSTRUMENT_SOURCE`; PR #14)
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
@@ -168,23 +168,22 @@ live audio analysis.
 - **Sounding range (registry):** MIDI 48–94 (C3–A#6), aligned with committed `spectral_data` table span; comfortable 50–69 (D3–A4)
 - **Source technique:** `arco_sustain`
 - **Uncertainty:** medium — sparse table, not full continuous spectrum
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Viola sordina (`viola_sordina`)
 
 - **Module:** `instrumentos/viola_sordina.py`
 - **GUI display name:** `vla sord` (aliases: `vla_sord`, `vla_con_sord`)
 - **Table:** `spectral_data` (47 chromatic rows, C3–A#6 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Viola_Zenodo_collections_con_sordino_Dynamics10.xlsx`
-  (dest Zenodo con sordino Media = average of available IOWA W and Orchidea F).
-  No B6–C7 rows: dest Media stops at A#6.
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\VIOLA 4\Viola_Extrapoled_effects\Viola_Zenodo_collections_con_sordino_Dynamics10.xlsx`
+  (dest Zenodo con sordino Media). C4 mf 25.246485. No B6–C7 rows: dest Media stops at A#6.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8)
 - **Source technique:** `arco_sordina`
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Viola sul tasto — retired (2026-08-11)
 
@@ -198,43 +197,43 @@ extrapolation workbook is available.
 - **Module:** `instrumentos/viola_sul_ponticello.py`
 - **GUI display name:** `vla sp` (aliases: `vla_sp`, `vla_sul_pont`)
 - **Table:** `spectral_data` (41 chromatic rows, C3–E6 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Viola_Zenodo_collections_sul_ponticello_Dynamics10.xlsx`
-  (dest Zenodo sul ponticello Media). Dest Media stops at E6.
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\VIOLA 4\Viola_Extrapoled_effects\Viola_Zenodo_collections_sul_ponticello_Dynamics10.xlsx`
+  (dest Zenodo sul ponticello Media). Dest Media stops at E6. C4 mf 32.926671.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8)
 - **Source technique:** `arco_sul_ponticello`
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Viola harmonics (`viola_harmonics`)
 
 - **Module:** `instrumentos/viola_harmonics.py`
 - **GUI display name:** `vla harm` (aliases: `vla_harm`)
 - **Table:** `spectral_data` (23 chromatic sounding rows, C5–A#6 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Viola_Zenodo_collections_harmonics_Dynamics10.xlsx`
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\VIOLA 4\Viola_Extrapoled_effects\Viola_Zenodo_collections_harmonics_Dynamics10.xlsx`
   (dest Zenodo harmonics Media). Media harmonics start at C5 and stop at A#6.
-  Do not invent C3–B4 or B6–B7 from older fills that are absent from Media.
+  Do not invent C3–B4 or B6–B7. C5 mf 19.508970.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8)
 - **Source technique:** `arco_harmonic` (pooled)
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Violin (`violin`)
 
 - **Module:** `instrumentos/violin.py`
 - **Table:** `spectral_data` (53 chromatic rows, G3–B7 × **all 10** dynamics)
-- **Provenance (2026-09-03):** IOWA+ORCH measured anchors at pp/mf/ff, with the
-  full dynamic ladder committed from Dynamics10 `VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx`
-  sheet **`Results`**. Runtime analysis looks up committed cells — it does
-  **not** re-run GPR / adaptive-tail extrapolation for violin arco.
+- **Provenance (2026-09-18):** IOWA+ORCH measured anchors at pp/mf/ff, with the
+  full dynamic ladder committed from
+  `D:\CORDAS_4\VIOLIN 4\VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx`
+  sheet **`Results`** (identical to the 2026-09-03 dest-Zenodo ladder; G4 mf 32.461862).
 - **Authoritative ingestion sheet:** `Violin_Media` in the dest-Zenodo
   `VIOLIN_Zenodo_collections_Arco_normal.xlsx` book that Dynamics10 was built from.
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 - **Uncertainty:** medium — non-anchor cells remain workbook-modelled, not lab measurements
 
 ## Violin sordina (`violin_sordina`)
@@ -242,60 +241,62 @@ extrapolation workbook is available.
 - **Module:** `instrumentos/violin_sordina.py`
 - **GUI display name:** `vl_con_sord` (aliases: `vl sord`, `vl_sord`)
 - **Table:** `spectral_data` (42 chromatic rows, G3–C7 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Violin_Zenodo_collections_con_sordino_Dynamics10.xlsx`
-  (dest Zenodo con sordino Media = average of available IOWA W and Orchidea F)
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\VIOLIN 4\Violin_Extrapoled_effects\Violin_Zenodo_collections_con_sordino_Dynamics10.xlsx`
+  (dest Zenodo con sordino Media). G4 mf 22.970686.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8), Dynamics_predicter v1.5.2.1
 - **Source technique:** `arco_sordina`
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Violin sul tasto (`violin_sul_tasto`)
 
 - **Module:** `instrumentos/violin_sul_tasto.py`
 - **GUI display name:** `vl_sul_tast` (aliases: `vl st`, `vl_st`)
 - **Table:** `spectral_data` (53 chromatic rows, G3–B7 × **all 10** dynamics)
-- **Provenance (2026-08-30):** `Results` sheet of
-  `Violin_Dynamics10_sul_tasto.xlsx`
-  (dest Zenodo sul tasto Media)
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\VIOLIN 4\Violin_Extrapoled_effects\Violin_Zenodo_collections_sul_tasto_Dynamics10.xlsx`
+  (dest Zenodo sul tasto Media). G4 mf remains 41.350741.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8), Dynamics_predicter v1.5.2.1
 - **Source technique:** `arco_sul_tasto`
 - **Uncertainty:** high
-- **Regeneration:** `tools/generate_violin_technique_modules_from_ok_workbooks.py --violin-only`
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Violin sul ponticello (`violin_sul_ponticello`)
 
 - **Module:** `instrumentos/violin_sul_ponticello.py`
 - **GUI display name:** `vl_sul_pont` (aliases: `vl sp`, `vl_sp`)
-- **Table:** `spectral_data` (42 chromatic rows, G3–C7 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Violin_Zenodo_collections_sul_ponticello_Dynamics10.xlsx`
-  (dest Zenodo sul ponticello Media)
+- **Table:** `spectral_data` (39 chromatic rows, G3–A6 × **all 10** dynamics)
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\VIOLIN 4\Violin_Extrapoled_effects\Violin_Zenodo_collections_sul_ponticello_Dynamics10.xlsx`
+  (dest Zenodo sul ponticello Media). Dest Media now stops at A6; A#6–C7 are
+  not invented. G4 mf 31.351427.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8), Dynamics_predicter v1.5.2.1
 - **Source technique:** `arco_sul_ponticello`
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Violin harmonics (`violin_harmonics`)
 
 - **Module:** `instrumentos/violin_harmonics.py`
 - **GUI display name:** `vl_harm` (alias: `vl harm`)
 - **Table:** `spectral_data` (29 chromatic sounding rows, G5–B7 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Violin_Zenodo_collections_harmonics_Dynamics10.xlsx`
-  (dest Zenodo harmonics Media; notes with a complete pp/mf/ff triad only)
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\VIOLIN 4\Violin_Extrapoled_effects\Violin_Zenodo_collections_harmonics_Dynamics10.xlsx`
+  (dest Zenodo harmonics Media; notes with a complete pp/mf/ff triad only).
+  G5 mf 15.935195.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8), Dynamics_predicter v1.5.2.1
 - **Source technique:** `arco_harmonic` (pooled)
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 - **History (2026-08-11):** replaces the retired split `violin_nat_harm` /
   `violin_art_harm` modules; their aliases now resolve to this pooled table
 
@@ -303,11 +304,12 @@ extrapolation workbook is available.
 
 - **Module:** `instrumentos/cello.py`
 - **Table:** `spectral_data` (49 chromatic rows, C2–C6 × **all 10** dynamics)
-- **Provenance (2026-09-03):** IOWA+ORCH arco sustain CDM medians at pp/mf/ff from
-  Dynamics10 `CELLO_Zenodo_collections_Arco_normal_Dynamics10.xlsx` `Results`.
-- **Source workbook:** dest-Zenodo `CELLO_Zenodo_collections_media.xlsx` (`Cello_Media`)
-- **Dynamics (2026-09-03):** full 10-level data-faithful Dynamics10 `Results` ladder (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Provenance (2026-09-18):** IOWA+ORCH arco sustain CDM medians at pp/mf/ff from
+  `D:\CORDAS_4\CELLO\CELLO_Zenodo_collections_Arco_normal_Dynamics10.xlsx` `Results`
+  (identical to the 2026-09-03 dest-Zenodo ladder; C2 mf 55.763080).
+- **Source workbook:** dest-Zenodo `CELLO_Zenodo_collections_Arco_normal.xlsx`
+- **Dynamics (2026-09-18):** full 10-level data-faithful Dynamics10 `Results` ladder (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 - **Uncertainty:** medium
 
 ## Cello sordina (`cello_sordina`)
@@ -315,15 +317,16 @@ extrapolation workbook is available.
 - **Module:** `instrumentos/cello_sordina.py`
 - **GUI display name:** `vlc_sord` (aliases: `vlc_con_sord`, `violoncelo_sordina`)
 - **Table:** `spectral_data` (46 chromatic rows, C2–A5 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Cello_Zenodo_collections_con_sordino_Dynamics10.xlsx`
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\CELLO\Cello_Extrapoled_effects\Cello_Zenodo_collections_con_sordino_Dynamics10.xlsx`
   (dest Zenodo con sordino Media = average of available IOWA W and Orchidea F).
+  C2 mf 61.104590 (pp/ff anchors unchanged from 2026-09-03).
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8)
 - **Source technique:** `arco_sordina`
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Cello sul tasto — withdrawn (2026-08-18)
 
@@ -334,32 +337,35 @@ dest-Zenodo cello sul tasto dynamics workbook exists.
 
 - **Module:** `instrumentos/cello_sul_ponticello.py`
 - **GUI display name:** `vlc_sp` (aliases: `vlc_sul_pont`, `violoncelo_sul_ponticello`)
-- **Table:** `spectral_data` (46 chromatic rows, C2–A5 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Cello_Zenodo_collections_sul_ponticello_Dynamics10.xlsx`
-  (dest Zenodo sul ponticello Media).
+- **Table:** `spectral_data` (49 chromatic rows, C2–C6 × **all 10** dynamics)
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\CELLO\Cello_Extrapoled_effects\Cello_STE_sul_ponticello_IOWA_ORCH_Dynamics10.xlsx`
+  (STE IOWA+ORCH sul ponticello; C2 mf 64.153127). Dest-Zenodo sibling
+  `Cello_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` stops at A5
+  (46 notes; overlap max |Δ| ≈ 0.131) and is not the production table.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8)
 - **Source technique:** `arco_sul_ponticello`
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Cello harmonics (`cello_harmonics`)
 
 - **Module:** `instrumentos/cello_harmonics.py`
 - **GUI display name:** `vlc_harm`
 - **Table:** `spectral_data` (25 chromatic sounding rows, C4–C6 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Cello_Zenodo_collections_harmonics_Dynamics10.xlsx`
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\CELLO\Cello_Extrapoled_effects\Cello_Zenodo_collections_harmonics_Dynamics10.xlsx`
   (dest Zenodo harmonics Media). Media harmonics start at C4 and stop at C6.
-  C2–B3 and the old C#6–E7 tail are not invented.
+  C2–B3 and the old C#6–E7 tail are not invented. C4 mf remains 20.2499;
+  outer levels were refreshed.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8)
 - **Source technique:** `arco_harmonic` (pooled)
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Double bass (`double_bass`)
 
@@ -367,11 +373,13 @@ dest-Zenodo cello sul tasto dynamics workbook exists.
 - **Table (source_table_span):** `spectral_data` (45 chromatic rows, **E1–C5**, MIDI 28–72), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
 - **Comfortable range:** MIDI 31–55 (G1–G3) — narrower orchestrational band, not a table limit
 - **Source technique:** `arco_sustain` (`table_supported_techniques`)
-- **Provenance (2026-09-03):** IOWA+ORCH arco sustain CDM medians at pp/mf/ff from
-  Dynamics10 `DOUBLEBASS_Zenodo_collections_Arco_normal_Dynamics10.xlsx` `Results`.
-- **Source workbook:** dest-Zenodo `DOUBLEBASS_Zenodo_collections_media.xlsx` (`DBass_Media`)
-- **Dynamics (2026-09-03):** full 10-level data-faithful Dynamics10 `Results` ladder (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Provenance (2026-09-18):** IOWA+ORCH arco sustain CDM medians at pp/mf/ff from
+  `D:\CORDAS_4\DOUBLE_BASS\DOUBLEBASS_Zenodo_collections_Arco_normal_Dynamics10.xlsx` `Results`
+  (identical to the 2026-09-03 dest-Zenodo ladder and to effects
+  `Double_bass_Zenodo_collections_ordinario_Dynamics10.xlsx`; E1 mf 48.759456).
+- **Source workbook:** dest-Zenodo `DOUBLEBASS_Zenodo_collections_Arco_normal.xlsx`
+- **Dynamics (2026-09-18):** full 10-level data-faithful Dynamics10 `Results` ladder (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 - **Uncertainty:** medium
 - **Span status:** E1–A3 in older docs was obsolete; committed span is E1–C5 (**PASS**). Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 
@@ -382,15 +390,15 @@ Double-bass sul tasto remains withdrawn (2026-08-18; no dest-Zenodo sul tasto wo
 - **Module:** `instrumentos/double_bass_sordina.py`
 - **GUI display name:** `cb_sord` (aliases: `cb_con_sord`, `contrabaixo_sordina`)
 - **Table:** `spectral_data` (40 chromatic rows, E1–G4 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Double_bass_Zenodo_collections_con_sordino_Dynamics10.xlsx`
-  (dest Zenodo con sordino Media).
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\DOUBLE_BASS\Double_bass_Extrapoled_effects\Double_bass_Zenodo_collections_con_sordino_Dynamics10.xlsx`
+  (dest Zenodo con sordino Media). F1 mf 43.607569.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8)
 - **Source technique:** `arco_sordina`
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Double bass sul tasto — withdrawn (2026-08-18)
 
@@ -402,47 +410,48 @@ dest-Zenodo double-bass sul tasto dynamics workbook exists.
 - **Module:** `instrumentos/double_bass_sul_ponticello.py`
 - **GUI display name:** `cb_sp` (aliases: `cb_sul_pont`, `contrabaixo_sul_ponticello`)
 - **Table:** `spectral_data` (40 chromatic rows, E1–G4 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Double_bass_Zenodo_collections_sul_ponticello_Dynamics10.xlsx`
-  (dest Zenodo sul ponticello Media).
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\DOUBLE_BASS\Double_bass_Extrapoled_effects\Double_bass_Zenodo_collections_sul_ponticello_Dynamics10.xlsx`
+  (dest Zenodo sul ponticello Media; identical to 2026-09-03; E1 mf 51.658048).
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8)
 - **Source technique:** `arco_sul_ponticello`
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Double bass harmonics (`double_bass_harmonics`)
 
 - **Module:** `instrumentos/double_bass_harmonics.py`
 - **GUI display name:** `cb_harm`
-- **Table:** `spectral_data` (40 chromatic sounding rows, E3–G6 × **all 10** dynamics)
-- **Provenance (2026-09-03):** `Results` sheet of
-  `Double_bass_Zenodo_collections_harmonics_Dynamics10.xlsx`
-  (dest Zenodo harmonics Media). Notes below E3 are not invented.
+- **Table:** `spectral_data` (21 chromatic sounding rows, E3–C5 × **all 10** dynamics)
+- **Provenance (2026-09-18):** `Results` sheet of
+  `D:\CORDAS_4\DOUBLE_BASS\Double_bass_Extrapoled_effects\Double_bass_Zenodo_collections_harmonics_Dynamics10.xlsx`
+  (dest Zenodo harmonics Media). Notes below E3 and the old C#5–G6 tail are
+  not invented. E3 mf 26.191633.
 - **Workbook anchors:** measured pp, mf and ff committed verbatim in
   `spectral_data`; p/mp/f PCHIP interiors; pppp/ppp/fff/ffff tapered
   equal-log outers (r=0.8)
 - **Source technique:** `arco_harmonic` (pooled)
 - **Uncertainty:** high
-- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-03 dest-Zenodo refresh)
+- **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 
 ## Generation tooling
 
 Offline curation pipeline (not used at runtime):
 
-1. `tools/commit_dynamics_from_para_dinamicas.py` — **current (2026-09-03)** commit path. Reads Desktop `para dinâmicas\*_Dynamics10.xlsx` `Results` (`status=ok`), normalizes note labels, clamps interiors into [pp,mf]/[mf,ff], and writes all table-backed pitched modules except violin sul tasto (no new book).
+1. `tools/commit_dynamics_from_para_dinamicas.py` — **current (2026-09-18)** commit path. Reads Dynamics10 `Results` (`status=ok`), normalizes note labels, clamps interiors into [pp,mf]/[mf,ff], and writes all table-backed pitched modules including violin sul tasto.
 2. `tools/populate_td_importer_sheets_from_zenodo_media.py` — builds `AcousticTable`, `Registry`, and `Provenance` sheets from `*_Media` workbooks. Applies `normalize_media_note_label()` when reading media rows (strips trailing `(2)` duplicate markers).
 3. `tools/generate_instrument_modules.py` — legacy 3-anchor generator; its `CONFIGS` also drive the source-reconstruction audit. All four string reconstructions read the curated Media sheets (`Violin_Media`, `VIOLA_Media`, `Cello_Media`, `DBass_Media`) via `load_spectral_data_from_media` (2026-08-08 config fix).
-4. `tools/generate_violin_technique_modules_from_xlsx.py` — historical emitter for `violin_sordina.py`, `violin_sul_tasto.py`, `violin_sul_ponticello.py` from Desktop `Violin_mf.xlsx` / `Violin_ff.xlsx` (pp via arco ratio transfer). Violin sul tasto still uses this 2026-08-30 path.
-5. `tools/generate_violin_technique_modules_from_ok_workbooks.py` — 2026-08-30 string Dynamics10 generator (`Desktop\\Código extrapolação\\<INSTR>\\Dynamics10`). Superseded for the 2026-09-03 refresh.
+4. `tools/generate_violin_technique_modules_from_xlsx.py` — historical emitter for `violin_sordina.py`, `violin_sul_tasto.py`, `violin_sul_ponticello.py` from Desktop `Violin_mf.xlsx` / `Violin_ff.xlsx` (pp via arco ratio transfer). Superseded.
+5. `tools/generate_violin_technique_modules_from_ok_workbooks.py` — string Dynamics10 generator; CORDAS_4 paths for violin/viola/cello/double bass. Superseded as the official writer by `commit_dynamics_from_para_dinamicas.py`.
 6. `tools/generate_full_dynamics_modules_from_xlsx.py` — earlier ordinary-sustain commit helper (`flute`, `clarinet`, `bassoon`, `oboe`, brass). Still imported by the 2026-09-03 commit tool for wind-module rendering.
 7. `tools/generate_violin_arco_full_dynamics_from_xlsx.py` — legacy violin arco regenerator (superseded by the Dynamics10 generator).
 8. `tools/refresh_regression_fixtures.py` — updates golden regression/snapshot/benchmark fixtures after intentional table changes.
 
 The former cello / double-bass STE technique generators (`generate_cello_technique_modules_from_xlsx.py`, `generate_double_bass_technique_modules_from_xlsx.py`) were retired when those modules were withdrawn (2026-08-18).
 
-**String techniques (2026-09-03):** violin, viola, cello, and double-bass ordinary arco plus sordina / sul ponticello / harmonics rebuilt from dest-Zenodo Dynamics10 `Results` ladders via `tools/commit_dynamics_from_para_dinamicas.py`. Violin arco G3–B7 (53); sordina/ponticello G3–C7 (42); tasto unchanged G3–B7 (53); harmonics G5–B7 (29). Viola arco/sordina C3–A#6 (47); ponticello C3–E6 (41); harmonics C5–A#6 (23). Cello arco C2–C6 (49); sordina/ponticello C2–A5 (46); harmonics C4–C6 (25). Double-bass arco E1–C5 (45); sordina/ponticello E1–G4 (40); harmonics E3–G6 (40). No cello/viola/double-bass sul tasto. Runtime GPR remains removed.
+**String techniques (2026-09-18):** violin, viola, cello, and double-bass ordinary arco plus sordina / sul ponticello / harmonics from dest-Zenodo Dynamics10 `Results` ladders via `tools/commit_dynamics_from_para_dinamicas.py`. Violin (CORDAS_4 refresh) arco/tasto G3–B7 (53); sordina G3–C7 (42); ponticello G3–A6 (39); harmonics G5–B7 (29). Viola (CORDAS_4 refresh) arco/sordina C3–A#6 (47); ponticello C3–E6 (41); harmonics C5–A#6 (23). Cello (CORDAS_4 refresh) arco C2–C6 (49); sordina C2–A5 (46); ponticello STE C2–C6 (49); harmonics C4–C6 (25). Double-bass (CORDAS_4 refresh) arco E1–C5 (45); sordina/ponticello E1–G4 (40); harmonics E3–C5 (21). No cello/viola/double-bass sul tasto. Runtime GPR remains removed.
 
 ## Media note-label normalization (PR #14)
 

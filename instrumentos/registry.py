@@ -414,7 +414,7 @@ REGISTRY["viola_sordina"] = _profile(
     unsupported=("pizzicato", "sul_ponticello", "sul_tasto"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/viola_sordina.py from "
-        "Dynamics10 Viola_Dynamics10_con_sordino.xlsx Results sheet "
+        "Viola_Zenodo_collections_con_sordino_Dynamics10.xlsx Results sheet "
         "(dest Zenodo con sordino Media; measured pp/mf/ff anchors, "
         "PCHIP interiors, tapered equal-log outers). Table span C3–A#6."
     ),
@@ -550,7 +550,7 @@ REGISTRY["violino_sul_ponticello"] = _profile(
         "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_ponticello.py from "
         "Violin_Zenodo_collections_sul_ponticello_Dynamics10.xlsx Results sheet "
         "(dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, "
-        "PCHIP interiors, tapered equal-log outers). Table span G3–C7."
+        "PCHIP interiors, tapered equal-log outers). Table span G3–A6."
     ),
     warnings=(
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
@@ -592,7 +592,7 @@ REGISTRY["violino_sul_tasto"] = _profile(
     unsupported=("pizzicato", "mute", "sul_ponticello"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/violin_sul_tasto.py from "
-        "Dynamics10 Violin_Dynamics10_sul_tasto.xlsx Results sheet "
+        "Violin_Zenodo_collections_sul_tasto_Dynamics10.xlsx Results sheet "
         "(dest Zenodo sul tasto Media; measured pp/mf/ff anchors, "
         "PCHIP interiors, tapered equal-log outers). Table span G3–B7."
     ),
@@ -634,7 +634,7 @@ REGISTRY["violino_harm"] = _profile(
     unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/violin_harmonics.py from "
-        "Dynamics10 Violin_Dynamics10_harmonics.xlsx Results sheet "
+        "Violin_Zenodo_collections_harmonics_Dynamics10.xlsx Results sheet "
         "(dest Zenodo harmonics Media; measured pp/mf/ff anchors, "
         "PCHIP interiors, tapered equal-log outers). Table span G5–B7."
     ),
@@ -688,7 +688,7 @@ REGISTRY["viola_harm"] = _profile(
     unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/viola_harmonics.py from "
-        "Dynamics10 Viola_Dynamics10_harmonics.xlsx Results sheet "
+        "Viola_Zenodo_collections_harmonics_Dynamics10.xlsx Results sheet "
         "(dest Zenodo harmonics Media; measured pp/mf/ff anchors, "
         "PCHIP interiors, tapered equal-log outers). Table span C5–A#6."
     ),
@@ -777,14 +777,14 @@ REGISTRY["violoncelo_sul_ponticello"] = _profile(
     unsupported=("pizzicato", "mute", "sul_tasto"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/cello_sul_ponticello.py from "
-        "Cello_Zenodo_collections_sul_ponticello_Dynamics10.xlsx Results sheet "
-        "(dest Zenodo sul ponticello Media; measured pp/mf/ff anchors, "
-        "PCHIP interiors, tapered equal-log outers). Table span C2–A5."
+        "Cello_STE_sul_ponticello_IOWA_ORCH_Dynamics10.xlsx Results sheet "
+        "(STE IOWA+ORCH sul ponticello; measured pp/mf/ff anchors, "
+        "PCHIP interiors, tapered equal-log outers). Table span C2–C6."
     ),
     warnings=(
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
-        "Numerical CDM table covers arco_sul_ponticello only; anchors are dest-Zenodo Media "
-        "(IOWA+Orchidea average) at pp/mf/ff.",
+        "Numerical CDM table covers arco_sul_ponticello only; anchors are STE IOWA+ORCH "
+        "sul ponticello at pp/mf/ff.",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),
@@ -821,7 +821,7 @@ REGISTRY["violoncelo_harm"] = _profile(
     unsupported=("pizzicato", "mute", "sul_ponticello", "sul_tasto"),
     source_notes=(
         "Committed 10-dynamic CDM ladder in instrumentos/cello_harmonics.py from "
-        "Dynamics10 Cello_Dynamics10_harmonics.xlsx Results sheet "
+        "Cello_Zenodo_collections_harmonics_Dynamics10.xlsx Results sheet "
         "(dest Zenodo harmonics Media; measured pp/mf/ff anchors, "
         "PCHIP interiors, tapered equal-log outers). Table span C4–C6."
     ),
@@ -943,7 +943,7 @@ REGISTRY["contrabaixo_harm"] = _profile(
     "contrabaixo_harm",
     "cb_harm",
     "strings",
-    sounding=(52, 91),
+    sounding=(52, 72),
     comfortable=(31, 55),
     brightness="bright",
     sustain="sustained",
@@ -957,14 +957,14 @@ REGISTRY["contrabaixo_harm"] = _profile(
         "Committed 10-dynamic CDM ladder in instrumentos/double_bass_harmonics.py from "
         "Double_bass_Zenodo_collections_harmonics_Dynamics10.xlsx Results sheet "
         "(dest Zenodo harmonics Media; measured pp/mf/ff anchors, "
-        "PCHIP interiors, tapered equal-log outers). Table span E3–G6."
+        "PCHIP interiors, tapered equal-log outers). Table span E3–C5."
     ),
     warnings=(
         "String density uses externally sourced sparse CDM tables interpolated in note space.",
         "Numerical CDM table covers arco_harmonic only (pooled harmonics); anchors are "
         "dest-Zenodo Media (IOWA+Orchidea average) at pp/mf/ff.",
-        "Table span is the dest-Zenodo harmonic register (E3–G6); notes below E3 "
-        "are not invented.",
+        "Table span is the dest-Zenodo harmonic register (E3–C5); notes below E3 "
+        "and the old C#5–G6 tail are not invented.",
         "Other registry supported_techniques are organological capabilities without "
         "technique-specific table rows.",
     ),

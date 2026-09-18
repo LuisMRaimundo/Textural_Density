@@ -20,7 +20,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
         "Cello arco_sustain CDM ladder: measured pp/mf/ff anchors with "
         "committed Results sheet values for all 10 dynamic levels from "
         "CELLO_Zenodo_collections_Arco_normal_Dynamics10.xlsx "
-        "(dest Zenodo Cello_Media (IOWA+Orchidea average); Dynamics_predicter Results ladder)."
+        "(dest Zenodo Cello_Media (IOWA+Orchidea average); Dynamics_predicter Results ladder (CORDAS_4))."
     ),
     source_url_or_identifier='docs/instrument_acoustic_sources.md#cello',
     extraction_method=(
@@ -32,7 +32,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
     dynamic_levels=('pppp', 'ppp', 'pp', 'p', 'mp', 'mf', 'f', 'ff', 'fff', 'ffff'),
     pitch_range=(36, 84),
     uncertainty="medium",
-    version="2026-09-03",
+    version="2026-09-18",
     source_technique="arco_sustain",
     table_supported_techniques=("arco_sustain",),
 )

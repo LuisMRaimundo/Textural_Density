@@ -21,7 +21,7 @@
 | clarinete | woodwinds | 50–96 | 0 (A_non_transposing) | D3–C7 (50–96) | aligned |
 | clarinete_baixo | woodwinds | 34–82 | 14 (D_interval_transposing) | C#2–A#5 (37–82) | OK_registry_covers_table |
 | contrabaixo | strings | 28–72 | 0 (A_non_transposing) | E1–C5 (28–72) | aligned |
-| contrabaixo_harm | strings | 52–91 | 0 (A_non_transposing) | E3–G6 (52–91) | aligned |
+| contrabaixo_harm | strings | 52–72 | 0 (A_non_transposing) | E3–C5 (52–72) | aligned |
 | contrabaixo_sordina | strings | 28–72 | 0 (A_non_transposing) | E1–G4 (28–67) | OK_registry_covers_table |
 | contrabaixo_sul_ponticello | strings | 28–72 | 0 (A_non_transposing) | E1–G4 (28–67) | OK_registry_covers_table |
 | contrafagote | woodwinds | 22–77 | 0 (A_non_transposing) | A#1–D#5 (34–75) | OK_registry_covers_table |
@@ -51,9 +51,9 @@
 | violino | strings | 55–107 | 0 (A_non_transposing) | G3–B7 (55–107) | aligned |
 | violino_harm | strings | 79–107 | 0 (A_non_transposing) | G5–B7 (79–107) | aligned |
 | violino_sordina | strings | 55–107 | 0 (A_non_transposing) | G3–C7 (55–96) | OK_registry_covers_table |
-| violino_sul_ponticello | strings | 55–107 | 0 (A_non_transposing) | G3–C7 (55–96) | OK_registry_covers_table |
+| violino_sul_ponticello | strings | 55–107 | 0 (A_non_transposing) | G3–A6 (55–93) | OK_registry_covers_table |
 | violino_sul_tasto | strings | 55–107 | 0 (A_non_transposing) | G3–B7 (55–107) | aligned |
 | violoncelo | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
 | violoncelo_harm | strings | 60–84 | 0 (A_non_transposing) | C4–C6 (60–84) | aligned |
 | violoncelo_sordina | strings | 36–84 | 0 (A_non_transposing) | C2–A5 (36–81) | OK_registry_covers_table |
-| violoncelo_sul_ponticello | strings | 36–84 | 0 (A_non_transposing) | C2–A5 (36–81) | OK_registry_covers_table |
+| violoncelo_sul_ponticello | strings | 36–84 | 0 (A_non_transposing) | C2–C6 (36–84) | aligned |
