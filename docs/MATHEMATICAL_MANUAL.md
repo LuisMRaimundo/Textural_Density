@@ -124,17 +124,13 @@ $$
 D_{\mathrm{int}}^{\mathrm{raw}} = \sum_{i<j} \phi\bigl(\delta(i,j);\lambda\bigr).
 $$
 
-**Normalised interval density** (average per unordered pair):
+**Effective interval cardinality** (`density.interval` $= D_V = n_{\mathrm{eff}}-1$):
 
 $$
-\bar{D}_{\mathrm{int}} = \frac{2\,D_{\mathrm{int}}^{\mathrm{raw}}}{n(n-1)} \quad (n \ge 2).
+D_V = \frac{\sqrt{1+8S}-1}{2}\quad (n\ge 2),\qquad D_V=0\quad (n<2).
 $$
 
-If `USE_LOG_COMPRESSION` is true (`config.py`):
-
-$$
-\bar{D}_{\mathrm{int}} \leftarrow \log_{10}(1 + \bar{D}_{\mathrm{int}}).
-$$
+$n_{\mathrm{eff}}$ is the number of pitches that, with $K=1$ for every pair, would yield the same pair sum $S$. Adding a distinct pitch strictly increases $D_V$. No log compression is applied to $D_V$; `USE_LOG_COMPRESSION` remains only on the composite $D_{\mathrm{total}}$.
 
 ---
 
@@ -204,24 +200,17 @@ Pitch interpolation (MIDI-space linear/PCHIP between chromatic anchors) is uncha
 
 ---
 
-### G. Weighted density (linear min-max blend)
+### G. Weighted density (fixed-divisor blend)
 
-**Module:** `core/composite.py` — `compute_weighted_density_normalized`.
-
-**Min–max** (default):
+**Module:** `core/composite.py` — `compute_blend_density`.
 
 $$
-\widehat{D}_{\mathrm{inst}} = \frac{D_{\mathrm{inst}}}{D_{\mathrm{inst,max}}}, \quad
-\widehat{D}_{\mathrm{int}} = \frac{D_{\mathrm{int}}}{D_{\mathrm{int,max}}}.
+D_{\mathrm{pond}} = w \cdot \frac{D_{\mathrm{inst}}}{10} + (1-w)\cdot D_V, \quad w \in [0,1].
 $$
 
-**Blend:**
+This is a fixed-divisor combination, not a data-dependent min–max. There is no `unit_range` mode.
 
-$$
-D_{\mathrm{pond}} = 10 \cdot \bigl( w \, \widehat{D}_{\mathrm{inst}} + (1-w)\, \widehat{D}_{\mathrm{int}} \bigr), \quad w \in [0,1].
-$$
-
-> **Removed:** Stevens power-law (`use_stevens`, `alpha`, `beta`) — see [MIGRATION.md](MIGRATION.md).
+> **Removed:** Stevens power-law (`use_stevens`, `alpha`, `beta`) — see [MIGRATION.md](MIGRATION.md). The unused z-score mixer and the `INTERVAL_BLEND_NORMALISATION` flag were removed in 5.2.0.
 
 ---
 
@@ -241,15 +230,14 @@ D_{\mathrm{pitch}} = S \cdot (1 + \ln(1 + H)) \cdot (1 - 0.15 \cdot \mathrm{harm
 S = \sum_{i<j} e^{-\lambda \delta_{ij}}.
 $$
 
-Here $S$ is the **raw accumulating pairwise interval sum** over distinct pitch bins (the same sum whose mean-per-pair normalisation gives the reported compactness $D_{\mathrm{int}}^{\mathrm{norm}}$). Because $S$ accumulates over pairs, **adding a distinct note never decreases $S$**. $D_{\mathrm{pitch}}$ is only **quasi-monotone** in $S$ (entropy and harmonic-ratio factors can fall). Registral span $A_{\mathrm{st}}$ is **not** applied here — the pairwise exponential decay $e^{-\lambda\delta}$ already attenuates distant pairs, so a second $1/(1+A_{\mathrm{st}}/12)$ damping would penalise ambitus twice. $A_{\mathrm{st}}$ remains a separately reported subindex (`registral`), not a factor in $D_{\mathrm{pitch}}$ or $D_{\mathrm{total}}$.
+Here $S$ is the **raw accumulating pairwise interval sum** over distinct pitch bins (the same sum inverted to $D_V=n_{\mathrm{eff}}-1$ for the reported interval axis). Because $S$ accumulates over pairs, **adding a distinct note never decreases $S$**. $D_{\mathrm{pitch}}$ is only **quasi-monotone** in $S$ (entropy and harmonic-ratio factors can fall). Registral span $A_{\mathrm{st}}$ is **not** applied here — the pairwise exponential decay $e^{-\lambda\delta}$ already attenuates distant pairs, so a second $1/(1+A_{\mathrm{st}}/12)$ damping would penalise ambitus twice. $A_{\mathrm{st}}$ remains a separately reported subindex (`registral`), not a factor in $D_{\mathrm{pitch}}$ or $D_{\mathrm{total}}$.
 
 If $n_{\mathrm{distinct}} < 2$, $D_{\mathrm{pitch}} = 0$.
 
 **Composite vertical density (Task 8c — unified):**
 
 $$
-D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}}+(1-w)\,\widehat{D}_{\mathrm{int}}\bigr)
-= w\cdot\frac{D_{\mathrm{inst}}}{10} + (1-w)\cdot D_{\mathrm{int}}
+D_{\mathrm{blend}} = w\cdot\frac{D_{\mathrm{inst}}}{10} + (1-w)\cdot D_V
 = \texttt{density.weighted},
 \quad
 D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}}}{\mathrm{REF}},
@@ -261,29 +249,24 @@ $$
 |--------|---------|------|
 | $\mathrm{REF}$ = `MAX_DENS_GLOBAL` | **193** | Task 8c re-freeze: chosen so frozen all-pitched baselines keep pre-unification order of magnitude (match ≈192.6→193); see `CHANGES.md` / `config.py` |
 | $w$ = `weight_factor` | **0.5** (`DEFAULT_WEIGHT_FACTOR`) | Instrument vs interval blend inside $D_{\mathrm{blend}}$ |
-| $\mathrm{DI\_max}$, $\mathrm{DV\_max}$ | 100, 10 | Normalisation divisors in `core.composite` (**no clamping applied**). Under `INTERVAL_BLEND_NORMALISATION = "legacy"` (default) $\mathrm{DV\_max}=10$ even though compressed $D_{\mathrm{int}}$ cannot exceed $\log_{10}(2)\approx 0.301$. `"unit_range"` is opt-in and divides DV by that attainable maximum so $w$ approaches **approximate parity** of the two axes (see below). |
+| Instrument divisor | 10 | $D_{\mathrm{inst}}$ enters as $w\cdot D_{\mathrm{inst}}/10$. Not a clamp. |
+| $D_V$ | $n_{\mathrm{eff}}-1$ | Enters the blend unscaled. Not bounded by $\log_{10}2$. |
 
-**Known asymmetry (do not “fix” by changing `USE_LOG_COMPRESSION`).** `USE_LOG_COMPRESSION` is applied twice to the interval/composite path and never to instrument density:
+**Known remaining scale difference.** `USE_LOG_COMPRESSION` applies only to $D_{\mathrm{total}}=\log_{10}(1+D_{\mathrm{blend}}\sqrt{M}/\mathrm{REF})$. $D_V$ is **not** log-compressed (5.2.0). $D_{\mathrm{inst}}$ is also uncompressed. The blend therefore still mixes an RSS instrument index (typical tens, divided by 10) with a cardinality-like $D_V$ (order $n-1$). Per-slice terms `w·DI/10` and `(1−w)·DV` and their ratio are emitted on `composite_meta.blend_term_contributions`. When the interval term is exactly zero (monophonic / unpitched-only slices, or $w=1$), the ratio field is JSON `null`, never `inf`/`nan`.
 
-1. $D_{\mathrm{int}}$ is already $\log_{10}(1+\bar{D})$ inside `normalize_interval_density` before it enters the blend as DV.
-2. $D_{\mathrm{total}}$ applies $\log_{10}(1+D_{\mathrm{blend}}\sqrt{M}/\mathrm{REF})$ again in `compute_composite_vertical_density`.
-3. $D_{\mathrm{inst}}$ (DI) is compressed in neither place.
-
-The default blend therefore compares a raw-scale DI (typical tens) to a log-compressed DV ($\le 0.301$) after dividing them by 100 and 10 respectively. Per-slice realised terms `w·DI/DI_max·scale` and `(1−w)·DV/DV_max·scale` and their ratio are emitted on `composite_meta.blend_term_contributions` so the imbalance is visible. When the interval term is exactly zero (monophonic / unpitched-only slices, or $w=1$), the ratio field is JSON `null`, never `inf`/`nan`. Changing the double-log or compressing DI would move frozen totals; it is documented here and pinned by `tests/test_log_compression_asymmetry.py`.
-
-**`unit_range` is approximate parity, not strict commensurability.** Under that opt-in, DV is divided by its true attainable maximum and therefore lies in $[0,1]$. DI is still divided by $\mathrm{DI\_max}=100$, an empirical reference rather than a bound (DI is unclamped). $w=0.5$ then gives equal *weight* to a bounded quantity and an unbounded one. Results under `"legacy"` and `"unit_range"` are not comparable; the mode used for any analysis must be stated. The identity $\mathrm{orch}/\mathrm{pitch}=(\mathrm{DI}/10)/\mathrm{DV}$ holds only at $w=0.5$, where $w$ cancels; it must not be generalised to other weightings.
+The identity $\mathrm{orch}/\mathrm{pitch}=(\mathrm{DI}/10)/\mathrm{DV}$ holds only at $w=0.5$, where $w$ cancels; it must not be generalised to other weightings. There is no `unit_range` mode.
 
 $D_{\mathrm{pitch}}$ remains a reported axis; it is **not** the composite product. Zero interval contribution (unpitched-only) is a numeric zero — no event-kind branch.
 
 **Acceptance criterion:** property tests in `tests/test_unified_composite_contract.py` (monotonicity under event/Qty addition, mixed > subsets, continuity when dropping the last pitched event) plus the GUI-chain freeze `tests/test_composite_unification_acceptance.py`. Header text is generated from the same expression as the computation (`core.composite.format_composite_header_line`).
 
-> **Removed:** mean-per-pair normalisation $D_{\mathrm{int}}^{\mathrm{norm}}$ as the aggregate's interval term (replaced by the raw sum $S$); redundant registral-span damping $1/(1+A_{\mathrm{st}}/12)$ in the composite product; earlier `D_{\mathrm{ref}} = D_{\mathrm{pond}}/A_{\mathrm{st}}` with zero-span exemption and cohesion factor $10/(1+A_{\mathrm{st}})$. The reported compactness axis $D_{\mathrm{int}}^{\mathrm{norm}}$ (`density.interval`) is unchanged and remains **intensive** (falls with spread).
+> **Removed (5.2.0):** mean-per-pair log-compressed $D_{\mathrm{int}}^{\mathrm{norm}}$ as the reported `density.interval` (replaced by $D_V=n_{\mathrm{eff}}-1$). Earlier removals: mean-per-pair $S$ as the *aggregate* interval term (replaced by raw $S$ in $D_{\mathrm{pitch}}$); redundant registral-span damping $1/(1+A_{\mathrm{st}}/12)$ in the composite product.
 
 **Monotonicity semantics.**
 
 - **Raw interval sum $S$ — hard guarantee.** $S$ is **non-decreasing** under addition of a distinct pitch bin.
 - **Pitch-structure density $D_{\mathrm{pitch}}$ — quasi-monotone (reported axis only).** Modulated by $\bigl(1+\ln(1+H)\bigr)$ and $\bigl(1-0.15\cdot\mathrm{harmonicRatio}\bigr)$. An octave-related addition can lower $D_{\mathrm{pitch}}$ even if $S$ rose. This does **not** enter $D_{\mathrm{total}}$.
-- **Composite $D_{\mathrm{total}}$ (Task 8c).** $D_{\mathrm{total}}=\log_{10}(1+D_{\mathrm{blend}}\sqrt{M}/\mathrm{REF})$. It moves with $D_{\mathrm{blend}}$ (instrument RSS + interval compactness) and $\sqrt{M}$, **not** with the entropy/harmonic factors inside $D_{\mathrm{pitch}}$. Property tests: `tests/test_unified_composite_contract.py`.
+- **Composite $D_{\mathrm{total}}$ (Task 8c / 5.2.0).** $D_{\mathrm{total}}=\log_{10}(1+D_{\mathrm{blend}}\sqrt{M}/\mathrm{REF})$. It moves with $D_{\mathrm{blend}}$ (instrument RSS + effective interval cardinality) and $\sqrt{M}$, **not** with the entropy/harmonic factors inside $D_{\mathrm{pitch}}$. Property tests: `tests/test_unified_composite_contract.py`, `tests/test_effective_interval_cardinality.py`.
 
 **Absolute density** (reference scalar; **not** an input to $D_{\mathrm{total}}$):
 
@@ -501,7 +484,7 @@ These are **implementation correctness checks**, not empirical validation:
 | Property | Expected behaviour |
 |----------|-------------------|
 | Finite outputs | All `density.*` scalars finite for synthetic cases |
-| Chromatic vs wide | Interval density (compactness, intensive) higher for chromatic cluster than wide-spaced chord |
+| Chromatic vs wide | Effective interval cardinality higher for a chromatic cluster than a wide-spaced chord at the same $n$ |
 | Raw interval sum $S$ | **Non-decreasing** under addition of a distinct pitch bin (hard guarantee; §H) |
 | Composite `density.total` (Task 8c) | Monotonicity is the tested property of the current blend×mass composite (`tests/test_unified_composite_contract.py`); register-isolated bass with meaningful mass must not lower the total |
 | Pitch-structure `density.pitch_structure` | **Quasi-monotone** only (§H): $S$ never falls, but entropy and harmonic-ratio factors can lower $D_{\mathrm{pitch}}$. No general non-decrease guarantee. `tests/test_extensive_density_monotonic.py` is a 5.0.0 regression vestige, not a general description of the current formula |
@@ -549,7 +532,7 @@ flowchart TD
   end
 
   subgraph Fusion
-    W[Weighted linear blend + min-max]
+    W[Fixed-divisor blend w*DI/10 + (1-w)*DV]
   end
 
   subgraph Spectral

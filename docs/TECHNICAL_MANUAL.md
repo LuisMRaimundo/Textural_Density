@@ -198,17 +198,14 @@ Events are aggregated by exact MIDI pitch (`core/pitch_aggregation.py`) before i
 
 - **Microtonal scale:** In code, interval in semitons $\Delta_{\mathrm{st}}$ is converted to microtonal steps as $\delta = 2 \cdot \Delta_{\mathrm{st}}$ (24 steps per octave). So $\delta(i,j) = 2\,|m_i - m_j|$.
 
-- **Raw interval compactness** (sum over unordered **distinct-bin** pairs only):
-  $$D_{\mathrm{int}}^{\mathrm{raw}} = \sum_{k < \ell} \phi\bigl(\delta(k,\ell); \lambda\bigr), \quad n_{\mathrm{distinct}} \geq 2.$$
-  If $n_{\mathrm{distinct}} < 2$, reported interval compactness is zero.
+- **Raw pair sum** (unordered **distinct-bin** pairs only):
+  $$S = \sum_{k < \ell} \phi\bigl(\delta(k,\ell); \lambda\bigr), \quad n_{\mathrm{distinct}} \geq 2.$$
 
-- **Normalisation** (average per distinct-bin pair):
-  $$D_{\mathrm{int}}^{\mathrm{norm}} = \frac{2 \, D_{\mathrm{int}}^{\mathrm{raw}}}{n_{\mathrm{distinct}}(n_{\mathrm{distinct}}-1)}.$$
+- **Effective interval cardinality** (`density.interval` $= D_V = n_{\mathrm{eff}}-1$):
+  $$D_V = \frac{\sqrt{1+8S}-1}{2}.$$
+  $n_{\mathrm{eff}}$ is the fully-adjacent pitch count ($K=1$ for every pair) that would yield the same $S$. $D_V=0$ for one distinct pitch. No log compression is applied to $D_V$.
 
-- **Optional log compression** (when `USE_LOG_COMPRESSION` is True):
-  $$\widetilde{D}_{\mathrm{int}} = \log_{10}(1 + D_{\mathrm{int}}^{\mathrm{norm}}).$$
-
-Interval compactness is **pitch-only**: no register multiplier, no perceptual weighting, no psychoacoustic wrapper.
+Interval cardinality is **pitch-only**: no register multiplier, no perceptual weighting, no psychoacoustic wrapper.
 
 ### 3.3 Instrument density (pressure-equivalent, incoherent RSS)
 
@@ -234,20 +231,15 @@ For identical sources: $D_{\mathrm{inst}} = d^{(1)} \sqrt{n}$.
 
 > **Removed:** per-event $d_i' = d_i \sqrt{n_{\mathrm{instr},i}}$ summed across rows, which compounded with sonic mass to yield effective $n^{3/2}$ scaling.
 
-### 3.4 Weighted density (linear min-max blend)
+### 3.4 Weighted density (fixed-divisor blend)
 
-Implemented in `calcular_densidade_ponderada_normalizada(DI, DV, ...)` with DI = instrument density, DV = interval density.
+Implemented in `core.composite.compute_blend_density(DI, DV, w)` with DI = instrument density and DV = effective interval cardinality.
 
-- **Min-max normalisation** (method `"min-max"`, configurable maxima):
-  $$\widehat{D}_{\mathrm{inst}} = \frac{D_{\mathrm{inst}}}{D_{\mathrm{inst,max}}}, \qquad \widehat{D}_{\mathrm{int}} = \frac{D_{\mathrm{int}}}{D_{\mathrm{int,max}}}.$$
-  Defaults: $D_{\mathrm{inst,max}} = 100$, $D_{\mathrm{int,max}} = 10$ (parameters `DI_max`, `DV_max`). These are **normalisation divisors, not clamps**. Default `INTERVAL_BLEND_NORMALISATION = "legacy"` keeps `DV_max = 10`; `"unit_range"` is an opt-in approximate-parity mode. See [MATHEMATICAL_MANUAL §H](MATHEMATICAL_MANUAL.md).
+$$
+D_{\mathrm{pond}} = w \cdot \frac{D_{\mathrm{inst}}}{10} + (1-w)\cdot D_V, \quad w \in [0,1].
+$$
 
-- **Alternative: z-score normalisation** (method `"z-score"`): $\widehat{D}_{\mathrm{inst}} = (D_{\mathrm{inst}} - \mu_{\mathrm{inst}})/\sigma_{\mathrm{inst}}$, $\widehat{D}_{\mathrm{int}} = (D_{\mathrm{int}} - \mu_{\mathrm{int}})/\sigma_{\mathrm{int}}$ with configurable $\mu$, $\sigma$ (example values in code: $\mu_{\mathrm{inst}}=50$, $\sigma_{\mathrm{inst}}=25$; $\mu_{\mathrm{int}}=5$, $\sigma_{\mathrm{int}}=2.5$).
-
-- **Weighted combination** (weight $w \in [0,1]$, `weight_factor` in input):
-  $$D_{\mathrm{pond}} = 10 \cdot \bigl( w \, \widehat{D}_{\mathrm{inst}} + (1-w) \, \widehat{D}_{\mathrm{int}} \bigr).$$
-  $$D_{\mathrm{pond}} = 10 \cdot \bigl( w \, \widetilde{D}_{\mathrm{inst}} + (1-w) \, \widetilde{D}_{\mathrm{int}} \bigr).$$
-  So $w=0$ uses only interval density, $w=1$ only instrument density.
+This is a fixed-divisor combination, not a data-dependent min-max. There is no `unit_range` mode and no z-score path. $w=0$ uses only $D_V$, $w=1$ only instrument density.
 
 ### 3.5 Pitch-structure and composite vertical density
 
@@ -257,7 +249,7 @@ Implemented in `calcular_densidade_ponderada_normalizada(DI, DV, ...)` with DI =
   where $S$ is the raw pairwise interval sum, $H$ is spectral entropy and $r_{\mathrm{harm}}$ is harmonic ratio — both over **distinct pitched bins**.
 
 - **Composite vertical density (unified, all regimes — Task 8c):**
-  $$D_{\mathrm{blend}} = 10\cdot\bigl(w\,\widehat{D}_{\mathrm{inst}} + (1-w)\,\widehat{D}_{\mathrm{int}}\bigr)
+  $$D_{\mathrm{blend}} = w\cdot D_{\mathrm{inst}}/10 + (1-w)\cdot D_V
   \quad(= \texttt{density.weighted}),$$
   $$D_{\mathrm{total}}^{\mathrm{raw}} = \frac{D_{\mathrm{blend}} \cdot \sqrt{M_{\mathrm{sonic}}}}{\mathrm{REF}}, \qquad
   D_{\mathrm{total}} = \log_{10}(1 + D_{\mathrm{total}}^{\mathrm{raw}})$$
@@ -438,13 +430,13 @@ input_data = {
 3. **Pitch aggregation:** Three events → three distinct pitch bins (no unison merge).
 
 4. **Interval compactness:** Pairs over **distinct bins** only → intervals 4, 7, 3 semitons. With $\lambda \approx 0.05$ and microtonal $\delta = 2 \cdot \Delta_{\mathrm{st}}$:
-   - $\phi(8) = e^{-0.05 \cdot 8}$, $\phi(14)$, $\phi(6)$; sum → $D_{\mathrm{int}}^{\mathrm{raw}}$; normalise over distinct-bin pairs.
+   - $\phi(8) = e^{-0.05 \cdot 8}$, $\phi(14)$, $\phi(6)$; sum → $S$; $D_V=(\sqrt{1+8S}-1)/2$.
 
 5. **One-player instrument densities:** For each note, the instrument module returns $d_i^{(1)}$ for the given dynamics (dynamic applied once). With Qty = 1 each, three source groups:
    $$D_{\mathrm{inst}} = \sqrt{(d_1^{(1)})^2 + (d_2^{(1)})^2 + (d_3^{(1)})^2}.$$
 
-6. **Weighted density:** Normalise $D_{\mathrm{inst}}$ and $D_{\mathrm{int}}$ (min-max), then:
-   $$D_{\mathrm{pond}} = 10 \cdot (0.5 \cdot \widehat{D}_{\mathrm{inst}} + 0.5 \cdot \widehat{D}_{\mathrm{int}}).$$
+6. **Weighted density** (fixed-divisor combination):
+   $$D_{\mathrm{pond}} = 0.5 \cdot D_{\mathrm{inst}}/10 + 0.5 \cdot D_V.$$
 
 7. **Pitch-structure density (reported only):** $D_{\mathrm{pitch}} = S \cdot (1 + \ln(1+H)) \cdot (1 - 0.15 \cdot r_{\mathrm{harm}})$ with $S$ the raw pairwise sum. Registral span is **not** a factor. This value does **not** enter the composite.
 
@@ -509,9 +501,9 @@ Calling `from core import calculate_metrics` (preferred) or `AnalysisController.
 
 ### 4.4 Example numerical ranges (orientation only)
 
-- **Interval density:** Typically positive; depends on $\lambda$ and number/size of intervals. After log, often in a range like $[0, 1]$ for moderate chords.
+- **Effective interval cardinality $D_V$:** $0$ for one pitch; approaches $n-1$ for $n$ fully compacted pitches.
 - **Instrument density:** Positive; order of magnitude depends on instrument modules (e.g. tens).
-- **Weighted density:** With min-max and $w=0.5$, often in $[0, 10]$.
+- **Weighted density:** Fixed-divisor $w\cdot D_{\mathrm{inst}}/10+(1-w)\cdot D_V$; with $w=0.5$ typically a few units for moderate slices.
 - **Total:** After normalisation and log, often in $[0, 1]$ or similar; exact values depend on all factors above.
 
 These ranges are indicative; the manual does not fix a single “expected” number so that the implementation can evolve (e.g. new instruments or calibration) without contradicting the document.
@@ -542,7 +534,7 @@ These ranges are indicative; the manual does not fix a single “expected” num
 | Pitch structure | `core.pitch_structure` | `compute_pitch_structure_density`, composite assembly |
 | Pipeline | `core.pipeline` | `calculate_metrics` |
 | Sonic mass | `core.orchestration_mass` | `compute_orchestration_mass` |
-| Weighted density | `core.composite` | `compute_weighted_density_normalized` (returns `float`; failures propagate) |
+| Weighted density | `core.composite` | `compute_blend_density` (fixed-divisor; failures propagate) |
 | Spectral moments | `spectral_analysis` | `calculate_spectral_moments`, `calculate_extended_spectral_moments` |
 | Chroma | `spectral_analysis` | `calculate_chroma_vector` |
 | Harmonic ratio | `spectral_analysis` | `calculate_harmonic_ratio` |

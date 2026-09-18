@@ -1,13 +1,13 @@
 # Textural Density - Musical Density Analysis Application
 
 **Repository:** [github.com/LuisMRaimundo/Textural_Density](https://github.com/LuisMRaimundo/Textural_Density)  
-**Version (two axes):** package **1.1.7** (`pyproject.toml`) · methodology **5.1.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`)  
+**Version (two axes):** package **1.2.0** (`pyproject.toml`) · methodology **5.2.0-strict-symbolic** (`METRIC_SCHEMA_VERSION`)  
 **Status:** Active Development  
 **License:** [MIT](LICENSE) (`pyproject.toml` declares MIT; see [docs/VERSIONING.md](docs/VERSIONING.md))  
 **Documentation:** [Mathematical manual](docs/MATHEMATICAL_MANUAL.md) · [Technical manual](docs/TECHNICAL_MANUAL.md) · [Migration guide](docs/MIGRATION.md) · [Versioning & license](docs/VERSIONING.md) · [API](docs/API.md) · [Instrument profile importer](docs/instrument_profile_importer.md) · [QA checklist](docs/qa_checklist.md)  
 The `.md` manuals are canonical. `docs/MATHEMATICAL_MANUAL.pdf` and `docs/TECHNICAL_MANUAL.pdf` are archival snapshots from the 2026-05-23 initial import (`a439f2c`) and do not include later alignment commits.
 
-> **Versioning:** The header **Version** line always names both axes. Package release **1.1.7** is independent of methodology phase **5.1.0-strict-symbolic** (earlier phases 3.0.0 / 4.0.0 / 5.0.0). Do not treat package semver as a schema bump. See [docs/VERSIONING.md](docs/VERSIONING.md).
+> **Versioning:** The header **Version** line always names both axes. Package release **1.2.0** is independent of methodology phase **5.2.0-strict-symbolic** (earlier phases 3.0.0 / 4.0.0 / 5.0.0 / 5.1.0). Do not treat package semver as a schema bump. See [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ---
 
@@ -362,6 +362,10 @@ MIT — see [LICENSE](LICENSE) and [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ## Changelog
 
+### Version 1.2.0 / 5.2.0-strict-symbolic (2026-09-18) — effective interval cardinality
+
+Breaking numeric change. `density.interval` is now $D_V=n_{\mathrm{eff}}-1=(\sqrt{1+8S}-1)/2$ from the raw pair sum $S$. The blend is the same fixed-divisor combination $w\cdot D_I/10+(1-w)\cdot D_V$. **`density.interval`, `density.weighted` and `density.total` are not comparable with results produced before this version.** REF and $\lambda$ are unchanged. See [CHANGES.md](CHANGES.md).
+
 ### 2026-09-17 — Metric semantics and MusicXML transpose
 
 Working-tree / PR documentation of MusicXML wrap-around correction and metric-label clarifications. Package remains **1.1.7**; methodology remains **`5.1.0-strict-symbolic`**. Existing research outputs were not regenerated. See [CHANGES.md](CHANGES.md).
@@ -439,7 +443,7 @@ Documentation-only reconciliation on `5.0.0-strict-symbolic`; **numeric outputs 
 
 - **Extensive pitch-structure density.** `core/pitch_structure.py::compute_pitch_structure_density` now builds the aggregate from the **raw accumulating pairwise interval sum** `S = Σ e^{-λδ}` instead of the mean-per-pair value. Adding a distinct note can no longer *decrease* `density.total` or `pitch_structure`. Signature changed: takes `interval_sum_raw` (was `interval_compactness_norm`); the `registral_span_semitones` parameter was removed. **Superseded / qualified** by later monotonicity analysis: $S$ remains non-decreasing; `pitch_structure` is only **quasi-monotone** (entropy and harmonic-ratio factors can fall). See the 2026-07-11 Documentation & probes entry above and [MATHEMATICAL_MANUAL.md](docs/MATHEMATICAL_MANUAL.md) §H.
 - **Redundant registral-span damping removed** from the aggregate: the `1/(1 + A_st/12)` factor is gone (the pairwise exponential decay already attenuates distant pairs). `compute_registral_span_distinct` supplies the reported `registral` span; production `registral_compression` is `1/(1+span)`. `compute_registral_compactness` (`1/(1+span/12)`) is a **non-production reference helper**, not a reported subindex. `core/pipeline.py` still computes `amplitude_st` for `registral_span` reporting.
-- **Compactness axis unchanged.** Reported `density.interval` (`normalize_interval_density`, mean-per-pair, log-compressed) is preserved and remains **intensive** (falls with spread).
+- **Compactness axis (historical 5.0.0 note).** Reported `density.interval` was then mean-per-pair and log-compressed. **Superseded in 5.2.0** by effective interval cardinality $n_{\mathrm{eff}}-1$.
 - **`MAX_DENS_GLOBAL` (REF)** history: `20.0` → `575.0` (5.0.0 extensive pitch-gated composite) → **`193.0` (Task 8c unified blend×mass composite)**. See [CHANGES.md](CHANGES.md).
 - **New tests:** `tests/test_extensive_density_monotonic.py` (no-decrease on note addition; register-isolated bass never lowers total; compactness stays intensive; unison-doubling invariance; two-note minimum; finiteness).
 - **Regenerated golden baselines** (aggregate values legitimately changed; not weakened): `tests/fixtures/regression_baseline.json` (`pitch_structure`/`refined`/`total`), `tests/snapshots/numeric_outputs/synthetic_triad.json` (same fields), `tests/snapshots/metadata_outputs/synthetic_triad.json` (`metric_schema_version`), `benchmarks/expected_outputs/excerpt_001..005.json`, `replication/outputs_frozen/json/synthetic_triad.json`, and `replication/tables/thesis_symbolic_density_summary.{csv,md}`. Tests asserting only the intensive compactness/registral subindices were left unchanged.

@@ -38,7 +38,8 @@ These describe **scientific scope**, not Python package semver:
 | `3.0.0-strict-symbolic` | Removed Stevens' Law, psychoacoustic paths, perceptual interval weighting | historical |
 | `4.0.0-strict-symbolic` | Removed combination-tone / resultant-tone analysis | historical |
 | `5.0.0-strict-symbolic` | Extensive composite vertical density: pitch-structure aggregate built from the raw accumulating pairwise interval sum (non-decreasing on distinct-note addition); redundant registral-span damping removed from the aggregate; `MAX_DENS_GLOBAL` recalibrated. Breaking numeric change. | historical |
-| `5.1.0-strict-symbolic` | **Current label.** Introduced register-adaptive tails (2026-07-12); **runtime GPR/tails removed 2026-08-03.** Production now looks up committed 10-dynamic ladders and raises `MissingCommittedDynamicError`. `DYN_TAIL_SHRINK` is offline/legacy only. Schema label unchanged. | `METRIC_SCHEMA_VERSION` in `core/defaults.py` |
+| `5.1.0-strict-symbolic` | Introduced register-adaptive tails (2026-07-12); **runtime GPR/tails removed 2026-08-03.** Production looks up committed 10-dynamic ladders and raises `MissingCommittedDynamicError`. Historical from 5.2.0. | historical |
+| `5.2.0-strict-symbolic` | **Current label.** `density.interval` is effective interval cardinality $n_{\mathrm{eff}}-1$ from the raw pair sum $S$. Blend is the fixed-divisor combination $w\cdot D_I/10+(1-w)\cdot D_V$. Breaking numeric change: interval, weighted, and total are not comparable with pre-5.2.0 results. | `METRIC_SCHEMA_VERSION` in `core/defaults.py` |
 
 **Task 8c (2026-08-03, still under `5.1.0-strict-symbolic`):** Composite assembly changed to the unified blend×mass formula (`REF=193`); pitch-structure remains the extensive $S$ axis. Schema label unchanged — numeric/traceability details in [`CHANGES.md`](../CHANGES.md).
 
@@ -48,7 +49,7 @@ These describe **scientific scope**, not Python package semver:
 
 **Committed dynamic ladders (2026-08-03, still under `5.1.0-strict-symbolic`):** Runtime GPR / adaptive-tail extrapolation removed. Table-backed pitched modules commit full 10-dynamic ladders; unpitched percussion uses pitch-independent `DYNAMIC_CDM`. **Data-faithful rebuild (2026-08-08/09/18):** ladders regenerated with Dynamics_predicter v1.5 — measured pp/mf/ff anchors verbatim (no isotonic clamp), PCHIP interiors, tapered outers; horn, tuba, and trombone modules added. Schema label unchanged — see [`CHANGES.md`](../CHANGES.md).
 
-Outputs embed `metric_schema_version` (currently **`5.1.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.1.7`.
+Outputs embed `metric_schema_version` (currently **`5.2.0-strict-symbolic`**) in metadata and replication JSON. This is **independent** of package version `1.2.0`.
 
 The `.md` manuals are canonical. `docs/MATHEMATICAL_MANUAL.pdf` and `docs/TECHNICAL_MANUAL.pdf` date from the 2026-05-23 initial import (`a439f2c`) and are archival only.
 
@@ -85,4 +86,4 @@ When changing methodology scope (e.g. new strict-symbolic phase):
 
 ---
 
-*Last updated: 2026-09-03 (package 1.1.7; methodology 5.1.0-strict-symbolic; repo slug Textural_Density).*
+*Last updated: 2026-09-18 (package 1.2.0; methodology 5.2.0-strict-symbolic; repo slug Textural_Density).*

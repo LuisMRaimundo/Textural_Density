@@ -93,7 +93,7 @@ Inventory of constants and modelling assumptions for the **systematic score-only
 | `DYN_TAIL_SHRINK` ($\gamma$) | **0.5** | `config.py` / `tools/legacy_gpr_dynamic_interpolation.py` | **Historical (5.1.0).** Not used by runtime `calculate_metrics`. |
 | `DENSITY_FLOOR` | $10^{-9}$ | `config.py` | **Historical** safety assert for the retired tail path. |
 
-Weighted density uses a linear min-max blend only (Stevens' Law removed in 3.0.0). Pitch-structure density is the **extensive** raw pairwise sum $S$ (5.0.0); registral-span damping is **not** applied in the aggregate.
+Weighted density is the fixed-divisor combination $w\cdot D_{\mathrm{inst}}/10+(1-w)\cdot D_V$ (Stevens' Law removed in 3.0.0). $D_V$ is effective interval cardinality $n_{\mathrm{eff}}-1$ (5.2.0). Pitch-structure density is the **extensive** raw pairwise sum $S$ (5.0.0); registral-span damping is **not** applied in the aggregate.
 
 ---
 
