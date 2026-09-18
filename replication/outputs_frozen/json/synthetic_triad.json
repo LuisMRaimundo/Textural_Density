@@ -3,21 +3,21 @@
   "source": "synthetic_fixture",
   "synthetic_fixture": true,
   "score_only_mode": true,
-  "software_version": "1.1.6",
-  "metric_schema_version": "5.1.0-strict-symbolic",
-  "config_hash": "28befaebd84264a1eca83123a9c10a0bb99b899892d49cbb8c10a0eea0a3d375",
+  "software_version": "1.1.7",
+  "metric_schema_version": "5.2.0-strict-symbolic",
+  "config_hash": "249bbced9e77cbd5b6ae45e2752b144511294602c70bef7ddffaf3277fe3ffe1",
   "input_hash": "12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8",
-  "timestamp_utc": "2026-08-24T23:12:14.213057+00:00",
+  "timestamp_utc": "2026-09-18T17:23:07.185847+00:00",
   "density": {
-    "interval": 0.2137588382139519,
+    "interval": 1.5162954002371611,
     "instrument": 46.78264113063388,
-    "weighted": 2.44601147563867,
+    "weighted": 3.0972797566502743,
     "pitch_structure": 3.5189123835151137,
     "refined": 3.5189123835151137,
-    "total": 0.04688897865038914,
+    "total": 0.058564805375031864,
     "sonic_mass": 80.9247499,
-    "absolute": 3.390891915912431,
-    "weighted_pitch": 0.10687941910697595,
+    "absolute": 4.293741461455062,
+    "weighted_pitch": 0.7581477001185806,
     "weighted_orchestral": 2.3391320565316938
   },
   "density_subindices": {
@@ -49,7 +49,7 @@
       "unit": "dimensionless",
       "warnings": [],
       "assumptions": [],
-      "normalized": 0.2137588382139519
+      "normalized": 1.5162954002371611
     },
     "registral": {
       "raw": {
@@ -143,8 +143,8 @@
       "assumptions": []
     },
     "composite": {
-      "value": 0.04688897865038914,
-      "pre_log": 0.11400971608413564,
+      "value": 0.058564805375031864,
+      "pre_log": 0.14436562919094093,
       "source_type": "metadata_proxy",
       "validation_status": "heuristic",
       "confidence": "medium",
@@ -193,7 +193,7 @@
       "warnings": [],
       "included_in_composite": true,
       "raw_value": 1.9077235705087667,
-      "normalized_value": 0.2137588382139519,
+      "normalized_value": 1.5162954002371611,
       "component_weight": 0.2
     },
     "registral_density": {
@@ -298,7 +298,7 @@
     },
     "composite_symbolic_density": {
       "construct_id": "composite_symbolic_density",
-      "value": 0.04688897865038914,
+      "value": 0.058564805375031864,
       "source_type": "metadata_proxy",
       "verification_status": "heuristic",
       "assumptions": [],
@@ -323,25 +323,26 @@
   },
   "metric_metadata": {
     "score_only_mode": true,
-    "metric_schema_version": "5.1.0-strict-symbolic",
+    "metric_schema_version": "5.2.0-strict-symbolic",
     "validation_status": "verified_only",
-    "config_hash": "28befaebd84264a1eca83123a9c10a0bb99b899892d49cbb8c10a0eea0a3d375",
+    "config_hash": "249bbced9e77cbd5b6ae45e2752b144511294602c70bef7ddffaf3277fe3ffe1",
     "metrics": {
       "density.interval": {
         "name": "density.interval",
-        "value": 0.2137588382139519,
+        "value": 1.5162954002371611,
         "source_type": "score_derived",
         "validation_status": "verified_only",
         "confidence": "medium",
-        "interpretation": "Interval compactness over distinct aggregated pitch bins only; exact unison doublings excluded from vertical interval structure.",
+        "interpretation": "Effective interval cardinality (n_eff \u2212 1) from the raw pairwise kernel sum S: (sqrt(1 + 8 S) \u2212 1) / 2. Exact unison doublings are excluded from vertical interval structure.",
         "warnings": [],
         "assumptions": [
           "Lambda calibrated against consonance ratings; symbolic pitch-distance model only.",
-          "Pitch bins aggregated by exact MIDI (microtonal tolerance); unison pairs not counted."
+          "Pitch bins aggregated by exact MIDI (microtonal tolerance); unison pairs not counted.",
+          "n_eff is the fully-adjacent pitch count that would yield the same pair sum S."
         ],
         "unit": "dimensionless",
         "raw_value": 1.9077235705087667,
-        "normalized_value": 0.2137588382139519
+        "normalized_value": 1.5162954002371611
       },
       "density.instrument": {
         "name": "density.instrument",
@@ -361,16 +362,14 @@
       },
       "density.weighted": {
         "name": "density.weighted",
-        "value": 2.44601147563867,
+        "value": 3.0972797566502743,
         "source_type": "metadata_proxy",
         "validation_status": "heuristic",
         "confidence": "medium",
-        "interpretation": "Linear blend of instrument and interval density after min-max normalisation.",
-        "warnings": [
-          "Normalisation constants DI_max=100.0, DV_max=10.0 are theoretical."
-        ],
+        "interpretation": "Fixed-divisor blend w*(DI/10) + (1-w)*DV; DV is effective interval cardinality (n_eff \u2212 1), not a min-max normalisation.",
+        "warnings": [],
         "assumptions": [
-          "Normalisation uses DI_max=100.0, DV_max=10.0.",
+          "Instrument term uses divisor 10; DV enters unscaled.",
           "Weighted density uses linear blend only (no power-law compression)."
         ],
         "unit": "dimensionless"
@@ -385,7 +384,7 @@
         "warnings": [],
         "assumptions": [],
         "unit": "dimensionless",
-        "raw_value": 0.2137588382139519
+        "raw_value": 1.5162954002371611
       },
       "density.pitch_structure": {
         "name": "density.pitch_structure",
@@ -400,7 +399,7 @@
       },
       "density.total": {
         "name": "density.total",
-        "value": 0.04688897865038914,
+        "value": 0.058564805375031864,
         "source_type": "metadata_proxy",
         "validation_status": "heuristic",
         "confidence": "medium",
@@ -411,11 +410,11 @@
           "Complexity factor (in pitch structure axis): 1.9490.",
           "Dynamic mass boost sqrt(sonic_mass): 8.9958.",
           "Single REF MAX_DENS_GLOBAL=193.0 (Task 8c re-freeze \u2248192.6\u2192193; not Qty or table size; no event-kind fallback).",
-          "log10(1+x) compression applied (USE_LOG_COMPRESSION=True); pre-log value\u22480.11400971608413564."
+          "log10(1+x) compression applied (USE_LOG_COMPRESSION=True); pre-log value\u22480.14436562919094093."
         ],
         "unit": "dimensionless",
-        "raw_value": 0.11400971608413564,
-        "normalized_value": 0.04688897865038914
+        "raw_value": 0.14436562919094093,
+        "normalized_value": 0.058564805375031864
       },
       "density.sonic_mass": {
         "name": "density.sonic_mass",
@@ -433,7 +432,7 @@
       },
       "density.absolute": {
         "name": "density.absolute",
-        "value": 3.390891915912431,
+        "value": 4.293741461455062,
         "source_type": "score_derived",
         "validation_status": "theoretical",
         "confidence": "medium",
@@ -448,7 +447,7 @@
         "source_type": "metadata_proxy",
         "validation_status": "heuristic",
         "confidence": "low",
-        "interpretation": "Harmonic-template match on symbolic pitch/weight arrays \u2014 not measured harmonicity.",
+        "interpretation": "Octave-class weight share versus the lowest MIDI (circular distance \u2264 0.25 semitone). Compatibility key harmonic_ratio; not k\u00b7f0 harmonicity. Damps density.pitch_structure only.",
         "warnings": [],
         "assumptions": [],
         "unit": "ratio"
@@ -529,7 +528,7 @@
       "MAX_DENS_GLOBAL": 193.0,
       "USE_LOG_COMPRESSION": true,
       "WEIGHTED_DI_MAX": 100.0,
-      "WEIGHTED_DV_MAX": 10.0
+      "INSTRUMENT_BLEND_DIVISOR": 10.0
     },
     "pitch_aggregation": {
       "event_count": 3,
@@ -755,6 +754,6 @@
       }
     ],
     "input_hash": "12437a4a047b5bb0e9688b150469de764ddcf79639e5f3d87fa6765d414e7dd8",
-    "software_version": "1.1.6"
+    "software_version": "1.1.7"
   }
 }

@@ -135,12 +135,13 @@ def independent_blend(
     ref: float = REF,
     use_log: bool = True,
 ) -> dict[str, float]:
-    """Independent §H re-implementation (legacy divisors; no clamping)."""
-    d_blend = scale * (w * (di / di_max) + (1.0 - w) * (dv / dv_max))
+    """Independent blend: w*(DI/10) + (1-w)*DV, then log10(1 + blend*sqrt(M)/REF)."""
+    instrument_divisor = di_max / scale
+    d_blend = w * (di / instrument_divisor) + (1.0 - w) * dv
     raw = d_blend * math.sqrt(mass) / ref
     total = math.log10(1.0 + raw) if use_log else raw
-    inst_term = scale * w * (di / di_max)
-    int_term = scale * (1.0 - w) * (dv / dv_max)
+    inst_term = w * (di / instrument_divisor)
+    int_term = (1.0 - w) * dv
     ratio = None
     if int_term != 0.0:
         ratio = inst_term / int_term

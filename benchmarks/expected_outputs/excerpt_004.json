@@ -113,7 +113,7 @@
           ]
         }
       ],
-      "interval_compactness_distinct": 0.23609954188252116,
+      "interval_compactness_distinct": 3.333440435923234,
       "pitch_aggregation": {
         "distinct_pitch_count": 5,
         "distinct_pitch_ratio": 1.0,
@@ -377,7 +377,7 @@
           "distinct_pitch_count",
           "pitch_bins"
         ],
-        "value": 0.23609954188252116
+        "value": 3.333440435923234
       },
       "pitch_structure_density": {
         "depends_on": [
@@ -402,14 +402,14 @@
           "pitch_structure_density",
           "sonic_mass"
         ],
-        "value": 0.05918442415611134
+        "value": 0.09035349419098379
       },
       "weighted_density": {
         "depends_on": [
           "instrument_density",
           "interval_compactness_distinct"
         ],
-        "value": 2.651603914996785
+        "value": 4.200274362017142
       }
     }
   },
@@ -429,7 +429,7 @@
       "Where instrument modules exist, density uses externally sourced sparse acoustic amplitude tables (GPR interpolation), not live audio analysis.",
       "This analysis uses score/information input only \u2014 no audio waveforms were analysed at runtime."
     ],
-    "metric_schema_version": "5.1.0-strict-symbolic",
+    "metric_schema_version": "5.2.0-strict-symbolic",
     "orchestral_mass.assumptions": [
       "Dynamic-to-weight mapping is symbolic dynamic weighting for score analysis.",
       "Instrument density component uses externally sourced acoustic metadata where GPR modules exist."
@@ -438,16 +438,16 @@
   },
   "numeric": {
     "density": {
-      "absolute": 4.7510364233376725,
+      "absolute": 7.5258813615000415,
       "instrument": 50.67108288111049,
-      "interval": 0.23609954188252116,
+      "interval": 3.333440435923234,
       "pitch_structure": 15.36947871780451,
       "refined": 15.36947871780451,
       "sonic_mass": 112.9275716,
-      "total": 0.05918442415611134,
-      "weighted": 2.651603914996785,
-      "weighted_orchestral": 2.533554144055525,
-      "weighted_pitch": 0.1180497709412606
+      "total": 0.09035349419098379,
+      "weighted": 4.200274362017142,
+      "weighted_orchestral": 2.5335541440555245,
+      "weighted_pitch": 1.666720217961617
     },
     "density_subindices": {
       "composite": {},
@@ -468,7 +468,7 @@
         }
       },
       "interval_compactness": {
-        "normalized": 0.23609954188252116,
+        "normalized": 3.333440435923234,
         "raw": 7.222632787885656
       },
       "orchestral_mass": {

@@ -1,15 +1,15 @@
 {
   "density": {
-    "interval": 0.1886837391214329,
+    "interval": 2.103757825240598,
     "instrument": 54.1848871873847,
-    "weighted": 2.803586228929951,
+    "weighted": 3.7611232719895344,
     "pitch_structure": 6.333268907802272,
     "refined": 6.333268907802272,
-    "total": 0.06363638437261204,
+    "total": 0.08339696358969217,
     "sonic_mass": 118.01642129999999,
-    "absolute": 4.512197967618012,
-    "weighted_pitch": 0.09434186956071647,
-    "weighted_orchestral": 2.709244359369235
+    "absolute": 6.053294387278149,
+    "weighted_pitch": 1.051878912620299,
+    "weighted_orchestral": 2.7092443593692352
   },
   "harmonic_ratio": 0.44959424348645716,
   "complexity": 1.945156740957147,
