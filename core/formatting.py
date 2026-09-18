@@ -83,7 +83,7 @@ def format_output_string(resultados: dict[str, Any]) -> str:
             )
         lines.extend(
             [
-                f"Interval Compactness (distinct pitches): {_fmt(dens['interval'])}",
+                f"Effective interval cardinality (n_eff − 1): {_fmt(dens['interval'])}",
                 f"Pitch-Structure Density: {_fmt(pitch_structure_val)}",
                 f"Composite Vertical Density: {_fmt(composite_val)}",
                 "",

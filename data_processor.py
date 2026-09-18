@@ -1,7 +1,7 @@
 # data_processor.py — backward-compatibility shim only.
 # Canonical pipeline: core.pipeline.calculate_metrics
 
-from core.composite import compute_weighted_density_normalized as calcular_densidade_ponderada_normalizada
+from core.composite import compute_blend_density as calcular_densidade_ponderada_normalizada
 from core.formatting import format_output_string
 from core.orchestration_mass import compute_orchestration_mass as calcular_massa_sonora
 from core.pipeline import calcular_metricas, calculate_metrics, load_instrument_module

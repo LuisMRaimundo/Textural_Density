@@ -2,11 +2,13 @@
 Vertical pitch-structure density (distinct pitch bins only).
 
 Separates orchestral mass from pitch-structure diversity. Exact unison doublings
-contribute to mass descriptors but not to interval compactness, spectral entropy,
+contribute to mass descriptors but not to interval cardinality, spectral entropy,
 registral diversity, or composite vertical pitch-structure density.
 """
 
 from __future__ import annotations
+
+import math
 
 import numpy as np
 
@@ -38,27 +40,29 @@ def calculate_interval_density_from_distinct_midis(
     return float(total)
 
 
-def normalize_interval_density(raw: float, distinct_pitch_count: int) -> float:
-    """Mean pairwise normalization over distinct pitch bins."""
+def effective_interval_cardinality(raw: float, distinct_pitch_count: int) -> float:
+    """Effective interval cardinality ``n_eff - 1`` from the raw pair sum.
+
+    Solves ``n_eff (n_eff - 1) / 2 = S`` for ``n_eff`` and returns
+    ``(sqrt(1 + 8 S) - 1) / 2``. Zero when fewer than two distinct pitches.
+    No log compression is applied here.
+    """
     if distinct_pitch_count < 2:
         return 0.0
-    n = distinct_pitch_count
-    normalized = float(2.0 * raw / (n * (n - 1)))
-    if USE_LOG_COMPRESSION:
-        normalized = float(np.log10(1.0 + normalized))
-    return normalized
+    s = max(0.0, float(raw))
+    return float((math.sqrt(1.0 + 8.0 * s) - 1.0) / 2.0)
 
 
 def compute_interval_compactness_distinct(
     aggregation: PitchAggregationResult,
     lamb: float | None = None,
 ) -> tuple[float, float]:
-    """Return (raw, normalized) interval compactness over distinct pitch bins."""
+    """Return ``(raw pair sum S, effective interval cardinality n_eff - 1)``."""
     midis = aggregation.bin_midis
     if aggregation.distinct_pitch_count < 2:
         return 0.0, 0.0
     raw = calculate_interval_density_from_distinct_midis(midis, lamb=lamb)
-    reported = normalize_interval_density(raw, aggregation.distinct_pitch_count)
+    reported = effective_interval_cardinality(raw, aggregation.distinct_pitch_count)
     return raw, reported
 
 
