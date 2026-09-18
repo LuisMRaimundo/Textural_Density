@@ -30,4 +30,4 @@ Reads each `*_Dynamics10.xlsx` `Results` sheet in the Desktop `para dinâmicas` 
 python tools/commit_dynamics_from_para_dinamicas.py
 ```
 
-This is the current official path for ordinary-sustain winds (including Picc, E_Horn, Bass_Clar, Contr_Basson), brass, arco strings, and string technique/harmonic modules. Violin sul tasto has no 2026-09-03 book and is left unchanged. Older generators (`generate_full_dynamics_modules_from_xlsx.py`, `generate_violin_technique_modules_from_ok_workbooks.py`) remain for history and for rendering helpers imported by this script.
+This is the current official path for ordinary-sustain winds (including Picc, E_Horn, Bass_Clar, Contr_Basson), brass, arco strings, and string technique/harmonic modules, including violin sul tasto (CORDAS_4 dest-Zenodo Dynamics10, 2026-09-18). Older generators (`generate_full_dynamics_modules_from_xlsx.py`, `generate_violin_technique_modules_from_ok_workbooks.py`) remain for history and for rendering helpers imported by this script.

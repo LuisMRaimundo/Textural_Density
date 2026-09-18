@@ -20,7 +20,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
         "Violin arco_sustain CDM ladder: measured pp/mf/ff anchors with "
         "committed Results sheet values for all 10 dynamic levels from "
         "VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx "
-        "(dest Zenodo Violin_Media (IOWA+Orchidea average); Dynamics_predicter Results ladder)."
+        "(dest Zenodo Violin_Media (IOWA+Orchidea average); Dynamics_predicter Results ladder (CORDAS_4))."
     ),
     source_url_or_identifier='docs/instrument_acoustic_sources.md#violin',
     extraction_method=(
@@ -32,7 +32,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
     dynamic_levels=('pppp', 'ppp', 'pp', 'p', 'mp', 'mf', 'f', 'ff', 'fff', 'ffff'),
     pitch_range=(55, 107),
     uncertainty="medium",
-    version="2026-09-03",
+    version="2026-09-18",
     source_technique="arco_sustain",
     table_supported_techniques=("arco_sustain",),
 )

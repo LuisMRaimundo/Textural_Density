@@ -1,4 +1,4 @@
-"""Tests for double-bass technique modules (dest-Zenodo Dynamics_predicter workbooks)."""
+"""Tests for double-bass technique modules (CORDAS_4 Dynamics10 Results workbooks)."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ DEST_TECHNIQUES = (
             "muted double bass",
         ),
         "probe_note": "F1",
-        "probe_mf": 45.06363,
+        "probe_mf": 43.607569,
         "n_notes": 40,
         "first": "E1",
         "last": "G4",
@@ -60,10 +60,10 @@ DEST_TECHNIQUES = (
             "harmonics double bass",
         ),
         "probe_note": "E3",
-        "probe_mf": 25.779643,
-        "n_notes": 40,
+        "probe_mf": 26.191633,
+        "n_notes": 21,
         "first": "E3",
-        "last": "G6",
+        "last": "C5",
     },
 )
 
@@ -136,5 +136,6 @@ def test_dest_workbook_measured_anchor_provenance(tech: dict):
         assert "E1" in mod.spectral_data
     if tech["module"] == "double_bass_harmonics":
         assert "E1" not in mod.spectral_data
-        assert "C#5" in mod.spectral_data
-        assert "G6" in mod.spectral_data
+        assert "C5" in mod.spectral_data
+        assert "C#5" not in mod.spectral_data
+        assert "G6" not in mod.spectral_data

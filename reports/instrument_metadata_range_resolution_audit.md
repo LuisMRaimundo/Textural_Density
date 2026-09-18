@@ -6,7 +6,7 @@
 
 - **Double bass:** source_table_span E1–C5 (MIDI 28–72) aligns with committed table and registry; E1–A3 was obsolete documentation.
 - **Violin sounding [55,107]:** table G3–B7 aligns (not a double-bass case).
-- **Table excludes sounding range (partial):** 11 instrument(s): clarinete_baixo, contrabaixo_sordina, contrabaixo_sul_ponticello, contrafagote, cor_anglais, flautim, viola_sul_ponticello, violino_sordina, violino_sul_ponticello, violoncelo_sordina, violoncelo_sul_ponticello.
+- **Table excludes sounding range (partial):** 10 instrument(s): clarinete_baixo, contrabaixo_sordina, contrabaixo_sul_ponticello, contrafagote, cor_anglais, flautim, viola_sul_ponticello, violino_sordina, violino_sul_ponticello, violoncelo_sordina.
 - **Technique:** modules declare `source_technique` / `table_supported_techniques`; registry lists broader organological capabilities.
 - **Trombone:** committed table (`trombone.py`, F1–C5) — **PASS** when registry matches the table span.
 - **Tuba:** committed table (`tuba.py`, C1–A#4) — **PASS** when registry matches the table span.
@@ -57,7 +57,7 @@
 | clarinete | D3–C7 | 50–96 | 55–80 | full_coverage | PASS | PASS |
 | clarinete_baixo | C#2–A#5 | 34–82 | 40–65 | YES (lo=3, hi=0) | REVIEW REQUIRED | PASS |
 | contrabaixo | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
-| contrabaixo_harm | E3–G6 | 52–91 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo_harm | E3–C5 | 52–72 | 31–55 | full_coverage | PASS | PASS |
 | contrabaixo_sordina | E1–G4 | 28–72 | 31–55 | YES (lo=0, hi=5) | REVIEW REQUIRED | PASS |
 | contrabaixo_sul_ponticello | E1–G4 | 28–72 | 31–55 | YES (lo=0, hi=5) | REVIEW REQUIRED | PASS |
 | contrafagote | A#1–D#5 | 22–77 | 28–65 | YES (lo=12, hi=2) | REVIEW REQUIRED | PASS |
@@ -87,9 +87,9 @@
 | violino | G3–B7 | 55–107 | 55–76 | full_coverage | PASS | PASS |
 | violino_harm | G5–B7 | 79–107 | 72–96 | full_coverage | PASS | PASS |
 | violino_sordina | G3–C7 | 55–107 | 55–76 | YES (lo=0, hi=11) | REVIEW REQUIRED | PASS |
-| violino_sul_ponticello | G3–C7 | 55–107 | 55–76 | YES (lo=0, hi=11) | REVIEW REQUIRED | PASS |
+| violino_sul_ponticello | G3–A6 | 55–107 | 55–76 | YES (lo=0, hi=14) | REVIEW REQUIRED | PASS |
 | violino_sul_tasto | G3–B7 | 55–107 | 55–76 | full_coverage | PASS | PASS |
 | violoncelo | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |
 | violoncelo_harm | C4–C6 | 60–84 | 60–84 | full_coverage | PASS | PASS |
 | violoncelo_sordina | C2–A5 | 36–84 | 40–65 | YES (lo=0, hi=3) | REVIEW REQUIRED | PASS |
-| violoncelo_sul_ponticello | C2–A5 | 36–84 | 40–65 | YES (lo=0, hi=3) | REVIEW REQUIRED | PASS |
+| violoncelo_sul_ponticello | C2–C6 | 36–84 | 40–65 | full_coverage | PASS | PASS |

@@ -190,7 +190,7 @@ Qty does **not** affect pitch-structure metrics (interval pairs, spectral entrop
 |------|-----------|
 | Dynamic present in row | Exact cell value |
 | Dynamic absent | MissingCommittedDynamicError |
-| Pitched table-backed modules (winds incl. piccolo / English horn / bass clarinet / contrabassoon, brass incl. horn/trombone/tuba, strings, techniques) | Full 10-level **data-faithful** Dynamics_predicter v1.5.2.1 ladders (2026-08-08/09/18/30; dest-Zenodo refresh 2026-09-03): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — not forced monotone |
+| Pitched table-backed modules (winds incl. piccolo / English horn / bass clarinet / contrabassoon, brass incl. horn/trombone/tuba, strings, techniques) | Full 10-level **data-faithful** Dynamics_predicter v1.5.2.1 ladders (2026-08-08/09/18/30; dest-Zenodo refresh 2026-09-03; string CORDAS_4 refresh 2026-09-18): measured pp/mf/ff anchors verbatim, PCHIP interiors, tapered outers — not forced monotone |
 | Unpitched percussion (`bass_drum`, `cymbals`, `tamtam`, `gong`) | Pitch-independent `DYNAMIC_CDM` (former `internal_default` log-linear ladder) |
 
 Pitch interpolation (MIDI-space linear/PCHIP between chromatic anchors) is unchanged and independent of the dynamic column.

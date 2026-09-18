@@ -209,20 +209,20 @@
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
       "registry_sounding_min_midi": 52,
-      "registry_sounding_max_midi": 91,
+      "registry_sounding_max_midi": 72,
       "comfortable_min_midi": 31,
       "comfortable_max_midi": 55,
       "module_name": "double_bass_harmonics",
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "E3",
-        "last_note": "G6",
-        "row_count": 40,
+        "last_note": "C5",
+        "row_count": 21,
         "min_midi": 52,
-        "max_midi": 91,
+        "max_midi": 72,
         "instrument_source_pitch_range": [
           52,
-          91
+          72
         ]
       },
       "range_discrepancy": "aligned",
@@ -1247,13 +1247,13 @@
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "G3",
-        "last_note": "C7",
-        "row_count": 42,
+        "last_note": "A6",
+        "row_count": 39,
         "min_midi": 55,
-        "max_midi": 96,
+        "max_midi": 93,
         "instrument_source_pitch_range": [
           55,
-          96
+          93
         ]
       },
       "range_discrepancy": "OK_registry_covers_table",
@@ -1453,16 +1453,16 @@
       "profile_status": "literature_derived",
       "table_span": {
         "first_note": "C2",
-        "last_note": "A5",
-        "row_count": 46,
+        "last_note": "C6",
+        "row_count": 49,
         "min_midi": 36,
-        "max_midi": 81,
+        "max_midi": 84,
         "instrument_source_pitch_range": [
           36,
-          81
+          84
         ]
       },
-      "range_discrepancy": "OK_registry_covers_table",
+      "range_discrepancy": "aligned",
       "validation_uses": "sounding_pitch_midi_vs_registry_sounding_range",
       "manual_input_convention": "sounding_concert_pitch_no_transposition",
       "musicxml_convention": "written_pitch_transposed_once_via_transpose_element",

@@ -193,7 +193,7 @@ JOBS: tuple[Job, ...] = (
             "family_blurb": "ordinary sustain",
         },
     ),
-    # Strings — ordinary + techniques (no sul tasto in this folder)
+    # Strings — ordinary + techniques
     Job(
         "VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx",
         "string",
@@ -206,7 +206,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "medium",
             "citation_pool": (
                 "dest Zenodo Violin_Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -222,7 +222,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "high",
             "citation_pool": (
                 "dest Zenodo Violin_con sordino Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -238,7 +238,23 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "high",
             "citation_pool": (
                 "dest Zenodo Violin_sul ponticello Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
+            ),
+        },
+    ),
+    Job(
+        "Violin_Zenodo_collections_sul_tasto_Dynamics10.xlsx",
+        "string",
+        {
+            "module": "violin_sul_tasto",
+            "instrument_label": "Violin",
+            "technique_label": "arco sul tasto",
+            "source_technique": "arco_sul_tasto",
+            "doc_anchor": "violin-sul-tasto",
+            "uncertainty": "high",
+            "citation_pool": (
+                "dest Zenodo Violin_sul tasto Media (IOWA+Orchidea average); "
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -254,7 +270,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "high",
             "citation_pool": (
                 "dest Zenodo Violin_harmonics Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -270,7 +286,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "medium",
             "citation_pool": (
                 "dest Zenodo VIOLA_Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -286,7 +302,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "high",
             "citation_pool": (
                 "dest Zenodo Viola_con sordino Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -302,7 +318,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "high",
             "citation_pool": (
                 "dest Zenodo Viola_sul ponticello Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -318,7 +334,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "high",
             "citation_pool": (
                 "dest Zenodo Viola_harmonics Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -355,7 +371,7 @@ JOBS: tuple[Job, ...] = (
         },
     ),
     Job(
-        "Cello_Zenodo_collections_sul_ponticello_Dynamics10.xlsx",
+        "Cello_STE_sul_ponticello_IOWA_ORCH_Dynamics10.xlsx",
         "string",
         {
             "module": "cello_sul_ponticello",
@@ -365,8 +381,7 @@ JOBS: tuple[Job, ...] = (
             "doc_anchor": "cello-sul-ponticello",
             "uncertainty": "high",
             "citation_pool": (
-                "dest Zenodo Cello_sul ponticello Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "STE IOWA+ORCH sul ponticello Dynamics10 Results (CORDAS_4)"
             ),
         },
     ),
@@ -398,7 +413,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "medium",
             "citation_pool": (
                 "dest Zenodo DBass_Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -414,7 +429,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "high",
             "citation_pool": (
                 "dest Zenodo DoubleBass_con sordino Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -430,7 +445,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "high",
             "citation_pool": (
                 "dest Zenodo DoubleBass_sul ponticello Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),
@@ -446,7 +461,7 @@ JOBS: tuple[Job, ...] = (
             "uncertainty": "high",
             "citation_pool": (
                 "dest Zenodo DoubleBass_harmonics Media (IOWA+Orchidea average); "
-                "Dynamics_predicter Results ladder"
+                "Dynamics_predicter Results ladder (CORDAS_4)"
             ),
         },
     ),

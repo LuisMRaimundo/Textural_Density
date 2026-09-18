@@ -1,4 +1,4 @@
-"""Tests for cello technique modules (dest-Zenodo Dynamics_predicter workbooks)."""
+"""Tests for cello technique modules (CORDAS_4 Dynamics10 Results workbooks)."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ DEST_TECHNIQUES = (
             "muted cello",
         ),
         "probe_note": "C2",
-        "probe_mf": 62.349097,
+        "probe_mf": 61.10459,
         "n_notes": 46,
         "first": "C2",
         "last": "A5",
@@ -44,9 +44,9 @@ DEST_TECHNIQUES = (
         ),
         "probe_note": "C2",
         "probe_mf": 64.153127,
-        "n_notes": 46,
+        "n_notes": 49,
         "first": "C2",
-        "last": "A5",
+        "last": "C6",
     },
     {
         "display": "vlc_harm",

@@ -1,4 +1,4 @@
-"""Tests for viola technique modules (dest-Zenodo Dynamics_predicter workbooks)."""
+"""Tests for viola technique modules (CORDAS_4 Dynamics10 Results workbooks)."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ DEST_TECHNIQUES = (
             "sul ponticello viola",
         ),
         "probe_note": "C4",
-        "probe_mf": 34.115549,
+        "probe_mf": 32.926671,
         "n_notes": 41,
         "first": "C3",
         "last": "E6",
@@ -43,7 +43,7 @@ DEST_TECHNIQUES = (
             "muted viola",
         ),
         "probe_note": "C4",
-        "probe_mf": 26.158056,
+        "probe_mf": 25.246485,
         "n_notes": 47,
         "first": "C3",
         "last": "A#6",
