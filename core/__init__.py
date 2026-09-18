@@ -5,7 +5,7 @@ Import from this package for GUI-independent analysis. The vertical-slice
 pipeline is implemented in ``core.pipeline`` (core-native).
 """
 
-from core.composite import compute_weighted_density_normalized as calcular_densidade_ponderada_normalizada
+from core.composite import compute_blend_density as calcular_densidade_ponderada_normalizada
 from core.converters import (
     analysis_config_from_input,
     legacy_input_to_vertical_slice,

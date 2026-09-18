@@ -23,8 +23,8 @@ def compute_interval_compactness(notes: list[str]) -> dict[str, Any]:
         "source_type": "score_derived",
         "validation_status": "verified_by_tests",
         "interpretation": (
-            "Pairwise pitch-distance compactness from distinct aggregated pitch bins; "
-            "exact unison doublings excluded."
+            "Effective interval cardinality (n_eff − 1) from distinct aggregated "
+            "pitch bins; exact unison doublings excluded."
         ),
         "distinct_pitch_count": agg.distinct_pitch_count,
         "interval_pairs_count_distinct": agg.interval_pairs_count_distinct,

@@ -88,7 +88,7 @@ def _instrument_density_epistemics(
 
 
 # Normalisation constants documented in metadata (single source: core.composite)
-from core.composite import WEIGHTED_DI_MAX, WEIGHTED_DV_MAX  # noqa: E402
+from core.composite import INSTRUMENT_BLEND_DIVISOR, WEIGHTED_DI_MAX  # noqa: E402
 
 
 @dataclass
@@ -254,12 +254,14 @@ def build_metric_metadata(context: MetricAssemblyContext) -> dict[str, Any]:
         validation_status="verified_only",
         confidence="medium",
         interpretation=(
-            "Interval compactness over distinct aggregated pitch bins only; "
-            "exact unison doublings excluded from vertical interval structure."
+            "Effective interval cardinality (n_eff − 1) from the raw pairwise "
+            "kernel sum S: (sqrt(1 + 8 S) − 1) / 2. Exact unison doublings "
+            "are excluded from vertical interval structure."
         ),
         assumptions=[
             "Lambda calibrated against consonance ratings; symbolic pitch-distance model only.",
             "Pitch bins aggregated by exact MIDI (microtonal tolerance); unison pairs not counted.",
+            "n_eff is the fully-adjacent pitch count that would yield the same pair sum S.",
         ],
         warnings=[],
     )
@@ -294,14 +296,15 @@ def build_metric_metadata(context: MetricAssemblyContext) -> dict[str, Any]:
         source_type="metadata_proxy",
         validation_status="heuristic",
         confidence="medium",
-        interpretation="Linear blend of instrument and interval density after min-max normalisation.",
+        interpretation=(
+            "Fixed-divisor blend w*(DI/10) + (1-w)*DV; DV is effective "
+            "interval cardinality (n_eff − 1), not a min-max normalisation."
+        ),
         assumptions=[
-            f"Normalisation uses DI_max={WEIGHTED_DI_MAX}, DV_max={WEIGHTED_DV_MAX}.",
+            f"Instrument term uses divisor {INSTRUMENT_BLEND_DIVISOR:g}; DV enters unscaled.",
             "Weighted density uses linear blend only (no power-law compression).",
         ],
-        warnings=[
-            f"Normalisation constants DI_max={WEIGHTED_DI_MAX}, DV_max={WEIGHTED_DV_MAX} are theoretical.",
-        ],
+        warnings=[],
     )
 
     metrics["density.refined"] = MetricResult(
@@ -465,7 +468,7 @@ def build_metric_metadata(context: MetricAssemblyContext) -> dict[str, Any]:
             "MAX_DENS_GLOBAL": MAX_DENS_GLOBAL,
             "USE_LOG_COMPRESSION": USE_LOG_COMPRESSION,
             "WEIGHTED_DI_MAX": WEIGHTED_DI_MAX,
-            "WEIGHTED_DV_MAX": WEIGHTED_DV_MAX,
+            "INSTRUMENT_BLEND_DIVISOR": INSTRUMENT_BLEND_DIVISOR,
         },
     }
 

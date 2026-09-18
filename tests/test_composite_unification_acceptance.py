@@ -20,9 +20,6 @@ import pytest
 
 from config import MAX_DENS_GLOBAL, USE_LOG_COMPRESSION
 from core.composite import (
-    BLEND_SCALE,
-    WEIGHTED_DI_MAX,
-    WEIGHTED_DV_MAX,
     compute_blend_density,
     compute_composite_from_blend,
 )
@@ -44,7 +41,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS,
         "instruments": STRING_INSTS,
         "qtys": (1, 1, 1, 1, 1),
-        "expected_total": 0.11097263710915733,
+        "expected_total": 0.13760876084378282,
     },
     {
         "label": "+bass drum",
@@ -52,7 +49,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff",),
         "instruments": STRING_INSTS + ("Bass drum",),
         "qtys": (1, 1, 1, 1, 1, 1),
-        "expected_total": 0.12076759726730982,
+        "expected_total": 0.14837365260546084,
     },
     {
         "label": "+cymbals",
@@ -60,7 +57,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff", "ff"),
         "instruments": STRING_INSTS + ("Bass drum", "Cymbals"),
         "qtys": (1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.12909176148013493,
+        "expected_total": 0.15748910017708936,
     },
     {
         "label": "+flute/oboe ffff",
@@ -68,7 +65,7 @@ SLICES: list[dict] = [
         "dynamics": STRING_DYNS + ("ff", "ff", "ffff", "ffff"),
         "instruments": STRING_INSTS + ("Bass drum", "Cymbals", "Flute", "Oboe"),
         "qtys": (1, 1, 1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.1405447032447646,
+        "expected_total": 0.17769046379474154,
     },
     {
         "label": "+tam-tam ffff",
@@ -77,7 +74,7 @@ SLICES: list[dict] = [
         "instruments": STRING_INSTS
         + ("Bass drum", "Cymbals", "Flute", "Oboe", "Tam-tam"),
         "qtys": (1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-        "expected_total": 0.1473125021895525,
+        "expected_total": 0.18514978714582095,
     },
     {
         "label": "Qty expansion 4/5/5/3/10",
@@ -86,7 +83,7 @@ SLICES: list[dict] = [
         "instruments": STRING_INSTS
         + ("Bass drum", "Cymbals", "Flute", "Oboe", "Tam-tam"),
         "qtys": (4, 5, 5, 3, 10, 1, 1, 1, 1, 1),
-        "expected_total": 0.4069651180509932,
+        "expected_total": 0.4468783742513252,
     },
 ]
 
@@ -193,9 +190,7 @@ def test_header_formula_evaluates_to_reported_composite(slice_def):
 
     di = float(r["density"]["instrument"])
     dv = float(r["density"]["interval"])
-    d_blend = compute_blend_density(
-        di, dv, w, DI_max=WEIGHTED_DI_MAX, DV_max=WEIGHTED_DV_MAX, scale=BLEND_SCALE
-    )
+    d_blend = compute_blend_density(di, dv, w)
     assert d_blend == pytest.approx(d_blend_printed, abs=5e-5)
     assert d_blend == pytest.approx(float(r["density"]["weighted"]), rel=1e-12)
 

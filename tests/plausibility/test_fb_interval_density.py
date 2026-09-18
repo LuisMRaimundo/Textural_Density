@@ -106,39 +106,31 @@ class TestFBOctaveDoublings:
 
 class TestFBLogCompression:
     def test_log_compression_is_log10_1_plus_x(self, monkeypatch):
-        """HARD: USE_LOG_COMPRESSION on/off changes weighted_pitch by log10(1+x)."""
+        """HARD: DV is not log-compressed; only the composite uses log10(1+x)."""
         import config as cfg
 
-        import densidade_intervalar as di_mod
         import core.pitch_structure as ps
 
         notes = ["C4", "E4", "G4"]
-        # Each module binds USE_LOG_COMPRESSION at import; patch the live names.
         for flag in (False, True):
             monkeypatch.setattr(cfg, "USE_LOG_COMPRESSION", flag)
-            monkeypatch.setattr(di_mod, "USE_LOG_COMPRESSION", flag)
             monkeypatch.setattr(ps, "USE_LOG_COMPRESSION", flag)
             if flag is False:
                 raw, _, _ = calculate_metrics(slice_input(notes, instruments="flauta"))
             else:
                 compressed, _, _ = calculate_metrics(slice_input(notes, instruments="flauta"))
-        x = float(raw["density"]["interval"])
-        got = float(compressed["density"]["interval"])
-        expected = math.log10(1.0 + x)
+        dv_raw = float(raw["density"]["interval"])
+        dv_comp = float(compressed["density"]["interval"])
+        assert dv_comp == pytest.approx(dv_raw, abs=1e-12)
         wp_raw = float(raw["density"]["weighted_pitch"])
         wp_comp = float(compressed["density"]["weighted_pitch"])
-        wp_is_log10_1_plus_x = wp_comp == pytest.approx(math.log10(1.0 + wp_raw), abs=1e-9)
-        assert got == pytest.approx(expected, rel=0, abs=1e-9)
+        assert wp_comp == pytest.approx(wp_raw, abs=1e-12)
         record_hard(
             family="F-B",
             test_id="FB.log",
-            raw_interval=x,
-            compressed_interval=got,
-            expected=expected,
-            weighted_pitch_raw=wp_raw,
-            weighted_pitch_compressed=wp_comp,
-            weighted_pitch_follows_log10_1_plus_x=bool(wp_is_log10_1_plus_x),
-            note="Documented identity is D_int ← log10(1+D_int); weighted_pitch is the blend of that DV",
+            interval_uncompressed=dv_raw,
+            interval_with_flag=dv_comp,
+            note="DV is n_eff-1; toggling USE_LOG_COMPRESSION does not change DV",
         )
 
 

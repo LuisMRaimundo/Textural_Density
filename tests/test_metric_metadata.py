@@ -59,7 +59,7 @@ class TestMetricMetadataIntegration:
         meta = calculate_metrics(baseline_input_data)[0]["metric_metadata"]["metrics"]
         interval = meta["density.interval"]
         assert interval["source_type"] == "score_derived"
-        assert float(interval["raw_value"]) >= float(interval["value"])
+        assert interval.get("raw_value") is not None
 
     def test_weighted_density_linear_blend_documented(self, baseline_input_data):
         meta = calculate_metrics(baseline_input_data)[0]["metric_metadata"]["metrics"]
@@ -100,7 +100,7 @@ class TestMetricMetadataIntegration:
         assert "MAX_DENS_GLOBAL" in norm
         assert "USE_LOG_COMPRESSION" in norm
         assert "WEIGHTED_DI_MAX" in norm
-        assert "WEIGHTED_DV_MAX" in norm
+        assert "INSTRUMENT_BLEND_DIVISOR" in norm
 
 
 class TestMetricMetadataHelpers:

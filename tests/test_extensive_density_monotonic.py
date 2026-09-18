@@ -6,7 +6,8 @@ Regression guard for the defect where ``density.total`` *decreased* when a
 distinct note was added to a sonority. After the fix, the pitch-structure
 aggregate is built from the raw accumulating pairwise interval sum (extensive,
 non-decreasing on distinct-note addition) while the reported compactness axis
-(``density.interval``) remains intensive (mean-per-pair, falls with spread).
+(``density.interval``) is effective interval cardinality (grows with added
+distinct pitches; tighter spacing is larger at fixed n).
 
 Public entry point only: ``from core import calculate_metrics``.
 All events ``mf`` / ``Qty 1`` unless stated otherwise.
@@ -63,7 +64,7 @@ def test_register_isolated_bass_never_lowers_total():
 
 
 def test_compactness_axis_remains_intensive():
-    """Reported density.interval (compactness) stays intensive: tight > wide."""
+    """Reported density.interval is larger for a tighter spacing at fixed n."""
     tight = _metrics(["C4", "C#4", "D4"], ["Flute"] * 3)
     wide = _metrics(["C4", "E5", "C7"], ["Flute"] * 3)
     assert tight["interval"] > wide["interval"]

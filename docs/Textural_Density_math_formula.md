@@ -8,13 +8,13 @@ This document records **mathematics as implemented** in the working tree of Text
 
 | Field | Value |
 |-------|--------|
-| Audit date | 2026-09-17 (Europe/Lisbon); semantics/MusicXML patch same day |
+| Audit date | 2026-09-18 (Europe/Lisbon); interval-cardinality patch |
 | Active repository | `E:\PYTHON CODES\CÓDIGOS FINAIS - GIT HUB\Textural_Density-git` |
-| Branch | `fix/metric-semantics-and-musicxml-transpose` (uncommitted patch; not pushed) |
-| Baseline HEAD (pre-patch) | `872d1d4131037cd94fed1a2f4ae69543cb6ab3d7` (`main` / GitHub default) |
-| Package version (declared) | `1.1.7` (`pyproject.toml`) |
-| Methodology / schema label (declared) | `5.1.0-strict-symbolic` (`core/defaults.py`) |
-| Working-tree source vs baseline | **Patched working tree.** MusicXML written-pitch conversion is a behaviour change. Roll-off / `harmonic_ratio` / IRR / GPR text are terminology or documentation. This document is **not** a self-referential final commit hash. |
+| Branch | `feat/interval-effective-cardinality` (uncommitted patch; not pushed) |
+| Baseline HEAD (pre-patch) | `0c5cab945a9c3f83b55ac9b723bf62939fad0b1b` (`main` / GitHub default) |
+| Package version (declared) | `1.2.0` (`pyproject.toml`) |
+| Methodology / schema label (declared) | `5.2.0-strict-symbolic` (`core/defaults.py`) |
+| Working-tree source vs baseline | **Patched working tree.** `density.interval` is $n_{\mathrm{eff}}-1$. This document is **not** a self-referential final commit hash. |
 | Uncommitted / untracked (non-source) | Pre-existing `build/`; `reports/density_probe/`; extra `reports/gpr_model_quality_plots/review_*.png`. Research analyses were **not** regenerated. |
 | Generated document excluded from fingerprint | this file (`docs/Textural_Density_math_formula.md`) |
 
@@ -519,38 +519,40 @@ with $d$ from M-010.
 
 ---
 
-### M-013 — Mean-pairwise interval density (reported $D_V$)
+### M-013 — Effective interval cardinality (reported $D_V$)
 
 **A. Status.** Production (`density.interval`).
 
-**B. Source.** [`core/pitch_structure.py`](../core/pitch_structure.py) `normalize_interval_density`, lines 41–49. Flag `USE_LOG_COMPRESSION = True` in [`config.py`](../config.py) line 29.
+**B. Source.** [`core/pitch_structure.py`](../core/pitch_structure.py) `effective_interval_cardinality`, lines 43–53. No log compression on $D_V$.
 
 **C. Excerpt.**
 
 ```python
-    normalized = float(2.0 * raw / (n * (n - 1)))
-    if USE_LOG_COMPRESSION:
-        normalized = float(np.log10(1.0 + normalized))
+    if distinct_pitch_count < 2:
+        return 0.0
+    s = max(0.0, float(raw))
+    return float((math.sqrt(1.0 + 8.0 * s) - 1.0) / 2.0)
 ```
 
-**D. LaTeX.** For $n=K\ge 2$:
+**D. LaTeX.** For raw pair sum $S$ (M-012) and $K\ge 2$:
 
 $$
-\overline{S}=\frac{2S}{n(n-1)},\qquad
-D_V=\log_{10}(1+\overline{S})\quad\text{when ``USE_LOG_COMPRESSION``}
+D_V=\frac{\sqrt{1+8S}-1}{2}=n_{\mathrm{eff}}-1,
+\qquad
+\frac{n_{\mathrm{eff}}(n_{\mathrm{eff}}-1)}{2}=S.
 $$
 
-otherwise $D_V=\overline{S}$. If $K<2$, $D_V=0$.
+If $K<2$, $D_V=0$. Exact unison doublings do not change $S$ or $D_V$.
 
-**E. Symbols.** $D_V$: `densidade_intervalar_val`. Common logarithm (`np.log10`). Dimensionless.
+**E. Symbols.** $D_V$: `densidade_intervalar_val`. $n_{\mathrm{eff}}$ is the fully-adjacent pitch count ($K=1$ for every pair) that would yield the same $S$. Dimensionless.
 
-**F. Layman.** Average closeness of all pitch pairs, then gently compressed so large chords do not explode the number.
+**F. Layman.** How many fully packed neighbouring pitches would produce the same total closeness.
 
-**G. Specialist.** Mean of pairwise kernel values, then $\log_{10}(1+x)$. Attainable $D_V$ is at most $\log_{10}2$ when compression is on and every pair is a unison-like $d=1$ — but distinct bins cannot all be unisons, so the bound is theoretical for the normaliser.
+**G. Specialist.** Inverse of the triangular-number map. Adding a distinct pitch strictly increases $D_V$ because $S$ gains strictly positive pair terms ($0<K(\Delta)\le 1$). At fixed $n$, narrower intervals increase $S$ and therefore $D_V$. No $\log_{10}(1+x)$ is applied here.
 
 **H. Conditions.** Always after M-012. Feeds the blend (M-023).
 
-**I. Verification evidence.** `tests/test_interval_blend_normalisation.py`, `tests/test_log_compression_asymmetry.py`. Not executed.
+**I. Verification evidence.** `tests/test_effective_interval_cardinality.py` (T1–T7), `tests/test_interval_density_bound.py`.
 
 ---
 
@@ -850,43 +852,43 @@ Identical incoherent sources with common $D$ reduce to $D\sqrt{Q}$ via `quantity
 
 ---
 
-### M-023 — Blend $D_{\mathrm{blend}}$ (min-max, production)
+### M-023 — Blend $D_{\mathrm{blend}}$ (fixed-divisor, production)
 
-**A. Status.** Production (`density.weighted`). Default `metodo="min-max"`.
+**A. Status.** Production (`density.weighted`).
 
-**B. Source.** [`core/composite.py`](../core/composite.py) `compute_blend_density` 44–63; constants `BLEND_SCALE=10`, `WEIGHTED_DI_MAX=100`, `WEIGHTED_DV_MAX=10` (lines 24–26). Called from `calculate_metrics` with `w=weight_factor` (default 0.5).
+**B. Source.** [`core/composite.py`](../core/composite.py) `compute_blend_density` 27–40; `INSTRUMENT_BLEND_DIVISOR=10` (line 22). Called from `calculate_metrics` with `w=weight_factor` (default 0.5).
 
 **C. Excerpt.**
 
 ```python
-    dv_max = resolve_interval_dv_max(DV_max)
-    return float(scale * (w * (DI / DI_max) + (1.0 - w) * (DV / dv_max)))
+    return float(
+        w * (float(DI) / INSTRUMENT_BLEND_DIVISOR) + (1.0 - w) * float(DV)
+    )
 ```
 
-**D. LaTeX.** With current `INTERVAL_BLEND_NORMALISATION="legacy"`:
+**D. LaTeX.**
 
 $$
-D_{\mathrm{blend}}=10\left(w\frac{D_I}{100}+(1-w)\frac{D_V}{10}\right)
-= w\frac{D_I}{10}+(1-w)D_V.
+D_{\mathrm{blend}}= w\frac{D_I}{10}+(1-w)D_V.
 $$
 
-No clamping of $D_I$ or $D_V$.
+No clamping of $D_I$ or $D_V$. No `unit_range` mode.
 
 **E. Symbols.** $w$: `weight_factor` $\in\mathbb{R}$ (GUI typically $[0,1]$, not enforced here). $D_I$, $D_V$ from M-021, M-013.
 
-**F. Layman.** A slider mixes “instrument-table strength” with “pitch closeness.”
+**F. Layman.** A slider mixes “instrument-table strength” with effective interval cardinality.
 
-**G. Specialist.** Affine blend of two differently scaled indices. Divisors 100 and 10 are **software references**, not proven maxima. $D_I$ can exceed 100; $D_V$ can exceed 10.
+**G. Specialist.** Fixed-divisor combination, not a data-dependent min–max. The instrument divisor 10 is a **software reference**, not a proven maximum.
 
-**H. Conditions.** Always (`metodo="min-max"`). Also computed with $(D_I,0)$ and $(0,D_V)$ as `weighted_orchestral` / `weighted_pitch`.
+**H. Conditions.** Always. Also computed with $(D_I,0)$ and $(0,D_V)$ as `weighted_orchestral` / `weighted_pitch`.
 
-**I. Verification evidence.** `tests/test_unified_composite_contract.py`, `tests/test_blend_scale_snapshot.py`, `tests/plausibility/test_fe_blend_composite.py`. Not executed.
+**I. Verification evidence.** `tests/test_unified_composite_contract.py`, `tests/test_blend_scale_snapshot.py`, `tests/plausibility/test_fe_blend_composite.py`.
 
 ---
 
 ### M-024 — Optional unit-range $D_V$ divisor
 
-**A. Status.** Optional (`INTERVAL_BLEND_NORMALISATION="unit_range"`). **Not** the committed default.
+**A. Status.** **Removed in 5.2.0.** The flag `INTERVAL_BLEND_NORMALISATION` and `resolve_interval_dv_max` no longer exist.
 
 **B. Source.** [`core/composite.py`](../core/composite.py) `resolve_interval_dv_max`, lines 29–41; flag in [`config.py`](../config.py) line 36.
 
@@ -922,7 +924,7 @@ $$
 
 ### M-025 — Optional z-score blend
 
-**A. Status.** Optional unused by `calculate_metrics` (hard-codes `"min-max"`).
+**A. Status.** **Removed in 5.2.0.** `compute_weighted_density_normalized` no longer exists; production uses `compute_blend_density` only.
 
 **B. Source.** [`core/composite.py`](../core/composite.py) `compute_weighted_density_normalized`, lines 207–212.
 
@@ -2181,7 +2183,7 @@ Written dynamics are symbolic markings. Instrument density applies **committed e
 12. **Timbre “families” list is incomplete** relative to the instrument registry (M-038).
 13. **Literature names in `CONSONANCE_RATINGS` comments** are not treated as verified citations of the stored numbers.
 14. **`mean_pairwise_pearson`** is mean Pearson, not Krippendorff’s $\alpha$ (M-049). Alias retained.
-15. **`INTERVAL_BLEND_NORMALISATION` default `"legacy"`** vs documented optional `"unit_range"` (M-024).
+15. **`INTERVAL_BLEND_NORMALISATION` / `unit_range`.** **Removed 2026-09-18** (M-024). Blend is the fixed-divisor combination only.
 16. **Coarse-default $D$ (M-018) is not on the same scale** as table CDM.
 
 Confirmed implementation facts above are separated from interpretation. This document does not claim that any index equals perceived density, loudness, or dissonance.

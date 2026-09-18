@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from core.composite import compute_weighted_density_normalized
+from core.composite import compute_blend_density
 from core.converters import legacy_input_to_vertical_slice
 from core.interval_compactness import compute_interval_compactness
 from core.orchestration_mass import compute_orchestration_mass
@@ -22,13 +22,13 @@ from densidade_intervalar import calculate_interval_density
 
 def test_interval_compactness_matches_pipeline_score_only():
     notes = ["C4", "E4", "G4"]
-    from densidade_intervalar import calculate_interval_density_normalized
+    from core.pitch_structure import effective_interval_cardinality
 
     wrapper = compute_interval_compactness(notes)
     direct = calculate_interval_density(notes)
-    normalized = calculate_interval_density_normalized(notes)
+    expected = effective_interval_cardinality(float(direct), 3)
     assert wrapper["raw"] == pytest.approx(float(direct))
-    assert wrapper["value"] == pytest.approx(float(normalized))
+    assert wrapper["value"] == pytest.approx(expected)
 
 
 def test_registral_matches_subindices_entropy():
@@ -69,6 +69,6 @@ def test_orchestration_mass_matches_data_processor():
 
 def test_composite_weighted_matches_data_processor():
     di, dv = 75.0, 6.5
-    assert compute_weighted_density_normalized(di, dv, w=0.5) == pytest.approx(
+    assert compute_blend_density(di, dv, w=0.5) == pytest.approx(
         calcular_densidade_ponderada_normalizada(di, dv, w=0.5)
     )

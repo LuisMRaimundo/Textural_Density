@@ -2,6 +2,18 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-09-18 — Effective interval cardinality (5.2.0 / package 1.2.0)
+
+Breaking numeric change. Package **1.1.7 → 1.2.0**. Methodology **5.1.0-strict-symbolic → 5.2.0-strict-symbolic**.
+
+`density.interval` is no longer the mean pairwise kernel $\log_{10}(1+\overline{S})$. It is the effective interval cardinality
+
+$$D_V = (\sqrt{1+8S}-1)/2 = n_{\mathrm{eff}}-1$$
+
+from the unchanged raw pair sum $S$ (same kernel, same $\lambda=0.05$). The blend remains $w\cdot D_I/10+(1-w)\cdot D_V$ (no `unit_range` mode, no min-max naming). REF stays **193**. Final $\log_{10}(1+x)$ on the composite is unchanged.
+
+**`density.interval`, `density.weighted` and `density.total` are not comparable with results produced before this version.**
+
 ## 2026-09-17 — Metric semantics labels and MusicXML transpose
 
 Branch work on `fix/metric-semantics-and-musicxml-transpose`. These changes do **not** establish scientific validity of the application. Existing research outputs were **not** modified, relabelled, or regenerated.

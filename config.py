@@ -10,11 +10,11 @@ from typing import Any, Dict, List, Tuple
 # -------------------------------------------------------------------
 # Composite = log10(1 + D_blend · √M / MAX_DENS_GLOBAL) when USE_LOG_COMPRESSION,
 # where D_blend is the slider-controlled weighted density
-#   D_blend = 10 · (w · DI/DI_max + (1−w) · DV/DV_max)
-# (same object as density.weighted; equivalently w·(DI/10)+(1−w)·DV with
-# DI_max=100, DV_max=10). D_pitch / DV = 0 is just a numeric value —
-# there is no unpitched-only fallback branch. Display strings are built from
-# the same constants in core.composite — do not hand-edit formula text here.
+#   D_blend = w · (DI / 10) + (1 − w) · DV
+# DV is the effective interval cardinality (n_eff − 1), not a log-mean of
+# pairwise kernels. D_pitch / DV = 0 is just a numeric value — there is no
+# unpitched-only fallback branch. Display strings are built from the same
+# constants in core.composite — do not hand-edit formula text here.
 #
 # MAX_DENS_GLOBAL (REF) = 193.0 — Task 8c re-freeze calibration:
 # chosen so the frozen all-pitched regression / snapshot baseline slices keep
@@ -27,13 +27,6 @@ from typing import Any, Dict, List, Tuple
 # -------------------------------------------------------------------
 MAX_DENS_GLOBAL = 193.0
 USE_LOG_COMPRESSION = True
-# Blend DV normalisation. "legacy" keeps WEIGHTED_DV_MAX = 10.0 (current
-# defaults, bit-identical). "unit_range" divides DV by its true attainable
-# maximum (log10(2) when USE_LOG_COMPRESSION else 1.0). That is approximate
-# parity only: DV then lies in [0, 1], but DI is still divided by the
-# empirical (unclamped) reference DI_max = 100. Results under the two modes
-# are not comparable; state the mode in any methods write-up.
-INTERVAL_BLEND_NORMALISATION = "legacy"  # "legacy" | "unit_range"
 
 # -------------------------------------------------------------------
 # Offline / legacy dynamic-tail constant (NOT used by calculate_metrics)

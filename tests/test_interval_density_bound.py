@@ -1,4 +1,4 @@
-"""A1: interval-density return is a mean of decay terms, then log10-capped."""
+"""Effective interval cardinality: formula and kernel bounds."""
 
 from __future__ import annotations
 
@@ -7,46 +7,36 @@ import random
 
 import pytest
 
-from config import USE_LOG_COMPRESSION
 from core.pitch_structure import (
     calculate_interval_density_from_distinct_midis,
-    normalize_interval_density,
+    effective_interval_cardinality,
 )
 from densidade_intervalar import modified_exponential_decay
 
 
-LOG10_2 = math.log10(2.0)
+def test_kernel_at_most_one_and_unison_is_one():
+    assert modified_exponential_decay(0.0) == 1.0
+    for delta in (0.5, 1.0, 12.0, 24.0, 48.0):
+        k = modified_exponential_decay(delta)
+        assert 0.0 < k <= 1.0
 
 
-def test_use_log_compression_is_on():
-    assert USE_LOG_COMPRESSION is True
-
-
-def test_decay_terms_are_at_most_one():
-    for delta in (0.0, 0.5, 1.0, 12.0, 24.0, 48.0):
-        assert modified_exponential_decay(delta) <= 1.0
-
-
-def test_normalize_interval_density_is_mean_then_log10():
+def test_effective_interval_cardinality_matches_closed_form():
     midis = [60.0, 64.0, 67.0]
-    n = len(midis)
     raw = calculate_interval_density_from_distinct_midis(midis)
-    mean = 2.0 * raw / (n * (n - 1))
-    assert mean <= 1.0
-    expected = math.log10(1.0 + mean)
-    assert normalize_interval_density(raw, n) == pytest.approx(expected, abs=1e-12)
-    assert expected <= LOG10_2
+    expected = (math.sqrt(1.0 + 8.0 * raw) - 1.0) / 2.0
+    assert effective_interval_cardinality(raw, 3) == pytest.approx(expected, abs=1e-12)
+    assert effective_interval_cardinality(raw, 1) == 0.0
 
 
-def test_normalize_interval_density_bounded_by_log10_2_random_midi_sets():
-    """Property: random MIDI sets of size 2..40 stay <= log10(2)."""
-    rng = random.Random(20260818)
-    for _ in range(250):
-        n = rng.randint(2, 40)
-        midis = [rng.uniform(0.0, 127.0) for _ in range(n)]
+def test_effective_cardinality_grows_with_random_additions():
+    rng = random.Random(20260918)
+    for _ in range(80):
+        n = rng.randint(2, 12)
+        midis = [rng.uniform(40.0, 90.0) for _ in range(n)]
         raw = calculate_interval_density_from_distinct_midis(midis)
-        mean = 2.0 * raw / (n * (n - 1))
-        assert mean <= 1.0 + 1e-12
-        value = normalize_interval_density(raw, n)
-        assert value <= LOG10_2 + 1e-12
-        assert value == pytest.approx(math.log10(1.0 + mean), abs=1e-12)
+        dv = effective_interval_cardinality(raw, n)
+        extra = max(midis) + 1.5
+        raw2 = calculate_interval_density_from_distinct_midis(midis + [extra])
+        dv2 = effective_interval_cardinality(raw2, n + 1)
+        assert dv2 > dv

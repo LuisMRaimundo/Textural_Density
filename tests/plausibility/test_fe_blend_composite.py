@@ -200,37 +200,6 @@ class TestFEMonotonicity:
         )
 
 
-class TestFEUnitRange:
-    def test_legacy_default_bit_identical_and_unit_range_rescales(self, monkeypatch):
-        """HARD: default totals bit-identical to legacy; unit_range rescales the interval term."""
-        import config as cfg
-
-        notes = ["C4", "E4", "G4"]
-        assert cfg.INTERVAL_BLEND_NORMALISATION == "legacy"
-        legacy, _, _ = calculate_metrics(slice_input(notes, instruments="flauta"))
-        monkeypatch.setattr(cfg, "INTERVAL_BLEND_NORMALISATION", "legacy")
-        again, _, _ = calculate_metrics(slice_input(notes, instruments="flauta"))
-        assert json_bytes(legacy) == json_bytes(again)
-        monkeypatch.setattr(cfg, "INTERVAL_BLEND_NORMALISATION", "unit_range")
-        unit, _, _ = calculate_metrics(slice_input(notes, instruments="flauta"))
-        dv = float(legacy["density"]["interval"])
-        w = 0.5
-        di = float(legacy["density"]["instrument"])
-        mass = float(legacy["density"]["sonic_mass"])
-        unit_dv_max = math.log10(2.0)
-        indep_unit = independent_blend(di, dv, w, mass, dv_max=unit_dv_max)
-        record_hard(
-            family="F-E",
-            test_id="FE.unit_range",
-            legacy_total=legacy["density"]["total"],
-            unit_total=unit["density"]["total"],
-            independent_unit_total=indep_unit["total"],
-            interval_term_legacy=0.5 * dv / DV_MAX_LEGACY * 10.0,
-            interval_term_unit=0.5 * dv / unit_dv_max * 10.0,
-            caveat="approximate parity, not commensurability (DI still /100)",
-        )
-
-
 def json_bytes(resultados: dict) -> bytes:
     import json
 

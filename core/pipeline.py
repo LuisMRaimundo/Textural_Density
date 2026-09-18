@@ -15,7 +15,7 @@ import numpy as np
 from config import MAX_DENS_GLOBAL, USE_LOG_COMPRESSION
 from core.composite import blend_term_contributions
 from core.composite import composite_formula_metadata
-from core.composite import compute_weighted_density_normalized
+from core.composite import compute_blend_density
 from core.converters import (
     analysis_config_from_input,
     legacy_input_to_vertical_slice,
@@ -209,17 +209,16 @@ def calculate_metrics(
     timbre = calculate_timbre_blend(instrumentos, one_player_densities)
     orch = calculate_orchestration_balance(bin_midis, bin_weights_spectral, instrumentos)
 
-    densidade_ponderada_val = compute_weighted_density_normalized(
+    densidade_ponderada_val = compute_blend_density(
         densidade_instrumento_val,
         densidade_intervalar_val,
-        metodo="min-max",
         w=weight_factor,
     )
-    weighted_orchestral = compute_weighted_density_normalized(
-        densidade_instrumento_val, 0.0, metodo="min-max", w=weight_factor
+    weighted_orchestral = compute_blend_density(
+        densidade_instrumento_val, 0.0, w=weight_factor
     )
-    weighted_pitch = compute_weighted_density_normalized(
-        0.0, densidade_intervalar_val, metodo="min-max", w=weight_factor
+    weighted_pitch = compute_blend_density(
+        0.0, densidade_intervalar_val, w=weight_factor
     )
 
     pitch_structure_density = compute_pitch_structure_density(

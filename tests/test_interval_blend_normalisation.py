@@ -1,96 +1,49 @@
-"""C1/C2: unit_range is opt-in; legacy default stays bit-identical."""
+"""Fixed-divisor blend: w*(DI/10) + (1-w)*DV."""
 
 from __future__ import annotations
 
 import json
-import math
-from pathlib import Path
 
 import pytest
 
 from core.composite import (
-    WEIGHTED_DI_MAX,
-    WEIGHTED_DV_MAX,
+    INSTRUMENT_BLEND_DIVISOR,
     blend_term_contributions,
     compute_blend_density,
-    resolve_interval_dv_max,
 )
 from core.defaults import apply_research_defaults
 from core.pipeline import calculate_metrics
 
-SNAPSHOT = (
-    Path(__file__).resolve().parent
-    / "snapshots"
-    / "numeric_outputs"
-    / "synthetic_triad.json"
-)
-META = (
-    Path(__file__).resolve().parents[1]
-    / "replication"
-    / "corpus"
-    / "metadata"
-    / "synthetic_triad.json"
-)
-CONFIG = (
-    Path(__file__).resolve().parents[1]
-    / "replication"
-    / "configs"
-    / "score_only_default.json"
-)
 
-
-def test_legacy_resolve_keeps_weighted_dv_max():
-    assert resolve_interval_dv_max() == WEIGHTED_DV_MAX
-
-
-def test_legacy_blend_matches_committed_triad_weighted():
-    snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
-    di = float(snap["density"]["instrument"])
-    dv = float(snap["density"]["interval"])
-    blend = compute_blend_density(di, dv, w=0.5)
-    assert blend == pytest.approx(float(snap["density"]["weighted"]), abs=1e-12)
-
-
-def test_unit_range_rescales_dv_only(monkeypatch):
-    import config as cfg
-
-    monkeypatch.setattr(cfg, "INTERVAL_BLEND_NORMALISATION", "unit_range")
-    monkeypatch.setattr(cfg, "USE_LOG_COMPRESSION", True)
-    dv_max = resolve_interval_dv_max()
-    assert dv_max == pytest.approx(math.log10(2.0), abs=1e-12)
-    di, dv, w = 34.5, 0.2137588382139519, 0.5
-    legacy = 10.0 * (w * di / WEIGHTED_DI_MAX + (1.0 - w) * dv / WEIGHTED_DV_MAX)
-    unit = compute_blend_density(di, dv, w=w)
-    expected = 10.0 * (w * di / WEIGHTED_DI_MAX + (1.0 - w) * dv / math.log10(2.0))
-    assert unit == pytest.approx(expected, abs=1e-12)
-    assert unit != pytest.approx(legacy, rel=1e-3)
+def test_blend_is_direct_fixed_divisor():
+    di, dv, w = 34.5, 1.85, 0.5
+    assert compute_blend_density(di, dv, w=w) == pytest.approx(
+        w * di / INSTRUMENT_BLEND_DIVISOR + (1.0 - w) * dv, abs=1e-12
+    )
 
 
 def test_pipeline_emits_blend_term_contributions():
-    meta = json.loads(META.read_text(encoding="utf-8"))
-    cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
-    input_data = apply_research_defaults({**cfg, **meta.get("input", {})})
+    input_data = apply_research_defaults(
+        {
+            "notes": ["C4", "E4", "G4"],
+            "dynamics": ["mf", "mf", "mf"],
+            "instruments": ["flauta", "flauta", "flauta"],
+            "num_instruments": [1, 1, 1],
+        }
+    )
     resultados, _, _ = calculate_metrics(input_data)
     terms = resultados["composite_meta"]["blend_term_contributions"]
-    assert terms["interval_blend_normalisation"] == "legacy"
+    assert "interval_blend_normalisation" not in terms
     assert terms["instrument_term"] == pytest.approx(
         float(resultados["density"]["weighted_orchestral"]), abs=1e-12
     )
     assert terms["interval_term"] == pytest.approx(
         float(resultados["density"]["weighted_pitch"]), abs=1e-12
     )
-    # Density fields stay on the committed snapshot values.
-    snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
-    orch = float(snap["density"]["weighted_orchestral"])
-    pitch = float(snap["density"]["weighted_pitch"])
-    assert terms["instrument_to_interval_ratio"] == pytest.approx(orch / pitch, abs=0.05)
-    assert float(resultados["density"]["total"]) == pytest.approx(
-        float(snap["density"]["total"]), abs=1e-12
-    )
 
 
 def test_blend_term_contributions_helper_matches_blend():
-    di, dv, w = 40.0, 0.2, 0.5
+    di, dv, w = 40.0, 2.0, 0.5
     terms = blend_term_contributions(DI=di, DV=dv, w=w)
     assert terms["instrument_term"] + terms["interval_term"] == pytest.approx(
         compute_blend_density(di, dv, w=w), abs=1e-12

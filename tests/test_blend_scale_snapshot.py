@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from core.composite import WEIGHTED_DI_MAX, WEIGHTED_DV_MAX
+from core.composite import INSTRUMENT_BLEND_DIVISOR, WEIGHTED_DI_MAX
 
 SNAPSHOT = (
     Path(__file__).resolve().parent
@@ -25,6 +25,6 @@ def test_synthetic_triad_weighted_orch_over_pitch_ratio():
     dv = float(snap["density"]["interval"])
 
     assert WEIGHTED_DI_MAX == 100.0
-    assert WEIGHTED_DV_MAX == 10.0
+    assert INSTRUMENT_BLEND_DIVISOR == 10.0
     # At w=0.5: orch = 0.5 * DI/10, pitch = 0.5 * DV; ratio = (DI/10)/DV.
-    assert orch / pitch == pytest.approx((di / 10.0) / dv, rel=1e-12)
+    assert orch / pitch == pytest.approx((di / INSTRUMENT_BLEND_DIVISOR) / dv, rel=1e-12)

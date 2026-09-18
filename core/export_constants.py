@@ -52,7 +52,7 @@ def export_constants_and_assumptions() -> dict[str, Any]:
         "composite": {
             "DEFAULT_WEIGHT_FACTOR": config.DEFAULT_WEIGHT_FACTOR,
             "module": "config.py",
-            "role": "Linear blend of instrument vs interval density after min-max normalization.",
+            "role": "Fixed-divisor blend w*(DI/10) + (1-w)*DV; DV is effective interval cardinality.",
         },
         "limitations": [
             "Written dynamics are symbolic score metadata, not loudness.",

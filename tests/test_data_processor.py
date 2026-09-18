@@ -124,18 +124,12 @@ class TestDensidadePonderada:
         DI = 50.0
         DV = 5.0
 
-        result = calcular_densidade_ponderada_normalizada(
-            DI, DV, metodo="min-max", w=0.5
-        )
+        result = calcular_densidade_ponderada_normalizada(DI, DV, w=0.5)
 
         assert result == pytest.approx(5.0)
 
-    def test_invalid_metodo_raises_value_error(self):
-        with pytest.raises(ValueError, match="Invalid method"):
-            calcular_densidade_ponderada_normalizada(50.0, 5.0, metodo="bogus")
-
     def test_calcular_densidade_ponderada_extreme_weights(self):
-        """Test with extreme weight values (use DI,DV so min-max gives different norms)."""
+        """Test with extreme weight values (use DI,DV so the blend terms differ)."""
         # With DI_max=100, DV_max=10: DI=80 -> 0.8, DV=2 -> 0.2; w=0 -> DV only -> 2.0, w=1 -> DI only -> 8.0
         DI = 80.0
         DV = 2.0

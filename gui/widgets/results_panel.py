@@ -140,7 +140,7 @@ class ResultsPanel:
                 values=(str(agg.get("player_doubling_count", "")),),
             )
         for key, label in (
-            ("interval", "Interval compactness (distinct)"),
+            ("interval", "Effective interval cardinality (n_eff − 1)"),
             ("pitch_structure", "Pitch-structure density"),
             ("total", "Composite vertical density"),
         ):

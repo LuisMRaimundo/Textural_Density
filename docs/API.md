@@ -395,6 +395,6 @@ Calibrated λ: `parameters/density_params.json` (`load_calibrated_parameters`; `
 
 ---
 
-**Package version:** 1.1.7 · **METRIC_SCHEMA_VERSION:** 5.1.0-strict-symbolic · **Last updated:** 2026-09-03
+**Package version:** 1.2.0 · **METRIC_SCHEMA_VERSION:** 5.2.0-strict-symbolic · **Last updated:** 2026-09-18
 
 Unpitched aggregation + unified composite: [TECHNICAL_MANUAL §7.5.1](TECHNICAL_MANUAL.md) · [CHANGES.md](../CHANGES.md). Header / labels: `core.composite.format_composite_header_line`, `core.unpitched_labels`.

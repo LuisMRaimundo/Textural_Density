@@ -1,14 +1,14 @@
 {
   "density": {
-    "interval": 0.2137588382139519,
+    "interval": 1.5162954002371611,
     "instrument": 46.78264113063388,
-    "weighted": 2.44601147563867,
+    "weighted": 3.0972797566502743,
     "pitch_structure": 3.5189123835151137,
     "refined": 3.5189123835151137,
-    "total": 0.04688897865038914,
+    "total": 0.058564805375031864,
     "sonic_mass": 80.9247499,
-    "absolute": 3.390891915912431,
-    "weighted_pitch": 0.10687941910697595,
+    "absolute": 4.293741461455062,
+    "weighted_pitch": 0.7581477001185806,
     "weighted_orchestral": 2.3391320565316938
   },
   "density_subindices": {
@@ -22,7 +22,7 @@
       }
     },
     "interval_compactness": {
-      "normalized": 0.2137588382139519,
+      "normalized": 1.5162954002371611,
       "raw": 1.9077235705087667
     },
     "registral": {
