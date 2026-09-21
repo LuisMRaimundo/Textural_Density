@@ -62,7 +62,7 @@ CI skips reconstruction when `D:\CORDAS\` workbooks are unavailable on the runne
 
 ## Remaining scientific-review candidates
 
-1. **Double-bass table span adjudication:** resolved — `source_table_span` E1–C5 aligns with committed module, `INSTRUMENT_SOURCE.pitch_range`, and registry; E1–A3 was obsolete documentation. Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
+1. **Double-bass table span adjudication:** resolved — `source_table_span` D#1–C5 aligns with committed module, `INSTRUMENT_SOURCE.pitch_range`, and registry; E1–A3 was obsolete documentation. Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 2. **Technique metadata vs tables:** resolved — `INSTRUMENT_SOURCE.source_technique` / `table_supported_techniques` distinguish numerical table coverage from registry organological capabilities.
 3. **Tuba range:** resolved — committed table `tuba.py` is C1–A#4 (MIDI 24–70) and matches `registry.sounding_range` (2026-08-09; refreshed 2026-09-03). Bass trombone remains coarse.
 4. **Committed dynamics (2026-08-03; data-faithful 2026-08-08/09; dest-Zenodo refresh 2026-09-03):** runtime GPR removed; all table-backed pitched modules (including Picc, E_Horn, Bass_Clar, Contr_Basson) + unpitched percussion commit full 10-level ladders (Dynamics_predicter v1.5.2.1 — measured anchors verbatim, not forced monotone); remaining coarse-default names include piano, harp, bass trombone, and pitched percussion.

@@ -49,8 +49,8 @@ STRING_INSTRUMENTS: tuple[StringInstrumentSpec, ...] = (
     StringInstrumentSpec(
         module_name="double_bass",
         registry_ids=("contrabaixo", "double_bass", "contrabass"),
-        documented_row_count=45,
-        documented_first_pitch="E1",
+        documented_row_count=46,
+        documented_first_pitch="D#1",
         documented_last_pitch="C5",
         open_strings=("E1", "A1", "D2", "G2"),
         workbook_path=r"C:\Users\lmr20\Desktop\Código extrapolação\DOUBLE_BASS\DOUBLEBASS_Zenodo_collections_media.xlsx",

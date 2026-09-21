@@ -167,20 +167,20 @@
       "family": "strings",
       "transposition_semitones": 0,
       "transposition_class": "A_non_transposing",
-      "registry_sounding_min_midi": 28,
+      "registry_sounding_min_midi": 27,
       "registry_sounding_max_midi": 72,
       "comfortable_min_midi": 31,
       "comfortable_max_midi": 55,
       "module_name": "double_bass",
       "profile_status": "literature_derived",
       "table_span": {
-        "first_note": "E1",
+        "first_note": "D#1",
         "last_note": "C5",
-        "row_count": 45,
-        "min_midi": 28,
+        "row_count": 46,
+        "min_midi": 27,
         "max_midi": 72,
         "instrument_source_pitch_range": [
-          28,
+          27,
           72
         ]
       },

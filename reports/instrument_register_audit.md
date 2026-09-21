@@ -20,7 +20,7 @@
 | celesta | keyboard_harp | 60–96 | 0 (A_non_transposing) | — | no_table |
 | clarinete | woodwinds | 50–96 | 0 (A_non_transposing) | D3–C7 (50–96) | aligned |
 | clarinete_baixo | woodwinds | 34–82 | 14 (D_interval_transposing) | C#2–A#5 (37–82) | OK_registry_covers_table |
-| contrabaixo | strings | 28–72 | 0 (A_non_transposing) | E1–C5 (28–72) | aligned |
+| contrabaixo | strings | 27–72 | 0 (A_non_transposing) | D#1–C5 (27–72) | aligned |
 | contrabaixo_harm | strings | 52–72 | 0 (A_non_transposing) | E3–C5 (52–72) | aligned |
 | contrabaixo_sordina | strings | 28–72 | 0 (A_non_transposing) | E1–G4 (28–67) | OK_registry_covers_table |
 | contrabaixo_sul_ponticello | strings | 28–72 | 0 (A_non_transposing) | E1–G4 (28–67) | OK_registry_covers_table |

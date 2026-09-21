@@ -30,7 +30,7 @@ INSTRUMENT_SOURCE = InstrumentSource(
         "marginally overshoots; pitch lookup via MIDI-space spectral_lookup"
     ),
     dynamic_levels=('pppp', 'ppp', 'pp', 'p', 'mp', 'mf', 'f', 'ff', 'fff', 'ffff'),
-    pitch_range=(28, 72),
+    pitch_range=(27, 72),
     uncertainty="medium",
     version="2026-09-18",
     source_technique="arco_sustain",
@@ -46,7 +46,7 @@ logger = logging.getLogger("double_bass")
 # Full 10-dynamic CDM ladder (Results sheet). Anchors pp/mf/ff match measured
 # workbook midpoints; other levels are workbook-committed.
 spectral_data = {
- 'D#1': {'pppp': 45.038028, 'ppp': 45.765837, 'pp': 45.792536, 'p': 45.88229, 'mp': 48.907543, 'mf': 49.099456, 'f': 50.98191, 'ff': 50.78876, 'fff': 54.58869, 'ffff': 55.618865},
+    'D#1': {'pppp': 45.038028, 'ppp': 45.765837, 'pp': 45.792536, 'p': 45.88229, 'mp': 48.907543, 'mf': 49.099456, 'f': 50.98191, 'ff': 50.78876, 'fff': 54.58869, 'ffff': 55.618865},
     'E1': {'pppp': 44.038028, 'ppp': 44.765837, 'pp': 45.692536, 'p': 46.62229, 'mp': 47.647543, 'mf': 48.759456, 'f': 49.98191, 'ff': 51.32876, 'fff': 52.58869, 'ffff': 53.618865},
     'F1': {'pppp': 41.620318, 'ppp': 42.60089, 'pp': 43.859157, 'p': 45.621767, 'mp': 47.106191, 'mf': 48.201482, 'f': 48.983086, 'ff': 49.472531, 'fff': 50.129623, 'ffff': 50.661575},
     'F#1': {'pppp': 39.937825, 'ppp': 40.243848, 'pp': 40.629677, 'p': 40.772438, 'mp': 41.165752, 'mf': 41.759047, 'f': 43.354762, 'ff': 46.155967, 'fff': 48.318543, 'ffff': 50.121333},

@@ -2,6 +2,10 @@
 
 Numeric and formula history for Textural Density. Cross-links: [TECHNICAL_MANUAL §3.5 / §3.12 / §7.5.1](docs/TECHNICAL_MANUAL.md) · [MATHEMATICAL_MANUAL §H](docs/MATHEMATICAL_MANUAL.md) · [constants_and_assumptions §7](docs/constants_and_assumptions.md).
 
+## 2026-09-21 — Double-bass D#1 accepted by range gates
+
+Adding `D#1` to `double_bass.spectral_data` was not enough for the GUI/CLI: sounding-range validation still used E1 (MIDI 28) as the floor. `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range` for `contrabaixo` now start at MIDI 27 so D#1 is recognised. Formulae and technique-module spans are unchanged.
+
 ## 2026-09-18 — Cello Dynamics10 refresh from CORDAS_4
 
 Rebuilt all four cello table modules from the CORDAS_4 Dynamics10 `Results` books (Dynamics_predicter v1.5.2.1, PCHIP, r=0.8, n_boot=200). Generator path: `tools/commit_dynamics_from_para_dinamicas.py` (`load_results_ladder` + interior clamp). Formulae unchanged. Cello sul tasto stays withdrawn.

@@ -107,7 +107,7 @@ def _double_bass_span_classification(table: dict[str, Any] | None) -> dict[str, 
         "upper_register_methodological_qc": "REVIEW REQUIRED",
         "rationale": (
             "Committed spectral_data, INSTRUMENT_SOURCE.pitch_range, and registry.sounding_range "
-            "all agree on E1–C5. E1–A3 was obsolete documentation. Comfortable range remains narrower. "
+            "all agree on D#1–C5. E1–A3 was obsolete documentation. Comfortable range remains narrower. "
             "Methodological status of upper-register rows (above A3) vs core corpus not independently adjudicated."
         ),
     }

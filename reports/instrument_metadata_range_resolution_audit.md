@@ -4,7 +4,7 @@
 
 ## Executive summary
 
-- **Double bass:** source_table_span E1–C5 (MIDI 28–72) aligns with committed table and registry; E1–A3 was obsolete documentation.
+- **Double bass:** source_table_span D#1–C5 (MIDI 27–72) aligns with committed table and registry; E1–A3 was obsolete documentation.
 - **Violin sounding [55,107]:** table G3–B7 aligns (not a double-bass case).
 - **Table excludes sounding range (partial):** 10 instrument(s): clarinete_baixo, contrabaixo_sordina, contrabaixo_sul_ponticello, contrafagote, cor_anglais, flautim, viola_sul_ponticello, violino_sordina, violino_sul_ponticello, violoncelo_sordina.
 - **Technique:** modules declare `source_technique` / `table_supported_techniques`; registry lists broader organological capabilities.
@@ -27,10 +27,10 @@
 ## Double-bass resolution
 
 - Classification: **PASS**
-- Source table span: E1–C5 (MIDI 28–72)
+- Source table span: D#1–C5 (MIDI 27–72)
 - Obsolete docs span: E1–A3 (obsolete_documentation_only)
 - Upper-register QC: **REVIEW REQUIRED**
-- Committed spectral_data, INSTRUMENT_SOURCE.pitch_range, and registry.sounding_range all agree on E1–C5. E1–A3 was obsolete documentation. Comfortable range remains narrower. Methodological status of upper-register rows (above A3) vs core corpus not independently adjudicated.
+- Committed spectral_data, INSTRUMENT_SOURCE.pitch_range, and registry.sounding_range all agree on D#1–C5. E1–A3 was obsolete documentation. Comfortable range remains narrower. Methodological status of upper-register rows (above A3) vs core corpus not independently adjudicated.
 
 ## Trombone review
 
@@ -56,7 +56,7 @@
 | celesta | — | 60–96 | 65–88 | no_table | NOT APPLICABLE | NOT APPLICABLE |
 | clarinete | D3–C7 | 50–96 | 55–80 | full_coverage | PASS | PASS |
 | clarinete_baixo | C#2–A#5 | 34–82 | 40–65 | YES (lo=3, hi=0) | REVIEW REQUIRED | PASS |
-| contrabaixo | E1–C5 | 28–72 | 31–55 | full_coverage | PASS | PASS |
+| contrabaixo | D#1–C5 | 27–72 | 31–55 | full_coverage | PASS | PASS |
 | contrabaixo_harm | E3–C5 | 52–72 | 31–55 | full_coverage | PASS | PASS |
 | contrabaixo_sordina | E1–G4 | 28–72 | 31–55 | YES (lo=0, hi=5) | REVIEW REQUIRED | PASS |
 | contrabaixo_sul_ponticello | E1–G4 | 28–72 | 31–55 | YES (lo=0, hi=5) | REVIEW REQUIRED | PASS |

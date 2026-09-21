@@ -392,18 +392,18 @@
       "table_backed": true,
       "profile_status": "literature_derived",
       "source_table_span": {
-        "first_note": "E1",
+        "first_note": "D#1",
         "last_note": "C5",
-        "row_count": 45,
-        "min_midi": 28,
+        "row_count": 46,
+        "min_midi": 27,
         "max_midi": 72
       },
       "instrument_source_pitch_range": [
-        28,
+        27,
         72
       ],
       "registry_sounding_range_midi": [
-        28,
+        27,
         72
       ],
       "registry_comfortable_range_midi": [
@@ -461,7 +461,7 @@
       "missing_low_semitones": 0,
       "missing_high_semitones": 0,
       "table_span_midi": [
-        28,
+        27,
         72
       ]
     },
@@ -3339,14 +3339,14 @@
     }
   ],
   "double_bass_resolution": {
-    "source_table_span": "E1\u2013C5 (MIDI 28\u201372)",
+    "source_table_span": "D#1\u2013C5 (MIDI 27\u201372)",
     "obsolete_documentation_span": "E1\u2013A3",
     "obsolete_status": "obsolete_documentation_only",
     "comfortable_range_midi": "31\u201355 (G1\u2013G3) per registry",
     "upper_register_extension": "A#3\u2013C5 rows present in committed workbook-derived table",
     "classification": "PASS",
     "upper_register_methodological_qc": "REVIEW REQUIRED",
-    "rationale": "Committed spectral_data, INSTRUMENT_SOURCE.pitch_range, and registry.sounding_range all agree on E1\u2013C5. E1\u2013A3 was obsolete documentation. Comfortable range remains narrower. Methodological status of upper-register rows (above A3) vs core corpus not independently adjudicated."
+    "rationale": "Committed spectral_data, INSTRUMENT_SOURCE.pitch_range, and registry.sounding_range all agree on D#1\u2013C5. E1\u2013A3 was obsolete documentation. Comfortable range remains narrower. Methodological status of upper-register rows (above A3) vs core corpus not independently adjudicated."
   },
   "tuba_review": {
     "module_name": "tuba",

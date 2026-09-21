@@ -206,3 +206,16 @@ class TestViolaRegression:
             }
         )
         assert pitches[0] == pytest.approx(81.0)
+
+
+class TestDoubleBassExtension:
+    def test_double_bass_ds1_table_boundary_accepted(self):
+        _, _, pitches = calculate_metrics(
+            {
+                "notes": ["D#1"],
+                "dynamics": ["mf"],
+                "instruments": ["contrabaixo"],
+                "num_instruments": [1],
+            }
+        )
+        assert pitches[0] == pytest.approx(27.0)

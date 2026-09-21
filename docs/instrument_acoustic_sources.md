@@ -370,7 +370,7 @@ dest-Zenodo cello sul tasto dynamics workbook exists.
 ## Double bass (`double_bass`)
 
 - **Module:** `instrumentos/double_bass.py`
-- **Table (source_table_span):** `spectral_data` (45 chromatic rows, **E1–C5**, MIDI 28–72), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
+- **Table (source_table_span):** `spectral_data` (46 chromatic rows, **D#1–C5**, MIDI 27–72), matching `INSTRUMENT_SOURCE.pitch_range` and `registry.sounding_range`
 - **Comfortable range:** MIDI 31–55 (G1–G3) — narrower orchestrational band, not a table limit
 - **Source technique:** `arco_sustain` (`table_supported_techniques`)
 - **Provenance (2026-09-18):** IOWA+ORCH arco sustain CDM medians at pp/mf/ff from
@@ -381,7 +381,7 @@ dest-Zenodo cello sul tasto dynamics workbook exists.
 - **Dynamics (2026-09-18):** full 10-level data-faithful Dynamics10 `Results` ladder (measured pp/mf/ff anchors verbatim; PCHIP interiors, tapered outers).
 - **Regeneration:** `tools/commit_dynamics_from_para_dinamicas.py` (2026-09-18 CORDAS_4 refresh)
 - **Uncertainty:** medium
-- **Span status:** E1–A3 in older docs was obsolete; committed span is E1–C5 (**PASS**). Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
+- **Span status:** E1–A3 in older docs was obsolete; committed span is D#1–C5 (**PASS**). Upper-register methodological QC (A♯3–C5) remains **REVIEW REQUIRED**.
 
 Double-bass sul tasto remains withdrawn (2026-08-18; no dest-Zenodo sul tasto workbook).
 
@@ -451,7 +451,7 @@ Offline curation pipeline (not used at runtime):
 
 The former cello / double-bass STE technique generators (`generate_cello_technique_modules_from_xlsx.py`, `generate_double_bass_technique_modules_from_xlsx.py`) were retired when those modules were withdrawn (2026-08-18).
 
-**String techniques (2026-09-18):** violin, viola, cello, and double-bass ordinary arco plus sordina / sul ponticello / harmonics from dest-Zenodo Dynamics10 `Results` ladders via `tools/commit_dynamics_from_para_dinamicas.py`. Violin (CORDAS_4 refresh) arco/tasto G3–B7 (53); sordina G3–C7 (42); ponticello G3–A6 (39); harmonics G5–B7 (29). Viola (CORDAS_4 refresh) arco/sordina C3–A#6 (47); ponticello C3–E6 (41); harmonics C5–A#6 (23). Cello (CORDAS_4 refresh) arco C2–C6 (49); sordina C2–A5 (46); ponticello STE C2–C6 (49); harmonics C4–C6 (25). Double-bass (CORDAS_4 refresh) arco E1–C5 (45); sordina/ponticello E1–G4 (40); harmonics E3–C5 (21). No cello/viola/double-bass sul tasto. Runtime GPR remains removed.
+**String techniques (2026-09-18):** violin, viola, cello, and double-bass ordinary arco plus sordina / sul ponticello / harmonics from dest-Zenodo Dynamics10 `Results` ladders via `tools/commit_dynamics_from_para_dinamicas.py`. Violin (CORDAS_4 refresh) arco/tasto G3–B7 (53); sordina G3–C7 (42); ponticello G3–A6 (39); harmonics G5–B7 (29). Viola (CORDAS_4 refresh) arco/sordina C3–A#6 (47); ponticello C3–E6 (41); harmonics C5–A#6 (23). Cello (CORDAS_4 refresh) arco C2–C6 (49); sordina C2–A5 (46); ponticello STE C2–C6 (49); harmonics C4–C6 (25). Double-bass CORDAS_4 workbook arco remains E1–C5 (45); sordina/ponticello E1–G4 (40); harmonics E3–C5 (21). **2026-09-21:** ordinary arco production now includes an extra `D#1` row (46 notes, MIDI 27–72) so GUI/CLI range gates accept that pitch; technique tables are unchanged. No cello/viola/double-bass sul tasto. Runtime GPR remains removed.
 
 ## Media note-label normalization (PR #14)
 
@@ -486,7 +486,7 @@ Audit: `tools/audit_instrument_metadata_range_resolution.py` → `reports/instru
 
 | ID | Topic | Status |
 |----|-------|--------|
-| DB-SPAN | Double-bass `source_table_span` E1–C5 aligns with committed table and registry; E1–A3 was obsolete documentation. Upper-register QC (A♯3–C5) open. | **PASS** (span); **REVIEW REQUIRED** (upper QC) |
+| DB-SPAN | Double-bass `source_table_span` D#1–C5 aligns with committed table and registry; E1–A3 was obsolete documentation. Upper-register QC (A♯3–C5) open. | **PASS** (span); **REVIEW REQUIRED** (upper QC) |
 | TECHNIQUE | `INSTRUMENT_SOURCE.table_supported_techniques` vs registry `supported_techniques`; tables do not overclaim technique coverage. | **PASS** |
 | TUBA-RNG | Tuba now ships a committed table (`tuba.py`, C1–A#4); `registry.sounding_range` (MIDI 24–70) matches the table span (2026-08-09). | **PASS** |
 | TBN-RNG | Trombone now ships a committed table (`trombone.py`, F1–C5); `registry.sounding_range` (MIDI 29–72) matches the table span (2026-08-24). Bass trombone remains coarse. | **PASS** |

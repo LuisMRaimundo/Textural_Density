@@ -339,7 +339,7 @@ REGISTRY["contrafagote"] = _profile(
 for _id, _name, _module, _sound, _comfort, _aliases in (
     ("violino", "Vl", "violin", (55, 107), (55, 76), ("violin", "vl.", "vln", "vln.")),
     ("violoncelo", "Vc", "cello", (36, 84), (40, 65), ("cello", "violoncello", "vc.", "vcl")),
-    ("contrabaixo", "Db", "double_bass", (28, 72), (31, 55), ("double_bass", "double bass", "contrabass", "baixo", "db.", "cb", "cb.")),
+    ("contrabaixo", "Db", "double_bass", (27, 72), (31, 55), ("double_bass", "double bass", "contrabass", "baixo", "db.", "cb", "cb.")),
 ):
     REGISTRY[_id] = _profile(
         _id,

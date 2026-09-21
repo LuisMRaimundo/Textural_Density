@@ -85,16 +85,16 @@ def test_gpr_registry_sounding_range_covers_table(instrument_id: str):
 
 
 class TestDoubleBassSpanResolution:
-    def test_source_table_span_e1_c5(self):
+    def test_source_table_span_ds1_c5(self):
         mod = importlib.import_module("instrumentos.double_bass")
         notes = sorted(mod.spectral_data.keys(), key=note_to_midi_strict)
-        assert notes[0] == "E1"
+        assert notes[0] == "D#1"
         assert notes[-1] == "C5"
-        assert mod.INSTRUMENT_SOURCE.pitch_range == (28, 72)
+        assert mod.INSTRUMENT_SOURCE.pitch_range == (27, 72)
 
     def test_registry_aligned_with_table(self):
         profile = REGISTRY["contrabaixo"]
-        assert profile.sounding_range == (28, 72)
+        assert profile.sounding_range == (27, 72)
         assert profile.comfortable_range == (31, 55)
 
     def test_audit_passes_span_documentation(self, audit_payload):

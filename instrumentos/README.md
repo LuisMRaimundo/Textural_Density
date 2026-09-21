@@ -27,7 +27,7 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 | `violin.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `VIOLIN_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (G3–B7) |
 | `viola.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `VIOLA_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (C3–A#6) |
 | `cello.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `CELLO_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (C2–C6) |
-| `double_bass.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `DOUBLEBASS_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (E1–C5) |
+| `double_bass.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `DOUBLEBASS_Zenodo_collections_Arco_normal_Dynamics10.xlsx` Results (D#1–C5) |
 | `violin_sordina.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Violin_Zenodo_collections_con_sordino_Dynamics10.xlsx` Results (G3–C7) |
 | `violin_sul_tasto.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Violin_Zenodo_collections_sul_tasto_Dynamics10.xlsx` Results (G3–B7) |
 | `violin_sul_ponticello.py` | `spectral_data` (10 dynamics) | CORDAS_4 Dynamics10 `Violin_Zenodo_collections_sul_ponticello_Dynamics10.xlsx` Results (G3–A6) |
@@ -54,7 +54,7 @@ Dedicated modules embed CDM tables from external sources (partial digitization �
 
 **Technique ladders (2026-09-03):** violin, viola, cello, and double-bass ordinary arco plus sordina / sul ponticello / harmonics commit dest-Zenodo Dynamics10 `Results` ladders via `tools/commit_dynamics_from_para_dinamicas.py`. Violin sul tasto is unchanged (no new book). Cello, viola, and double-bass sul tasto remain withdrawn (2026-08-18).
 
-**Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans E1–C5 while comfortable range is G1–G3.
+**Range semantics:** distinguish `source_table_span` (committed table), `sounding_range` (validation), and `comfortable_range` (conservative orchestration band). Example: double bass table spans D#1–C5 while comfortable range is G1–G3.
 
 Audit: `python tools/audit_instrument_metadata_range_resolution.py` → `reports/instrument_metadata_range_resolution_audit.*`
 
